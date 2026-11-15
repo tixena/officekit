@@ -1,5 +1,8 @@
-//! The month and weekday names of each locale of Unicode CLDR's main files (ECMA-376 Part 1,
+//! The date names and formats of each locale of Unicode CLDR's main files (ECMA-376 Part 1,
 //! section 18.8.31), written to `crates/officekit/src/xlsx/number_format/date/names.rs`.
+//!
+//! A locale's names are its months and weekdays; its formats are its long date and medium time
+//! patterns and the names of the halves of the day.
 
 use alloc::collections::BTreeMap;
 use core::fmt::{self, Write as _};
@@ -28,33 +31,60 @@ const DAYS: [&str; 7] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 /// The locale whose Hijri months `b2` writes in a section with no language.
 pub const ENGLISH: &str = "en";
 
-/// The elements from a file's root to a calendar; below one only its months, its days and its
+/// The elements from a file's root to a calendar; below one only [`KEPT_IN_CALENDAR`] and its
 /// aliases are kept.
 const KEPT: [&str; 3] = ["dates", "calendars", "calendar"];
+
+const KEPT_IN_CALENDAR: [&str; 5] = ["months", "days", "dateFormats", "timeFormats", "dayPeriods"];
+
+/// The formats a locale writes for section 18.8.31's system long date and system time.
+#[derive(Clone, Debug, Default, Eq, PartialEq)]
+#[non_exhaustive]
+pub struct Formats {
+    /// The Gregorian `long` date pattern, in UTS #35's pattern letters.
+    pub date: String,
+    /// The abbreviated `am` and `pm` names, in the format context.
+    pub halves: Vec<String>,
+    /// The Gregorian `medium` time pattern.
+    pub time: String,
+}
 
 /// Each distinct list of names, and the locales that give them.
 #[derive(Clone, Debug, Default, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct Names {
+    /// Each pair of names of the halves of the day.
+    pub halves: Vec<Vec<String>>,
     /// Each locale, sorted, and its lists: the narrow, abbreviated and wide Gregorian months, the
     /// abbreviated and wide weekdays, and the narrow, abbreviated and wide Hijri months.
     pub locales: Vec<(String, [usize; 8])>,
     /// Each list of twelve month names.
     pub months: Vec<Vec<String>>,
+    /// Each long date and medium time pattern.
+    pub patterns: Vec<String>,
+    /// Each locale's index in [`patterns`](Self::patterns) of its long date and its medium time
+    /// pattern, and in [`halves`](Self::halves) of its names, in the order of `locales`.
+    pub system: Vec<[usize; 3]>,
     /// Each list of seven weekday names, from Sunday.
     pub weekdays: Vec<Vec<String>>,
 }
 
 impl Names {
     /// Add `locale` and its lists: `months` and `hijri` narrow, abbreviated and wide, `weekdays`
-    /// abbreviated and wide.
+    /// abbreviated and wide; and its `formats`.
     pub fn add(
         &mut self,
         locale: &str,
         months: [Vec<String>; 3],
         weekdays: [Vec<String>; 2],
         hijri: [Vec<String>; 3],
+        formats: Formats,
     ) {
+        self.system.push([
+            Self::index(&mut self.patterns, formats.date),
+            Self::index(&mut self.patterns, formats.time),
+            Self::index(&mut self.halves, formats.halves),
+        ]);
         let mut lists = [0; 8];
         for (at, list) in months.into_iter().enumerate() {
             lists[at] = Self::index(&mut self.months, list);
@@ -69,7 +99,10 @@ impl Names {
     }
 
     /// The index of `list` in `lists`, added when it is new.
-    fn index(lists: &mut Vec<Vec<String>>, list: Vec<String>) -> usize {
+    fn index<T>(lists: &mut Vec<T>, list: T) -> usize
+    where
+        T: PartialEq,
+    {
         lists
             .iter()
             .position(|found| *found == list)
@@ -80,7 +113,8 @@ impl Names {
     }
 }
 
-/// `file` less everything but each calendar's months, days and aliases, and the aliases above.
+/// `file` less everything but each calendar's [`KEPT_IN_CALENDAR`] and aliases, and the aliases
+/// above.
 #[must_use = "this only returns the value"]
 pub fn pruned(mut file: Tree, depth: usize) -> Tree {
     file.children = file
@@ -89,7 +123,7 @@ pub fn pruned(mut file: Tree, depth: usize) -> Tree {
         .filter_map(|child| match KEPT.get(depth) {
             _ if child.name == "alias" => Some(child),
             Some(name) if child.name == *name => Some(pruned(child, depth + 1)),
-            None if matches!(child.name.as_str(), "months" | "days") => Some(child),
+            None if KEPT_IN_CALENDAR.contains(&child.name.as_str()) => Some(child),
             _ => None,
         })
         .collect();
@@ -145,6 +179,56 @@ pub fn weekday_lists(main: &BTreeMap<String, Tree>, chain: &[String]) -> Result<
     Ok(lists)
 }
 
+/// The Gregorian long date and medium time patterns, and the abbreviated `am` and `pm` names, of
+/// `chain`'s language (UTS #35, Part 4, "Dates").
+///
+/// # Errors
+///
+/// A pattern or a name that is missing, or an `am` name holding the `/` that parts `AM/PM`.
+pub fn formats(main: &BTreeMap<String, Tree>, chain: &[String]) -> Result<Formats> {
+    let found = |steps: &[(&str, Option<&str>)]| -> Result<String> {
+        let mut path: Vec<Step> = vec![
+            ("dates".to_owned(), None),
+            ("calendars".to_owned(), None),
+            ("calendar".to_owned(), Some("gregorian".to_owned())),
+        ];
+        path.extend(
+            steps
+                .iter()
+                .map(|(name, kind)| ((*name).to_owned(), kind.map(str::to_owned))),
+        );
+        resolve(main, chain, &path)?.with_context(|| {
+            let last = steps.iter().rev().find_map(|(_, kind)| *kind).unwrap_or("");
+            format!("{} gives no {last} {}", chain.join(", "), steps[0].0)
+        })
+    };
+    let pattern = |formats: &str, length: &str, format: &str| {
+        found(&[
+            (formats, None),
+            (&format!("{format}Length"), Some(length)),
+            (format, None),
+            ("pattern", None),
+        ])
+    };
+    let half = |kind: &str| {
+        found(&[
+            ("dayPeriods", None),
+            ("dayPeriodContext", Some("format")),
+            ("dayPeriodWidth", Some("abbreviated")),
+            ("dayPeriod", Some(kind)),
+        ])
+    };
+    let am = half("am")?;
+    if am.contains('/') {
+        bail!("{} names am {am}, which holds a /", chain.join(", "));
+    }
+    Ok(Formats {
+        date: pattern("dateFormats", "long", "dateFormat")?,
+        halves: vec![am, half("pm")?],
+        time: pattern("timeFormats", "medium", "timeFormat")?,
+    })
+}
+
 /// The lists of every locale of `main` but `root`, each resolved through its parents.
 ///
 /// # Errors
@@ -159,6 +243,7 @@ pub fn names(main: &BTreeMap<String, Tree>, parents: &BTreeMap<String, String>) 
             month_lists(main, &chain, "gregorian")?,
             weekday_lists(main, &chain)?,
             month_lists(main, &chain, HIJRI)?,
+            formats(main, &chain)?,
         );
     }
     if !main.contains_key(ENGLISH) {
@@ -225,8 +310,20 @@ fn render_lists(text: &mut String, lists: &[Vec<String>]) {
     text.push_str("];\n");
 }
 
+/// `indexes` as the items of a static array of `[u16; length]`, one to a line.
+fn render_indexes(text: &mut String, locale: &str, indexes: &[usize]) -> Result<()> {
+    let mut shown = Vec::new();
+    for list in indexes {
+        let index =
+            u16::try_from(*list).with_context(|| format!("the lists of {locale} pass a u16"))?;
+        shown.push(index.to_string());
+    }
+    let _: fmt::Result = writeln!(text, "    {},", array(&shown, 4));
+    Ok(())
+}
+
 /// The table's source: `header`, the notices, the lists of month and of weekday names, the
-/// locales, and each locale's lists.
+/// patterns and the names of the halves of the day, the locales, and each locale's lists.
 ///
 /// # Errors
 ///
@@ -234,8 +331,9 @@ fn render_lists(text: &mut String, lists: &[Vec<String>]) {
 pub fn render(header: &str, copyright: &str, names: &Names) -> Result<String> {
     let mut text = format!(
         "{header}{UNICODE_NOTICE}\n\n//! Unicode CLDR {version}'s month and weekday names of each \
-         locale, in the format context of the\n//! Gregorian calendar and of `{HIJRI}`. \
-         {copyright} Unicode License v3.\n\n/// Each list of twelve month names, from January or \
+         locale, in the format context of the\n//! Gregorian calendar and of `{HIJRI}`; its \
+         Gregorian long date and medium time patterns, in\n//! UTS #35's pattern letters; and its \
+         abbreviated names of the halves of the day.\n//! {copyright} Unicode License v3.\n\n/// Each list of twelve month names, from January or \
          from Muharram.\npub(super) static MONTHS: [[&str; 12]; {}] = [\n",
         names.months.len(),
         version = cldr::VERSION,
@@ -248,6 +346,21 @@ pub fn render(header: &str, copyright: &str, names: &Names) -> Result<String> {
         names.weekdays.len()
     );
     render_lists(&mut text, &names.weekdays);
+    let patterns: Vec<String> = names
+        .patterns
+        .iter()
+        .map(|pattern| layout::string(pattern))
+        .collect();
+    let _: fmt::Result = write!(
+        text,
+        "\n/// Each long date and medium time pattern.\npub(super) static PATTERNS: [&str; {}] = \
+         {};\n\n/// Each pair of names of the morning and the afternoon.\npub(super) static \
+         HALVES: [[&str; 2]; {}] = [\n",
+        patterns.len(),
+        array(&patterns, 0),
+        names.halves.len(),
+    );
+    render_lists(&mut text, &names.halves);
     let locales: Vec<String> = names
         .locales
         .iter()
@@ -265,13 +378,17 @@ pub fn render(header: &str, copyright: &str, names: &Names) -> Result<String> {
         names.locales.len(),
     );
     for (locale, lists) in &names.locales {
-        let mut indexes = Vec::new();
-        for list in lists {
-            let index = u16::try_from(*list)
-                .with_context(|| format!("the lists of {locale} pass a u16"))?;
-            indexes.push(index.to_string());
-        }
-        let _: fmt::Result = writeln!(text, "    {},", array(&indexes, 4));
+        render_indexes(&mut text, locale, lists)?;
+    }
+    let _: fmt::Result = write!(
+        text,
+        "];\n\n/// The formats of each of [`LOCALES`]: the index in [`PATTERNS`] of its long date \
+         and its medium\n/// time pattern, and in [`HALVES`] of its names of the halves of the \
+         day.\npub(super) static SYSTEM: [[u16; 3]; {}] = [\n",
+        names.system.len(),
+    );
+    for ((locale, _), indexes) in names.locales.iter().zip(&names.system) {
+        render_indexes(&mut text, locale, indexes)?;
     }
     text.push_str("];\n");
     Ok(text)

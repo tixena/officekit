@@ -3,6 +3,7 @@
 
 use core::mem;
 
+use super::date::is_system_format;
 use super::decimal::Decimal;
 use super::{FormatColor, FormatError, Piece, Section};
 
@@ -140,14 +141,16 @@ impl Section {
     }
 
     /// Settle what each token of a section for numbers does: which `.`, `E` and `/` act and
-    /// which show as text, and what each `,` and `%` does to the number.
+    /// which show as text, and what each `,` and `%` does to the number; a system long date or
+    /// time is a section of dates.
     fn settle_number(&mut self) {
-        self.dates = self.tokens.iter().any(|token| {
-            matches!(
-                token,
-                Token::AmPm(_) | Token::Calendar(_) | Token::Date(..) | Token::Elapsed(..)
-            )
-        });
+        self.dates = self.language.is_some_and(is_system_format)
+            || self.tokens.iter().any(|token| {
+                matches!(
+                    token,
+                    Token::AmPm(_) | Token::Calendar(_) | Token::Date(..) | Token::Elapsed(..)
+                )
+            });
         if self.dates {
             return;
         }

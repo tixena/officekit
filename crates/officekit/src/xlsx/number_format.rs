@@ -154,9 +154,9 @@ impl NumberFormat {
         self.number_in(number, dates, None)
     }
 
-    /// `number` as [`number`](Self::number) writes it, a section that names no language in its
-    /// `[$-<language info>]` taking `language`, a BCP 47 tag, as its locale (section 18.8.31,
-    /// "International Considerations").
+    /// `number` as [`number`](Self::number) writes it in `language`, a BCP 47 tag: the locale of a
+    /// section naming none, and whose CLDR long date and medium time patterns write `[$-F800]` and
+    /// `[$-F400]`, English's with none (section 18.8.31, "International Considerations").
     #[must_use = "this only returns the value"]
     pub fn number_in(
         &self,

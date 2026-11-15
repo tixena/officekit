@@ -3,6 +3,7 @@
 
 mod calendars;
 mod names;
+mod system_format;
 #[cfg(test)]
 mod tests;
 
@@ -18,6 +19,8 @@ use super::parse::Token;
 use super::write::Writer;
 use super::{Section, Shown, language_tag};
 use crate::docx::fonts::likely_subtags;
+
+pub(super) use self::system_format::is_system_format;
 
 /// Nanoseconds in a day.
 pub const DAY: i128 = 86_400_000_000_000;
@@ -45,6 +48,10 @@ const HIJRI_YEAR: i64 = 354;
 /// The language of the Hijri months `b2` writes in a section with no language: section 18.8.31
 /// writes the Gregorian ones in English.
 const HIJRI_LANGUAGE: &str = "en";
+
+/// The language of a system long date or time when the caller names none CLDR has (section
+/// 18.8.31, "International Considerations").
+const SYSTEM_LANGUAGE: &str = "en";
 
 /// The most decimals of a second a code shows (section 18.8.31, `h:mm:ss.00`).
 const MOST_DECIMALS: usize = 3;
@@ -218,39 +225,9 @@ impl Names {
             .map_or("", |months| name(months, month - 1))
     }
 
-    /// The names of CLDR's locale of the BCP 47 tag `tag`: of its language, script and region,
-    /// the script CLDR's likely subtags give when it names none; CLDR's ids leave out a
-    /// language's own script.
+    /// The names of CLDR's locale of the BCP 47 tag `tag`, as [`cldr_locale`] finds it.
     fn of(tag: &str) -> Option<Self> {
-        let Subtags {
-            language,
-            region,
-            script: named,
-        } = Subtags::of(tag)?;
-        let likely = |id: &str| -> Option<&'static str> { likely_subtags(id)?.split('_').nth(1) };
-        let own = likely(&language);
-        let script = named
-            .as_deref()
-            .or_else(|| likely(&format!("{language}_{}", region.as_ref()?)))
-            .or(own);
-        let plain = script == own;
-        let mut ids = Vec::new();
-        if let (Some(writing), Some(place)) = (script, &region) {
-            ids.push(format!("{language}_{writing}_{place}"));
-        }
-        if let (true, Some(place)) = (plain, &region) {
-            ids.push(format!("{language}_{place}"));
-        }
-        if let Some(writing) = script {
-            ids.push(format!("{language}_{writing}"));
-        }
-        if plain {
-            ids.push(language.clone());
-        }
-        ids.iter()
-            .find_map(|id| LOCALES.binary_search(&id.as_str()).ok())
-            .and_then(|at| NAMES.get(at))
-            .map(Self)
+        cldr_locale(tag).and_then(|at| NAMES.get(at)).map(Self)
     }
 
     /// The name of `weekday`, from 0 for Sunday, in `width`: 0 abbreviated, 1 wide.
@@ -407,10 +384,28 @@ pub const fn days_from_civil(year: i64, month: i64, day: i64) -> i64 {
     era * 146_097 + day_of_era - 719_468
 }
 
+/// `value` under `section` in `system`; a system long date or time by CLDR's pattern of
+/// `language`, or of English when CLDR has no locale of it (section 18.8.31).
+pub(super) fn write(
+    section: &Section,
+    value: &Decimal,
+    system: DateSystem,
+    language: Option<&str>,
+) -> Option<Shown> {
+    if !section.language.is_some_and(is_system_format) {
+        return write_codes(section, value, system, language);
+    }
+    let (tag, at) = language
+        .and_then(|tag| Some((tag, cldr_locale(tag)?)))
+        .or_else(|| Some((SYSTEM_LANGUAGE, cldr_locale(SYSTEM_LANGUAGE)?)))?;
+    let own = system_format::section(section, at)?;
+    write_codes(&own, value, system, Some(tag))
+}
+
 /// `value` under the date and time codes of `section` in `system` (section 18.8.31, "Dates and
 /// times"): rounded to the second or to the decimals of a second the section shows, a half
 /// upward, before it is cut into its parts. `None` when a date code finds no date.
-pub(super) fn write(
+fn write_codes(
     section: &Section,
     value: &Decimal,
     system: DateSystem,
@@ -538,6 +533,39 @@ fn calendar<'tag>(section: &Section, language: Option<&'tag str>) -> (bool, Opti
         .find(|token| matches!(token, Token::Calendar(_)))
         == Some(&Token::Calendar(2));
     (hijri, section.language.map_or(language, language_tag))
+}
+
+/// The index in [`LOCALES`] of CLDR's locale of the BCP 47 tag `tag`: of its language, script and
+/// region, the script CLDR's likely subtags give when it names none; CLDR's ids leave out a
+/// language's own script.
+fn cldr_locale(tag: &str) -> Option<usize> {
+    let Subtags {
+        language,
+        region,
+        script: named,
+    } = Subtags::of(tag)?;
+    let likely = |id: &str| -> Option<&'static str> { likely_subtags(id)?.split('_').nth(1) };
+    let own = likely(&language);
+    let script = named
+        .as_deref()
+        .or_else(|| likely(&format!("{language}_{}", region.as_ref()?)))
+        .or(own);
+    let plain = script == own;
+    let mut ids = Vec::new();
+    if let (Some(writing), Some(place)) = (script, &region) {
+        ids.push(format!("{language}_{writing}_{place}"));
+    }
+    if let (true, Some(place)) = (plain, &region) {
+        ids.push(format!("{language}_{place}"));
+    }
+    if let Some(writing) = script {
+        ids.push(format!("{language}_{writing}"));
+    }
+    if plain {
+        ids.push(language.clone());
+    }
+    ids.iter()
+        .find_map(|id| LOCALES.binary_search(&id.as_str()).ok())
 }
 
 /// What the era code `letter`, `length` times, writes of `on` in `era` of `locale` (section

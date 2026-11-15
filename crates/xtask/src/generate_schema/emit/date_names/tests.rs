@@ -1,6 +1,6 @@
 use alloc::collections::BTreeMap;
 
-use super::{Names, month_lists, names, pruned, render, weekday_lists};
+use super::{Formats, Names, formats, month_lists, names, pruned, render, weekday_lists};
 use crate::generate_schema::cldr::{self, Tree};
 
 fn tree(text: &str) -> Tree {
@@ -22,9 +22,17 @@ fn days(prefix: &str) -> String {
 }
 
 /// `root` gives every name and aliases the islamic-tbla calendar to islamic and the narrow months
-/// to the abbreviated ones; `es` gives its wide months and weekdays; `es_MX`'s parent is `es_419`,
-/// which gives its abbreviated weekdays.
+/// to the abbreviated ones; `es` gives its wide months and weekdays and its long date pattern;
+/// `es_MX`'s parent is `es_419`, which gives its abbreviated weekdays.
 fn main_files() -> BTreeMap<String, Tree> {
+    let formats = "<dateFormats><dateFormatLength type=\"long\"><dateFormat><pattern>y MMMM d\
+                   </pattern></dateFormat></dateFormatLength></dateFormats><timeFormats>\
+                   <timeFormatLength type=\"medium\"><timeFormat><pattern>HH:mm:ss</pattern>\
+                   <pattern alt=\"ascii\">h:mm:ss</pattern></timeFormat></timeFormatLength>\
+                   </timeFormats><dayPeriods><dayPeriodContext type=\"format\">\
+                   <dayPeriodWidth type=\"abbreviated\"><dayPeriod type=\"am\">AM</dayPeriod>\
+                   <dayPeriod type=\"pm\">PM</dayPeriod></dayPeriodWidth></dayPeriodContext>\
+                   </dayPeriods>";
     let months = |calendar: &str, prefix: &str| {
         format!(
             "<calendar type=\"{calendar}\"><months><monthContext type=\"format\">\
@@ -34,11 +42,12 @@ fn main_files() -> BTreeMap<String, Tree> {
              <monthWidth type=\"wide\">{}</monthWidth>\
              </monthContext></months>\
              <days><dayContext type=\"format\"><dayWidth type=\"abbreviated\">{}</dayWidth>\
-             <dayWidth type=\"wide\">{}</dayWidth></dayContext></days></calendar>",
+             <dayWidth type=\"wide\">{}</dayWidth></dayContext></days>{}</calendar>",
             numbered(&format!("{prefix}a"), 12),
             numbered(&format!("{prefix}w"), 12),
             days(&format!("{prefix}a")),
             days(&format!("{prefix}w")),
+            if calendar == "gregorian" { formats } else { "" },
         )
     };
     let root = tree(&format!(
@@ -54,7 +63,9 @@ fn main_files() -> BTreeMap<String, Tree> {
          <monthContext type=\"format\"><monthWidth type=\"wide\">{}</monthWidth></monthContext>\
          <monthContext type=\"stand-alone\"><monthWidth type=\"wide\">{}</monthWidth></monthContext>\
          </months><days><dayContext type=\"format\"><dayWidth type=\"wide\">{}</dayWidth>\
-         </dayContext></days><eras/></calendar></calendars></dates></ldml>",
+         </dayContext></days><eras/><dateFormats><dateFormatLength type=\"long\"><dateFormat>\
+         <pattern>d 'de' MMMM 'de' y</pattern></dateFormat></dateFormatLength></dateFormats>\
+         </calendar></calendars></dates></ldml>",
         numbered("es", 12),
         numbered("ES", 12),
         days("es"),
@@ -89,11 +100,11 @@ fn day_list(prefix: &str) -> Vec<String> {
 }
 
 #[test]
-fn pruning_keeps_each_calendars_months_days_and_aliases() {
+fn pruning_keeps_each_calendars_names_formats_and_aliases() {
     let file = tree(
         "<ldml><identity/><dates><calendars><alias source=\"locale\" path=\"x\"/>\
-         <calendar type=\"gregorian\"><months/><days/><eras/><alias source=\"locale\" path=\"y\"/>\
-         </calendar></calendars><fields/></dates><numbers/></ldml>",
+         <calendar type=\"gregorian\"><months/><days/><eras/><dateFormats/><timeFormats/>\
+         <dayPeriods/><dateTimeFormats/><alias source=\"locale\" path=\"y\"/></calendar></calendars><fields/></dates><numbers/></ldml>",
     );
     let kept = pruned(file, 0);
     let dates = kept.child("dates").unwrap();
@@ -108,7 +119,17 @@ fn pruning_keeps_each_calendars_months_days_and_aliases() {
         .iter()
         .map(|child| child.name.as_str())
         .collect();
-    assert_eq!(names, ["months", "days", "alias"]);
+    assert_eq!(
+        names,
+        [
+            "months",
+            "days",
+            "dateFormats",
+            "timeFormats",
+            "dayPeriods",
+            "alias"
+        ]
+    );
 }
 
 #[test]
@@ -127,7 +148,21 @@ fn the_names_are_the_format_contexts_through_the_parents_and_the_aliases() {
         weekday_lists(&main, &es).unwrap(),
         [day_list("419"), day_list("es")]
     );
+    assert_eq!(
+        formats(&main, &es).unwrap(),
+        Formats {
+            date: "d 'de' MMMM 'de' y".to_owned(),
+            halves: vec!["AM".to_owned(), "PM".to_owned()],
+            time: "HH:mm:ss".to_owned(),
+        }
+    );
     let none = BTreeMap::from([("root".to_owned(), tree("<ldml/>"))]);
+    assert_eq!(
+        formats(&none, &cldr::chain("es", &BTreeMap::new()))
+            .unwrap_err()
+            .to_string(),
+        "es, root gives no am dayPeriods"
+    );
     assert_eq!(
         weekday_lists(&none, &cldr::chain("es", &BTreeMap::new()))
             .unwrap_err()
@@ -155,6 +190,11 @@ fn each_locale_but_root_shares_the_lists_it_gives_alike() {
     );
     assert_eq!(found.months.len(), 5);
     assert_eq!(found.weekdays.len(), 4);
+    assert_eq!(found.system, [[0, 1, 0], [2, 1, 0], [2, 1, 0], [2, 1, 0]]);
+    assert_eq!(
+        found.patterns,
+        ["y MMMM d", "HH:mm:ss", "d 'de' MMMM 'de' y"]
+    );
     let mut without = main_files();
     without.remove("en");
     assert_eq!(
@@ -176,6 +216,11 @@ fn the_table_holds_the_lists_the_locales_and_their_indexes() {
         [months.clone(), months.clone(), wide.clone()],
         [days.clone(), days],
         [months.clone(), months, wide],
+        Formats {
+            date: "d 'de' MMMM 'de' y".to_owned(),
+            halves: vec!["a. m.".to_owned(), "p. m.".to_owned()],
+            time: "H:mm:ss".to_owned(),
+        },
     );
     let text = render("// header\n", "Copyright", &found).unwrap();
     assert!(
@@ -192,6 +237,9 @@ fn the_table_holds_the_lists_the_locales_and_their_indexes() {
          \"dwed\", \"dthu\", \"dfri\", \"dsat\"],\n];\n",
         "pub(super) static LOCALES: [&str; 1] = [\"es\"];",
         "pub(super) static NAMES: [[u16; 8]; 1] = [\n    [0, 0, 1, 0, 0, 0, 0, 1],\n];\n",
+        "pub(super) static PATTERNS: [&str; 2] = [\"d 'de' MMMM 'de' y\", \"H:mm:ss\"];",
+        "pub(super) static HALVES: [[&str; 2]; 1] = [\n    [\"a. m.\", \"p. m.\"],\n];\n",
+        "pub(super) static SYSTEM: [[u16; 3]; 1] = [\n    [0, 1, 0],\n];\n",
     ] {
         assert!(text.contains(expected), "{expected}\n{text}");
     }

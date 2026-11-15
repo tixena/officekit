@@ -1,6 +1,6 @@
 use officekit_xml::values::DateTime;
 
-use super::super::{FormatColor, NumberFormat, Piece, language_tag};
+use super::super::{FormatColor, FormatKind, NumberFormat, Piece, language_tag};
 use super::{Date, DateSystem, FIRST, HIJRI_FIRST, LAST, Locale, date_time, days_from_civil};
 
 const STRICT: DateSystem = DateSystem::V1900;
@@ -684,7 +684,6 @@ fn a_language_cldr_lacks_and_no_language_write_english() {
         ("mmmm dddd mmm ddd mmmmm", Some("zz")),
         ("mmmm dddd mmm ddd mmmmm", Some("x-private")),
         ("mmmm dddd mmm ddd mmmmm", None),
-        ("[$-F800]mmmm dddd mmm ddd mmmmm", Some("es-ES")),
     ] {
         assert_eq!(
             shown_in(code, MONDAY, language).as_deref(),
@@ -692,4 +691,65 @@ fn a_language_cldr_lacks_and_no_language_write_english() {
             "{code} {language:?}"
         );
     }
+}
+
+#[test]
+fn f800_writes_cldrs_long_date_of_the_callers_language() {
+    let code = "[$-F800]dddd\\,\\ mmmm\\ dd\\,\\ yyyy";
+    for (language, expected) in [
+        (Some("es-ES"), "15 de enero de 2024"),
+        (Some("en-US"), "January 15, 2024"),
+        (None, "January 15, 2024"),
+        (Some("zz"), "January 15, 2024"),
+        (Some("de-DE"), "15. Januar 2024"),
+        (Some("ja-JP"), "2024\u{5e74}1\u{6708}15\u{65e5}"),
+    ] {
+        assert_eq!(
+            shown_in(code, MONDAY, language).as_deref(),
+            Some(expected),
+            "{language:?}"
+        );
+    }
+}
+
+#[test]
+fn f400_writes_cldrs_medium_time_of_the_callers_language() {
+    let code = "[$-F400]h:mm:ss\\ AM/PM";
+    for (language, serial, expected) in [
+        (Some("en-US"), "45306.4207639", "10:05:54\u{202f}AM"),
+        (None, "45306.75", "6:00:00\u{202f}PM"),
+        (Some("es-ES"), "45306.75", "18:00:00"),
+        (Some("ko-KR"), "45306.75", "\u{c624}\u{d6c4} 6:00:00"),
+        (Some("zh-TW"), "45306.75", "\u{4e0b}\u{5348}6:00:00"),
+    ] {
+        assert_eq!(
+            shown_in(code, serial, language).as_deref(),
+            Some(expected),
+            "{language:?}"
+        );
+    }
+}
+
+#[test]
+fn a_system_format_keeps_its_colour_and_is_a_section_of_dates() {
+    let format = NumberFormat::parse("[Red][$-F800]0.00").unwrap();
+    assert_eq!(format.kind(), FormatKind::DateTime);
+    let written = format.number_in(MONDAY, STRICT, Some("es")).unwrap();
+    assert_eq!(
+        (written.plain().as_str(), written.color),
+        ("15 de enero de 2024", Some(FormatColor::Red))
+    );
+    assert_eq!(
+        shown_in("[$-1F800]yyyy", MONDAY, Some("es")).as_deref(),
+        Some("15 de enero de 2024")
+    );
+    assert_eq!(shown("[$-F800]yyyy", "0", TRANSITIONAL), None);
+}
+
+#[test]
+fn an_era_cldrs_pattern_names_writes_nothing() {
+    assert_eq!(
+        shown_in("[$-F800]yyyy", MONDAY, Some("th")).as_deref(),
+        Some("15 \u{e21}\u{e01}\u{e23}\u{e32}\u{e04}\u{e21}  2024")
+    );
 }
