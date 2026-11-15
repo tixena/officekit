@@ -1,5 +1,5 @@
-//! What a VML opacity and a VML miter limit state, and whether a VML shape is filled and stroked
-//! (ECMA-376 Part 4, sections 19.1.2.5, 19.1.2.19 and 19.1.2.21).
+//! What a VML opacity and a VML miter limit state, whether a VML shape is filled and stroked, and
+//! what a shape takes from its shapetype (ECMA-376 Part 4, sections 19.1.2.5, 19.1.2.19 to 19.1.2.21).
 
 #[cfg(test)]
 mod tests;
@@ -9,10 +9,10 @@ use core::iter;
 use officekit_markup::UserData;
 use officekit_markup::common_simple_types::{BooleanValue, BooleanValueMember};
 use officekit_markup::vml::{
-    ArcSegmentWith, BezierCurveWith, DocumentBackgroundWith, ImageFileWith, LineWith,
-    MultiplePathLineContentWith, MultiplePathLineWith, OvalWith, RectangleWith,
+    ArcSegmentWith, BezierCurveWith, DocumentBackgroundWith, ImageFileWith, LineStrokeSettingsWith,
+    LineWith, MultiplePathLineContentWith, MultiplePathLineWith, OvalWith, RectangleWith,
     RoundedRectangleWith, ShapeDefinitionContentWith, ShapeDefinitionWith, ShapeElementContentWith,
-    ShapeGroupContentWith, ShapeGroupWith, ShapeTemplateWith,
+    ShapeFillPropertiesWith, ShapeGroupContentWith, ShapeGroupWith, ShapeTemplateWith,
 };
 
 use crate::docx::lines::Stated;
@@ -24,12 +24,12 @@ macro_rules! fill_toggles {
             fn fill_toggle(&self) -> Toggle {
                 let child = self.content.iter().find_map(|item| {
                     if let $content::ShapeFillProperties(fill) = item {
-                        Some(Child::On(fill.on.as_ref()))
+                        Some(Child::On(true_false(fill.on.as_ref())))
                     } else {
                         None
                     }
                 });
-                toggle(self.filled.as_ref(), child.unwrap_or(Child::Absent))
+                toggle(true_false(self.filled.as_ref()), child.unwrap_or(Child::Absent))
             }
         }
     )+};
@@ -42,12 +42,12 @@ macro_rules! stroke_toggles {
             fn stroke_toggle(&self) -> Toggle {
                 let child = self.content.iter().find_map(|item| {
                     if let $content::LineStrokeSettings(stroke) = item {
-                        Some(Child::On(stroke.on.as_ref()))
+                        Some(Child::On(true_false(stroke.on.as_ref())))
                     } else {
                         None
                     }
                 });
-                toggle(self.stroked.as_ref(), child.unwrap_or(Child::Absent))
+                toggle(true_false(self.stroked.as_ref()), child.unwrap_or(Child::Absent))
             }
         }
     )+};
@@ -61,11 +61,11 @@ const OPAQUE: u32 = 100_000;
 
 /// A shape's `v:fill` or `v:stroke` child, as `filled` and `stroked` read it.
 #[derive(Clone, Copy)]
-enum Child<'node> {
+enum Child {
     /// The shape has no such child.
     Absent,
-    /// The child, with its `on` when it states one.
-    On(Option<&'node BooleanValue>),
+    /// The child, with the truth of its `on` when it states one.
+    On(Option<bool>),
 }
 
 /// Whether a VML shape is filled or stroked: its own `filled` or `stroked`, which its child's `on`
@@ -85,6 +85,14 @@ pub enum Toggle {
     },
 }
 
+/// A `v:shape` with the `v:shapetype` its `type` names, whose properties the shape's own override
+/// one by one (Part 4, sections 19.1.2.19 and 19.1.2.20).
+#[derive(Clone, Copy, Debug)]
+pub struct TypedShape<'node, X: UserData> {
+    shape: &'node ShapeDefinitionWith<X>,
+    shapetype: Option<&'node ShapeTemplateWith<X>>,
+}
+
 /// A VML element with `filled` and `v:fill` children; the first `v:fill` is the one read.
 pub trait FillToggle {
     /// Whether the element is filled: its `filled` and its `v:fill` child's `on` together.
@@ -102,8 +110,88 @@ impl<X: UserData> FillToggle for DocumentBackgroundWith<X> {
         let child = self
             .shape_fill_properties
             .as_ref()
-            .map_or(Child::Absent, |fill| Child::On(fill.on.as_ref()));
-        toggle(self.filled.as_ref(), child)
+            .map_or(Child::Absent, |fill| {
+                Child::On(true_false(fill.on.as_ref()))
+            });
+        toggle(true_false(self.filled.as_ref()), child)
+    }
+}
+
+impl<'node, X: UserData> TypedShape<'node, X> {
+    /// An attribute of the shape's first `v:fill`, else of its shapetype's (Part 4, 19.1.2.20).
+    pub fn fill_attribute<T, F>(&self, attribute: F) -> Option<&'node T>
+    where
+        T: ?Sized,
+        F: Fn(&'node ShapeFillPropertiesWith<X>) -> Option<&'node T>,
+    {
+        shape_fill(self.shape)
+            .and_then(&attribute)
+            .or_else(|| self.shapetype.and_then(shapetype_fill).and_then(attribute))
+    }
+
+    /// `shape` with the first of `shapetypes` its `type` names (see `shapetype`).
+    #[must_use = "this only returns the value"]
+    pub fn new<I>(shape: &'node ShapeDefinitionWith<X>, shapetypes: I) -> Self
+    where
+        I: IntoIterator<Item = &'node ShapeTemplateWith<X>>,
+    {
+        Self {
+            shape,
+            shapetype: shapetype(shape, shapetypes),
+        }
+    }
+
+    /// The `v:shape`.
+    #[must_use = "this only returns the value"]
+    pub const fn shape(&self) -> &'node ShapeDefinitionWith<X> {
+        self.shape
+    }
+
+    /// The `v:shapetype` the shape's `type` names, if any.
+    #[must_use = "this only returns the value"]
+    pub const fn shapetype(&self) -> Option<&'node ShapeTemplateWith<X>> {
+        self.shapetype
+    }
+
+    /// An attribute of the shape's first `v:stroke`, else of its shapetype's (Part 4, 19.1.2.20).
+    pub fn stroke_attribute<T, F>(&self, attribute: F) -> Option<&'node T>
+    where
+        T: ?Sized,
+        F: Fn(&'node LineStrokeSettingsWith<X>) -> Option<&'node T>,
+    {
+        shape_stroke(self.shape).and_then(&attribute).or_else(|| {
+            self.shapetype
+                .and_then(shapetype_stroke)
+                .and_then(attribute)
+        })
+    }
+}
+
+impl<X: UserData> FillToggle for TypedShape<'_, X> {
+    fn fill_toggle(&self) -> Toggle {
+        layered_toggle(
+            [
+                (self.shape.filled.as_ref(), shape_fill(self.shape)),
+                self.shapetype.map_or((None, None), |template| {
+                    (template.filled.as_ref(), shapetype_fill(template))
+                }),
+            ],
+            |fill| fill.on.as_ref(),
+        )
+    }
+}
+
+impl<X: UserData> StrokeToggle for TypedShape<'_, X> {
+    fn stroke_toggle(&self) -> Toggle {
+        layered_toggle(
+            [
+                (self.shape.stroked.as_ref(), shape_stroke(self.shape)),
+                self.shapetype.map_or((None, None), |template| {
+                    (template.stroked.as_ref(), shapetype_stroke(template))
+                }),
+            ],
+            |stroke| stroke.on.as_ref(),
+        )
     }
 }
 
@@ -142,6 +230,23 @@ where
     S: FillToggle + ?Sized,
 {
     shape.fill_toggle()
+}
+
+/// The toggle from `layers` of attribute and child, each property taken from the first layer that
+/// states it; the child is present when any layer has one.
+fn layered_toggle<C, const N: usize>(
+    layers: [(Option<&BooleanValue>, Option<&C>); N],
+    on: impl Fn(&C) -> Option<&BooleanValue>,
+) -> Toggle {
+    let attribute = layers
+        .iter()
+        .find_map(|&(attribute, _)| true_false(attribute));
+    let child = if layers.iter().any(|(_, child)| child.is_some()) {
+        Child::On(layers.iter().find_map(|&(_, child)| true_false(on(child?))))
+    } else {
+        Child::Absent
+    };
+    toggle(attribute, child)
 }
 
 /// The VML `miterlimit` of `v:stroke` in thousandths of the line's thickness, an `xsd:decimal`;
@@ -206,6 +311,80 @@ fn scaled(text: &str, places: usize) -> Option<i128> {
     number.checked_add(i128::from(round_up))
 }
 
+/// The first `v:fill` of a `v:shape`.
+fn shape_fill<X>(shape: &ShapeDefinitionWith<X>) -> Option<&ShapeFillPropertiesWith<X>>
+where
+    X: UserData,
+{
+    shape.content.iter().find_map(|item| {
+        if let ShapeDefinitionContentWith::ShapeFillProperties(fill) = item {
+            Some(fill)
+        } else {
+            None
+        }
+    })
+}
+
+/// The first `v:stroke` of a `v:shape`.
+fn shape_stroke<X>(shape: &ShapeDefinitionWith<X>) -> Option<&LineStrokeSettingsWith<X>>
+where
+    X: UserData,
+{
+    shape.content.iter().find_map(|item| {
+        if let ShapeDefinitionContentWith::LineStrokeSettings(stroke) = item {
+            Some(stroke)
+        } else {
+            None
+        }
+    })
+}
+
+/// The first of `shapetypes` whose `id` the `type` of `shape` names, as `#_x0000_t202` or with no
+/// `#` (Part 4, section 19.1.2.19); `None` when `shape` has no `type` or it names none of them.
+#[must_use = "this only returns the value"]
+pub fn shapetype<'node, X, I>(
+    shape: &ShapeDefinitionWith<X>,
+    shapetypes: I,
+) -> Option<&'node ShapeTemplateWith<X>>
+where
+    X: UserData,
+    I: IntoIterator<Item = &'node ShapeTemplateWith<X>>,
+{
+    let named = shape.r#type.as_deref()?;
+    let id = named.strip_prefix('#').unwrap_or(named);
+    shapetypes
+        .into_iter()
+        .find(|template| template.id.as_deref() == Some(id))
+}
+
+/// The first `v:fill` of a `v:shapetype`.
+fn shapetype_fill<X>(template: &ShapeTemplateWith<X>) -> Option<&ShapeFillPropertiesWith<X>>
+where
+    X: UserData,
+{
+    template.content.iter().find_map(|item| {
+        if let ShapeElementContentWith::ShapeFillProperties(fill) = item {
+            Some(fill)
+        } else {
+            None
+        }
+    })
+}
+
+/// The first `v:stroke` of a `v:shapetype`.
+fn shapetype_stroke<X>(template: &ShapeTemplateWith<X>) -> Option<&LineStrokeSettingsWith<X>>
+where
+    X: UserData,
+{
+    template.content.iter().find_map(|item| {
+        if let ShapeElementContentWith::LineStrokeSettings(stroke) = item {
+            Some(stroke)
+        } else {
+            None
+        }
+    })
+}
+
 /// The `xsd:decimal` `text`, signed, in thousandths, to the nearest whole number.
 fn signed_thousandths(text: &str) -> Option<i64> {
     let (negative, digits) = text.strip_prefix('-').map_or_else(
@@ -231,12 +410,11 @@ where
     shape.stroke_toggle()
 }
 
-/// The toggle from a shape's `attribute` and its `child`; a text that is no `ST_TrueFalse` value
-/// counts as absent.
-fn toggle(attribute: Option<&BooleanValue>, child: Child<'_>) -> Toggle {
-    let shape = true_false(attribute);
+/// The toggle from the truth of a shape's own `filled` or `stroked`, `shape`, and its `child`; a
+/// text that is no `ST_TrueFalse` value counts as absent.
+fn toggle(shape: Option<bool>, child: Child) -> Toggle {
     match child {
-        Child::On(on) => match (true_false(on), shape) {
+        Child::On(on) => match (on, shape) {
             (Some(stated_on), _) => Toggle::Decided(stated_on),
             (None, Some(false)) => Toggle::Open {
                 child: true,
