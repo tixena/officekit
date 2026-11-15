@@ -13,6 +13,7 @@ use core::iter;
 use officekit_markup::wordprocessing::StNumberFormatMember;
 
 use self::locales::{ALPHABETS, FORMATS, LOCALES, PARENTS, PATTERNS, PLURALS, RULE_SETS, WORDS};
+use crate::docx::fonts::likely_subtags;
 
 /// Past this many rule sets within one another a number is left unwritten.
 const DEEPEST: u8 = 64;
@@ -372,9 +373,15 @@ fn holds_remainder(parts: &[Part]) -> bool {
     })
 }
 
-/// The nearest locale of `language`'s chain that the table holds: the tag, then each parent.
+/// The script of the full id likely subtags give the CLDR id `id`.
+fn likely_script(id: &str) -> Option<&'static str> {
+    likely_subtags(id)?.split('_').nth(1)
+}
+
+/// The nearest locale of `language`'s chain that the table holds: the tag, with the script
+/// [`with_likely_script`] gives it, then each parent.
 fn locale(language: &str) -> Option<&'static Locale> {
-    let mut id = normalized(language)?;
+    let mut id = with_likely_script(normalized(language)?);
     loop {
         if let Ok(at) = LOCALES.binary_search_by(|found| found.id.cmp(id.as_str())) {
             return LOCALES.get(at);
@@ -432,4 +439,24 @@ pub(super) fn spelled(value: i64, kind: Spelled, language: &str) -> Option<Strin
 
 fn words(language: &str) -> Option<&'static Words> {
     WORDS.get(locale(language)?.words?)
+}
+
+/// The CLDR id `id` with the script Unicode CLDR's likely subtags give its language and region
+/// (UTS #35, Part 1, "Likely Subtags"), when it names none and that is not its language's script.
+fn with_likely_script(id: String) -> String {
+    let mut subtags = id.split('_');
+    let (Some(language), Some(region)) = (subtags.next(), subtags.next()) else {
+        return id;
+    };
+    if region.len() == 4 {
+        return id;
+    }
+    let likely = likely_script(&format!("{language}_{region}"));
+    match likely {
+        Some(found) if likely != likely_script(language) => {
+            let rest = &id[language.len()..];
+            format!("{language}_{found}{rest}")
+        }
+        _ => id,
+    }
 }

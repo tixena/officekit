@@ -5,7 +5,7 @@ use officekit_markup::wordprocessing::StNumberFormatMember as F;
 
 use super::{
     Category, FORMATS, LOCALES, PARENTS, Pattern, PluralKind, Relation, Spelled, WORDS, Words,
-    counted, dollars, locale, normalized, spelled,
+    counted, dollars, locale, normalized, spelled, with_likely_script,
 };
 
 /// Words with Latin digits, `.` between groups and `,` before a fraction.
@@ -83,6 +83,41 @@ fn a_locale_is_found_through_its_parents_up_to_root() {
     );
     assert!(locale("az-Cyrl-AZ").is_none_or(|found| found.words.is_none()));
     assert!(locale("zz").is_none());
+}
+
+#[test]
+fn a_tag_without_a_script_takes_its_region_s_likely_script_when_it_is_another() {
+    for (id, full) in [
+        ("zh_TW", "zh_Hant_TW"),
+        ("sr_ME", "sr_Latn_ME"),
+        ("pa_PK", "pa_Arab_PK"),
+        ("zh_HK", "zh_Hant_HK"),
+        ("en_US", "en_US"),
+        ("sr_RS", "sr_RS"),
+        ("zh_Hans_TW", "zh_Hans_TW"),
+        ("zh", "zh"),
+        ("es_419", "es_419"),
+        ("zz_TW", "zz_TW"),
+    ] {
+        assert_eq!(with_likely_script(id.to_owned()), full, "{id}");
+    }
+    assert_eq!(locale("zh-TW").map(|found| found.id), Some("zh_Hant"));
+    assert_eq!(locale("zh-MO").map(|found| found.id), Some("zh_Hant_HK"));
+    assert_eq!(locale("sr-ME").map(|found| found.id), Some("sr_Latn"));
+    assert_eq!(locale("sr-RS").map(|found| found.id), Some("sr"));
+}
+
+/// No locale or parent CLDR names without a script has a region whose likely script is another,
+/// so the lookup of every one of them is as before.
+#[test]
+fn every_id_of_the_tables_keeps_its_script() {
+    for id in LOCALES
+        .iter()
+        .map(|found| found.id)
+        .chain(PARENTS.iter().map(|(child, _)| *child))
+    {
+        assert_eq!(with_likely_script(id.to_owned()), id);
+    }
 }
 
 #[test]

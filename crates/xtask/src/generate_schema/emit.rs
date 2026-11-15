@@ -13,4 +13,5 @@ pub mod parts;
 pub mod preset_colors;
 pub mod rule_based;
 pub mod semantic;
+pub mod special_casing;
 pub mod validation;

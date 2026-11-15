@@ -1521,3 +1521,112 @@ fn every_other_format_is_written_as_without_a_language() {
         }
     }
 }
+
+#[test]
+fn turkish_and_azerbaijani_words_start_with_a_dotted_capital_i() {
+    for language in ["tr-TR", "az", "az-Latn-AZ"] {
+        assert_eq!(
+            texts(F::CardinalText, language, &[2]),
+            ["\u{130}ki"],
+            "{language}"
+        );
+        assert_eq!(
+            texts(F::OrdinalText, language, &[2]),
+            ["\u{130}kinci"],
+            "{language}"
+        );
+        assert_eq!(
+            texts(F::CardinalText, language, &[1]),
+            ["Bir"],
+            "{language}"
+        );
+    }
+    assert_eq!(texts(F::DollarText, "tr-TR", &[2]), ["iki ve 00/100"]);
+}
+
+#[test]
+fn turkish_and_azerbaijani_lower_letters_keep_the_dot_of_i_apart() {
+    assert_eq!(
+        texts(F::LowerLetter, "tr-TR", &[9, 10, 11, 12, 41, 42]),
+        ["h", "\u{131}", "i", "j", "\u{131}\u{131}", "ii"]
+    );
+    assert_eq!(texts(F::UpperLetter, "tr-TR", &[10, 11]), ["I", "\u{130}"]);
+    assert_eq!(
+        texts(F::LowerLetter, "az-AZ", &[12, 13, 14]),
+        ["x", "\u{131}", "i"]
+    );
+    assert_eq!(texts(F::LowerLetter, "tr", &[0, -3]), ["0", "-3"]);
+}
+
+/// No Lithuanian letter is followed by a mark above, so its own mappings leave its letters and
+/// words as Unicode's defaults case them.
+#[test]
+fn lithuanian_letters_and_words_follow_its_mappings() {
+    for value in 1..=70 {
+        let upper = format_number_in(value, F::UpperLetter, "lt-LT").unwrap();
+        assert_eq!(
+            format_number_in(value, F::LowerLetter, "lt-LT"),
+            Some(upper.to_lowercase()),
+            "{value}"
+        );
+    }
+    assert_eq!(
+        texts(F::LowerLetter, "lt", &[13, 14, 15]),
+        ["i", "\u{12F}", "y"]
+    );
+    assert_eq!(
+        texts(F::CardinalText, "lt-LT", &[1, 2, 8]),
+        ["Vienas", "Du", "A\u{161}tuoni"]
+    );
+}
+
+#[test]
+fn a_region_that_implies_another_script_takes_that_script_s_rules() {
+    for language in ["zh-TW", "zh-HK", "zh-MO", "zh-Hant"] {
+        assert_eq!(
+            texts(F::CardinalText, language, &[2, 10_000]),
+            ["\u{4E8C}", "\u{4E00}\u{842C}"],
+            "{language}"
+        );
+    }
+    for language in ["sr-ME", "sr-Latn"] {
+        assert_eq!(
+            texts(F::CardinalText, language, &[2, 10_000]),
+            ["Dva", "Deset hiljada"],
+            "{language}"
+        );
+        assert_eq!(
+            texts(F::LowerLetter, language, &[4, 5, 6]),
+            ["\u{10D}", "\u{107}", "d"],
+            "{language}"
+        );
+    }
+    for language in ["pa-PK", "az-IR", "uz-AF"] {
+        assert_eq!(texts(F::CardinalText, language, &[2]), ["?"], "{language}");
+        assert_eq!(
+            format_number_in(27, F::LowerLetter, language).as_deref(),
+            Some("aa"),
+            "{language}"
+        );
+    }
+}
+
+#[test]
+fn a_tag_that_names_its_script_or_keeps_its_language_s_script_is_as_before() {
+    for language in ["zh", "zh-CN", "zh-Hans-TW", "zh-SG"] {
+        assert_eq!(
+            texts(F::CardinalText, language, &[2, 10_000]),
+            ["\u{4E8C}", "\u{4E00}\u{4E07}"],
+            "{language}"
+        );
+    }
+    for language in ["sr", "sr-RS", "sr-Cyrl-ME", "sr-BA"] {
+        assert_eq!(
+            texts(F::CardinalText, language, &[2]),
+            ["\u{414}\u{432}\u{430}"],
+            "{language}"
+        );
+    }
+    assert_eq!(texts(F::CardinalText, "pa-IN", &[10]), ["\u{A26}\u{A38}"]);
+    assert_eq!(texts(F::CardinalText, "az-Latn-IR", &[2]), ["\u{130}ki"]);
+}

@@ -608,6 +608,39 @@ fn a_level_writes_its_label_in_the_language_of_its_run_properties() {
 }
 
 #[test]
+fn a_turkish_level_cases_i_as_turkish_does() {
+    let numbering = single(Vec::from([
+        in_language(level(0, StNumberFormatMember::CardinalText, "%1."), "tr-TR"),
+        in_language(
+            starting(unstarted(1, StNumberFormatMember::LowerLetter, "%2)"), 10),
+            "tr-TR",
+        ),
+    ]));
+    assert_eq!(
+        labels_of(&numbering, &[0, 0, 1, 1]),
+        ["Bir.", "\u{130}ki.", "\u{131})", "i)"]
+    );
+}
+
+#[test]
+fn a_level_in_a_tag_with_a_region_writes_in_the_region_s_script() {
+    let numbering = single(Vec::from([
+        in_language(
+            starting(
+                unstarted(0, StNumberFormatMember::CardinalText, "%1"),
+                10_000,
+            ),
+            "zh-TW",
+        ),
+        in_language(level(1, StNumberFormatMember::CardinalText, "%2"), "sr-ME"),
+    ]));
+    assert_eq!(
+        labels_of(&numbering, &[0, 1]),
+        ["\u{4E00}\u{842C}", "Jedan"]
+    );
+}
+
+#[test]
 fn a_language_cldr_has_no_rules_for_counts_in_decimal() {
     let numbering = single(Vec::from([in_language(
         level(0, StNumberFormatMember::CardinalText, "%1."),

@@ -33,6 +33,16 @@ fn layout() -> MemorySystem {
             b"0030;DIGIT ZERO;Nd",
         )
         .unwrap()
+        .with_file(
+            "/inputs/unicode/18.0.0/PropList.txt",
+            b"0069..006A ; Soft_Dotted",
+        )
+        .unwrap()
+        .with_file(
+            "/inputs/unicode/18.0.0/SpecialCasing.txt",
+            b"0130; 0069; 0130; 0130; tr;",
+        )
+        .unwrap()
         .with_file("/inputs/cldr/49/LICENSE", b"Copyright")
         .unwrap()
         .with_file("/inputs/cldr/49/common/main/es.xml", b"<ldml/>")
@@ -117,6 +127,14 @@ fn finds_every_input() {
     assert_eq!(
         inputs.unicode_data,
         Path::new("inputs/unicode/18.0.0/UnicodeData.txt")
+    );
+    assert_eq!(
+        inputs.unicode_prop_list,
+        Path::new("inputs/unicode/18.0.0/PropList.txt")
+    );
+    assert_eq!(
+        inputs.unicode_special_casing,
+        Path::new("inputs/unicode/18.0.0/SpecialCasing.txt")
     );
     assert_eq!(
         inputs.cldr_main,
@@ -226,6 +244,20 @@ fn names_the_missing_semantic_dump() {
 #[test]
 fn names_the_missing_unicode_data() {
     let path = "inputs/unicode/18.0.0/UnicodeData.txt";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
+}
+
+#[test]
+fn names_the_missing_special_casing() {
+    let path = "inputs/unicode/18.0.0/SpecialCasing.txt";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
+}
+
+#[test]
+fn names_the_missing_prop_list() {
+    let path = "inputs/unicode/18.0.0/PropList.txt";
     let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
     assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
 }

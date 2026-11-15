@@ -8,6 +8,7 @@ use alloc::vec::Vec;
 
 use officekit_markup::wordprocessing::StNumberFormatMember;
 
+use super::casing;
 use super::digits::DIGIT_ZEROS;
 use super::rule_based::{self, Spelled};
 
@@ -685,14 +686,26 @@ pub fn format_number_in(
         return rule_based::dollars(value, language);
     }
     if matches!(format, F::LowerLetter | F::UpperLetter) {
-        let Some(letters) = rule_based::alphabet(language, format == F::UpperLetter) else {
+        // A language with case mappings of its own lowers the upper-case letters by them.
+        let own_lower = format == F::LowerLetter && casing::tailored(language);
+        let upper = format == F::UpperLetter || own_lower;
+        let Some(letters) = rule_based::alphabet(language, upper) else {
             return format_number(value, format);
         };
         let positive = u64::try_from(value).ok().filter(|number| *number > 0);
         return Some(
             positive
                 .and_then(|number| repeated(number, letters))
-                .unwrap_or_else(|| value.to_string()),
+                .map_or_else(
+                    || value.to_string(),
+                    |text| {
+                        if own_lower {
+                            casing::lowered(&text, language)
+                        } else {
+                            text
+                        }
+                    },
+                ),
         );
     }
     let kind = if format == F::CardinalText {
@@ -708,7 +721,7 @@ pub fn format_number_in(
     Some(if format == F::Ordinal {
         text
     } else {
-        capitalized(&text)
+        casing::capitalized(&text, language)
     })
 }
 
@@ -755,15 +768,6 @@ fn alphabetic(value: u64, letters: &[&str]) -> String {
         rest = index / size;
     }
     written.into_iter().rev().collect()
-}
-
-/// `text` with its first letter in upper case, as the section's examples of `cardinalText` and
-/// `ordinalText` write it.
-fn capitalized(text: &str) -> String {
-    let mut characters = text.chars();
-    characters.next().map_or_else(String::new, |first| {
-        first.to_uppercase().chain(characters).collect()
-    })
 }
 
 /// `chineseCounting` and `taiwaneseCounting`: 0 to 10 from the set; to 99 the tens digit, unless

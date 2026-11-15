@@ -241,9 +241,12 @@ inputs:
     TABLE
     mv -f $osdir/SOURCES.part $osdir/SOURCES
 
-    # The Unicode Character Database's UnicodeData.txt, version 18.0.0 (Unicode License v3).
+    # The Unicode Character Database's UnicodeData.txt, SpecialCasing.txt and PropList.txt,
+    # version 18.0.0 (Unicode License v3).
     mkdir -p inputs/unicode/18.0.0
     fetch https://www.unicode.org/Public/18.0.0/ucd/UnicodeData.txt inputs/unicode/18.0.0/UnicodeData.txt
+    fetch https://www.unicode.org/Public/18.0.0/ucd/SpecialCasing.txt inputs/unicode/18.0.0/SpecialCasing.txt
+    fetch https://www.unicode.org/Public/18.0.0/ucd/PropList.txt inputs/unicode/18.0.0/PropList.txt
 
     # Unicode CLDR 49, under the Unicode License v3 its LICENSE gives: the rule-based
     # number formats, the plural rules, parent locales and numbering systems they use,

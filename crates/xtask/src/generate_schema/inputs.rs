@@ -56,6 +56,10 @@ pub struct Inputs {
     pub transitional_schemas: Vec<PathBuf>,
     /// The Unicode Character Database's `UnicodeData.txt`, version 18.0.0.
     pub unicode_data: PathBuf,
+    /// The Unicode Character Database's `PropList.txt`, version 18.0.0.
+    pub unicode_prop_list: PathBuf,
+    /// The Unicode Character Database's `SpecialCasing.txt`, version 18.0.0.
+    pub unicode_special_casing: PathBuf,
 }
 
 impl Inputs {
@@ -101,10 +105,10 @@ impl Inputs {
             .collect();
 
         let semantic_dump = file(system, root.join("sdk-3.5.1-semantic.json"))?;
-        let unicode_data = file(
-            system,
-            root.join("unicode").join("18.0.0").join("UnicodeData.txt"),
-        )?;
+        let unicode = root.join("unicode").join("18.0.0");
+        let unicode_data = file(system, unicode.join("UnicodeData.txt"))?;
+        let unicode_prop_list = file(system, unicode.join("PropList.txt"))?;
+        let unicode_special_casing = file(system, unicode.join("SpecialCasing.txt"))?;
 
         let cldr = root.join("cldr").join(cldr::VERSION);
         let cldr_license = file(system, cldr.join("LICENSE"))?;
@@ -142,6 +146,8 @@ impl Inputs {
             tools,
             transitional_schemas,
             unicode_data,
+            unicode_prop_list,
+            unicode_special_casing,
         })
     }
 
