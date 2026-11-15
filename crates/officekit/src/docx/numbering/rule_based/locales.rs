@@ -1041,6 +1041,8 @@
 //! Unicode CLDR 49's rule-based number formats, plural rules, list patterns, digits,
 //! separators and alphabets. Copyright © 2001–2026 Unicode, Inc. Unicode License v3.
 
+use officekit_markup::wordprocessing::StNumberFormatMember;
+
 use super::{
     Category, Letters, Locale, Part, Pattern, PluralKind, PluralRule, Relation, Rule, RuleSet,
     Target, Words,
@@ -2340,6 +2342,21 @@ pub(super) static ALPHABETS: [Letters; 102] = [
             "A", "B", "D", "E", "G", "I", "K", "M", "N", "P", "R", "S", "T", "U", "W", "X", "Y",
         ],
     },
+];
+
+/// Each format section 17.18.59 spells only to a limit, and the rule set past it.
+pub(super) static FORMATS: [(StNumberFormatMember, usize); 11] = [
+    (StNumberFormatMember::ChineseCountingThousand, 571),
+    (StNumberFormatMember::ChineseLegalSimplified, 572),
+    (StNumberFormatMember::Hebrew1, 409),
+    (StNumberFormatMember::HindiCounting, 205),
+    (StNumberFormatMember::IdeographLegalTraditional, 589),
+    (StNumberFormatMember::JapaneseCounting, 251),
+    (StNumberFormatMember::JapaneseLegal, 252),
+    (StNumberFormatMember::KoreanCounting, 279),
+    (StNumberFormatMember::TaiwaneseCountingThousand, 588),
+    (StNumberFormatMember::ThaiCounting, 484),
+    (StNumberFormatMember::VietnameseCounting, 531),
 ];
 
 /// Each locale whose facts differ from its parent's, sorted by id.
@@ -5074,7 +5091,7 @@ pub(super) static PLURALS: [&[PluralRule]; 44] = [
 ];
 
 /// The rule sets the formats reach.
-pub(super) static RULE_SETS: [RuleSet; 565] = [
+pub(super) static RULE_SETS: [RuleSet; 592] = [
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
         rules: &[Rule::new(
@@ -26805,6 +26822,100 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         ],
     },
     RuleSet {
+        negative: Some(&[
+            Part::Text("\u{30de}\u{30a4}\u{30ca}\u{30b9}"),
+            Part::Remainder(Target::Same),
+        ]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{96f6}")]),
+            Rule::new(1, 1, &[Part::Text("\u{58f1}")]),
+            Rule::new(2, 1, &[Part::Text("\u{5f10}")]),
+            Rule::new(3, 1, &[Part::Text("\u{53c2}")]),
+            Rule::new(4, 1, &[Part::Text("\u{56db}")]),
+            Rule::new(5, 1, &[Part::Text("\u{4f0d}")]),
+            Rule::new(6, 1, &[Part::Text("\u{516d}")]),
+            Rule::new(7, 1, &[Part::Text("\u{4e03}")]),
+            Rule::new(8, 1, &[Part::Text("\u{516b}")]),
+            Rule::new(9, 1, &[Part::Text("\u{4e5d}")]),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{62fe}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{62fe}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{767e}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1000,
+                1000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5343}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                10000,
+                10000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{842c}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                100_000_000,
+                100_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5104}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5146}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                10_000_000_000_000_000,
+                10_000_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4eac}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000_000_000,
+                1_000_000_000_000_000_000,
+                &[Part::Whole(Target::Digits(2))],
+            ),
+        ],
+    },
+    RuleSet {
         negative: None,
         rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(251))])],
     },
@@ -26813,21 +26924,21 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[Rule::new(
             0,
             1,
-            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(252))],
+            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(253))],
         )],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{10d8}")]),
-            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(256))]),
+            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(257))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{10d8}")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(256))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(257))]),
         ],
     },
     RuleSet {
@@ -26979,7 +27090,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -26987,7 +27098,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10dd}\u{10e0}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -26995,7 +27106,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10e1}\u{10d0}\u{10db}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -27003,7 +27114,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10dd}\u{10d7}\u{10ee}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -27011,7 +27122,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10ee}\u{10e3}\u{10d7}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -27019,7 +27130,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10d4}\u{10e5}\u{10d5}\u{10e1}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -27027,7 +27138,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10e8}\u{10d5}\u{10d8}\u{10d3}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -27035,7 +27146,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10e0}\u{10d5}\u{10d0}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -27043,7 +27154,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{10ea}\u{10ee}\u{10e0}\u{10d0}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(254)),
+                    Part::Remainder(Target::Set(255)),
                 ],
             ),
             Rule::new(
@@ -27051,7 +27162,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("\u{10d0}\u{10d7}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(255)),
+                    Part::Remainder(Target::Set(256)),
                 ],
             ),
             Rule::new(
@@ -27060,7 +27171,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{10d0}\u{10d7}\u{10d0}\u{10e1}"),
-                    Part::Remainder(Target::Set(255)),
+                    Part::Remainder(Target::Set(256)),
                 ],
             ),
             Rule::new(
@@ -27069,7 +27180,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{10db}\u{10d8}\u{10da}\u{10d8}\u{10dd}\u{10dc}"),
-                    Part::Remainder(Target::Set(255)),
+                    Part::Remainder(Target::Set(256)),
                 ],
             ),
             Rule::new(
@@ -27078,7 +27189,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{10db}\u{10d8}\u{10da}\u{10d8}\u{10d0}\u{10e0}\u{10d3}"),
-                    Part::Remainder(Target::Set(255)),
+                    Part::Remainder(Target::Set(256)),
                 ],
             ),
             Rule::new(
@@ -27087,7 +27198,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{10d1}\u{10d8}\u{10da}\u{10d8}\u{10dd}\u{10dc}"),
-                    Part::Remainder(Target::Set(255)),
+                    Part::Remainder(Target::Set(256)),
                 ],
             ),
             Rule::new(
@@ -27096,7 +27207,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{10d1}\u{10d8}\u{10da}\u{10d8}\u{10d0}\u{10e0}\u{10d3}"),
-                    Part::Remainder(Target::Set(255)),
+                    Part::Remainder(Target::Set(256)),
                 ],
             ),
             Rule::new(
@@ -27108,7 +27219,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(256))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(257))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -27132,14 +27243,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{456}\u{43d}\u{448}\u{456}")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(263))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(264))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{44b}\u{43d}\u{448}\u{44b}")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(263))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(264))]),
         ],
     },
     RuleSet {
@@ -27345,7 +27456,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(261))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(262))])],
     },
     RuleSet {
         negative: Some(&[
@@ -27429,7 +27540,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{43e}\u{43d}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27452,7 +27563,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{43e}\u{442}\u{44b}\u{437}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27460,7 +27571,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{49b}\u{44b}\u{440}\u{44b}\u{49b}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27468,7 +27579,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{435}\u{43b}\u{443}"),
-                    Part::Remainder(Target::Set(259)),
+                    Part::Remainder(Target::Set(260)),
                 ],
             ),
             Rule::new(
@@ -27476,7 +27587,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{430}\u{43b}\u{43f}\u{44b}\u{441}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27484,7 +27595,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{436}\u{435}\u{442}\u{43f}\u{456}\u{441}"),
-                    Part::Remainder(Target::Set(259)),
+                    Part::Remainder(Target::Set(260)),
                 ],
             ),
             Rule::new(
@@ -27492,7 +27603,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{441}\u{435}\u{43a}\u{441}\u{435}\u{43d}"),
-                    Part::Remainder(Target::Set(259)),
+                    Part::Remainder(Target::Set(260)),
                 ],
             ),
             Rule::new(
@@ -27500,7 +27611,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("\u{442}\u{43e}\u{49b}\u{441}\u{430}\u{43d}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27508,16 +27619,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("\u{436}\u{4af}\u{437}"),
-                    Part::Remainder(Target::Set(259)),
+                    Part::Remainder(Target::Set(260)),
                 ],
             ),
             Rule::new(
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(261)),
+                    Part::Quotient(Target::Set(262)),
                     Part::Text(" \u{436}\u{4af}\u{437}"),
-                    Part::Remainder(Target::Set(259)),
+                    Part::Remainder(Target::Set(260)),
                 ],
             ),
             Rule::new(
@@ -27525,16 +27636,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("\u{43c}\u{44b}\u{4a3}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(261)),
+                    Part::Quotient(Target::Set(262)),
                     Part::Text(" \u{43c}\u{44b}\u{4a3}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27542,16 +27653,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[
                     Part::Text("\u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(261)),
+                    Part::Quotient(Target::Set(262)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27559,16 +27670,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[
                     Part::Text("\u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{430}\u{440}\u{434}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(261)),
+                    Part::Quotient(Target::Set(262)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{430}\u{440}\u{434}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27576,16 +27687,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[
                     Part::Text("\u{442}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(261)),
+                    Part::Quotient(Target::Set(262)),
                     Part::Text(" \u{442}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27595,18 +27706,18 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Text(
                         "\u{43a}\u{432}\u{430}\u{434}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}",
                     ),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(261)),
+                    Part::Quotient(Target::Set(262)),
                     Part::Text(
                         " \u{43a}\u{432}\u{430}\u{434}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}",
                     ),
-                    Part::Remainder(Target::Set(260)),
+                    Part::Remainder(Target::Set(261)),
                 ],
             ),
             Rule::new(
@@ -27642,7 +27753,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" qulillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27659,7 +27770,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" uutritillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27693,7 +27804,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" qulillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27710,7 +27821,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" uutritillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27727,7 +27838,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" tuusintillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27744,7 +27855,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" millionillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27761,7 +27872,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" milliardillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27778,7 +27889,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" billioniillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27795,7 +27906,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(264)),
+                    Part::Quotient(Target::Set(265)),
                     Part::Text(" billiardillit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -27809,7 +27920,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(265))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(266))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -27824,7 +27935,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(269))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(270))])],
     },
     RuleSet {
         negative: Some(&[
@@ -28061,7 +28172,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             1,
             &[
                 Part::Text("\u{1791}\u{17b8}"),
-                Part::Whole(Target::Set(268)),
+                Part::Whole(Target::Set(269)),
             ],
         )],
     },
@@ -28220,7 +28331,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c87}\u{caa}\u{ccd}\u{caa}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28231,7 +28342,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{cae}\u{cc2}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28242,7 +28353,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{ca8}\u{cb2}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28253,7 +28364,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c90}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28264,7 +28375,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c85}\u{cb0}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28275,7 +28386,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c8e}\u{caa}\u{ccd}\u{caa}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28286,7 +28397,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c8e}\u{c82}\u{cac}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28297,7 +28408,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{ca4}\u{cca}\u{c82}\u{cac}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(273))],
+                        &[Part::Remainder(Target::Set(274))],
                         &[Part::Text("\u{cc1}")],
                     ),
                 ],
@@ -28513,7 +28624,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(274))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(275))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{c8b}\u{ca3} "), Part::Remainder(Target::Same)]),
@@ -28620,7 +28731,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c87}\u{caa}\u{ccd}\u{caa}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28631,7 +28742,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{cae}\u{cc2}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28642,7 +28753,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{ca8}\u{cb2}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28653,7 +28764,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c90}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28664,7 +28775,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c85}\u{cb0}\u{cb5}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28675,7 +28786,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c8e}\u{caa}\u{ccd}\u{caa}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28686,7 +28797,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c8e}\u{c82}\u{cac}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28697,7 +28808,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{ca4}\u{cca}\u{c82}\u{cac}\u{ca4}\u{ccd}\u{ca4}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(272))],
+                        &[Part::Remainder(Target::Set(273))],
                         &[Part::Text("\u{ca8}\u{cc7}")],
                     ),
                 ],
@@ -28816,7 +28927,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(274)),
+                    Part::Quotient(Target::Set(275)),
                     Part::Text(" \u{cb8}\u{cbe}\u{cb5}\u{cbf}\u{cb0}"),
                     Part::Optional(
                         &[Part::Text("\u{ca6} "), Part::Remainder(Target::Same)],
@@ -28839,7 +28950,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000,
                 100_000,
                 &[
-                    Part::Quotient(Target::Set(274)),
+                    Part::Quotient(Target::Set(275)),
                     Part::Text(" \u{cb2}\u{c95}\u{ccd}\u{cb7}"),
                     Part::Optional(
                         &[Part::Text("\u{ca6} "), Part::Remainder(Target::Same)],
@@ -28862,7 +28973,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000,
                 10_000_000,
                 &[
-                    Part::Quotient(Target::Set(274)),
+                    Part::Quotient(Target::Set(275)),
                     Part::Text(" \u{c95}\u{ccb}\u{c9f}\u{cbf}"),
                     Part::Optional(
                         &[Part::Text("\u{caf} "), Part::Remainder(Target::Same)],
@@ -28885,7 +28996,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(274)),
+                    Part::Quotient(Target::Set(275)),
                     Part::Text(" \u{c85}\u{cb0}\u{cac}\u{ccd}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -28908,7 +29019,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000_000_000,
                 100_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(274)),
+                    Part::Quotient(Target::Set(275)),
                     Part::Text(" \u{c96}\u{cb0}\u{cac}\u{ccd}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29056,7 +29167,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{acf5}")]),
-            Rule::new(1, 1, &[Part::Whole(Target::Set(278))]),
+            Rule::new(1, 1, &[Part::Whole(Target::Set(279))]),
         ],
     },
     RuleSet {
@@ -29309,7 +29420,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(281))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(282))])],
     },
     RuleSet {
         negative: Some(&[
@@ -29493,7 +29604,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 101,
                 100,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{436}\u{4af}\u{437}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29505,7 +29616,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{436}\u{4af}\u{437}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29524,7 +29635,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1001,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{43c}\u{438}\u{4a3}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29536,7 +29647,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{43c}\u{438}\u{4a3}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29555,7 +29666,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_001,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29567,7 +29678,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29586,7 +29697,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_001,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{430}\u{440}\u{434}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29598,7 +29709,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{430}\u{440}\u{434}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29617,7 +29728,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_001,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{442}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29629,7 +29740,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(" \u{442}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -29648,7 +29759,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_001,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(
                         " \u{43a}\u{432}\u{430}\u{434}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}",
                     ),
@@ -29662,7 +29773,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(282)),
+                    Part::Quotient(Target::Set(283)),
                     Part::Text(
                         " \u{43a}\u{432}\u{430}\u{434}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}",
                     ),
@@ -29686,14 +29797,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("ten")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(290))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(291))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("en")]),
-            Rule::new(1, 1, &[Part::Whole(Target::Set(290))]),
+            Rule::new(1, 1, &[Part::Whole(Target::Set(291))]),
         ],
     },
     RuleSet {
@@ -29702,7 +29813,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("null")]),
             Rule::new(1, 1, &[Part::Text("eng")]),
             Rule::new(2, 1, &[Part::Text("zwou")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(287))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(288))]),
             Rule::new(
                 100,
                 100,
@@ -29715,7 +29826,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}honnert\u{ad}"),
                     Part::Optional(&[Part::Remainder(Target::Same)], &[]),
                 ],
@@ -29732,7 +29843,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}dausend\u{ad}"),
                     Part::Optional(&[Part::Remainder(Target::Same)], &[]),
                 ],
@@ -29741,7 +29852,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29754,7 +29865,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29767,7 +29878,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29780,7 +29891,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29823,7 +29934,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("zwanzeg"),
                 ],
             ),
@@ -29831,7 +29942,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 30,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("dr\u{eb}sseg"),
                 ],
             ),
@@ -29839,7 +29950,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 40,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("v\u{e9}ierzeg"),
                 ],
             ),
@@ -29847,7 +29958,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 50,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("fofzeg"),
                 ],
             ),
@@ -29855,7 +29966,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 60,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("siechzeg"),
                 ],
             ),
@@ -29863,7 +29974,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 70,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("siwwenzeg"),
                 ],
             ),
@@ -29871,7 +29982,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 80,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("achtzeg"),
                 ],
             ),
@@ -29879,7 +29990,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 90,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(288)), Part::Text("an")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(289)), Part::Text("an")], &[]),
                     Part::Text("nonzeg"),
                 ],
             ),
@@ -29895,7 +30006,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}honnert\u{ad}"),
                     Part::Optional(&[Part::Remainder(Target::Same)], &[]),
                 ],
@@ -29912,7 +30023,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}dausend\u{ad}"),
                     Part::Optional(&[Part::Remainder(Target::Same)], &[]),
                 ],
@@ -29921,7 +30032,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29934,7 +30045,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29947,7 +30058,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29960,7 +30071,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -29981,7 +30092,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[
             Rule::new(0, 1, &[Part::Text("null")]),
             Rule::new(1, 1, &[Part::Text("een")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(287))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(288))]),
             Rule::new(
                 100,
                 100,
@@ -29994,7 +30105,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}honnert\u{ad}"),
                     Part::Optional(&[Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30011,7 +30122,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}dausend\u{ad}"),
                     Part::Optional(&[Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30020,7 +30131,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30033,7 +30144,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30046,7 +30157,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30059,7 +30170,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30077,7 +30188,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(287))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(288))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("minus "), Part::Remainder(Target::Same)]),
@@ -30091,23 +30202,23 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(6, 1, &[Part::Text("sechsten")]),
             Rule::new(7, 1, &[Part::Text("siwenten")]),
             Rule::new(8, 1, &[Part::Text("aachten")]),
-            Rule::new(9, 1, &[Part::Whole(Target::Set(288)), Part::Text("ten")]),
-            Rule::new(20, 10, &[Part::Whole(Target::Set(288)), Part::Text("sten")]),
+            Rule::new(9, 1, &[Part::Whole(Target::Set(289)), Part::Text("ten")]),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(289)), Part::Text("sten")]),
             Rule::new(
                 100,
                 100,
                 &[
                     Part::Text("\u{ad}honnert\u{ad}"),
-                    Part::Remainder(Target::Set(285)),
+                    Part::Remainder(Target::Set(286)),
                 ],
             ),
             Rule::new(
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}honnert\u{ad}"),
-                    Part::Remainder(Target::Set(285)),
+                    Part::Remainder(Target::Set(286)),
                 ],
             ),
             Rule::new(
@@ -30115,68 +30226,68 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("\u{ad}dausend\u{ad}"),
-                    Part::Remainder(Target::Set(285)),
+                    Part::Remainder(Target::Set(286)),
                 ],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(287)),
+                    Part::Quotient(Target::Set(288)),
                     Part::Text("\u{ad}dausend\u{ad}"),
-                    Part::Remainder(Target::Set(285)),
+                    Part::Remainder(Target::Set(286)),
                 ],
             ),
             Rule::new(
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
                         &[(Category::One, "Millioun"), (Category::Other, "Milliounen")],
                     ),
-                    Part::Remainder(Target::Set(284)),
+                    Part::Remainder(Target::Set(285)),
                 ],
             ),
             Rule::new(
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
                         &[(Category::One, "Milliard"), (Category::Other, "Milliarden")],
                     ),
-                    Part::Remainder(Target::Set(284)),
+                    Part::Remainder(Target::Set(285)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
                         &[(Category::One, "Billioun"), (Category::Other, "Billiounen")],
                     ),
-                    Part::Remainder(Target::Set(284)),
+                    Part::Remainder(Target::Set(285)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(286)),
+                    Part::Quotient(Target::Set(287)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
                         &[(Category::One, "Billiard"), (Category::Other, "Billiarden")],
                     ),
-                    Part::Remainder(Target::Set(284)),
+                    Part::Remainder(Target::Set(285)),
                 ],
             ),
             Rule::new(
@@ -30204,7 +30315,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("\u{ec0}\u{ead}\u{eb1}\u{e94}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(293))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(294))]),
         ],
     },
     RuleSet {
@@ -30229,7 +30340,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{eaa}\u{eb4}\u{e9a}"),
                     Part::Optional(
-                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(292))],
+                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(293))],
                         &[],
                     ),
                 ],
@@ -30240,7 +30351,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{e8a}\u{eb2}\u{ea7}"),
                     Part::Optional(
-                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(292))],
+                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(293))],
                         &[],
                     ),
                 ],
@@ -30252,7 +30363,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Quotient(Target::Same),
                     Part::Text("\u{200b}\u{eaa}\u{eb4}\u{e9a}"),
                     Part::Optional(
-                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(292))],
+                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(293))],
                         &[],
                     ),
                 ],
@@ -30326,7 +30437,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(293))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(294))])],
     },
     RuleSet {
         negative: None,
@@ -30335,7 +30446,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             1,
             &[
                 Part::Text("\u{e17}\u{e35}\u{e48}\u{200b}"),
-                Part::Whole(Target::Set(293)),
+                Part::Whole(Target::Set(294)),
             ],
         )],
     },
@@ -30621,7 +30732,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(296))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(297))])],
     },
     RuleSet {
         negative: None,
@@ -30646,7 +30757,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(17, 10, &[Part::Text("septyniolik")]),
             Rule::new(18, 10, &[Part::Text("a\u{161}tuoniolik")]),
             Rule::new(19, 10, &[Part::Text("devyniolik")]),
-            Rule::new(20, 10, &[Part::Whole(Target::Set(301))]),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(302))]),
         ],
     },
     RuleSet {
@@ -30676,7 +30787,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(300)),
+                    Part::Quotient(Target::Set(301)),
                     Part::Text("de\u{161}imt"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30693,7 +30804,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" \u{161}imt"),
                     Part::Optional(&[Part::Text("ai "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30710,7 +30821,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" t\u{16b}kstant"),
                     Part::Optional(&[Part::Text("ai "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30724,18 +30835,18 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("vien\u{105}")]),
             Rule::new(2, 1, &[Part::Text("dvi")]),
             Rule::new(3, 1, &[Part::Text("tris")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(298)), Part::Text("ias")]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(299)), Part::Text("ias")]),
             Rule::new(10, 10, &[Part::Text("de\u{161}imt")]),
             Rule::new(
                 11,
                 10,
-                &[Part::Whole(Target::Set(298)), Part::Text("\u{105}")],
+                &[Part::Whole(Target::Set(299)), Part::Text("\u{105}")],
             ),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(300)),
+                    Part::Quotient(Target::Set(301)),
                     Part::Text("de\u{161}imt"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30752,7 +30863,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" \u{161}imtai"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30769,7 +30880,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30786,7 +30897,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30803,7 +30914,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30820,7 +30931,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30837,7 +30948,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30864,14 +30975,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("vienas")]),
             Rule::new(2, 1, &[Part::Text("du")]),
             Rule::new(3, 1, &[Part::Text("trys")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(298)), Part::Text("i")]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(299)), Part::Text("i")]),
             Rule::new(10, 10, &[Part::Text("de\u{161}imt")]),
-            Rule::new(11, 10, &[Part::Whole(Target::Set(298)), Part::Text("a")]),
+            Rule::new(11, 10, &[Part::Whole(Target::Set(299)), Part::Text("a")]),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(300)),
+                    Part::Quotient(Target::Set(301)),
                     Part::Text("de\u{161}imt"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30888,7 +30999,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" \u{161}imtai"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -30905,7 +31016,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30922,7 +31033,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30939,7 +31050,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30956,7 +31067,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30973,7 +31084,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -30995,12 +31106,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(301))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(302))])],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(299)), Part::Text("as")]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(300)), Part::Text("as")]),
             Rule::new(
                 100,
                 100,
@@ -31013,7 +31124,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" \u{161}imt"),
                     Part::Optional(&[Part::Text("ai "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31030,7 +31141,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(301)),
+                    Part::Quotient(Target::Set(302)),
                     Part::Text(" t\u{16b}kstant"),
                     Part::Optional(&[Part::Text("ai "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31071,13 +31182,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 11,
                 10,
-                &[Part::Remainder(Target::Set(304)), Part::Text("padsmit")],
+                &[Part::Remainder(Target::Set(305)), Part::Text("padsmit")],
             ),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(304)),
+                    Part::Quotient(Target::Set(305)),
                     Part::Text("desmit"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31094,7 +31205,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(304)),
+                    Part::Quotient(Target::Set(305)),
                     Part::Text("simt"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31111,7 +31222,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(304)),
+                    Part::Quotient(Target::Set(305)),
                     Part::Text("t\u{16b}ksto\u{161}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31120,7 +31231,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(305)),
+                    Part::Quotient(Target::Set(306)),
                     Part::Text(" t\u{16b}ksto\u{161}i"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31137,7 +31248,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(305)),
+                    Part::Quotient(Target::Set(306)),
                     Part::Text(" miljoni"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31154,7 +31265,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(305)),
+                    Part::Quotient(Target::Set(306)),
                     Part::Text(" miljardi"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31171,7 +31282,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(305)),
+                    Part::Quotient(Target::Set(306)),
                     Part::Text(" biljoni"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31188,7 +31299,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(305)),
+                    Part::Quotient(Target::Set(306)),
                     Part::Text(" biljardi"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31202,7 +31313,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(305))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(306))])],
     },
     RuleSet {
         negative: Some(&[
@@ -31213,7 +31324,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("\u{43d}\u{443}\u{43b}\u{430}")]),
             Rule::new(1, 1, &[Part::Text("\u{435}\u{434}\u{43d}\u{430}")]),
             Rule::new(2, 1, &[Part::Text("\u{434}\u{432}\u{435}")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(308))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(309))]),
             Rule::new(
                 20,
                 10,
@@ -31310,7 +31421,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(307)),
+                    Part::Quotient(Target::Set(308)),
                     Part::Text("\u{441}\u{442}\u{43e}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31319,7 +31430,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(307)),
+                    Part::Quotient(Target::Set(308)),
                     Part::Text(" \u{438}\u{43b}\u{458}\u{430}\u{434}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31328,7 +31439,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31337,7 +31448,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{438}\u{458}\u{430}\u{440}\u{434}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31346,7 +31457,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{431}\u{438}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31355,7 +31466,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{431}\u{438}\u{43b}\u{438}\u{458}\u{430}\u{440}\u{434}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31547,7 +31658,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(307)),
+                    Part::Quotient(Target::Set(308)),
                     Part::Text("\u{441}\u{442}\u{43e}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31556,7 +31667,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(307)),
+                    Part::Quotient(Target::Set(308)),
                     Part::Text(" \u{438}\u{43b}\u{458}\u{430}\u{434}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31565,7 +31676,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31574,7 +31685,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{43c}\u{438}\u{43b}\u{438}\u{458}\u{430}\u{440}\u{434}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31583,7 +31694,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{431}\u{438}\u{43b}\u{438}\u{43e}\u{43d}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31592,7 +31703,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(308)),
+                    Part::Quotient(Target::Set(309)),
                     Part::Text(" \u{431}\u{438}\u{43b}\u{438}\u{458}\u{430}\u{440}\u{434}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -31606,7 +31717,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(308))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(309))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -31626,9 +31737,9 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Whole(Target::Set(314)), Part::Text("\u{d4d}")],
+                &[Part::Whole(Target::Set(315)), Part::Text("\u{d4d}")],
             ),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(315))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(316))]),
             Rule::new(
                 500,
                 100,
@@ -31637,7 +31748,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -31651,7 +31762,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -31665,7 +31776,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -31679,13 +31790,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
                 ],
             ),
-            Rule::new(900, 100, &[Part::Whole(Target::Set(315))]),
+            Rule::new(900, 100, &[Part::Whole(Target::Set(316))]),
         ],
     },
     RuleSet {
@@ -31695,9 +31806,9 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Whole(Target::Set(314)), Part::Text("\u{d3e}\u{d02}")],
+                &[Part::Whole(Target::Set(315)), Part::Text("\u{d3e}\u{d02}")],
             ),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(317))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(318))]),
             Rule::new(
                 500,
                 100,
@@ -31706,7 +31817,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -31720,7 +31831,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -31734,7 +31845,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -31748,13 +31859,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
             ),
-            Rule::new(900, 100, &[Part::Whole(Target::Set(317))]),
+            Rule::new(900, 100, &[Part::Whole(Target::Set(318))]),
         ],
     },
     RuleSet {
@@ -31839,7 +31950,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31853,7 +31964,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31867,7 +31978,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31881,7 +31992,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31895,7 +32006,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31909,7 +32020,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31923,7 +32034,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31937,7 +32048,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(314)),
+                            Part::Remainder(Target::Set(315)),
                         ],
                         &[],
                     ),
@@ -31957,7 +32068,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(7, 1, &[Part::Text("\u{d2f}\u{d47}\u{d34}")]),
             Rule::new(8, 1, &[Part::Text("\u{d2f}\u{d46}\u{d1f}\u{d4d}\u{d1f}")]),
             Rule::new(9, 1, &[Part::Text("\u{d2f}\u{d4a}\u{d7b}\u{d2a}\u{d24}")]),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(313))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(314))]),
         ],
     },
     RuleSet {
@@ -31988,7 +32099,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 11,
                 10,
-                &[Part::Whole(Target::Set(313)), Part::Text("\u{d4d}")],
+                &[Part::Whole(Target::Set(314)), Part::Text("\u{d4d}")],
             ),
             Rule::new(
                 20,
@@ -31998,7 +32109,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32012,7 +32123,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32026,7 +32137,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32040,7 +32151,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32054,7 +32165,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32068,7 +32179,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32082,7 +32193,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32096,7 +32207,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32110,7 +32221,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32124,7 +32235,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32138,7 +32249,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32152,7 +32263,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32166,7 +32277,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32180,7 +32291,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32194,7 +32305,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32208,7 +32319,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d4d}")],
                     ),
@@ -32222,7 +32333,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d24}\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d02}")],
                     ),
@@ -32236,7 +32347,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d24}\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d02}")],
                     ),
@@ -32246,12 +32357,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(313)),
+                    Part::Quotient(Target::Set(314)),
                     Part::Text("\u{d3e}\u{d2f}\u{d3f}\u{d30}"),
                     Part::Optional(
                         &[
                             Part::Text("\u{d24}\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d02}")],
                     ),
@@ -32265,7 +32376,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d24}\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d02}")],
                     ),
@@ -32275,12 +32386,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000,
                 100_000,
                 &[
-                    Part::Quotient(Target::Set(315)),
+                    Part::Quotient(Target::Set(316)),
                     Part::Text(" \u{d32}\u{d15}\u{d4d}\u{d37}"),
                     Part::Optional(
                         &[
                             Part::Text("\u{d24}\u{d4d}\u{d24}\u{d3f}"),
-                            Part::Remainder(Target::Set(311)),
+                            Part::Remainder(Target::Set(312)),
                         ],
                         &[Part::Text("\u{d02}")],
                     ),
@@ -32291,16 +32402,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10_000_000,
                 &[
                     Part::Text("\u{d12}\u{d30}\u{d41} \u{d15}\u{d4b}\u{d1f}\u{d3f}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(311))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(312))], &[]),
                 ],
             ),
             Rule::new(
                 20_000_000,
                 10_000_000,
                 &[
-                    Part::Quotient(Target::Set(315)),
+                    Part::Quotient(Target::Set(316)),
                     Part::Text(" \u{d15}\u{d4b}\u{d1f}\u{d3f}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(311))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(312))], &[]),
                 ],
             ),
             Rule::new(
@@ -32308,7 +32419,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[
                     Part::Text("\u{d12}\u{d30}\u{d41} \u{d05}\u{d31}\u{d2c}\u{d4d}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(311))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(312))], &[]),
                 ],
             ),
             Rule::new(
@@ -32317,7 +32428,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{d05}\u{d31}\u{d2c}\u{d4d}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(311))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(312))], &[]),
                 ],
             ),
             Rule::new(
@@ -32325,7 +32436,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100_000_000_000,
                 &[
                     Part::Text("\u{d12}\u{d30}\u{d41} \u{d16}\u{d31}\u{d2c}\u{d4d}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(311))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(312))], &[]),
                 ],
             ),
             Rule::new(
@@ -32334,7 +32445,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{d16}\u{d31}\u{d2c}\u{d4d}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(311))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(312))], &[]),
                 ],
             ),
             Rule::new(
@@ -32350,9 +32461,9 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Part::Remainder(Target::Same),
         ]),
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(315))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(316))]),
             Rule::new(1, 1, &[Part::Text("\u{d12}\u{d28}\u{d4d}\u{d28}\u{d4d}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(315))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(316))]),
         ],
     },
     RuleSet {
@@ -32409,7 +32520,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 11,
                 10,
-                &[Part::Whole(Target::Set(313)), Part::Text("\u{d3e}\u{d02}")],
+                &[Part::Whole(Target::Set(314)), Part::Text("\u{d3e}\u{d02}")],
             ),
             Rule::new(
                 100,
@@ -32419,7 +32530,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32433,7 +32544,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32447,7 +32558,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32461,7 +32572,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32475,7 +32586,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32489,7 +32600,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32503,7 +32614,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32517,7 +32628,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{d4d}\u{d31}\u{d3f}"),
-                            Part::Remainder(Target::Set(312)),
+                            Part::Remainder(Target::Set(313)),
                         ],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
@@ -32531,7 +32642,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         "\u{d24}\u{d4a}\u{d33}\u{d4d}\u{d33}\u{d3e}\u{d2f}\u{d3f}\u{d30}\u{d24}\u{d4d}\u{d24}",
                     ),
                     Part::Optional(
-                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32542,7 +32653,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{d06}\u{d2f}\u{d3f}\u{d30}\u{d24}\u{d4d}\u{d24}"),
                     Part::Optional(
-                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32551,10 +32662,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(313)),
+                    Part::Quotient(Target::Set(314)),
                     Part::Text("\u{d3e}\u{d2f}\u{d3f}\u{d30}\u{d24}\u{d4d}\u{d24}"),
                     Part::Optional(
-                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32567,7 +32678,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         "\u{d12}\u{d30}\u{d41} \u{d32}\u{d15}\u{d4d}\u{d37}\u{d24}\u{d4d}\u{d24}",
                     ),
                     Part::Optional(
-                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32576,10 +32687,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000,
                 100_000,
                 &[
-                    Part::Quotient(Target::Set(315)),
+                    Part::Quotient(Target::Set(316)),
                     Part::Text(" \u{d32}\u{d15}\u{d4d}\u{d37}\u{d24}\u{d4d}\u{d24}"),
                     Part::Optional(
-                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d3f}"), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32590,7 +32701,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{d12}\u{d30}\u{d41} \u{d15}\u{d4b}\u{d1f}\u{d3f}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(312))],
+                        &[Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d2f}\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32599,10 +32710,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000,
                 10_000_000,
                 &[
-                    Part::Quotient(Target::Set(315)),
+                    Part::Quotient(Target::Set(316)),
                     Part::Text(" \u{d15}\u{d4b}\u{d1f}\u{d3f}"),
                     Part::Optional(
-                        &[Part::Remainder(Target::Set(312))],
+                        &[Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d2f}\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32613,7 +32724,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{d12}\u{d30}\u{d41} \u{d05}\u{d31}\u{d2c}"),
                     Part::Optional(
-                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32622,10 +32733,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(315)),
+                    Part::Quotient(Target::Set(316)),
                     Part::Text(" \u{d05}\u{d31}\u{d2c}"),
                     Part::Optional(
-                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32636,7 +32747,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{d12}\u{d30}\u{d41} \u{d16}\u{d31}\u{d2c}"),
                     Part::Optional(
-                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32645,10 +32756,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000_000_000,
                 100_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(315)),
+                    Part::Quotient(Target::Set(316)),
                     Part::Text(" \u{d16}\u{d31}\u{d2c}"),
                     Part::Optional(
-                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(312))],
+                        &[Part::Text("\u{d4d} "), Part::Remainder(Target::Set(313))],
                         &[Part::Text("\u{d3e}\u{d02}")],
                     ),
                 ],
@@ -32662,7 +32773,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(319))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(320))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -33284,7 +33395,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(320))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(321))])],
     },
     RuleSet {
         negative: Some(&[
@@ -33312,65 +33423,65 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 11,
                 10,
-                &[Part::Whole(Target::Set(320)), Part::Text("\u{935}\u{93e}")],
+                &[Part::Whole(Target::Set(321)), Part::Text("\u{935}\u{93e}")],
             ),
             Rule::new(
                 19,
                 10,
                 &[
-                    Part::Whole(Target::Set(320)),
+                    Part::Whole(Target::Set(321)),
                     Part::Text("\u{93e}\u{935}\u{93e}"),
                 ],
             ),
             Rule::new(
                 50,
                 10,
-                &[Part::Whole(Target::Set(320)), Part::Text("\u{935}\u{93e}")],
+                &[Part::Whole(Target::Set(321)), Part::Text("\u{935}\u{93e}")],
             ),
             Rule::new(
                 51,
                 10,
                 &[
-                    Part::Whole(Target::Set(320)),
+                    Part::Whole(Target::Set(321)),
                     Part::Text("\u{93e}\u{935}\u{93e}"),
                 ],
             ),
             Rule::new(
                 79,
                 10,
-                &[Part::Whole(Target::Set(320)), Part::Text("\u{935}\u{93e}")],
+                &[Part::Whole(Target::Set(321)), Part::Text("\u{935}\u{93e}")],
             ),
             Rule::new(
                 89,
                 10,
                 &[
-                    Part::Whole(Target::Set(320)),
+                    Part::Whole(Target::Set(321)),
                     Part::Text("\u{93e}\u{935}\u{93e}"),
                 ],
             ),
             Rule::new(
                 10_000_000,
                 10_000_000,
-                &[Part::Whole(Target::Set(320)), Part::Text("\u{935}\u{93e}")],
+                &[Part::Whole(Target::Set(321)), Part::Text("\u{935}\u{93e}")],
             ),
             Rule::new(
                 10_000_001,
                 10_000_000,
                 &[
-                    Part::Whole(Target::Set(320)),
+                    Part::Whole(Target::Set(321)),
                     Part::Text("\u{93e}\u{935}\u{93e}"),
                 ],
             ),
             Rule::new(
                 100_000_000,
                 100_000_000,
-                &[Part::Whole(Target::Set(320)), Part::Text("\u{935}\u{93e}")],
+                &[Part::Whole(Target::Set(321)), Part::Text("\u{935}\u{93e}")],
             ),
             Rule::new(
                 100_000_001,
                 100_000_000,
                 &[
-                    Part::Whole(Target::Set(320)),
+                    Part::Whole(Target::Set(321)),
                     Part::Text("\u{93e}\u{935}\u{93e}"),
                 ],
             ),
@@ -33503,14 +33614,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(324))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(325))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("negatif "), Part::Remainder(Target::Same)]),
         rules: &[
             Rule::new(0, 1, &[Part::Text("kekosong")]),
             Rule::new(1, 1, &[Part::Text("pertama")]),
-            Rule::new(2, 1, &[Part::Text("ke"), Part::Whole(Target::Set(324))]),
+            Rule::new(2, 1, &[Part::Text("ke"), Part::Whole(Target::Set(325))]),
         ],
     },
     RuleSet {
@@ -33618,7 +33729,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" mija"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33643,7 +33754,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 3000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(328)),
+                    Part::Quotient(Target::Set(329)),
                     Part::Text(" elef"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33652,7 +33763,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" elf"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33669,7 +33780,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" miljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33678,7 +33789,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" miljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33695,7 +33806,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" biljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33704,7 +33815,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" biljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33721,7 +33832,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" triljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33730,7 +33841,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" triljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33747,7 +33858,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" kvadriljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33756,7 +33867,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" kvadriljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33771,7 +33882,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(327))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(328))]),
             Rule::new(2, 1, &[Part::Text("\u{17c}ew\u{121}t")]),
             Rule::new(3, 1, &[Part::Text("tlitt")]),
             Rule::new(4, 1, &[Part::Text("erbat")]),
@@ -33781,7 +33892,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(8, 1, &[Part::Text("tmint")]),
             Rule::new(9, 1, &[Part::Text("disat")]),
             Rule::new(10, 10, &[Part::Text("g\u{127}axart")]),
-            Rule::new(11, 10, &[Part::Whole(Target::Set(327))]),
+            Rule::new(11, 10, &[Part::Whole(Target::Set(328))]),
         ],
     },
     RuleSet {
@@ -33891,7 +34002,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" mija"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33916,7 +34027,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 3000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(328)),
+                    Part::Quotient(Target::Set(329)),
                     Part::Text(" elef"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33925,7 +34036,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" elf"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33942,7 +34053,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" miljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33951,7 +34062,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" miljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33968,7 +34079,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" biljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33977,7 +34088,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" biljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -33994,7 +34105,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" triljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -34003,7 +34114,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" triljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -34020,7 +34131,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" kvadriljuni"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -34029,7 +34140,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(327)),
+                    Part::Quotient(Target::Set(328)),
                     Part::Text(" kvadriljun"),
                     Part::Optional(&[Part::Text(" u "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -34055,7 +34166,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(8, 1, &[Part::Text("tmien")]),
             Rule::new(9, 1, &[Part::Text("disa\u{2bc}")]),
             Rule::new(10, 10, &[Part::Text("g\u{127}axar")]),
-            Rule::new(11, 10, &[Part::Whole(Target::Set(329))]),
+            Rule::new(11, 10, &[Part::Whole(Target::Set(330))]),
         ],
     },
     RuleSet {
@@ -34189,7 +34300,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(331))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(332))])],
     },
     RuleSet {
         negative: Some(&[
@@ -34197,7 +34308,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Part::Remainder(Target::Same),
         ]),
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(331))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(332))]),
             Rule::new(1, 1, &[Part::Text("\u{1015}\u{1011}\u{1019}")]),
             Rule::new(
                 2,
@@ -34234,7 +34345,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             ),
             Rule::new(9, 1, &[Part::Text("\u{1014}\u{101d}\u{1019}")]),
             Rule::new(10, 10, &[Part::Text("\u{1012}\u{101e}\u{1019}")]),
-            Rule::new(11, 10, &[Part::Whole(Target::Set(331))]),
+            Rule::new(11, 10, &[Part::Whole(Target::Set(332))]),
         ],
     },
     RuleSet {
@@ -34246,7 +34357,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1,
                 &[
                     Part::Text(" "),
-                    Part::Whole(Target::Set(335)),
+                    Part::Whole(Target::Set(336)),
                     Part::Text("\u{94c}\u{901}"),
                 ],
             ),
@@ -34256,11 +34367,11 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1,
                 &[
                     Part::Text(" "),
-                    Part::Whole(Target::Set(335)),
+                    Part::Whole(Target::Set(336)),
                     Part::Text("\u{94c}\u{901}"),
                 ],
             ),
-            Rule::new(5, 1, &[Part::Text(" "), Part::Whole(Target::Set(336))]),
+            Rule::new(5, 1, &[Part::Text(" "), Part::Whole(Target::Set(337))]),
         ],
     },
     RuleSet {
@@ -34823,89 +34934,89 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 13,
                 10,
-                &[Part::Whole(Target::Set(335)), Part::Text("\u{94c}\u{901}")],
+                &[Part::Whole(Target::Set(336)), Part::Text("\u{94c}\u{901}")],
             ),
             Rule::new(
                 60,
                 10,
-                &[Part::Whole(Target::Set(335)), Part::Text("\u{914}\u{901}")],
+                &[Part::Whole(Target::Set(336)), Part::Text("\u{914}\u{901}")],
             ),
             Rule::new(
                 71,
                 10,
-                &[Part::Whole(Target::Set(335)), Part::Text("\u{94c}\u{901}")],
+                &[Part::Whole(Target::Set(336)), Part::Text("\u{94c}\u{901}")],
             ),
             Rule::new(
                 80,
                 10,
-                &[Part::Whole(Target::Set(335)), Part::Text("\u{914}\u{901}")],
+                &[Part::Whole(Target::Set(336)), Part::Text("\u{914}\u{901}")],
             ),
             Rule::new(
                 99,
                 10,
-                &[Part::Whole(Target::Set(335)), Part::Text("\u{94c}\u{901}")],
+                &[Part::Whole(Target::Set(336)), Part::Text("\u{94c}\u{901}")],
             ),
             Rule::new(
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(335)),
+                    Part::Quotient(Target::Set(336)),
                     Part::Text(" \u{938}\u{92f}"),
-                    Part::Remainder(Target::Set(334)),
+                    Part::Remainder(Target::Set(335)),
                 ],
             ),
             Rule::new(
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(335)),
+                    Part::Quotient(Target::Set(336)),
                     Part::Text(" \u{939}\u{91c}\u{93e}\u{930}"),
-                    Part::Remainder(Target::Set(334)),
+                    Part::Remainder(Target::Set(335)),
                 ],
             ),
             Rule::new(
                 100_000,
                 100_000,
                 &[
-                    Part::Quotient(Target::Set(335)),
+                    Part::Quotient(Target::Set(336)),
                     Part::Text(" \u{932}\u{93e}\u{916}"),
-                    Part::Remainder(Target::Set(334)),
+                    Part::Remainder(Target::Set(335)),
                 ],
             ),
             Rule::new(
                 10_000_000,
                 10_000_000,
                 &[
-                    Part::Quotient(Target::Set(335)),
+                    Part::Quotient(Target::Set(336)),
                     Part::Text(" \u{915}\u{930}\u{94b}\u{921}"),
-                    Part::Remainder(Target::Set(334)),
+                    Part::Remainder(Target::Set(335)),
                 ],
             ),
             Rule::new(
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(335)),
+                    Part::Quotient(Target::Set(336)),
                     Part::Text(" \u{905}\u{930}\u{92c}"),
-                    Part::Remainder(Target::Set(334)),
+                    Part::Remainder(Target::Set(335)),
                 ],
             ),
             Rule::new(
                 100_000_000_000,
                 100_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(335)),
+                    Part::Quotient(Target::Set(336)),
                     Part::Text(" \u{916}\u{930}\u{92c}"),
-                    Part::Remainder(Target::Set(334)),
+                    Part::Remainder(Target::Set(335)),
                 ],
             ),
             Rule::new(
                 10_000_000_000_000,
                 10_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(335)),
+                    Part::Quotient(Target::Set(336)),
                     Part::Text(" \u{936}\u{902}\u{916}"),
-                    Part::Remainder(Target::Set(334)),
+                    Part::Remainder(Target::Set(335)),
                 ],
             ),
             Rule::new(
@@ -34932,7 +35043,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 4,
                 1,
-                &[Part::Whole(Target::Set(340)), Part::Text("\u{ad}en\u{ad}")],
+                &[Part::Whole(Target::Set(341)), Part::Text("\u{ad}en\u{ad}")],
             ),
         ],
     },
@@ -34940,7 +35051,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("ste")]),
-            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(342))]),
+            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(343))]),
         ],
     },
     RuleSet {
@@ -34970,7 +35081,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("twintig"),
                 ],
             ),
@@ -34978,7 +35089,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 30,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("dertig"),
                 ],
             ),
@@ -34986,7 +35097,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 40,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("veertig"),
                 ],
             ),
@@ -34994,7 +35105,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 50,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("vijftig"),
                 ],
             ),
@@ -35002,7 +35113,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 60,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("zestig"),
                 ],
             ),
@@ -35010,7 +35121,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 70,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("zeventig"),
                 ],
             ),
@@ -35018,7 +35129,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 80,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("tachtig"),
                 ],
             ),
@@ -35026,7 +35137,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 90,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(338))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(339))], &[]),
                     Part::Text("negentig"),
                 ],
             ),
@@ -35118,7 +35229,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(340))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(341))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("min "), Part::Remainder(Target::Same)]),
@@ -35127,72 +35238,72 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("eerste")]),
             Rule::new(2, 1, &[Part::Text("tweede")]),
             Rule::new(3, 1, &[Part::Text("derde")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(340)), Part::Text("de")]),
-            Rule::new(8, 1, &[Part::Whole(Target::Set(340)), Part::Text("ste")]),
-            Rule::new(9, 1, &[Part::Whole(Target::Set(340)), Part::Text("de")]),
-            Rule::new(20, 10, &[Part::Whole(Target::Set(340)), Part::Text("ste")]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(341)), Part::Text("de")]),
+            Rule::new(8, 1, &[Part::Whole(Target::Set(341)), Part::Text("ste")]),
+            Rule::new(9, 1, &[Part::Whole(Target::Set(341)), Part::Text("de")]),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(341)), Part::Text("ste")]),
             Rule::new(
                 100,
                 100,
-                &[Part::Text("honderd"), Part::Remainder(Target::Set(339))],
+                &[Part::Text("honderd"), Part::Remainder(Target::Set(340))],
             ),
             Rule::new(
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(340)),
+                    Part::Quotient(Target::Set(341)),
                     Part::Text("\u{ad}honderd"),
-                    Part::Remainder(Target::Set(339)),
+                    Part::Remainder(Target::Set(340)),
                 ],
             ),
             Rule::new(
                 1000,
                 1000,
-                &[Part::Text("duizend"), Part::Remainder(Target::Set(339))],
+                &[Part::Text("duizend"), Part::Remainder(Target::Set(340))],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(340)),
+                    Part::Quotient(Target::Set(341)),
                     Part::Text("\u{ad}duizend"),
-                    Part::Remainder(Target::Set(339)),
+                    Part::Remainder(Target::Set(340)),
                 ],
             ),
             Rule::new(
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(340)),
+                    Part::Quotient(Target::Set(341)),
                     Part::Text("\u{ad}miljoen"),
-                    Part::Remainder(Target::Set(339)),
+                    Part::Remainder(Target::Set(340)),
                 ],
             ),
             Rule::new(
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(340)),
+                    Part::Quotient(Target::Set(341)),
                     Part::Text("\u{ad}miljard"),
-                    Part::Remainder(Target::Set(339)),
+                    Part::Remainder(Target::Set(340)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(340)),
+                    Part::Quotient(Target::Set(341)),
                     Part::Text("\u{ad}biljoen"),
-                    Part::Remainder(Target::Set(339)),
+                    Part::Remainder(Target::Set(340)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(340)),
+                    Part::Quotient(Target::Set(341)),
                     Part::Text("\u{ad}biljard"),
-                    Part::Remainder(Target::Set(339)),
+                    Part::Remainder(Target::Set(340)),
                 ],
             ),
             Rule::new(
@@ -35207,7 +35318,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[
             Rule::new(0, 1, &[Part::Text("null")]),
             Rule::new(1, 1, &[Part::Text("eitt")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(344))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(345))]),
         ],
     },
     RuleSet {
@@ -35301,7 +35412,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(343)),
+                    Part::Quotient(Target::Set(344)),
                     Part::Text(" hundre"),
                     Part::Optional(&[Part::Text(" og "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35310,7 +35421,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(343)),
+                    Part::Quotient(Target::Set(344)),
                     Part::Text(" tusen"),
                     Part::Optional(&[Part::Text(" og "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35392,14 +35503,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(344))])],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[
-            Rule::new(0, 1, &[Part::Text("og "), Part::Whole(Target::Set(352))]),
-            Rule::new(100, 100, &[Part::Whole(Target::Set(352))]),
-        ],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(345))])],
     },
     RuleSet {
         negative: None,
@@ -35411,29 +35515,36 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: None,
         rules: &[
+            Rule::new(0, 1, &[Part::Text("og "), Part::Whole(Target::Set(354))]),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(354))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
             Rule::new(0, 1, &[Part::Text("de")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(355))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(356))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("ende")]),
-            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(355))]),
+            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(356))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("te")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(355))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(356))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("te")]),
-            Rule::new(1, 1, &[Part::Text("er "), Part::Whole(Target::Set(355))]),
+            Rule::new(1, 1, &[Part::Text("er "), Part::Whole(Target::Set(356))]),
         ],
     },
     RuleSet {
@@ -35535,7 +35646,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(353)),
+                    Part::Quotient(Target::Set(354)),
                     Part::Text(" hundre"),
                     Part::Optional(&[Part::Text(" og "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35545,16 +35656,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("tusen"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(346))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(347))], &[]),
                 ],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(353)),
+                    Part::Quotient(Target::Set(354)),
                     Part::Text(" tusen"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(346))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(347))], &[]),
                 ],
             ),
             Rule::new(
@@ -35637,7 +35748,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[
             Rule::new(0, 1, &[Part::Text("null")]),
             Rule::new(1, 1, &[Part::Text("ett")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(352))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(353))]),
             Rule::new(
                 20,
                 10,
@@ -35714,7 +35825,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(353)),
+                    Part::Quotient(Target::Set(354)),
                     Part::Text(" hundre"),
                     Part::Optional(&[Part::Text(" og "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35724,16 +35835,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("tusen"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(347))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(348))], &[]),
                 ],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(353)),
+                    Part::Quotient(Target::Set(354)),
                     Part::Text(" tusen"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(347))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(348))], &[]),
                 ],
             ),
             Rule::new(
@@ -35748,7 +35859,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" millioner"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35765,7 +35876,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" milliarder"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35782,7 +35893,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" billioner"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35799,7 +35910,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" billiarder"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -35813,7 +35924,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(352))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(353))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("minus "), Part::Remainder(Target::Same)]),
@@ -35831,63 +35942,63 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(10, 10, &[Part::Text("tiende")]),
             Rule::new(11, 10, &[Part::Text("ellevte")]),
             Rule::new(12, 10, &[Part::Text("tolvte")]),
-            Rule::new(13, 10, &[Part::Whole(Target::Set(353)), Part::Text("de")]),
+            Rule::new(13, 10, &[Part::Whole(Target::Set(354)), Part::Text("de")]),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("tjue"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("tjue"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 30,
                 10,
-                &[Part::Text("tretti"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("tretti"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 40,
                 10,
-                &[Part::Text("f\u{f8}rti"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("f\u{f8}rti"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 50,
                 10,
-                &[Part::Text("femti"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("femti"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 60,
                 10,
-                &[Part::Text("seksti"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("seksti"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 70,
                 10,
-                &[Part::Text("sytti"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("sytti"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 80,
                 10,
-                &[Part::Text("\u{e5}tti"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("\u{e5}tti"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 90,
                 10,
-                &[Part::Text("nitti"), Part::Remainder(Target::Set(349))],
+                &[Part::Text("nitti"), Part::Remainder(Target::Set(350))],
             ),
             Rule::new(
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(354)),
+                    Part::Quotient(Target::Set(355)),
                     Part::Text("\u{ad}hundre"),
-                    Part::Remainder(Target::Set(348)),
+                    Part::Remainder(Target::Set(349)),
                 ],
             ),
             Rule::new(
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(354)),
+                    Part::Quotient(Target::Set(355)),
                     Part::Text("\u{ad}tusen"),
-                    Part::Remainder(Target::Set(348)),
+                    Part::Remainder(Target::Set(349)),
                 ],
             ),
             Rule::new(
@@ -35895,16 +36006,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[
                     Part::Text("\u{e9}n million"),
-                    Part::Remainder(Target::Set(350)),
+                    Part::Remainder(Target::Set(351)),
                 ],
             ),
             Rule::new(
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" million"),
-                    Part::Remainder(Target::Set(351)),
+                    Part::Remainder(Target::Set(352)),
                 ],
             ),
             Rule::new(
@@ -35912,16 +36023,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[
                     Part::Text("\u{e9}n milliard"),
-                    Part::Remainder(Target::Set(350)),
+                    Part::Remainder(Target::Set(351)),
                 ],
             ),
             Rule::new(
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" milliard"),
-                    Part::Remainder(Target::Set(351)),
+                    Part::Remainder(Target::Set(352)),
                 ],
             ),
             Rule::new(
@@ -35929,16 +36040,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[
                     Part::Text("\u{e9}n billion"),
-                    Part::Remainder(Target::Set(350)),
+                    Part::Remainder(Target::Set(351)),
                 ],
             ),
             Rule::new(
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" billion"),
-                    Part::Remainder(Target::Set(351)),
+                    Part::Remainder(Target::Set(352)),
                 ],
             ),
             Rule::new(
@@ -35946,16 +36057,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[
                     Part::Text("\u{e9}n billiard"),
-                    Part::Remainder(Target::Set(350)),
+                    Part::Remainder(Target::Set(351)),
                 ],
             ),
             Rule::new(
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(352)),
+                    Part::Quotient(Target::Set(353)),
                     Part::Text(" billiard"),
-                    Part::Remainder(Target::Set(351)),
+                    Part::Remainder(Target::Set(352)),
                 ],
             ),
             Rule::new(
@@ -36389,7 +36500,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(357))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(358))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{b0b}\u{b23} "), Part::Remainder(Target::Same)]),
@@ -36424,7 +36535,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 11,
                 10,
-                &[Part::Whole(Target::Set(357)), Part::Text("\u{b24}\u{b2e}")],
+                &[Part::Whole(Target::Set(358)), Part::Text("\u{b24}\u{b2e}")],
             ),
             Rule::new(
                 1_000_000_000_000_000_000,
@@ -36435,7 +36546,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(361))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(362))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -37044,7 +37155,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(363))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(364))])],
     },
     RuleSet {
         negative: Some(&[
@@ -37067,7 +37178,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 5,
                 1,
                 &[
-                    Part::Whole(Target::Set(362)),
+                    Part::Whole(Target::Set(363)),
                     Part::Text("\u{a35}\u{a3e}\u{a02}"),
                 ],
             ),
@@ -37093,7 +37204,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(2, 1, &[Part::Text("dwu")]),
             Rule::new(3, 1, &[Part::Text("trzech")]),
             Rule::new(4, 1, &[Part::Text("czterech")]),
-            Rule::new(5, 1, &[Part::Whole(Target::Set(375))]),
+            Rule::new(5, 1, &[Part::Whole(Target::Set(376))]),
         ],
     },
     RuleSet {
@@ -37139,7 +37250,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37154,7 +37265,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37169,7 +37280,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37184,7 +37295,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37199,7 +37310,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37214,7 +37325,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37229,7 +37340,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37244,7 +37355,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37259,7 +37370,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37274,7 +37385,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37285,12 +37396,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(375)),
+                    Part::Quotient(Target::Set(376)),
                     Part::Text("stu"),
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37301,12 +37412,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 500,
                 100,
                 &[
-                    Part::Quotient(Target::Set(376)),
+                    Part::Quotient(Target::Set(377)),
                     Part::Text("set"),
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(373)),
+                            Part::Remainder(Target::Set(374)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -37319,7 +37430,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("jeden")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(375))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(376))]),
         ],
     },
     RuleSet {
@@ -37340,14 +37451,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("jeden")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(378))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(379))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("jeden")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(379))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(380))]),
         ],
     },
     RuleSet {
@@ -37391,8 +37502,8 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(374)),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Quotient(Target::Set(375)),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37400,7 +37511,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("sto"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37408,25 +37519,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("dwie\u{15b}cie"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(375)),
+                    Part::Quotient(Target::Set(376)),
                     Part::Text("sta"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
                 500,
                 100,
                 &[
-                    Part::Quotient(Target::Set(375)),
+                    Part::Quotient(Target::Set(376)),
                     Part::Text("set"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37434,14 +37545,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("tysi\u{105}c"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(377)),
+                    Part::Quotient(Target::Set(378)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -37450,7 +37561,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "tysi\u{119}cy"),
                         ],
                     ),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37458,14 +37569,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[
                     Part::Text("milion"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(377)),
+                    Part::Quotient(Target::Set(378)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -37474,7 +37585,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "milion\u{f3}w"),
                         ],
                     ),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37489,7 +37600,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(377)),
+                    Part::Quotient(Target::Set(378)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -37498,7 +37609,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "miliard\u{f3}w"),
                         ],
                     ),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37513,7 +37624,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(377)),
+                    Part::Quotient(Target::Set(378)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -37522,7 +37633,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "bilion\u{f3}w"),
                         ],
                     ),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37530,14 +37641,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[
                     Part::Text("biliard"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(377)),
+                    Part::Quotient(Target::Set(378)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -37546,7 +37657,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "biliard\u{f3}w"),
                         ],
                     ),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(370))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(371))], &[]),
                 ],
             ),
             Rule::new(
@@ -37561,7 +37672,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[
             Rule::new(0, 1, &[Part::Text("zera")]),
             Rule::new(1, 1, &[Part::Text("jednej")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(378))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(379))]),
         ],
     },
     RuleSet {
@@ -37591,7 +37702,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(374)),
+                    Part::Quotient(Target::Set(375)),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
             ),
@@ -37615,7 +37726,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(375)),
+                    Part::Quotient(Target::Set(376)),
                     Part::Text("sta"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -37624,7 +37735,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 500,
                 100,
                 &[
-                    Part::Quotient(Target::Set(375)),
+                    Part::Quotient(Target::Set(376)),
                     Part::Text("set"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -37783,8 +37894,8 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(371)),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Quotient(Target::Set(372)),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37792,7 +37903,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("stu"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37800,25 +37911,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("dwustu"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(375)),
+                    Part::Quotient(Target::Set(376)),
                     Part::Text("stu"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
                 500,
                 100,
                 &[
-                    Part::Quotient(Target::Set(376)),
+                    Part::Quotient(Target::Set(377)),
                     Part::Text("set"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37826,7 +37937,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("tysi\u{105}ca"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37835,7 +37946,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" tysi\u{119}cy"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37843,7 +37954,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[
                     Part::Text("miliona"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37852,7 +37963,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" milion\u{f3}w"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37860,7 +37971,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[
                     Part::Text("miliarda"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37869,7 +37980,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" miliard\u{f3}w"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37877,7 +37988,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[
                     Part::Text("biliona"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37886,7 +37997,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" bilion\u{f3}w"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37894,7 +38005,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[
                     Part::Text("biliarda"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37903,7 +38014,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" biliard\u{f3}w"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(372))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
                 ],
             ),
             Rule::new(
@@ -37941,7 +38052,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("dwudziestoma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -37949,7 +38060,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("trzydziestoma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -37957,7 +38068,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("czterdziestoma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -37965,7 +38076,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("pi\u{119}\u{107}dziesi\u{119}cioma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -37973,7 +38084,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("sze\u{15b}\u{107}dziesi\u{119}cioma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -37981,7 +38092,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("siedemdziesi\u{119}cioma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -37989,7 +38100,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("osiemdziesi\u{119}cioma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -37997,7 +38108,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("dziewi\u{119}\u{107}dziesi\u{119}cioma"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38005,7 +38116,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("stu"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38013,25 +38124,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[
                     Part::Text("dwustu"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(375)),
+                    Part::Quotient(Target::Set(376)),
                     Part::Text("stu"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
                 500,
                 100,
                 &[
-                    Part::Quotient(Target::Set(376)),
+                    Part::Quotient(Target::Set(377)),
                     Part::Text("set"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38039,7 +38150,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("tysi\u{105}cem"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38048,7 +38159,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" tysi\u{105}cami"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38056,7 +38167,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[
                     Part::Text("milionem"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38065,7 +38176,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" milionami"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38073,7 +38184,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[
                     Part::Text("miliardem"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38082,7 +38193,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" miliardami"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38090,7 +38201,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[
                     Part::Text("bilionem"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38099,7 +38210,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" bilionami"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38107,7 +38218,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[
                     Part::Text("biliardem"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38116,7 +38227,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" biliardami"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(373))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(374))], &[]),
                 ],
             ),
             Rule::new(
@@ -38128,7 +38239,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(377))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(378))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("minus "), Part::Remainder(Target::Same)]),
@@ -38147,13 +38258,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 11,
                 10,
-                &[Part::Remainder(Target::Set(368)), Part::Text("nasty")],
+                &[Part::Remainder(Target::Set(369)), Part::Text("nasty")],
             ),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(368)),
+                    Part::Quotient(Target::Set(369)),
                     Part::Plural(
                         PluralKind::Cardinal,
                         &[
@@ -38177,11 +38288,11 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(366)),
+                        Part::Quotient(Target::Set(367)),
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(367)), Part::Text("setny")],
+                    &[Part::Quotient(Target::Set(368)), Part::Text("setny")],
                 )],
             ),
             Rule::new(
@@ -38197,7 +38308,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(377)),
+                        Part::Quotient(Target::Set(378)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -38210,7 +38321,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(369)),
+                        Part::Quotient(Target::Set(370)),
                         Part::Text("tysi\u{119}czny"),
                     ],
                 )],
@@ -38228,7 +38339,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(377)),
+                        Part::Quotient(Target::Set(378)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -38240,7 +38351,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(369)), Part::Text("milionowy")],
+                    &[Part::Quotient(Target::Set(370)), Part::Text("milionowy")],
                 )],
             ),
             Rule::new(
@@ -38256,7 +38367,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(377)),
+                        Part::Quotient(Target::Set(378)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -38268,7 +38379,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(369)), Part::Text("miliardowy")],
+                    &[Part::Quotient(Target::Set(370)), Part::Text("miliardowy")],
                 )],
             ),
             Rule::new(
@@ -38284,7 +38395,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(377)),
+                        Part::Quotient(Target::Set(378)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -38296,7 +38407,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(369)), Part::Text("bilionowy")],
+                    &[Part::Quotient(Target::Set(370)), Part::Text("bilionowy")],
                 )],
             ),
             Rule::new(
@@ -38312,7 +38423,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(377)),
+                        Part::Quotient(Target::Set(378)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -38324,7 +38435,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(369)), Part::Text("biliardowy")],
+                    &[Part::Quotient(Target::Set(370)), Part::Text("biliardowy")],
                 )],
             ),
             Rule::new(
@@ -38336,7 +38447,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(383))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(384))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -38356,13 +38467,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Text(" e "), Part::Whole(Target::Set(386))]),
+            Rule::new(0, 1, &[Part::Text(" e "), Part::Whole(Target::Set(387))]),
             Rule::new(
                 100,
                 100,
                 &[
-                    Part::Remainder(Target::Set(384)),
-                    Part::Whole(Target::Set(386)),
+                    Part::Remainder(Target::Set(385)),
+                    Part::Whole(Target::Set(387)),
                 ],
             ),
         ],
@@ -38529,7 +38640,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("mil"),
-                    Part::Optional(&[Part::Remainder(Target::Set(385))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(386))], &[]),
                 ],
             ),
             Rule::new(
@@ -38538,7 +38649,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" mil"),
-                    Part::Optional(&[Part::Remainder(Target::Set(385))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(386))], &[]),
                 ],
             ),
             Rule::new(
@@ -38554,7 +38665,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "milh\u{f5}es"),
                         ],
                     ),
-                    Part::Optional(&[Part::Remainder(Target::Set(385))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(386))], &[]),
                 ],
             ),
             Rule::new(
@@ -38570,7 +38681,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "bilh\u{f5}es"),
                         ],
                     ),
-                    Part::Optional(&[Part::Remainder(Target::Set(385))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(386))], &[]),
                 ],
             ),
             Rule::new(
@@ -38586,7 +38697,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "trilh\u{f5}es"),
                         ],
                     ),
-                    Part::Optional(&[Part::Remainder(Target::Set(385))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(386))], &[]),
                 ],
             ),
             Rule::new(
@@ -38602,7 +38713,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "quatrilh\u{f5}es"),
                         ],
                     ),
-                    Part::Optional(&[Part::Remainder(Target::Set(385))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(386))], &[]),
                 ],
             ),
             Rule::new(
@@ -38614,7 +38725,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(386))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(387))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("menos "), Part::Remainder(Target::Same)]),
@@ -38785,7 +38896,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(386)),
+                    Part::Quotient(Target::Set(387)),
                     Part::Text(" mil\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -38794,7 +38905,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(386)),
+                    Part::Quotient(Target::Set(387)),
                     Part::Text(" milion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -38803,7 +38914,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(386)),
+                    Part::Quotient(Target::Set(387)),
                     Part::Text(" bilion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -38812,7 +38923,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(386)),
+                    Part::Quotient(Target::Set(387)),
                     Part::Text(" trilion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -38821,7 +38932,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(386)),
+                    Part::Quotient(Target::Set(387)),
                     Part::Text(" quadrilion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -38843,13 +38954,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Text(" e "), Part::Whole(Target::Set(391))]),
+            Rule::new(0, 1, &[Part::Text(" e "), Part::Whole(Target::Set(392))]),
             Rule::new(
                 100,
                 100,
                 &[
-                    Part::Remainder(Target::Set(389)),
-                    Part::Whole(Target::Set(391)),
+                    Part::Remainder(Target::Set(390)),
+                    Part::Whole(Target::Set(392)),
                 ],
             ),
         ],
@@ -39016,7 +39127,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("mil"),
-                    Part::Optional(&[Part::Remainder(Target::Set(390))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(391))], &[]),
                 ],
             ),
             Rule::new(
@@ -39025,7 +39136,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" mil"),
-                    Part::Optional(&[Part::Remainder(Target::Set(390))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(391))], &[]),
                 ],
             ),
             Rule::new(
@@ -39041,7 +39152,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "milh\u{f5}es"),
                         ],
                     ),
-                    Part::Optional(&[Part::Remainder(Target::Set(390))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(391))], &[]),
                 ],
             ),
             Rule::new(
@@ -39050,7 +39161,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" mil milh\u{f5}es"),
-                    Part::Optional(&[Part::Remainder(Target::Set(390))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(391))], &[]),
                 ],
             ),
             Rule::new(
@@ -39066,7 +39177,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                             (Category::Other, "bili\u{f5}es"),
                         ],
                     ),
-                    Part::Optional(&[Part::Remainder(Target::Set(390))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(391))], &[]),
                 ],
             ),
             Rule::new(
@@ -39075,7 +39186,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" mil bili\u{f5}es"),
-                    Part::Optional(&[Part::Remainder(Target::Set(390))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(391))], &[]),
                 ],
             ),
             Rule::new(
@@ -39087,7 +39198,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(391))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(392))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("menos "), Part::Remainder(Target::Same)]),
@@ -39258,7 +39369,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(391)),
+                    Part::Quotient(Target::Set(392)),
                     Part::Text(" mil\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39267,7 +39378,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(391)),
+                    Part::Quotient(Target::Set(392)),
                     Part::Text(" milion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39276,7 +39387,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(391)),
+                    Part::Quotient(Target::Set(392)),
                     Part::Text(" mil milion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39285,7 +39396,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(391)),
+                    Part::Quotient(Target::Set(392)),
                     Part::Text(" bilion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39294,7 +39405,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(391)),
+                    Part::Quotient(Target::Set(392)),
                     Part::Text(" mil bilion\u{e9}simo"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39312,13 +39423,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 0,
                 1,
-                &[Part::Whole(Target::Set(395)), Part::Text("-ni-yuq")],
+                &[Part::Whole(Target::Set(396)), Part::Text("-ni-yuq")],
             ),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(395)), Part::Text("-yuq")]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(396)), Part::Text("-yuq")]),
             Rule::new(
                 7,
                 1,
-                &[Part::Whole(Target::Set(395)), Part::Text("-ni-yuq")],
+                &[Part::Whole(Target::Set(396)), Part::Text("-ni-yuq")],
             ),
         ],
     },
@@ -39340,7 +39451,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("chunka"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(394))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(395))], &[]),
                 ],
             ),
             Rule::new(
@@ -39349,7 +39460,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" chunka"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(394))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(395))], &[]),
                 ],
             ),
             Rule::new(
@@ -39415,14 +39526,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(395))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(396))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("minusu "), Part::Remainder(Target::Same)]),
         rules: &[Rule::new(
             0,
             1,
-            &[Part::Whole(Target::Set(395)), Part::Text("-\u{f1}iqin")],
+            &[Part::Whole(Target::Set(396)), Part::Text("-\u{f1}iqin")],
         )],
     },
     RuleSet {
@@ -39451,25 +39562,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 12,
                 10,
-                &[Part::Remainder(Target::Set(401)), Part::Text("sprezecelea")],
+                &[Part::Remainder(Target::Set(402)), Part::Text("sprezecelea")],
             ),
             Rule::new(14, 10, &[Part::Text("paisprezecelea")]),
             Rule::new(
                 15,
                 10,
-                &[Part::Remainder(Target::Set(401)), Part::Text("sprezecelea")],
+                &[Part::Remainder(Target::Set(402)), Part::Text("sprezecelea")],
             ),
             Rule::new(16, 10, &[Part::Text("\u{219}aisprezecelea")]),
             Rule::new(
                 17,
                 10,
-                &[Part::Remainder(Target::Set(401)), Part::Text("sprezecelea")],
+                &[Part::Remainder(Target::Set(402)), Part::Text("sprezecelea")],
             ),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Optional(
                         &[Part::Text("zeci \u{219}i "), Part::Remainder(Target::Same)],
                         &[Part::Text("zecilea")],
@@ -39488,7 +39599,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" "),
                     Part::Optional(
                         &[Part::Text("sute "), Part::Remainder(Target::Same)],
@@ -39508,7 +39619,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" "),
                     Part::Optional(
                         &[
@@ -39539,7 +39650,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" "),
                     Part::Optional(
                         &[
@@ -39570,7 +39681,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" "),
                     Part::Optional(
                         &[
@@ -39601,7 +39712,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" "),
                     Part::Optional(
                         &[
@@ -39632,7 +39743,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" "),
                     Part::Optional(
                         &[
@@ -39664,7 +39775,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("zero")]),
             Rule::new(1, 1, &[Part::Text("una")]),
             Rule::new(2, 1, &[Part::Text("dou\u{103}")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(401))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(402))]),
             Rule::new(
                 12,
                 10,
@@ -39749,7 +39860,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" milioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39758,7 +39869,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de milioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39775,7 +39886,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" miliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39784,7 +39895,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de miliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39801,7 +39912,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" bilioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39810,7 +39921,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de bilioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39827,7 +39938,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" biliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39836,7 +39947,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de biliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39884,7 +39995,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text("zeci"),
                     Part::Optional(
                         &[Part::Text(" \u{219}i "), Part::Remainder(Target::Same)],
@@ -39904,7 +40015,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" sute"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39921,7 +40032,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" mii"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39930,7 +40041,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" de mii"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39947,7 +40058,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" milioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39956,7 +40067,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de milioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39973,7 +40084,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" miliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39982,7 +40093,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de miliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -39999,7 +40110,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" bilioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40008,7 +40119,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de bilioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40025,7 +40136,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" biliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40034,7 +40145,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de biliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40051,12 +40162,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[
             Rule::new(0, 1, &[Part::Text("zero")]),
             Rule::new(1, 1, &[Part::Text("un")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(400))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(401))]),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text("zeci"),
                     Part::Optional(
                         &[Part::Text(" \u{219}i "), Part::Remainder(Target::Same)],
@@ -40076,7 +40187,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" sute"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40093,7 +40204,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" mii"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40102,7 +40213,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(400)),
+                    Part::Quotient(Target::Set(401)),
                     Part::Text(" de mii"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40119,7 +40230,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" milioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40128,7 +40239,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de milioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40145,7 +40256,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" miliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40154,7 +40265,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de miliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40171,7 +40282,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" bilioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40180,7 +40291,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de bilioane"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40197,7 +40308,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" biliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40206,7 +40317,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(402)),
+                    Part::Quotient(Target::Set(403)),
                     Part::Text(" de biliarde"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40220,14 +40331,778 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(401))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(402))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("minus "), Part::Remainder(Target::Same)]),
         rules: &[
-            Rule::new(0, 1, &[Part::Text("al "), Part::Whole(Target::Set(399))]),
+            Rule::new(0, 1, &[Part::Text("al "), Part::Whole(Target::Set(400))]),
             Rule::new(1, 1, &[Part::Text("primul")]),
-            Rule::new(2, 1, &[Part::Text("al "), Part::Whole(Target::Set(399))]),
+            Rule::new(2, 1, &[Part::Text("al "), Part::Whole(Target::Set(400))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{5f3}")]),
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{5f4}"), Part::Whole(Target::Set(410))],
+            ),
+            Rule::new(
+                11,
+                10,
+                &[
+                    Part::Text("\u{5d9}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(15, 10, &[Part::Text("\u{5d8}\u{5f4}\u{5d5}")]),
+            Rule::new(16, 10, &[Part::Text("\u{5d8}\u{5f4}\u{5d6}")]),
+            Rule::new(
+                17,
+                10,
+                &[
+                    Part::Text("\u{5d9}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(20, 10, &[Part::Text("\u{5f4}\u{5db}")]),
+            Rule::new(
+                21,
+                10,
+                &[
+                    Part::Text("\u{5db}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(30, 10, &[Part::Text("\u{5f4}\u{5dc}")]),
+            Rule::new(
+                31,
+                10,
+                &[
+                    Part::Text("\u{5dc}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(40, 10, &[Part::Text("\u{5f4}\u{5de}")]),
+            Rule::new(
+                41,
+                10,
+                &[
+                    Part::Text("\u{5de}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(50, 10, &[Part::Text("\u{5f4}\u{5e0}")]),
+            Rule::new(
+                51,
+                10,
+                &[
+                    Part::Text("\u{5e0}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(60, 10, &[Part::Text("\u{5f4}\u{5e1}")]),
+            Rule::new(
+                61,
+                10,
+                &[
+                    Part::Text("\u{5e1}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(70, 10, &[Part::Text("\u{5f4}\u{5e2}")]),
+            Rule::new(
+                71,
+                10,
+                &[
+                    Part::Text("\u{5e2}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(80, 10, &[Part::Text("\u{5f4}\u{5e3}")]),
+            Rule::new(
+                81,
+                10,
+                &[
+                    Part::Text("\u{5e4}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(90, 10, &[Part::Text("\u{5f4}\u{5e6}")]),
+            Rule::new(
+                91,
+                10,
+                &[
+                    Part::Text("\u{5e6}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{5f4}")]),
+            Rule::new(1, 1, &[Part::Text("\u{5d0}")]),
+            Rule::new(2, 1, &[Part::Text("\u{5d1}")]),
+            Rule::new(3, 1, &[Part::Text("\u{5d2}")]),
+            Rule::new(4, 1, &[Part::Text("\u{5d3}")]),
+            Rule::new(5, 1, &[Part::Text("\u{5d4}")]),
+            Rule::new(6, 1, &[Part::Text("\u{5d5}")]),
+            Rule::new(7, 1, &[Part::Text("\u{5d6}")]),
+            Rule::new(8, 1, &[Part::Text("\u{5d7}")]),
+            Rule::new(9, 1, &[Part::Text("\u{5d8}")]),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{5d9}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(15, 10, &[Part::Text("\u{5d8}\u{5d5}")]),
+            Rule::new(16, 10, &[Part::Text("\u{5d8}\u{5d6}")]),
+            Rule::new(
+                17,
+                10,
+                &[Part::Text("\u{5d9}"), Part::Remainder(Target::Same)],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[
+                    Part::Text("\u{5db}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                30,
+                10,
+                &[
+                    Part::Text("\u{5dc}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                40,
+                10,
+                &[
+                    Part::Text("\u{5de}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                50,
+                10,
+                &[
+                    Part::Text("\u{5e0}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                60,
+                10,
+                &[
+                    Part::Text("\u{5e1}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                70,
+                10,
+                &[
+                    Part::Text("\u{5e2}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(80, 10, &[Part::Text("\u{5e3}")]),
+            Rule::new(
+                81,
+                10,
+                &[
+                    Part::Text("\u{5e4}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                90,
+                10,
+                &[
+                    Part::Text("\u{5e6}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[
+                    Part::Text("\u{5e7}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                200,
+                100,
+                &[
+                    Part::Text("\u{5e8}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(298, 100, &[Part::Text("\u{5e8}\u{5d7}\u{5e6}")]),
+            Rule::new(
+                299,
+                100,
+                &[Part::Text("\u{5e8}"), Part::Remainder(Target::Same)],
+            ),
+            Rule::new(
+                300,
+                100,
+                &[
+                    Part::Text("\u{5e9}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(304, 100, &[Part::Text("\u{5d3}\u{5e9}")]),
+            Rule::new(
+                305,
+                100,
+                &[Part::Text("\u{5e9}"), Part::Remainder(Target::Same)],
+            ),
+            Rule::new(344, 100, &[Part::Text("\u{5e9}\u{5d3}\u{5de}")]),
+            Rule::new(
+                345,
+                100,
+                &[Part::Text("\u{5e9}"), Part::Remainder(Target::Same)],
+            ),
+            Rule::new(
+                400,
+                100,
+                &[
+                    Part::Text("\u{5ea}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                500,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e7}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                600,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e8}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(698, 100, &[Part::Text("\u{5ea}\u{5e8}\u{5d7}\u{5e6}")]),
+            Rule::new(
+                699,
+                100,
+                &[Part::Text("\u{5ea}\u{5e8}"), Part::Remainder(Target::Same)],
+            ),
+            Rule::new(
+                700,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e9}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(744, 100, &[Part::Text("\u{5ea}\u{5e9}\u{5d3}\u{5de}")]),
+            Rule::new(
+                745,
+                100,
+                &[Part::Text("\u{5ea}\u{5e9}"), Part::Remainder(Target::Same)],
+            ),
+            Rule::new(
+                800,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                900,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5e7}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1000,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5e8}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1100,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5e9}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1200,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1300,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5e7}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1400,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5e8}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1500,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5e9}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1600,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5ea}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1700,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5ea}\u{5e7}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1800,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5ea}\u{5e8}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1900,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5ea}\u{5e9}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                2000,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5ea}\u{5ea}\u{5ea}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(2100, 1000, &[Part::Whole(Target::Digits(2))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(0, 1, &[Part::Whole(Target::Set(409))]),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Whole(Target::Set(409)),
+                    Part::Optional(&[Part::Text("\u{5f3}")], &[]),
+                ],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[
+                    Part::Whole(Target::Set(409)),
+                    Part::Optional(&[Part::Text("\u{5f3}")], &[]),
+                ],
+            ),
+            Rule::new(
+                401,
+                100,
+                &[Part::Whole(Target::Set(409)), Part::Text("\u{5f3}")],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(
+                0,
+                1,
+                &[Part::Whole(Target::Set(410)), Part::Text("\u{5f3}")],
+            ),
+            Rule::new(
+                11,
+                10,
+                &[
+                    Part::Text("\u{5d9}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(15, 10, &[Part::Text("\u{5d8}\u{5f4}\u{5d5}")]),
+            Rule::new(16, 10, &[Part::Text("\u{5d8}\u{5f4}\u{5d6}")]),
+            Rule::new(
+                17,
+                10,
+                &[
+                    Part::Text("\u{5d9}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(20, 10, &[Part::Text("\u{5db}\u{5f3}")]),
+            Rule::new(
+                21,
+                10,
+                &[
+                    Part::Text("\u{5db}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(30, 10, &[Part::Text("\u{5dc}\u{5f3}")]),
+            Rule::new(
+                31,
+                10,
+                &[
+                    Part::Text("\u{5dc}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(40, 10, &[Part::Text("\u{5de}\u{5f3}")]),
+            Rule::new(
+                41,
+                10,
+                &[
+                    Part::Text("\u{5de}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(50, 10, &[Part::Text("\u{5e0}\u{5f3}")]),
+            Rule::new(
+                51,
+                10,
+                &[
+                    Part::Text("\u{5e0}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(60, 10, &[Part::Text("\u{5e1}\u{5f3}")]),
+            Rule::new(
+                61,
+                10,
+                &[
+                    Part::Text("\u{5e1}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(70, 10, &[Part::Text("\u{5e2}\u{5f3}")]),
+            Rule::new(
+                71,
+                10,
+                &[
+                    Part::Text("\u{5e2}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(80, 10, &[Part::Text("\u{5e4}\u{5f3}")]),
+            Rule::new(
+                81,
+                10,
+                &[
+                    Part::Text("\u{5e4}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(90, 10, &[Part::Text("\u{5e6}\u{5f3}")]),
+            Rule::new(
+                91,
+                10,
+                &[
+                    Part::Text("\u{5e6}\u{5f4}"),
+                    Part::Remainder(Target::Set(410)),
+                ],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[Part::Text("\u{5e7}"), Part::Remainder(Target::Set(406))],
+            ),
+            Rule::new(
+                200,
+                100,
+                &[Part::Text("\u{5e8}"), Part::Remainder(Target::Set(406))],
+            ),
+            Rule::new(298, 100, &[Part::Text("\u{5e8}\u{5d7}\u{5f4}\u{5e6}")]),
+            Rule::new(
+                299,
+                100,
+                &[Part::Text("\u{5e8}"), Part::Remainder(Target::Set(406))],
+            ),
+            Rule::new(
+                300,
+                100,
+                &[Part::Text("\u{5e9}"), Part::Remainder(Target::Set(406))],
+            ),
+            Rule::new(304, 100, &[Part::Text("\u{5d3}\u{5f4}\u{5e9}")]),
+            Rule::new(
+                305,
+                100,
+                &[Part::Text("\u{5e9}"), Part::Remainder(Target::Set(406))],
+            ),
+            Rule::new(344, 100, &[Part::Text("\u{5e9}\u{5d3}\u{5f4}\u{5de}")]),
+            Rule::new(
+                345,
+                100,
+                &[Part::Text("\u{5e9}"), Part::Remainder(Target::Set(406))],
+            ),
+            Rule::new(
+                400,
+                100,
+                &[Part::Text("\u{5ea}"), Part::Remainder(Target::Set(406))],
+            ),
+            Rule::new(500, 100, &[Part::Text("\u{5ea}\u{5f4}\u{5e7}")]),
+            Rule::new(
+                501,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e7}"),
+                    Part::Remainder(Target::Set(406)),
+                ],
+            ),
+            Rule::new(600, 100, &[Part::Text("\u{5ea}\u{5f4}\u{5e8}")]),
+            Rule::new(
+                601,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e8}"),
+                    Part::Remainder(Target::Set(406)),
+                ],
+            ),
+            Rule::new(
+                698,
+                100,
+                &[Part::Text("\u{5ea}\u{5e8}\u{5d7}\u{5f4}\u{5e6}")],
+            ),
+            Rule::new(
+                699,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e8}"),
+                    Part::Remainder(Target::Set(406)),
+                ],
+            ),
+            Rule::new(700, 100, &[Part::Text("\u{5ea}\u{5f4}\u{5e9}")]),
+            Rule::new(
+                701,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e9}"),
+                    Part::Remainder(Target::Set(406)),
+                ],
+            ),
+            Rule::new(
+                744,
+                100,
+                &[Part::Text("\u{5ea}\u{5e9}\u{5d3}\u{5f4}\u{5de}")],
+            ),
+            Rule::new(
+                745,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5e9}"),
+                    Part::Remainder(Target::Set(406)),
+                ],
+            ),
+            Rule::new(800, 100, &[Part::Text("\u{5ea}\u{5f4}\u{5ea}")]),
+            Rule::new(
+                801,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}"),
+                    Part::Remainder(Target::Set(406)),
+                ],
+            ),
+            Rule::new(900, 100, &[Part::Text("\u{5ea}\u{5ea}\u{5f4}\u{5e7}")]),
+            Rule::new(
+                901,
+                100,
+                &[
+                    Part::Text("\u{5ea}\u{5ea}\u{5e7}"),
+                    Part::Remainder(Target::Set(406)),
+                ],
+            ),
+            Rule::new(1000, 1000, &[Part::Text("\u{5d0}\u{5dc}\u{5e3}")]),
+            Rule::new(
+                1001,
+                1000,
+                &[
+                    Part::Quotient(Target::Set(408)),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                2000,
+                1000,
+                &[Part::Text("\u{5d0}\u{5dc}\u{5e4}\u{5d9}\u{5d9}\u{5dd}")],
+            ),
+            Rule::new(
+                2001,
+                1000,
+                &[
+                    Part::Quotient(Target::Set(408)),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                3000,
+                1000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text(" \u{5d0}\u{5dc}\u{5e4}\u{5d9}\u{5dd}"),
+                ],
+            ),
+            Rule::new(
+                3001,
+                1000,
+                &[
+                    Part::Quotient(Target::Set(408)),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000,
+                1_000_000,
+                &[Part::Text(
+                    "\u{5d0}\u{5dc}\u{5e3} \u{5d0}\u{5dc}\u{5e4}\u{5d9}\u{5dd}",
+                )],
+            ),
+            Rule::new(1_000_001, 1_000_000, &[Part::Whole(Target::Digits(2))]),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{5f4}")]),
+            Rule::new(1, 1, &[Part::Text("\u{5d0}")]),
+            Rule::new(2, 1, &[Part::Text("\u{5d1}")]),
+            Rule::new(3, 1, &[Part::Text("\u{5d2}")]),
+            Rule::new(4, 1, &[Part::Text("\u{5d3}")]),
+            Rule::new(5, 1, &[Part::Text("\u{5d4}")]),
+            Rule::new(6, 1, &[Part::Text("\u{5d5}")]),
+            Rule::new(7, 1, &[Part::Text("\u{5d6}")]),
+            Rule::new(8, 1, &[Part::Text("\u{5d7}")]),
+            Rule::new(9, 1, &[Part::Text("\u{5d8}")]),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{5d9}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(15, 10, &[Part::Text("\u{5d8}\u{5d5}")]),
+            Rule::new(16, 10, &[Part::Text("\u{5d8}\u{5d6}")]),
+            Rule::new(
+                17,
+                10,
+                &[Part::Text("\u{5d9}"), Part::Remainder(Target::Same)],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[
+                    Part::Text("\u{5db}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                30,
+                10,
+                &[
+                    Part::Text("\u{5dc}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                40,
+                10,
+                &[
+                    Part::Text("\u{5de}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                50,
+                10,
+                &[
+                    Part::Text("\u{5e0}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                60,
+                10,
+                &[
+                    Part::Text("\u{5e1}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                70,
+                10,
+                &[
+                    Part::Text("\u{5e2}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                80,
+                10,
+                &[
+                    Part::Text("\u{5e4}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                90,
+                10,
+                &[
+                    Part::Text("\u{5e6}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(407))]),
         ],
     },
     RuleSet {
@@ -40245,9 +41120,9 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(409))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(415))]),
             Rule::new(1, 1, &[Part::Text("\u{43e}\u{434}\u{43d}\u{43e}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(409))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(415))]),
             Rule::new(
                 20,
                 10,
@@ -40332,7 +41207,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(409)),
+                    Part::Quotient(Target::Set(415)),
                     Part::Text("\u{441}\u{43e}\u{442}"),
                     Part::Optional(&[Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40348,7 +41223,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("\u{43d}\u{43e}\u{43b}\u{44c}")]),
             Rule::new(1, 1, &[Part::Text("\u{43e}\u{434}\u{43d}\u{430}")]),
             Rule::new(2, 1, &[Part::Text("\u{434}\u{432}\u{435}")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(410))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(416))]),
             Rule::new(
                 20,
                 10,
@@ -40429,7 +41304,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text("\u{441}\u{442}\u{438}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40438,7 +41313,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text("\u{441}\u{442}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40447,7 +41322,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 500,
                 100,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text("\u{441}\u{43e}\u{442}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40456,7 +41331,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40473,7 +41348,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40499,7 +41374,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40525,7 +41400,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40551,7 +41426,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40588,7 +41463,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{43d}\u{43e}\u{43b}\u{44f}")]),
             Rule::new(1, 1, &[Part::Text("\u{43e}\u{434}\u{43d}\u{43e}\u{439}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(411))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(417))]),
             Rule::new(
                 20,
                 10,
@@ -40673,7 +41548,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(409)),
+                    Part::Quotient(Target::Set(415)),
                     Part::Text("\u{441}\u{43e}\u{442}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40682,7 +41557,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(409)),
+                    Part::Quotient(Target::Set(415)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40698,7 +41573,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40720,7 +41595,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40742,7 +41617,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40764,7 +41639,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -40965,7 +41840,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text("\u{441}\u{442}\u{438}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40974,7 +41849,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text("\u{441}\u{442}\u{430}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40983,7 +41858,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 500,
                 100,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text("\u{441}\u{43e}\u{442}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -40992,7 +41867,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(408)),
+                    Part::Quotient(Target::Set(414)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41009,7 +41884,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41035,7 +41910,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41061,7 +41936,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41087,7 +41962,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(410)),
+                    Part::Quotient(Target::Set(416)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41302,7 +42177,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(409)),
+                    Part::Quotient(Target::Set(415)),
                     Part::Text("\u{441}\u{43e}\u{442}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -41311,7 +42186,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(409)),
+                    Part::Quotient(Target::Set(415)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41327,7 +42202,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41349,7 +42224,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41371,7 +42246,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41393,7 +42268,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(411)),
+                    Part::Quotient(Target::Set(417)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -41420,7 +42295,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(410))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(416))])],
     },
     RuleSet {
         negative: Some(&[
@@ -41674,12 +42549,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(408)),
+                        Part::Quotient(Target::Set(414)),
                         Part::Text("\u{441}\u{442}\u{438} "),
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(411)),
+                        Part::Quotient(Target::Set(417)),
                         Part::Text("\u{441}\u{43e}\u{442}\u{44b}\u{439}"),
                     ],
                 )],
@@ -41689,7 +42564,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(408)),
+                        Part::Quotient(Target::Set(414)),
                         Part::Plural(
                             PluralKind::Cardinal,
                             &[
@@ -41701,7 +42576,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(411)),
+                        Part::Quotient(Target::Set(417)),
                         Part::Text("\u{441}\u{43e}\u{442}\u{44b}\u{439}"),
                     ],
                 )],
@@ -41724,7 +42599,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(408)),
+                        Part::Quotient(Target::Set(414)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -41738,7 +42613,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(407)),
+                        Part::Quotient(Target::Set(413)),
                         Part::Text("\u{442}\u{44b}\u{441}\u{44f}\u{447}\u{43d}\u{44b}\u{439}"),
                     ],
                 )],
@@ -41759,7 +42634,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(410)),
+                        Part::Quotient(Target::Set(416)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -41782,7 +42657,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(407)),
+                        Part::Quotient(Target::Set(413)),
                         Part::Text(
                             "\u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}\u{43d}\u{44b}\u{439}",
                         ),
@@ -41805,7 +42680,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(410)),
+                        Part::Quotient(Target::Set(416)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -41828,7 +42703,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(407)),
+                        Part::Quotient(Target::Set(413)),
                         Part::Text(
                             "\u{43c}\u{438}\u{43b}\u{43b}\u{438}\u{430}\u{440}\u{434}\u{43d}\u{44b}\u{439}",
                         ),
@@ -41851,7 +42726,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(410)),
+                        Part::Quotient(Target::Set(416)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -41874,7 +42749,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(407)),
+                        Part::Quotient(Target::Set(413)),
                         Part::Text(
                             "\u{442}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}\u{43d}\u{44b}\u{439}",
                         ),
@@ -41899,7 +42774,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(410)),
+                        Part::Quotient(Target::Set(416)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -41922,7 +42797,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(407)),
+                        Part::Quotient(Target::Set(413)),
                         Part::Text(
                             "\u{43a}\u{432}\u{430}\u{434}\u{440}\u{438}\u{43b}\u{43b}\u{438}\u{43e}\u{43d}\u{43d}\u{44b}\u{439}",
                         ),
@@ -42030,7 +42905,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(414))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(420))])],
     },
     RuleSet {
         negative: None,
@@ -42067,7 +42942,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("nula")]),
             Rule::new(1, 1, &[Part::Text("jedna")]),
             Rule::new(2, 1, &[Part::Text("dve")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(419))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(425))]),
             Rule::new(
                 20,
                 10,
@@ -42113,7 +42988,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text("\u{ad}sto"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42130,7 +43005,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42147,7 +43022,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(419)),
+                    Part::Quotient(Target::Set(425)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42164,7 +43039,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42181,7 +43056,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(419)),
+                    Part::Quotient(Target::Set(425)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42198,7 +43073,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42286,7 +43161,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text("\u{ad}sto"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42303,7 +43178,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42320,7 +43195,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(419)),
+                    Part::Quotient(Target::Set(425)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42337,7 +43212,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42354,7 +43229,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(419)),
+                    Part::Quotient(Target::Set(425)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42371,7 +43246,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -42393,7 +43268,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(419))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(425))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("m\u{ed}nus "), Part::Remainder(Target::Same)]),
@@ -42411,13 +43286,13 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 10,
                 10,
-                &[Part::Remainder(Target::Set(416)), Part::Text("ty")],
+                &[Part::Remainder(Target::Set(422)), Part::Text("ty")],
             ),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(417)),
+                    Part::Quotient(Target::Set(423)),
                     Part::Text("y"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42434,7 +43309,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text("\u{ad}st\u{fd}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42451,7 +43326,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text("\u{ad}tis\u{ed}ci"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42468,7 +43343,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(419)),
+                    Part::Quotient(Target::Set(425)),
                     Part::Text(" mili\u{f3}nt\u{fd}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42485,7 +43360,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" miliardt\u{fd}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42502,7 +43377,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(419)),
+                    Part::Quotient(Target::Set(425)),
                     Part::Text(" bili\u{f3}nt\u{fd}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42519,7 +43394,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(418)),
+                    Part::Quotient(Target::Set(424)),
                     Part::Text(" biliardt\u{fd}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42537,12 +43412,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("ni\u{10d}")]),
             Rule::new(1, 1, &[Part::Text("eno")]),
             Rule::new(2, 1, &[Part::Text("dve")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(423))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(429))]),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("dvajset"),
                 ],
             ),
@@ -42550,7 +43425,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 30,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("trideset"),
                 ],
             ),
@@ -42558,7 +43433,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 40,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("\u{161}tirideset"),
                 ],
             ),
@@ -42566,7 +43441,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 50,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("petdeset"),
                 ],
             ),
@@ -42574,7 +43449,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 60,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("\u{161}estdeset"),
                 ],
             ),
@@ -42582,7 +43457,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 70,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("sedemdeset"),
                 ],
             ),
@@ -42590,7 +43465,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 80,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("osemdeset"),
                 ],
             ),
@@ -42598,7 +43473,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 90,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("devetdeset"),
                 ],
             ),
@@ -42614,7 +43489,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(422)),
+                    Part::Quotient(Target::Set(428)),
                     Part::Text("sto"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42631,7 +43506,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(423)),
+                    Part::Quotient(Target::Set(429)),
                     Part::Text(" tiso\u{10d}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42649,7 +43524,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(423)),
+                        Part::Quotient(Target::Set(429)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -42663,7 +43538,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(423)), Part::Text(" milijona")],
+                    &[Part::Quotient(Target::Set(429)), Part::Text(" milijona")],
                 )],
             ),
             Rule::new(
@@ -42679,7 +43554,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(422)),
+                        Part::Quotient(Target::Set(428)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -42709,7 +43584,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(423)),
+                        Part::Quotient(Target::Set(429)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -42723,7 +43598,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(423)), Part::Text(" bilijona")],
+                    &[Part::Quotient(Target::Set(429)), Part::Text(" bilijona")],
                 )],
             ),
             Rule::new(
@@ -42739,7 +43614,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(422)),
+                        Part::Quotient(Target::Set(428)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -42862,7 +43737,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(422)),
+                    Part::Quotient(Target::Set(428)),
                     Part::Text("sto"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42879,7 +43754,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(423)),
+                    Part::Quotient(Target::Set(429)),
                     Part::Text(" tiso\u{10d}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -42897,7 +43772,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(423)),
+                        Part::Quotient(Target::Set(429)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -42927,7 +43802,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(422)),
+                        Part::Quotient(Target::Set(428)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -42957,7 +43832,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(423)),
+                        Part::Quotient(Target::Set(429)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -42987,7 +43862,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(422)),
+                        Part::Quotient(Target::Set(428)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -43013,7 +43888,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(422))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(428))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("minus "), Part::Remainder(Target::Same)]),
@@ -43042,7 +43917,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("dvajseti"),
                 ],
             ),
@@ -43050,7 +43925,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 30,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("trideseti"),
                 ],
             ),
@@ -43058,7 +43933,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 40,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("\u{161}tirideseti"),
                 ],
             ),
@@ -43066,7 +43941,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 50,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("petdeseti"),
                 ],
             ),
@@ -43074,7 +43949,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 60,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("\u{161}estdeseti"),
                 ],
             ),
@@ -43082,7 +43957,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 70,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("sedemdeseti"),
                 ],
             ),
@@ -43090,7 +43965,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 80,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("osemdeseti"),
                 ],
             ),
@@ -43098,7 +43973,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 90,
                 10,
                 &[
-                    Part::Optional(&[Part::Remainder(Target::Set(423)), Part::Text("in")], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(429)), Part::Text("in")], &[]),
                     Part::Text("devetdeseti"),
                 ],
             ),
@@ -43117,7 +43992,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(422)),
+                    Part::Quotient(Target::Set(428)),
                     Part::Text("\u{ad}sto"),
                     Part::Optional(
                         &[Part::Text("\u{ad}"), Part::Remainder(Target::Same)],
@@ -43140,7 +44015,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(423)),
+                    Part::Quotient(Target::Set(429)),
                     Part::Text("\u{ad}tiso\u{10d}"),
                     Part::Optional(
                         &[Part::Text("\u{ad}"), Part::Remainder(Target::Same)],
@@ -43161,7 +44036,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(423)),
+                        Part::Quotient(Target::Set(429)),
                         Part::Text("\u{ad}"),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -43191,7 +44066,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(422)),
+                        Part::Quotient(Target::Set(428)),
                         Part::Text("\u{ad}"),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -43221,7 +44096,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(423)),
+                        Part::Quotient(Target::Set(429)),
                         Part::Text("\u{ad}"),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -43251,7 +44126,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(422)),
+                        Part::Quotient(Target::Set(428)),
                         Part::Text("\u{ad}"),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -43282,7 +44157,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("nj\u{eb}")]),
             Rule::new(2, 1, &[Part::Text("dy")]),
             Rule::new(3, 1, &[Part::Text("tri")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(427))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(433))]),
             Rule::new(
                 20,
                 10,
@@ -43311,7 +44186,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 50,
                 10,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text("dhjet\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43320,7 +44195,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(427)),
+                    Part::Quotient(Target::Set(433)),
                     Part::Text("qind"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43329,7 +44204,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(427)),
+                    Part::Quotient(Target::Set(433)),
                     Part::Text(" mij\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43346,7 +44221,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" milion\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43363,7 +44238,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" miliar\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43380,7 +44255,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" bilion\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43397,7 +44272,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" biliar\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43427,7 +44302,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 11,
                 10,
                 &[
-                    Part::Remainder(Target::Set(427)),
+                    Part::Remainder(Target::Set(433)),
                     Part::Text("mb\u{eb}dhjet\u{eb}"),
                 ],
             ),
@@ -43459,7 +44334,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 50,
                 10,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text("dhjet\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43468,7 +44343,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(427)),
+                    Part::Quotient(Target::Set(433)),
                     Part::Text("qind"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43477,7 +44352,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(427)),
+                    Part::Quotient(Target::Set(433)),
                     Part::Text(" mij\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43494,7 +44369,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" milion\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43511,7 +44386,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" miliar\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43528,7 +44403,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" bilion\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43545,7 +44420,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(426)),
+                    Part::Quotient(Target::Set(432)),
                     Part::Text(" biliar\u{eb}"),
                     Part::Optional(&[Part::Text(" e "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43559,7 +44434,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(427))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(433))])],
     },
     RuleSet {
         negative: None,
@@ -43573,19 +44448,19 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(7, 1, &[Part::Text("\u{441}\u{435}\u{434}\u{430}\u{43c}")]),
             Rule::new(8, 1, &[Part::Text("\u{43e}\u{441}\u{430}\u{43c}")]),
             Rule::new(9, 1, &[Part::Text("\u{434}\u{435}\u{432}\u{435}")]),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(434))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(440))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("\u{458}\u{435}\u{434}\u{430}\u{43d}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(433))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(439))]),
             Rule::new(
                 10,
                 10,
                 &[Part::Optional(
-                    &[Part::Whole(Target::Set(434))],
+                    &[Part::Whole(Target::Set(440))],
                     &[Part::Text("\u{434}\u{435}\u{441}\u{435}\u{442}\u{43e}")],
                 )],
             ),
@@ -43593,12 +44468,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(429)),
+                    Part::Quotient(Target::Set(435)),
                     Part::Text("\u{434}\u{435}\u{441}\u{435}\u{442}"),
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(434)),
+                            Part::Remainder(Target::Set(440)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -43609,7 +44484,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Whole(Target::Set(434)),
+                    Part::Whole(Target::Set(440)),
                     Part::Optional(&[Part::Text(" ")], &[]),
                 ],
             ),
@@ -43617,7 +44492,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Whole(Target::Set(434)),
+                    Part::Whole(Target::Set(440)),
                     Part::Optional(&[Part::Text(" ")], &[]),
                 ],
             ),
@@ -43625,7 +44500,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Whole(Target::Set(434)),
+                    Part::Whole(Target::Set(440)),
                     Part::Optional(&[Part::Text(" ")], &[]),
                 ],
             ),
@@ -43633,12 +44508,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 400,
                 100,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text("\u{441}\u{442}\u{43e}"),
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(434)),
+                            Part::Remainder(Target::Set(440)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -43653,19 +44528,19 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("\u{458}\u{435}\u{434}\u{43d}\u{43e}")]),
             Rule::new(2, 1, &[Part::Text("\u{434}\u{432}\u{43e}")]),
             Rule::new(3, 1, &[Part::Text("\u{442}\u{440}\u{43e}")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(430))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(436))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(436))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(442))]),
             Rule::new(
                 100,
                 100,
                 &[
                     Part::Optional(&[Part::Text(" ")], &[]),
-                    Part::Whole(Target::Set(436)),
+                    Part::Whole(Target::Set(442)),
                 ],
             ),
         ],
@@ -43679,12 +44554,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("\u{43d}\u{443}\u{43b}\u{430}")]),
             Rule::new(1, 1, &[Part::Text("\u{458}\u{435}\u{434}\u{43d}\u{430}")]),
             Rule::new(2, 1, &[Part::Text("\u{434}\u{432}\u{435}")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(434))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(440))]),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(429)),
+                    Part::Quotient(Target::Set(435)),
                     Part::Text("\u{434}\u{435}\u{441}\u{435}\u{442}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43752,7 +44627,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -43817,7 +44692,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -43965,7 +44840,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(429)),
+                    Part::Quotient(Target::Set(435)),
                     Part::Text("\u{434}\u{435}\u{441}\u{435}\u{442}"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -43982,7 +44857,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(433)),
+                    Part::Quotient(Target::Set(439)),
                     Part::Plural(
                         PluralKind::Cardinal,
                         &[
@@ -44005,7 +44880,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(433)),
+                    Part::Quotient(Target::Set(439)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44033,7 +44908,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44064,7 +44939,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(433)),
+                    Part::Quotient(Target::Set(439)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44098,7 +44973,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44129,7 +45004,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(433)),
+                    Part::Quotient(Target::Set(439)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44164,7 +45039,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Part::Remainder(Target::Same),
         ]),
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(434))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(440))]),
             Rule::new(
                 1000,
                 1000,
@@ -44177,7 +45052,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(433)),
+                    Part::Quotient(Target::Set(439)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44205,7 +45080,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44236,7 +45111,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(433)),
+                    Part::Quotient(Target::Set(439)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44270,7 +45145,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44301,7 +45176,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(433)),
+                    Part::Quotient(Target::Set(439)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -44551,7 +45426,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 400,
                 100,
                 &[
-                    Part::Quotient(Target::Set(434)),
+                    Part::Quotient(Target::Set(440)),
                     Part::Text("\u{441}\u{442}\u{43e}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -44565,7 +45440,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{445}\u{438}\u{459}\u{430}\u{434}"),
                     Part::Optional(
-                        &[Part::Text("\u{443}"), Part::Remainder(Target::Set(432))],
+                        &[Part::Text("\u{443}"), Part::Remainder(Target::Set(438))],
                         &[Part::Text("\u{438}\u{442}\u{438}")],
                     ),
                 ],
@@ -44575,7 +45450,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(433)),
+                        Part::Quotient(Target::Set(439)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -44592,7 +45467,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(430)),
+                        Part::Quotient(Target::Set(436)),
                         Part::Text("\u{445}\u{438}\u{459}\u{430}\u{434}\u{438}\u{442}\u{438}"),
                     ],
                 )],
@@ -44613,7 +45488,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(434)),
+                        Part::Quotient(Target::Set(440)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -44633,7 +45508,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(431)),
+                        Part::Quotient(Target::Set(437)),
                         Part::Text(
                             "\u{43c}\u{438}\u{43b}\u{438}\u{43e}\u{43d}\u{438}\u{442}\u{438}",
                         ),
@@ -44656,7 +45531,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(433)),
+                        Part::Quotient(Target::Set(439)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -44679,7 +45554,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(430)),
+                        Part::Quotient(Target::Set(436)),
                         Part::Text(
                             "\u{43c}\u{438}\u{43b}\u{438}\u{458}\u{430}\u{440}\u{434}\u{438}\u{442}\u{438}",
                         ),
@@ -44702,7 +45577,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(434)),
+                        Part::Quotient(Target::Set(440)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -44722,7 +45597,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(431)),
+                        Part::Quotient(Target::Set(437)),
                         Part::Text(
                             "\u{431}\u{438}\u{43b}\u{438}\u{43e}\u{43d}\u{438}\u{442}\u{438}",
                         ),
@@ -44745,7 +45620,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(433)),
+                        Part::Quotient(Target::Set(439)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -44768,7 +45643,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(430)),
+                        Part::Quotient(Target::Set(436)),
                         Part::Text(
                             "\u{431}\u{438}\u{43b}\u{438}\u{458}\u{430}\u{440}\u{434}\u{438}\u{442}\u{438}",
                         ),
@@ -44794,19 +45669,19 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(7, 1, &[Part::Text("sedam")]),
             Rule::new(8, 1, &[Part::Text("osam")]),
             Rule::new(9, 1, &[Part::Text("deve")]),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(442))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(448))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("jedan")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(441))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(447))]),
             Rule::new(
                 10,
                 10,
                 &[Part::Optional(
-                    &[Part::Whole(Target::Set(442))],
+                    &[Part::Whole(Target::Set(448))],
                     &[Part::Text("deseto")],
                 )],
             ),
@@ -44814,12 +45689,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(437)),
+                    Part::Quotient(Target::Set(443)),
                     Part::Text("deset"),
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(442)),
+                            Part::Remainder(Target::Set(448)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -44830,7 +45705,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Whole(Target::Set(442)),
+                    Part::Whole(Target::Set(448)),
                     Part::Optional(&[Part::Text(" ")], &[]),
                 ],
             ),
@@ -44838,7 +45713,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Whole(Target::Set(442)),
+                    Part::Whole(Target::Set(448)),
                     Part::Optional(&[Part::Text(" ")], &[]),
                 ],
             ),
@@ -44846,7 +45721,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 300,
                 100,
                 &[
-                    Part::Whole(Target::Set(442)),
+                    Part::Whole(Target::Set(448)),
                     Part::Optional(&[Part::Text(" ")], &[]),
                 ],
             ),
@@ -44854,12 +45729,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 400,
                 100,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text("sto"),
                     Part::Optional(
                         &[
                             Part::Text(" "),
-                            Part::Remainder(Target::Set(442)),
+                            Part::Remainder(Target::Set(448)),
                             Part::Text(" "),
                         ],
                         &[],
@@ -44874,19 +45749,19 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("jedno")]),
             Rule::new(2, 1, &[Part::Text("dvo")]),
             Rule::new(3, 1, &[Part::Text("tro")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(438))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(444))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(444))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(450))]),
             Rule::new(
                 100,
                 100,
                 &[
                     Part::Optional(&[Part::Text(" ")], &[]),
-                    Part::Whole(Target::Set(444)),
+                    Part::Whole(Target::Set(450)),
                 ],
             ),
         ],
@@ -44897,12 +45772,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("nula")]),
             Rule::new(1, 1, &[Part::Text("jedna")]),
             Rule::new(2, 1, &[Part::Text("dve")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(442))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(448))]),
             Rule::new(
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(437)),
+                    Part::Quotient(Target::Set(443)),
                     Part::Text("deset"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -44964,7 +45839,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45014,7 +45889,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45086,7 +45961,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20,
                 10,
                 &[
-                    Part::Quotient(Target::Set(437)),
+                    Part::Quotient(Target::Set(443)),
                     Part::Text("deset"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -45103,7 +45978,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(441)),
+                    Part::Quotient(Target::Set(447)),
                     Part::Plural(
                         PluralKind::Cardinal,
                         &[(Category::Few, "sta"), (Category::Other, "sto")],
@@ -45123,7 +45998,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(441)),
+                    Part::Quotient(Target::Set(447)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45148,7 +46023,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45173,7 +46048,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(441)),
+                    Part::Quotient(Target::Set(447)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45198,7 +46073,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45223,7 +46098,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(441)),
+                    Part::Quotient(Target::Set(447)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45246,7 +46121,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: Some(&[Part::Text("minus "), Part::Remainder(Target::Same)]),
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(442))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(448))]),
             Rule::new(
                 1000,
                 1000,
@@ -45259,7 +46134,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(441)),
+                    Part::Quotient(Target::Set(447)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45284,7 +46159,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45309,7 +46184,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(441)),
+                    Part::Quotient(Target::Set(447)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45334,7 +46209,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45359,7 +46234,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(441)),
+                    Part::Quotient(Target::Set(447)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -45527,7 +46402,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 400,
                 100,
                 &[
-                    Part::Quotient(Target::Set(442)),
+                    Part::Quotient(Target::Set(448)),
                     Part::Text("sto"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -45541,7 +46416,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("hiljad"),
                     Part::Optional(
-                        &[Part::Text("u"), Part::Remainder(Target::Set(440))],
+                        &[Part::Text("u"), Part::Remainder(Target::Set(446))],
                         &[Part::Text("iti")],
                     ),
                 ],
@@ -45551,7 +46426,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(441)),
+                        Part::Quotient(Target::Set(447)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -45564,7 +46439,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(438)), Part::Text("hiljaditi")],
+                    &[Part::Quotient(Target::Set(444)), Part::Text("hiljaditi")],
                 )],
             ),
             Rule::new(
@@ -45583,7 +46458,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(442)),
+                        Part::Quotient(Target::Set(448)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -45596,7 +46471,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(439)), Part::Text("milioniti")],
+                    &[Part::Quotient(Target::Set(445)), Part::Text("milioniti")],
                 )],
             ),
             Rule::new(
@@ -45615,7 +46490,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(441)),
+                        Part::Quotient(Target::Set(447)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -45628,7 +46503,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(438)), Part::Text("milijarditi")],
+                    &[Part::Quotient(Target::Set(444)), Part::Text("milijarditi")],
                 )],
             ),
             Rule::new(
@@ -45647,7 +46522,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(442)),
+                        Part::Quotient(Target::Set(448)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -45660,7 +46535,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(439)), Part::Text("bilioniti")],
+                    &[Part::Quotient(Target::Set(445)), Part::Text("bilioniti")],
                 )],
             ),
             Rule::new(
@@ -45679,7 +46554,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(441)),
+                        Part::Quotient(Target::Set(447)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -45692,7 +46567,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Text(" "),
                         Part::Remainder(Target::Same),
                     ],
-                    &[Part::Quotient(Target::Set(438)), Part::Text("bilijarditi")],
+                    &[Part::Quotient(Target::Set(444)), Part::Text("bilijarditi")],
                 )],
             ),
             Rule::new(
@@ -45808,19 +46683,19 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(445))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(451))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("mineus "), Part::Remainder(Target::Same)]),
         rules: &[Rule::new(
             0,
             1,
-            &[Part::Text("ka"), Part::Whole(Target::Set(445))],
+            &[Part::Text("ka"), Part::Whole(Target::Set(451))],
         )],
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(449))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(455))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -45840,28 +46715,28 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("de")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(458))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(464))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("nde")]),
-            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(458))]),
+            Rule::new(1, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(464))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("te")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(458))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(464))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("te")]),
-            Rule::new(1, 1, &[Part::Text("er "), Part::Whole(Target::Set(458))]),
+            Rule::new(1, 1, &[Part::Text("er "), Part::Whole(Target::Set(464))]),
         ],
     },
     RuleSet {
@@ -45954,7 +46829,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(457)),
+                    Part::Quotient(Target::Set(463)),
                     Part::Text("\u{ad}hundra"),
                     Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -45964,14 +46839,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(457))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(463))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("minus "), Part::Remainder(Target::Same)]),
         rules: &[
             Rule::new(0, 1, &[Part::Text("noll")]),
             Rule::new(1, 1, &[Part::Text("en")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(457))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(463))]),
             Rule::new(
                 20,
                 10,
@@ -46040,7 +46915,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(455)),
+                    Part::Quotient(Target::Set(461)),
                     Part::Text("\u{ad}hundra"),
                     Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46057,7 +46932,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text("\u{ad}tusen"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46074,7 +46949,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" miljoner"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46091,7 +46966,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" miljarder"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46108,7 +46983,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" biljoner"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46125,7 +47000,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" biljarder"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46228,7 +47103,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(457)),
+                    Part::Quotient(Target::Set(463)),
                     Part::Text("\u{ad}hundra"),
                     Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46237,7 +47112,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(454)),
+                    Part::Quotient(Target::Set(460)),
                     Part::Text("\u{ad}tusen"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46254,7 +47129,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" miljoner"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46271,7 +47146,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" miljarder"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46288,7 +47163,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" biljoner"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46305,7 +47180,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" biljarder"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -46333,119 +47208,119 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(10, 10, &[Part::Text("tionde")]),
             Rule::new(11, 10, &[Part::Text("elfte")]),
             Rule::new(12, 10, &[Part::Text("tolfte")]),
-            Rule::new(13, 10, &[Part::Whole(Target::Set(455)), Part::Text("de")]),
+            Rule::new(13, 10, &[Part::Whole(Target::Set(461)), Part::Text("de")]),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("tjugo"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("tjugo"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 30,
                 10,
-                &[Part::Text("trettio"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("trettio"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 40,
                 10,
-                &[Part::Text("fyrtio"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("fyrtio"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 50,
                 10,
-                &[Part::Text("femtio"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("femtio"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 60,
                 10,
-                &[Part::Text("sextio"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("sextio"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 70,
                 10,
-                &[Part::Text("sjuttio"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("sjuttio"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 80,
                 10,
-                &[Part::Text("\u{e5}ttio"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("\u{e5}ttio"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 90,
                 10,
-                &[Part::Text("nittio"), Part::Remainder(Target::Set(451))],
+                &[Part::Text("nittio"), Part::Remainder(Target::Set(457))],
             ),
             Rule::new(
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(457)),
+                    Part::Quotient(Target::Set(463)),
                     Part::Text("\u{ad}hundra"),
-                    Part::Remainder(Target::Set(450)),
+                    Part::Remainder(Target::Set(456)),
                 ],
             ),
             Rule::new(
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(454)),
+                    Part::Quotient(Target::Set(460)),
                     Part::Text("\u{ad}tusen"),
-                    Part::Remainder(Target::Set(450)),
+                    Part::Remainder(Target::Set(456)),
                 ],
             ),
             Rule::new(
                 1_000_000,
                 1_000_000,
-                &[Part::Text("en miljon"), Part::Remainder(Target::Set(452))],
+                &[Part::Text("en miljon"), Part::Remainder(Target::Set(458))],
             ),
             Rule::new(
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" miljon"),
-                    Part::Remainder(Target::Set(453)),
+                    Part::Remainder(Target::Set(459)),
                 ],
             ),
             Rule::new(
                 1_000_000_000,
                 1_000_000_000,
-                &[Part::Text("en miljard"), Part::Remainder(Target::Set(452))],
+                &[Part::Text("en miljard"), Part::Remainder(Target::Set(458))],
             ),
             Rule::new(
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" miljard"),
-                    Part::Remainder(Target::Set(453)),
+                    Part::Remainder(Target::Set(459)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
-                &[Part::Text("en biljon"), Part::Remainder(Target::Set(452))],
+                &[Part::Text("en biljon"), Part::Remainder(Target::Set(458))],
             ),
             Rule::new(
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" biljon"),
-                    Part::Remainder(Target::Set(453)),
+                    Part::Remainder(Target::Set(459)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
-                &[Part::Text("en biljard"), Part::Remainder(Target::Set(452))],
+                &[Part::Text("en biljard"), Part::Remainder(Target::Set(458))],
             ),
             Rule::new(
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(456)),
+                    Part::Quotient(Target::Set(462)),
                     Part::Text(" biljard"),
-                    Part::Remainder(Target::Set(453)),
+                    Part::Remainder(Target::Set(459)),
                 ],
             ),
             Rule::new(
@@ -46603,15 +47478,15 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(459))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(465))])],
     },
     RuleSet {
-        negative: Some(&[Part::Text("wa kasoro "), Part::Remainder(Target::Set(459))]),
+        negative: Some(&[Part::Text("wa kasoro "), Part::Remainder(Target::Set(465))]),
         rules: &[
             Rule::new(0, 1, &[Part::Text("wa sifuri")]),
             Rule::new(1, 1, &[Part::Text("kwanza")]),
             Rule::new(2, 1, &[Part::Text("pili")]),
-            Rule::new(3, 1, &[Part::Text("wa "), Part::Whole(Target::Set(459))]),
+            Rule::new(3, 1, &[Part::Text("wa "), Part::Whole(Target::Set(465))]),
         ],
     },
     RuleSet {
@@ -46629,7 +47504,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("\u{b92}\u{bb0}\u{bc1}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(468))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(474))]),
         ],
     },
     RuleSet {
@@ -46639,7 +47514,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 2,
                 1,
-                &[Part::Text("\u{bc1} "), Part::Whole(Target::Set(468))],
+                &[Part::Text("\u{bc1} "), Part::Whole(Target::Set(474))],
             ),
         ],
     },
@@ -46650,7 +47525,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 2,
                 1,
-                &[Part::Text("\u{bc1} "), Part::Whole(Target::Set(468))],
+                &[Part::Text("\u{bc1} "), Part::Whole(Target::Set(474))],
             ),
         ],
     },
@@ -46664,7 +47539,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     "\u{b92}\u{ba9}\u{bcd}\u{bb1}\u{bbe}\u{bb5}\u{ba4}\u{bc1}",
                 )],
             ),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(470))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(476))]),
         ],
     },
     RuleSet {
@@ -46747,7 +47622,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{ba4}")],
                     ),
@@ -46761,7 +47636,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{ba4}")],
                     ),
@@ -46775,7 +47650,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{ba4}")],
                     ),
@@ -46789,7 +47664,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{ba4}")],
                     ),
@@ -46803,7 +47678,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{ba4}")],
                     ),
@@ -46817,7 +47692,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{ba4}")],
                     ),
@@ -46831,7 +47706,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{ba4}")],
                     ),
@@ -46845,7 +47720,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bb1}\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(467)),
+                            Part::Remainder(Target::Set(473)),
                         ],
                         &[Part::Text("\u{bb1}")],
                     ),
@@ -46963,7 +47838,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -46977,7 +47852,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -46991,7 +47866,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47005,7 +47880,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47019,7 +47894,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47033,7 +47908,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47047,7 +47922,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47061,7 +47936,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47075,7 +47950,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47089,7 +47964,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47103,7 +47978,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47117,7 +47992,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47131,7 +48006,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47145,7 +48020,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47159,7 +48034,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47173,7 +48048,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}"),
-                            Part::Remainder(Target::Set(464)),
+                            Part::Remainder(Target::Set(470)),
                         ],
                         &[Part::Text("\u{bc1}")],
                     ),
@@ -47187,7 +48062,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bae}\u{bcd}")],
                     ),
@@ -47201,7 +48076,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bae}\u{bcd}")],
                     ),
@@ -47211,12 +48086,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(467)),
+                    Part::Quotient(Target::Set(473)),
                     Part::Text("\u{bbe}\u{baf}\u{bbf}\u{bb0}"),
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bae}\u{bcd}")],
                     ),
@@ -47230,7 +48105,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bae}\u{bcd}")],
                     ),
@@ -47245,7 +48120,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{ba4}\u{bcd}\u{ba4}"),
-                            Part::Remainder(Target::Set(465)),
+                            Part::Remainder(Target::Set(471)),
                         ],
                         &[Part::Text("\u{bae}\u{bcd}")],
                     ),
@@ -47259,7 +48134,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{baf}\u{bc7} "),
-                            Part::Remainder(Target::Set(463)),
+                            Part::Remainder(Target::Set(469)),
                         ],
                         &[],
                     ),
@@ -47274,7 +48149,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{baf}\u{bc7} "),
-                            Part::Remainder(Target::Set(463)),
+                            Part::Remainder(Target::Set(469)),
                         ],
                         &[],
                     ),
@@ -47285,7 +48160,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[
                     Part::Text("\u{b92}\u{bb0}\u{bc1} \u{b85}\u{bb0}\u{baa}\u{bae}\u{bcd}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(463))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(469))], &[]),
                 ],
             ),
             Rule::new(
@@ -47294,7 +48169,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{b85}\u{bb0}\u{baa}\u{bae}\u{bcd}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(463))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(469))], &[]),
                 ],
             ),
             Rule::new(
@@ -47302,7 +48177,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100_000_000_000,
                 &[
                     Part::Text("\u{b92}\u{bb0}\u{bc1} \u{b95}\u{bb0}\u{baa}\u{bae}\u{bcd}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(463))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(469))], &[]),
                 ],
             ),
             Rule::new(
@@ -47311,7 +48186,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" \u{b95}\u{bb0}\u{baa}\u{bae}\u{bcd}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(463))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(469))], &[]),
                 ],
             ),
             Rule::new(
@@ -47679,7 +48554,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(467)),
+                    Part::Quotient(Target::Set(473)),
                     Part::Text("\u{bbe}\u{baf}\u{bbf}\u{bb0}"),
                     Part::Optional(
                         &[
@@ -47933,7 +48808,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -47947,7 +48822,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -47961,7 +48836,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -47975,7 +48850,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -47989,7 +48864,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48003,7 +48878,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48017,7 +48892,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{ba4}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48031,7 +48906,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48045,7 +48920,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48059,7 +48934,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48073,7 +48948,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48087,7 +48962,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48101,7 +48976,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48115,7 +48990,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48129,7 +49004,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48143,7 +49018,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{bcd}\u{bb1}\u{bc1} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48157,7 +49032,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         "\u{ba4}\u{bca}\u{bb3}\u{bcd}\u{bb3}\u{bbe}\u{baf}\u{bbf}\u{bb0}\u{ba4}\u{bcd}\u{ba4}",
                     ),
                     Part::Optional(
-                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(466))],
+                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(472))],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
                 ],
@@ -48168,7 +49043,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{b86}\u{baf}\u{bbf}\u{bb0}\u{ba4}\u{bcd}\u{ba4}"),
                     Part::Optional(
-                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(466))],
+                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(472))],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
                 ],
@@ -48177,10 +49052,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(467)),
+                    Part::Quotient(Target::Set(473)),
                     Part::Text("\u{bbe}\u{baf}\u{bbf}\u{bb0}\u{ba4}\u{bcd}\u{ba4}"),
                     Part::Optional(
-                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(466))],
+                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(472))],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
                 ],
@@ -48193,7 +49068,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         "\u{b92}\u{bb0}\u{bc1} \u{bb2}\u{b9f}\u{bcd}\u{b9a}\u{ba4}\u{bcd}\u{ba4}",
                     ),
                     Part::Optional(
-                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(466))],
+                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(472))],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
                 ],
@@ -48202,10 +49077,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000,
                 100_000,
                 &[
-                    Part::Quotient(Target::Set(468)),
+                    Part::Quotient(Target::Set(474)),
                     Part::Text(" \u{bb2}\u{b9f}\u{bcd}\u{b9a}\u{ba4}\u{bcd}\u{ba4}"),
                     Part::Optional(
-                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(466))],
+                        &[Part::Text("\u{bc1} "), Part::Remainder(Target::Set(472))],
                         &[Part::Text("\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
                 ],
@@ -48218,7 +49093,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Optional(
                         &[
                             Part::Text("\u{baf}\u{bc7} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{baf}\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48228,12 +49103,12 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000,
                 10_000_000,
                 &[
-                    Part::Quotient(Target::Set(468)),
+                    Part::Quotient(Target::Set(474)),
                     Part::Text(" \u{b95}\u{bcb}\u{b9f}\u{bbf}"),
                     Part::Optional(
                         &[
                             Part::Text("\u{baf}\u{bc7} "),
-                            Part::Remainder(Target::Set(466)),
+                            Part::Remainder(Target::Set(472)),
                         ],
                         &[Part::Text("\u{baf}\u{bbe}\u{bb5}\u{ba4}\u{bc1}")],
                     ),
@@ -48254,7 +49129,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(468)),
+                    Part::Quotient(Target::Set(474)),
                     Part::Text(" \u{b85}\u{bb0}\u{baa}\u{ba4}\u{bcd}\u{ba4}"),
                     Part::Optional(
                         &[Part::Text("\u{bc1} "), Part::Remainder(Target::Same)],
@@ -48277,7 +49152,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000_000_000,
                 100_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(468)),
+                    Part::Quotient(Target::Set(474)),
                     Part::Text(" \u{b95}\u{bb0}\u{baa}\u{ba4}\u{bcd}\u{ba4}"),
                     Part::Optional(
                         &[Part::Text("\u{bc1} "), Part::Remainder(Target::Same)],
@@ -48307,7 +49182,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("\u{c12}\u{c15}\u{c1f}\u{c35}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(475))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(481))]),
         ],
     },
     RuleSet {
@@ -48696,7 +49571,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(473))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(479))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{c0b}\u{c23} "), Part::Remainder(Target::Same)]),
@@ -48799,7 +49674,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c07}\u{c30}\u{c35}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48810,7 +49685,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c2e}\u{c41}\u{c2a}\u{c4d}\u{c2a}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48821,7 +49696,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c28}\u{c32}\u{c2d}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48832,7 +49707,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c2f}\u{c3e}\u{c2d}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48843,7 +49718,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c05}\u{c30}\u{c35}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48854,7 +49729,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c21}\u{c46}\u{c2c}\u{c4d}\u{c2c}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48865,7 +49740,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c0e}\u{c28}\u{c2d}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48876,7 +49751,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{c24}\u{c4a}\u{c02}\u{c2d}"),
                     Part::Optional(
-                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(472))],
+                        &[Part::Text("\u{c48} "), Part::Remainder(Target::Set(478))],
                         &[Part::Text("\u{c2f}\u{c4d}\u{c2f}\u{c35}")],
                     ),
                 ],
@@ -48894,7 +49769,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(473)),
+                    Part::Quotient(Target::Set(479)),
                     Part::Text(" \u{c35}\u{c02}\u{c26}\u{c32}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -48917,7 +49792,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(473)),
+                    Part::Quotient(Target::Set(479)),
                     Part::Text(" \u{c35}\u{c47}\u{c32}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -48940,7 +49815,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000,
                 100_000,
                 &[
-                    Part::Quotient(Target::Set(473)),
+                    Part::Quotient(Target::Set(479)),
                     Part::Text(" \u{c32}\u{c15}\u{c4d}\u{c37}\u{c32}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -48963,7 +49838,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 20_000_000,
                 10_000_000,
                 &[
-                    Part::Quotient(Target::Set(473)),
+                    Part::Quotient(Target::Set(479)),
                     Part::Text(" \u{c15}\u{c4b}\u{c1f}\u{c4d}\u{c32}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -48986,7 +49861,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(473)),
+                    Part::Quotient(Target::Set(479)),
                     Part::Text(" \u{c05}\u{c30}\u{c2c}\u{c4d}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -49009,7 +49884,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 200_000_000_000,
                 100_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(473)),
+                    Part::Quotient(Target::Set(479)),
                     Part::Text(" \u{c16}\u{c30}\u{c2c}\u{c4d}"),
                     Part::Optional(
                         &[Part::Text(" "), Part::Remainder(Target::Same)],
@@ -49042,7 +49917,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(1, 1, &[Part::Text("\u{e40}\u{e2d}\u{e47}\u{e14}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(478))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(484))]),
         ],
     },
     RuleSet {
@@ -49067,7 +49942,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{e2a}\u{e34}\u{e1a}"),
                     Part::Optional(
-                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(477))],
+                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(483))],
                         &[],
                     ),
                 ],
@@ -49078,7 +49953,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Text("\u{e22}\u{e35}\u{e48}\u{200b}\u{e2a}\u{e34}\u{e1a}"),
                     Part::Optional(
-                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(477))],
+                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(483))],
                         &[],
                     ),
                 ],
@@ -49090,7 +49965,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                     Part::Quotient(Target::Same),
                     Part::Text("\u{200b}\u{e2a}\u{e34}\u{e1a}"),
                     Part::Optional(
-                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(477))],
+                        &[Part::Text("\u{200b}"), Part::Remainder(Target::Set(483))],
                         &[],
                     ),
                 ],
@@ -49164,7 +50039,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(478))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(484))])],
     },
     RuleSet {
         negative: None,
@@ -49173,7 +50048,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             1,
             &[
                 Part::Text("\u{e17}\u{e35}\u{e48}\u{200b}"),
-                Part::Whole(Target::Set(478)),
+                Part::Whole(Target::Set(484)),
             ],
         )],
     },
@@ -49181,35 +50056,35 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("inci")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(488))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(494))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{131}nc\u{131}")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(488))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(494))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("nci")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(488))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(494))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("uncu")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(488))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(494))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{fc}nc\u{fc}")]),
-            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(488))]),
+            Rule::new(1, 1, &[Part::Text(" "), Part::Whole(Target::Set(494))]),
         ],
     },
     RuleSet {
@@ -49376,7 +50251,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(486))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(492))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("eksi "), Part::Remainder(Target::Same)]),
@@ -49394,34 +50269,34 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 10,
                 10,
-                &[Part::Text("on"), Part::Remainder(Target::Set(484))],
+                &[Part::Text("on"), Part::Remainder(Target::Set(490))],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("yirmi"), Part::Remainder(Target::Set(483))],
+                &[Part::Text("yirmi"), Part::Remainder(Target::Set(489))],
             ),
             Rule::new(
                 30,
                 10,
-                &[Part::Text("otuz"), Part::Remainder(Target::Set(484))],
+                &[Part::Text("otuz"), Part::Remainder(Target::Set(490))],
             ),
             Rule::new(
                 40,
                 10,
-                &[Part::Text("k\u{131}rk"), Part::Remainder(Target::Set(482))],
+                &[Part::Text("k\u{131}rk"), Part::Remainder(Target::Set(488))],
             ),
             Rule::new(
                 50,
                 10,
-                &[Part::Text("elli"), Part::Remainder(Target::Set(483))],
+                &[Part::Text("elli"), Part::Remainder(Target::Set(489))],
             ),
             Rule::new(
                 60,
                 10,
                 &[
                     Part::Text("altm\u{131}\u{15f}"),
-                    Part::Remainder(Target::Set(482)),
+                    Part::Remainder(Target::Set(488)),
                 ],
             ),
             Rule::new(
@@ -49429,81 +50304,81 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("yetmi\u{15f}"),
-                    Part::Remainder(Target::Set(481)),
+                    Part::Remainder(Target::Set(487)),
                 ],
             ),
             Rule::new(
                 80,
                 10,
-                &[Part::Text("seksen"), Part::Remainder(Target::Set(481))],
+                &[Part::Text("seksen"), Part::Remainder(Target::Set(487))],
             ),
             Rule::new(
                 90,
                 10,
-                &[Part::Text("doksan"), Part::Remainder(Target::Set(482))],
+                &[Part::Text("doksan"), Part::Remainder(Target::Set(488))],
             ),
             Rule::new(
                 100,
                 100,
-                &[Part::Text("y\u{fc}z"), Part::Remainder(Target::Set(485))],
+                &[Part::Text("y\u{fc}z"), Part::Remainder(Target::Set(491))],
             ),
             Rule::new(
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(487)),
+                    Part::Quotient(Target::Set(493)),
                     Part::Text(" y\u{fc}z"),
-                    Part::Remainder(Target::Set(485)),
+                    Part::Remainder(Target::Set(491)),
                 ],
             ),
             Rule::new(
                 1000,
                 1000,
-                &[Part::Text("bin"), Part::Remainder(Target::Set(481))],
+                &[Part::Text("bin"), Part::Remainder(Target::Set(487))],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(487)),
+                    Part::Quotient(Target::Set(493)),
                     Part::Text(" bin"),
-                    Part::Remainder(Target::Set(481)),
+                    Part::Remainder(Target::Set(487)),
                 ],
             ),
             Rule::new(
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(487)),
+                    Part::Quotient(Target::Set(493)),
                     Part::Text(" milyon"),
-                    Part::Remainder(Target::Set(484)),
+                    Part::Remainder(Target::Set(490)),
                 ],
             ),
             Rule::new(
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(487)),
+                    Part::Quotient(Target::Set(493)),
                     Part::Text(" milyar"),
-                    Part::Remainder(Target::Set(482)),
+                    Part::Remainder(Target::Set(488)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(487)),
+                    Part::Quotient(Target::Set(493)),
                     Part::Text(" trilyon"),
-                    Part::Remainder(Target::Set(484)),
+                    Part::Remainder(Target::Set(490)),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(487)),
+                    Part::Quotient(Target::Set(493)),
                     Part::Text(" katrilyon"),
-                    Part::Remainder(Target::Set(484)),
+                    Part::Remainder(Target::Set(490)),
                 ],
             ),
             Rule::new(
@@ -49515,7 +50390,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(490))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(496))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -49538,10 +50413,10 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(495))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(501))]),
             Rule::new(1, 1, &[Part::Text("\u{43e}\u{434}\u{43d}\u{43e}")]),
             Rule::new(2, 1, &[Part::Text("\u{434}\u{432}\u{43e}")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(495))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(501))]),
             Rule::new(
                 20,
                 10,
@@ -49701,7 +50576,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(0, 1, &[Part::Text("\u{43d}\u{443}\u{43b}\u{44c}")]),
             Rule::new(1, 1, &[Part::Text("\u{43e}\u{434}\u{43d}\u{430}")]),
             Rule::new(2, 1, &[Part::Text("\u{434}\u{432}\u{456}")]),
-            Rule::new(3, 1, &[Part::Whole(Target::Set(494))]),
+            Rule::new(3, 1, &[Part::Whole(Target::Set(500))]),
             Rule::new(
                 20,
                 10,
@@ -49846,7 +50721,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(492)),
+                    Part::Quotient(Target::Set(498)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -49863,7 +50738,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -49889,7 +50764,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -49915,7 +50790,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -49941,7 +50816,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -49978,7 +50853,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[
             Rule::new(0, 1, &[Part::Text("\u{43d}\u{443}\u{43b}\u{44f}")]),
             Rule::new(1, 1, &[Part::Text("\u{43e}\u{434}\u{43d}\u{43e}\u{457}")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(495))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(501))]),
             Rule::new(
                 20,
                 10,
@@ -50131,7 +51006,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(493)),
+                    Part::Quotient(Target::Set(499)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50147,7 +51022,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50169,7 +51044,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50191,7 +51066,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50213,7 +51088,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50476,7 +51351,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(492)),
+                    Part::Quotient(Target::Set(498)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50493,7 +51368,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50519,7 +51394,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50545,7 +51420,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50571,7 +51446,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(494)),
+                    Part::Quotient(Target::Set(500)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50856,7 +51731,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(493)),
+                    Part::Quotient(Target::Set(499)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50872,7 +51747,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50894,7 +51769,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50916,7 +51791,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50938,7 +51813,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(495)),
+                    Part::Quotient(Target::Set(501)),
                     Part::Text(" "),
                     Part::Plural(
                         PluralKind::Cardinal,
@@ -50965,7 +51840,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(494))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(500))])],
     },
     RuleSet {
         negative: Some(&[
@@ -51340,7 +52215,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(492)),
+                        Part::Quotient(Target::Set(498)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -51354,7 +52229,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(491)),
+                        Part::Quotient(Target::Set(497)),
                         Part::Text("\u{442}\u{438}\u{441}\u{44f}\u{447}\u{43d}\u{438}\u{439}"),
                     ],
                 )],
@@ -51375,7 +52250,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(494)),
+                        Part::Quotient(Target::Set(500)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -51398,7 +52273,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(491)),
+                        Part::Quotient(Target::Set(497)),
                         Part::Text(
                             "\u{43c}\u{456}\u{43b}\u{44c}\u{439}\u{43e}\u{43d}\u{43d}\u{438}\u{439}",
                         ),
@@ -51421,7 +52296,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(494)),
+                        Part::Quotient(Target::Set(500)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -51444,7 +52319,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(491)),
+                        Part::Quotient(Target::Set(497)),
                         Part::Text(
                             "\u{43c}\u{456}\u{43b}\u{44c}\u{44f}\u{440}\u{434}\u{43d}\u{438}\u{439}",
                         ),
@@ -51467,7 +52342,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(494)),
+                        Part::Quotient(Target::Set(500)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -51490,7 +52365,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(491)),
+                        Part::Quotient(Target::Set(497)),
                         Part::Text(
                             "\u{431}\u{456}\u{43b}\u{44c}\u{439}\u{43e}\u{43d}\u{43d}\u{438}\u{439}",
                         ),
@@ -51513,7 +52388,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[Part::Optional(
                     &[
-                        Part::Quotient(Target::Set(494)),
+                        Part::Quotient(Target::Set(500)),
                         Part::Text(" "),
                         Part::Plural(
                             PluralKind::Cardinal,
@@ -51536,7 +52411,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                         Part::Remainder(Target::Same),
                     ],
                     &[
-                        Part::Quotient(Target::Set(491)),
+                        Part::Quotient(Target::Set(497)),
                         Part::Text(
                             "\u{431}\u{456}\u{43b}\u{44c}\u{44f}\u{440}\u{434}\u{43d}\u{438}\u{439}",
                         ),
@@ -51552,7 +52427,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(499))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(505))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{2212}"), Part::Remainder(Target::Same)]),
@@ -51904,7 +52779,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(500))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(506))])],
     },
     RuleSet {
         negative: Some(&[
@@ -51944,7 +52819,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 10,
                 &[
-                    Part::Whole(Target::Set(500)),
+                    Part::Whole(Target::Set(506)),
                     Part::Text("\u{648}\u{627}\u{6ba}"),
                 ],
             ),
@@ -51953,51 +52828,51 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(517))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(523))]),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("vint"), Part::Remainder(Target::Set(507))],
+                &[Part::Text("vint"), Part::Remainder(Target::Set(513))],
             ),
             Rule::new(
                 30,
                 10,
-                &[Part::Text("trent"), Part::Remainder(Target::Set(505))],
+                &[Part::Text("trent"), Part::Remainder(Target::Set(511))],
             ),
             Rule::new(
                 40,
                 10,
-                &[Part::Text("cuarant"), Part::Remainder(Target::Set(505))],
+                &[Part::Text("cuarant"), Part::Remainder(Target::Set(511))],
             ),
             Rule::new(
                 50,
                 10,
-                &[Part::Text("sincuant"), Part::Remainder(Target::Set(505))],
+                &[Part::Text("sincuant"), Part::Remainder(Target::Set(511))],
             ),
             Rule::new(
                 60,
                 10,
-                &[Part::Text("sesant"), Part::Remainder(Target::Set(505))],
+                &[Part::Text("sesant"), Part::Remainder(Target::Set(511))],
             ),
             Rule::new(
                 70,
                 10,
-                &[Part::Text("setant"), Part::Remainder(Target::Set(505))],
+                &[Part::Text("setant"), Part::Remainder(Target::Set(511))],
             ),
             Rule::new(
                 80,
                 10,
-                &[Part::Text("otant"), Part::Remainder(Target::Set(505))],
+                &[Part::Text("otant"), Part::Remainder(Target::Set(511))],
             ),
             Rule::new(
                 90,
                 10,
-                &[Part::Text("novant"), Part::Remainder(Target::Set(505))],
+                &[Part::Text("novant"), Part::Remainder(Target::Set(511))],
             ),
             Rule::new(
                 100,
                 100,
-                &[Part::Text("sent"), Part::Remainder(Target::Set(509))],
+                &[Part::Text("sent"), Part::Remainder(Target::Set(515))],
             ),
             Rule::new(
                 200,
@@ -52005,7 +52880,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{ad}zent"),
-                    Part::Remainder(Target::Set(509)),
+                    Part::Remainder(Target::Set(515)),
                 ],
             ),
             Rule::new(
@@ -52014,7 +52889,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{ad}sent"),
-                    Part::Remainder(Target::Set(509)),
+                    Part::Remainder(Target::Set(515)),
                 ],
             ),
         ],
@@ -52026,17 +52901,17 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("\u{ad}aun")]),
             Rule::new(2, 1, &[Part::Text("\u{ad}ad\u{f9}")]),
             Rule::new(3, 1, &[Part::Text("\u{ad}atr\u{ec}")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(510))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(516))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(504))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(510))]),
             Rule::new(1, 1, &[Part::Text("aun")]),
             Rule::new(2, 1, &[Part::Text("a\u{ad}d\u{f9}")]),
             Rule::new(3, 1, &[Part::Text("a\u{ad}tr\u{ec}")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(504))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(510))]),
         ],
     },
     RuleSet {
@@ -52046,17 +52921,17 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("\u{ad}iun")]),
             Rule::new(2, 1, &[Part::Text("\u{ad}id\u{f9}")]),
             Rule::new(3, 1, &[Part::Text("\u{ad}itr\u{ec}")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(511))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(517))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(506))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(512))]),
             Rule::new(1, 1, &[Part::Text("iun")]),
             Rule::new(2, 1, &[Part::Text("i\u{ad}d\u{f9}")]),
             Rule::new(3, 1, &[Part::Text("i\u{ad}tr\u{ec}")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(506))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(512))]),
         ],
     },
     RuleSet {
@@ -52069,18 +52944,18 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 4,
                 1,
-                &[Part::Text("o\u{ad}"), Part::Whole(Target::Set(518))],
+                &[Part::Text("o\u{ad}"), Part::Whole(Target::Set(524))],
             ),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(508))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(514))]),
             Rule::new(1, 1, &[Part::Text("oun")]),
             Rule::new(2, 1, &[Part::Text("o\u{ad}d\u{f9}")]),
             Rule::new(3, 1, &[Part::Text("o\u{ad}tr\u{ec}")]),
-            Rule::new(4, 1, &[Part::Whole(Target::Set(508))]),
+            Rule::new(4, 1, &[Part::Whole(Target::Set(514))]),
         ],
     },
     RuleSet {
@@ -52093,7 +52968,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 4,
                 1,
-                &[Part::Text("a\u{ad}"), Part::Whole(Target::Set(518))],
+                &[Part::Text("a\u{ad}"), Part::Whole(Target::Set(524))],
             ),
         ],
     },
@@ -52107,7 +52982,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 4,
                 1,
-                &[Part::Text("i\u{ad}"), Part::Whole(Target::Set(518))],
+                &[Part::Text("i\u{ad}"), Part::Whole(Target::Set(524))],
             ),
         ],
     },
@@ -52121,7 +52996,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 4,
                 1,
-                &[Part::Text("o\u{ad}"), Part::Whole(Target::Set(518))],
+                &[Part::Text("o\u{ad}"), Part::Whole(Target::Set(524))],
             ),
         ],
     },
@@ -52138,7 +53013,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(7, 1, &[Part::Text("\u{ad}set\u{e8}zemo")]),
             Rule::new(8, 1, &[Part::Text("\u{ad}ot\u{e8}zemo")]),
             Rule::new(9, 1, &[Part::Text("\u{ad}nov\u{e8}zemo")]),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(519))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(525))]),
         ],
     },
     RuleSet {
@@ -52154,7 +53029,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(7, 1, &[Part::Text("a\u{ad}set\u{e8}zemo")]),
             Rule::new(8, 1, &[Part::Text("a\u{ad}ot\u{e8}zemo")]),
             Rule::new(9, 1, &[Part::Text("a\u{ad}nov\u{e8}zemo")]),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(519))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(525))]),
         ],
     },
     RuleSet {
@@ -52170,7 +53045,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(7, 1, &[Part::Text("i\u{ad}set\u{e8}zemo")]),
             Rule::new(8, 1, &[Part::Text("i\u{ad}ot\u{e8}zemo")]),
             Rule::new(9, 1, &[Part::Text("i\u{ad}nov\u{e8}zemo")]),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(519))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(525))]),
         ],
     },
     RuleSet {
@@ -52189,7 +53064,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 10,
                 10,
-                &[Part::Text("o\u{ad}"), Part::Whole(Target::Set(519))],
+                &[Part::Text("o\u{ad}"), Part::Whole(Target::Set(525))],
             ),
         ],
     },
@@ -52200,189 +53075,11 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(1, 1, &[Part::Text("un")]),
             Rule::new(2, 1, &[Part::Text("du")]),
             Rule::new(3, 1, &[Part::Text("tri")]),
-            Rule::new(4, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(518))]),
+            Rule::new(4, 1, &[Part::Text("\u{ad}"), Part::Whole(Target::Set(524))]),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("vint"), Part::Remainder(Target::Set(506))],
-            ),
-            Rule::new(
-                30,
-                10,
-                &[Part::Text("trent"), Part::Remainder(Target::Set(504))],
-            ),
-            Rule::new(
-                40,
-                10,
-                &[Part::Text("cuarant"), Part::Remainder(Target::Set(504))],
-            ),
-            Rule::new(
-                50,
-                10,
-                &[Part::Text("sincuant"), Part::Remainder(Target::Set(504))],
-            ),
-            Rule::new(
-                60,
-                10,
-                &[Part::Text("sesant"), Part::Remainder(Target::Set(504))],
-            ),
-            Rule::new(
-                70,
-                10,
-                &[Part::Text("setant"), Part::Remainder(Target::Set(504))],
-            ),
-            Rule::new(
-                80,
-                10,
-                &[Part::Text("otant"), Part::Remainder(Target::Set(504))],
-            ),
-            Rule::new(
-                90,
-                10,
-                &[Part::Text("novant"), Part::Remainder(Target::Set(504))],
-            ),
-            Rule::new(
-                100,
-                100,
-                &[Part::Text("sent"), Part::Remainder(Target::Set(508))],
-            ),
-            Rule::new(
-                200,
-                100,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("zent"),
-                    Part::Remainder(Target::Set(508)),
-                ],
-            ),
-            Rule::new(
-                400,
-                100,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{ad}sent"),
-                    Part::Remainder(Target::Set(508)),
-                ],
-            ),
-            Rule::new(
-                1000,
-                1000,
-                &[
-                    Part::Text("mi\u{142}e"),
-                    Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                2000,
-                1000,
-                &[
-                    Part::Quotient(Target::Set(503)),
-                    Part::Text("\u{ad}mi\u{142}a"),
-                    Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000,
-                1_000_000,
-                &[
-                    Part::Text("un mi\u{142}ion"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                2_000_000,
-                1_000_000,
-                &[
-                    Part::Quotient(Target::Set(517)),
-                    Part::Text(" mi\u{142}ioni"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000_000,
-                1_000_000_000,
-                &[
-                    Part::Text("un miliardo"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                2_000_000_000,
-                1_000_000_000,
-                &[
-                    Part::Quotient(Target::Set(517)),
-                    Part::Text(" mi\u{142}iardi"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000_000_000,
-                1_000_000_000_000,
-                &[
-                    Part::Text("un bilione"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                2_000_000_000_000,
-                1_000_000_000_000,
-                &[
-                    Part::Quotient(Target::Set(517)),
-                    Part::Text(" bi\u{142}ioni"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000_000_000_000,
-                1_000_000_000_000_000,
-                &[
-                    Part::Text("un biliardo"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                2_000_000_000_000_000,
-                1_000_000_000_000_000,
-                &[
-                    Part::Quotient(Target::Set(517)),
-                    Part::Text(" bi\u{142}iardi"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000_000_000_000_000,
-                1_000_000_000_000_000_000,
-                &[Part::Whole(Target::Digits(2))],
-            ),
-        ],
-    },
-    RuleSet {
-        negative: Some(&[Part::Text("manca "), Part::Remainder(Target::Same)]),
-        rules: &[
-            Rule::new(0, 1, &[Part::Text("zero")]),
-            Rule::new(1, 1, &[Part::Text("uno")]),
-            Rule::new(2, 1, &[Part::Text("do")]),
-            Rule::new(3, 1, &[Part::Text("tre")]),
-            Rule::new(4, 1, &[Part::Text("cuatro")]),
-            Rule::new(5, 1, &[Part::Text("sincue")]),
-            Rule::new(6, 1, &[Part::Text("sie")]),
-            Rule::new(7, 1, &[Part::Text("sete")]),
-            Rule::new(8, 1, &[Part::Text("oto")]),
-            Rule::new(9, 1, &[Part::Text("nove")]),
-            Rule::new(10, 10, &[Part::Text("dieze")]),
-            Rule::new(11, 10, &[Part::Text("\u{f9}ndeze")]),
-            Rule::new(12, 10, &[Part::Text("d\u{f3}deze")]),
-            Rule::new(13, 10, &[Part::Text("tr\u{e8}deze")]),
-            Rule::new(14, 10, &[Part::Text("cuat\u{f2}rdeze")]),
-            Rule::new(15, 10, &[Part::Text("cu\u{ec}ndeze")]),
-            Rule::new(16, 10, &[Part::Text("s\u{e9}deze")]),
-            Rule::new(17, 10, &[Part::Text("disete")]),
-            Rule::new(18, 10, &[Part::Text("dizdoto")]),
-            Rule::new(19, 10, &[Part::Text("diznove")]),
-            Rule::new(
-                20,
-                10,
-                &[Part::Text("vint"), Part::Remainder(Target::Set(511))],
+                &[Part::Text("vint"), Part::Remainder(Target::Set(512))],
             ),
             Rule::new(
                 30,
@@ -52422,7 +53119,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 100,
                 100,
-                &[Part::Text("sent"), Part::Remainder(Target::Set(512))],
+                &[Part::Text("sent"), Part::Remainder(Target::Set(514))],
             ),
             Rule::new(
                 200,
@@ -52430,7 +53127,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("zent"),
-                    Part::Remainder(Target::Set(512)),
+                    Part::Remainder(Target::Set(514)),
                 ],
             ),
             Rule::new(
@@ -52439,7 +53136,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{ad}sent"),
-                    Part::Remainder(Target::Set(512)),
+                    Part::Remainder(Target::Set(514)),
                 ],
             ),
             Rule::new(
@@ -52454,7 +53151,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(503)),
+                    Part::Quotient(Target::Set(509)),
                     Part::Text("\u{ad}mi\u{142}a"),
                     Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -52471,7 +53168,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text(" mi\u{142}ioni"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -52488,7 +53185,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text(" mi\u{142}iardi"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -52505,7 +53202,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text(" bi\u{142}ioni"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -52522,7 +53219,185 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
+                    Part::Text(" bi\u{142}iardi"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000_000_000,
+                1_000_000_000_000_000_000,
+                &[Part::Whole(Target::Digits(2))],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("manca "), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("zero")]),
+            Rule::new(1, 1, &[Part::Text("uno")]),
+            Rule::new(2, 1, &[Part::Text("do")]),
+            Rule::new(3, 1, &[Part::Text("tre")]),
+            Rule::new(4, 1, &[Part::Text("cuatro")]),
+            Rule::new(5, 1, &[Part::Text("sincue")]),
+            Rule::new(6, 1, &[Part::Text("sie")]),
+            Rule::new(7, 1, &[Part::Text("sete")]),
+            Rule::new(8, 1, &[Part::Text("oto")]),
+            Rule::new(9, 1, &[Part::Text("nove")]),
+            Rule::new(10, 10, &[Part::Text("dieze")]),
+            Rule::new(11, 10, &[Part::Text("\u{f9}ndeze")]),
+            Rule::new(12, 10, &[Part::Text("d\u{f3}deze")]),
+            Rule::new(13, 10, &[Part::Text("tr\u{e8}deze")]),
+            Rule::new(14, 10, &[Part::Text("cuat\u{f2}rdeze")]),
+            Rule::new(15, 10, &[Part::Text("cu\u{ec}ndeze")]),
+            Rule::new(16, 10, &[Part::Text("s\u{e9}deze")]),
+            Rule::new(17, 10, &[Part::Text("disete")]),
+            Rule::new(18, 10, &[Part::Text("dizdoto")]),
+            Rule::new(19, 10, &[Part::Text("diznove")]),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("vint"), Part::Remainder(Target::Set(517))],
+            ),
+            Rule::new(
+                30,
+                10,
+                &[Part::Text("trent"), Part::Remainder(Target::Set(516))],
+            ),
+            Rule::new(
+                40,
+                10,
+                &[Part::Text("cuarant"), Part::Remainder(Target::Set(516))],
+            ),
+            Rule::new(
+                50,
+                10,
+                &[Part::Text("sincuant"), Part::Remainder(Target::Set(516))],
+            ),
+            Rule::new(
+                60,
+                10,
+                &[Part::Text("sesant"), Part::Remainder(Target::Set(516))],
+            ),
+            Rule::new(
+                70,
+                10,
+                &[Part::Text("setant"), Part::Remainder(Target::Set(516))],
+            ),
+            Rule::new(
+                80,
+                10,
+                &[Part::Text("otant"), Part::Remainder(Target::Set(516))],
+            ),
+            Rule::new(
+                90,
+                10,
+                &[Part::Text("novant"), Part::Remainder(Target::Set(516))],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[Part::Text("sent"), Part::Remainder(Target::Set(518))],
+            ),
+            Rule::new(
+                200,
+                100,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("zent"),
+                    Part::Remainder(Target::Set(518)),
+                ],
+            ),
+            Rule::new(
+                400,
+                100,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{ad}sent"),
+                    Part::Remainder(Target::Set(518)),
+                ],
+            ),
+            Rule::new(
+                1000,
+                1000,
+                &[
+                    Part::Text("mi\u{142}e"),
+                    Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                2000,
+                1000,
+                &[
+                    Part::Quotient(Target::Set(509)),
+                    Part::Text("\u{ad}mi\u{142}a"),
+                    Part::Optional(&[Part::Text("\u{ad}"), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000,
+                1_000_000,
+                &[
+                    Part::Text("un mi\u{142}ion"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                2_000_000,
+                1_000_000,
+                &[
+                    Part::Quotient(Target::Set(523)),
+                    Part::Text(" mi\u{142}ioni"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000,
+                1_000_000_000,
+                &[
+                    Part::Text("un miliardo"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                2_000_000_000,
+                1_000_000_000,
+                &[
+                    Part::Quotient(Target::Set(523)),
+                    Part::Text(" mi\u{142}iardi"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Text("un bilione"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                2_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Set(523)),
+                    Part::Text(" bi\u{142}ioni"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000_000,
+                1_000_000_000_000_000,
+                &[
+                    Part::Text("un biliardo"),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                2_000_000_000_000_000,
+                1_000_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Set(523)),
                     Part::Text(" bi\u{142}iardi"),
                     Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Same)], &[]),
                 ],
@@ -52560,64 +53435,64 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 20,
                 10,
-                &[Part::Text("vent"), Part::Remainder(Target::Set(515))],
+                &[Part::Text("vent"), Part::Remainder(Target::Set(521))],
             ),
             Rule::new(
                 30,
                 10,
-                &[Part::Text("trent"), Part::Remainder(Target::Set(514))],
+                &[Part::Text("trent"), Part::Remainder(Target::Set(520))],
             ),
             Rule::new(
                 40,
                 10,
-                &[Part::Text("cuarant"), Part::Remainder(Target::Set(514))],
+                &[Part::Text("cuarant"), Part::Remainder(Target::Set(520))],
             ),
             Rule::new(
                 50,
                 10,
-                &[Part::Text("sincuant"), Part::Remainder(Target::Set(514))],
+                &[Part::Text("sincuant"), Part::Remainder(Target::Set(520))],
             ),
             Rule::new(
                 60,
                 10,
-                &[Part::Text("sesant"), Part::Remainder(Target::Set(514))],
+                &[Part::Text("sesant"), Part::Remainder(Target::Set(520))],
             ),
             Rule::new(
                 70,
                 10,
-                &[Part::Text("setant"), Part::Remainder(Target::Set(514))],
+                &[Part::Text("setant"), Part::Remainder(Target::Set(520))],
             ),
             Rule::new(
                 80,
                 10,
-                &[Part::Text("otant"), Part::Remainder(Target::Set(514))],
+                &[Part::Text("otant"), Part::Remainder(Target::Set(520))],
             ),
             Rule::new(
                 90,
                 10,
-                &[Part::Text("novant"), Part::Remainder(Target::Set(514))],
+                &[Part::Text("novant"), Part::Remainder(Target::Set(520))],
             ),
             Rule::new(
                 100,
                 100,
-                &[Part::Text("sent"), Part::Remainder(Target::Set(516))],
+                &[Part::Text("sent"), Part::Remainder(Target::Set(522))],
             ),
             Rule::new(
                 200,
                 100,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("\u{ad}zent"),
-                    Part::Remainder(Target::Set(516)),
+                    Part::Remainder(Target::Set(522)),
                 ],
             ),
             Rule::new(
                 400,
                 100,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("\u{ad}sent"),
-                    Part::Remainder(Target::Set(516)),
+                    Part::Remainder(Target::Set(522)),
                 ],
             ),
             Rule::new(
@@ -52625,25 +53500,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1000,
                 &[
                     Part::Text("mi\u{142}e\u{ad}"),
-                    Part::Remainder(Target::Set(513)),
+                    Part::Remainder(Target::Set(519)),
                 ],
             ),
             Rule::new(
                 2000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("\u{ad}mi\u{142}e\u{ad}"),
-                    Part::Remainder(Target::Set(513)),
+                    Part::Remainder(Target::Set(519)),
                 ],
             ),
             Rule::new(
                 2001,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("\u{ad}mi\u{142}a\u{ad}"),
-                    Part::Remainder(Target::Set(513)),
+                    Part::Remainder(Target::Set(519)),
                 ],
             ),
             Rule::new(
@@ -52651,16 +53526,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000,
                 &[
                     Part::Text("mi\u{142}ion\u{ad}"),
-                    Part::Remainder(Target::Set(513)),
+                    Part::Remainder(Target::Set(519)),
                 ],
             ),
             Rule::new(
                 2_000_000,
                 1_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("mi\u{142}ion\u{ad}"),
-                    Part::Remainder(Target::Set(513)),
+                    Part::Remainder(Target::Set(519)),
                 ],
             ),
             Rule::new(
@@ -52668,16 +53543,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000,
                 &[
                     Part::Text("mi\u{142}iard\u{ad}"),
-                    Part::Remainder(Target::Set(516)),
+                    Part::Remainder(Target::Set(522)),
                 ],
             ),
             Rule::new(
                 2_000_000_000,
                 1_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("mi\u{142}iard\u{ad}"),
-                    Part::Remainder(Target::Set(516)),
+                    Part::Remainder(Target::Set(522)),
                 ],
             ),
             Rule::new(
@@ -52685,16 +53560,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000,
                 &[
                     Part::Text("bi\u{142}ion\u{ad}"),
-                    Part::Remainder(Target::Set(513)),
+                    Part::Remainder(Target::Set(519)),
                 ],
             ),
             Rule::new(
                 2_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("bi\u{142}ion\u{ad}"),
-                    Part::Remainder(Target::Set(513)),
+                    Part::Remainder(Target::Set(519)),
                 ],
             ),
             Rule::new(
@@ -52702,16 +53577,16 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1_000_000_000_000_000,
                 &[
                     Part::Text("bi\u{142}iard\u{ad}"),
-                    Part::Remainder(Target::Set(516)),
+                    Part::Remainder(Target::Set(522)),
                 ],
             ),
             Rule::new(
                 2_000_000_000_000_000,
                 1_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(517)),
+                    Part::Quotient(Target::Set(523)),
                     Part::Text("bi\u{142}iard\u{ad}"),
-                    Part::Remainder(Target::Set(516)),
+                    Part::Remainder(Target::Set(522)),
                 ],
             ),
             Rule::new(
@@ -52735,9 +53610,9 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 0,
                 1,
-                &[Part::Text("l\u{1ebb} "), Part::Whole(Target::Set(525))],
+                &[Part::Text("l\u{1ebb} "), Part::Whole(Target::Set(531))],
             ),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(525))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(531))]),
         ],
     },
     RuleSet {
@@ -52748,28 +53623,28 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 1,
                 &[
                     Part::Text("kh\u{f4}ng tr\u{103}m "),
-                    Part::Whole(Target::Set(521)),
+                    Part::Whole(Target::Set(527)),
                 ],
             ),
-            Rule::new(100, 100, &[Part::Whole(Target::Set(525))]),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(531))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(525))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(531))]),
             Rule::new(5, 1, &[Part::Text("l\u{103}m")]),
-            Rule::new(6, 1, &[Part::Whole(Target::Set(525))]),
+            Rule::new(6, 1, &[Part::Whole(Target::Set(531))]),
         ],
     },
     RuleSet {
         negative: None,
         rules: &[
-            Rule::new(0, 1, &[Part::Whole(Target::Set(525))]),
+            Rule::new(0, 1, &[Part::Whole(Target::Set(531))]),
             Rule::new(1, 1, &[Part::Text("m\u{1ed1}t")]),
-            Rule::new(2, 1, &[Part::Whole(Target::Set(523))]),
+            Rule::new(2, 1, &[Part::Whole(Target::Set(529))]),
             Rule::new(4, 1, &[Part::Text("t\u{1b0}")]),
-            Rule::new(5, 1, &[Part::Whole(Target::Set(523))]),
+            Rule::new(5, 1, &[Part::Whole(Target::Set(529))]),
         ],
     },
     RuleSet {
@@ -52790,7 +53665,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 10,
                 &[
                     Part::Text("m\u{1b0}\u{1edd}i"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(523))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(529))], &[]),
                 ],
             ),
             Rule::new(
@@ -52799,7 +53674,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" m\u{1b0}\u{1a1}i"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(524))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(530))], &[]),
                 ],
             ),
             Rule::new(
@@ -52808,7 +53683,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" tr\u{103}m"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(521))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(527))], &[]),
                 ],
             ),
             Rule::new(
@@ -52817,7 +53692,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" ngh\u{ec}n"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(522))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(528))], &[]),
                 ],
             ),
             Rule::new(
@@ -52826,7 +53701,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" tri\u{1ec7}u"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(521))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(527))], &[]),
                 ],
             ),
             Rule::new(
@@ -52835,7 +53710,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text(" t\u{1ef7}"),
-                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(521))], &[]),
+                    Part::Optional(&[Part::Text(" "), Part::Remainder(Target::Set(527))], &[]),
                 ],
             ),
             Rule::new(
@@ -52847,7 +53722,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
     },
     RuleSet {
         negative: None,
-        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(525))])],
+        rules: &[Rule::new(0, 1, &[Part::Whole(Target::Set(531))])],
     },
     RuleSet {
         negative: Some(&[Part::Text("\u{e2}m "), Part::Remainder(Target::Same)]),
@@ -52855,20 +53730,20 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 0,
                 1,
-                &[Part::Text("th\u{1ee9} "), Part::Whole(Target::Set(525))],
+                &[Part::Text("th\u{1ee9} "), Part::Whole(Target::Set(531))],
             ),
             Rule::new(1, 1, &[Part::Text("th\u{1ee9} nh\u{1ea5}t")]),
             Rule::new(2, 1, &[Part::Text("th\u{1ee9} nh\u{ec}")]),
             Rule::new(
                 3,
                 1,
-                &[Part::Text("th\u{1ee9} "), Part::Whole(Target::Set(525))],
+                &[Part::Text("th\u{1ee9} "), Part::Whole(Target::Set(531))],
             ),
             Rule::new(4, 1, &[Part::Text("th\u{1ee9} t\u{1b0}")]),
             Rule::new(
                 5,
                 1,
-                &[Part::Text("th\u{1ee9} "), Part::Whole(Target::Set(525))],
+                &[Part::Text("th\u{1ee9} "), Part::Whole(Target::Set(531))],
             ),
         ],
     },
@@ -52889,25 +53764,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(535)),
+                    Part::Whole(Target::Set(541)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
-                &[Part::Whole(Target::Set(535))],
+                &[Part::Whole(Target::Set(541))],
             ),
         ],
     },
@@ -52917,14 +53792,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
             Rule::new(
                 10,
                 10,
-                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(541))],
             ),
-            Rule::new(20, 10, &[Part::Whole(Target::Set(535))]),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(541))]),
         ],
     },
     RuleSet {
@@ -52933,22 +53808,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(535)),
+                    Part::Whole(Target::Set(541)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
-            Rule::new(100, 100, &[Part::Whole(Target::Set(535))]),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(541))]),
         ],
     },
     RuleSet {
@@ -52957,22 +53832,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(535)),
+                    Part::Whole(Target::Set(541)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
-            Rule::new(1000, 1000, &[Part::Whole(Target::Set(535))]),
+            Rule::new(1000, 1000, &[Part::Whole(Target::Set(541))]),
         ],
     },
     RuleSet {
@@ -52981,22 +53856,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(535)),
+                    Part::Whole(Target::Set(541)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
-            Rule::new(10000, 10000, &[Part::Whole(Target::Set(535))]),
+            Rule::new(10000, 10000, &[Part::Whole(Target::Set(541))]),
         ],
     },
     RuleSet {
@@ -53005,22 +53880,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(535)),
+                    Part::Whole(Target::Set(541)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(535))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(541))],
             ),
-            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(535))]),
+            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(541))]),
         ],
     },
     RuleSet {
@@ -53059,7 +53934,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{767e}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(530))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(536))], &[]),
                 ],
             ),
             Rule::new(
@@ -53068,7 +53943,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{5343}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(531))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(537))], &[]),
                 ],
             ),
             Rule::new(
@@ -53077,287 +53952,37 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{842c}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(532))], &[]),
-                ],
-            ),
-            Rule::new(
-                100_000_000,
-                100_000_000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{5104}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(533))], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000_000_000,
-                1_000_000_000_000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{5146}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(534))], &[]),
-                ],
-            ),
-            Rule::new(
-                10_000_000_000_000_000,
-                10_000_000_000_000_000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{4eac}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(529))], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000_000_000_000_000,
-                1_000_000_000_000_000_000,
-                &[Part::Whole(Target::Digits(2))],
-            ),
-        ],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[Rule::new(
-            0,
-            1,
-            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(535))],
-        )],
-    },
-    RuleSet {
-        negative: Some(&[
-            Part::Text("\u{7b2c}\u{2212}"),
-            Part::Remainder(Target::Digits(2)),
-        ]),
-        rules: &[Rule::new(
-            0,
-            1,
-            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Digits(2))],
-        )],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[
-            Rule::new(
-                1,
-                1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(
-                10,
-                10,
-                &[
-                    Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(544)),
-                ],
-            ),
-            Rule::new(
-                20,
-                10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(
-                1_000_000_000_000,
-                1_000_000_000_000,
-                &[Part::Whole(Target::Set(544))],
-            ),
-        ],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[
-            Rule::new(
-                1,
-                1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(
-                10,
-                10,
-                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(20, 10, &[Part::Whole(Target::Set(544))]),
-        ],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[
-            Rule::new(
-                1,
-                1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(
-                10,
-                10,
-                &[
-                    Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(544)),
-                ],
-            ),
-            Rule::new(
-                20,
-                10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(100, 100, &[Part::Whole(Target::Set(544))]),
-        ],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[
-            Rule::new(
-                1,
-                1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(
-                10,
-                10,
-                &[
-                    Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(544)),
-                ],
-            ),
-            Rule::new(
-                20,
-                10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(1000, 1000, &[Part::Whole(Target::Set(544))]),
-        ],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[
-            Rule::new(
-                1,
-                1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(
-                10,
-                10,
-                &[
-                    Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(544)),
-                ],
-            ),
-            Rule::new(
-                20,
-                10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(10000, 10000, &[Part::Whole(Target::Set(544))]),
-        ],
-    },
-    RuleSet {
-        negative: None,
-        rules: &[
-            Rule::new(
-                1,
-                1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(
-                10,
-                10,
-                &[
-                    Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(544)),
-                ],
-            ),
-            Rule::new(
-                20,
-                10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(544))],
-            ),
-            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(544))]),
-        ],
-    },
-    RuleSet {
-        negative: Some(&[Part::Text("\u{8d1f}"), Part::Remainder(Target::Same)]),
-        rules: &[
-            Rule::new(0, 1, &[Part::Text("\u{96f6}")]),
-            Rule::new(1, 1, &[Part::Text("\u{4e00}")]),
-            Rule::new(2, 1, &[Part::Text("\u{4e8c}")]),
-            Rule::new(3, 1, &[Part::Text("\u{4e09}")]),
-            Rule::new(4, 1, &[Part::Text("\u{56db}")]),
-            Rule::new(5, 1, &[Part::Text("\u{4e94}")]),
-            Rule::new(6, 1, &[Part::Text("\u{516d}")]),
-            Rule::new(7, 1, &[Part::Text("\u{4e03}")]),
-            Rule::new(8, 1, &[Part::Text("\u{516b}")]),
-            Rule::new(9, 1, &[Part::Text("\u{4e5d}")]),
-            Rule::new(
-                10,
-                10,
-                &[
-                    Part::Text("\u{5341}"),
-                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                20,
-                10,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{5341}"),
-                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
-                ],
-            ),
-            Rule::new(
-                100,
-                100,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{767e}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(539))], &[]),
-                ],
-            ),
-            Rule::new(
-                1000,
-                1000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{5343}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(540))], &[]),
-                ],
-            ),
-            Rule::new(
-                10000,
-                10000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{4e07}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(541))], &[]),
-                ],
-            ),
-            Rule::new(
-                100_000_000,
-                100_000_000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{4ebf}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(542))], &[]),
-                ],
-            ),
-            Rule::new(
-                1_000_000_000_000,
-                1_000_000_000_000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{5146}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(543))], &[]),
-                ],
-            ),
-            Rule::new(
-                10_000_000_000_000_000,
-                10_000_000_000_000_000,
-                &[
-                    Part::Quotient(Target::Same),
-                    Part::Text("\u{4eac}"),
                     Part::Optional(&[Part::Remainder(Target::Set(538))], &[]),
                 ],
             ),
             Rule::new(
+                100_000_000,
+                100_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5104}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(539))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5146}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(540))], &[]),
+                ],
+            ),
+            Rule::new(
+                10_000_000_000_000_000,
+                10_000_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4eac}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(535))], &[]),
+                ],
+            ),
+            Rule::new(
                 1_000_000_000_000_000_000,
                 1_000_000_000_000_000_000,
                 &[Part::Whole(Target::Digits(2))],
@@ -53369,7 +53994,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[Rule::new(
             0,
             1,
-            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(544))],
+            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(541))],
         )],
     },
     RuleSet {
@@ -53389,25 +54014,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
-                    Part::Text("\u{3007}\u{4e00}"),
-                    Part::Whole(Target::Set(553)),
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(550)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
-                &[Part::Whole(Target::Set(553))],
+                &[Part::Whole(Target::Set(550))],
             ),
         ],
     },
@@ -53417,14 +54042,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
             ),
             Rule::new(
                 10,
                 10,
-                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(550))],
             ),
-            Rule::new(20, 10, &[Part::Whole(Target::Set(553))]),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(550))]),
         ],
     },
     RuleSet {
@@ -53433,22 +54058,512 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(550)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(550))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(550)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(1000, 1000, &[Part::Whole(Target::Set(550))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(550)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(10000, 10000, &[Part::Whole(Target::Set(550))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(550)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(550))],
+            ),
+            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(550))]),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("\u{8d1f}"), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{96f6}")]),
+            Rule::new(1, 1, &[Part::Text("\u{4e00}")]),
+            Rule::new(2, 1, &[Part::Text("\u{4e8c}")]),
+            Rule::new(3, 1, &[Part::Text("\u{4e09}")]),
+            Rule::new(4, 1, &[Part::Text("\u{56db}")]),
+            Rule::new(5, 1, &[Part::Text("\u{4e94}")]),
+            Rule::new(6, 1, &[Part::Text("\u{516d}")]),
+            Rule::new(7, 1, &[Part::Text("\u{4e03}")]),
+            Rule::new(8, 1, &[Part::Text("\u{516b}")]),
+            Rule::new(9, 1, &[Part::Text("\u{4e5d}")]),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{5341}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5341}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{767e}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(545))], &[]),
+                ],
+            ),
+            Rule::new(
+                1000,
+                1000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5343}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(546))], &[]),
+                ],
+            ),
+            Rule::new(
+                10000,
+                10000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4e07}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(547))], &[]),
+                ],
+            ),
+            Rule::new(
+                100_000_000,
+                100_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4ebf}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(548))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5146}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(549))], &[]),
+                ],
+            ),
+            Rule::new(
+                10_000_000_000_000_000,
+                10_000_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4eac}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(544))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000_000_000,
+                1_000_000_000_000_000_000,
+                &[Part::Whole(Target::Digits(2))],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[Rule::new(
+            0,
+            1,
+            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(550))],
+        )],
+    },
+    RuleSet {
+        negative: Some(&[
+            Part::Text("\u{7b2c}\u{2212}"),
+            Part::Remainder(Target::Digits(2)),
+        ]),
+        rules: &[Rule::new(
+            0,
+            1,
+            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Digits(2))],
+        )],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(571)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(571))],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[Part::Whole(Target::Set(571))],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(573))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(571)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(571))],
+            ),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(571))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(571)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(571))],
+            ),
+            Rule::new(1000, 1000, &[Part::Whole(Target::Set(571))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(571)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(571))],
+            ),
+            Rule::new(10000, 10000, &[Part::Whole(Target::Set(571))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{4e00}"),
+                    Part::Whole(Target::Set(571)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(571))],
+            ),
+            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(571))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(572)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[Part::Whole(Target::Set(572))],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[Part::Text("\u{58f9}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(572))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(572)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(572))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(572)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(1000, 1000, &[Part::Whole(Target::Set(572))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(572)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(10000, 10000, &[Part::Whole(Target::Set(572))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(572)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(572))],
+            ),
+            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(572))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{3007}\u{4e00}"),
-                    Part::Whole(Target::Set(553)),
+                    Part::Whole(Target::Set(573)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
             ),
-            Rule::new(100, 100, &[Part::Whole(Target::Set(553))]),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[Part::Whole(Target::Set(573))],
+            ),
         ],
     },
     RuleSet {
@@ -53457,22 +54572,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
             ),
             Rule::new(
                 10,
                 10,
-                &[
-                    Part::Text("\u{3007}\u{4e00}"),
-                    Part::Whole(Target::Set(553)),
-                ],
+                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(573))],
             ),
-            Rule::new(
-                20,
-                10,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
-            ),
-            Rule::new(1000, 1000, &[Part::Whole(Target::Set(553))]),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(573))]),
         ],
     },
     RuleSet {
@@ -53481,22 +54588,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{3007}\u{4e00}"),
-                    Part::Whole(Target::Set(553)),
+                    Part::Whole(Target::Set(573)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
             ),
-            Rule::new(10000, 10000, &[Part::Whole(Target::Set(553))]),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(573))]),
         ],
     },
     RuleSet {
@@ -53505,22 +54612,236 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{3007}\u{4e00}"),
-                    Part::Whole(Target::Set(553)),
+                    Part::Whole(Target::Set(573)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(553))],
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
             ),
-            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(553))]),
+            Rule::new(1000, 1000, &[Part::Whole(Target::Set(573))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{3007}\u{4e00}"),
+                    Part::Whole(Target::Set(573)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(10000, 10000, &[Part::Whole(Target::Set(573))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{3007}\u{4e00}"),
+                    Part::Whole(Target::Set(573)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{3007}"), Part::Whole(Target::Set(573))],
+            ),
+            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(573))]),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("\u{8d1f}"), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{96f6}")]),
+            Rule::new(1, 1, &[Part::Text("\u{4e00}")]),
+            Rule::new(2, 1, &[Part::Text("\u{4e8c}")]),
+            Rule::new(3, 1, &[Part::Text("\u{4e09}")]),
+            Rule::new(4, 1, &[Part::Text("\u{56db}")]),
+            Rule::new(5, 1, &[Part::Text("\u{4e94}")]),
+            Rule::new(6, 1, &[Part::Text("\u{516d}")]),
+            Rule::new(7, 1, &[Part::Text("\u{4e03}")]),
+            Rule::new(8, 1, &[Part::Text("\u{516b}")]),
+            Rule::new(9, 1, &[Part::Text("\u{4e5d}")]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(573))]),
+            Rule::new(
+                100,
+                100,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{767e}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(554))], &[]),
+                ],
+            ),
+            Rule::new(
+                1000,
+                1000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5343}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(555))], &[]),
+                ],
+            ),
+            Rule::new(
+                10000,
+                10000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4e07}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(556))], &[]),
+                ],
+            ),
+            Rule::new(
+                100_000_000,
+                100_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4ebf}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(557))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5146}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(558))], &[]),
+                ],
+            ),
+            Rule::new(
+                10_000_000_000_000_000,
+                10_000_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4eac}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(553))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000_000_000,
+                1_000_000_000_000_000_000,
+                &[Part::Whole(Target::Digits(2))],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("\u{8d1f}"), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{96f6}")]),
+            Rule::new(1, 1, &[Part::Text("\u{58f9}")]),
+            Rule::new(2, 1, &[Part::Text("\u{8d30}")]),
+            Rule::new(3, 1, &[Part::Text("\u{53c1}")]),
+            Rule::new(4, 1, &[Part::Text("\u{8086}")]),
+            Rule::new(5, 1, &[Part::Text("\u{4f0d}")]),
+            Rule::new(6, 1, &[Part::Text("\u{9646}")]),
+            Rule::new(7, 1, &[Part::Text("\u{67d2}")]),
+            Rule::new(8, 1, &[Part::Text("\u{634c}")]),
+            Rule::new(9, 1, &[Part::Text("\u{7396}")]),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{62fe}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{62fe}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4f70}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(560))], &[]),
+                ],
+            ),
+            Rule::new(
+                1000,
+                1000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4edf}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(561))], &[]),
+                ],
+            ),
+            Rule::new(
+                10000,
+                10000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4e07}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(562))], &[]),
+                ],
+            ),
+            Rule::new(
+                100_000_000,
+                100_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4ebf}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(563))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5146}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(564))], &[]),
+                ],
+            ),
+            Rule::new(
+                10_000_000_000_000_000,
+                10_000_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4eac}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(559))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000_000_000,
+                1_000_000_000_000_000_000,
+                &[Part::Whole(Target::Digits(2))],
+            ),
         ],
     },
     RuleSet {
@@ -53559,7 +54880,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{767e}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(548))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(566))], &[]),
                 ],
             ),
             Rule::new(
@@ -53568,7 +54889,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{5343}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(549))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(567))], &[]),
                 ],
             ),
             Rule::new(
@@ -53577,7 +54898,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{4e07}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(550))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(568))], &[]),
                 ],
             ),
             Rule::new(
@@ -53586,7 +54907,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{4ebf}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(551))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(569))], &[]),
                 ],
             ),
             Rule::new(
@@ -53595,7 +54916,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{5146}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(552))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(570))], &[]),
                 ],
             ),
             Rule::new(
@@ -53604,7 +54925,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{4eac}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(547))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(565))], &[]),
                 ],
             ),
             Rule::new(
@@ -53619,7 +54940,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[Rule::new(
             0,
             1,
-            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(553))],
+            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(573))],
         )],
     },
     RuleSet {
@@ -53639,25 +54960,25 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(563))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(590))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(562)),
+                    Part::Whole(Target::Set(588)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(562))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(588))],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
-                &[Part::Whole(Target::Set(562))],
+                &[Part::Whole(Target::Set(588))],
             ),
         ],
     },
@@ -53667,14 +54988,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(563))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(590))],
             ),
             Rule::new(
                 10,
                 10,
-                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(563))],
+                &[Part::Text("\u{4e00}"), Part::Whole(Target::Set(590))],
             ),
-            Rule::new(20, 10, &[Part::Whole(Target::Set(563))]),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(590))]),
         ],
     },
     RuleSet {
@@ -53683,22 +55004,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(563))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(590))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(562)),
+                    Part::Whole(Target::Set(588)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(562))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(588))],
             ),
-            Rule::new(100, 100, &[Part::Whole(Target::Set(562))]),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(588))]),
         ],
     },
     RuleSet {
@@ -53707,22 +55028,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(563))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(590))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(562)),
+                    Part::Whole(Target::Set(588)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(562))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(588))],
             ),
-            Rule::new(1000, 1000, &[Part::Whole(Target::Set(562))]),
+            Rule::new(1000, 1000, &[Part::Whole(Target::Set(588))]),
         ],
     },
     RuleSet {
@@ -53731,22 +55052,22 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(563))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(590))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(562)),
+                    Part::Whole(Target::Set(588)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(562))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(588))],
             ),
-            Rule::new(10000, 10000, &[Part::Whole(Target::Set(562))]),
+            Rule::new(10000, 10000, &[Part::Whole(Target::Set(588))]),
         ],
     },
     RuleSet {
@@ -53755,22 +55076,162 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(
                 1,
                 1,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(563))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(590))],
             ),
             Rule::new(
                 10,
                 10,
                 &[
                     Part::Text("\u{96f6}\u{4e00}"),
-                    Part::Whole(Target::Set(562)),
+                    Part::Whole(Target::Set(588)),
                 ],
             ),
             Rule::new(
                 20,
                 10,
-                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(562))],
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(588))],
             ),
-            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(562))]),
+            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(588))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(589)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[Part::Whole(Target::Set(589))],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[Part::Text("\u{58f9}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(20, 10, &[Part::Whole(Target::Set(589))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(589)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(100, 100, &[Part::Whole(Target::Set(589))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(589)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(1000, 1000, &[Part::Whole(Target::Set(589))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(589)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(10000, 10000, &[Part::Whole(Target::Set(589))]),
+        ],
+    },
+    RuleSet {
+        negative: None,
+        rules: &[
+            Rule::new(
+                1,
+                1,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{96f6}\u{58f9}"),
+                    Part::Whole(Target::Set(589)),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[Part::Text("\u{96f6}"), Part::Whole(Target::Set(589))],
+            ),
+            Rule::new(10_000_000, 10_000_000, &[Part::Whole(Target::Set(589))]),
         ],
     },
     RuleSet {
@@ -53786,14 +55247,14 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
             Rule::new(7, 1, &[Part::Text("\u{4e03}")]),
             Rule::new(8, 1, &[Part::Text("\u{516b}")]),
             Rule::new(9, 1, &[Part::Text("\u{4e5d}")]),
-            Rule::new(10, 10, &[Part::Whole(Target::Set(563))]),
+            Rule::new(10, 10, &[Part::Whole(Target::Set(590))]),
             Rule::new(
                 100,
                 100,
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{767e}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(557))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(577))], &[]),
                 ],
             ),
             Rule::new(
@@ -53802,7 +55263,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{5343}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(558))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(578))], &[]),
                 ],
             ),
             Rule::new(
@@ -53811,7 +55272,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{842c}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(559))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(579))], &[]),
                 ],
             ),
             Rule::new(
@@ -53820,7 +55281,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{5104}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(560))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(580))], &[]),
                 ],
             ),
             Rule::new(
@@ -53829,7 +55290,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{5146}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(561))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(581))], &[]),
                 ],
             ),
             Rule::new(
@@ -53838,7 +55299,98 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 &[
                     Part::Quotient(Target::Same),
                     Part::Text("\u{4eac}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(556))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(576))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000_000_000,
+                1_000_000_000_000_000_000,
+                &[Part::Whole(Target::Digits(2))],
+            ),
+        ],
+    },
+    RuleSet {
+        negative: Some(&[Part::Text("\u{8ca0}"), Part::Remainder(Target::Same)]),
+        rules: &[
+            Rule::new(0, 1, &[Part::Text("\u{96f6}")]),
+            Rule::new(1, 1, &[Part::Text("\u{58f9}")]),
+            Rule::new(2, 1, &[Part::Text("\u{8cb3}")]),
+            Rule::new(3, 1, &[Part::Text("\u{53c3}")]),
+            Rule::new(4, 1, &[Part::Text("\u{8086}")]),
+            Rule::new(5, 1, &[Part::Text("\u{4f0d}")]),
+            Rule::new(6, 1, &[Part::Text("\u{9678}")]),
+            Rule::new(7, 1, &[Part::Text("\u{67d2}")]),
+            Rule::new(8, 1, &[Part::Text("\u{634c}")]),
+            Rule::new(9, 1, &[Part::Text("\u{7396}")]),
+            Rule::new(
+                10,
+                10,
+                &[
+                    Part::Text("\u{62fe}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                20,
+                10,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{62fe}"),
+                    Part::Optional(&[Part::Remainder(Target::Same)], &[]),
+                ],
+            ),
+            Rule::new(
+                100,
+                100,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4f70}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(583))], &[]),
+                ],
+            ),
+            Rule::new(
+                1000,
+                1000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4edf}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(584))], &[]),
+                ],
+            ),
+            Rule::new(
+                10000,
+                10000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{842c}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(585))], &[]),
+                ],
+            ),
+            Rule::new(
+                100_000_000,
+                100_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5104}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(586))], &[]),
+                ],
+            ),
+            Rule::new(
+                1_000_000_000_000,
+                1_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{5146}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(587))], &[]),
+                ],
+            ),
+            Rule::new(
+                10_000_000_000_000_000,
+                10_000_000_000_000_000,
+                &[
+                    Part::Quotient(Target::Same),
+                    Part::Text("\u{4eac}"),
+                    Part::Optional(&[Part::Remainder(Target::Set(582))], &[]),
                 ],
             ),
             Rule::new(
@@ -53882,54 +55434,54 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
                 100,
                 100,
                 &[
-                    Part::Quotient(Target::Set(562)),
+                    Part::Quotient(Target::Set(588)),
                     Part::Text("\u{767e}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(557))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(577))], &[]),
                 ],
             ),
             Rule::new(
                 1000,
                 1000,
                 &[
-                    Part::Quotient(Target::Set(562)),
+                    Part::Quotient(Target::Set(588)),
                     Part::Text("\u{5343}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(558))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(578))], &[]),
                 ],
             ),
             Rule::new(
                 10000,
                 10000,
                 &[
-                    Part::Quotient(Target::Set(562)),
+                    Part::Quotient(Target::Set(588)),
                     Part::Text("\u{842c}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(559))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(579))], &[]),
                 ],
             ),
             Rule::new(
                 100_000_000,
                 100_000_000,
                 &[
-                    Part::Quotient(Target::Set(562)),
+                    Part::Quotient(Target::Set(588)),
                     Part::Text("\u{5104}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(560))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(580))], &[]),
                 ],
             ),
             Rule::new(
                 1_000_000_000_000,
                 1_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(562)),
+                    Part::Quotient(Target::Set(588)),
                     Part::Text("\u{5146}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(561))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(581))], &[]),
                 ],
             ),
             Rule::new(
                 10_000_000_000_000_000,
                 10_000_000_000_000_000,
                 &[
-                    Part::Quotient(Target::Set(562)),
+                    Part::Quotient(Target::Set(588)),
                     Part::Text("\u{4eac}"),
-                    Part::Optional(&[Part::Remainder(Target::Set(556))], &[]),
+                    Part::Optional(&[Part::Remainder(Target::Set(576))], &[]),
                 ],
             ),
             Rule::new(
@@ -53944,7 +55496,7 @@ pub(super) static RULE_SETS: [RuleSet; 565] = [
         rules: &[Rule::new(
             0,
             1,
-            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(563))],
+            &[Part::Text("\u{7b2c}"), Part::Whole(Target::Set(590))],
         )],
     },
 ];
@@ -53969,7 +55521,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(8),
     },
@@ -54035,7 +55587,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(28),
     },
@@ -54046,7 +55598,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 8,
         ordinal_text: Some(32),
     },
@@ -54090,7 +55642,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
@@ -54112,7 +55664,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ".",
         digits: "\u{11136}\u{11137}\u{11138}\u{11139}\u{1113a}\u{1113b}\u{1113c}\u{1113d}\u{1113e}\u{1113f}",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(65),
     },
@@ -54123,7 +55675,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
@@ -54134,7 +55686,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(73),
     },
@@ -54145,7 +55697,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(77),
     },
@@ -54156,7 +55708,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 17,
         ordinal_text: None,
     },
@@ -54167,7 +55719,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(90),
     },
@@ -54178,7 +55730,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(94),
     },
@@ -54189,7 +55741,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(94),
     },
@@ -54200,7 +55752,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ".",
         digits: "0123456789",
         group: "'",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(98),
     },
@@ -54211,7 +55763,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ".",
         digits: "0123456789",
         group: "'",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(94),
     },
@@ -54310,7 +55862,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{202f}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(126),
     },
@@ -54365,7 +55917,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
@@ -54376,7 +55928,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: "\u{66b}",
         digits: "\u{6f0}\u{6f1}\u{6f2}\u{6f3}\u{6f4}\u{6f5}\u{6f6}\u{6f7}\u{6f8}\u{6f9}",
         group: "\u{66c}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
@@ -54387,7 +55939,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: "\u{66b}",
         digits: "\u{6f0}\u{6f1}\u{6f2}\u{6f3}\u{6f4}\u{6f5}\u{6f6}\u{6f7}\u{6f8}\u{6f9}",
         group: "\u{66c}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
@@ -54398,7 +55950,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(142),
     },
@@ -54409,7 +55961,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(146),
     },
@@ -54431,7 +55983,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
@@ -54563,7 +56115,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: Some(214),
     },
@@ -54574,7 +56126,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 26,
         ordinal_text: Some(221),
     },
@@ -54585,7 +56137,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 0,
         ordinal_text: None,
     },
@@ -54607,7 +56159,7 @@ pub(super) static WORDS: [Words; 120] = [
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
@@ -54635,640 +56187,640 @@ pub(super) static WORDS: [Words; 120] = [
     },
     Words {
         and: "{0}\u{3001}{1}",
-        cardinal: Some(252),
+        cardinal: Some(253),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
         ordinal: Some(250),
         ordinal_plurals: 3,
-        ordinal_text: Some(253),
+        ordinal_text: Some(254),
     },
     Words {
         and: "{0} \u{10d3}\u{10d0} {1}",
-        cardinal: Some(257),
+        cardinal: Some(258),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 29,
         ordinal_text: None,
     },
     Words {
         and: "{0} \u{436}\u{4d9}\u{43d}\u{435} {1}",
-        cardinal: Some(262),
+        cardinal: Some(263),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(258),
+        ordinal: Some(259),
         ordinal_plurals: 30,
-        ordinal_text: Some(263),
+        ordinal_text: Some(264),
     },
     Words {
         and: "{0}, {1}",
-        cardinal: Some(266),
+        cardinal: Some(267),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
     Words {
         and: "{0} \u{1793}\u{17b7}\u{1784}\u{200b}{1}",
-        cardinal: Some(269),
+        cardinal: Some(270),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(267),
+        ordinal: Some(268),
         ordinal_plurals: 3,
-        ordinal_text: Some(270),
+        ordinal_text: Some(271),
     },
     Words {
         and: "{0} \u{cae}\u{ca4}\u{ccd}\u{ca4}\u{cc1} {1}",
-        cardinal: Some(275),
+        cardinal: Some(276),
         cardinal_plurals: 4,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(271),
+        ordinal: Some(272),
         ordinal_plurals: 3,
-        ordinal_text: Some(276),
+        ordinal_text: Some(277),
     },
     Words {
         and: "{0} \u{bc0f} {1}",
-        cardinal: Some(279),
+        cardinal: Some(280),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(277),
+        ordinal: Some(278),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
     Words {
         and: "{0} \u{436}\u{430}\u{43d}\u{430} {1}",
-        cardinal: Some(282),
+        cardinal: Some(283),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(280),
+        ordinal: Some(281),
         ordinal_plurals: 3,
-        ordinal_text: Some(283),
+        ordinal_text: Some(284),
     },
     Words {
         and: "{0} a(n) {1}",
-        cardinal: Some(289),
+        cardinal: Some(290),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(290),
+        ordinal_text: Some(291),
     },
     Words {
         and: "{0} \u{ec1}\u{ea5}\u{eb0} {1}",
-        cardinal: Some(294),
+        cardinal: Some(295),
         cardinal_plurals: 3,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(291),
+        ordinal: Some(292),
         ordinal_plurals: 0,
-        ordinal_text: Some(295),
+        ordinal_text: Some(296),
     },
     Words {
         and: "{0}, {1}",
-        cardinal: Some(297),
+        cardinal: Some(298),
         cardinal_plurals: 3,
         decimal: "\u{66b}",
         digits: "\u{6f0}\u{6f1}\u{6f2}\u{6f3}\u{6f4}\u{6f5}\u{6f6}\u{6f7}\u{6f8}\u{6f9}",
         group: "\u{66c}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
     Words {
         and: "{0} ir {1}",
-        cardinal: Some(302),
+        cardinal: Some(303),
         cardinal_plurals: 31,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(303),
+        ordinal_text: Some(304),
     },
     Words {
         and: "{0} un {1}",
-        cardinal: Some(306),
+        cardinal: Some(307),
         cardinal_plurals: 32,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
     Words {
         and: "{0} \u{438} {1}",
-        cardinal: Some(309),
+        cardinal: Some(310),
         cardinal_plurals: 27,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 33,
         ordinal_text: None,
     },
     Words {
         and: "{0}, {1}",
-        cardinal: Some(316),
+        cardinal: Some(317),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(310),
+        ordinal: Some(311),
         ordinal_plurals: 3,
-        ordinal_text: Some(317),
+        ordinal_text: Some(318),
     },
     Words {
         and: "{0} \u{906}\u{923}\u{93f} {1}",
-        cardinal: Some(321),
+        cardinal: Some(322),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "\u{966}\u{967}\u{968}\u{969}\u{96a}\u{96b}\u{96c}\u{96d}\u{96e}\u{96f}",
         group: ",",
-        ordinal: Some(318),
+        ordinal: Some(319),
         ordinal_plurals: 34,
-        ordinal_text: Some(322),
+        ordinal_text: Some(323),
     },
     Words {
         and: "{0} dan {1}",
-        cardinal: Some(325),
+        cardinal: Some(326),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(323),
+        ordinal: Some(324),
         ordinal_plurals: 0,
-        ordinal_text: Some(326),
+        ordinal_text: Some(327),
     },
     Words {
         and: "{0} dan {1}",
-        cardinal: Some(325),
+        cardinal: Some(326),
         cardinal_plurals: 3,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(323),
+        ordinal: Some(324),
         ordinal_plurals: 0,
-        ordinal_text: Some(326),
+        ordinal_text: Some(327),
     },
     Words {
         and: "{0} u {1}",
-        cardinal: Some(329),
+        cardinal: Some(330),
         cardinal_plurals: 35,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(330),
+        ordinal_text: Some(331),
     },
     Words {
         and: "{0} \u{1014}\u{103e}\u{1004}\u{1037}\u{103a} {1}",
-        cardinal: Some(332),
+        cardinal: Some(333),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "\u{1040}\u{1041}\u{1042}\u{1043}\u{1044}\u{1045}\u{1046}\u{1047}\u{1048}\u{1049}",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(333),
+        ordinal_text: Some(334),
     },
     Words {
         and: "{0} \u{930} {1}",
-        cardinal: Some(335),
+        cardinal: Some(336),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "\u{966}\u{967}\u{968}\u{969}\u{96a}\u{96b}\u{96c}\u{96d}\u{96e}\u{96f}",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 36,
-        ordinal_text: Some(336),
+        ordinal_text: Some(337),
     },
     Words {
         and: "{0} en {1}",
-        cardinal: Some(341),
+        cardinal: Some(342),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(337),
+        ordinal: Some(338),
         ordinal_plurals: 3,
-        ordinal_text: Some(342),
+        ordinal_text: Some(343),
     },
     Words {
         and: "{0} og {1}",
-        cardinal: Some(345),
+        cardinal: Some(346),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
     Words {
         and: "{0} og {1}",
-        cardinal: Some(354),
+        cardinal: Some(355),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(355),
+        ordinal_text: Some(356),
     },
     Words {
         and: "{0} \u{b13} {1}",
-        cardinal: Some(358),
+        cardinal: Some(359),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(356),
+        ordinal: Some(357),
         ordinal_plurals: 37,
-        ordinal_text: Some(359),
+        ordinal_text: Some(360),
     },
     Words {
         and: "{0} \u{a05}\u{a24}\u{a47} {1}",
-        cardinal: Some(364),
+        cardinal: Some(365),
         cardinal_plurals: 2,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(360),
+        ordinal: Some(361),
         ordinal_plurals: 3,
-        ordinal_text: Some(365),
+        ordinal_text: Some(366),
     },
     Words {
         and: "{0} i {1}",
-        cardinal: Some(380),
+        cardinal: Some(381),
         cardinal_plurals: 38,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(381),
+        ordinal_text: Some(382),
     },
     Words {
         and: "{0} e {1}",
-        cardinal: Some(387),
+        cardinal: Some(388),
         cardinal_plurals: 22,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(382),
+        ordinal: Some(383),
         ordinal_plurals: 3,
-        ordinal_text: Some(388),
+        ordinal_text: Some(389),
     },
     Words {
         and: "{0} e {1}",
-        cardinal: Some(392),
+        cardinal: Some(393),
         cardinal_plurals: 22,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(382),
+        ordinal: Some(383),
         ordinal_plurals: 3,
-        ordinal_text: Some(393),
+        ordinal_text: Some(394),
     },
     Words {
         and: "{0} e {1}",
-        cardinal: Some(392),
+        cardinal: Some(393),
         cardinal_plurals: 12,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(382),
+        ordinal: Some(383),
         ordinal_plurals: 3,
-        ordinal_text: Some(393),
+        ordinal_text: Some(394),
     },
     Words {
         and: "{0}, {1}",
-        cardinal: Some(396),
+        cardinal: Some(397),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(397),
+        ordinal_text: Some(398),
     },
     Words {
         and: "{0}, {1}",
-        cardinal: Some(396),
+        cardinal: Some(397),
         cardinal_plurals: 3,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(397),
+        ordinal_text: Some(398),
     },
     Words {
         and: "{0} \u{219}i {1}",
-        cardinal: Some(403),
+        cardinal: Some(404),
         cardinal_plurals: 39,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(398),
+        ordinal: Some(399),
         ordinal_plurals: 0,
-        ordinal_text: Some(404),
+        ordinal_text: Some(405),
     },
     Words {
         and: "{0} \u{438} {1}",
-        cardinal: Some(412),
+        cardinal: Some(418),
         cardinal_plurals: 7,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(406),
+        ordinal: Some(412),
         ordinal_plurals: 3,
-        ordinal_text: Some(413),
+        ordinal_text: Some(419),
     },
     Words {
         and: "{0} ja {1}",
-        cardinal: Some(415),
+        cardinal: Some(421),
         cardinal_plurals: 25,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
         ordinal_text: None,
     },
     Words {
         and: "{0} a\u{a0}{1}",
-        cardinal: Some(420),
+        cardinal: Some(426),
         cardinal_plurals: 14,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(421),
+        ordinal_text: Some(427),
     },
     Words {
         and: "{0} in {1}",
-        cardinal: Some(424),
+        cardinal: Some(430),
         cardinal_plurals: 40,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(425),
+        ordinal_text: Some(431),
     },
     Words {
         and: "{0} dhe {1}",
-        cardinal: Some(428),
+        cardinal: Some(434),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 41,
         ordinal_text: None,
     },
     Words {
         and: "{0} \u{438} {1}",
-        cardinal: Some(435),
+        cardinal: Some(441),
         cardinal_plurals: 11,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(436),
+        ordinal_text: Some(442),
     },
     Words {
         and: "{0} i {1}",
-        cardinal: Some(443),
+        cardinal: Some(449),
         cardinal_plurals: 11,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(444),
+        ordinal_text: Some(450),
     },
     Words {
         and: "{0} sareng {1}",
-        cardinal: Some(446),
+        cardinal: Some(452),
         cardinal_plurals: 3,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(447),
+        ordinal_text: Some(453),
     },
     Words {
         and: "{0} och {1}",
-        cardinal: Some(457),
+        cardinal: Some(463),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(448),
+        ordinal: Some(454),
         ordinal_plurals: 42,
-        ordinal_text: Some(458),
+        ordinal_text: Some(464),
     },
     Words {
         and: "{0} na {1}",
-        cardinal: Some(460),
+        cardinal: Some(466),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(461),
+        ordinal_text: Some(467),
     },
     Words {
         and: "{0} na {1}",
-        cardinal: Some(460),
+        cardinal: Some(466),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(461),
+        ordinal_text: Some(467),
     },
     Words {
         and: "{0} \u{bae}\u{bb1}\u{bcd}\u{bb1}\u{bc1}\u{bae}\u{bcd} {1}",
-        cardinal: Some(469),
+        cardinal: Some(475),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(462),
+        ordinal: Some(468),
         ordinal_plurals: 3,
-        ordinal_text: Some(470),
+        ordinal_text: Some(476),
     },
     Words {
         and: "{0} \u{c2e}\u{c30}\u{c3f}\u{c2f}\u{c41} {1}",
-        cardinal: Some(474),
+        cardinal: Some(480),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(471),
+        ordinal: Some(477),
         ordinal_plurals: 3,
-        ordinal_text: Some(475),
+        ordinal_text: Some(481),
     },
     Words {
         and: "{0}\u{e41}\u{e25}\u{e30}{1}",
-        cardinal: Some(479),
+        cardinal: Some(485),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(476),
+        ordinal: Some(482),
         ordinal_plurals: 3,
-        ordinal_text: Some(480),
+        ordinal_text: Some(486),
     },
     Words {
         and: "{0} ve {1}",
-        cardinal: Some(487),
+        cardinal: Some(493),
         cardinal_plurals: 0,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 3,
-        ordinal_text: Some(488),
+        ordinal_text: Some(494),
     },
     Words {
         and: "{0} \u{456} {1}",
-        cardinal: Some(496),
+        cardinal: Some(502),
         cardinal_plurals: 7,
         decimal: ",",
         digits: "0123456789",
         group: "\u{a0}",
-        ordinal: Some(489),
+        ordinal: Some(495),
         ordinal_plurals: 43,
-        ordinal_text: Some(497),
+        ordinal_text: Some(503),
     },
     Words {
         and: "{0} \u{627}\u{648}\u{631} {1}",
-        cardinal: Some(501),
+        cardinal: Some(507),
         cardinal_plurals: 0,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(498),
+        ordinal: Some(504),
         ordinal_plurals: 3,
-        ordinal_text: Some(502),
+        ordinal_text: Some(508),
     },
     Words {
         and: "{0} \u{627}\u{648}\u{631} {1}",
-        cardinal: Some(501),
+        cardinal: Some(507),
         cardinal_plurals: 0,
         decimal: "\u{66b}",
         digits: "\u{6f0}\u{6f1}\u{6f2}\u{6f3}\u{6f4}\u{6f5}\u{6f6}\u{6f7}\u{6f8}\u{6f9}",
         group: "\u{66c}",
-        ordinal: Some(498),
+        ordinal: Some(504),
         ordinal_plurals: 3,
-        ordinal_text: Some(502),
+        ordinal_text: Some(508),
     },
     Words {
         and: "{0} e {1}",
-        cardinal: Some(518),
+        cardinal: Some(524),
         cardinal_plurals: 12,
         decimal: ",",
         digits: "0123456789",
         group: "\u{202f}",
-        ordinal: Some(405),
+        ordinal: Some(411),
         ordinal_plurals: 28,
-        ordinal_text: Some(519),
+        ordinal_text: Some(525),
     },
     Words {
         and: "{0} v\u{e0} {1}",
-        cardinal: Some(526),
+        cardinal: Some(532),
         cardinal_plurals: 4,
         decimal: ",",
         digits: "0123456789",
         group: ".",
-        ordinal: Some(520),
+        ordinal: Some(526),
         ordinal_plurals: 0,
-        ordinal_text: Some(527),
+        ordinal_text: Some(533),
     },
     Words {
         and: "{0}\u{540c}{1}",
-        cardinal: Some(535),
+        cardinal: Some(541),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(528),
+        ordinal: Some(534),
         ordinal_plurals: 3,
-        ordinal_text: Some(536),
+        ordinal_text: Some(542),
     },
     Words {
         and: "{0}\u{540c}{1}",
-        cardinal: Some(544),
+        cardinal: Some(550),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(537),
+        ordinal: Some(543),
         ordinal_plurals: 3,
-        ordinal_text: Some(545),
+        ordinal_text: Some(551),
     },
     Words {
         and: "{0}\u{548c}{1}",
-        cardinal: Some(553),
+        cardinal: Some(573),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(546),
+        ordinal: Some(552),
         ordinal_plurals: 3,
-        ordinal_text: Some(554),
+        ordinal_text: Some(574),
     },
     Words {
         and: "{0}\u{548c}{1}",
-        cardinal: Some(563),
+        cardinal: Some(590),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(555),
+        ordinal: Some(575),
         ordinal_plurals: 3,
-        ordinal_text: Some(564),
+        ordinal_text: Some(591),
     },
     Words {
         and: "{0}\u{53ca}{1}",
-        cardinal: Some(563),
+        cardinal: Some(590),
         cardinal_plurals: 3,
         decimal: ".",
         digits: "0123456789",
         group: ",",
-        ordinal: Some(555),
+        ordinal: Some(575),
         ordinal_plurals: 3,
-        ordinal_text: Some(564),
+        ordinal_text: Some(591),
     },
 ];

@@ -465,7 +465,6 @@ const EXAMPLES: [(F, &[(i64, &str)]); 56] = [
             (8, "\u{906}\u{920}"),
             (9, "\u{928}\u{94C}"),
             (10, "\u{926}\u{938}"),
-            (11, "11"),
         ],
     ),
     (
@@ -631,7 +630,6 @@ const EXAMPLES: [(F, &[(i64, &str)]); 56] = [
             (21, "\u{4E8C}\u{5341}\u{4E00}"),
             (500, "\u{4E94}\u{767E}"),
             (50, "\u{4E94}\u{5341}"),
-            (10_000, "10000"),
         ],
     ),
     (
@@ -880,7 +878,6 @@ const EXAMPLES: [(F, &[(i64, &str)]); 56] = [
             (8, "\u{E41}\u{E1B}\u{E14}"),
             (9, "\u{E40}\u{E01}\u{E49}\u{E32}"),
             (10, "\u{E2A}\u{E34}\u{E1A}"),
-            (11, "11"),
         ],
     ),
     (
@@ -967,10 +964,86 @@ const EXAMPLES: [(F, &[(i64, &str)]); 56] = [
             (8, "t\u{E1}m"),
             (9, "ch\u{ED}n"),
             (10, "m\u{1B0}\u{1EDD}i"),
-            (11, "11"),
         ],
     ),
 ];
+
+/// The largest number CLDR's rule sets write in words: one below 10^18, where each writes digits.
+const LAST_IN_WORDS: i64 = 999_999_999_999_999_999;
+
+/// Each group system's first value past the standard's and its text, and the parts of its text of
+/// [`LAST_IN_WORDS`].
+const PAST_GROUPS: [PastGroups; 7] = [
+    PastGroups {
+        first: 100_000,
+        first_text: "\u{5341}\u{4E07}",
+        format: F::ChineseCountingThousand,
+        group: "\u{4E5D}\u{5343}\u{4E5D}\u{767E}\u{4E5D}\u{5341}\u{4E5D}",
+        powers: ["\u{4E07}", "\u{4EBF}", "\u{5146}", "\u{4EAC}"],
+        tens: "\u{4E5D}\u{5341}\u{4E5D}",
+    },
+    PastGroups {
+        first: 100_000,
+        first_text: "\u{62FE}\u{4E07}",
+        format: F::ChineseLegalSimplified,
+        group: "\u{7396}\u{4EDF}\u{7396}\u{4F70}\u{7396}\u{62FE}\u{7396}",
+        powers: ["\u{4E07}", "\u{4EBF}", "\u{5146}", "\u{4EAC}"],
+        tens: "\u{7396}\u{62FE}\u{7396}",
+    },
+    PastGroups {
+        first: 100_000,
+        first_text: "\u{62FE}\u{842C}",
+        format: F::IdeographLegalTraditional,
+        group: "\u{7396}\u{4EDF}\u{7396}\u{4F70}\u{7396}\u{62FE}\u{7396}",
+        powers: ["\u{842C}", "\u{5104}", "\u{5146}", "\u{4EAC}"],
+        tens: "\u{7396}\u{62FE}\u{7396}",
+    },
+    PastGroups {
+        first: 10_000,
+        first_text: "\u{4E00}\u{4E07}",
+        format: F::JapaneseCounting,
+        group: "\u{4E5D}\u{5343}\u{4E5D}\u{767E}\u{4E5D}\u{5341}\u{4E5D}",
+        powers: ["\u{4E07}", "\u{5104}", "\u{5146}", "\u{4EAC}"],
+        tens: "\u{4E5D}\u{5341}\u{4E5D}",
+    },
+    PastGroups {
+        first: 100_000,
+        first_text: "\u{62FE}\u{842C}",
+        format: F::JapaneseLegal,
+        group: "\u{4E5D}\u{5343}\u{4E5D}\u{767E}\u{4E5D}\u{62FE}\u{4E5D}",
+        powers: ["\u{842C}", "\u{5104}", "\u{5146}", "\u{4EAC}"],
+        tens: "\u{4E5D}\u{62FE}\u{4E5D}",
+    },
+    PastGroups {
+        first: 100_000,
+        first_text: "\u{C2ED}\u{B9CC}",
+        format: F::KoreanCounting,
+        group: " \u{AD6C}\u{CC9C}\u{AD6C}\u{BC31}\u{AD6C}\u{C2ED}\u{AD6C}",
+        powers: ["\u{B9CC}", "\u{C5B5}", "\u{C870}", "\u{ACBD}"],
+        tens: "\u{AD6C}\u{C2ED}\u{AD6C}",
+    },
+    PastGroups {
+        first: 100_000,
+        first_text: "\u{5341}\u{842C}",
+        format: F::TaiwaneseCountingThousand,
+        group: "\u{4E5D}\u{5343}\u{4E5D}\u{767E}\u{4E5D}\u{5341}\u{4E5D}",
+        powers: ["\u{842C}", "\u{5104}", "\u{5146}", "\u{4EAC}"],
+        tens: "\u{4E5D}\u{5341}\u{4E5D}",
+    },
+];
+
+/// A group system past the values the standard spells out.
+struct PastGroups {
+    first: i64,
+    first_text: &'static str,
+    format: F,
+    /// The text of 9,999, after the separator CLDR writes before it.
+    group: &'static str,
+    /// The symbols of 10^4, 10^8, 10^12 and 10^16.
+    powers: [&'static str; 4],
+    /// The text of 99.
+    tens: &'static str,
+}
 
 #[test]
 fn each_member_writes_the_values_of_its_example() {
@@ -1042,10 +1115,13 @@ fn zero_and_negative_numbers_with_no_text_are_decimal() {
 #[test]
 fn numbers_past_a_format_s_reach_are_decimal() {
     assert_eq!(
-        format_number(100_000, F::ChineseCountingThousand).as_deref(),
-        Some("100000")
+        format_number(1_000_000_000_000_000_000, F::ChineseCountingThousand).as_deref(),
+        Some("1000000000000000000")
     );
-    assert_eq!(format_number(10_000, F::Hebrew1).as_deref(), Some("10000"));
+    assert_eq!(
+        format_number(1_000_001, F::Hebrew1).as_deref(),
+        Some("1000001")
+    );
     assert_eq!(format_number(100, F::KoreanLegal).as_deref(), Some("100"));
     assert_eq!(
         format_number(i64::MAX, F::UpperLetter),
@@ -1054,6 +1130,142 @@ fn numbers_past_a_format_s_reach_are_decimal() {
     assert_eq!(
         format_number(i64::MAX, F::LowerRoman),
         Some(i64::MAX.to_string())
+    );
+}
+
+#[test]
+fn the_counting_names_past_ten_are_cldr_s() {
+    let cases = [
+        (
+            F::HindiCounting,
+            "\u{917}\u{94D}\u{92F}\u{93E}\u{930}\u{939}",
+        ),
+        (
+            F::ThaiCounting,
+            "\u{E2A}\u{E34}\u{E1A}\u{200B}\u{E40}\u{E2D}\u{E47}\u{E14}",
+        ),
+        (F::VietnameseCounting, "m\u{1B0}\u{1EDD}i m\u{1ED9}t"),
+        (
+            F::BahtText,
+            "\u{E2A}\u{E34}\u{E1A}\u{200B}\u{E40}\u{E2D}\u{E47}\u{E14}\u{E1A}\u{E32}\u{E17}\u{E16}\
+             \u{E49}\u{E27}\u{E19}",
+        ),
+    ];
+    for (format, eleven) in cases {
+        assert_eq!(
+            format_number(11, format).as_deref(),
+            Some(eleven),
+            "{format:?}"
+        );
+    }
+    assert_eq!(
+        format_number(105, F::VietnameseCounting).as_deref(),
+        Some("m\u{1ED9}t tr\u{103}m l\u{1EBB} n\u{103}m")
+    );
+}
+
+#[test]
+fn the_counting_names_reach_one_below_ten_to_the_eighteenth() {
+    let hindi_99 = "\u{928}\u{93F}\u{928}\u{94D}\u{92F}\u{93E}\u{928}\u{92C}\u{947}";
+    let hindi_lakhs = format!(
+        "{hindi_99} \u{932}\u{93E}\u{916} {hindi_99} \u{939}\u{91C}\u{93C}\u{93E}\u{930} \
+         \u{928}\u{94C} \u{938}\u{94C} {hindi_99}"
+    );
+    let hindi = format!(
+        "{hindi_lakhs} \u{916}\u{930}\u{92C} {hindi_99} \u{905}\u{930}\u{92C} {hindi_99} \
+         \u{915}\u{930}\u{94B}\u{921}\u{93C} {hindi_lakhs}"
+    );
+    let thai_nine = "\u{E40}\u{E01}\u{E49}\u{E32}";
+    let mut thai_group = String::new();
+    for power in [
+        "\u{E41}\u{E2A}\u{E19}",
+        "\u{E2B}\u{E21}\u{E37}\u{E48}\u{E19}",
+        "\u{E1E}\u{E31}\u{E19}",
+        "\u{E23}\u{E49}\u{E2D}\u{E22}",
+        "\u{E2A}\u{E34}\u{E1A}",
+    ] {
+        thai_group.push_str(thai_nine);
+        thai_group.push('\u{200B}');
+        thai_group.push_str(power);
+        thai_group.push('\u{200B}');
+    }
+    thai_group.push_str(thai_nine);
+    let million = "\u{200B}\u{E25}\u{E49}\u{E32}\u{E19}\u{200B}";
+    let thai = format!("{thai_group}{million}{thai_group}{million}{thai_group}");
+    let vietnamese_group = "ch\u{ED}n tr\u{103}m ch\u{ED}n m\u{1B0}\u{1A1}i ch\u{ED}n";
+    let vietnamese_millions =
+        format!("{vietnamese_group} tri\u{1EC7}u {vietnamese_group} ngh\u{EC}n {vietnamese_group}");
+    let vietnamese = format!("{vietnamese_millions} t\u{1EF7} {vietnamese_millions}");
+    for (format, text) in [
+        (F::HindiCounting, hindi),
+        (F::ThaiCounting, thai),
+        (F::VietnameseCounting, vietnamese),
+    ] {
+        assert_eq!(
+            format_number(LAST_IN_WORDS, format),
+            Some(text),
+            "{format:?}"
+        );
+        assert_eq!(
+            format_number(LAST_IN_WORDS + 1, format),
+            Some((LAST_IN_WORDS + 1).to_string()),
+            "{format:?}"
+        );
+    }
+}
+
+#[test]
+fn the_group_systems_past_the_standard_s_values_are_cldr_s() {
+    for PastGroups {
+        first,
+        first_text,
+        format,
+        group,
+        powers,
+        tens,
+    } in PAST_GROUPS
+    {
+        assert_eq!(
+            format_number(first, format).as_deref(),
+            Some(first_text),
+            "{format:?}"
+        );
+        let [ten_thousand, hundred_million, trillion, quadrillion] = powers;
+        let last = format!(
+            "{tens}{quadrillion}{group}{trillion}{group}{hundred_million}{group}{ten_thousand}\
+             {group}"
+        );
+        assert_eq!(
+            format_number(LAST_IN_WORDS, format),
+            Some(last),
+            "{format:?}"
+        );
+        assert_eq!(
+            format_number(LAST_IN_WORDS + 1, format),
+            Some((LAST_IN_WORDS + 1).to_string()),
+            "{format:?}"
+        );
+    }
+}
+
+#[test]
+fn hebrew1_past_9999_is_cldr_s_hebrew_numbering_to_a_million() {
+    let thousands = " \u{5D0}\u{5DC}\u{5E4}\u{5D9}\u{5DD}";
+    assert_eq!(
+        format_number(10_000, F::Hebrew1),
+        Some(format!("\u{5D9}\u{5F3}{thousands}"))
+    );
+    assert_eq!(
+        format_number(10_001, F::Hebrew1).as_deref(),
+        Some("\u{5D9}\u{5F3}\u{5D0}\u{5F3}")
+    );
+    assert_eq!(
+        format_number(1_000_000, F::Hebrew1),
+        Some(format!("\u{5D0}\u{5DC}\u{5E3}{thousands}"))
+    );
+    assert_eq!(
+        format_number(1_000_001, F::Hebrew1).as_deref(),
+        Some("1000001")
     );
 }
 

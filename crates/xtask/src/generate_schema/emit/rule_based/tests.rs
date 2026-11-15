@@ -149,7 +149,7 @@ fn a_locale_with_no_rules_of_its_own_has_no_words() {
 
 #[test]
 fn the_table_holds_each_locale_that_differs_from_its_parent_and_the_sets_reached() {
-    let table = Table::build(&data()).unwrap();
+    let table = Table::build(&data(), &[]).unwrap();
     let ids: Vec<&str> = table.locales.iter().map(|(id, _, _)| id.as_str()).collect();
     assert_eq!(ids, ["en", "es", "es_419"]);
     let names: Vec<&str> = table
@@ -177,6 +177,47 @@ fn the_table_holds_each_locale_that_differs_from_its_parent_and_the_sets_reached
 }
 
 #[test]
+fn a_format_spelled_to_a_limit_takes_its_rule_set_from_any_grouping() {
+    let mut found = data();
+    found.rules.get_mut("root").unwrap().extend(
+        groupings(
+            &cldr::read(
+                "<ldml><rbnf><rulesetGrouping type=\"NumberingSystemRules\"><rbnfRules>\
+                 <![CDATA[%hebrew:\n1: =%%item=;\n%%item:\n1: \u{5d0};\n]]></rbnfRules>\
+                 </rulesetGrouping></rbnf></ldml>",
+            )
+            .unwrap(),
+        )
+        .unwrap(),
+    );
+    let formats = [
+        ("Hebrew1", "root", "NumberingSystemRules", "%hebrew"),
+        ("HindiCounting", "en", "SpelloutRules", "%%cardinal"),
+    ];
+    let table = Table::build(&found, &formats).unwrap();
+    let named: Vec<(&str, &str)> = table
+        .formats
+        .iter()
+        .map(|(variant, at)| (variant.as_str(), table.rule_sets[*at].name.as_str()))
+        .collect();
+    assert_eq!(
+        named,
+        [("Hebrew1", "%hebrew"), ("HindiCounting", "%%cardinal")]
+    );
+    assert!(table.rule_sets.iter().any(|set| set.name == "%%item"));
+    let text = render("// header\n", "Copyright", &table).unwrap();
+    assert!(text.contains("pub(super) static FORMATS: [(StNumberFormatMember, usize); 2] = ["));
+    assert!(text.contains("(StNumberFormatMember::Hebrew1, "));
+
+    let missing = [("Hebrew1", "root", "NumberingSystemRules", "%greek")];
+    let err = Table::build(&found, &missing).unwrap_err();
+    assert_eq!(
+        err.to_string(),
+        "root's NumberingSystemRules holds no rule set %greek"
+    );
+}
+
+#[test]
 fn a_rule_set_named_that_its_grouping_lacks_stops_the_table() {
     let mut found = data();
     found.rules.insert(
@@ -190,7 +231,7 @@ fn a_rule_set_named_that_its_grouping_lacks_stops_the_table() {
         )
         .unwrap(),
     );
-    let err = Table::build(&found).unwrap_err();
+    let err = Table::build(&found, &[]).unwrap_err();
     assert_eq!(
         err.to_string(),
         "en's SpelloutRules holds no rule set %%missing"
@@ -211,7 +252,7 @@ fn a_rule_the_evaluator_does_not_follow_stops_the_table() {
         )
         .unwrap(),
     );
-    let err = Table::build(&found).unwrap_err();
+    let err = Table::build(&found, &[]).unwrap_err();
     assert!(err.to_string().contains("does not follow `>>>`"));
 }
 

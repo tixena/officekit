@@ -1,5 +1,6 @@
-//! Numbers in words and the alphabets of the run's language, from Unicode CLDR's rule-based
-//! number formats, plural rules, list patterns and index exemplars (UTS #35, Parts 2 and 3).
+//! Numbers in words and the alphabets of the run's language, and the formats ECMA-376 spells only
+//! to a limit past it, from Unicode CLDR's rule-based number formats, plural rules, list patterns
+//! and index exemplars (UTS #35, Parts 2 and 3).
 
 mod locales;
 #[cfg(test)]
@@ -9,7 +10,9 @@ use alloc::string::String;
 use alloc::vec::Vec;
 use core::iter;
 
-use self::locales::{ALPHABETS, LOCALES, PARENTS, PATTERNS, PLURALS, RULE_SETS, WORDS};
+use officekit_markup::wordprocessing::StNumberFormatMember;
+
+use self::locales::{ALPHABETS, FORMATS, LOCALES, PARENTS, PATTERNS, PLURALS, RULE_SETS, WORDS};
 
 /// Past this many rule sets within one another a number is left unwritten.
 const DEEPEST: u8 = 64;
@@ -132,12 +135,10 @@ impl Rule {
         }
     }
 
-    /// ICU's rollback: a rule with a remainder whose base is not a multiple of its divisor gives
-    /// way to the rule before it for a number that is.
+    /// ICU's rollback: a rule with a remainder, in brackets or not, whose base is not a multiple
+    /// of its divisor gives way to the rule before it for a number that is.
     fn rolls_back(&self, value: u64) -> bool {
-        self.parts
-            .iter()
-            .any(|part| matches!(part, Part::Remainder(_)))
+        holds_remainder(self.parts)
             && !self.base.is_multiple_of(self.divisor)
             && value.is_multiple_of(self.divisor)
     }
@@ -149,6 +150,102 @@ struct RuleSet {
     negative: Option<&'static [Part]>,
     /// The rules of whole numbers, by base.
     rules: &'static [Rule],
+}
+
+/// Writes numbers by the rule sets, in the digits and plural categories of `words`; without
+/// words, a number a rule writes in digits or by a plural is left unwritten.
+#[derive(Debug)]
+struct Speller {
+    words: Option<&'static Words>,
+}
+
+impl Speller {
+    /// The text of the rule at `at` of the rule set `set` for `value`.
+    fn rule(&self, set: usize, at: usize, value: u64, depth: u8) -> Option<String> {
+        let rule = RULE_SETS.get(set)?.rules.get(at)?;
+        let place = Place {
+            divisor: rule.divisor,
+            negative: false,
+            set,
+            value,
+        };
+        let mut text = String::new();
+        self.write(rule.parts, place, depth, &mut text)?;
+        Some(text)
+    }
+
+    /// `value`, negative when `negative`, by the rule set `set`.
+    fn set(&self, set: usize, negative: bool, value: u64, depth: u8) -> Option<String> {
+        if depth > DEEPEST {
+            return None;
+        }
+        let rules = RULE_SETS.get(set)?;
+        if negative {
+            let place = Place {
+                divisor: 1,
+                negative: true,
+                set,
+                value,
+            };
+            let mut text = String::new();
+            self.write(rules.negative?, place, depth, &mut text)?;
+            return Some(text);
+        }
+        let mut at = rules
+            .rules
+            .partition_point(|rule| rule.base <= value)
+            .checked_sub(1)?;
+        if at > 0 && rules.rules.get(at)?.rolls_back(value) {
+            at -= 1;
+        }
+        self.rule(set, at, value, depth)
+    }
+
+    /// `number` written as `target` says, from the rule set `set`.
+    fn target(&self, target: Target, set: usize, number: u64, depth: u8) -> Option<String> {
+        match target {
+            Target::Digits(pattern) => Some(self.words?.digits(number, PATTERNS.get(pattern)?)),
+            Target::Same => self.set(set, false, number, depth + 1),
+            Target::Set(other) => self.set(other, false, number, depth + 1),
+        }
+    }
+
+    fn write(&self, parts: &[Part], place: Place, depth: u8, text: &mut String) -> Option<()> {
+        let quotient = place.value / place.divisor;
+        let remainder = place.value % place.divisor;
+        for part in parts {
+            match part {
+                Part::Optional(first, second) => {
+                    let chosen = if remainder == 0 { second } else { first };
+                    self.write(chosen, place, depth, text)?;
+                }
+                Part::Plural(kind, choices) => {
+                    let category = self.words?.category(*kind, quotient);
+                    let (_, chosen) = choices
+                        .iter()
+                        .find(|(found, _)| *found == category)
+                        .or_else(|| choices.iter().find(|(found, _)| *found == Category::Other))?;
+                    text.push_str(chosen);
+                }
+                Part::Quotient(target) => {
+                    text.push_str(&self.target(*target, place.set, quotient, depth)?);
+                }
+                Part::Remainder(target) => {
+                    let number = if place.negative {
+                        place.value
+                    } else {
+                        remainder
+                    };
+                    text.push_str(&self.target(*target, place.set, number, depth)?);
+                }
+                Part::Text(found) => text.push_str(found),
+                Part::Whole(target) => {
+                    text.push_str(&self.target(*target, place.set, place.value, depth)?);
+                }
+            }
+        }
+        Some(())
+    }
 }
 
 /// The format a number is spelled in.
@@ -243,93 +340,6 @@ impl Words {
         text.extend(iter::repeat_n(zero, usize::from(pattern.fraction)));
         text
     }
-
-    /// The text of the rule at `at` of the rule set `set` for `value`.
-    fn rule(&self, set: usize, at: usize, value: u64, depth: u8) -> Option<String> {
-        let rule = RULE_SETS.get(set)?.rules.get(at)?;
-        let place = Place {
-            divisor: rule.divisor,
-            negative: false,
-            set,
-            value,
-        };
-        let mut text = String::new();
-        self.write(rule.parts, place, depth, &mut text)?;
-        Some(text)
-    }
-
-    /// `value`, negative when `negative`, by the rule set `set`.
-    fn set(&self, set: usize, negative: bool, value: u64, depth: u8) -> Option<String> {
-        if depth > DEEPEST {
-            return None;
-        }
-        let rules = RULE_SETS.get(set)?;
-        if negative {
-            let place = Place {
-                divisor: 1,
-                negative: true,
-                set,
-                value,
-            };
-            let mut text = String::new();
-            self.write(rules.negative?, place, depth, &mut text)?;
-            return Some(text);
-        }
-        let mut at = rules
-            .rules
-            .partition_point(|rule| rule.base <= value)
-            .checked_sub(1)?;
-        if at > 0 && rules.rules.get(at)?.rolls_back(value) {
-            at -= 1;
-        }
-        self.rule(set, at, value, depth)
-    }
-
-    /// `number` written as `target` says, from the rule set `set`.
-    fn target(&self, target: Target, set: usize, number: u64, depth: u8) -> Option<String> {
-        match target {
-            Target::Digits(pattern) => Some(self.digits(number, PATTERNS.get(pattern)?)),
-            Target::Same => self.set(set, false, number, depth + 1),
-            Target::Set(other) => self.set(other, false, number, depth + 1),
-        }
-    }
-
-    fn write(&self, parts: &[Part], place: Place, depth: u8, text: &mut String) -> Option<()> {
-        let quotient = place.value / place.divisor;
-        let remainder = place.value % place.divisor;
-        for part in parts {
-            match part {
-                Part::Optional(first, second) => {
-                    let chosen = if remainder == 0 { second } else { first };
-                    self.write(chosen, place, depth, text)?;
-                }
-                Part::Plural(kind, choices) => {
-                    let category = self.category(*kind, quotient);
-                    let (_, chosen) = choices
-                        .iter()
-                        .find(|(found, _)| *found == category)
-                        .or_else(|| choices.iter().find(|(found, _)| *found == Category::Other))?;
-                    text.push_str(chosen);
-                }
-                Part::Quotient(target) => {
-                    text.push_str(&self.target(*target, place.set, quotient, depth)?);
-                }
-                Part::Remainder(target) => {
-                    let number = if place.negative {
-                        place.value
-                    } else {
-                        remainder
-                    };
-                    text.push_str(&self.target(*target, place.set, number, depth)?);
-                }
-                Part::Text(found) => text.push_str(found),
-                Part::Whole(target) => {
-                    text.push_str(&self.target(*target, place.set, place.value, depth)?);
-                }
-            }
-        }
-        Some(())
-    }
 }
 
 /// The letters of `upperLetter`, else of `lowerLetter`, in `language`'s alphabet; `None` when
@@ -339,11 +349,27 @@ pub(super) fn alphabet(language: &str, upper: bool) -> Option<&'static [&'static
     Some(if upper { letters.upper } else { letters.lower })
 }
 
+/// `value` in `format` past the values section 17.18.59 spells out, by the CLDR rule set
+/// [`FORMATS`] names; `None` for another format, and for a value the set writes in digits.
+pub(super) fn counted(value: u64, format: StNumberFormatMember) -> Option<String> {
+    let (_, set) = FORMATS.iter().find(|(found, _)| *found == format)?;
+    Speller { words: None }.set(*set, false, value, 0)
+}
+
 /// `dollarText`: the words of `value`, then "and 00/100" by the language's list pattern.
 pub(super) fn dollars(value: i64, language: &str) -> Option<String> {
     let found = words(language)?;
     let cardinal = spelled(value, Spelled::Cardinal, language)?;
     Some(found.and.replace("{1}", "00/100").replace("{0}", &cardinal))
+}
+
+/// Whether `parts`, those in brackets included, write the remainder.
+fn holds_remainder(parts: &[Part]) -> bool {
+    parts.iter().any(|part| match part {
+        Part::Remainder(_) => true,
+        Part::Optional(first, second) => holds_remainder(first) || holds_remainder(second),
+        Part::Plural(..) | Part::Quotient(_) | Part::Text(_) | Part::Whole(_) => false,
+    })
 }
 
 /// The nearest locale of `language`'s chain that the table holds: the tag, then each parent.
@@ -401,7 +427,7 @@ pub(super) fn spelled(value: i64, kind: Spelled, language: &str) -> Option<Strin
         Spelled::Ordinal => found.ordinal,
         Spelled::OrdinalText => found.ordinal_text,
     }?;
-    found.set(set, value < 0, value.unsigned_abs(), 0)
+    Speller { words: Some(found) }.set(set, value < 0, value.unsigned_abs(), 0)
 }
 
 fn words(language: &str) -> Option<&'static Words> {

@@ -577,8 +577,8 @@ struct Grouped {
     zero: [Option<u64>; 3],
 }
 
-/// `value` in the number format `format` (ECMA-376 Part 1, section 17.18.59), in decimal where
-/// the section gives the value no text.
+/// `value` in the number format `format` (ECMA-376 Part 1, section 17.18.59); past the values the
+/// section spells out, as Unicode CLDR's rule-based number formats spell it, else in decimal.
 ///
 /// `None` for `bullet`, `custom`, `decimalFullWidth2` and the formats in the run's language,
 /// `cardinalText`, `ordinalText`, `ordinal` and `dollarText`, which [`format_number_in`] writes.
@@ -594,7 +594,9 @@ pub fn format_number(value: i64, format: StNumberFormatMember) -> Option<String>
         F::ArabicAbjad => positive.and_then(|n| repeated(n, &ARABIC_ABJAD)),
         F::ArabicAlpha => positive.and_then(|n| repeated(n, &ARABIC_ALPHA)),
         F::BahtText => positive
-            .and_then(|n| within(n, &THAI_COUNTING))
+            .and_then(|n| {
+                within(n, &THAI_COUNTING).or_else(|| rule_based::counted(n, F::ThaiCounting))
+            })
             .map(|counted| format!("{counted}{BAHT}")),
         F::Chicago => positive.and_then(|n| repeated(n, &CHICAGO)),
         F::ChineseCounting | F::TaiwaneseCounting => whole.map(counting),
@@ -662,7 +664,10 @@ pub fn format_number(value: i64, format: StNumberFormatMember) -> Option<String>
         | F::OrdinalText
         | _ => return None,
     };
-    Some(text.unwrap_or_else(|| value.to_string()))
+    Some(
+        text.or_else(|| rule_based::counted(positive?, format))
+            .unwrap_or_else(|| value.to_string()),
+    )
 }
 
 /// `value` in `format` for a run in `language`, a tag such as `en-US` (section 17.18.59).

@@ -1,9 +1,11 @@
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_markup::wordprocessing::StNumberFormatMember as F;
+
 use super::{
-    Category, LOCALES, PARENTS, Pattern, PluralKind, Relation, Spelled, WORDS, Words, dollars,
-    locale, normalized, spelled,
+    Category, FORMATS, LOCALES, PARENTS, Pattern, PluralKind, Relation, Spelled, WORDS, Words,
+    counted, dollars, locale, normalized, spelled,
 };
 
 /// Words with Latin digits, `.` between groups and `,` before a fraction.
@@ -145,5 +147,45 @@ fn english_ordinal_suffixes_follow_its_plural_categories() {
             Category::One,
             Category::Other
         ]
+    );
+}
+
+#[test]
+fn each_format_spelled_to_a_limit_has_a_rule_set() {
+    let formats: Vec<F> = FORMATS.iter().map(|(format, _)| *format).collect();
+    assert_eq!(
+        formats,
+        [
+            F::ChineseCountingThousand,
+            F::ChineseLegalSimplified,
+            F::Hebrew1,
+            F::HindiCounting,
+            F::IdeographLegalTraditional,
+            F::JapaneseCounting,
+            F::JapaneseLegal,
+            F::KoreanCounting,
+            F::TaiwaneseCountingThousand,
+            F::ThaiCounting,
+            F::VietnameseCounting,
+        ]
+    );
+}
+
+#[test]
+fn a_counted_number_written_in_digits_or_of_another_format_is_none() {
+    assert_eq!(
+        counted(21, F::VietnameseCounting).as_deref(),
+        Some("hai m\u{1B0}\u{1A1}i m\u{1ED1}t")
+    );
+    assert_eq!(counted(21, F::Decimal), None);
+    assert_eq!(counted(1_000_000_000_000_000_000, F::HindiCounting), None);
+    assert_eq!(counted(1_000_001, F::Hebrew1), None);
+}
+
+#[test]
+fn a_remainder_in_brackets_rolls_a_rule_back() {
+    assert_eq!(
+        counted(5_000, F::Hebrew1).as_deref(),
+        Some("\u{5D4}\u{5F3} \u{5D0}\u{5DC}\u{5E4}\u{5D9}\u{5DD}")
     );
 }

@@ -1,5 +1,5 @@
-//! The table of the number formats in the run's language, from Unicode CLDR (ECMA-376 Part 1,
-//! section 17.18.59).
+//! The table of the number formats in the run's language, and of those spelled only to a limit,
+//! from Unicode CLDR (ECMA-376 Part 1, section 17.18.59).
 
 pub mod plurals;
 pub mod rules;
@@ -26,6 +26,52 @@ mod tests;
 /// The rule set of `cardinalText` and of `dollarText`'s words.
 const CARDINAL: [&str; 1] = ["%spellout-numbering"];
 
+/// The number formats section 17.18.59 spells only to a limit: each `StNumberFormatMember`
+/// variant and the CLDR rule set, by locale, grouping and name, that writes it past that limit.
+pub const COUNTING: [(&str, &str, &str, &str); 11] = [
+    (
+        "ChineseCountingThousand",
+        "zh",
+        SPELLOUT,
+        "%spellout-cardinal",
+    ),
+    (
+        "ChineseLegalSimplified",
+        "zh",
+        SPELLOUT,
+        "%spellout-cardinal-financial",
+    ),
+    ("Hebrew1", "root", "NumberingSystemRules", "%hebrew"),
+    ("HindiCounting", "hi", SPELLOUT, "%spellout-cardinal"),
+    (
+        "IdeographLegalTraditional",
+        "zh_Hant",
+        SPELLOUT,
+        "%spellout-cardinal-financial",
+    ),
+    ("JapaneseCounting", "ja", SPELLOUT, "%spellout-cardinal"),
+    (
+        "JapaneseLegal",
+        "ja",
+        SPELLOUT,
+        "%spellout-cardinal-financial",
+    ),
+    (
+        "KoreanCounting",
+        "ko",
+        SPELLOUT,
+        "%spellout-cardinal-sinokorean",
+    ),
+    (
+        "TaiwaneseCountingThousand",
+        "zh_Hant",
+        SPELLOUT,
+        "%spellout-cardinal",
+    ),
+    ("ThaiCounting", "th", SPELLOUT, "%spellout-cardinal"),
+    ("VietnameseCounting", "vi", SPELLOUT, "%spellout-cardinal"),
+];
+
 /// The rule set of `ordinal`.
 const ORDINAL: [&str; 1] = ["%digits-ordinal"];
 
@@ -35,6 +81,8 @@ const ORDINAL_TEXT: [&str; 3] = [
     "%spellout-ordinal-masculine",
     "%spellout-ordinal-common",
 ];
+
+const SPELLOUT: &str = "SpelloutRules";
 
 /// The letters A to Z.
 const UPPER_LETTERS: [&str; 26] = [
@@ -126,6 +174,8 @@ pub struct Summary {
 pub struct Table {
     /// The alphabets, upper case then lower case.
     pub alphabets: Vec<(Vec<String>, Vec<String>)>,
+    /// Each format of [`COUNTING`]'s kind: its variant and the index of its rule set.
+    pub formats: Vec<(String, usize)>,
     /// Each locale whose facts differ from its parent's, with its alphabet and words.
     pub locales: Vec<(String, Option<usize>, Option<usize>)>,
     /// Each locale a parent locale rule names, and that parent.
@@ -251,12 +301,13 @@ impl Cldr {
 }
 
 impl Table {
-    /// The table of every locale `data` names.
+    /// The table of every locale `data` names, and of each format of `formats`, laid out as
+    /// [`COUNTING`] is.
     ///
     /// # Errors
     ///
     /// What [`Cldr::facts`] refuses, or a rule set the evaluator cannot follow.
-    pub fn build(data: &Cldr) -> Result<Self> {
+    pub fn build(data: &Cldr, formats: &[(&str, &str, &str, &str)]) -> Result<Self> {
         let ids: BTreeSet<&String> = data
             .main
             .keys()
@@ -281,6 +332,20 @@ impl Table {
                     .cloned(),
             );
         }
+        let format_keys: Vec<(&str, SetKey)> = formats
+            .iter()
+            .map(|(variant, locale, grouping, name)| {
+                (
+                    *variant,
+                    (
+                        (*locale).to_owned(),
+                        (*grouping).to_owned(),
+                        (*name).to_owned(),
+                    ),
+                )
+            })
+            .collect();
+        keys.extend(format_keys.iter().map(|(_, key)| key.clone()));
         let reached = reach(data, keys)?;
         let index_of: BTreeMap<&SetKey, usize> = reached
             .iter()
@@ -293,6 +358,15 @@ impl Table {
         }
 
         let mut table = Self {
+            formats: format_keys
+                .iter()
+                .map(|(variant, key)| {
+                    index_of
+                        .get(key)
+                        .map(|index| ((*variant).to_owned(), *index))
+                        .context("a rule set was not reached")
+                })
+                .collect::<Result<_>>()?,
             parents: data
                 .parents
                 .iter()
@@ -406,7 +480,7 @@ where
         .find(|line| line.starts_with("Copyright"))
         .context("the CLDR LICENSE holds no copyright line")?;
 
-    let table = Table::build(&data)?;
+    let table = Table::build(&data, &COUNTING)?;
     let mut read = vec![inputs.cldr_license.clone()];
     read.extend(inputs.cldr_main.iter().cloned());
     read.extend(inputs.cldr_rbnf.iter().cloned());
@@ -428,7 +502,7 @@ where
     Ok(table.summary())
 }
 
-/// The rule sets of each grouping of an `rbnf` file but its numbering systems.
+/// The rule sets of each grouping of an `rbnf` file.
 ///
 /// # Errors
 ///
@@ -442,9 +516,6 @@ pub fn groupings(file: &Tree) -> Result<BTreeMap<String, Vec<RuleSet>>> {
         let kind = grouping
             .attribute("type")
             .context("a rulesetGrouping with no type")?;
-        if kind == "NumberingSystemRules" {
-            continue;
-        }
         let text = grouping
             .child("rbnfRules")
             .map_or("", |rules| rules.text.as_str());
@@ -769,6 +840,7 @@ pub fn render(header: &str, copyright: &str, table: &Table) -> Result<String> {
     let mut out = format!(
         "{header}\n//! Unicode CLDR {version}'s rule-based number formats, plural rules, list \
          patterns, digits,\n//! separators and alphabets. {copyright} Unicode License v3.\n\n\
+         use officekit_markup::wordprocessing::StNumberFormatMember;\n\n\
          use super::{{\n    Category, Letters, Locale, Part, Pattern, PluralKind, PluralRule, \
          Relation, Rule, RuleSet,\n    Target, Words,\n}};\n",
         version = cldr::VERSION,
@@ -779,6 +851,22 @@ pub fn render(header: &str, copyright: &str, table: &Table) -> Result<String> {
         "The alphabets of `upperLetter` and `lowerLetter` other than A to Z.",
         "ALPHABETS: [Letters",
         &alphabets,
+    );
+    let formats: Vec<Expr> = table
+        .formats
+        .iter()
+        .map(|(variant, set)| {
+            Expr::Tuple(vec![
+                Expr::atom(&format!("StNumberFormatMember::{variant}")),
+                Expr::atom(&set.to_string()),
+            ])
+        })
+        .collect();
+    static_table(
+        &mut out,
+        "Each format section 17.18.59 spells only to a limit, and the rule set past it.",
+        "FORMATS: [(StNumberFormatMember, usize)",
+        &formats,
     );
     let locales: Vec<Expr> = table.locales.iter().map(locale_expr).collect();
     static_table(
