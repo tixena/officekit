@@ -17,9 +17,9 @@ use officekit_markup::wordprocessing::{
     TableCellLeadingEdgeBorderTblWidth, TableCellMarginExceptions, TableCellProperties,
     TableCellTrailingMarginException, TableCellTrailingMarginExceptionTblWidth,
     TableInsideHorizontalEdgesBorder, TableInsideVerticalEdgesBorder, TableLevelPropertyExceptions,
-    TableProperties, TableRowCannotBreakAcrossPages, TableRowProperties, TableRowPropertiesContent,
-    TableStyleConditionalFormattingSettingsException, TableWidthUnits, TableWidthUnitsMember,
-    VisuallyRightToLeftTable,
+    TableProperties, TableRowCannotBreakAcrossPages, TableRowCellSpacing, TableRowProperties,
+    TableRowPropertiesContent, TableStyleConditionalFormattingSettingsException, TableWidthUnits,
+    TableWidthUnitsMember, VisuallyRightToLeftTable,
 };
 
 use super::CellPosition;
@@ -908,4 +908,232 @@ fn a_cell_s_bare_no_wrap_turns_on_the_style_s_no_wrap_that_is_off() {
         .as_deref()
         .map(|found| on(found.val.as_ref()));
     assert_eq!(found, Some(true));
+}
+
+/// A table style `Spaced` with the whole-table `w:tblPr` `whole` and a first-row format whose
+/// `w:tblPr` is `first_row`.
+fn spaced_sheet(
+    whole: Option<PreviousTableProperties>,
+    first_row: PreviousTableProperties,
+) -> StyleSheet {
+    let mut format = conditional(FirstRow, None, None);
+    format.previous_table_properties = Some(Box::new(first_row));
+    sheet_of(alloc::vec![table_style(
+        "Spaced",
+        whole,
+        alloc::vec![format]
+    )])
+}
+
+/// A `w:tblPr` with the `w:tblCellSpacing` `twips`, as in the examples of sections 17.7.6.3 and
+/// 17.7.6.4.
+fn spacing_of(twips: &str) -> PreviousTableProperties {
+    let mut table = PreviousTableProperties::default();
+    let mut spacing = TableRowCellSpacing::default();
+    spacing.w = Some(MeasurementOrPercentageValue::from(twips.to_owned()));
+    spacing.r#type = Some(TableWidthUnits::from(TableWidthUnitsMember::Dxa));
+    table.table_row_cell_spacing = Some(Box::new(spacing));
+    table
+}
+
+fn spacing(table: &TableProperties) -> Option<&str> {
+    table
+        .table_row_cell_spacing
+        .as_deref()
+        .and_then(|found| found.w.as_ref())
+        .map(|value| value.0.as_str())
+}
+
+#[test]
+fn the_first_row_format_s_cell_spacing_holds_in_the_first_row_only() {
+    let sheet = spaced_sheet(Some(spacing_of("15")), spacing_of("29"));
+    let format = sheet.table(&own_table(
+        Some("Spaced"),
+        Some(first_row_look(true, false)),
+    ));
+    assert_eq!(
+        spacing(&format.properties_at(position(0, 3, 0, 2))),
+        Some("29")
+    );
+    assert_eq!(
+        spacing(&format.properties_at(position(0, 3, 1, 2))),
+        Some("29")
+    );
+    assert_eq!(
+        spacing(&format.properties_at(position(1, 3, 0, 2))),
+        Some("15")
+    );
+    assert_eq!(spacing(&format.properties()), Some("15"));
+
+    let unspaced = spaced_sheet(None, spacing_of("29"));
+    let without = unspaced.table(&own_table(
+        Some("Spaced"),
+        Some(first_row_look(true, false)),
+    ));
+    assert_eq!(
+        spacing(&without.properties_at(position(0, 3, 0, 2))),
+        Some("29")
+    );
+    assert_eq!(spacing(&without.properties_at(position(1, 3, 0, 2))), None);
+    let header = CellPosition::new(1, 3, 0, 2, true);
+    assert_eq!(spacing(&without.properties_at(header)), Some("29"));
+}
+
+#[test]
+fn first_row_off_leaves_the_whole_table_s_cell_spacing_in_the_first_row() {
+    let sheet = spaced_sheet(Some(spacing_of("15")), spacing_of("29"));
+    let format = sheet.table(&own_table(
+        Some("Spaced"),
+        Some(first_row_look(false, false)),
+    ));
+    assert_eq!(
+        spacing(&format.properties_at(position(0, 3, 0, 2))),
+        Some("15")
+    );
+}
+
+#[test]
+fn the_table_s_own_cell_spacing_wins_over_the_first_row_format_s() {
+    let sheet = spaced_sheet(Some(spacing_of("15")), spacing_of("29"));
+    let mut own = own_table(Some("Spaced"), Some(first_row_look(true, false)));
+    own.table_row_cell_spacing = spacing_of("50").table_row_cell_spacing;
+    let format = sheet.table(&own);
+    for row in 0..3 {
+        assert_eq!(
+            spacing(&format.properties_at(position(row, 3, 0, 2))),
+            Some("50")
+        );
+    }
+}
+
+#[test]
+fn a_first_row_format_s_bottom_border_replaces_that_edge_only() {
+    let mut bottom = TableBorders::default();
+    bottom.paragraph_border_below_identical_paragraphs = border!(
+        ParagraphBorderBelowIdenticalParagraphs,
+        BorderStylesMember::Double,
+        "12",
+        "FF0000"
+    );
+    let mut first_row = PreviousTableProperties::default();
+    first_row.table_borders = Some(Box::new(bottom.clone()));
+    let sheet = spaced_sheet(Some(example_table_properties()), first_row);
+    let format = sheet.table(&own_table(
+        Some("Spaced"),
+        Some(first_row_look(true, false)),
+    ));
+
+    let whole = example_table_properties().table_borders.unwrap();
+    let mut expected = (*whole).clone();
+    expected.paragraph_border_below_identical_paragraphs =
+        bottom.paragraph_border_below_identical_paragraphs;
+    let top = format.properties_at(position(0, 3, 0, 2));
+    assert_eq!(top.table_borders.as_deref(), Some(&expected));
+    let next = format.properties_at(position(1, 3, 0, 2));
+    assert_eq!(next.table_borders.as_deref(), Some(&*whole));
+}
+
+#[test]
+fn the_table_s_own_border_and_margin_win_over_the_format_s_edge_by_edge() {
+    let mut format_borders = TableBorders::default();
+    format_borders.paragraph_border_above_identical_paragraphs = border!(
+        ParagraphBorderAboveIdenticalParagraphs,
+        BorderStylesMember::Double,
+        "12",
+        "FF0000"
+    );
+    format_borders.paragraph_border_below_identical_paragraphs = border!(
+        ParagraphBorderBelowIdenticalParagraphs,
+        BorderStylesMember::Double,
+        "12",
+        "FF0000"
+    );
+    let mut format_margins = TableCellMarginExceptions::default();
+    format_margins.paragraph_border_above_identical_paragraphs_tbl_width =
+        width!(ParagraphBorderAboveIdenticalParagraphsTblWidth, "72");
+    format_margins.table_cell_leading_edge_border_tbl_width =
+        width!(TableCellLeadingEdgeBorderTblWidth, "144");
+    let mut first_row = PreviousTableProperties::default();
+    first_row.table_borders = Some(Box::new(format_borders.clone()));
+    first_row.table_cell_margin_exceptions = Some(Box::new(format_margins.clone()));
+    let sheet = spaced_sheet(Some(example_table_properties()), first_row);
+
+    let mut own_borders = TableBorders::default();
+    own_borders.paragraph_border_above_identical_paragraphs = border!(
+        ParagraphBorderAboveIdenticalParagraphs,
+        BorderStylesMember::Single,
+        "24",
+        "0000FF"
+    );
+    let mut own_margins = TableCellMarginExceptions::default();
+    own_margins.paragraph_border_above_identical_paragraphs_tbl_width =
+        width!(ParagraphBorderAboveIdenticalParagraphsTblWidth, "288");
+    let mut own = own_table(Some("Spaced"), Some(first_row_look(true, false)));
+    own.table_borders = Some(Box::new(own_borders.clone()));
+    own.table_cell_margin_exceptions = Some(Box::new(own_margins.clone()));
+    let table = sheet.table(&own).properties_at(position(0, 3, 0, 2));
+
+    let borders = table.table_borders.unwrap();
+    assert_eq!(
+        borders.paragraph_border_above_identical_paragraphs,
+        own_borders.paragraph_border_above_identical_paragraphs
+    );
+    assert_eq!(
+        borders.paragraph_border_below_identical_paragraphs,
+        format_borders.paragraph_border_below_identical_paragraphs
+    );
+    let whole = example_table_properties().table_borders.unwrap();
+    assert_eq!(
+        borders.table_inside_horizontal_edges_border,
+        whole.table_inside_horizontal_edges_border
+    );
+    let margins = table.table_cell_margin_exceptions.unwrap();
+    assert_eq!(
+        margins.paragraph_border_above_identical_paragraphs_tbl_width,
+        own_margins.paragraph_border_above_identical_paragraphs_tbl_width
+    );
+    assert_eq!(
+        margins.table_cell_leading_edge_border_tbl_width,
+        format_margins.table_cell_leading_edge_border_tbl_width
+    );
+    let whole_margins = example_table_properties()
+        .table_cell_margin_exceptions
+        .unwrap();
+    assert_eq!(
+        margins.table_cell_trailing_margin_exception_tbl_width,
+        whole_margins.table_cell_trailing_margin_exception_tbl_width
+    );
+}
+
+#[test]
+fn where_only_the_whole_table_applies_properties_at_is_properties() {
+    let sheet = spaced_sheet(Some(example_table_properties()), spacing_of("29"));
+    let format = sheet.table(&own_table(
+        Some("Spaced"),
+        Some(first_row_look(true, false)),
+    ));
+    let inner = position(1, 3, 0, 2);
+    assert_eq!(format.formats(inner), [WholeTable]);
+    assert_eq!(format.properties_at(inner), format.properties());
+
+    let unstyled = sheet_of(Vec::new()).table(&own_table(None, None));
+    let at = position(0, 3, 0, 2);
+    assert_eq!(unstyled.properties_at(at), unstyled.properties());
+}
+
+#[test]
+fn a_row_s_exception_cell_spacing_wins_over_the_first_row_format_s() {
+    let sheet = spaced_sheet(Some(spacing_of("15")), spacing_of("29"));
+    let format = sheet.table(&own_table(
+        Some("Spaced"),
+        Some(first_row_look(true, false)),
+    ));
+    let mut exceptions = TableLevelPropertyExceptions::default();
+    exceptions.table_row_cell_spacing = spacing_of("0").table_row_cell_spacing;
+    let row = format.for_row(Some(&exceptions));
+    assert_eq!(spacing(&row.properties_at(position(0, 3, 0, 2))), Some("0"));
+    assert_eq!(
+        spacing(&format.properties_at(position(0, 3, 0, 2))),
+        Some("29")
+    );
 }

@@ -317,9 +317,35 @@ impl TableFormat {
     /// row's `w:tblPrEx` for a format from [`TableFormat::for_row`].
     #[must_use = "this only returns the value"]
     pub fn properties(&self) -> TableProperties {
-        use ConditionalTableStyleFormattingTypesMember::WholeTable;
+        self.properties_of(&[ConditionalTableStyleFormattingTypesMember::WholeTable])
+    }
+
+    /// The table properties in force at `position` (sections 17.7.6 and 17.7.6.3): the style
+    /// chain's `w:tblPr`, then those of the conditional formats that apply there, then the
+    /// table's own, then the row's `w:tblPrEx` for a format from [`TableFormat::for_row`].
+    #[must_use = "this only returns the value"]
+    pub fn properties_at(&self, position: CellPosition) -> TableProperties {
+        self.properties_of(&self.formats(position))
+    }
+
+    /// The table properties in effect for the row whose `w:tblPrEx` is `exceptions`: those of
+    /// [`TableFormat::properties`] with each one the exceptions state in its place (section
+    /// 17.4.60); `None` gives [`TableFormat::properties`].
+    #[must_use = "this only returns the value"]
+    pub fn properties_for_row(
+        &self,
+        exceptions: Option<&TableLevelPropertyExceptions>,
+    ) -> TableProperties {
+        self.for_row(exceptions).properties()
+    }
+
+    /// The `w:tblPr` that `formats` lay down, then the table's own, then the row's exceptions.
+    fn properties_of(
+        &self,
+        formats: &[ConditionalTableStyleFormattingTypesMember],
+    ) -> TableProperties {
         let mut layers: Vec<Element> = self
-            .layers(&[WholeTable], Kind::Table)
+            .layers(formats, Kind::Table)
             .into_iter()
             .flatten()
             .collect();
@@ -332,17 +358,6 @@ impl TableFormat {
             Some(exceptions) => excepted(table, exceptions),
             None => table,
         }
-    }
-
-    /// The table properties in effect for the row whose `w:tblPrEx` is `exceptions`: those of
-    /// [`TableFormat::properties`] with each one the exceptions state in its place (section
-    /// 17.4.60); `None` gives [`TableFormat::properties`].
-    #[must_use = "this only returns the value"]
-    pub fn properties_for_row(
-        &self,
-        exceptions: Option<&TableLevelPropertyExceptions>,
-    ) -> TableProperties {
-        self.for_row(exceptions).properties()
     }
 
     /// The effective properties of the row of `position` whose own properties are `own`: the
