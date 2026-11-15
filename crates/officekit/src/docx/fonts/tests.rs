@@ -6,6 +6,10 @@ use officekit_markup::wordprocessing::{RunFonts, ThemeFont, ThemeFontLanguages, 
 
 use super::{RunFontFamilies, ThemeFonts, likely_subtags};
 
+/// HY중고딕, the typeface of `a:font script="Hang"` in the example `a:majorFont` of section
+/// 20.1.4.1.24.
+const HANG_TYPEFACE: &str = "HY\u{c911}\u{ace0}\u{b515}";
+
 /// Every member of `ST_Theme`.
 const MEMBERS: [ThemeFontMember; 8] = [
     ThemeFontMember::MajorAscii,
@@ -232,6 +236,96 @@ fn a_likely_script_the_theme_lacks_falls_back_to_the_region_s_typeface() {
         fonts.family(ThemeFontMember::MinorEastAsia),
         Some("Yu Mincho")
     );
+}
+
+/// The example `a:majorFont` of section 20.1.4.1.24.
+fn standard_major_font() -> Theme {
+    let mut theme = Theme::default();
+    let major = &mut theme.elements.font_scheme.major_font;
+    major.latin_font.typeface = Some("Calibri".to_owned());
+    major.east_asian_font.typeface = Some("Arial".to_owned());
+    major.complex_script_font.typeface = Some("Arial".to_owned());
+    major.font.extend(
+        [
+            (
+                "Jpan",
+                "\u{ff2d}\u{ff33} \u{ff30}\u{30b4}\u{30b7}\u{30c3}\u{30af}",
+            ),
+            ("Hang", HANG_TYPEFACE),
+            ("Hans", "\u{96b6}\u{4e66}"),
+            ("Hant", "\u{5fae}\u{8edf}\u{6b63}\u{9ed1}\u{9ad4}"),
+            ("Arab", "Traditional Arabic"),
+            ("Hebr", "Arial"),
+            ("Thai", "Cordia New"),
+            ("Ethi", "Nyala"),
+            ("Beng", "Vrinda"),
+            ("Gujr", "Shruti"),
+            ("Khmr", "DaunPenh"),
+            ("Knda", "Tunga"),
+        ]
+        .map(|(script, typeface)| font(script, typeface)),
+    );
+    theme
+}
+
+#[test]
+fn the_standard_s_example_gives_korean_the_font_of_hang() {
+    let languages = east_asian_language("ko-KR");
+    let fonts = ThemeFonts::new(Some(&standard_major_font()), Some(&languages));
+    assert_eq!(
+        fonts.family(ThemeFontMember::MajorEastAsia),
+        Some(HANG_TYPEFACE)
+    );
+}
+
+#[test]
+fn a_theme_that_lists_kore_gives_korean_the_font_of_kore() {
+    let theme = by_script(&[("Hang", "Hangul Font"), ("Kore", "Korean Font")]);
+    let languages = east_asian_language("ko-KR");
+    let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
+    assert_eq!(
+        fonts.family(ThemeFontMember::MinorEastAsia),
+        Some("Korean Font")
+    );
+}
+
+#[test]
+fn a_korean_script_subtag_takes_its_script_then_its_fallback() {
+    let both = by_script(&[("Hang", "Hangul Font"), ("Kore", "Korean Font")]);
+    let hang = by_script(&[("Hang", "Hangul Font")]);
+    let kore = by_script(&[("Kore", "Korean Font")]);
+    let family = |theme: &Theme, tag: &str| {
+        let languages = east_asian_language(tag);
+        ThemeFonts::new(Some(theme), Some(&languages))
+            .family(ThemeFontMember::MinorEastAsia)
+            .map(str::to_owned)
+    };
+    assert_eq!(family(&both, "ko-Kore-KR").as_deref(), Some("Korean Font"));
+    assert_eq!(family(&both, "ko-Hang-KR").as_deref(), Some("Hangul Font"));
+    assert_eq!(family(&hang, "ko-Kore-KR").as_deref(), Some("Hangul Font"));
+    assert_eq!(family(&hang, "ko-kore-KR").as_deref(), Some("Hangul Font"));
+    assert_eq!(family(&kore, "ko-Hang-KR"), None);
+}
+
+#[test]
+fn hang_is_no_fallback_for_other_languages() {
+    let mut theme = standard_major_font();
+    theme
+        .elements
+        .font_scheme
+        .major_font
+        .font
+        .retain(|listed| listed.script.as_deref() == Some("Hang"));
+    let family = |tag: &str| {
+        let languages = east_asian_language(tag);
+        ThemeFonts::new(Some(&theme), Some(&languages))
+            .family(ThemeFontMember::MajorEastAsia)
+            .map(str::to_owned)
+    };
+    assert_eq!(family("ja-JP").as_deref(), Some("Arial"));
+    assert_eq!(family("zh-CN").as_deref(), Some("Arial"));
+    assert_eq!(family("zh-TW").as_deref(), Some("Arial"));
+    assert_eq!(family("ko-KR").as_deref(), Some(HANG_TYPEFACE));
 }
 
 #[test]

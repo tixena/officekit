@@ -13,6 +13,11 @@ use officekit_markup::wordprocessing::{RunFonts, ThemeFont, ThemeFontLanguages, 
 
 use self::likely_subtags::LIKELY_SUBTAGS;
 
+/// The script a theme lists a language under when it lacks the language's likely script: ISO
+/// 15924's Kore is Hangul with Han, and the example themes of sections 20.1.4.1.24 and
+/// 20.1.4.1.25 list Korean under Hang.
+const SCRIPT_FALLBACKS: [(&str, &str); 1] = [("Kore", "Hang")];
+
 /// One of a theme's two collections of fonts, `a:majorFont` or `a:minorFont` (sections
 /// 20.1.4.1.24 and 20.1.4.1.25).
 #[derive(Clone, Debug, Default)]
@@ -57,12 +62,19 @@ pub struct ThemeFonts {
 
 impl Collection {
     /// The typeface of the `a:font` for `language` (sections 17.15.1.88 and 20.1.4.1.16): the one
-    /// whose script is the tag itself, else the one whose script is the tag's script.
+    /// whose script is the tag itself, else the one whose script is the tag's script, else the one
+    /// whose script is that script's fallback.
     fn for_language(&self, language: &Language) -> Option<&str> {
         if let Some(found) = self.for_script(&language.tag) {
             return Some(found);
         }
-        self.for_script(language.script.as_deref()?)
+        let script = language.script.as_deref()?;
+        self.for_script(script).or_else(|| {
+            SCRIPT_FALLBACKS
+                .iter()
+                .filter(|(from, _)| from.eq_ignore_ascii_case(script))
+                .find_map(|(_, to)| self.for_script(to))
+        })
     }
 
     /// The typeface of the first `a:font` whose script is `script`, compared without case, and
