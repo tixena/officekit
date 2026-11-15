@@ -466,6 +466,12 @@ const fn linear(value: i128) -> i128 {
     product(square, fifth_root(square))
 }
 
+/// The thousandths of a percent an `ST_PositiveFixedPercentage` states, in either class (section
+/// 20.1.10.45); `None` when `text` is no value of the type.
+pub(super) fn positive_fixed_percentage(text: &str) -> Option<u32> {
+    u32::try_from(PercentKind::PositiveFixed.thousandths(text)?).ok()
+}
+
 /// The red, green and blue section 20.1.10.48 states for `name`.
 fn preset_color(name: PresetColorValueMember) -> Option<[u8; 3]> {
     let index = PRESET_COLORS

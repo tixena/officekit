@@ -3,4 +3,5 @@
 pub mod color;
 pub mod geometry;
 pub mod scheme;
+pub mod shape;
 pub mod text;
