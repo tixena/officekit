@@ -44,6 +44,7 @@ fn layout() -> MemorySystem {
         .with_file("/inputs/cldr/49/common/rbnf/README.md", b"")
         .unwrap();
     for name in [
+        "likelySubtags",
         "numberingSystems",
         "ordinals",
         "plurals",
@@ -129,6 +130,10 @@ fn finds_every_input() {
         [Path::new("inputs/cldr/49/common/rbnf/en.xml")]
     );
     assert_eq!(inputs.cldr_license, Path::new("inputs/cldr/49/LICENSE"));
+    assert_eq!(
+        inputs.cldr_likely_subtags,
+        Path::new("inputs/cldr/49/common/supplemental/likelySubtags.xml")
+    );
     assert_eq!(
         inputs.cldr_supplemental,
         Path::new("inputs/cldr/49/common/supplemental/supplementalData.xml")

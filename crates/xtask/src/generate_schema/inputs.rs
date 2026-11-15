@@ -19,6 +19,8 @@ pub struct Inputs {
     pub checksums: String,
     /// CLDR's `LICENSE`.
     pub cldr_license: PathBuf,
+    /// CLDR's `likelySubtags.xml`.
+    pub cldr_likely_subtags: PathBuf,
     /// CLDR's main file of each locale, sorted.
     pub cldr_main: Vec<PathBuf>,
     /// CLDR's `numberingSystems.xml`.
@@ -110,6 +112,7 @@ impl Inputs {
         let cldr_main = files(system, &common.join("main"), "xml")?;
         let cldr_rbnf = files(system, &common.join("rbnf"), "xml")?;
         let supplemental = common.join("supplemental");
+        let cldr_likely_subtags = file(system, supplemental.join("likelySubtags.xml"))?;
         let cldr_numbering_systems = file(system, supplemental.join("numberingSystems.xml"))?;
         let cldr_ordinals = file(system, supplemental.join("ordinals.xml"))?;
         let cldr_plurals = file(system, supplemental.join("plurals.xml"))?;
@@ -121,6 +124,7 @@ impl Inputs {
         Ok(Self {
             checksums,
             cldr_license,
+            cldr_likely_subtags,
             cldr_main,
             cldr_numbering_systems,
             cldr_ordinals,

@@ -247,16 +247,18 @@ inputs:
 
     # Unicode CLDR 49, under the Unicode License v3 its LICENSE gives: the rule-based
     # number formats, the plural rules, parent locales and numbering systems they use,
-    # and each locale's main file, for its list pattern, digits, separators and
-    # alphabet. The archive is checked against the SHA-512 unicode.org publishes.
+    # each locale's main file, for its list pattern, digits, separators and alphabet,
+    # and the likely subtags, for the script of a language. The archive is checked
+    # against the SHA-512 unicode.org publishes.
     cldr=inputs/cldr/49
-    if [ ! -s $cldr/LICENSE ]; then
+    if [ ! -s $cldr/LICENSE ] || [ ! -s $cldr/common/supplemental/likelySubtags.xml ]; then
         mkdir -p $cldr
         fetch https://unicode.org/Public/cldr/49/cldr-common-49.zip "$work/cldr.zip"
         echo "c704a2baf9ce4e28f40e242f8b2fbd0123579bb2c56daaaf8a92d72abd02485a1f60095c3cc4fe89eaf2d5c9f5fd07954c2eaee88839f97e18b1ff37cd62e2d8  $work/cldr.zip" \
             | sha512sum -c --quiet
         unzip -oq "$work/cldr.zip" 'common/rbnf/*.xml' 'common/main/*.xml' \
-            common/supplemental/{numberingSystems,ordinals,plurals,supplementalData}.xml -d $cldr
+            common/supplemental/{likelySubtags,numberingSystems,ordinals,plurals,supplementalData}.xml \
+            -d $cldr
         unzip -oq "$work/cldr.zip" LICENSE -d $cldr
     fi
 

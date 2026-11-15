@@ -1,6 +1,7 @@
 //! The font family a run's `w:rFonts` names, with the theme's fonts (ECMA-376 Part 1, sections
 //! 17.3.2.26, 17.18.96 and 17.15.1.88).
 
+mod likely_subtags;
 #[cfg(test)]
 mod tests;
 
@@ -10,6 +11,8 @@ use alloc::vec::Vec;
 use officekit_markup::drawing::{ComplexScriptFont, EastAsianFont, Font, LatinFont, Theme};
 use officekit_markup::wordprocessing::{RunFonts, ThemeFont, ThemeFontLanguages, ThemeFontMember};
 
+use self::likely_subtags::LIKELY_SUBTAGS;
+
 /// One of a theme's two collections of fonts, `a:majorFont` or `a:minorFont` (sections
 /// 20.1.4.1.24 and 20.1.4.1.25).
 #[derive(Clone, Debug, Default)]
@@ -18,6 +21,13 @@ struct Collection {
     east_asian: Option<String>,
     latin: Option<String>,
     supplemental: Vec<Font>,
+}
+
+/// A language tag of `w:themeFontLang` and its script.
+#[derive(Clone, Debug)]
+struct Language {
+    script: Option<String>,
+    tag: String,
 }
 
 /// The family each of the four kinds of character of a run uses (section 17.3.2.26).
@@ -38,21 +48,21 @@ pub struct RunFontFamilies {
 /// values of `ST_Theme` (section 17.18.96).
 #[derive(Clone, Debug, Default)]
 pub struct ThemeFonts {
-    bidi: Option<String>,
-    east_asia: Option<String>,
+    bidi: Option<Language>,
+    east_asia: Option<Language>,
     major: Collection,
     minor: Collection,
-    val: Option<String>,
+    val: Option<Language>,
 }
 
 impl Collection {
-    /// The typeface of the `a:font` for the language `tag` (sections 17.15.1.88 and 20.1.4.1.16):
-    /// the one whose script is the tag itself, else the one whose script is its script subtag.
-    fn for_language(&self, tag: &str) -> Option<&str> {
-        if let Some(found) = self.for_script(tag) {
+    /// The typeface of the `a:font` for `language` (sections 17.15.1.88 and 20.1.4.1.16): the one
+    /// whose script is the tag itself, else the one whose script is the tag's script.
+    fn for_language(&self, language: &Language) -> Option<&str> {
+        if let Some(found) = self.for_script(&language.tag) {
             return Some(found);
         }
-        self.for_script(script_subtag(tag)?)
+        self.for_script(language.script.as_deref()?)
     }
 
     /// The typeface of the first `a:font` whose script is `script`, compared without case, and
@@ -117,8 +127,8 @@ impl ThemeFonts {
             _ => return None,
         };
         language
-            .as_deref()
-            .and_then(|tag| collection.for_language(tag))
+            .as_ref()
+            .and_then(|found| collection.for_language(found))
             .or_else(|| named(own.as_deref()))
     }
 
@@ -137,8 +147,8 @@ impl ThemeFonts {
     pub fn new(theme: Option<&Theme>, languages: Option<&ThemeFontLanguages>) -> Self {
         let scheme = theme.map(|root| &*root.elements.font_scheme);
         Self {
-            bidi: languages.and_then(|found| found.bidi.clone()),
-            east_asia: languages.and_then(|found| found.east_asia.clone()),
+            bidi: languages.and_then(|found| found.bidi.as_deref().map(Language::new)),
+            east_asia: languages.and_then(|found| found.east_asia.as_deref().map(Language::new)),
             major: scheme.map_or_else(Collection::default, |found| {
                 let fonts = &found.major_font;
                 Collection::new(
@@ -157,9 +167,27 @@ impl ThemeFonts {
                     &fonts.font,
                 )
             }),
-            val: languages.and_then(|found| found.val.clone()),
+            val: languages.and_then(|found| found.val.as_deref().map(Language::new)),
         }
     }
+}
+
+impl Language {
+    fn new(tag: &str) -> Self {
+        Self {
+            script: script_of(tag).map(str::to_owned),
+            tag: tag.to_owned(),
+        }
+    }
+}
+
+/// The most likely full id, `language_Script_REGION`, of the CLDR id `id` (Unicode CLDR's likely
+/// subtags), as `zh_Hant_TW` for `zh_TW`.
+pub(crate) fn likely_subtags(id: &str) -> Option<&'static str> {
+    let at = LIKELY_SUBTAGS
+        .binary_search_by(|(from, _)| (*from).cmp(id))
+        .ok()?;
+    LIKELY_SUBTAGS.get(at).map(|(_, to)| *to)
 }
 
 /// `typeface` when it names a font: an empty one names none.
@@ -167,10 +195,37 @@ fn named(typeface: Option<&str>) -> Option<&str> {
     typeface.filter(|name| !name.is_empty())
 }
 
-/// The script subtag of the language tag `tag`: a subtag of four letters after the first, as
-/// `Hant` in `zh-Hant-TW`.
+/// The region subtag of the language tag `tag`, upper case: two letters or three digits after the
+/// first subtag and before any singleton, as `TW` in `zh-TW`.
+fn region_subtag(tag: &str) -> Option<String> {
+    tag.split('-')
+        .skip(1)
+        .take_while(|subtag| subtag.len() > 1)
+        .find(|subtag| {
+            (subtag.len() == 2 && subtag.bytes().all(|byte| byte.is_ascii_alphabetic()))
+                || (subtag.len() == 3 && subtag.bytes().all(|byte| byte.is_ascii_digit()))
+        })
+        .map(str::to_ascii_uppercase)
+}
+
+/// The script of the language tag `tag`: its own script subtag, else the likely script of its
+/// language and region, else of its language alone.
+fn script_of(tag: &str) -> Option<&str> {
+    if let Some(own) = script_subtag(tag) {
+        return Some(own);
+    }
+    let language = tag.split('-').next()?.to_ascii_lowercase();
+    let full = region_subtag(tag)
+        .and_then(|region| likely_subtags(&format!("{language}_{region}")))
+        .or_else(|| likely_subtags(&language))?;
+    full.split('_').nth(1)
+}
+
+/// The script subtag of the language tag `tag`: a subtag of four letters after the first and
+/// before any singleton, as `Hant` in `zh-Hant-TW`.
 fn script_subtag(tag: &str) -> Option<&str> {
     tag.split('-')
         .skip(1)
+        .take_while(|subtag| subtag.len() > 1)
         .find(|subtag| subtag.len() == 4 && subtag.bytes().all(|byte| byte.is_ascii_alphabetic()))
 }

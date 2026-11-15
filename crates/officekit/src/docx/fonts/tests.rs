@@ -4,7 +4,7 @@ use alloc::vec::Vec;
 use officekit_markup::drawing::{Font, Theme};
 use officekit_markup::wordprocessing::{RunFonts, ThemeFont, ThemeFontLanguages, ThemeFontMember};
 
-use super::{RunFontFamilies, ThemeFonts};
+use super::{RunFontFamilies, ThemeFonts, likely_subtags};
 
 /// Every member of `ST_Theme`.
 const MEMBERS: [ThemeFontMember; 8] = [
@@ -119,27 +119,127 @@ fn a_language_with_a_script_subtag_takes_the_font_of_that_script() {
     );
 }
 
-#[test]
-fn a_language_with_no_script_subtag_falls_back_to_the_region_s_typeface() {
+/// A theme whose major and minor collections have an empty `a:ea` and an `a:font` for each script
+/// of `fonts`.
+fn by_script(fonts: &[(&str, &str)]) -> Theme {
+    let listed: Vec<Font> = fonts
+        .iter()
+        .map(|(script, typeface)| font(script, typeface))
+        .collect();
     let mut theme = Theme::default();
-    let minor = &mut theme.elements.font_scheme.minor_fonts;
-    minor.east_asian_font.typeface = Some(String::new());
-    minor.font.push(font("Jpan", "MS Mincho"));
+    let scheme = &mut theme.elements.font_scheme;
+    scheme.major_font.east_asian_font.typeface = Some(String::new());
+    scheme.major_font.font.clone_from(&listed);
+    scheme.minor_fonts.east_asian_font.typeface = Some(String::new());
+    scheme.minor_fonts.font = listed;
+    theme
+}
+
+#[test]
+fn the_standard_s_example_maps_ja_jp_to_the_font_of_jpan() {
+    let theme = by_script(&[("Jpan", "MS Mincho")]);
+    let mut languages = ThemeFontLanguages::default();
+    languages.val = Some("ja-JP".to_owned());
+    let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
+    assert_eq!(fonts.family(ThemeFontMember::MajorAscii), Some("MS Mincho"));
+    assert_eq!(fonts.family(ThemeFontMember::MajorHAnsi), Some("MS Mincho"));
+}
+
+#[test]
+fn an_east_asian_language_with_no_script_subtag_takes_the_font_of_its_likely_script() {
+    let theme = by_script(&[("Jpan", "MS Mincho")]);
     let languages = east_asian_language("ja-JP");
+    let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
+    assert_eq!(
+        fonts.family(ThemeFontMember::MajorEastAsia),
+        Some("MS Mincho")
+    );
+    assert_eq!(
+        fonts.family(ThemeFontMember::MinorEastAsia),
+        Some("MS Mincho")
+    );
+}
+
+#[test]
+fn the_region_decides_the_likely_script() {
+    let theme = by_script(&[("Hans", "SimSun"), ("Hant", "PMingLiU")]);
+    let family = |tag: &str| {
+        let languages = east_asian_language(tag);
+        ThemeFonts::new(Some(&theme), Some(&languages))
+            .family(ThemeFontMember::MinorEastAsia)
+            .map(str::to_owned)
+    };
+    assert_eq!(family("zh-TW").as_deref(), Some("PMingLiU"));
+    assert_eq!(family("zh-CN").as_deref(), Some("SimSun"));
+    assert_eq!(family("zh-HK").as_deref(), Some("PMingLiU"));
+    assert_eq!(family("zh").as_deref(), Some("SimSun"));
+    assert_eq!(family("ZH-tw").as_deref(), Some("PMingLiU"));
+}
+
+#[test]
+fn a_script_subtag_wins_over_the_likely_script() {
+    let theme = by_script(&[("Hans", "SimSun"), ("Hant", "PMingLiU")]);
+    let languages = east_asian_language("zh-Hant-CN");
+    let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
+    assert_eq!(
+        fonts.family(ThemeFontMember::MinorEastAsia),
+        Some("PMingLiU")
+    );
+
+    let private = east_asian_language("zh-CN-x-hant");
+    let private_fonts = ThemeFonts::new(Some(&theme), Some(&private));
+    assert_eq!(
+        private_fonts.family(ThemeFontMember::MinorEastAsia),
+        Some("SimSun")
+    );
+}
+
+#[test]
+fn a_language_with_no_likely_script_falls_back_to_the_region_s_typeface() {
+    let mut theme = by_script(&[("Jpan", "MS Mincho"), ("Arab", "Arabic Font")]);
+    let mut languages = ThemeFontLanguages::default();
+    languages.val = Some("xx-XX".to_owned());
+    languages.east_asia = Some("xx-XX".to_owned());
+    languages.bidi = Some("xx-XX".to_owned());
     let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
     assert_eq!(fonts.family(ThemeFontMember::MinorEastAsia), None);
 
+    let minor = &mut theme.elements.font_scheme.minor_fonts;
+    minor.east_asian_font.typeface = Some("Yu Mincho".to_owned());
+    minor.latin_font.typeface = Some("Calibri".to_owned());
+    minor.complex_script_font.typeface = Some("Arial".to_owned());
+    let named = ThemeFonts::new(Some(&theme), Some(&languages));
+    assert_eq!(
+        named.family(ThemeFontMember::MinorEastAsia),
+        Some("Yu Mincho")
+    );
+    assert_eq!(named.family(ThemeFontMember::MinorAscii), Some("Calibri"));
+    assert_eq!(named.family(ThemeFontMember::MinorBidi), Some("Arial"));
+}
+
+#[test]
+fn a_likely_script_the_theme_lacks_falls_back_to_the_region_s_typeface() {
+    let mut theme = by_script(&[("Hant", "PMingLiU")]);
     theme
         .elements
         .font_scheme
         .minor_fonts
         .east_asian_font
         .typeface = Some("Yu Mincho".to_owned());
-    let named = ThemeFonts::new(Some(&theme), Some(&languages));
+    let languages = east_asian_language("ja-JP");
+    let fonts = ThemeFonts::new(Some(&theme), Some(&languages));
     assert_eq!(
-        named.family(ThemeFontMember::MinorEastAsia),
+        fonts.family(ThemeFontMember::MinorEastAsia),
         Some("Yu Mincho")
     );
+}
+
+#[test]
+fn likely_subtags_gives_cldr_s_full_id() {
+    assert_eq!(likely_subtags("zh_TW"), Some("zh_Hant_TW"));
+    assert_eq!(likely_subtags("ja"), Some("ja_Jpan_JP"));
+    assert_eq!(likely_subtags("und_TW"), Some("zh_Hant_TW"));
+    assert_eq!(likely_subtags("xx"), None);
 }
 
 #[test]

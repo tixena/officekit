@@ -5,6 +5,7 @@ pub mod classes;
 pub mod digits;
 pub mod geometry;
 pub mod indexed_colors;
+pub mod likely_subtags;
 pub mod markup;
 pub mod namespaces;
 pub mod paper_sizes;
