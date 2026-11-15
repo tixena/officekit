@@ -1,5 +1,7 @@
 //! The `.xlsx` file type.
 
+pub mod color;
+pub mod format;
 pub mod number_format;
 pub mod sheets;
 pub mod size;
@@ -37,10 +39,13 @@ use os_shim::System;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use os_shim::bucket::Condition;
 
+use crate::drawing::scheme::{SchemeMap, ThemeColors};
 use crate::file;
 use crate::new_parts;
 use crate::validation::fix::{Fix, Validation};
 use crate::validation::validator::Validator;
+use crate::xlsx::color::Palette;
+use crate::xlsx::format::CellFormats;
 use crate::xlsx::number_format::DateSystem;
 use crate::xlsx::sheets::SheetEntry;
 
@@ -111,6 +116,16 @@ struct IsoDates {
 }
 
 impl Xlsx {
+    /// The cell formats of the styles part (ECMA-376 Part 1, section 18.8.10); empty when the
+    /// workbook part relates to none.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`styles`](Self::styles).
+    pub fn cell_formats(&self) -> Result<CellFormats, PackageError> {
+        Ok(CellFormats::from_styles(self.styles()?))
+    }
+
     /// The class the file was read in, the class every store through it writes.
     #[must_use = "this only returns the value"]
     pub const fn conformance_class(&self) -> ConformanceClass {
@@ -246,6 +261,19 @@ impl Xlsx {
         &mut self.package
     }
 
+    /// The indexed colours of the styles part's `colors` (ECMA-376 Part 1, section 18.8.27); the
+    /// standard's when it states none or the workbook part relates to no styles part.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`styles`](Self::styles).
+    pub fn palette(&self) -> Result<Palette, PackageError> {
+        let styles = self.styles()?;
+        Ok(Palette::new(
+            styles.as_ref().and_then(|sheet| sheet.colors.as_deref()),
+        ))
+    }
+
     /// The root of the first part the workbook part relates to by `relationship_type`, loaded by
     /// `load`; `None` when it relates to none the package holds.
     fn related_root<R>(
@@ -371,6 +399,20 @@ impl Xlsx {
     /// The errors of [`Package::related_by_type`] and [`theme::load`].
     pub fn theme(&self) -> Result<Option<Theme>, PackageError> {
         self.related_root(&theme::RELATIONSHIP_TYPE, theme::load)
+    }
+
+    /// The twelve colours of the theme part's `a:clrScheme` (ECMA-376 Part 1, section 20.1.6.2),
+    /// under the default mapping; no colour when the workbook part relates to no theme part.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`theme`](Self::theme).
+    pub fn theme_colors(&self) -> Result<ThemeColors, PackageError> {
+        let theme = self.theme()?;
+        Ok(ThemeColors::new(
+            theme.as_ref().map(|root| &*root.elements.color_scheme),
+            SchemeMap::default(),
+        ))
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every

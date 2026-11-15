@@ -1,6 +1,7 @@
 use super::{
-    Paper, PaperUnit, element_headings, paper_sizes, part_definitions, part_summary, preset_colors,
-    relationship_sections, simple_type_headings, transitional_parts, transitional_relationships,
+    Paper, PaperUnit, builtin_number_formats, element_headings, indexed_colors, paper_sizes,
+    part_definitions, part_summary, preset_colors, relationship_sections, simple_type_headings,
+    transitional_parts, transitional_relationships,
 };
 
 #[test]
@@ -340,5 +341,68 @@ fn the_paper_sizes_are_read_from_the_first_list_of_their_section_in_both_spellin
             paper(90, ("12", inch), ("11", inch)),
             paper(95, ("97", millimetre), ("151", millimetre)),
         ]
+    );
+}
+
+#[test]
+fn the_builtin_number_formats_are_the_list_for_all_languages_across_a_page_break() {
+    let text = concat!(
+        "18.8.30   numFmt (Number Format) .............................................. 1776\n",
+        "All Languages\n",
+        "         7            0.0\n",
+        "18.8.30            numFmt (Number Format)\n",
+        "This element specifies number format properties.\n",
+        "All Languages\n",
+        "\n",
+        "              ID              formatCode\n",
+        "         0            General\n",
+        "         4            #,##0.00\n",
+        "\n\n                                                                          1776\n",
+        "\u{c}                            18. SpreadsheetML Reference Material\n",
+        "             ID            formatCode\n",
+        "        18         h:mm AM/PM\n",
+        "        37         #,##0 ;(#,##0)\n",
+        "        49         @\n",
+        "\n",
+        "\"General\" Format\n",
+        "        50         yyyy\n",
+        "18.8.31            numFmts (Number Formats)\n",
+        "         0            General\n",
+    );
+    let expected = [
+        (0, "General"),
+        (4, "#,##0.00"),
+        (18, "h:mm AM/PM"),
+        (37, "#,##0 ;(#,##0)"),
+        (49, "@"),
+    ];
+    assert_eq!(
+        builtin_number_formats(text),
+        expected.map(|(id, code)| (id, code.to_owned()))
+    );
+}
+
+#[test]
+fn the_indexed_colours_are_the_lines_of_eight_digits_of_their_section() {
+    let text = concat!(
+        "18.8.27 indexedColors (Color Indexes) .......................................... 1772\n",
+        "18.8.26        hyperlink (Hyperlink)\n",
+        " indexed=\"9\"         00FFFFFF\n",
+        "18.8.27        indexedColors (Color Indexes)\n",
+        " Color Index         ARGB Value            [Example:\n",
+        " indexed=\"0\"         00000000\n",
+        "\n\n                                                                          1772\n",
+        "\u{c}                            18. SpreadsheetML Reference Material\n",
+        "(none)        (none)\n",
+        "indexed=\"10\" 00FF0000\n",
+        " indexed=\"63\" 00333333\n",
+        " indexed=\"64\" System Foreground         n/a\n",
+        " indexed=\"65\" 00ZZ0000\n",
+        "18.8.28      mruColors (MRU Colors)\n",
+        " indexed=\"1\"         00FFFFFF\n",
+    );
+    assert_eq!(
+        indexed_colors(text),
+        [(0, 0), (10, 0x00FF_0000), (63, 0x0033_3333)]
     );
 }

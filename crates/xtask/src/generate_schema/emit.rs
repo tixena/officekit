@@ -1,7 +1,9 @@
 //! The files `generate-schema` writes.
 
+pub mod builtin_number_formats;
 pub mod classes;
 pub mod geometry;
+pub mod indexed_colors;
 pub mod markup;
 pub mod namespaces;
 pub mod paper_sizes;

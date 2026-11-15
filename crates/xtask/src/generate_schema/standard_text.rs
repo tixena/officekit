@@ -10,6 +10,8 @@ const PART_1_REFERENCE: &str = " (Part 1, \u{a7}";
 const PART_SECTIONS: [&str; 5] = ["11.3.", "12.3.", "13.3.", "14.2.", "15.2."];
 const RGB_VALUE: &str = "Specifies a color with RGB value (";
 const PAGE_SETUP_SECTION: &str = "18.3.1.63";
+const INDEXED_COLORS_SECTION: &str = "18.8.27";
+const NUMBER_FORMAT_SECTION: &str = "18.8.30";
 const LABELS: [&str; 7] = [
     "Content Type:",
     "Content",
@@ -676,6 +678,56 @@ fn paper_length(number: &str, unit_text: &str) -> Option<(String, PaperUnit)> {
     let (whole, fraction) = number.split_once('.').unwrap_or((number, "0"));
     let digits = |part: &str| !part.is_empty() && part.bytes().all(|byte| byte.is_ascii_digit());
     (digits(whole) && digits(fraction)).then(|| (number.to_owned(), unit))
+}
+
+/// The lines of the section whose heading names `section`, up to the next heading; empty when no
+/// heading names it.
+fn section_lines<'text>(lines: &[&'text str], section: &str) -> Vec<&'text str> {
+    let Some(start) = lines
+        .iter()
+        .position(|line| heading(line, false).is_some_and(|found| found.section == section))
+    else {
+        return Vec::new();
+    };
+    lines[start + 1..]
+        .iter()
+        .take_while(|line| heading(line, false).is_none())
+        .copied()
+        .collect()
+}
+
+/// Each line of the list `All Languages` of section 18.8.30 of Part 1, up to the line `"General"
+/// Format`, as its id and its format code, in the text's order: the line `4            #,##0.00`.
+#[must_use = "this only returns the value"]
+pub fn builtin_number_formats(text: &str) -> Vec<(u32, String)> {
+    let lines = lines(text);
+    section_lines(&lines, NUMBER_FORMAT_SECTION)
+        .into_iter()
+        .skip_while(|line| line.trim() != "All Languages")
+        .skip(1)
+        .take_while(|line| line.trim() != "\"General\" Format")
+        .filter_map(|line| {
+            let (id, code) = line.trim().split_once(char::is_whitespace)?;
+            Some((id.parse().ok()?, code.trim().to_owned()))
+        })
+        .collect()
+}
+
+/// Each colour section 18.8.27 of Part 1 lists as an index and eight hexadecimal digits, in the
+/// text's order: the line `indexed="10" 00FF0000` gives `(10, 0x00FF_0000)`.
+#[must_use = "this only returns the value"]
+pub fn indexed_colors(text: &str) -> Vec<(u32, u32)> {
+    let lines = lines(text);
+    section_lines(&lines, INDEXED_COLORS_SECTION)
+        .into_iter()
+        .filter_map(|line| {
+            let (index, value) = line.trim().strip_prefix("indexed=\"")?.split_once('"')?;
+            let digits = value.trim();
+            let hex = digits.len() == 8 && digits.bytes().all(|byte| byte.is_ascii_hexdigit());
+            let argb = u32::from_str_radix(digits, 16).ok().filter(|_| hex)?;
+            Some((index.parse().ok()?, argb))
+        })
+        .collect()
 }
 
 /// The counts the generator reports over the two texts, on one line.
