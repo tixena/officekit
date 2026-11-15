@@ -2,7 +2,10 @@
 
 pub mod color;
 pub mod format;
+pub mod header_footer;
 pub mod number_format;
+pub mod print;
+pub mod reference;
 pub mod sheets;
 pub mod size;
 #[cfg(test)]

@@ -19,13 +19,12 @@ use officekit_xml::packaging::relationship::{RelationshipType, Target};
 
 use crate::embedded::{self, Embedded};
 use crate::xlsx::Xlsx;
+use crate::xlsx::reference::{cell, column_name};
 
 use super::Docx;
 
 const CHART: &str = "http://schemas.openxmlformats.org/drawingml/2006/chart";
 const DATA_REFERENCES: [&str; 5] = ["cat", "val", "xVal", "yVal", "bubbleSize"];
-const MAX_COLUMN: u32 = 0x4000;
-const MAX_ROW: u32 = 0x0010_0000;
 
 /// Which cells each cache is filled from.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -82,21 +81,20 @@ impl Area {
             None => return None,
         };
         let (first, last) = area.split_once(':').unwrap_or((area, area));
-        let (first_column, first_row) = cell_position(first)?;
-        let (last_column, last_row) = cell_position(last)?;
+        let (start, end) = (cell(first)?, cell(last)?);
         Some(Self {
-            first_column: first_column.min(last_column),
-            first_row: first_row.min(last_row),
-            last_column: first_column.max(last_column),
-            last_row: first_row.max(last_row),
+            first_column: start.column.min(end.column),
+            first_row: start.row.min(end.row),
+            last_column: start.column.max(end.column),
+            last_row: start.row.max(end.row),
             sheet,
             written_sheet: written_sheet.to_owned(),
         })
     }
 
     fn text(&self) -> String {
-        let first = column_letters(self.first_column);
-        let last = column_letters(self.last_column);
+        let first = column_name(self.first_column).unwrap_or_default();
+        let last = column_name(self.last_column).unwrap_or_default();
         format!(
             "{}!${first}${}:${last}${}",
             self.written_sheet, self.first_row, self.last_row
@@ -398,9 +396,12 @@ fn read_cells(
         .row
         .iter()
         .flat_map(|row| &row.cell)
-        .filter_map(|cell| {
-            let (column, row) = cell_position(cell.r.as_deref()?)?;
-            Some(((row, column), cell_text(cell, shared)?))
+        .filter_map(|cell_element| {
+            let position = cell(cell_element.r.as_deref()?)?;
+            Some((
+                (position.row, position.column),
+                cell_text(cell_element, shared)?,
+            ))
         })
         .collect())
 }
@@ -428,31 +429,4 @@ fn text_and_runs(text: Option<&Text>, runs: &[RichTextRun]) -> String {
         .into_iter()
         .chain(runs.iter().map(|run| run.text.value.as_str()))
         .collect()
-}
-
-/// The column and row of a cell reference such as `$B$2`, whose `$` are optional.
-fn cell_position(reference: &str) -> Option<(u32, u32)> {
-    let plain = reference.replace('$', "");
-    let split = plain.find(|c: char| c.is_ascii_digit())?;
-    let (letters, digits) = plain.split_at(split);
-    if letters.is_empty() || !letters.bytes().all(|b| b.is_ascii_uppercase()) {
-        return None;
-    }
-    let column = letters.bytes().try_fold(0_u32, |number, letter| {
-        number
-            .checked_mul(26)?
-            .checked_add(u32::from(letter - b'A' + 1))
-    })?;
-    let row: u32 = digits.parse().ok()?;
-    ((1..=MAX_COLUMN).contains(&column) && (1..=MAX_ROW).contains(&row)).then_some((column, row))
-}
-
-fn column_letters(mut number: u32) -> String {
-    let mut letters = Vec::new();
-    while number > 0 {
-        let rest = (number - 1) % 26;
-        letters.push(char::from(b'A' + u8::try_from(rest).unwrap_or(0)));
-        number = (number - 1) / 26;
-    }
-    letters.iter().rev().collect()
 }

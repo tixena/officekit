@@ -710,24 +710,6 @@ fn an_embedded_document_that_is_not_a_workbook_is_a_read_error() {
     );
 }
 
-#[test]
-fn cell_references_convert_columns_with_or_without_dollars() {
-    use super::{cell_position, column_letters};
-    assert_eq!(cell_position("$A$1"), Some((1, 1)));
-    assert_eq!(cell_position("Z9"), Some((26, 9)));
-    assert_eq!(cell_position("AA10"), Some((27, 10)));
-    assert_eq!(cell_position("XFD1048576"), Some((0x4000, 0x0010_0000)));
-    assert_eq!(cell_position("XFE1"), None);
-    assert_eq!(cell_position("A1048577"), None);
-    assert_eq!(cell_position("a1"), None);
-    assert_eq!(cell_position("1"), None);
-    assert_eq!(cell_position("A"), None);
-    assert_eq!(column_letters(1), "A");
-    assert_eq!(column_letters(26), "Z");
-    assert_eq!(column_letters(27), "AA");
-    assert_eq!(column_letters(0x4000), "XFD");
-}
-
 #[cfg(feature = "transitional")]
 #[test]
 fn a_text_category_range_becomes_a_text_reference_with_a_text_cache() {
