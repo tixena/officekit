@@ -5,16 +5,21 @@
 //! use officekit::drawing::color::Rgba;
 //! use officekit::parts::kinds::SpreadsheetKind;
 //! use officekit::xlsx::Xlsx;
-//! use officekit::xlsx::color::{SheetColor, color};
+//! use officekit::xlsx::color::{Resolved, SheetColor, color, resolved};
 //! use officekit_markup::spreadsheet::ForegroundColor;
 //!
 //! # fn main() -> Result<(), Box<dyn core::error::Error>> {
 //! let xlsx = Xlsx::new(SpreadsheetKind::Workbook)?;
+//! let (theme, palette) = (xlsx.theme_colors()?, xlsx.palette()?);
 //! let mut fill = ForegroundColor::default();
 //! fill.indexed = Some("10".to_owned());
 //! fill.tint = Some("-0.5".to_owned());
-//! let found = color(&SheetColor::from(&fill), &xlsx.theme_colors()?, &xlsx.palette()?);
+//! let found = color(&SheetColor::from(&fill), &theme, &palette);
 //! assert_eq!(found, Some(Rgba::new(128, 0, 0, 100_000)));
+//! fill.indexed = Some("64".to_owned());
+//! let stated = SheetColor::from(&fill);
+//! assert_eq!(resolved(&stated, &theme, &palette), Some(Resolved::SystemForeground));
+//! assert_eq!(stated.with_tint([200, 200, 200]), Rgba::new(100, 100, 100, 100_000));
 //! # Ok(())
 //! # }
 //! ```
@@ -55,6 +60,12 @@ const TINT_PLACES: i64 = 24;
 /// A tint of 1 in units of `10^-24`.
 const TINT_ONE: i128 = 1_000_000_000_000_000_000_000_000;
 
+/// The index section 18.8.27 names "System Background".
+const SYSTEM_BACKGROUND: u32 = 65;
+
+/// The index section 18.8.27 names "System Foreground".
+const SYSTEM_FOREGROUND: u32 = 64;
+
 /// The indexed colours of a workbook: its own, or the standard's 64 (section 18.8.27).
 #[derive(Clone, Debug, Default)]
 pub struct Palette {
@@ -63,7 +74,8 @@ pub struct Palette {
 
 impl Palette {
     /// The red, green and blue of `index`: the workbook's own `rgbColor` at it when it states
-    /// `indexedColors`, else the standard's. `None` from 64 up, the system colours among them.
+    /// `indexedColors`, else the standard's. `None` from 64 up; [`resolved`] tells the system
+    /// colours.
     #[must_use = "this only returns the value"]
     pub fn get(&self, index: u32) -> Option<[u8; 3]> {
         let at = usize::try_from(index).ok()?;
@@ -92,6 +104,20 @@ impl Palette {
     }
 }
 
+/// What a colour element names: a colour, or a system colour with no red, green and blue (section
+/// 18.8.27 lists `indexed="64"` "System Foreground", `indexed="65"` "System Background", ARGB
+/// "n/a").
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum Resolved {
+    /// The colour, opaque, with its tint applied.
+    Color(Rgba),
+    /// `indexed="65"`, whose colour is the caller's; [`SheetColor::with_tint`] tints it.
+    SystemBackground,
+    /// `indexed="64"`, whose colour is the caller's; [`SheetColor::with_tint`] tints it.
+    SystemForeground,
+}
+
 /// What a colour element states (section 18.8.19). Each value is `None` when the element does not
 /// state it, or states no number of its type.
 #[derive(Clone, Copy, Debug, Default, Eq, PartialEq)]
@@ -109,6 +135,19 @@ pub struct SheetColor<'color> {
     pub tint: Option<&'color str>,
 }
 
+impl SheetColor<'_> {
+    /// `rgb`, opaque, with this element's tint applied: section 18.8.19 applies a tint "to the RGB
+    /// value of the color", which for a system colour is the caller's.
+    #[must_use = "this only returns the value"]
+    pub fn with_tint(&self, rgb: [u8; 3]) -> Rgba {
+        let [red, green, blue] = self
+            .tint
+            .and_then(tint)
+            .map_or(rgb, |amount| tinted(rgb, amount));
+        Rgba::new(red, green, blue, 100_000)
+    }
+}
+
 sheet_color_from!(
     BackgroundColor,
     DataBarColor,
@@ -117,9 +156,24 @@ sheet_color_from!(
 );
 
 /// The colour `stated` names, opaque, with its tint applied (section 18.8.19): its `rgb`, else its
-/// `theme` colour, else its `indexed` one. `None` when it names none; `auto` names none.
+/// `theme` colour, else its `indexed` one. `None` when it names none, or a system colour; `auto`
+/// names none.
 #[must_use = "this only returns the value"]
 pub fn color(stated: &SheetColor<'_>, theme: &ThemeColors, palette: &Palette) -> Option<Rgba> {
+    match resolved(stated, theme, palette)? {
+        Resolved::Color(found) => Some(found),
+        Resolved::SystemBackground | Resolved::SystemForeground => None,
+    }
+}
+
+/// What `stated` names, as [`color`] reads it; `indexed` 64 and 65 are the system colours under
+/// any palette, as section 18.8.27 lets no `indexedColors` change them. `None` when it names none.
+#[must_use = "this only returns the value"]
+pub fn resolved(
+    stated: &SheetColor<'_>,
+    theme: &ThemeColors,
+    palette: &Palette,
+) -> Option<Resolved> {
     let base = if let Some(rgb) = stated.rgb {
         rgb
     } else if let Some(index) = stated.theme {
@@ -127,13 +181,13 @@ pub fn color(stated: &SheetColor<'_>, theme: &ThemeColors, palette: &Palette) ->
         let found = drawing_color::color(element, theme, None)?;
         [found.red, found.green, found.blue]
     } else {
-        palette.get(stated.indexed?)?
+        match stated.indexed? {
+            SYSTEM_BACKGROUND => return Some(Resolved::SystemBackground),
+            SYSTEM_FOREGROUND => return Some(Resolved::SystemForeground),
+            index => palette.get(index)?,
+        }
     };
-    let [red, green, blue] = stated
-        .tint
-        .and_then(tint)
-        .map_or(base, |amount| tinted(base, amount));
-    Some(Rgba::new(red, green, blue, 100_000))
+    Some(Resolved::Color(stated.with_tint(base)))
 }
 
 /// The red, green and blue of six hexadecimal digits, or of the last six of eight; the first two

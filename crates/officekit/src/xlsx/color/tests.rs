@@ -9,7 +9,7 @@ use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
 use officekit_xml::write::WriteOptions;
 
-use super::{Palette, SheetColor, color, theme_slot};
+use super::{Palette, Resolved, SheetColor, color, resolved, theme_slot};
 use crate::drawing::color::Rgba;
 use crate::drawing::scheme::{SchemeMap, ThemeColors, ThemeSlot};
 use crate::parts::kinds::SpreadsheetKind;
@@ -202,6 +202,90 @@ fn a_workbook_s_own_palette_replaces_the_standard_s() {
     assert_eq!(
         Palette::new(Some(&Colors::default())).get(1),
         Some([255; 3])
+    );
+}
+
+/// What indexes 63 to 66 name under `palette`, with `tint`.
+fn past_the_table(palette: &Palette, tint: Option<&str>) -> [Option<Resolved>; 4] {
+    ["63", "64", "65", "66"].map(|index| {
+        let node = element(None, None, Some(index), tint);
+        resolved(&SheetColor::from(&node), &ThemeColors::default(), palette)
+    })
+}
+
+#[test]
+fn indexes_64_and_65_are_the_system_foreground_and_background() {
+    assert_eq!(
+        past_the_table(&Palette::default(), None),
+        [
+            Some(Resolved::Color(opaque(0x33, 0x33, 0x33))),
+            Some(Resolved::SystemForeground),
+            Some(Resolved::SystemBackground),
+            None,
+        ]
+    );
+    for system in ["64", "65"] {
+        let node = element(None, None, Some(system), None);
+        assert_eq!(of(&node, &ThemeColors::default()), None, "{system}");
+    }
+}
+
+#[test]
+fn a_workbook_s_own_palette_does_not_change_the_system_colours() {
+    let mut indexes = ColorIndexes::default();
+    for _ in 0_u8..67 {
+        let mut entry = RGBColor::default();
+        entry.rgb = Some(HexUnsignedInteger::from("FF0A0B0C".to_owned()));
+        indexes.rgb_color.push(entry);
+    }
+    let mut colors = Colors::default();
+    colors.color_indexes = Some(Box::new(indexes));
+    assert_eq!(
+        past_the_table(&Palette::new(Some(&colors)), None),
+        [
+            Some(Resolved::Color(opaque(10, 11, 12))),
+            Some(Resolved::SystemForeground),
+            Some(Resolved::SystemBackground),
+            None,
+        ]
+    );
+}
+
+#[test]
+fn rgb_and_theme_come_before_a_system_colour() {
+    let stated = element(Some("FF123456"), None, Some("64"), None);
+    assert_eq!(
+        resolved(&SheetColor::from(&stated), &themed(), &Palette::default()),
+        Some(Resolved::Color(opaque(0x12, 0x34, 0x56)))
+    );
+    let themed_and_system = element(None, Some("4"), Some("65"), None);
+    assert_eq!(
+        resolved(
+            &SheetColor::from(&themed_and_system),
+            &themed(),
+            &Palette::default()
+        ),
+        Some(Resolved::Color(opaque(0x15, 0x60, 0x82)))
+    );
+}
+
+#[test]
+fn a_system_colour_s_tint_is_applied_to_the_caller_s_colour() {
+    assert_eq!(
+        past_the_table(&Palette::default(), Some("-0.5")),
+        [
+            Some(Resolved::Color(opaque(26, 26, 26))),
+            Some(Resolved::SystemForeground),
+            Some(Resolved::SystemBackground),
+            None,
+        ]
+    );
+    let node = element(None, None, Some("65"), Some("-0.5"));
+    let stated = SheetColor::from(&node);
+    assert_eq!(stated.with_tint([200, 200, 200]), opaque(100, 100, 100));
+    assert_eq!(
+        SheetColor::from(&element(None, None, Some("64"), None)).with_tint([1, 2, 3]),
+        opaque(1, 2, 3)
     );
 }
 

@@ -2,6 +2,8 @@
 //! sections 18.8.30, 18.8.31 and 18.17.4).
 //!
 //! ```
+//! use officekit::drawing::color::Rgba;
+//! use officekit::xlsx::color::Palette;
 //! use officekit::xlsx::number_format::{DateSystem, FormatColor, NumberFormat, date_time, general};
 //!
 //! # fn main() -> Result<(), Box<dyn core::error::Error>> {
@@ -11,6 +13,8 @@
 //! assert_eq!(shown, Some("1,234.50".to_owned()));
 //! let negative = format.number("-5", system).ok_or("a number")?;
 //! assert_eq!((negative.plain().as_str(), negative.color), ("-5.00", Some(FormatColor::Red)));
+//! let red = negative.color.and_then(|named| named.rgba(&Palette::default()));
+//! assert_eq!(red, Some(Rgba::new(255, 0, 0, 100_000)));
 //! assert_eq!(general("123456789012", 11).as_deref(), Some("1.23457E+11"));
 //! let date = NumberFormat::parse("yyyy-mm-dd")?;
 //! let shown = date.number("46000", system).map(|shown| shown.plain());
@@ -39,20 +43,54 @@ pub use general::general;
 use decimal::Decimal;
 use parse::{Condition, Token};
 
+use crate::drawing::color::Rgba;
+use crate::xlsx::color::Palette;
+
 /// The colour a section names (section 18.8.31, "Specify colors").
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum FormatColor {
+    /// The standard's indexed colour 8, which section 18.8.31 calls "black (by default)".
     Black,
+    /// No value: section 18.8.31 names it and gives it none.
     Blue,
+    /// No value: section 18.8.31 names it and gives it none.
     Cyan,
+    /// No value: section 18.8.31 names it and gives it none.
     Green,
+    /// No value: section 18.8.31 names it and gives it none.
     Magenta,
     /// `[Color1]` to `[Color56]`: the entry of the indexed palette at this number plus 7.
     Palette(u8),
+    /// The standard's indexed colour 10, `[Color3]`: section 18.8.31 writes "[Color3] for Red".
     Red,
+    /// The standard's indexed colour 9, which section 18.8.31 calls "white (by default)".
     White,
+    /// No value: section 18.8.31 names it and gives it none.
     Yellow,
+}
+
+impl FormatColor {
+    /// The colour, opaque, as each case says; `Palette` reads `palette`, since section 18.8.31 says
+    /// `[ColorN]` "will reflect" a customized palette, and gives none outside 1 to 56.
+    #[must_use = "this only returns the value"]
+    pub fn rgba(self, palette: &Palette) -> Option<Rgba> {
+        let standard = Palette::default();
+        let (index, from) = match self {
+            Self::Black => (8, &standard),
+            Self::Palette(number @ 1..=56) => (u32::from(number) + 7, palette),
+            Self::Red => (10, &standard),
+            Self::White => (9, &standard),
+            Self::Blue
+            | Self::Cyan
+            | Self::Green
+            | Self::Magenta
+            | Self::Palette(_)
+            | Self::Yellow => return None,
+        };
+        let [red, green, blue] = from.get(index)?;
+        Some(Rgba::new(red, green, blue, 100_000))
+    }
 }
 
 /// Where a format code could not be read.

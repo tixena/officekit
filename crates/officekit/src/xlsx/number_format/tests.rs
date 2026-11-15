@@ -1,8 +1,12 @@
-use officekit_markup::spreadsheet::{CellValue, NumberFormat as NumFmt};
+use officekit_markup::spreadsheet::{
+    CellValue, ColorIndexes, Colors, HexUnsignedInteger, NumberFormat as NumFmt, RGBColor,
+};
 
 use super::{
     DateSystem, FormatColor, FormatError, FormatKind, NumberFormat, Piece, Shown, general,
 };
+use crate::drawing::color::Rgba;
+use crate::xlsx::color::Palette;
 
 /// The date system a code of numbers is given, which none of them reads.
 const ANY: DateSystem = DateSystem::V1900Transitional;
@@ -329,6 +333,77 @@ fn the_eight_colours() {
         let shown = format(&format!("{bracket}0")).number("1", ANY).unwrap();
         assert_eq!(shown.color, Some(color), "{bracket}");
     }
+}
+
+fn opaque(red: u8, green: u8, blue: u8) -> Rgba {
+    Rgba::new(red, green, blue, 100_000)
+}
+
+#[test]
+fn the_red_green_and_blue_of_the_eight_names() {
+    let names = [
+        ("[Black]", Some(opaque(0, 0, 0))),
+        ("[Blue]", None),
+        ("[Cyan]", None),
+        ("[Green]", None),
+        ("[Magenta]", None),
+        ("[Red]", Some(opaque(255, 0, 0))),
+        ("[White]", Some(opaque(255, 255, 255))),
+        ("[Yellow]", None),
+    ];
+    for (bracket, rgba) in names {
+        let stated = format(&format!("{bracket}0"))
+            .number("1", ANY)
+            .unwrap()
+            .color;
+        let found = stated.and_then(|color| color.rgba(&Palette::default()));
+        assert_eq!(found, rgba, "{bracket}");
+    }
+}
+
+#[test]
+fn color_1_to_56_are_the_standard_s_entries_8_to_63() {
+    let rgba = |code: &str| {
+        let named = format(code).number("1", ANY).unwrap().color.unwrap();
+        named.rgba(&Palette::default())
+    };
+    assert_eq!(rgba("[Color1]0"), Some(opaque(0, 0, 0)));
+    assert_eq!(rgba("[Color2]0"), Some(opaque(255, 255, 255)));
+    assert_eq!(rgba("[Color3]0"), Some(opaque(255, 0, 0)));
+    assert_eq!(rgba("[Color56]0"), Some(opaque(0x33, 0x33, 0x33)));
+    for outside in [0, 57, 58, u8::MAX] {
+        assert_eq!(
+            FormatColor::Palette(outside).rgba(&Palette::default()),
+            None,
+            "{outside}"
+        );
+    }
+}
+
+#[test]
+fn a_workbook_s_own_palette_changes_color_n_and_not_a_name() {
+    let mut indexes = ColorIndexes::default();
+    for at in 0_u8..64 {
+        let mut entry = RGBColor::default();
+        entry.rgb = Some(HexUnsignedInteger::from(format!("FF{at:02X}0000")));
+        indexes.rgb_color.push(entry);
+    }
+    let mut colors = Colors::default();
+    colors.color_indexes = Some(Box::new(indexes));
+    let own = Palette::new(Some(&colors));
+    assert_eq!(FormatColor::Palette(1).rgba(&own), Some(opaque(8, 0, 0)));
+    assert_eq!(FormatColor::Palette(3).rgba(&own), Some(opaque(10, 0, 0)));
+    assert_eq!(FormatColor::Palette(56).rgba(&own), Some(opaque(63, 0, 0)));
+    assert_eq!(FormatColor::Red.rgba(&own), Some(opaque(255, 0, 0)));
+    assert_eq!(FormatColor::Black.rgba(&own), Some(opaque(0, 0, 0)));
+    assert_eq!(FormatColor::White.rgba(&own), Some(opaque(255, 255, 255)));
+    assert_eq!(FormatColor::Blue.rgba(&own), None);
+    let short = {
+        let mut few = Colors::default();
+        few.color_indexes = Some(Box::default());
+        Palette::new(Some(&few))
+    };
+    assert_eq!(FormatColor::Palette(3).rgba(&short), None);
 }
 
 #[test]
