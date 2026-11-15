@@ -34,6 +34,7 @@ folder             a document as a folder of its parts, and back
 parts              one module per part type: content type, relationship types, load and store
 transitional       the Transitional class: read and write of every node, and the conversion of date cells (feature `transitional`)
 validation         the validator and its generated tables
+vml                what ECMA-376 Part 4 writes about VML, for every file type that holds it
 ```
 
 ## Rules

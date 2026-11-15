@@ -468,6 +468,7 @@ pub mod pptx;
 #[cfg(feature = "transitional")]
 pub mod transitional;
 pub mod validation;
+pub mod vml;
 pub mod xlsx;
 
 #[cfg(feature = "strict")]
