@@ -104,6 +104,13 @@ fn point(x: &str, y: &str) -> ShapePathPoint {
     point
 }
 
+/// The x of a move to each of `texts`, in a frame 1 828 800 by 914 400.
+fn moved_x(texts: &[&str]) -> Vec<i64> {
+    let moves = texts.iter().map(|x| move_to(x, "0")).collect();
+    let outline = custom(&geometry(Vec::new(), vec![path(moves)]), 1_828_800, 914_400);
+    points(&outline).iter().map(|place| place.x).collect()
+}
+
 /// Every point of an outline.
 fn points(outline: &Outline) -> Vec<Point> {
     outline
@@ -430,6 +437,103 @@ fn a_name_nothing_defines_and_a_division_by_zero_are_0() {
     assert_eq!(
         only_path(&custom(&shape, 100, 100)),
         [PathCommand::MoveTo(at(0, 0))]
+    );
+}
+
+#[test]
+fn a_line_to_a_measure_ends_at_its_length_in_emus() {
+    let shape = geometry(
+        Vec::new(),
+        vec![path(vec![move_to("0", "0"), line_to("1in", "2.54cm")])],
+    );
+    assert_eq!(
+        only_path(&custom(&shape, 1_828_800, 914_400)),
+        [
+            PathCommand::MoveTo(at(0, 0)),
+            PathCommand::LineTo(at(914_400, 914_400)),
+        ]
+    );
+}
+
+#[test]
+fn an_inch_in_each_unit_is_914_400_emus() {
+    assert_eq!(
+        moved_x(&["1in", "2.54cm", "25.4mm", "72pt", "6pc", "6pi"]),
+        [914_400; 6]
+    );
+}
+
+#[test]
+fn a_measure_keeps_its_sign_and_rounds_its_fraction_once() {
+    // 0.0001 mm is 3.6 EMUs.
+    assert_eq!(moved_x(&["-0.5in", "0.0001mm"]), [-457_200, 4]);
+}
+
+#[test]
+fn a_measure_of_any_length_counts_while_its_emus_fit() {
+    assert_eq!(
+        moved_x(&[
+            "1.000000000000000000000000in",
+            "99999999999999999999999999999in"
+        ]),
+        [914_400, 0]
+    );
+}
+
+#[test]
+fn a_text_that_is_no_measure_counts_as_0() {
+    assert_eq!(
+        moved_x(&["2cm", "2.cm", "2CM", ".5in", "2px", "cm", "-in", "+1in"]),
+        [720_000, 0, 0, 0, 0, 0, 0, 0]
+    );
+}
+
+#[test]
+fn an_arc_of_measured_radii_ends_where_its_radii_say() {
+    let shape = geometry(
+        Vec::new(),
+        vec![path(vec![
+            move_to("914400", "457200"),
+            arc_to("0.5in", "0.5in", "0", "5400000"),
+        ])],
+    );
+    let outline = custom(&shape, 914_400, 914_400);
+    assert_eq!(letters(only_path(&outline)), "MC");
+    assert_eq!(points(&outline).last(), Some(&at(457_200, 914_400)));
+}
+
+#[test]
+fn a_measured_text_rectangle_edge_counts_its_emus() {
+    let mut rect = ShapeTextRectangle::default();
+    rect.l = Some(AdjustableCoordinateMethods::from("0.1in".to_owned()));
+    rect.t = Some(AdjustableCoordinateMethods::from("0".to_owned()));
+    rect.r = Some(AdjustableCoordinateMethods::from("w".to_owned()));
+    rect.b = Some(AdjustableCoordinateMethods::from("b".to_owned()));
+    let mut shape = geometry(Vec::new(), vec![path(vec![move_to("0", "0")])]);
+    shape.shape_text_rectangle = Some(Box::new(rect));
+    assert_eq!(
+        custom(&shape, 914_400, 914_400).text_rectangle,
+        TextRectangle {
+            bottom: 914_400,
+            left: 91_440,
+            right: 914_400,
+            top: 0,
+        }
+    );
+}
+
+#[test]
+fn a_measure_in_a_path_of_its_own_size_is_stretched_like_a_number() {
+    let mut sized = path(vec![move_to("0", "0"), line_to("1in", "0.5in")]);
+    sized.w = Some(PositiveCoordinate::from("1828800".to_owned()));
+    sized.h = Some(PositiveCoordinate::from("914400".to_owned()));
+    let outline = custom(&geometry(Vec::new(), vec![sized]), 100, 60);
+    assert_eq!(
+        only_path(&outline),
+        [
+            PathCommand::MoveTo(at(0, 0)),
+            PathCommand::LineTo(at(50, 30))
+        ]
     );
 }
 

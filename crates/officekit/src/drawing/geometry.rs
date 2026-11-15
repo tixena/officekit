@@ -438,6 +438,41 @@ fn frame_names<'text>(width: i128, height: i128) -> BTreeMap<&'text str, i128> {
     ])
 }
 
+/// A universal measure (section 22.9.2.15), such as `2.54cm`, as a guide's value counting EMUs
+/// (section 20.1.2.1); `None` for any other text or a value that does not fit.
+fn measure(text: &str) -> Option<i128> {
+    let split = text.len().checked_sub(2)?;
+    let (number, unit) = (text.get(..split)?, text.get(split..)?);
+    let per_unit: i128 = match unit {
+        "in" => 914_400,
+        "cm" => 360_000,
+        "mm" => 36_000,
+        "pt" => 12_700,
+        "pc" | "pi" => 152_400,
+        _ => return None,
+    };
+    let (negative, unsigned) = number
+        .strip_prefix('-')
+        .map_or((false, number), |rest| (true, rest));
+    let (whole, fraction) = match unsigned.split_once('.') {
+        Some((_, "")) => return None,
+        Some(parts) => parts,
+        None => (unsigned, ""),
+    };
+    if whole.is_empty()
+        || !whole
+            .bytes()
+            .chain(fraction.bytes())
+            .all(|byte| byte.is_ascii_digit())
+    {
+        return None;
+    }
+    let digits: i128 = format!("{whole}{fraction}").parse().ok()?;
+    let places = 10_i128.checked_pow(u32::try_from(fraction.len()).ok()?)?;
+    let magnitude = divide(digits.checked_mul(per_unit)?.checked_mul(SCALE)?, places)?;
+    Some(if negative { -magnitude } else { magnitude })
+}
+
 /// The square root of the sum of the squares of `sides`, each a guide's value (`mod`, section
 /// 20.1.9.11); `None` when the sum does not fit.
 fn modulus(sides: [i128; 3]) -> Option<i128> {
@@ -790,11 +825,16 @@ fn unit(parts: i128) -> i64 {
         .unwrap_or_default()
 }
 
-/// The value of `text`, a whole number or a name `names` holds, as a guide's value; 0 for
-/// anything else.
+/// The value of `text`, a whole number, a universal measure or a name `names` holds, as a guide's
+/// value; 0 for anything else.
 fn value(text: &str, names: &BTreeMap<&str, i128>) -> i128 {
-    text.trim().parse::<i64>().map_or_else(
-        |_| names.get(text).copied().unwrap_or_default(),
+    let trimmed = text.trim();
+    trimmed.parse::<i64>().map_or_else(
+        |_| {
+            measure(trimmed)
+                .or_else(|| names.get(text).copied())
+                .unwrap_or_default()
+        },
         |number| i128::from(number) * SCALE,
     )
 }
