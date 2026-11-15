@@ -5,13 +5,14 @@
 mod archive;
 
 use alloc::borrow::Cow;
-use alloc::collections::{BTreeSet, VecDeque};
+use alloc::collections::BTreeSet;
 use core::mem;
 
 use super::element::{Document, Element, NamespaceDeclaration, Node, XmlError};
 use super::name::table::NAMESPACES;
 use super::name::{Namespace, OfficeVersion};
 use super::parse::{Scope, split_qualified};
+use super::write::{PREFIX_LISTS, QUALIFIED_LISTS};
 
 #[cfg(test)]
 mod tests;
@@ -49,11 +50,14 @@ enum Outcome {
     Unwrap,
 }
 
-/// The nodes that take the place of an `mc:AlternateContent` block: the
-/// children of its first `mc:Choice` whose every `Requires` prefix `target`
-/// understands, else of its `mc:Fallback`, else none. The block's and the
-/// branch's declarations move onto each element among them.
-fn alternate_content(block: Element, target: OfficeVersion, scope: &mut Scope) -> Vec<Node> {
+/// The branch that takes the place of an `mc:AlternateContent` block, with the declarations in
+/// force inside it: its first `mc:Choice` whose every `Requires` prefix `target` understands,
+/// else its `mc:Fallback`, else none.
+fn selected_branch(
+    block: Element,
+    target: OfficeVersion,
+    scope: &mut Scope,
+) -> Option<(Vec<NamespaceDeclaration>, Element)> {
     scope.push(&block.namespace_declarations);
     let mut chosen = None;
     let mut fallback = None;
@@ -72,30 +76,27 @@ fn alternate_content(block: Element, target: OfficeVersion, scope: &mut Scope) -
         }
     }
     scope.pop();
-    chosen.or(fallback).map_or_else(Vec::new, |branch| {
-        branch_content(block.namespace_declarations, branch)
+    chosen.or(fallback).map(|mut branch| {
+        let declarations = merged(
+            block.namespace_declarations,
+            mem::take(&mut branch.namespace_declarations),
+        );
+        (declarations, branch)
     })
 }
 
 /// The nodes that take the place of an `mc:AlternateContent` block when `branch` is the one
 /// chosen.
 ///
-/// They are the branch's children, each element given the block's `declarations` and the
-/// branch's declarations it does not make itself.
+/// They are the branch's children, each element given those of the block's `declarations` and
+/// the branch's that its subtree uses and does not make itself.
 #[must_use = "this only returns the value"]
 pub fn branch_content(declarations: Vec<NamespaceDeclaration>, branch: Element) -> Vec<Node> {
-    let mut moved: Vec<NamespaceDeclaration> = Vec::new();
-    for declaration in declarations
-        .into_iter()
-        .chain(branch.namespace_declarations)
-    {
-        moved.retain(|earlier| earlier.prefix != declaration.prefix);
-        moved.push(declaration);
-    }
+    let moved = merged(declarations, branch.namespace_declarations);
     branch
         .children
         .into_iter()
-        .map(|node| with_declarations(node, &moved))
+        .map(|node| with_used_declarations(node, &moved))
         .collect()
 }
 
@@ -163,6 +164,19 @@ fn mc_attribute<'element>(element: &'element Element, local: &str) -> Option<&'e
         .map(|attribute| attribute.value.as_str())
 }
 
+/// `outer` then `inner`, a prefix `inner` declares again given only its declaration.
+fn merged(
+    outer: Vec<NamespaceDeclaration>,
+    inner: Vec<NamespaceDeclaration>,
+) -> Vec<NamespaceDeclaration> {
+    let mut all: Vec<NamespaceDeclaration> = Vec::new();
+    for declaration in outer.into_iter().chain(inner) {
+        all.retain(|earlier| earlier.prefix != declaration.prefix);
+        all.push(declaration);
+    }
+    all
+}
+
 /// Process an element that is not an `mc:AlternateContent` block, its
 /// declarations already in `scope`.
 fn process_child(
@@ -196,16 +210,25 @@ fn process_children(
     scope: &mut Scope,
     context: &Context,
 ) -> Result<(), XmlError> {
-    let mut queue: VecDeque<Node> = mem::take(&mut element.children).into();
-    let mut children = Vec::with_capacity(queue.len());
-    while let Some(node) = queue.pop_front() {
+    let nodes = mem::take(&mut element.children);
+    let mut children = Vec::with_capacity(nodes.len());
+    for node in nodes {
         let Node::Element(mut child) = node else {
             children.push(node);
             continue;
         };
         if is_mc(&child.name.namespace) && child.name.local == "AlternateContent" {
-            for replacement in alternate_content(child, target, scope).into_iter().rev() {
-                queue.push_front(replacement);
+            if let Some((declarations, mut branch)) = selected_branch(child, target, scope) {
+                scope.push(&declarations);
+                let processed = process_children(&mut branch, target, scope, context);
+                scope.pop();
+                processed?;
+                children.extend(
+                    branch
+                        .children
+                        .into_iter()
+                        .map(|content| with_used_declarations(content, &declarations)),
+                );
             }
             continue;
         }
@@ -267,6 +290,42 @@ pub(crate) fn requires(choice: &Element) -> &str {
         .unwrap_or_default()
 }
 
+/// The prefixes `element` and its subtree use, in a name, a `Requires` or an `mc` list, that no
+/// declaration among them binds.
+fn used_prefixes(element: &Element) -> BTreeSet<&str> {
+    let mut used = BTreeSet::from([element.name.prefix.as_str()]);
+    for attribute in &element.attributes {
+        if !attribute.name.prefix.is_empty() {
+            used.insert(attribute.name.prefix.as_str());
+        }
+        let local = attribute.name.local.as_str();
+        if is_mc(&attribute.name.namespace) {
+            if PREFIX_LISTS.contains(&local) {
+                used.extend(attribute.value.split_whitespace());
+            } else if QUALIFIED_LISTS.contains(&local) {
+                used.extend(
+                    attribute
+                        .value
+                        .split_whitespace()
+                        .map(|item| split_qualified(item).0),
+                );
+            } else {
+                // Not a list of prefixes.
+            }
+        }
+    }
+    if is_mc(&element.name.namespace) && element.name.local == "Choice" {
+        used.extend(requires(element).split_whitespace());
+    }
+    for child in element.child_elements() {
+        used.extend(used_prefixes(child));
+    }
+    for declaration in &element.namespace_declarations {
+        used.remove(declaration.prefix.as_str());
+    }
+    used
+}
+
 /// Whether `target` understands a namespace: ECMA-376's own, `mc`, and `xml`
 /// always, a Microsoft extension from the version that brought it; a
 /// namespace outside the table never.
@@ -312,4 +371,19 @@ pub fn with_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> N
     merged.append(&mut element.namespace_declarations);
     element.namespace_declarations = merged;
     Node::Element(element)
+}
+
+/// [`with_declarations`] with only those of `declarations` the node's subtree uses: a
+/// declaration no name in it needs is not carried onto it.
+fn with_used_declarations(node: Node, declarations: &[NamespaceDeclaration]) -> Node {
+    let Node::Element(element) = &node else {
+        return node;
+    };
+    let used = used_prefixes(element);
+    let needed: Vec<NamespaceDeclaration> = declarations
+        .iter()
+        .filter(|declaration| used.contains(declaration.prefix.as_str()))
+        .cloned()
+        .collect();
+    with_declarations(node, &needed)
 }

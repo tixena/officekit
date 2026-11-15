@@ -25,10 +25,11 @@ mod tests;
 const OTHER_PREFIX: &str = "ns";
 
 /// The `mc` lists whose items are prefixes.
-const PREFIX_LISTS: [&str; 2] = ["Ignorable", "MustUnderstand"];
+pub(crate) const PREFIX_LISTS: [&str; 2] = ["Ignorable", "MustUnderstand"];
 
 /// The `mc` lists whose items are qualified names.
-const QUALIFIED_LISTS: [&str; 3] = ["PreserveAttributes", "PreserveElements", "ProcessContent"];
+pub(crate) const QUALIFIED_LISTS: [&str; 3] =
+    ["PreserveAttributes", "PreserveElements", "ProcessContent"];
 
 /// The namespace the `xml` prefix is bound to without a declaration.
 const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";

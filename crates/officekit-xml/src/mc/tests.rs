@@ -93,14 +93,14 @@ fn a_block_with_no_choice_understood_and_no_fallback_goes() {
 }
 
 #[test]
-fn the_block_and_branch_declarations_move_onto_the_elements_that_replace_it() {
+fn the_block_and_branch_declarations_move_onto_the_elements_that_replace_it_and_use_them() {
     let xml = format!(
         r#"<w:r xmlns:w="{W}" {MC}><mc:AlternateContent {WPS}><mc:Choice Requires="wps" {W14}><wps:wsp w14:a="1"/>text<wps:txbx {WPS}/></mc:Choice></mc:AlternateContent></w:r>"#
     );
     assert_eq!(
         processed(&xml, OfficeVersion::Office2010),
         Ok(format!(
-            r#"<w:r xmlns:w="{W}" {MC}><wps:wsp {WPS} {W14} w14:a="1"/>text<wps:txbx {W14} {WPS}/></w:r>"#
+            r#"<w:r xmlns:w="{W}" {MC}><wps:wsp {WPS} {W14} w14:a="1"/>text<wps:txbx {WPS}/></w:r>"#
         ))
     );
 }

@@ -1,3 +1,5 @@
+mod word_drawings;
+
 use officekit_markup::common_simple_types::{
     DocumentConformanceClassValue, DocumentConformanceClassValueMember,
 };
