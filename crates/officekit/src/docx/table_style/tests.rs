@@ -24,11 +24,12 @@ use officekit_markup::wordprocessing::{
 
 use officekit_markup::wordprocessing::{
     ContentCellContent, ContentRowContent, GridColumnDefinition, GridColumnsBeforeFirstCell,
-    GridColumnsSpanned, MergedCellType, MergedCellTypeMember, RowLevelStructuredDocumentTag,
-    RowLevelStructuredDocumentTagContent, Table, VerticallyMergedCell,
+    GridColumnsSpanned, HorizontallyMergedCell, MergedCellType, MergedCellTypeMember,
+    RowLevelStructuredDocumentTag, RowLevelStructuredDocumentTagContent, Table,
+    VerticallyMergedCell,
 };
 
-use super::{CellPosition, VerticalMerge};
+use super::{CellPosition, HorizontalMerge, VerticalMerge};
 use crate::docx::effective::StyleSheet;
 use crate::docx::table::TableRows as _;
 use crate::docx::table_style::TableFormat;
@@ -1396,6 +1397,241 @@ fn a_row_inside_a_content_control_continues_the_merge_above_it() {
         [
             [VerticalMerge::Starts],
             [VerticalMerge::Continues { column: 0, row: 0 }]
+        ]
+    );
+}
+
+/// `cell` with a `w:hMerge` of `value`, or of no value.
+fn h_merged(mut cell: TableCellProperties, value: Option<MergedCellType>) -> TableCellProperties {
+    let mut merge = HorizontallyMergedCell::default();
+    merge.val = value;
+    cell.horizontally_merged_cell = Some(Box::new(merge));
+    cell
+}
+
+fn h_restart() -> TableCellProperties {
+    h_merged(
+        plain(),
+        Some(MergedCellType::from(MergedCellTypeMember::Restart)),
+    )
+}
+
+fn h_continue() -> TableCellProperties {
+    h_merged(
+        plain(),
+        Some(MergedCellType::from(MergedCellTypeMember::Continue)),
+    )
+}
+
+fn h_merges(table: &Table) -> Vec<Vec<HorizontalMerge>> {
+    StyleSheet::default()
+        .table(&table.properties)
+        .horizontal_merges(table)
+}
+
+#[test]
+fn part_4_s_example_merges_the_last_two_of_three_cells() {
+    let table = merge_table(
+        3,
+        alloc::vec![alloc::vec![plain(), h_restart(), h_merged(plain(), None)]],
+    );
+    assert_eq!(
+        h_merges(&table),
+        [[
+            HorizontalMerge::NotMerged,
+            HorizontalMerge::Starts,
+            HorizontalMerge::Continues { column: 1 }
+        ]]
+    );
+    let format = StyleSheet::default().table(&table.properties);
+    assert_eq!(
+        format.horizontal_merge(&table, 0, 2),
+        Some(HorizontalMerge::Continues { column: 1 })
+    );
+    assert_eq!(
+        format.horizontal_merge(&table, 0, 1),
+        Some(HorizontalMerge::Starts)
+    );
+    assert_eq!(format.horizontal_merge(&table, 0, 3), None);
+    assert_eq!(format.horizontal_merge(&table, 1, 0), None);
+}
+
+#[test]
+fn an_h_merge_with_no_value_continues_the_merge_through_the_row() {
+    let table = merge_table(
+        3,
+        alloc::vec![alloc::vec![
+            h_restart(),
+            h_merged(plain(), None),
+            h_continue()
+        ]],
+    );
+    assert_eq!(
+        h_merges(&table),
+        [[
+            HorizontalMerge::Starts,
+            HorizontalMerge::Continues { column: 0 },
+            HorizontalMerge::Continues { column: 0 }
+        ]]
+    );
+}
+
+#[test]
+fn a_continue_after_a_cell_of_no_merge_is_ignored_and_no_h_merge_closes_the_merge() {
+    let table = merge_table(
+        6,
+        alloc::vec![alloc::vec![
+            h_continue(),
+            h_restart(),
+            plain(),
+            h_continue(),
+            h_restart(),
+            h_continue()
+        ]],
+    );
+    assert_eq!(
+        h_merges(&table),
+        [[
+            HorizontalMerge::NotMerged,
+            HorizontalMerge::Starts,
+            HorizontalMerge::NotMerged,
+            HorizontalMerge::NotMerged,
+            HorizontalMerge::Starts,
+            HorizontalMerge::Continues { column: 4 }
+        ]]
+    );
+}
+
+#[test]
+fn a_restart_after_a_merge_starts_another() {
+    let table = merge_table(
+        3,
+        alloc::vec![alloc::vec![h_restart(), h_continue(), h_restart()]],
+    );
+    assert_eq!(
+        h_merges(&table),
+        [[
+            HorizontalMerge::Starts,
+            HorizontalMerge::Continues { column: 0 },
+            HorizontalMerge::Starts
+        ]]
+    );
+}
+
+#[test]
+fn a_continue_first_in_its_row_does_not_join_the_row_above() {
+    let table = merge_table(
+        2,
+        alloc::vec![
+            alloc::vec![plain(), h_restart()],
+            alloc::vec![h_continue(), h_continue()],
+        ],
+    );
+    assert_eq!(
+        h_merges(&table),
+        [
+            [HorizontalMerge::NotMerged, HorizontalMerge::Starts],
+            [HorizontalMerge::NotMerged, HorizontalMerge::NotMerged],
+        ]
+    );
+}
+
+#[test]
+fn an_h_merge_value_that_is_no_st_merge_value_is_unsettled_and_so_is_its_continue() {
+    let table = merge_table(
+        3,
+        alloc::vec![alloc::vec![
+            h_merged(plain(), Some(MergedCellType::from("across".to_owned()))),
+            h_continue(),
+            plain()
+        ]],
+    );
+    assert_eq!(
+        h_merges(&table),
+        [[
+            HorizontalMerge::Unsettled,
+            HorizontalMerge::Unsettled,
+            HorizontalMerge::NotMerged
+        ]]
+    );
+}
+
+#[test]
+fn a_cell_in_both_merges_reports_each_in_its_own_reading() {
+    let both = h_merged(
+        restart(),
+        Some(MergedCellType::from(MergedCellTypeMember::Restart)),
+    );
+    let table = merge_table(
+        2,
+        alloc::vec![
+            alloc::vec![both, h_continue()],
+            alloc::vec![continue_merge(), plain()],
+        ],
+    );
+    assert_eq!(
+        h_merges(&table),
+        [
+            [
+                HorizontalMerge::Starts,
+                HorizontalMerge::Continues { column: 0 }
+            ],
+            [HorizontalMerge::NotMerged, HorizontalMerge::NotMerged],
+        ]
+    );
+    assert_eq!(
+        merges(&table),
+        [
+            [VerticalMerge::Starts, VerticalMerge::NotMerged],
+            [
+                VerticalMerge::Continues { column: 0, row: 0 },
+                VerticalMerge::NotMerged
+            ],
+        ]
+    );
+}
+
+#[test]
+fn a_table_style_s_h_merge_applies_and_a_cell_s_own_with_no_value_continues_it() {
+    let mut style = table_style("Merging", None, Vec::new());
+    style.table_cell_properties = Some(Box::new(h_restart()));
+    let sheet = sheet_of(alloc::vec![style]);
+    let mut table = merge_table(
+        2,
+        alloc::vec![alloc::vec![plain(), h_merged(plain(), None)]],
+    );
+    *table.properties = own_table(Some("Merging"), None);
+    assert_eq!(
+        sheet.table(&table.properties).horizontal_merges(&table),
+        [[
+            HorizontalMerge::Starts,
+            HorizontalMerge::Continues { column: 0 }
+        ]]
+    );
+}
+
+#[test]
+fn cells_inside_a_content_control_and_rows_inside_one_take_their_place_in_the_merge() {
+    let mut table = merge_table(1, alloc::vec![alloc::vec![h_restart(), h_continue()]]);
+    let inner_rows = merge_table(1, alloc::vec![alloc::vec![h_restart(), h_continue()]]);
+    let mut inner = RowLevelStructuredDocumentTagContent::default();
+    inner.content = inner_rows.content_row_content;
+    let mut control = RowLevelStructuredDocumentTag::default();
+    control.content = Some(Box::new(inner));
+    table
+        .content_row_content
+        .push(ContentRowContent::RowLevelStructuredDocumentTag(control));
+    assert_eq!(
+        h_merges(&table),
+        [
+            [
+                HorizontalMerge::Starts,
+                HorizontalMerge::Continues { column: 0 }
+            ],
+            [
+                HorizontalMerge::Starts,
+                HorizontalMerge::Continues { column: 0 }
+            ],
         ]
     );
 }

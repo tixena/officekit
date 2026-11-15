@@ -145,6 +145,25 @@ impl Sets<'_> {
     }
 }
 
+/// A cell's place in a horizontal merge (ECMA-376 Part 4, section 14.4.13, and Part 1, section
+/// 17.18.57). It is read apart from [`VerticalMerge`]: the standard gives no rule for combining them.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum HorizontalMerge {
+    /// A `w:hMerge` of value `continue`, or of none, after a cell of a merge in the same row.
+    Continues {
+        /// The column of the cell that starts the merge, in cells of the row.
+        column: usize,
+    },
+    /// No `w:hMerge`, which closes any merge before it; or a `continue` after a cell of no merge,
+    /// or first in its row, which "shall be ignored" (section 17.18.57).
+    NotMerged,
+    /// `w:hMerge w:val="restart"`: the cell starts a new merged group of cells.
+    Starts,
+    /// A `w:val` that is no `ST_Merge` value, or a `continue` after such a cell.
+    Unsettled,
+}
+
 /// A cell's place in a vertical merge (ECMA-376 Part 1, sections 17.4.84 and 17.18.57).
 ///
 /// Of a continuing cell's content the standard says nothing: such cells "shall be merged into
@@ -288,6 +307,52 @@ impl TableFormat {
                 .map(|(format, _)| format),
         );
         found
+    }
+
+    /// The place in a horizontal merge of cell `column` of row `row` of `table`, the table of
+    /// this format, counted as [`TableFormat::horizontal_merges`] counts; `None` when there is none.
+    #[must_use = "this only returns the value"]
+    pub fn horizontal_merge(
+        &self,
+        table: &Table,
+        row: usize,
+        column: usize,
+    ) -> Option<HorizontalMerge> {
+        let rows = every_row(table);
+        self.horizontal_merges_of(rows.get(row)?, row, rows.len())
+            .get(column)
+            .copied()
+    }
+
+    /// Each cell's place in a horizontal merge, by row of [`every_row`] and cell of
+    /// [`every_cell`], from the cells' effective `w:hMerge` (Part 4, section 14.4.13).
+    #[must_use = "this only returns the value"]
+    pub fn horizontal_merges(&self, table: &Table) -> Vec<Vec<HorizontalMerge>> {
+        let rows = every_row(table);
+        rows.iter()
+            .enumerate()
+            .map(|(index, row)| self.horizontal_merges_of(row, index, rows.len()))
+            .collect()
+    }
+
+    /// Each cell's place in a horizontal merge in `row`, row `index` of a table of `rows` rows.
+    fn horizontal_merges_of(
+        &self,
+        row: &TableRow,
+        index: usize,
+        rows: usize,
+    ) -> Vec<HorizontalMerge> {
+        let cells = every_cell(row);
+        let format = self.for_row(row.table_level_property_exceptions.as_deref());
+        let header = holds_header(row);
+        let mut merges: Vec<HorizontalMerge> = Vec::with_capacity(cells.len());
+        for (column, cell) in cells.iter().enumerate() {
+            let position = CellPosition::new(index, rows, column, cells.len(), header);
+            let properties = format.cell(position, cell.properties.as_deref());
+            let previous = column.checked_sub(1).zip(merges.last().copied());
+            merges.push(horizontal_of(&properties, previous));
+        }
+        merges
     }
 
     /// The elements of `kind` that `formats` lay down, one list for each format in order, each
@@ -671,6 +736,29 @@ fn holds_header(row: &TableRow) -> bool {
                 if found.val.as_ref().is_none_or(|on| !matches!(on.value(), Ok(false))))
         })
     })
+}
+
+/// The place in a horizontal merge of a cell whose effective properties are `cell`, after the
+/// cell of the same row at `previous`, its column and place (Part 4, section 14.4.13; 17.18.57).
+fn horizontal_of(
+    cell: &TableCellProperties,
+    previous: Option<(usize, HorizontalMerge)>,
+) -> HorizontalMerge {
+    let Some(merge) = cell.horizontally_merged_cell.as_deref() else {
+        return HorizontalMerge::NotMerged;
+    };
+    let value = merge.val.as_ref().map(MergedCellType::value);
+    if matches!(value, Some(Ok(MergedCellTypeMember::Restart))) {
+        return HorizontalMerge::Starts;
+    }
+    if !matches!(value, None | Some(Ok(MergedCellTypeMember::Continue))) {
+        return HorizontalMerge::Unsettled;
+    }
+    match previous {
+        Some((column, HorizontalMerge::Starts)) => HorizontalMerge::Continues { column },
+        Some((_, HorizontalMerge::NotMerged)) | None => HorizontalMerge::NotMerged,
+        Some((_, found)) => found,
+    }
 }
 
 /// An empty element `local` of `shape` with `layers` laid over it in order.
