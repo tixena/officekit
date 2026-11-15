@@ -16,7 +16,7 @@ use os_shim::bucket::Condition;
 use self::plurals::{PluralRule, Relation};
 use self::rules::{Part, Pattern, RuleSet, Target};
 use super::markup::render::layout::{self, Expr};
-use super::namespaces;
+use super::namespaces::{self, UNICODE_NOTICE};
 use crate::generate_schema::cldr::{self, Tree};
 use crate::generate_schema::inputs::Inputs;
 
@@ -838,8 +838,8 @@ fn reach(data: &Cldr, keys: BTreeSet<SetKey>) -> Result<BTreeMap<SetKey, RuleSet
 /// A plural category or a pattern the table cannot name.
 pub fn render(header: &str, copyright: &str, table: &Table) -> Result<String> {
     let mut out = format!(
-        "{header}\n//! Unicode CLDR {version}'s rule-based number formats, plural rules, list \
-         patterns, digits,\n//! separators and alphabets. {copyright} Unicode License v3.\n\n\
+        "{header}{UNICODE_NOTICE}\n\n//! Unicode CLDR {version}'s rule-based number formats, \
+         plural rules, list patterns, digits,\n//! separators and alphabets. {copyright} Unicode License v3.\n\n\
          use officekit_markup::wordprocessing::StNumberFormatMember;\n\n\
          use super::{{\n    Category, Letters, Locale, Part, Pattern, PluralKind, PluralRule, \
          Relation, Rule, RuleSet,\n    Target, Words,\n}};\n",

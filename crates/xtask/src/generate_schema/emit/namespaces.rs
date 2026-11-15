@@ -22,6 +22,10 @@ mod tests;
 /// Where the table is written, from the workspace root.
 pub const TABLE_PATH: &str = "crates/officekit-xml/src/name/table.rs";
 
+/// The line that follows [`header`] on a table derived from Unicode data.
+pub const UNICODE_NOTICE: &str = "// Derived from Unicode data; the Unicode License v3 notice is in \
+                                  the crate's LICENSE-UNICODE.";
+
 /// `NamespaceId` is a `u8`, so the table holds at most this many rows.
 const MAX_ROWS: usize = 256;
 

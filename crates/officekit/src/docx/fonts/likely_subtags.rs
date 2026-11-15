@@ -4,6 +4,7 @@
 //   114019e183cffd98262c8c137d40d215124f80d9ba474a594d6ffa1b551b0a96  inputs/cldr/49/common/supplemental/likelySubtags.xml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
+// Derived from Unicode data; the Unicode License v3 notice is in the crate's LICENSE-UNICODE.
 
 //! Unicode CLDR 49's likely subtags: the most likely language, script and region of an id
 //! that lacks some. Copyright © 2001–2026 Unicode, Inc. Unicode License v3.

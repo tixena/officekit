@@ -1037,6 +1037,7 @@
 //   745150ec1408d50e1a272b65654a5dd645f3e60f5cc2898b576f725b28538d1a  inputs/cldr/49/common/supplemental/supplementalData.xml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
+// Derived from Unicode data; the Unicode License v3 notice is in the crate's LICENSE-UNICODE.
 
 //! Unicode CLDR 49's rule-based number formats, plural rules, list patterns, digits,
 //! separators and alphabets. Copyright © 2001–2026 Unicode, Inc. Unicode License v3.

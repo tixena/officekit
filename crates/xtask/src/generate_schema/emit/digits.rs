@@ -11,7 +11,7 @@ use officekit_xml::ready::ready_now;
 use os_shim::System;
 use os_shim::bucket::Condition;
 
-use super::namespaces;
+use super::namespaces::{self, UNICODE_NOTICE};
 use crate::generate_schema::inputs::Inputs;
 use crate::generate_schema::unicode_data::{self, DecimalDigit};
 
@@ -84,9 +84,9 @@ where
 #[must_use = "this only returns the value"]
 pub fn render(header: &str, zeros: &[&DecimalDigit]) -> String {
     let mut text = format!(
-        "{header}\n/// The zero of each family of ten decimal digits (Unicode category `Nd`), sorted; a \
-         family's\n/// digit n is its zero's code point plus n.\npub(super) static DIGIT_ZEROS: \
-         [char; {}] = [\n",
+        "{header}{UNICODE_NOTICE}\n\n/// The zero of each family of ten decimal digits (Unicode \
+         category `Nd`), sorted; a family's\n/// digit n is its zero's code point plus n.\n\
+         pub(super) static DIGIT_ZEROS: [char; {}] = [\n",
         zeros.len()
     );
     let literals: Vec<String> = zeros

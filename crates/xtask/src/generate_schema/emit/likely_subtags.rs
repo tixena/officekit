@@ -11,7 +11,7 @@ use os_shim::System;
 use os_shim::bucket::Condition;
 
 use super::markup::render::layout;
-use super::namespaces;
+use super::namespaces::{self, UNICODE_NOTICE};
 use crate::generate_schema::cldr::{self, Tree};
 use crate::generate_schema::inputs::Inputs;
 
@@ -95,8 +95,8 @@ where
 #[must_use = "this only returns the value"]
 pub fn render(header: &str, copyright: &str, rows: &BTreeMap<String, String>) -> String {
     let mut text = format!(
-        "{header}\n//! Unicode CLDR {version}'s likely subtags: the most likely language, script \
-         and region of an id\n//! that lacks some. {copyright} Unicode License v3.\n\n/// Each \
+        "{header}{UNICODE_NOTICE}\n\n//! Unicode CLDR {version}'s likely subtags: the most \
+         likely language, script and region of an id\n//! that lacks some. {copyright} Unicode License v3.\n\n/// Each \
          id CLDR gives and its most likely full id, `language_Script_REGION`, sorted by id.\n\
          pub(super) static LIKELY_SUBTAGS: [(&str, &str); {}] = [\n",
         rows.len(),

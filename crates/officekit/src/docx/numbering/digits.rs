@@ -3,6 +3,7 @@
 //   0736451de439ae7baf1425136617da495e09ee5afbe6e394374db7009ea08950  inputs/unicode/18.0.0/UnicodeData.txt
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
+// Derived from Unicode data; the Unicode License v3 notice is in the crate's LICENSE-UNICODE.
 
 /// The zero of each family of ten decimal digits (Unicode category `Nd`), sorted; a family's
 /// digit n is its zero's code point plus n.

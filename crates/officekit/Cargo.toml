@@ -8,7 +8,7 @@ authors.workspace = true
 license.workspace = true
 repository.workspace = true
 readme.workspace = true
-include = ["/src/**/*.rs", "/LICENSE", "/LICENSE-OPEN-XML-SDK"]
+include = ["/src/**/*.rs", "/LICENSE", "/LICENSE-OPEN-XML-SDK", "/LICENSE-UNICODE"]
 
 [lints]
 workspace = true

@@ -69,7 +69,10 @@ fn the_table_has_one_row_per_id() {
         ("zh_TW".to_owned(), "zh_Hant_TW".to_owned()),
     ]);
     let text = render("// header\n", "Copyright 1991-2026 Unicode, Inc.", &found);
-    assert!(text.starts_with("// header\n\n//! Unicode CLDR 49's likely subtags"));
+    assert!(text.starts_with(
+        "// header\n// Derived from Unicode data; the Unicode License v3 notice is in the crate's \
+         LICENSE-UNICODE.\n\n//! Unicode CLDR 49's likely subtags"
+    ));
     assert!(text.contains("Copyright 1991-2026 Unicode, Inc. Unicode License v3."));
     assert!(text.ends_with(
         "pub(super) static LIKELY_SUBTAGS: [(&str, &str); 2] = [\n    (\"ja\", \"ja_Jpan_JP\"),\n    \

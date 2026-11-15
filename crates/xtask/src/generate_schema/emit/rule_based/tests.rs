@@ -170,6 +170,10 @@ fn the_table_holds_each_locale_that_differs_from_its_parent_and_the_sets_reached
         ]
     );
     let text = render("// header\n", "Copyright", &table).unwrap();
+    assert!(text.starts_with(
+        "// header\n// Derived from Unicode data; the Unicode License v3 notice is in the crate's \
+         LICENSE-UNICODE.\n\n//! Unicode CLDR 49's rule-based number formats"
+    ));
     assert!(text.contains("Rule::new(1, 1, &[Part::Text(\"one\")])"));
     assert!(text.contains("Part::Whole(Target::Set(1))"));
     assert!(text.contains("(Category::Other, \"th\")"));
