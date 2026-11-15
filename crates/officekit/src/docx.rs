@@ -8,6 +8,7 @@ mod merge;
 pub mod numbering;
 pub mod protection;
 pub mod table;
+pub mod table_style;
 #[cfg(test)]
 mod tests;
 

@@ -15,13 +15,16 @@ use officekit_markup::wordprocessing::{
     NUMBERING_DEFINITION_INSTANCE_REFERENCE_NUM_PR_SHAPE, PARAGRAPH_BORDERS_SHAPE,
     PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE, ParagraphProperties, ParagraphPropertiesPPrGeneral,
     RUN_PROPERTIES_SHAPE, RunProperties, RunPropertiesContent, RunPropertiesForTheParagraphMark,
-    StyleDefinition, StyleDefinitions, StyleTypesMember, write,
+    SINGLE_TABLE_CELL_MARGINS_SHAPE, StyleDefinition, StyleDefinitions, StyleTypesMember,
+    TABLE_BORDERS_SHAPE, TABLE_CELL_BORDERS_SHAPE, TABLE_CELL_MARGIN_EXCEPTIONS_SHAPE,
+    TableProperties, write,
 };
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
 use crate::docx::numbering::{self, ListLevel, Numbering};
+use crate::docx::table_style::{CellPosition, Kind, TableFormat};
 
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
@@ -43,7 +46,8 @@ const TOGGLES: [&str; 12] = [
 
 /// A paragraph after the document defaults, its style's chain and its own properties.
 ///
-/// Table styles are not applied; [`StyleSheet::numbered_paragraph`] applies numbering levels.
+/// [`StyleSheet::numbered_paragraph`] applies numbering levels, and
+/// [`StyleSheet::paragraph_in_cell`] a table style.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct EffectiveParagraph {
@@ -54,6 +58,10 @@ pub struct EffectiveParagraph {
     pub run_properties: RunProperties,
     /// The id of the paragraph style that was applied, when there is one.
     pub style: Option<String>,
+    /// The run properties the table style gives the paragraph's cell, one for each format that
+    /// applies and states any, the last applied first; empty outside a table. Section 17.7.3
+    /// reads the table level's value of a toggle property from them.
+    pub table_run_properties: Vec<RunProperties>,
 }
 
 /// Where a numbering level's `w:pPr` goes among the layers of a paragraph (ECMA-376 Part 1,
@@ -70,12 +78,13 @@ enum LevelLayer {
 
 /// The styles of a Word file, by id, with the document defaults.
 ///
-/// Table styles are not applied by [`StyleSheet::paragraph`] or [`StyleSheet::run`];
-/// [`StyleSheet::numbered_paragraph`] applies numbering levels.
+/// [`StyleSheet::numbered_paragraph`] applies numbering levels, and
+/// [`StyleSheet::paragraph_in_cell`] a table style.
 #[derive(Clone, Debug, Default)]
 pub struct StyleSheet {
     by_id: BTreeMap<String, StyleDefinition>,
     default_paragraph: Option<String>,
+    default_table: Option<String>,
     paragraph_defaults: Option<ParagraphPropertiesPPrGeneral>,
     run_defaults: Option<RunProperties>,
 }
@@ -152,22 +161,24 @@ impl StyleSheet {
             if sheet.default_paragraph.is_none() && is_default_paragraph(style) {
                 sheet.default_paragraph = Some(id.clone());
             }
+            if is_default_table(style) {
+                sheet.default_table = Some(id.clone());
+            }
             sheet.by_id.entry(id).or_insert_with(|| style.clone());
         }
         sheet
     }
 
-    /// The effective properties of a paragraph that may be a list item (ECMA-376 Part 1,
-    /// sections 17.7.2, 17.9.18 and 17.9.22): those of [`StyleSheet::paragraph`] with the `w:pPr`
-    /// of the level it is numbered with laid in, and that level.
-    #[must_use = "this only returns the value"]
-    pub fn numbered_paragraph(
+    /// [`StyleSheet::numbered_paragraph`] inside `cell`, or with no numbering level when
+    /// `numbering` is `None`.
+    fn numbered_over(
         &self,
-        numbering: &Numbering,
+        numbering: Option<&Numbering>,
         properties: Option<&ParagraphProperties>,
+        cell: Option<(&TableFormat, CellPosition)>,
     ) -> (EffectiveParagraph, Option<ListLevel>) {
-        let plain = self.paragraph_over(properties, None);
-        let Some(level) = numbering.level_of(&plain, properties) else {
+        let plain = self.paragraph_over(properties, None, cell);
+        let Some(level) = numbering.and_then(|found| found.level_of(&plain, properties)) else {
             return (plain, None);
         };
         let layer = if numbering::states_num_id(properties) {
@@ -179,8 +190,20 @@ impl StyleSheet {
             .definition
             .paragraph_properties_p_pr_general
             .as_deref();
-        let numbered = self.paragraph_over(properties, own.map(|found| (found, layer)));
+        let numbered = self.paragraph_over(properties, own.map(|found| (found, layer)), cell);
         (numbered, Some(level))
+    }
+
+    /// The effective properties of a paragraph that may be a list item (ECMA-376 Part 1,
+    /// sections 17.7.2, 17.9.18 and 17.9.22): those of [`StyleSheet::paragraph`] with the `w:pPr`
+    /// of the level it is numbered with laid in, and that level.
+    #[must_use = "this only returns the value"]
+    pub fn numbered_paragraph(
+        &self,
+        numbering: &Numbering,
+        properties: Option<&ParagraphProperties>,
+    ) -> (EffectiveParagraph, Option<ListLevel>) {
+        self.numbered_over(Some(numbering), properties, None)
     }
 
     /// The effective properties of a paragraph whose own properties are `properties`: the
@@ -188,7 +211,23 @@ impl StyleSheet {
     /// `properties`. A paragraph that names no style takes the default paragraph style.
     #[must_use = "this only returns the value"]
     pub fn paragraph(&self, properties: Option<&ParagraphProperties>) -> EffectiveParagraph {
-        self.paragraph_over(properties, None)
+        self.paragraph_over(properties, None, None)
+    }
+
+    /// The effective properties of a paragraph inside the cell at `position` of a table
+    /// (ECMA-376 Part 1, sections 17.7.2 and 17.7.6): the document defaults, then the table
+    /// style's paragraph properties with the conditional formats that apply there, then the
+    /// layers of [`StyleSheet::numbered_paragraph`]. `numbering` is `None` for a caller that
+    /// applies no numbering level.
+    #[must_use = "this only returns the value"]
+    pub fn paragraph_in_cell(
+        &self,
+        table: &TableFormat,
+        position: CellPosition,
+        numbering: Option<&Numbering>,
+        properties: Option<&ParagraphProperties>,
+    ) -> (EffectiveParagraph, Option<ListLevel>) {
+        self.numbered_over(numbering, properties, Some((table, position)))
     }
 
     /// The effective run properties of a paragraph's mark (ECMA-376 Part 1, section 17.3.1.29):
@@ -206,11 +245,13 @@ impl StyleSheet {
     }
 
     /// `paragraph`'s properties with a numbering level's `w:pPr`, less its `w:numPr`, laid in
-    /// where `level` says (section 17.7.2).
+    /// where `level` says, and the table style of `cell` over the document defaults (section
+    /// 17.7.2).
     fn paragraph_over(
         &self,
         properties: Option<&ParagraphProperties>,
         level: Option<(&ParagraphPropertiesPPrGeneral, LevelLayer)>,
+        cell: Option<(&TableFormat, CellPosition)>,
     ) -> EffectiveParagraph {
         let named = properties
             .and_then(|own| own.referenced_paragraph_style.as_ref())
@@ -218,11 +259,28 @@ impl StyleSheet {
             .or(self.default_paragraph.as_deref());
         let chain = self.chain(named);
         let mut scope = Scope::default();
+        let (table_paragraph, table_runs) = cell.map_or_else(
+            || (Vec::new(), Vec::new()),
+            |(table, position)| {
+                let formats = table.formats(position);
+                (
+                    table.layers(&formats, Kind::Paragraph),
+                    table.layers(&formats, Kind::Run),
+                )
+            },
+        );
 
         let mut paragraph = self.paragraph_defaults.as_ref().map_or_else(
             || empty("pPr"),
             |defaults| write::paragraph_properties_p_pr_general(defaults, &mut scope),
         );
+        for element in table_paragraph.iter().flatten() {
+            apply(
+                &mut paragraph,
+                element,
+                Some(&PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE),
+            );
+        }
         let numbered = level.map(|(general, layer)| {
             let mut element = write::paragraph_properties_p_pr_general(general, &mut scope);
             element
@@ -266,39 +324,66 @@ impl StyleSheet {
             );
         }
 
+        let (runs, table_levels) = self.paragraph_runs(&chain, &table_runs);
+        EffectiveParagraph {
+            properties: ParagraphPropertiesPPrGeneral::read(&paragraph),
+            run_properties: RunProperties::read(&runs),
+            style: chain.first().and_then(|style| style.style_id.clone()),
+            table_run_properties: table_levels.iter().map(RunProperties::read).collect(),
+        }
+    }
+
+    /// The run properties a paragraph gives its runs: the document defaults, the table style's
+    /// `table_runs`, then the paragraph style's `chain` from its last ancestor down, with the
+    /// toggle properties of section 17.7.3; and the table level's run properties, one for each
+    /// format, the last applied first.
+    fn paragraph_runs(
+        &self,
+        chain: &[&StyleDefinition],
+        table_runs: &[Vec<Element>],
+    ) -> (Element, Vec<Element>) {
         let mut runs = self
             .run_defaults
             .as_ref()
             .map_or_else(|| empty("rPr"), run_element);
-        let levels = levels_of(&chain);
+        for element in table_runs.iter().flatten() {
+            apply(&mut runs, element, Some(&RUN_PROPERTIES_SHAPE));
+        }
         for style in chain.iter().rev() {
             if let Some(run) = style.run_properties.as_deref() {
                 apply(&mut runs, &run_element(run), Some(&RUN_PROPERTIES_SHAPE));
             }
         }
+        let table_levels: Vec<Element> = table_runs
+            .iter()
+            .rev()
+            .filter_map(|format| format_run(format))
+            .collect();
+        let levels = levels_of(chain);
         let defaults = self.run_defaults.as_ref().map(run_element);
         for name in TOGGLES {
             let default = defaults.as_ref().and_then(|found| toggle_of(found, name));
             set_toggle(
                 &mut runs,
                 name,
-                toggle(None, default, level_value(&levels, name), None),
+                toggle(
+                    None,
+                    default,
+                    [
+                        level_value(&table_levels, name),
+                        level_value(&levels, name),
+                        None,
+                    ],
+                ),
             );
         }
-
-        EffectiveParagraph {
-            properties: ParagraphPropertiesPPrGeneral::read(&paragraph),
-            run_properties: RunProperties::read(&runs),
-            style: chain.first().and_then(|style| style.style_id.clone()),
-        }
+        (runs, table_levels)
     }
 
     /// The effective properties of a run of `paragraph` whose own properties are `properties`:
     /// what the paragraph gives its runs, then the character style's chain from its last
-    /// ancestor down, then `properties`, with the toggle properties combined as section 17.7.3
-    /// says.
-    ///
-    /// Table styles and numbering levels are not applied.
+    /// ancestor down, then `properties`, with the toggle properties combined over the table,
+    /// paragraph and character levels as section 17.7.3 says.
     #[must_use = "this only returns the value"]
     pub fn run(
         &self,
@@ -332,6 +417,11 @@ impl StyleSheet {
         }
 
         let defaults = self.run_defaults.as_ref().map(run_element);
+        let table_levels: Vec<Element> = paragraph
+            .table_run_properties
+            .iter()
+            .map(run_element)
+            .collect();
         let paragraph_levels = levels_of(&paragraph_chain);
         let character_levels = levels_of(&character_chain);
         for name in TOGGLES {
@@ -343,8 +433,11 @@ impl StyleSheet {
                 toggle(
                     direct,
                     default,
-                    level_value(&paragraph_levels, name),
-                    level_value(&character_levels, name),
+                    [
+                        level_value(&table_levels, name),
+                        level_value(&paragraph_levels, name),
+                        level_value(&character_levels, name),
+                    ],
                 ),
             );
         }
@@ -355,12 +448,25 @@ impl StyleSheet {
     pub fn style(&self, id: &str) -> Option<&StyleDefinition> {
         self.by_id.get(id)
     }
+
+    /// The table `properties` belong to, with its style (ECMA-376 Part 1, sections 17.4.62 and
+    /// 17.7.6): the one its `w:tblStyle` names, else the default table style.
+    #[must_use = "this only returns the value"]
+    pub fn table(&self, properties: &TableProperties) -> TableFormat {
+        let named = properties
+            .referenced_table_style
+            .as_ref()
+            .and_then(|style| style.val.as_deref())
+            .or(self.default_table.as_deref());
+        let chain = self.chain(named).into_iter().cloned().collect();
+        TableFormat::new(chain, properties)
+    }
 }
 
 /// `over` applied on `base`, both elements of `shape`. A property `base` lacks is added at its
 /// schema position; one both hold takes `over`'s attributes one by one, and its children are
 /// applied the same way.
-fn apply(base: &mut Element, over: &Element, shape: Option<&Shape>) {
+pub(super) fn apply(base: &mut Element, over: &Element, shape: Option<&Shape>) {
     for child in over.child_elements() {
         if is_word(child, "tabs") {
             merge_tabs(base, child, shape);
@@ -395,7 +501,7 @@ fn character_style(content: &[RunPropertiesContent]) -> Option<&str> {
     })
 }
 
-fn empty(local: &str) -> Element {
+pub(super) fn empty(local: &str) -> Element {
     Element::new(word_name(local))
 }
 
@@ -415,19 +521,47 @@ fn schema_position(parent: &Element, shape: Option<&Shape>, child: &Element) -> 
         .map_or(0, |last| last + 1)
 }
 
+/// One format's run properties, `layers` laid down in order with each toggle property the last
+/// layer's that states it; `None` when they state none.
+fn format_run(layers: &[Element]) -> Option<Element> {
+    let mut merged = empty("rPr");
+    for layer in layers {
+        apply(&mut merged, layer, Some(&RUN_PROPERTIES_SHAPE));
+    }
+    for name in TOGGLES {
+        let value = layers.iter().rev().find_map(|layer| toggle_of(layer, name));
+        set_toggle(&mut merged, name, value);
+    }
+    let states = merged.child_elements().next().is_some();
+    states.then_some(merged)
+}
+
+fn is_default(style: &StyleDefinition) -> bool {
+    style
+        .default
+        .as_ref()
+        .is_some_and(|value| value.value().unwrap_or(false))
+}
+
 fn is_default_paragraph(style: &StyleDefinition) -> bool {
     let paragraph = style
         .r#type
         .as_ref()
         .is_none_or(|kind| matches!(kind.value(), Ok(StyleTypesMember::Paragraph)));
-    let default = style
-        .default
-        .as_ref()
-        .is_some_and(|value| value.value().unwrap_or(false));
-    paragraph && default
+    paragraph && is_default(style)
 }
 
-fn is_word(element: &Element, local: &str) -> bool {
+/// Whether `style` may be the default table style: `w:default` on and `w:type="table"`; the last
+/// such style is the one (section 17.7.4.17).
+fn is_default_table(style: &StyleDefinition) -> bool {
+    let table = style
+        .r#type
+        .as_ref()
+        .is_some_and(|kind| matches!(kind.value(), Ok(StyleTypesMember::Table)));
+    table && is_default(style)
+}
+
+pub(super) fn is_word(element: &Element, local: &str) -> bool {
     element.name.local == local && element.name.namespace == Namespace::from_uri(WORDPROCESSING)
 }
 
@@ -460,6 +594,14 @@ fn merge_property(held: &mut Element, over: &Element) {
         Some(&PARAGRAPH_BORDERS_SHAPE)
     } else if is_word(held, "numPr") {
         Some(&NUMBERING_DEFINITION_INSTANCE_REFERENCE_NUM_PR_SHAPE)
+    } else if is_word(held, "tblBorders") {
+        Some(&TABLE_BORDERS_SHAPE)
+    } else if is_word(held, "tcBorders") {
+        Some(&TABLE_CELL_BORDERS_SHAPE)
+    } else if is_word(held, "tblCellMar") {
+        Some(&TABLE_CELL_MARGIN_EXCEPTIONS_SHAPE)
+    } else if is_word(held, "tcMar") {
+        Some(&SINGLE_TABLE_CELL_MARGINS_SHAPE)
     } else {
         None
     };
@@ -542,24 +684,24 @@ fn set_toggle(element: &mut Element, name: &str, value: Option<bool>) {
     }
 }
 
-/// The effective value of a toggle property: the direct one; else true when the document defaults
-/// say true; else the paragraph level's value exclusive-or the character level's.
-fn toggle(
-    direct: Option<bool>,
-    default: Option<bool>,
-    paragraph: Option<bool>,
-    character: Option<bool>,
-) -> Option<bool> {
+/// The effective value of a toggle property (section 17.7.3): the direct one; else true when
+/// the document defaults say true; else the table level's value exclusive-or the paragraph
+/// level's exclusive-or the character level's.
+fn toggle(direct: Option<bool>, default: Option<bool>, levels: [Option<bool>; 3]) -> Option<bool> {
     if direct.is_some() {
         return direct;
     }
     if matches!(default, Some(true)) {
         return Some(true);
     }
-    match (paragraph, character) {
-        (None, None) => default,
-        (left, right) => Some(left.unwrap_or(false) ^ right.unwrap_or(false)),
+    if levels.iter().all(Option::is_none) {
+        return default;
     }
+    Some(
+        levels
+            .iter()
+            .fold(false, |value, level| value ^ level.unwrap_or(false)),
+    )
 }
 
 fn toggle_element(name: &str, on: bool) -> Element {

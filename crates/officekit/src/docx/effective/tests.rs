@@ -5,23 +5,28 @@ use alloc::vec::Vec;
 use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue};
 use officekit_markup::office_word_2010_wordml::ConflictInsTrackChange;
 use officekit_markup::wordprocessing::{
-    AbstractNumberingDefinition, Bold, ColorValue, ConflictChangeContent, DecimalNumberValue,
-    DeletedTableRow, InsertedTableRow, MeasurementInHalfPoints, MoveDestinationParagraph,
-    MoveSourceParagraph, NonComplexScriptFontSize, NumberingDefinitionInstance,
+    AbstractNumberingDefinition, Bold, ColorValue, ConditionalTableStyleFormattingTypes,
+    ConditionalTableStyleFormattingTypesMember, ConflictChangeContent, DecimalNumberValue,
+    DefaultRunProperties, DeletedTableRow, DocumentDefaultParagraphAndRunProperties,
+    HorizontalAlignmentType, HorizontalAlignmentTypeMember, InsertedTableRow,
+    MeasurementInHalfPoints, MoveDestinationParagraph, MoveSourceParagraph,
+    NonComplexScriptFontSize, NumberingDefinitionInstance,
     NumberingDefinitionInstanceReferenceNumId, NumberingDefinitionInstanceReferenceNumPr,
     NumberingDefinitions, NumberingLevelOverrideDefinition, NumberingLevelReference,
-    ParagraphIndentation, ParagraphMarkRunPropertiesRevision, ParagraphProperties,
-    ParagraphPropertiesPPrGeneral, ReferencedCharacterStyle, ReferencedParagraphStyle,
-    RunContentColor, RunFonts, RunProperties, RunPropertiesContent,
-    RunPropertiesForTheParagraphMark, SignedMeasurementInTwentiethsOfPoint,
-    SpacingBetweenLinesAndAboveBelowParagraph, StyleDefinition, StyleDefinitions, StyleTypes,
-    StyleTypesMember,
+    ParagraphAlignment, ParagraphIndentation, ParagraphMarkRunPropertiesRevision,
+    ParagraphProperties, ParagraphPropertiesPPrGeneral, ReferencedCharacterStyle,
+    ReferencedParagraphStyle, ReferencedTableStyle, RunContentColor, RunFonts, RunProperties,
+    RunPropertiesContent, RunPropertiesForTheParagraphMark, SignedMeasurementInTwentiethsOfPoint,
+    SpacingBetweenLinesAndAboveBelowParagraph, StyleConditionalTableFormattingProperties,
+    StyleDefinition, StyleDefinitions, StyleTypes, StyleTypesMember, TableProperties,
+    TableStyleConditionalFormattingSettingsException,
 };
 use officekit_xml::parse::parse;
 
 use super::{StyleSheet, WORDPROCESSING};
 use crate::docx::Docx;
 use crate::docx::numbering::Numbering;
+use crate::docx::table_style::{CellPosition, TableFormat};
 use crate::parts::kinds::WordprocessingKind;
 
 macro_rules! toggle_arms {
@@ -848,4 +853,136 @@ fn the_label_takes_the_mark_s_properties_under_the_level_s() {
     assert_eq!(size(&label), Some("48"));
     assert_eq!(bold(&label), Some(true));
     assert_eq!(color(&label), Some("FF0000"));
+}
+
+fn aligned(alignment: HorizontalAlignmentTypeMember) -> ParagraphPropertiesPPrGeneral {
+    let mut found = ParagraphAlignment::default();
+    found.val = Some(HorizontalAlignmentType::from(alignment));
+    let mut general = ParagraphPropertiesPPrGeneral::default();
+    general.paragraph_alignment = Some(Box::new(found));
+    general
+}
+
+fn run_of(content: Vec<RunPropertiesContent>) -> RunProperties {
+    let mut run = RunProperties::default();
+    run.content = content;
+    run
+}
+
+/// A table style `Grid` with the paragraph properties `paragraph`, the run properties `run` and a
+/// first-row format whose runs have `first_row`.
+fn grid_style(
+    paragraph: Option<ParagraphPropertiesPPrGeneral>,
+    run: Vec<RunPropertiesContent>,
+    first_row: Vec<RunPropertiesContent>,
+) -> StyleDefinition {
+    let mut format = StyleConditionalTableFormattingProperties::default();
+    format.r#type = Some(ConditionalTableStyleFormattingTypes::from(
+        ConditionalTableStyleFormattingTypesMember::FirstRow,
+    ));
+    format.run_properties = Some(Box::new(run_of(first_row)));
+    let mut style = style_of("Grid", StyleTypesMember::Table, run);
+    style.paragraph_properties_p_pr_general = paragraph.map(Box::new);
+    style
+        .style_conditional_table_formatting_properties
+        .push(format);
+    style
+}
+
+/// A table that names `Grid` and turns its first-row format on.
+fn grid_table(styles: &StyleSheet) -> TableFormat {
+    let mut reference = ReferencedTableStyle::default();
+    reference.val = Some("Grid".to_owned());
+    let mut look = TableStyleConditionalFormattingSettingsException::default();
+    look.first_row = Some(true.into());
+    let mut own = TableProperties::default();
+    own.referenced_table_style = Some(Box::new(reference));
+    own.table_style_conditional_formatting_settings_exception = Some(Box::new(look));
+    styles.table(&own)
+}
+
+#[test]
+fn a_paragraph_in_a_cell_lays_the_table_style_under_the_paragraph_style() {
+    let mut default_run = DefaultRunProperties::default();
+    default_run.run_properties = Some(Box::new(run_of(vec![font_size("20")])));
+    let mut defaults = DocumentDefaultParagraphAndRunProperties::default();
+    defaults.default_run_properties = Some(Box::new(default_run));
+    let mut definitions = StyleDefinitions::default();
+    definitions.document_default_paragraph_and_run_properties = Some(Box::new(defaults));
+    definitions.style_definition = vec![
+        grid_style(
+            Some(aligned(HorizontalAlignmentTypeMember::Center)),
+            vec![font_size("18")],
+            vec![],
+        ),
+        paragraph_style("Right", aligned(HorizontalAlignmentTypeMember::Right)),
+    ];
+    let styles = StyleSheet::new(&definitions);
+    let table = grid_table(&styles);
+    let at = CellPosition::new(1, 2, 0, 1, false);
+
+    let named = own_of("Right", None, None);
+    let (right, _) = styles.paragraph_in_cell(&table, at, None, Some(&named));
+    assert_eq!(size(&styles.run(&right, None)), Some("18"));
+    assert_eq!(justification(&right.properties), Some("right"));
+
+    let (plain, _) = styles.paragraph_in_cell(&table, at, None, None);
+    assert_eq!(size(&styles.run(&plain, None)), Some("18"));
+    assert_eq!(justification(&plain.properties), Some("center"));
+}
+
+#[test]
+fn a_toggle_combines_the_table_paragraph_and_character_levels() {
+    let styles = sheet_of(vec![
+        grid_style(
+            None,
+            vec![],
+            vec![RunPropertiesContent::Bold(Bold::default())],
+        ),
+        style_of(
+            "Strong",
+            StyleTypesMember::Paragraph,
+            vec![RunPropertiesContent::Bold(Bold::default())],
+        ),
+    ]);
+    let table = grid_table(&styles);
+    let own = own_of("Strong", None, None);
+    let at = CellPosition::new(0, 2, 0, 1, false);
+    let (paragraph, _) = styles.paragraph_in_cell(&table, at, None, Some(&own));
+    assert_eq!(paragraph.table_run_properties.len(), 1);
+    assert_eq!(bold(&styles.run(&paragraph, None)), Some(false));
+    let direct = run_of(vec![RunPropertiesContent::Bold(Bold::default())]);
+    assert_eq!(bold(&styles.run(&paragraph, Some(&direct))), Some(true));
+
+    let below = CellPosition::new(1, 2, 0, 1, false);
+    let (outside_first_row, _) = styles.paragraph_in_cell(&table, below, None, Some(&own));
+    assert_eq!(outside_first_row.table_run_properties.len(), 0);
+    assert_eq!(bold(&styles.run(&outside_first_row, None)), Some(true));
+}
+
+#[test]
+fn a_numbered_paragraph_in_a_cell_takes_its_level_as_outside_a_table() {
+    let styles = sheet_of(vec![
+        grid_style(
+            Some(aligned(HorizontalAlignmentTypeMember::Center)),
+            vec![],
+            vec![],
+        ),
+        paragraph_style("Body", ParagraphPropertiesPPrGeneral::default()),
+    ]);
+    let numbering = list_of(&styles, vec![]);
+    let table = grid_table(&styles);
+    let at = CellPosition::new(0, 1, 0, 1, false);
+    let own = own_of("Body", Some(numbered(5, Some(0))), None);
+
+    let (inside, level) = styles.paragraph_in_cell(&table, at, Some(&numbering), Some(&own));
+    let (_, outside) = styles.numbered_paragraph(&numbering, Some(&own));
+    assert_eq!(level.as_ref().map(|found| found.ilvl), Some(0));
+    assert_eq!(level, outside);
+    assert_eq!(indents(&inside.properties), (Some("720"), Some("360")));
+    assert_eq!(justification(&inside.properties), Some("center"));
+
+    let (unnumbered, none) = styles.paragraph_in_cell(&table, at, None, Some(&own));
+    assert_eq!(none, None);
+    assert_eq!(indents(&unnumbered.properties), (None, None));
 }
