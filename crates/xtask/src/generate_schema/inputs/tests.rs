@@ -52,6 +52,8 @@ fn layout() -> MemorySystem {
         .with_file("/inputs/cldr/49/common/rbnf/en.xml", b"<ldml/>")
         .unwrap()
         .with_file("/inputs/cldr/49/common/rbnf/README.md", b"")
+        .unwrap()
+        .with_file("/inputs/cldr/49/common/bcp47/calendar.xml", b"<ldmlBCP47/>")
         .unwrap();
     for name in [
         "likelySubtags",
@@ -148,6 +150,10 @@ fn finds_every_input() {
         [Path::new("inputs/cldr/49/common/rbnf/en.xml")]
     );
     assert_eq!(inputs.cldr_license, Path::new("inputs/cldr/49/LICENSE"));
+    assert_eq!(
+        inputs.cldr_calendars,
+        Path::new("inputs/cldr/49/common/bcp47/calendar.xml")
+    );
     assert_eq!(
         inputs.cldr_likely_subtags,
         Path::new("inputs/cldr/49/common/supplemental/likelySubtags.xml")
@@ -265,6 +271,13 @@ fn names_the_missing_prop_list() {
 #[test]
 fn names_the_missing_cldr_plural_rules() {
     let path = "inputs/cldr/49/common/supplemental/plurals.xml";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
+}
+
+#[test]
+fn names_the_missing_cldr_calendar_keywords() {
+    let path = "inputs/cldr/49/common/bcp47/calendar.xml";
     let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
     assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
 }

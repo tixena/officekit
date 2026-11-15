@@ -1,6 +1,7 @@
 //! The date and the time of a serial date-time, and a date written under a format code
 //! (ECMA-376 Part 1, sections 18.17.4 and 18.8.31; Part 4, section 15.3.4).
 
+mod calendars;
 #[cfg(test)]
 mod tests;
 
@@ -9,10 +10,12 @@ use core::str::Chars;
 use officekit_markup::class_rules::{BASE_1900, BASE_1904};
 use officekit_xml::values::DateTime;
 
+use self::calendars::{HIJRI_FIRST, HIJRI_LEAP_YEARS, HIJRI_MONTHS, JAPANESE, LANGUAGE_IDS, ROC};
 use super::decimal::Decimal;
 use super::parse::Token;
 use super::write::Writer;
 use super::{Section, Shown};
+use crate::docx::fonts::likely_subtags;
 
 /// Nanoseconds in a day.
 pub const DAY: i128 = 86_400_000_000_000;
@@ -28,6 +31,14 @@ const FIRST: i64 = days_from_civil(1, 1, 1);
 
 /// Days from 1970-01-01 to 9999-12-31, the upper limit of every date system.
 const LAST: i64 = days_from_civil(9999, 12, 31);
+
+/// The years of a cycle of the tabular Hijri calendar, of which [`HIJRI_LEAP_YEARS`] have 355
+/// days and the others 354 (Reingold and Dershowitz, "Calendrical Calculations", the arithmetic
+/// Islamic calendar).
+const HIJRI_CYCLE: i64 = 30;
+
+/// The days of a common year of the tabular Hijri calendar.
+const HIJRI_YEAR: i64 = 354;
 
 /// The most decimals of a second a code shows (section 18.8.31, `h:mm:ss.00`).
 const MOST_DECIMALS: usize = 3;
@@ -95,9 +106,81 @@ impl DateSystem {
     }
 }
 
-/// A day of the proleptic Gregorian calendar.
+/// An era of a calendar, from Unicode CLDR (section 18.8.31, "International Considerations").
+struct Era {
+    backward: bool,
+    /// Days from 1970-01-01 to its first day; `i64::MIN` for an era with no first day.
+    first: i64,
+    /// What `g`, `gg` and `ggg` write.
+    names: [&'static str; 3],
+    /// The Gregorian year its years count from: its first, or its last when `backward`.
+    year: i64,
+}
+
+/// A locale section 18.8.31's "International Considerations" gives the era codes.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+enum Locale {
+    /// ja-jp: the Japanese emperor eras.
+    Japan,
+    /// zh-tw: the Republic of China's eras.
+    Taiwan,
+}
+
+impl Locale {
+    /// The era of the day `days` from 1970-01-01.
+    fn era(self, days: i64) -> Option<&'static Era> {
+        let eras: &'static [Era] = match self {
+            Self::Japan => &JAPANESE,
+            Self::Taiwan => &ROC,
+        };
+        eras.iter().rev().find(|era| era.first <= days)
+    }
+
+    /// The locale of the BCP 47 tag `tag`, by its language and its region, or the region CLDR's
+    /// likely subtags give the tag when it names none.
+    fn of(tag: &str) -> Option<Self> {
+        let mut subtags = tag.split(['-', '_']).take_while(|subtag| subtag.len() > 1);
+        let language = subtags.next()?.to_ascii_lowercase();
+        let rest: Vec<&str> = subtags.collect();
+        let script = rest.iter().find(|subtag| {
+            subtag.len() == 4 && subtag.bytes().all(|byte| byte.is_ascii_alphabetic())
+        });
+        let region = rest
+            .iter()
+            .find(|subtag| {
+                (subtag.len() == 2 && subtag.bytes().all(|byte| byte.is_ascii_alphabetic()))
+                    || (subtag.len() == 3 && subtag.bytes().all(|byte| byte.is_ascii_digit()))
+            })
+            .map(|subtag| subtag.to_ascii_uppercase())
+            .or_else(|| {
+                let id = script.map_or_else(
+                    || language.clone(),
+                    |own| {
+                        let (first, others) = own.split_at(1);
+                        format!(
+                            "{language}_{}{}",
+                            first.to_ascii_uppercase(),
+                            others.to_ascii_lowercase()
+                        )
+                    },
+                );
+                let full = likely_subtags(&id).or_else(|| likely_subtags(&language))?;
+                full.rsplit('_').next().map(str::to_owned)
+            })?;
+        match (language.as_str(), region.as_str()) {
+            ("ja", "JP") => Some(Self::Japan),
+            ("zh", "TW") => Some(Self::Taiwan),
+            _ => None,
+        }
+    }
+}
+
+/// A day of the proleptic Gregorian calendar, or of the tabular Hijri calendar.
 struct Date {
     day: i64,
+    /// Days from 1970-01-01.
+    days: i64,
+    hijri: bool,
     month: i64,
     /// From 0 for Sunday.
     weekday: i64,
@@ -122,14 +205,66 @@ impl Date {
         let year = era * 400 + year_of_era + if month <= 2 { 1 } else { 0 };
         Self {
             day: day_of_year - (153 * shifted_month + 2) / 5 + 1,
+            days,
+            hijri: false,
             month,
             weekday: (days + 4).rem_euclid(7),
             year,
         }
     }
 
-    fn month_name(&self) -> &'static str {
-        name(&MONTHS, self.month - 1)
+    /// The day `days` from 1970-01-01 in CLDR's `islamic-tbla`, the tabular Hijri calendar: odd
+    /// months of 30 days, even months of 29, the twelfth of 30 in a leap year; `None` before its
+    /// first day.
+    fn hijri(days: i64) -> Option<Self> {
+        let since = days.checked_sub(HIJRI_FIRST).filter(|since| *since >= 0)?;
+        let leap = |year: i64| HIJRI_LEAP_YEARS.contains(&((year - 1).rem_euclid(HIJRI_CYCLE) + 1));
+        let cycle = HIJRI_CYCLE * HIJRI_YEAR + i64::try_from(HIJRI_LEAP_YEARS.len()).ok()?;
+        let mut year = since.div_euclid(cycle) * HIJRI_CYCLE + 1;
+        let mut rest = since.rem_euclid(cycle);
+        while rest >= HIJRI_YEAR + i64::from(leap(year)) {
+            rest -= HIJRI_YEAR + i64::from(leap(year));
+            year += 1;
+        }
+        let length =
+            |month: i64| 29 + i64::from(month.rem_euclid(2) == 1 || (month == 12 && leap(year)));
+        let mut month = 1;
+        while rest >= length(month) {
+            rest -= length(month);
+            month += 1;
+        }
+        Some(Self {
+            day: rest + 1,
+            days,
+            hijri: true,
+            month,
+            weekday: (days + 4).rem_euclid(7),
+            year,
+        })
+    }
+
+    /// The month's name: `mmm` when `length` is 3, `mmmm` when 4, `mmmmm` when more; the
+    /// Gregorian ones in English, the Hijri ones in CLDR's English.
+    fn month_text(&self, length: usize) -> String {
+        if self.hijri {
+            let names = usize::try_from(self.month - 1)
+                .ok()
+                .and_then(|at| HIJRI_MONTHS.get(at))
+                .copied()
+                .unwrap_or(["", "", ""]);
+            return match length {
+                3 => names[1],
+                4 => names[2],
+                _ => names[0],
+            }
+            .to_owned();
+        }
+        let full = name(&MONTHS, self.month - 1);
+        match length {
+            3 => full[..3].to_owned(),
+            4 => full.to_owned(),
+            _ => full[..1].to_owned(),
+        }
     }
 
     fn weekday_name(&self) -> &'static str {
@@ -186,8 +321,14 @@ pub const fn days_from_civil(year: i64, month: i64, day: i64) -> i64 {
 /// `value` under the date and time codes of `section` in `system` (section 18.8.31, "Dates and
 /// times"): rounded to the second or to the decimals of a second the section shows, a half
 /// upward, before it is cut into its parts. `None` when a date code finds no date.
-pub(super) fn write(section: &Section, value: &Decimal, system: DateSystem) -> Option<Shown> {
+pub(super) fn write(
+    section: &Section,
+    value: &Decimal,
+    system: DateSystem,
+    language: Option<&str>,
+) -> Option<Shown> {
     let tokens = &section.tokens;
+    let (hijri, locale) = calendar(section, language);
     let decimals = decimals(tokens);
     let per_second = 10_i128.pow(u32::try_from(decimals).ok()?);
     let per_day = SECONDS * per_second;
@@ -196,15 +337,20 @@ pub(super) fn write(section: &Section, value: &Decimal, system: DateSystem) -> O
     if !system.holds(serial_day) {
         return None;
     }
-    let dated = (0..tokens.len()).any(|at| {
-        matches!(tokens[at], Token::Date('y' | 'd' | 'e', _))
-            || (matches!(tokens[at], Token::Date('m', _)) && !is_minute(tokens, at))
-    });
-    let date = if dated {
-        Some(Date::from_days(system.civil(serial_day)?))
+    let date = if is_dated(tokens, locale.is_some()) {
+        let days = system.civil(serial_day)?;
+        Some(if hijri {
+            Date::hijri(days)?
+        } else {
+            Date::from_days(days)
+        })
     } else {
         None
     };
+    let era = locale.zip(date.as_ref()).and_then(|(place, on)| {
+        let era = place.era(on.days)?;
+        Some((place, era, on))
+    });
     let clock = clock(units.rem_euclid(per_day), per_second);
     let twelve = tokens.iter().any(|token| matches!(token, Token::AmPm(_)));
     let hour = if twelve {
@@ -219,15 +365,22 @@ pub(super) fn write(section: &Section, value: &Decimal, system: DateSystem) -> O
         if !matches!(token, Token::Digit(_)) {
             shown_decimals = None;
         }
+        if let (Some((place, of, on)), Token::Date(letter @ ('g' | 'e' | 'r'), length)) =
+            (era, token)
+        {
+            let after_g = tokens[..at]
+                .iter()
+                .any(|before| matches!(before, Token::Date('g', _)));
+            writer.text(&era_text(place, of, on, (*letter, *length), after_g));
+            continue;
+        }
         let text = match (token, &date) {
             (Token::Date('y', length), Some(on)) => year(on.year, *length >= 3),
             (Token::Date('e', length), Some(on)) => year(on.year, *length == 1),
             (Token::Date('m', length), _) if is_minute(tokens, at) => padded(clock.minute, *length),
             (Token::Date('m', length), Some(on)) => match length {
                 1 | 2 => padded(on.month.into(), *length),
-                3 => on.month_name()[..3].to_owned(),
-                4 => on.month_name().to_owned(),
-                _ => on.month_name()[..1].to_owned(),
+                _ => on.month_text(*length),
             },
             (Token::Date('d', length), Some(on)) => match length {
                 1 | 2 => padded(on.day.into(), *length),
@@ -285,6 +438,55 @@ const fn clock(into_day: i128, per_second: i128) -> Clock {
     }
 }
 
+/// Whether `section` writes the Hijri calendar, its last calendar code being `b2`, and else the
+/// locale of its `[$-<language info>]`, or of `language` when it names none (section 18.8.31).
+fn calendar(section: &Section, language: Option<&str>) -> (bool, Option<Locale>) {
+    let hijri = section
+        .tokens
+        .iter()
+        .rev()
+        .find(|token| matches!(token, Token::Calendar(_)))
+        == Some(&Token::Calendar(2));
+    let tag = section.language.map_or(language, |id| {
+        LANGUAGE_IDS
+            .iter()
+            .find(|(found, _)| *found == id)
+            .map(|(_, tag)| *tag)
+    });
+    (hijri, tag.filter(|_| !hijri).and_then(Locale::of))
+}
+
+/// What the era code `letter`, `length` times, writes of `on` in `era` of `locale` (section
+/// 18.8.31, "International Considerations"); `after_g` when a `g` code comes before it.
+fn era_text(
+    locale: Locale,
+    era: &Era,
+    on: &Date,
+    (letter, length): (char, usize),
+    after_g: bool,
+) -> String {
+    let year = if era.backward {
+        era.year - on.year + 1
+    } else {
+        on.year - era.year + 1
+    };
+    let name = era.names[length.clamp(1, 3) - 1];
+    match (locale, letter) {
+        (_, 'g') => name.to_owned(),
+        (Locale::Japan, 'e') => padded(year.into(), length),
+        (Locale::Japan, _) if length == 1 => padded(year.into(), 2),
+        (Locale::Japan, _) => format!("{}{}", era.names[2], padded(year.into(), 2)),
+        (Locale::Taiwan, _) => {
+            let shown = if after_g || !era.backward {
+                year
+            } else {
+                on.year
+            };
+            padded(shown.into(), if letter == 'e' { length } else { 1 })
+        }
+    }
+}
+
 /// The decimals of a second the section shows: the most `0` after a `.` that follows a second's
 /// code, at most three (section 18.8.31, `h:mm:ss.00`).
 fn decimals(tokens: &[Token]) -> usize {
@@ -303,6 +505,15 @@ fn decimals(tokens: &[Token]) -> usize {
 
 const fn is_code(token: &Token) -> bool {
     matches!(token, Token::Date(..) | Token::Elapsed(..))
+}
+
+/// Whether a code of `tokens` writes a part of the date; `g`, `r` and `rr` do when `eras`.
+fn is_dated(tokens: &[Token], eras: bool) -> bool {
+    (0..tokens.len()).any(|at| {
+        matches!(tokens[at], Token::Date('y' | 'd' | 'e', _))
+            || (matches!(tokens[at], Token::Date('m', _)) && !is_minute(tokens, at))
+            || (eras && matches!(tokens[at], Token::Date('g' | 'r', _)))
+    })
 }
 
 const fn is_hour(token: &Token) -> bool {

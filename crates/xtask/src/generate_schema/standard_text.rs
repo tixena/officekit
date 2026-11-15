@@ -713,6 +713,66 @@ pub fn builtin_number_formats(text: &str) -> Vec<(u32, String)> {
         .collect()
 }
 
+/// Each language id a `[$-<language info>]` of section 18.8.30's tables carries and the locale of
+/// its column, in the text's order: `[$-411]` under `ja-jp formatCode` gives `(0x411, "ja-jp")`.
+#[must_use = "this only returns the value"]
+pub fn language_ids(text: &str) -> Vec<(u16, String)> {
+    let lines = lines(text);
+    let mut columns: Vec<(usize, String)> = Vec::new();
+    let mut found = Vec::new();
+    for line in section_lines(&lines, NUMBER_FORMAT_SECTION) {
+        let words = words_at(line);
+        if words.first().is_some_and(|(_, word)| *word == "ID")
+            && words.iter().any(|(_, word)| *word == "formatCode")
+        {
+            columns = words
+                .windows(2)
+                .filter(|pair| pair[1].1 == "formatCode")
+                .map(|pair| (pair[1].0 + pair[1].1.len(), pair[0].1.to_owned()))
+                .collect();
+            continue;
+        }
+        for (at, word) in words {
+            let Some((info, _)) = word
+                .strip_prefix("[$-")
+                .and_then(|rest| rest.split_once(']'))
+            else {
+                continue;
+            };
+            let hex = !info.is_empty() && info.bytes().all(|byte| byte.is_ascii_hexdigit());
+            let id = u32::from_str_radix(info, 16)
+                .ok()
+                .filter(|_| hex)
+                .and_then(|value| u16::try_from(value & 0xFFFF).ok());
+            let column = columns.iter().find(|(end, _)| at < *end);
+            if let (Some(language), Some((_, locale))) = (id, column) {
+                found.push((language, locale.clone()));
+            }
+        }
+    }
+    found
+}
+
+/// The words of `line` between whitespace, each with the place of its first character.
+fn words_at(line: &str) -> Vec<(usize, &str)> {
+    let mut words = Vec::new();
+    let mut start: Option<(usize, usize)> = None;
+    for (at, (byte, character)) in line.char_indices().enumerate() {
+        match (character.is_whitespace(), start) {
+            (true, Some((place, from))) => {
+                words.push((place, &line[from..byte]));
+                start = None;
+            }
+            (false, None) => start = Some((at, byte)),
+            _ => {}
+        }
+    }
+    if let Some((place, from)) = start {
+        words.push((place, &line[from..]));
+    }
+    words
+}
+
 /// Each colour section 18.8.27 of Part 1 lists as an index and eight hexadecimal digits, in the
 /// text's order: the line `indexed="10" 00FF0000` gives `(10, 0x00FF_0000)`.
 #[must_use = "this only returns the value"]

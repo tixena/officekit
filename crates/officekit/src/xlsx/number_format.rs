@@ -149,6 +149,19 @@ impl NumberFormat {
     /// when it is no number, no section serves it, or a date or a time code cannot write it.
     #[must_use = "this only returns the value"]
     pub fn number(&self, number: &str, dates: DateSystem) -> Option<Shown> {
+        self.number_in(number, dates, None)
+    }
+
+    /// `number` as [`number`](Self::number) writes it, a section that names no language in its
+    /// `[$-<language info>]` taking `language`, a BCP 47 tag, as its locale (section 18.8.31,
+    /// "International Considerations").
+    #[must_use = "this only returns the value"]
+    pub fn number_in(
+        &self,
+        number: &str,
+        dates: DateSystem,
+        language: Option<&str>,
+    ) -> Option<Shown> {
         let value = Decimal::parse(number)?;
         let Some(last) = self.numbers.len().checked_sub(1) else {
             let text = general::unsigned(&value.abs(), general::MOST)?;
@@ -169,7 +182,7 @@ impl NumberFormat {
                     .as_ref()
                     .is_none_or(|condition| condition.holds(&value))
             })?;
-            return written(section, &value, true, dates);
+            return written(section, &value, true, dates, language);
         }
         let (index, signed) = if value.is_negative() && last >= 1 {
             (1, false)
@@ -178,7 +191,7 @@ impl NumberFormat {
         } else {
             (0, true)
         };
-        written(&self.numbers[index], &value, signed, dates)
+        written(&self.numbers[index], &value, signed, dates, language)
     }
 
     /// Read `code`: up to four sections at each `;` outside quotation marks and brackets and not
@@ -217,6 +230,8 @@ struct Section {
     color: Option<FormatColor>,
     condition: Option<Condition>,
     dates: bool,
+    /// The language id its `[$-<language info>]` names (section 18.8.31).
+    language: Option<u16>,
     /// The power of ten a number is multiplied by: 2 for each `%`, -3 for each `,` that scales.
     scale: i64,
     thousands: bool,
@@ -258,14 +273,20 @@ impl Shown {
 }
 
 /// `value` under `section`, signed as [`write::number`] signs it; a section of dates and times
-/// writes `value` itself, or its magnitude when it is not `signed`.
-fn written(section: &Section, value: &Decimal, signed: bool, dates: DateSystem) -> Option<Shown> {
+/// writes `value` itself, or its magnitude when it is not `signed`, in `language`.
+fn written(
+    section: &Section,
+    value: &Decimal,
+    signed: bool,
+    dates: DateSystem,
+    language: Option<&str>,
+) -> Option<Shown> {
     if !section.dates {
         return write::number(section, value, signed);
     }
     if signed {
-        date::write(section, value, dates)
+        date::write(section, value, dates, language)
     } else {
-        date::write(section, &value.abs(), dates)
+        date::write(section, &value.abs(), dates, language)
     }
 }

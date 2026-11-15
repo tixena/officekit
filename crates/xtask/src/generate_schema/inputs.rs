@@ -17,6 +17,8 @@ mod tests;
 pub struct Inputs {
     /// The `SHA256SUMS` text.
     pub checksums: String,
+    /// CLDR's calendar keywords, `bcp47/calendar.xml`.
+    pub cldr_calendars: PathBuf,
     /// CLDR's `LICENSE`.
     pub cldr_license: PathBuf,
     /// CLDR's `likelySubtags.xml`.
@@ -113,6 +115,7 @@ impl Inputs {
         let cldr = root.join("cldr").join(cldr::VERSION);
         let cldr_license = file(system, cldr.join("LICENSE"))?;
         let common = cldr.join("common");
+        let cldr_calendars = file(system, common.join("bcp47").join("calendar.xml"))?;
         let cldr_main = files(system, &common.join("main"), "xml")?;
         let cldr_rbnf = files(system, &common.join("rbnf"), "xml")?;
         let supplemental = common.join("supplemental");
@@ -127,6 +130,7 @@ impl Inputs {
 
         Ok(Self {
             checksums,
+            cldr_calendars,
             cldr_license,
             cldr_likely_subtags,
             cldr_main,

@@ -92,15 +92,19 @@ pub(super) enum Placeholder {
 }
 
 impl Section {
-    /// Read the text of a bracket: a colour, a condition, a currency's text, or an elapsed count.
+    /// Read the text of a bracket: a colour, a condition, a currency's text and language info, or
+    /// an elapsed count.
     fn bracket(&mut self, text: &str) {
         let lower = text.to_ascii_lowercase();
         if let Some(currency) = text.strip_prefix('$') {
-            let shown = currency
+            let (shown, info) = currency
                 .split_once('-')
-                .map_or(currency, |(before, _)| before);
+                .map_or((currency, None), |(before, after)| (before, Some(after)));
             if !shown.is_empty() {
                 self.tokens.push(Token::Literal(shown.to_owned()));
+            }
+            if let Some(id) = info.and_then(language_id) {
+                self.language.get_or_insert(id);
             }
             return;
         }
@@ -294,6 +298,16 @@ fn color(lower: &str) -> Option<FormatColor> {
         .ok()
         .filter(|index| (1..=56).contains(index))
         .map(FormatColor::Palette)
+}
+
+/// The language id of a bracket's language info, its bytes 0 and 1 (section 18.8.31,
+/// `[$USD-409]`); `None` when the info is not one to eight hexadecimal digits.
+fn language_id(info: &str) -> Option<u16> {
+    if info.is_empty() || !info.bytes().all(|byte| byte.is_ascii_hexdigit()) {
+        return None;
+    }
+    let value = u32::from_str_radix(info, 16).ok()?;
+    u16::try_from(value & 0xFFFF).ok()
 }
 
 /// The sections of `code` for numbers, and its section for text when it has one (section

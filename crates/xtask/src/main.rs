@@ -28,8 +28,8 @@ use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
 use xtask::generate_schema::emit::{
-    builtin_number_formats, classes, digits, geometry, indexed_colors, likely_subtags, markup,
-    namespaces, paper_sizes, parts, preset_colors, rule_based, semantic, special_casing,
+    builtin_number_formats, calendars, classes, digits, geometry, indexed_colors, likely_subtags,
+    markup, namespaces, paper_sizes, parts, preset_colors, rule_based, semantic, special_casing,
     validation,
 };
 use xtask::generate_schema::inputs::Inputs;
@@ -398,6 +398,12 @@ fn tables(out: &mut dyn Write, system: &RealSystem, inputs: &Inputs) -> Result<(
         out,
         "wrote {}: {casings} case mappings of a language",
         special_casing::PATH
+    )?;
+    let (eras, ids) = calendars::emit(system, inputs)?;
+    writeln!(
+        out,
+        "wrote {}: {eras} eras, {ids} language ids",
+        calendars::PATH
     )?;
     Ok(())
 }

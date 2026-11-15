@@ -1,7 +1,7 @@
 use super::{
-    Paper, PaperUnit, builtin_number_formats, element_headings, indexed_colors, paper_sizes,
-    part_definitions, part_summary, preset_colors, relationship_sections, simple_type_headings,
-    transitional_parts, transitional_relationships,
+    Paper, PaperUnit, builtin_number_formats, element_headings, indexed_colors, language_ids,
+    paper_sizes, part_definitions, part_summary, preset_colors, relationship_sections,
+    simple_type_headings, transitional_parts, transitional_relationships,
 };
 
 #[test]
@@ -379,6 +379,33 @@ fn the_builtin_number_formats_are_the_list_for_all_languages_across_a_page_break
     assert_eq!(
         builtin_number_formats(text),
         expected.map(|(id, code)| (id, code.to_owned()))
+    );
+}
+
+#[test]
+fn each_language_id_of_the_tables_goes_to_the_locale_of_its_column() {
+    let text = concat!(
+        "18.8.30            numFmt (Number Format)\n",
+        "        27    [$-409]m/d                           yyyy\n",
+        "zh-tw and zh-cn\n",
+        "        ID             zh-tw formatCode                   zh-cn formatCode\n",
+        "        27    [$-404]e/m/d                         yyyy\"\u{5e74}\"m\"\u{6708}\"\n",
+        "        30    m/d/yy                               m-d-yy\n",
+        "ja-jp and ko-kr\n",
+        "        ID             ja-jp formatCode                  ko-kr formatCode\n",
+        "        28    [$-411]ggge\"\u{5e74}\"m\"\u{6708}\"            [$-412]mm-dd\n",
+        "        29    [$-XYZ]g                              mm-dd\n",
+        "18.8.31            numFmts (Number Formats)\n",
+        "        ID             en-us formatCode\n",
+        "        27    [$-409]m/d\n",
+    );
+    assert_eq!(
+        language_ids(text),
+        [
+            (0x404, "zh-tw".to_owned()),
+            (0x411, "ja-jp".to_owned()),
+            (0x412, "ko-kr".to_owned()),
+        ]
     );
 }
 

@@ -1,6 +1,7 @@
 //! The files `generate-schema` writes.
 
 pub mod builtin_number_formats;
+pub mod calendars;
 pub mod classes;
 pub mod digits;
 pub mod geometry;
