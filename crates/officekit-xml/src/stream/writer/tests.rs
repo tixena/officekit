@@ -1,5 +1,6 @@
 use super::PartWriter;
-use crate::element::{NamespaceDeclaration, Node};
+use crate::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
+use crate::name::QName;
 use crate::parse::parse;
 use crate::stream::reader::PartReader;
 use crate::write::{Layout, WriteOptions};
@@ -181,4 +182,28 @@ fn text_before_and_after_the_root_is_written_as_read() {
     };
     assert_eq!(written(Layout::Compact, part), "\r\n<a/>\r\n");
     assert_eq!(written(Layout::Pretty, part), "\r\n<a/>\r\n");
+}
+
+#[test]
+fn empty_text_is_no_content_through_both_writers() {
+    let mut element = Element::new(QName::unprefixed("a", ""));
+    element.attributes.push(Attribute::new(
+        QName::prefixed("xml", "space", "http://www.w3.org/XML/1998/namespace"),
+        "preserve".to_owned(),
+    ));
+    element.children.push(Node::Text(String::new()));
+    let document = Document::new("xml version=\"1.0\"", element);
+    for layout in [Layout::Compact, Layout::Pretty] {
+        let streamed = written(layout, |out| {
+            out.start("a", &[], &[("xml:space", "preserve")]).unwrap();
+            out.text("").unwrap();
+            out.end("a").unwrap();
+        });
+        assert_eq!(streamed, "<a xml:space=\"preserve\"/>");
+        let tree = document.to_xml(WriteOptions::new(layout, false));
+        assert_eq!(
+            String::from_utf8(tree).unwrap(),
+            format!("<?xml version=\"1.0\"?>\r\n{streamed}")
+        );
+    }
 }

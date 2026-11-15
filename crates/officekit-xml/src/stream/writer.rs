@@ -218,7 +218,7 @@ impl<'sink> PartWriter<'sink> {
 
     /// Text, escaped as in the generic tree's writer. With no element open,
     /// before or after the root, it is written as it is, as the generic
-    /// tree's writer writes the prolog and the epilog.
+    /// tree's writer writes the prolog and the epilog. Empty text is no content.
     ///
     /// # Errors
     ///
@@ -228,6 +228,9 @@ impl<'sink> PartWriter<'sink> {
             return self
                 .writer
                 .write_event(Event::Text(BytesText::from_escaped(value)));
+        }
+        if value.is_empty() {
+            return Ok(());
         }
         if self.layout == Layout::Compact && !self.preserved() && is_whitespace(value) {
             if self.pending.is_some() {

@@ -18,11 +18,17 @@ use officekit_markup::chart::{
     ChartExtensibility, Extension, NumericPoint, ScatterChartSeries, ScatterCharts, XValues,
 };
 #[cfg(feature = "transitional")]
+use officekit_markup::drawing::AnyElementContent;
+#[cfg(feature = "transitional")]
 use officekit_markup::spreadsheet::{
     Cell, CellType, CellValue, RichTextInline, RichTextRun, Row, SharedStringTable,
     SheetInformation, StringItem, Text as SheetText, Workbook, Worksheet,
 };
 use officekit_xml::element::Document as XmlDocument;
+#[cfg(feature = "transitional")]
+use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
+#[cfg(feature = "transitional")]
+use officekit_xml::name::{OfficeVersion, QName};
 use officekit_xml::packaging::package::DECLARATION;
 #[cfg(feature = "transitional")]
 use officekit_xml::packaging::package::OpenOptions;
@@ -33,6 +39,10 @@ use officekit_xml::write::WriteOptions as PartWriteOptions;
 use officekit_xml::write::{Scope, WriteOptions};
 
 use super::{ChartRanges, Docx};
+#[cfg(feature = "transitional")]
+use crate::validation::error::ValidationError;
+#[cfg(feature = "transitional")]
+use crate::validation::validator::Validator;
 
 const SPREADSHEET: &str = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
@@ -487,6 +497,108 @@ fn first_values(space: &ChartSpace) -> Option<Cached> {
     series_read(space).into_iter().next()?.values
 }
 
+/// The `c16:uniqueId` extension Word writes into a chart's data references.
+#[cfg(feature = "transitional")]
+fn unique_id_extension() -> Extension {
+    const C16: &str = "http://schemas.microsoft.com/office/drawing/2014/chart";
+    let mut unique_id = Element::new(QName::prefixed("c16", "uniqueId", C16));
+    unique_id
+        .namespace_declarations
+        .push(NamespaceDeclaration::new("c16".to_owned(), C16.to_owned()));
+    unique_id.attributes.push(Attribute::new(
+        QName::unprefixed("val", ""),
+        "{00000000-0001-0000-0000-000000000000}".to_owned(),
+    ));
+    let mut extension = Extension::default();
+    extension.uri = Some("{C3380CC4-5D6E-409C-BE32-E72D297353CC}".to_owned());
+    extension.content = Box::new(AnyElementContent::Other(Node::Element(unique_id)));
+    extension
+}
+
+/// A document whose main part relates a chart holding `extension` in its values' extension list.
+#[cfg(feature = "transitional")]
+fn chart_with_extension(extension: Extension) -> Docx {
+    let mut extended = ChartExtensibility::default();
+    extended.extension = vec![extension];
+    let mut values = number_reference("Sheet1!$B$2:$B$3", None);
+    values.chart_extensibility = Some(Box::new(extended));
+    let mut docx = document(&chart_of(vec![series_of_values(values)]), None);
+    let main = docx.main_document_part().clone();
+    docx.package_mut()
+        .relate(
+            Some(&main),
+            &name("/word/charts/chart1.xml"),
+            RelationshipType::CHART.transitional,
+        )
+        .unwrap();
+    docx
+}
+
+/// What the validator reports on the `c:ext` of `docx`'s chart, one line each.
+#[cfg(feature = "transitional")]
+fn reported_on_ext(docx: &Docx) -> Vec<String> {
+    Validator::new(OfficeVersion::Microsoft365)
+        .validate(docx.package())
+        .iter()
+        .map(ValidationError::line)
+        .filter(|line| line.contains("/c:ext[1]:"))
+        .collect()
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn a_default_extension_writes_an_empty_ext_and_no_drawing() {
+    let text = chart_text(&chart_with_extension(Extension::default()));
+    assert!(
+        text.contains("</c:f><c:extLst><c:ext/></c:extLst></c:numRef>"),
+        "{text}"
+    );
+    assert!(!text.contains("wp:"), "{text}");
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn the_validator_reports_the_child_a_default_extension_lacks() {
+    let mut extension = Extension::default();
+    extension.uri = Some("x".to_owned());
+    assert_eq!(
+        reported_on_ext(&chart_with_extension(extension)),
+        [
+            "/word/charts/chart1.xml /c:chartSpace[1]/c:chart[1]/c:plotArea[1]/c:barChart[1]/c:ser[1]/c:val[1]/c:numRef[1]/c:extLst[1]/c:ext[1]: schema MissingChild: the element ends before a child it requires, expected c15:formulaRef, c15:fullRef, c15:levelRef or ##any"
+        ]
+    );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn the_validator_reports_nothing_on_a_unique_id_extension() {
+    assert_eq!(
+        reported_on_ext(&chart_with_extension(unique_id_extension())),
+        Vec::<String>::new()
+    );
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn an_extension_read_without_its_child_is_written_back_as_it_was() {
+    let mut extension = Extension::default();
+    extension.uri = Some("x".to_owned());
+    let docx = chart_with_extension(extension);
+    let text = chart_text(&docx);
+    assert!(
+        text.contains("<c:extLst><c:ext uri=\"x\"/></c:extLst>"),
+        "{text}"
+    );
+    let part = name("/word/charts/chart1.xml");
+    let read = chart::load(docx.package(), &part, OpenOptions::default()).unwrap();
+    let again = XmlDocument::new(
+        DECLARATION,
+        chart_write::chart_space(&read, &mut Scope::default()),
+    )
+    .to_xml(WriteOptions::default());
+    assert_eq!(String::from_utf8(again).unwrap(), text);
+}
+
 #[cfg(feature = "transitional")]
 #[test]
 fn two_rows_written_give_the_ranges_and_caches_of_the_last_row_holding_a_value() {
@@ -637,7 +749,7 @@ fn a_missing_cache_is_created_after_the_formula_and_points_go_before_the_extensi
     let mut values = number_reference("Sheet1!$B$2:$B$3", None);
     values.chart_extensibility = Some(Box::default());
     let mut extended = ChartExtensibility::default();
-    extended.extension = vec![Extension::default()];
+    extended.extension = vec![unique_id_extension()];
     let mut cache = string_cache("9", &[]);
     cache.chart_extensibility = Some(Box::new(extended));
     let mut categories = StringReference::default();
@@ -651,8 +763,19 @@ fn a_missing_cache_is_created_after_the_formula_and_points_go_before_the_extensi
     docx.refresh_chart_caches(&name("/word/charts/chart1.xml"), ChartRanges::AsWritten)
         .unwrap();
     let text = chart_text(&docx);
-    assert!(text.contains("<c:f>Sheet1!$B$2:$B$3</c:f><c:numCache><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>12</c:v></c:pt><c:pt idx=\"1\"><c:v>18</c:v></c:pt></c:numCache><c:extLst/>"), "{text}");
-    assert!(text.contains("<c:strCache><c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>Week 2</c:v></c:pt><c:extLst><c:ext>"), "{text}");
+    assert!(
+        text.contains(concat!(
+            "<c:cat><c:strRef><c:f>Sheet1!$A$2:$A$3</c:f><c:strCache><c:ptCount val=\"2\"/>",
+            "<c:pt idx=\"0\"><c:v>Week 1</c:v></c:pt><c:pt idx=\"1\"><c:v>Week 2</c:v></c:pt>",
+            "<c:extLst><c:ext uri=\"{C3380CC4-5D6E-409C-BE32-E72D297353CC}\">",
+            "<c16:uniqueId xmlns:c16=\"http://schemas.microsoft.com/office/drawing/2014/chart\" ",
+            "val=\"{00000000-0001-0000-0000-000000000000}\"/></c:ext></c:extLst></c:strCache>",
+            "</c:strRef></c:cat><c:val><c:numRef><c:f>Sheet1!$B$2:$B$3</c:f><c:numCache>",
+            "<c:ptCount val=\"2\"/><c:pt idx=\"0\"><c:v>12</c:v></c:pt>",
+            "<c:pt idx=\"1\"><c:v>18</c:v></c:pt></c:numCache><c:extLst/></c:numRef></c:val>",
+        )),
+        "{text}"
+    );
 }
 
 #[cfg(feature = "transitional")]
@@ -715,7 +838,7 @@ fn an_embedded_document_that_is_not_a_workbook_is_a_read_error() {
 fn a_text_category_range_becomes_a_text_reference_with_a_text_cache() {
     let mut categories = number_reference("Sheet1!$A$2:$A$3", Some(empty_cache()));
     let mut extended = ChartExtensibility::default();
-    extended.extension = vec![Extension::default()];
+    extended.extension = vec![unique_id_extension()];
     categories.chart_extensibility = Some(Box::new(extended));
     let mut bar = BarChartSeries::default();
     bar.category_axis_data_cat = Some(Box::new(categories_of(categories)));

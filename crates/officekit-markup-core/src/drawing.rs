@@ -18005,9 +18005,7 @@ impl<X: UserData> AnyElementContentWith<X> {
 
 impl<X: UserData> Default for AnyElementContentWith<X> {
     fn default() -> Self {
-        Self::AnchorForFloatingDrawingMLObject(
-            super::wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith::default(),
-        )
+        Self::Other(Node::Text(String::new()))
     }
 }
 

@@ -8527,7 +8527,13 @@ const PARTICLES_215: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_293: &[Particle] = &[
+const ITEMS_293: &[Particle] = &[Particle::Any {
+    max: 1,
+    min: 1,
+    namespace: AnyNamespace::Any,
+}];
+
+const ITEMS_294: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8535,7 +8541,7 @@ const ITEMS_293: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -8544,7 +8550,7 @@ const PARTICLES_216: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -8553,7 +8559,7 @@ const PARTICLES_216: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_293,
+            items: ITEMS_294,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -8561,7 +8567,7 @@ const PARTICLES_216: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_294: &[Particle] = &[Particle::Element {
+const ITEMS_295: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 843,
@@ -8570,14 +8576,14 @@ const ITEMS_294: &[Particle] = &[Particle::Element {
 const PARTICLES_217: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_294,
+        items: ITEMS_295,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_295: &[Particle] = &[
+const ITEMS_296: &[Particle] = &[
     Particle::Composite {
         items: ITEMS_291,
         kind: CompositeKind::Group,
@@ -8599,14 +8605,14 @@ const ITEMS_295: &[Particle] = &[
 const PARTICLES_218: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_295,
+        items: ITEMS_296,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_296: &[Particle] = &[Particle::Element {
+const ITEMS_297: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 846,
@@ -8615,14 +8621,14 @@ const ITEMS_296: &[Particle] = &[Particle::Element {
 const PARTICLES_219: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_296,
+        items: ITEMS_297,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_297: &[Particle] = &[
+const ITEMS_298: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8645,16 +8651,16 @@ const ITEMS_297: &[Particle] = &[
     },
 ];
 
-const ITEMS_298: &[Particle] = &[Particle::Composite {
-    items: ITEMS_297,
+const ITEMS_299: &[Particle] = &[Particle::Composite {
+    items: ITEMS_298,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_299: &[Particle] = &[
+const ITEMS_300: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -8704,14 +8710,14 @@ const ITEMS_299: &[Particle] = &[
 const PARTICLES_220: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_299,
+        items: ITEMS_300,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_300: &[Particle] = &[
+const ITEMS_301: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8734,12 +8740,12 @@ const ITEMS_300: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
 
-const ITEMS_301: &[Particle] = &[
+const ITEMS_302: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8777,7 +8783,7 @@ const ITEMS_301: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -8786,7 +8792,7 @@ const PARTICLES_221: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -8795,7 +8801,7 @@ const PARTICLES_221: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0010),
         Some(Particle::Composite {
-            items: ITEMS_300,
+            items: ITEMS_301,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -8804,7 +8810,7 @@ const PARTICLES_221: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1100),
         Some(Particle::Composite {
-            items: ITEMS_301,
+            items: ITEMS_302,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -8812,7 +8818,7 @@ const PARTICLES_221: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_302: &[Particle] = &[Particle::Element {
+const ITEMS_303: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 850,
@@ -8821,14 +8827,14 @@ const ITEMS_302: &[Particle] = &[Particle::Element {
 const PARTICLES_222: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_302,
+        items: ITEMS_303,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_303: &[Particle] = &[
+const ITEMS_304: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8856,8 +8862,8 @@ const ITEMS_303: &[Particle] = &[
     },
 ];
 
-const ITEMS_304: &[Particle] = &[Particle::Composite {
-    items: ITEMS_303,
+const ITEMS_305: &[Particle] = &[Particle::Composite {
+    items: ITEMS_304,
     kind: CompositeKind::Choice,
     max: 1,
     min: 1,
@@ -8866,14 +8872,14 @@ const ITEMS_304: &[Particle] = &[Particle::Composite {
 const PARTICLES_223: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_304,
+        items: ITEMS_305,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_305: &[Particle] = &[
+const ITEMS_306: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8889,14 +8895,14 @@ const ITEMS_305: &[Particle] = &[
 const PARTICLES_224: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_305,
+        items: ITEMS_306,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_306: &[Particle] = &[Particle::Element {
+const ITEMS_307: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 860,
@@ -8905,14 +8911,14 @@ const ITEMS_306: &[Particle] = &[Particle::Element {
 const PARTICLES_225: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_306,
+        items: ITEMS_307,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_307: &[Particle] = &[
+const ITEMS_308: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8940,16 +8946,16 @@ const ITEMS_307: &[Particle] = &[
     },
 ];
 
-const ITEMS_308: &[Particle] = &[Particle::Composite {
-    items: ITEMS_307,
+const ITEMS_309: &[Particle] = &[Particle::Composite {
+    items: ITEMS_308,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_309: &[Particle] = &[
+const ITEMS_310: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_308,
+        items: ITEMS_309,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -8984,14 +8990,14 @@ const ITEMS_309: &[Particle] = &[
 const PARTICLES_226: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_309,
+        items: ITEMS_310,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_310: &[Particle] = &[
+const ITEMS_311: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -8999,7 +9005,7 @@ const ITEMS_310: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -9008,7 +9014,7 @@ const PARTICLES_227: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9017,7 +9023,7 @@ const PARTICLES_227: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_310,
+            items: ITEMS_311,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9025,7 +9031,7 @@ const PARTICLES_227: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_311: &[Particle] = &[Particle::Element {
+const ITEMS_312: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 863,
@@ -9034,16 +9040,16 @@ const ITEMS_311: &[Particle] = &[Particle::Element {
 const PARTICLES_228: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_311,
+        items: ITEMS_312,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_312: &[Particle] = &[
+const ITEMS_313: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_308,
+        items: ITEMS_309,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -9078,14 +9084,14 @@ const ITEMS_312: &[Particle] = &[
 const PARTICLES_229: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_312,
+        items: ITEMS_313,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_313: &[Particle] = &[Particle::Element {
+const ITEMS_314: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 866,
@@ -9094,16 +9100,16 @@ const ITEMS_313: &[Particle] = &[Particle::Element {
 const PARTICLES_230: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_313,
+        items: ITEMS_314,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_314: &[Particle] = &[
+const ITEMS_315: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -9163,14 +9169,14 @@ const ITEMS_314: &[Particle] = &[
 const PARTICLES_231: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_314,
+        items: ITEMS_315,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_315: &[Particle] = &[
+const ITEMS_316: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9178,12 +9184,12 @@ const ITEMS_315: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
 
-const ITEMS_316: &[Particle] = &[
+const ITEMS_317: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9211,12 +9217,12 @@ const ITEMS_316: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
 
-const ITEMS_317: &[Particle] = &[
+const ITEMS_318: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9259,7 +9265,7 @@ const ITEMS_317: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -9268,7 +9274,7 @@ const PARTICLES_232: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_315,
+            items: ITEMS_316,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9277,7 +9283,7 @@ const PARTICLES_232: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0010),
         Some(Particle::Composite {
-            items: ITEMS_316,
+            items: ITEMS_317,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9286,7 +9292,7 @@ const PARTICLES_232: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1100),
         Some(Particle::Composite {
-            items: ITEMS_317,
+            items: ITEMS_318,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9294,7 +9300,7 @@ const PARTICLES_232: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_318: &[Particle] = &[Particle::Element {
+const ITEMS_319: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 872,
@@ -9303,14 +9309,14 @@ const ITEMS_318: &[Particle] = &[Particle::Element {
 const PARTICLES_233: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_318,
+        items: ITEMS_319,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_319: &[Particle] = &[
+const ITEMS_320: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -9361,14 +9367,14 @@ const ITEMS_319: &[Particle] = &[
 const PARTICLES_234: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_319,
+        items: ITEMS_320,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_320: &[Particle] = &[
+const ITEMS_321: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9376,7 +9382,7 @@ const ITEMS_320: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -9385,7 +9391,7 @@ const PARTICLES_235: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9394,7 +9400,7 @@ const PARTICLES_235: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_320,
+            items: ITEMS_321,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9402,7 +9408,7 @@ const PARTICLES_235: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_321: &[Particle] = &[Particle::Element {
+const ITEMS_322: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 924,
@@ -9411,16 +9417,16 @@ const ITEMS_321: &[Particle] = &[Particle::Element {
 const PARTICLES_236: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_321,
+        items: ITEMS_322,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_322: &[Particle] = &[
+const ITEMS_323: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -9485,14 +9491,14 @@ const ITEMS_322: &[Particle] = &[
 const PARTICLES_237: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_322,
+        items: ITEMS_323,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_323: &[Particle] = &[
+const ITEMS_324: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9515,12 +9521,12 @@ const ITEMS_323: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
 
-const ITEMS_324: &[Particle] = &[
+const ITEMS_325: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9558,7 +9564,7 @@ const ITEMS_324: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -9567,7 +9573,7 @@ const PARTICLES_238: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_315,
+            items: ITEMS_316,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9576,7 +9582,7 @@ const PARTICLES_238: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0010),
         Some(Particle::Composite {
-            items: ITEMS_323,
+            items: ITEMS_324,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9585,7 +9591,7 @@ const PARTICLES_238: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1100),
         Some(Particle::Composite {
-            items: ITEMS_324,
+            items: ITEMS_325,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9593,7 +9599,7 @@ const PARTICLES_238: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_325: &[Particle] = &[Particle::Element {
+const ITEMS_326: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 929,
@@ -9602,14 +9608,14 @@ const ITEMS_325: &[Particle] = &[Particle::Element {
 const PARTICLES_239: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_325,
+        items: ITEMS_326,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_326: &[Particle] = &[
+const ITEMS_327: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9622,7 +9628,7 @@ const ITEMS_326: &[Particle] = &[
     },
 ];
 
-const ITEMS_327: &[Particle] = &[
+const ITEMS_328: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9694,23 +9700,23 @@ const ITEMS_327: &[Particle] = &[
         type_id: 1165,
     },
     Particle::Composite {
-        items: ITEMS_326,
+        items: ITEMS_327,
         kind: CompositeKind::Choice,
         max: 1,
         min: 0,
     },
 ];
 
-const ITEMS_328: &[Particle] = &[Particle::Composite {
-    items: ITEMS_327,
+const ITEMS_329: &[Particle] = &[Particle::Composite {
+    items: ITEMS_328,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_329: &[Particle] = &[
+const ITEMS_330: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_328,
+        items: ITEMS_329,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -9755,14 +9761,14 @@ const ITEMS_329: &[Particle] = &[
 const PARTICLES_240: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_329,
+        items: ITEMS_330,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_330: &[Particle] = &[
+const ITEMS_331: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9770,7 +9776,7 @@ const ITEMS_330: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -9779,7 +9785,7 @@ const PARTICLES_241: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9788,7 +9794,7 @@ const PARTICLES_241: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_330,
+            items: ITEMS_331,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -9796,7 +9802,7 @@ const PARTICLES_241: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_331: &[Particle] = &[Particle::Element {
+const ITEMS_332: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 933,
@@ -9805,14 +9811,14 @@ const ITEMS_331: &[Particle] = &[Particle::Element {
 const PARTICLES_242: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_331,
+        items: ITEMS_332,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_332: &[Particle] = &[
+const ITEMS_333: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -9883,14 +9889,14 @@ const ITEMS_332: &[Particle] = &[
 const PARTICLES_243: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_332,
+        items: ITEMS_333,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_333: &[Particle] = &[Particle::Element {
+const ITEMS_334: &[Particle] = &[Particle::Element {
     max: 1,
     min: 1,
     type_id: 841,
@@ -9899,36 +9905,20 @@ const ITEMS_333: &[Particle] = &[Particle::Element {
 const PARTICLES_244: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_333,
+        items: ITEMS_334,
         kind: CompositeKind::Choice,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_334: &[Particle] = &[Particle::Element {
+const ITEMS_335: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 936,
 }];
 
 const PARTICLES_245: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_334,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_335: &[Particle] = &[Particle::Element {
-    max: 1,
-    min: 0,
-    type_id: 113,
-}];
-
-const PARTICLES_246: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_335,
@@ -9938,7 +9928,23 @@ const PARTICLES_246: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_336: &[Particle] = &[
+const ITEMS_336: &[Particle] = &[Particle::Element {
+    max: 1,
+    min: 0,
+    type_id: 113,
+}];
+
+const PARTICLES_246: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_336,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_337: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -9951,7 +9957,7 @@ const ITEMS_336: &[Particle] = &[
     },
 ];
 
-const ITEMS_337: &[Particle] = &[
+const ITEMS_338: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -9968,7 +9974,7 @@ const ITEMS_337: &[Particle] = &[
         type_id: 904,
     },
     Particle::Composite {
-        items: ITEMS_336,
+        items: ITEMS_337,
         kind: CompositeKind::Choice,
         max: 1,
         min: 0,
@@ -10028,14 +10034,14 @@ const ITEMS_337: &[Particle] = &[
 const PARTICLES_247: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_337,
+        items: ITEMS_338,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_338: &[Particle] = &[
+const ITEMS_339: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -10048,12 +10054,12 @@ const ITEMS_338: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
 
-const ITEMS_339: &[Particle] = &[
+const ITEMS_340: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -10071,7 +10077,7 @@ const ITEMS_339: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -10080,7 +10086,7 @@ const PARTICLES_248: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_338,
+            items: ITEMS_339,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -10089,7 +10095,7 @@ const PARTICLES_248: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_339,
+            items: ITEMS_340,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -10097,29 +10103,13 @@ const PARTICLES_248: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_340: &[Particle] = &[Particle::Element {
+const ITEMS_341: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 947,
 }];
 
 const PARTICLES_249: &[(Versions, Option<Particle>)] = &[(
-    Versions(0b11_1111),
-    Some(Particle::Composite {
-        items: ITEMS_340,
-        kind: CompositeKind::Sequence,
-        max: 1,
-        min: 1,
-    }),
-)];
-
-const ITEMS_341: &[Particle] = &[Particle::Element {
-    max: 0,
-    min: 0,
-    type_id: 1171,
-}];
-
-const PARTICLES_250: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
         items: ITEMS_341,
@@ -10129,7 +10119,23 @@ const PARTICLES_250: &[(Versions, Option<Particle>)] = &[(
     }),
 )];
 
-const ITEMS_342: &[Particle] = &[
+const ITEMS_342: &[Particle] = &[Particle::Element {
+    max: 0,
+    min: 0,
+    type_id: 1171,
+}];
+
+const PARTICLES_250: &[(Versions, Option<Particle>)] = &[(
+    Versions(0b11_1111),
+    Some(Particle::Composite {
+        items: ITEMS_342,
+        kind: CompositeKind::Sequence,
+        max: 1,
+        min: 1,
+    }),
+)];
+
+const ITEMS_343: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -10187,14 +10193,14 @@ const ITEMS_342: &[Particle] = &[
     },
 ];
 
-const ITEMS_343: &[Particle] = &[Particle::Composite {
-    items: ITEMS_342,
+const ITEMS_344: &[Particle] = &[Particle::Composite {
+    items: ITEMS_343,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_344: &[Particle] = &[
+const ITEMS_345: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -10206,42 +10212,42 @@ const ITEMS_344: &[Particle] = &[
         type_id: 1160,
     },
     Particle::Composite {
-        items: ITEMS_343,
+        items: ITEMS_344,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
     },
 ];
 
-const ITEMS_345: &[Particle] = &[Particle::Composite {
-    items: ITEMS_344,
+const ITEMS_346: &[Particle] = &[Particle::Composite {
+    items: ITEMS_345,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_346: &[Particle] = &[
+const ITEMS_347: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
         type_id: 893,
     },
     Particle::Composite {
-        items: ITEMS_345,
+        items: ITEMS_346,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
     },
 ];
 
-const ITEMS_347: &[Particle] = &[
+const ITEMS_348: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
         type_id: 1168,
     },
     Particle::Composite {
-        items: ITEMS_346,
+        items: ITEMS_347,
         kind: CompositeKind::Choice,
         max: 1,
         min: 1,
@@ -10256,14 +10262,14 @@ const ITEMS_347: &[Particle] = &[
 const PARTICLES_251: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_347,
+        items: ITEMS_348,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_348: &[Particle] = &[
+const ITEMS_349: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -10291,12 +10297,12 @@ const ITEMS_348: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
 
-const ITEMS_349: &[Particle] = &[
+const ITEMS_350: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -10329,7 +10335,7 @@ const ITEMS_349: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -10338,7 +10344,7 @@ const PARTICLES_252: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -10347,7 +10353,7 @@ const PARTICLES_252: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0010),
         Some(Particle::Composite {
-            items: ITEMS_348,
+            items: ITEMS_349,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -10356,7 +10362,7 @@ const PARTICLES_252: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1100),
         Some(Particle::Composite {
-            items: ITEMS_349,
+            items: ITEMS_350,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -10364,7 +10370,7 @@ const PARTICLES_252: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_350: &[Particle] = &[Particle::Element {
+const ITEMS_351: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 955,
@@ -10373,16 +10379,16 @@ const ITEMS_350: &[Particle] = &[Particle::Element {
 const PARTICLES_253: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_350,
+        items: ITEMS_351,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_351: &[Particle] = &[
+const ITEMS_352: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_343,
+        items: ITEMS_344,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -10399,35 +10405,35 @@ const ITEMS_351: &[Particle] = &[
     },
 ];
 
-const ITEMS_352: &[Particle] = &[Particle::Composite {
-    items: ITEMS_351,
+const ITEMS_353: &[Particle] = &[Particle::Composite {
+    items: ITEMS_352,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_353: &[Particle] = &[
+const ITEMS_354: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
         type_id: 893,
     },
     Particle::Composite {
-        items: ITEMS_352,
+        items: ITEMS_353,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
     },
 ];
 
-const ITEMS_354: &[Particle] = &[
+const ITEMS_355: &[Particle] = &[
     Particle::Element {
         max: 0,
         min: 0,
         type_id: 954,
     },
     Particle::Composite {
-        items: ITEMS_353,
+        items: ITEMS_354,
         kind: CompositeKind::Choice,
         max: 1,
         min: 1,
@@ -10442,14 +10448,14 @@ const ITEMS_354: &[Particle] = &[
 const PARTICLES_254: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_354,
+        items: ITEMS_355,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_355: &[Particle] = &[
+const ITEMS_356: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -10487,7 +10493,7 @@ const ITEMS_355: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -10496,7 +10502,7 @@ const PARTICLES_255: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -10505,7 +10511,7 @@ const PARTICLES_255: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b11_1110),
         Some(Particle::Composite {
-            items: ITEMS_355,
+            items: ITEMS_356,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -10513,7 +10519,7 @@ const PARTICLES_255: &[(Versions, Option<Particle>)] = &[
     ),
 ];
 
-const ITEMS_356: &[Particle] = &[Particle::Element {
+const ITEMS_357: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 959,
@@ -10522,14 +10528,14 @@ const ITEMS_356: &[Particle] = &[Particle::Element {
 const PARTICLES_256: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_356,
+        items: ITEMS_357,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_357: &[Particle] = &[
+const ITEMS_358: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -10575,14 +10581,14 @@ const ITEMS_357: &[Particle] = &[
 const PARTICLES_257: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_357,
+        items: ITEMS_358,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_358: &[Particle] = &[
+const ITEMS_359: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -10623,16 +10629,16 @@ const ITEMS_358: &[Particle] = &[
 const PARTICLES_258: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_358,
+        items: ITEMS_359,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_359: &[Particle] = &[
+const ITEMS_360: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_328,
+        items: ITEMS_329,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -10682,14 +10688,14 @@ const ITEMS_359: &[Particle] = &[
 const PARTICLES_259: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_359,
+        items: ITEMS_360,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_360: &[Particle] = &[Particle::Element {
+const ITEMS_361: &[Particle] = &[Particle::Element {
     max: 0,
     min: 0,
     type_id: 964,
@@ -10698,14 +10704,14 @@ const ITEMS_360: &[Particle] = &[Particle::Element {
 const PARTICLES_260: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_360,
+        items: ITEMS_361,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_361: &[Particle] = &[
+const ITEMS_362: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 1,
@@ -10718,9 +10724,9 @@ const ITEMS_361: &[Particle] = &[
     },
 ];
 
-const ITEMS_362: &[Particle] = &[
+const ITEMS_363: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_361,
+        items: ITEMS_362,
         kind: CompositeKind::Choice,
         max: 1,
         min: 1,
@@ -10740,14 +10746,14 @@ const ITEMS_362: &[Particle] = &[
 const PARTICLES_261: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_362,
+        items: ITEMS_363,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_363: &[Particle] = &[
+const ITEMS_364: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -10773,14 +10779,14 @@ const ITEMS_363: &[Particle] = &[
 const PARTICLES_262: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_363,
+        items: ITEMS_364,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_364: &[Particle] = &[
+const ITEMS_365: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -10798,16 +10804,16 @@ const ITEMS_364: &[Particle] = &[
     },
 ];
 
-const ITEMS_365: &[Particle] = &[Particle::Composite {
-    items: ITEMS_364,
+const ITEMS_366: &[Particle] = &[Particle::Composite {
+    items: ITEMS_365,
     kind: CompositeKind::Sequence,
     max: 1,
     min: 1,
 }];
 
-const ITEMS_366: &[Particle] = &[
+const ITEMS_367: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_365,
+        items: ITEMS_366,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -10832,14 +10838,14 @@ const ITEMS_366: &[Particle] = &[
 const PARTICLES_263: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_366,
+        items: ITEMS_367,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_367: &[Particle] = &[
+const ITEMS_368: &[Particle] = &[
     Particle::Element {
         max: 1,
         min: 0,
@@ -10890,23 +10896,17 @@ const ITEMS_367: &[Particle] = &[
 const PARTICLES_264: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_367,
+        items: ITEMS_368,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
     }),
 )];
 
-const ITEMS_368: &[Particle] = &[Particle::Any {
-    max: 1,
-    min: 1,
-    namespace: AnyNamespace::Any,
-}];
-
 const PARTICLES_265: &[(Versions, Option<Particle>)] = &[(
     Versions(0b11_1111),
     Some(Particle::Composite {
-        items: ITEMS_368,
+        items: ITEMS_293,
         kind: CompositeKind::Sequence,
         max: 1,
         min: 1,
@@ -11192,7 +11192,7 @@ const ITEMS_381: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -11201,7 +11201,7 @@ const PARTICLES_273: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -11301,7 +11301,7 @@ const PARTICLES_276: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_385: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -11570,7 +11570,7 @@ const ITEMS_392: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -11579,7 +11579,7 @@ const PARTICLES_284: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -11742,7 +11742,7 @@ const ITEMS_400: &[Particle] = &[
         type_id: 1054,
     },
     Particle::Composite {
-        items: ITEMS_365,
+        items: ITEMS_366,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -11834,7 +11834,7 @@ const PARTICLES_292: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_402: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_365,
+        items: ITEMS_366,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -11864,7 +11864,7 @@ const ITEMS_403: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -11873,7 +11873,7 @@ const PARTICLES_294: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -11908,7 +11908,7 @@ const PARTICLES_295: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_405: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_365,
+        items: ITEMS_366,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -11953,7 +11953,7 @@ const PARTICLES_297: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_407: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -12376,7 +12376,7 @@ const ITEMS_418: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -12385,7 +12385,7 @@ const PARTICLES_307: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -12420,7 +12420,7 @@ const PARTICLES_308: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_420: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -12577,7 +12577,7 @@ const ITEMS_424: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -12586,7 +12586,7 @@ const PARTICLES_313: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -12621,7 +12621,7 @@ const PARTICLES_314: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_426: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -12701,7 +12701,7 @@ const PARTICLES_316: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_428: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_328,
+        items: ITEMS_329,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -12879,7 +12879,7 @@ const ITEMS_435: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -12888,7 +12888,7 @@ const PARTICLES_323: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -13049,7 +13049,7 @@ const ITEMS_441: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -13058,7 +13058,7 @@ const PARTICLES_329: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -13163,7 +13163,7 @@ const PARTICLES_332: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_447: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_298,
+        items: ITEMS_299,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -13223,7 +13223,7 @@ const ITEMS_448: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -13261,7 +13261,7 @@ const ITEMS_449: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -13270,7 +13270,7 @@ const PARTICLES_334: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -13541,7 +13541,7 @@ const PARTICLES_340: &[(Versions, Option<Particle>)] = &[(
 
 const ITEMS_457: &[Particle] = &[
     Particle::Composite {
-        items: ITEMS_328,
+        items: ITEMS_329,
         kind: CompositeKind::Group,
         max: 1,
         min: 1,
@@ -45148,7 +45148,7 @@ const ITEMS_1590: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -45166,7 +45166,7 @@ const ITEMS_1591: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -45276,7 +45276,7 @@ const ITEMS_1596: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -45294,7 +45294,7 @@ const ITEMS_1597: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -45372,7 +45372,7 @@ const ITEMS_1600: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -45489,7 +45489,7 @@ const ITEMS_1606: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -45507,7 +45507,7 @@ const ITEMS_1607: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -45692,7 +45692,7 @@ const ITEMS_1615: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -46151,7 +46151,7 @@ const ITEMS_1634: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -46169,7 +46169,7 @@ const ITEMS_1635: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -46516,7 +46516,7 @@ const ITEMS_1651: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -46534,7 +46534,7 @@ const ITEMS_1652: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -48816,7 +48816,7 @@ const ITEMS_1751: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -48844,7 +48844,7 @@ const ITEMS_1752: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -48877,7 +48877,7 @@ const ITEMS_1753: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -48930,7 +48930,7 @@ const ITEMS_1754: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -49065,7 +49065,7 @@ const ITEMS_1759: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -49148,7 +49148,7 @@ const ITEMS_1763: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -49157,7 +49157,7 @@ const PARTICLES_1290: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -49258,7 +49258,7 @@ const ITEMS_1768: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -49384,7 +49384,7 @@ const ITEMS_1775: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -49393,7 +49393,7 @@ const PARTICLES_1302: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -50451,7 +50451,7 @@ const ITEMS_1813: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -50460,7 +50460,7 @@ const PARTICLES_1340: &[(Versions, Option<Particle>)] = &[
     (
         Versions(0b00_0001),
         Some(Particle::Composite {
-            items: ITEMS_103,
+            items: ITEMS_293,
             kind: CompositeKind::Choice,
             max: 1,
             min: 1,
@@ -50588,7 +50588,7 @@ const ITEMS_1818: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -50606,7 +50606,7 @@ const ITEMS_1819: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51182,7 +51182,7 @@ const ITEMS_1839: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51245,7 +51245,7 @@ const ITEMS_1840: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51323,7 +51323,7 @@ const ITEMS_1841: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51610,7 +51610,7 @@ const ITEMS_1844: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51658,7 +51658,7 @@ const ITEMS_1845: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51873,7 +51873,7 @@ const ITEMS_1851: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51896,7 +51896,7 @@ const ITEMS_1852: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];
@@ -51924,7 +51924,7 @@ const ITEMS_1853: &[Particle] = &[
     },
     Particle::Any {
         max: 1,
-        min: 0,
+        min: 1,
         namespace: AnyNamespace::Any,
     },
 ];

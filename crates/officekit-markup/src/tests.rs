@@ -1,9 +1,14 @@
 use core::mem::{size_of, size_of_val};
 
+use officekit_xml::element::{Element, Node};
+use officekit_xml::write::Scope;
+
+use crate::drawing::AnyElementContent;
+use crate::office_drawing_2017_model3d::{self as model3d, Model3DExtensionContent};
 use crate::wordprocessing::{
     self, Document, Paragraph, ParagraphContent, ParagraphWith, TextRun, TextWith,
 };
-use crate::{UserData, user_data};
+use crate::{UserData, chart, drawing, spreadsheet, user_data};
 
 #[derive(Clone, Debug, Default, PartialEq)]
 struct Marks;
@@ -60,4 +65,58 @@ fn user_data_fills_the_named_kind_and_leaves_the_others_empty() {
     assert!(format!("{paragraph:?}").contains("72.5"));
     let text: TextWith<Marks> = TextWith::default();
     assert_eq!(size_of_val(&text.user_data), 0);
+}
+
+/// The elements under `element`, at any depth, by qualified name.
+fn element_names(element: &Element) -> Vec<String> {
+    element
+        .child_elements()
+        .flat_map(|child| {
+            let mut names = vec![format!("{}:{}", child.name.prefix, child.name.local)];
+            names.extend(element_names(child));
+            names
+        })
+        .collect()
+}
+
+#[test]
+fn a_required_wildcard_position_defaults_to_no_element() {
+    let nothing = || Node::Text(String::new());
+    assert_eq!(
+        AnyElementContent::default(),
+        AnyElementContent::Other(nothing())
+    );
+    assert_eq!(
+        *chart::Extension::default().content,
+        AnyElementContent::Other(nothing())
+    );
+    assert_eq!(
+        *spreadsheet::Extension::default().content,
+        AnyElementContent::Other(nothing())
+    );
+    assert_eq!(
+        *model3d::Ext::default().content,
+        Model3DExtensionContent::Other(nothing())
+    );
+}
+
+#[test]
+fn an_extension_written_from_its_default_holds_no_element() {
+    let written = [
+        chart::write::extension(&chart::Extension::default(), &mut Scope::default()),
+        drawing::write::extension(&drawing::Extension::default(), &mut Scope::default()),
+        spreadsheet::write::extension(&spreadsheet::Extension::default(), &mut Scope::default()),
+        model3d::write::ext(&model3d::Ext::default(), &mut Scope::default()),
+    ];
+    for element in written {
+        assert_eq!(element_names(&element), Vec::<String>::new(), "{element:?}");
+    }
+}
+
+#[test]
+fn a_required_choice_position_defaults_to_its_first_alternative() {
+    assert!(matches!(
+        *chart::CategoryAxisDataCat::default().content,
+        chart::AxisDataSourceContent::MultiLevelStringReference(_)
+    ));
 }

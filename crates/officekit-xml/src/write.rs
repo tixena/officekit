@@ -587,6 +587,7 @@ where
     let children: Vec<&Node> = element
         .children
         .iter()
+        .filter(|child| !matches!(child, Node::Text(text) if text.is_empty()))
         .filter(|child| {
             layout == Layout::Pretty || preserved || only_whitespace || !is_whitespace_text(child)
         })

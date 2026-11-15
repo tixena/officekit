@@ -838,7 +838,7 @@ impl<'data> Builder<'data> {
                 .enums
                 .get_mut(found)
                 .context("a required enum out of range")?;
-            if entry.arms.is_empty() {
+            if entry.arms.is_empty() && entry.wildcard.is_none() {
                 bail!(
                     "the enum {} is required but has no arm to default to",
                     entry.name

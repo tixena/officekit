@@ -1634,24 +1634,19 @@ fn enum_impls(
     (out, helpers)
 }
 
-/// An enum's `Default`, its first arm's default, when a required single
-/// position uses it.
+/// An enum's `Default`, when a required single position uses it: its first
+/// arm's default, or an empty `Other` when its set has a wildcard, whose
+/// arms are global elements unrelated to the position.
 fn enum_default(names: &Names<'_>, found: &EnumDef) -> String {
     let mut out = String::new();
-    if found.default
-        && let Some((variant, arm)) = found.arms.first()
-    {
+    if !found.default {
+        return out;
+    }
+    let value = if found.wildcard.is_some() {
+        Expr::call("Self::Other", vec![Expr::atom("Node::Text(String::new())")])
+    } else if let Some((variant, arm)) = found.arms.first() {
         let node = &names.catalog.nodes[*arm];
-        let _ = write!(
-            out,
-            "\n{}    fn default() -> Self {{\n",
-            layout::generic_impl_header(
-                "<X: UserData>",
-                "Default",
-                &format!("{}<X>", generic_name(&found.name))
-            )
-        );
-        let value = if found.boxed.contains(arm) {
+        let held = if found.boxed.contains(arm) {
             "Box::default()".to_owned()
         } else {
             format!(
@@ -1659,14 +1654,21 @@ fn enum_default(names: &Names<'_>, found: &EnumDef) -> String {
                 names.path(node.module, &generic_name(&node.name))
             )
         };
-        line(
-            "        ",
-            &Expr::call(&format!("Self::{variant}"), vec![Expr::Atom(value)]),
-            "",
-            &mut out,
-        );
-        out.push_str("    }\n}\n");
-    }
+        Expr::call(&format!("Self::{variant}"), vec![Expr::Atom(held)])
+    } else {
+        return out;
+    };
+    let _ = write!(
+        out,
+        "\n{}    fn default() -> Self {{\n",
+        layout::generic_impl_header(
+            "<X: UserData>",
+            "Default",
+            &format!("{}<X>", generic_name(&found.name))
+        )
+    );
+    line("        ", &value, "", &mut out);
+    out.push_str("    }\n}\n");
     out
 }
 

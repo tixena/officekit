@@ -103,6 +103,40 @@ source = "local choice in CT_Group"
 types = ["CT_Group"]
 "#;
 
+/// `wp:ext`, whose one required child is any element, and `wp:pick`, whose one required child
+/// is `wp:second` or `wp:first`.
+const REQUIRED_DRAWING: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:wp" targetNamespace="urn:wp" elementFormDefault="qualified">
+  <xsd:complexType name="CT_Empty"/>
+  <xsd:complexType name="CT_Extension">
+    <xsd:sequence>
+      <xsd:any processContents="lax"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Pick">
+    <xsd:choice>
+      <xsd:element name="second" type="CT_Empty"/>
+      <xsd:element name="first" type="CT_Empty"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:element name="ext" type="CT_Extension"/>
+  <xsd:element name="pick" type="CT_Pick"/>
+</xsd:schema>"#;
+
+const REQUIRED_ENUMS: &str = r###"
+[[enum]]
+module = "wordprocessing_drawing"
+name = "AnyElementContent"
+source = "an xsd:any of any namespace"
+wildcard = "##any"
+
+[[enum]]
+module = "wordprocessing_drawing"
+name = "PickContent"
+source = "local choice in CT_Pick"
+types = ["CT_Pick"]
+"###;
+
 fn sml_catalog() -> Catalog {
     let system = MemorySystem::new()
         .with_file("/data/namespaces.json", NAMESPACES.as_bytes())
@@ -170,6 +204,50 @@ fn word_catalog() -> Catalog {
     .unwrap();
     catalog.crates = assign(&render::references(&catalog).unwrap());
     catalog
+}
+
+/// The rendered `wordprocessing_drawing` module of the set whose required positions are a
+/// wildcard and a choice.
+fn required_module() -> String {
+    let system = MemorySystem::new()
+        .with_file("/data/namespaces.json", WORD_NAMESPACES.as_bytes())
+        .unwrap()
+        .with_file("/data/typed/namespaces.json", b"[]")
+        .unwrap()
+        .with_file("/data/parts/none.json", br#"{"Name": "None"}"#)
+        .unwrap()
+        .with_file("/data/schematrons.json", b"[]")
+        .unwrap()
+        .with_file(
+            "/data/schemas/wp.json",
+            br#"{"TargetNamespace": "urn:wp", "Types": []}"#,
+        )
+        .unwrap()
+        .with_file(
+            "/xsd/dml-wordprocessingDrawing.xsd",
+            REQUIRED_DRAWING.as_bytes(),
+        )
+        .unwrap();
+    let sdk = SdkData::read(&system, Path::new("data")).unwrap();
+    let transitional = SchemaSet::read(&system, &["/xsd/dml-wordprocessingDrawing.xsd"]).unwrap();
+    let strict = SchemaSet::default();
+    let rows = namespaces::rows(&sdk, &transitional, &strict, &SchemaSet::default()).unwrap();
+    let mut catalog = Catalog::build(
+        &Data::new(&sdk, &transitional),
+        &strict,
+        &rows,
+        &Titles::read("", ""),
+        &Overrides::parse("").unwrap(),
+        &enums::rows(REQUIRED_ENUMS).unwrap(),
+    )
+    .unwrap();
+    catalog.crates = assign(&render::references(&catalog).unwrap());
+    let files = render::files(&MemorySystem::new(), "", &catalog).unwrap();
+    files
+        .into_iter()
+        .find(|(path, _)| path.ends_with("wordprocessing_drawing.rs"))
+        .map(|(_, text)| text)
+        .unwrap()
 }
 
 /// The struct of the tag `wp:local`.
@@ -452,4 +530,17 @@ fn the_cycle_is_core_what_it_reaches_base_and_every_other_module_ext() {
             Crate::Ext,
         ]
     );
+}
+
+#[test]
+fn a_required_wildcard_defaults_to_an_empty_other_and_a_required_choice_to_its_first_arm() {
+    let text = required_module();
+    for expected in [
+        "impl<X: UserData> Default for AnyElementContentWith<X> {\n    fn default() -> Self {\n        \
+         Self::Other(Node::Text(String::new()))\n    }\n}\n",
+        "impl<X: UserData> Default for PickContentWith<X> {\n    fn default() -> Self {\n        \
+         Self::First(FirstWith::default())\n    }\n}\n",
+    ] {
+        assert!(text.contains(expected), "{expected} is not in\n{text}");
+    }
 }

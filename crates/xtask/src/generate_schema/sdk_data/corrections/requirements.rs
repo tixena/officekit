@@ -1,15 +1,15 @@
 //! What ECMA-376 requires and SDK 3.5.1's data does not check, taken from the Transitional
-//! schemas: each attribute they make required, and each content model whose order or required
-//! children the data loosens.
+//! schemas: each attribute they make required, each content model whose order or required
+//! children the data loosens, and each wildcard child the data makes optional.
 
-use alloc::collections::BTreeSet;
+use alloc::collections::{BTreeMap, BTreeSet};
 
 use anyhow::{Context as _, Result, bail};
 
 use super::collect_leaves;
 use super::standard::prefix_of;
 use crate::generate_schema::model::{
-    ComplexType, Content, Name, Particle, ParticleKind, SchemaSet,
+    ComplexType, Content, Name, Particle, ParticleKind, SchemaSet, TypeRef,
 };
 use crate::generate_schema::sdk_data::{DataParticle, Occurs, SdkData, Validator};
 
@@ -28,8 +28,9 @@ pub(super) struct Kept {
 }
 
 /// Add to `data` what the schemas of `standard` require: the required check of each attribute
-/// they make required, and the content model of each type whose order or required children the
-/// data loosens, its children outside the standard allowed anywhere.
+/// they make required, the content model of each type whose order or required children the
+/// data loosens, its children outside the standard allowed anywhere, and each wildcard child
+/// they require.
 ///
 /// # Errors
 ///
@@ -107,6 +108,7 @@ pub(super) fn require(data: &mut SdkData, standard: &SchemaSet, kept: &Kept) -> 
     if !problems.is_empty() {
         bail!("what ECMA-376 requires:\n  {}", problems.join("\n  "));
     }
+    require_wildcards(data, standard);
     Ok(())
 }
 
@@ -191,10 +193,76 @@ fn data_required(particle: &DataParticle) -> BTreeSet<String> {
 
 /// The element of a data leaf, `w:alias` of `w:CT_String/w:alias`.
 fn element_of(leaf: &DataParticle) -> Option<&str> {
-    leaf.name
-        .as_deref()
-        .and_then(|name| name.split_once('/'))
-        .map(|(_, element)| element)
+    leaf.name.as_deref().and_then(element_named)
+}
+
+/// The element of a data type's name, `w:alias` of `w:CT_String/w:alias`.
+fn element_named(name: &str) -> Option<&str> {
+    name.split_once('/').map(|(_, element)| element)
+}
+
+/// Each element `particle` declares with a complex type, and that type, when it has one only;
+/// the elements of the groups it refers to too.
+fn element_types(standard: &SchemaSet, particle: &Particle) -> BTreeMap<Name, Name> {
+    fn walk(
+        standard: &SchemaSet,
+        particle: &Particle,
+        groups: &mut Vec<Name>,
+        found: &mut BTreeMap<Name, BTreeSet<Name>>,
+    ) {
+        match &particle.kind {
+            ParticleKind::All(items)
+            | ParticleKind::Choice(items)
+            | ParticleKind::Sequence(items) => {
+                for item in items {
+                    walk(standard, item, groups, found);
+                }
+            }
+            ParticleKind::Element {
+                name,
+                type_ref:
+                    TypeRef::Complex {
+                        anonymous: _anonymous,
+                        name: complex_type,
+                    },
+            } => {
+                found
+                    .entry(name.clone())
+                    .or_default()
+                    .insert(complex_type.clone());
+            }
+            ParticleKind::GroupRef(group) => {
+                if groups.contains(group) {
+                    return;
+                }
+                if let Some(defined) = standard.groups.get(group) {
+                    groups.push(group.clone());
+                    walk(standard, &defined.particle, groups, found);
+                    groups.pop();
+                }
+            }
+            ParticleKind::Any {
+                namespace: _namespace,
+                process_contents: _process_contents,
+            } => {}
+            ParticleKind::Element {
+                name: _name,
+                type_ref: _type_ref,
+            } => {}
+        }
+    }
+    let mut found = BTreeMap::new();
+    walk(standard, particle, &mut Vec::new(), &mut found);
+    found
+        .into_iter()
+        .filter_map(|(element, types)| {
+            let mut each = types.into_iter();
+            match (each.next(), each.next()) {
+                (Some(only), None) => Some((element, only)),
+                _ => None,
+            }
+        })
+        .collect()
 }
 
 /// Each element a schema particle names, as the data spells it.
@@ -350,14 +418,143 @@ fn schema_type<'set>(
     name: &str,
 ) -> Option<&'set ComplexType> {
     let (schema_type, _) = name.split_once('/')?;
-    let (prefix, local) = schema_type.split_once(':')?;
+    standard
+        .complex_types
+        .get(&standard_name(data, schema_type)?)
+}
+
+/// The name `prefix:local` of the data, in the namespace the data declares the prefix for.
+fn standard_name(data: &SdkData, qualified: &str) -> Option<Name> {
+    let (prefix, local) = qualified.split_once(':')?;
     let namespace = data
         .namespaces
         .iter()
         .find(|namespace| namespace.prefix == prefix)?;
-    standard
-        .complex_types
-        .get(&Name::new(&namespace.uri, local))
+    Some(Name::new(&namespace.uri, local))
+}
+
+/// The Transitional complex type of each schema type of the data: the one of its name, else
+/// the one its element is declared with in the type of every parent found so, in turn until no
+/// more are found. `c:CT_NumRefExtension`, the data's own, is `CT_Extension` so.
+fn standard_types(data: &SdkData, standard: &SchemaSet) -> BTreeMap<String, Name> {
+    let mut found: BTreeMap<String, Name> = BTreeMap::new();
+    for name in data.types.keys() {
+        if let Some(declared) = schema_type(data, standard, name) {
+            found.insert(schema_type_of(name).to_owned(), declared.name.clone());
+        }
+    }
+    loop {
+        let mut candidates: BTreeMap<String, BTreeSet<Name>> = BTreeMap::new();
+        for (name, data_type) in &data.types {
+            let Some(parent) = found
+                .get(schema_type_of(name))
+                .and_then(|parent| standard.complex_types.get(parent))
+            else {
+                continue;
+            };
+            let Content::Particle(particle) = standard.effective(parent).content else {
+                continue;
+            };
+            let declared = element_types(standard, &particle);
+            let mut children: BTreeSet<String> = data_type.children.iter().cloned().collect();
+            if let Some(held) = &data_type.particle {
+                let mut leaves = Vec::new();
+                collect_leaves(held, None, &mut leaves);
+                children.extend(leaves.into_iter().filter_map(|leaf| leaf.name));
+            }
+            for child in &children {
+                let child_type = schema_type_of(child);
+                if found.contains_key(child_type) {
+                    continue;
+                }
+                if let Some(ecma) = element_named(child)
+                    .and_then(|element| standard_name(data, element))
+                    .and_then(|element| declared.get(&element))
+                {
+                    candidates
+                        .entry(child_type.to_owned())
+                        .or_default()
+                        .insert(ecma.clone());
+                }
+            }
+        }
+        let before = found.len();
+        for (child_type, types) in candidates {
+            let mut each = types.into_iter();
+            if let (Some(only), None) = (each.next(), each.next()) {
+                found.insert(child_type, only);
+            }
+        }
+        if found.len() == before {
+            return found;
+        }
+    }
+}
+
+/// The schema type part of a data type's name, `w:CT_String` of `w:CT_String/w:alias`.
+fn schema_type_of(name: &str) -> &str {
+    name.split_once('/')
+        .map_or(name, |(schema_type, _)| schema_type)
+}
+
+/// Whether every match of a schema particle holds an element a wildcard takes.
+fn requires_wildcard(standard: &SchemaSet, particle: &Particle) -> bool {
+    if particle.min == 0 {
+        return false;
+    }
+    match &particle.kind {
+        ParticleKind::Any {
+            namespace: _namespace,
+            process_contents: _process_contents,
+        } => true,
+        ParticleKind::All(items) | ParticleKind::Sequence(items) => {
+            items.iter().any(|item| requires_wildcard(standard, item))
+        }
+        ParticleKind::Choice(items) => {
+            !items.is_empty() && items.iter().all(|item| requires_wildcard(standard, item))
+        }
+        ParticleKind::Element {
+            name: _name,
+            type_ref: _type_ref,
+        } => false,
+        ParticleKind::GroupRef(group) => standard
+            .groups
+            .get(group)
+            .is_some_and(|defined| requires_wildcard(standard, &defined.particle)),
+    }
+}
+
+/// Each wildcard of a data particle at least once.
+fn raise_wildcards(particle: &mut DataParticle) {
+    if particle.kind.as_deref() == Some("Any") {
+        for occurs in &mut particle.occurs {
+            occurs.min = occurs.min.max(1);
+        }
+    }
+    for item in &mut particle.items {
+        raise_wildcards(item);
+    }
+}
+
+/// Require the wildcards of each data type whose Transitional type requires a wildcard child,
+/// as `CT_Extension` does, where the data makes them optional.
+fn require_wildcards(data: &mut SdkData, standard: &SchemaSet) {
+    let types = standard_types(data, standard);
+    for (name, data_type) in &mut data.types {
+        let Some(declared) = types
+            .get(schema_type_of(name))
+            .and_then(|found| standard.complex_types.get(found))
+        else {
+            continue;
+        };
+        let requires = match &standard.effective(declared).content {
+            Content::Particle(particle) => requires_wildcard(standard, particle),
+            Content::Empty | Content::Simple(_) => false,
+        };
+        if requires && let Some(held) = &mut data_type.particle {
+            raise_wildcards(held);
+        }
+    }
 }
 
 /// The elements a schema particle requires: those every match holds.

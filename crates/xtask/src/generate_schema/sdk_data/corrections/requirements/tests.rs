@@ -14,7 +14,8 @@ const NAMESPACES: &str = r#"[
 const TYPED_NAMESPACES: &str = r#"[{"Prefix": "w", "Namespace": "Office.Word"}]"#;
 
 /// The data: attributes the standard requires and the data leaves optional, a choice where the
-/// standard has a sequence, and a child the standard requires and the data does not.
+/// standard has a sequence, a child the standard requires and the data does not, and optional
+/// wildcards in an extension of the data's own type and in a type whose wildcard is optional.
 const DATA: &str = r#"{
   "TargetNamespace": "urn:w",
   "Types": [
@@ -44,7 +45,20 @@ const DATA: &str = r#"{
       {"Name": "w:CT_A/w:alias"},
       {"Name": "w:CT_A/w:temp"}
     ]}},
-    {"Name": "w:CT_Custom/w:custom"}
+    {"Name": "w:CT_Custom/w:custom"},
+    {"Name": "w:CT_Holder/w:holder", "Particle": {"Kind": "Sequence", "Items": [
+      {"Name": "w:CT_HolderExtensionList/w:extLst", "Occurs": [{"Max": 1}]}
+    ]}},
+    {"Name": "w:CT_HolderExtensionList/w:extLst", "Particle": {"Kind": "Sequence", "Items": [
+      {"Name": "w:CT_HolderExtension/w:ext", "Occurs": [{}]}
+    ]}},
+    {"Name": "w:CT_HolderExtension/w:ext", "Particle": {"Kind": "Choice", "Items": [
+      {"Name": "w:CT_A/w:alias"},
+      {"Kind": "Any", "Occurs": [{"Max": 1}]}
+    ]}},
+    {"Name": "w:CT_Loose/w:loose", "Particle": {"Kind": "Sequence", "Items": [
+      {"Kind": "Any", "Occurs": [{"Max": 1}]}
+    ]}}
   ]
 }"#;
 
@@ -82,6 +96,26 @@ const STANDARD: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchem
   </xsd:complexType>
   <xsd:complexType name="CT_Custom">
     <xsd:attribute name="element" type="xsd:string" use="required"/>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Extension">
+    <xsd:sequence>
+      <xsd:any processContents="lax"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_ExtensionList">
+    <xsd:sequence>
+      <xsd:element name="ext" type="CT_Extension" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Holder">
+    <xsd:sequence>
+      <xsd:element name="extLst" type="CT_ExtensionList" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Loose">
+    <xsd:sequence>
+      <xsd:any processContents="lax" minOccurs="0"/>
+    </xsd:sequence>
   </xsd:complexType>
 </xsd:schema>"#;
 
@@ -209,4 +243,25 @@ fn an_attribute_the_data_does_not_declare_stops_the_build_unless_a_row_names_it(
     .unwrap_err()
     .to_string();
     assert!(stale.contains("which the data declares"), "{stale}");
+}
+
+/// The minimum of each wildcard of the type `name`'s content model.
+fn wildcard_minimums(data: &SdkData, name: &str) -> Vec<u32> {
+    data.types[name]
+        .particle
+        .as_ref()
+        .unwrap()
+        .items
+        .iter()
+        .filter(|item| item.kind.as_deref() == Some("Any"))
+        .flat_map(|item| item.occurs.iter().map(|occurs| occurs.min))
+        .collect()
+}
+
+// XSD and SDK data input: the generator reads them, forms the typed model does not hold.
+#[test]
+fn a_wildcard_the_standard_requires_is_required_in_a_type_found_through_its_parents() {
+    let data = required(TABLE).unwrap();
+    assert_eq!(wildcard_minimums(&data, "w:CT_HolderExtension/w:ext"), [1]);
+    assert_eq!(wildcard_minimums(&data, "w:CT_Loose/w:loose"), [0]);
 }

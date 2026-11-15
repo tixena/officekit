@@ -3640,9 +3640,7 @@ impl<X: UserData> Model3DExtensionContentWith<X> {
 
 impl<X: UserData> Default for Model3DExtensionContentWith<X> {
     fn default() -> Self {
-        Self::AnchorForFloatingDrawingMLObject(
-            wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith::default(),
-        )
+        Self::Other(Node::Text(String::new()))
     }
 }
 
