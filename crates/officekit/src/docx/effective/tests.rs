@@ -3,6 +3,7 @@ use alloc::format;
 use alloc::vec::Vec;
 
 use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue};
+use officekit_markup::drawing::Theme;
 use officekit_markup::office_word_2010_wordml::ConflictInsTrackChange;
 use officekit_markup::wordprocessing::{
     AbstractNumberingDefinition, Bold, ColorValue, ConditionalTableStyleFormattingTypes,
@@ -19,12 +20,13 @@ use officekit_markup::wordprocessing::{
     RunPropertiesContent, RunPropertiesForTheParagraphMark, SignedMeasurementInTwentiethsOfPoint,
     SpacingBetweenLinesAndAboveBelowParagraph, StyleConditionalTableFormattingProperties,
     StyleDefinition, StyleDefinitions, StyleTypes, StyleTypesMember, TableProperties,
-    TableStyleConditionalFormattingSettingsException,
+    TableStyleConditionalFormattingSettingsException, ThemeFont, ThemeFontMember,
 };
 use officekit_xml::parse::parse;
 
 use super::{StyleSheet, WORDPROCESSING};
 use crate::docx::Docx;
+use crate::docx::fonts::ThemeFonts;
 use crate::docx::numbering::Numbering;
 use crate::docx::table_style::{CellPosition, TableFormat};
 use crate::parts::kinds::WordprocessingKind;
@@ -985,4 +987,80 @@ fn a_numbered_paragraph_in_a_cell_takes_its_level_as_outside_a_table() {
     let (unnumbered, none) = styles.paragraph_in_cell(&table, at, None, Some(&own));
     assert_eq!(none, None);
     assert_eq!(indents(&unnumbered.properties), (None, None));
+}
+
+/// A sheet whose document defaults hold the run properties `defaults`, and no style.
+fn defaults_sheet(defaults: Vec<RunPropertiesContent>) -> StyleSheet {
+    let mut default_run = DefaultRunProperties::default();
+    default_run.run_properties = Some(Box::new(run_of(defaults)));
+    let mut document = DocumentDefaultParagraphAndRunProperties::default();
+    document.default_run_properties = Some(Box::new(default_run));
+    let mut definitions = StyleDefinitions::default();
+    definitions.document_default_paragraph_and_run_properties = Some(Box::new(document));
+    StyleSheet::new(&definitions)
+}
+
+fn ascii_theme(member: ThemeFontMember) -> RunPropertiesContent {
+    let mut fonts = RunFonts::default();
+    fonts.ascii_theme = Some(ThemeFont::from(member));
+    RunPropertiesContent::RunFonts(fonts)
+}
+
+fn ascii(family: &str) -> RunPropertiesContent {
+    let mut fonts = RunFonts::default();
+    fonts.ascii = Some(family.to_owned());
+    RunPropertiesContent::RunFonts(fonts)
+}
+
+#[test]
+fn a_run_s_own_font_replaces_the_defaults_theme_font_of_its_kind() {
+    let styles = defaults_sheet(vec![ascii_theme(ThemeFontMember::MinorHAnsi)]);
+    let paragraph = styles.paragraph(None);
+    let run = styles.run(&paragraph, Some(&run_of(vec![ascii("Courier New")])));
+    let effective = fonts(&run);
+    assert_eq!(
+        effective.and_then(|found| found.ascii.as_deref()),
+        Some("Courier New")
+    );
+    assert_eq!(effective.and_then(|found| found.ascii_theme.as_ref()), None);
+
+    let mut theme = Theme::default();
+    theme.elements.font_scheme.minor_fonts.latin_font.typeface = Some("Calibri".to_owned());
+    let families = ThemeFonts::new(Some(&theme), None).families(effective);
+    assert_eq!(families.ascii.as_deref(), Some("Courier New"));
+}
+
+#[test]
+fn a_run_s_own_theme_font_replaces_the_style_s_font_of_its_kind() {
+    let styles = typed_sheet(vec![ascii("Arial")], vec![]);
+    let paragraph = styles.paragraph(None);
+    let own = run_of(vec![ascii_theme(ThemeFontMember::MajorAscii)]);
+    let run = styles.run(&paragraph, Some(&own));
+    let effective = fonts(&run);
+    assert_eq!(
+        effective.and_then(|found| found.ascii_theme.as_ref()),
+        Some(&ThemeFont::from(ThemeFontMember::MajorAscii))
+    );
+    assert_eq!(effective.and_then(|found| found.ascii.as_deref()), None);
+}
+
+#[test]
+fn a_kind_the_later_level_does_not_state_keeps_the_earlier_font() {
+    let styles = defaults_sheet(vec![ascii_theme(ThemeFontMember::MinorHAnsi)]);
+    let paragraph = styles.paragraph(None);
+    let mut own = RunFonts::default();
+    own.cs = Some("Arial".to_owned());
+    let run = styles.run(
+        &paragraph,
+        Some(&run_of(vec![RunPropertiesContent::RunFonts(own)])),
+    );
+    let effective = fonts(&run);
+    assert_eq!(
+        effective.and_then(|found| found.ascii_theme.as_ref()),
+        Some(&ThemeFont::from(ThemeFontMember::MinorHAnsi))
+    );
+    assert_eq!(
+        effective.and_then(|found| found.cs.as_deref()),
+        Some("Arial")
+    );
 }

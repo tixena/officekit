@@ -2,6 +2,7 @@
 
 pub mod chart;
 pub mod effective;
+pub mod fonts;
 mod header_footer;
 pub mod image;
 mod merge;
@@ -38,6 +39,7 @@ use os_shim::bucket::Condition;
 
 use crate::compact::{self, Comments};
 use crate::docx::effective::StyleSheet;
+use crate::docx::fonts::ThemeFonts;
 use crate::docx::numbering::Numbering;
 use crate::drawing::scheme::{SchemeMap, ThemeColors};
 use crate::file;
@@ -656,6 +658,21 @@ impl Docx {
             found.as_ref().map(|root| &*root.elements.color_scheme),
             map,
         ))
+    }
+
+    /// The theme's fonts for this file (ECMA-376 Part 1, sections 17.18.96 and 17.15.1.88): the
+    /// theme part's `a:fontScheme` with the settings part's `w:themeFontLang`. A file with no
+    /// theme part gives no family for any theme value.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Docx::theme`] and [`Docx::settings`].
+    pub fn theme_fonts(&self) -> Result<ThemeFonts, PackageError> {
+        let found = self.theme()?;
+        let languages = self
+            .settings()?
+            .and_then(|settings| settings.theme_font_languages);
+        Ok(ThemeFonts::new(found.as_ref(), languages.as_deref()))
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every

@@ -44,6 +44,14 @@ const TOGGLES: [&str; 12] = [
     "vanish",
 ];
 
+/// The plain and the theme attribute of each kind of character of `w:rFonts` (section 17.3.2.26).
+const FONT_KINDS: [(&str, &str); 4] = [
+    ("ascii", "asciiTheme"),
+    ("hAnsi", "hAnsiTheme"),
+    ("eastAsia", "eastAsiaTheme"),
+    ("cs", "cstheme"),
+];
+
 /// A paragraph after the document defaults, its style's chain and its own properties.
 ///
 /// [`StyleSheet::numbered_paragraph`] applies numbering levels, and
@@ -605,6 +613,19 @@ fn merge_property(held: &mut Element, over: &Element) {
     } else {
         None
     };
+    if is_word(held, "rFonts") {
+        let namespace = Namespace::from_uri(WORDPROCESSING);
+        for (plain, theme) in FONT_KINDS {
+            if over.attribute(&namespace, plain).is_some()
+                || over.attribute(&namespace, theme).is_some()
+            {
+                held.attributes.retain(|existing| {
+                    existing.name.namespace != namespace
+                        || (existing.name.local != plain && existing.name.local != theme)
+                });
+            }
+        }
+    }
     for attribute in &over.attributes {
         let found = held.attributes.iter_mut().find(|existing| {
             existing.name.local == attribute.name.local

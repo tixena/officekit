@@ -13,15 +13,15 @@ use crate::parts::kinds::WordprocessingKind;
 use crate::parts::theme;
 use officekit_markup::drawing::StSchemeColorValMember;
 #[cfg(feature = "transitional")]
-use officekit_markup::drawing::{ColorContent, ColorScheme};
+use officekit_markup::drawing::{ColorContent, ColorScheme, Font, Theme};
 #[cfg(feature = "strict")]
 use officekit_markup::wordprocessing;
-#[cfg(feature = "transitional")]
-use officekit_markup::wordprocessing::ThemeColorMappings;
 use officekit_markup::wordprocessing::{
-    BlockContent, Document, DocumentBody, Paragraph, ParagraphContent, Text, TextRun,
-    TextRunContent,
+    BlockContent, Document, DocumentBody, Paragraph, ParagraphContent, RunFonts, Text, TextRun,
+    TextRunContent, ThemeFontMember,
 };
+#[cfg(feature = "transitional")]
+use officekit_markup::wordprocessing::{DocumentSettings, ThemeColorMappings, ThemeFontLanguages};
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_xml::error::WriteError;
@@ -1015,23 +1015,19 @@ fn dark_and_light() -> ColorScheme {
     scheme
 }
 
-/// A new Word file whose main part relates to a theme part holding `scheme`, and to a settings
-/// part holding `mapping` when there is one.
+/// A new Word file whose main part relates to a theme part holding `root`, and to a settings
+/// part holding `settings` when there is one.
 #[cfg(feature = "transitional")]
-fn docx_with_theme(scheme: &ColorScheme, mapping: Option<ThemeColorMappings>) -> Docx {
-    use officekit_markup::drawing::Theme;
-    use officekit_markup::wordprocessing::DocumentSettings;
+fn docx_with_parts(root: &Theme, settings: Option<&DocumentSettings>) -> Docx {
     use officekit_xml::write::WriteOptions as PartWriteOptions;
 
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
     let main = docx.main_document_part().clone();
-    let mut root = Theme::default();
-    *root.elements.color_scheme = scheme.clone();
     let theme_part = name("/word/theme/theme1.xml");
     theme::store_transitional(
         docx.package_mut(),
         &theme_part,
-        &root,
+        root,
         PartWriteOptions::default(),
     )
     .unwrap();
@@ -1042,14 +1038,12 @@ fn docx_with_theme(scheme: &ColorScheme, mapping: Option<ThemeColorMappings>) ->
             theme::RELATIONSHIP_TYPE.transitional,
         )
         .unwrap();
-    if let Some(stated) = mapping {
-        let mut settings = DocumentSettings::default();
-        settings.theme_color_mappings = Some(Box::new(stated));
+    if let Some(stated) = settings {
         let settings_part = name("/word/settings.xml");
         document_settings::store_transitional(
             docx.package_mut(),
             &settings_part,
-            &settings,
+            stated,
             PartWriteOptions::default(),
         )
         .unwrap();
@@ -1062,6 +1056,20 @@ fn docx_with_theme(scheme: &ColorScheme, mapping: Option<ThemeColorMappings>) ->
             .unwrap();
     }
     docx
+}
+
+/// A new Word file whose main part relates to a theme part holding `scheme`, and to a settings
+/// part holding `mapping` when there is one.
+#[cfg(feature = "transitional")]
+fn docx_with_theme(scheme: &ColorScheme, mapping: Option<ThemeColorMappings>) -> Docx {
+    let mut root = Theme::default();
+    *root.elements.color_scheme = scheme.clone();
+    let settings = mapping.map(|stated| {
+        let mut settings = DocumentSettings::default();
+        settings.theme_color_mappings = Some(Box::new(stated));
+        settings
+    });
+    docx_with_parts(&root, settings.as_ref())
 }
 
 #[cfg(feature = "transitional")]
@@ -1134,6 +1142,65 @@ fn a_word_file_with_no_theme_part_has_no_theme_no_settings_and_no_colour() {
     ] {
         assert_eq!(colors.color(member), None, "{member:?}");
     }
+}
+
+#[cfg(feature = "transitional")]
+#[test]
+fn theme_fonts_reads_the_theme_part_with_the_settings_part_s_languages() {
+    let mut root = Theme::default();
+    let minor = &mut root.elements.font_scheme.minor_fonts;
+    minor.latin_font.typeface = Some("Calibri".to_owned());
+    let mut traditional = Font::default();
+    traditional.script = Some("Hant".to_owned());
+    traditional.typeface = Some("PMingLiU".to_owned());
+    minor.font.push(traditional);
+    let mut languages = ThemeFontLanguages::default();
+    languages.east_asia = Some("zh-Hant-TW".to_owned());
+    let mut settings = DocumentSettings::default();
+    settings.theme_font_languages = Some(Box::new(languages));
+
+    let fonts = docx_with_parts(&root, Some(&settings))
+        .theme_fonts()
+        .unwrap();
+    assert_eq!(fonts.family(ThemeFontMember::MinorAscii), Some("Calibri"));
+    assert_eq!(
+        fonts.family(ThemeFontMember::MinorEastAsia),
+        Some("PMingLiU")
+    );
+
+    let without = docx_with_parts(&root, None).theme_fonts().unwrap();
+    assert_eq!(without.family(ThemeFontMember::MinorAscii), Some("Calibri"));
+    assert_eq!(without.family(ThemeFontMember::MinorEastAsia), None);
+}
+
+#[test]
+fn a_word_file_with_no_theme_part_gives_no_theme_family_and_a_run_s_plain_fonts() {
+    let fonts = Docx::new(WordprocessingKind::Document)
+        .unwrap()
+        .theme_fonts()
+        .unwrap();
+    for member in [
+        ThemeFontMember::MajorAscii,
+        ThemeFontMember::MajorBidi,
+        ThemeFontMember::MajorEastAsia,
+        ThemeFontMember::MajorHAnsi,
+        ThemeFontMember::MinorAscii,
+        ThemeFontMember::MinorBidi,
+        ThemeFontMember::MinorEastAsia,
+        ThemeFontMember::MinorHAnsi,
+    ] {
+        assert_eq!(fonts.family(member), None, "{member:?}");
+    }
+    let mut run = RunFonts::default();
+    run.ascii = Some("Arial".to_owned());
+    run.cs = Some("Times New Roman".to_owned());
+    run.east_asia = Some("MS Mincho".to_owned());
+    run.h_ansi = Some("Verdana".to_owned());
+    let families = fonts.families(Some(&run));
+    assert_eq!(families.ascii.as_deref(), Some("Arial"));
+    assert_eq!(families.cs.as_deref(), Some("Times New Roman"));
+    assert_eq!(families.east_asia.as_deref(), Some("MS Mincho"));
+    assert_eq!(families.h_ansi.as_deref(), Some("Verdana"));
 }
 
 #[cfg(feature = "transitional")]
