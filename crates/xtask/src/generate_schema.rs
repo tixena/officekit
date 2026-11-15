@@ -1,5 +1,6 @@
 //! The `generate-schema` subcommand.
 
+pub mod cldr;
 pub mod compare;
 pub mod emit;
 pub mod inputs;

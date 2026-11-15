@@ -3,6 +3,7 @@
 
 mod digits;
 mod format;
+mod rule_based;
 #[cfg(test)]
 mod tests;
 
@@ -13,10 +14,10 @@ use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
     AbstractNumberingDefinition, DecimalNumberValue, NumberingDefinitionInstance,
     NumberingDefinitions, NumberingLevelOverrideDefinition, ParagraphProperties,
-    StNumberFormatMember, StyleDefinition,
+    RunPropertiesContent, StNumberFormatMember, StyleDefinition,
 };
 
-pub use format::{format_custom, format_number};
+pub use format::{format_custom, format_number, format_number_in};
 
 use crate::docx::effective::{EffectiveParagraph, StyleSheet};
 
@@ -293,6 +294,23 @@ fn format_of(definition: &NumberingLevelOverrideDefinition) -> StNumberFormatMem
         .unwrap_or(StNumberFormatMember::Decimal)
 }
 
+/// The `w:val` of the `w:lang` of a level's run properties, the language of its label (sections
+/// 17.3.2.20 and 17.9.24).
+fn language_of(definition: &NumberingLevelOverrideDefinition) -> Option<&str> {
+    definition
+        .run_properties
+        .as_deref()?
+        .content
+        .iter()
+        .find_map(|item| {
+            if let RunPropertiesContent::LanguagesForRunContent(languages) = item {
+                languages.val.as_deref()
+            } else {
+                None
+            }
+        })
+}
+
 /// The text of a label of `item`: its level's `w:lvlText` with `%1` to `%9` replaced by the
 /// counters (sections 17.9.4, 17.9.11 and 17.9.17).
 fn label_text(numbering: &Numbering, item: &ListLevel, counters: &BTreeMap<u8, i64>) -> String {
@@ -342,8 +360,9 @@ fn names_style(definition: &NumberingLevelOverrideDefinition, style: &str) -> bo
         == Some(style)
 }
 
-/// The text of level `at`'s number in a label of `item`: nothing for a level deeper than the
-/// item's; for a level no item has counted, its `w:start` (section 17.9.11).
+/// The text of level `at`'s number in a label of `item`, in the language of the item's level:
+/// nothing for a level deeper than the item's; for a level no item has counted, its `w:start`
+/// (section 17.9.11).
 fn number(
     numbering: &Numbering,
     item: &ListLevel,
@@ -375,7 +394,12 @@ fn number(
     } else {
         definition.map_or(StNumberFormatMember::Decimal, format_of)
     };
-    format_number(value, format).unwrap_or_else(|| value.to_string())
+    language_of(&item.definition)
+        .map_or_else(
+            || format_number(value, format),
+            |language| format_number_in(value, format, language),
+        )
+        .unwrap_or_else(|| value.to_string())
 }
 
 fn on(value: &OnOffValue) -> bool {

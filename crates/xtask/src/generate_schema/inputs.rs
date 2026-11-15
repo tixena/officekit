@@ -6,6 +6,8 @@ use anyhow::{Context as _, Result, bail};
 use officekit_xml::ready::ready_now;
 use os_shim::System;
 
+use crate::generate_schema::cldr;
+
 #[cfg(test)]
 mod tests;
 
@@ -15,6 +17,20 @@ mod tests;
 pub struct Inputs {
     /// The `SHA256SUMS` text.
     pub checksums: String,
+    /// CLDR's `LICENSE`.
+    pub cldr_license: PathBuf,
+    /// CLDR's main file of each locale, sorted.
+    pub cldr_main: Vec<PathBuf>,
+    /// CLDR's `numberingSystems.xml`.
+    pub cldr_numbering_systems: PathBuf,
+    /// CLDR's ordinal plural rules, `ordinals.xml`.
+    pub cldr_ordinals: PathBuf,
+    /// CLDR's cardinal plural rules, `plurals.xml`.
+    pub cldr_plurals: PathBuf,
+    /// CLDR's rule-based number formats, one file per locale, sorted.
+    pub cldr_rbnf: Vec<PathBuf>,
+    /// CLDR's `supplementalData.xml`, for its parent locales.
+    pub cldr_supplemental: PathBuf,
     /// The OPC schemas.
     pub opc_schemas: Vec<PathBuf>,
     /// The `(prefix, XSD)` pair of each Open Specifications namespace found.
@@ -88,11 +104,29 @@ impl Inputs {
             root.join("unicode").join("18.0.0").join("UnicodeData.txt"),
         )?;
 
+        let cldr = root.join("cldr").join(cldr::VERSION);
+        let cldr_license = file(system, cldr.join("LICENSE"))?;
+        let common = cldr.join("common");
+        let cldr_main = files(system, &common.join("main"), "xml")?;
+        let cldr_rbnf = files(system, &common.join("rbnf"), "xml")?;
+        let supplemental = common.join("supplemental");
+        let cldr_numbering_systems = file(system, supplemental.join("numberingSystems.xml"))?;
+        let cldr_ordinals = file(system, supplemental.join("ordinals.xml"))?;
+        let cldr_plurals = file(system, supplemental.join("plurals.xml"))?;
+        let cldr_supplemental = file(system, supplemental.join("supplementalData.xml"))?;
+
         let checksums = read(system, &file(system, root.join("SHA256SUMS"))?)?;
         let tools = read(system, &file(system, root.join("TOOLS"))?)?;
 
         Ok(Self {
             checksums,
+            cldr_license,
+            cldr_main,
+            cldr_numbering_systems,
+            cldr_ordinals,
+            cldr_plurals,
+            cldr_rbnf,
+            cldr_supplemental,
             opc_schemas,
             open_specifications,
             part1_text,
@@ -151,7 +185,8 @@ where
         .with_context(|| format!("cannot read {}", path.display()))
 }
 
-fn xsds<S>(system: &S, folder: &Path) -> Result<Vec<PathBuf>>
+/// The files of `folder` with the extension `extension`, sorted.
+fn files<S>(system: &S, folder: &Path, extension: &str) -> Result<Vec<PathBuf>>
 where
     S: System + ?Sized,
 {
@@ -160,8 +195,15 @@ where
     }
     let mut found: Vec<PathBuf> = listed(system, folder)?
         .into_iter()
-        .filter(|path| path.extension().is_some_and(|ext| ext == "xsd"))
+        .filter(|path| path.extension().is_some_and(|ext| ext == extension))
         .collect();
     found.sort();
     Ok(found)
+}
+
+fn xsds<S>(system: &S, folder: &Path) -> Result<Vec<PathBuf>>
+where
+    S: System + ?Sized,
+{
+    files(system, folder, "xsd")
 }

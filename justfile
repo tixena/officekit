@@ -141,7 +141,7 @@ semantic-inputs:
 inputs:
     #!/usr/bin/env bash
     set -euo pipefail
-    for tool in curl unzip git pdftotext sha256sum; do
+    for tool in curl unzip git pdftotext sha256sum sha512sum; do
         command -v "$tool" >/dev/null || { echo "inputs: $tool is not installed" >&2; exit 1; }
     done
     work=$(mktemp -d)
@@ -244,6 +244,21 @@ inputs:
     # The Unicode Character Database's UnicodeData.txt, version 18.0.0 (Unicode License v3).
     mkdir -p inputs/unicode/18.0.0
     fetch https://www.unicode.org/Public/18.0.0/ucd/UnicodeData.txt inputs/unicode/18.0.0/UnicodeData.txt
+
+    # Unicode CLDR 49, under the Unicode License v3 its LICENSE gives: the rule-based
+    # number formats, the plural rules, parent locales and numbering systems they use,
+    # and each locale's main file, for its list pattern, digits, separators and
+    # alphabet. The archive is checked against the SHA-512 unicode.org publishes.
+    cldr=inputs/cldr/49
+    if [ ! -s $cldr/LICENSE ]; then
+        mkdir -p $cldr
+        fetch https://unicode.org/Public/cldr/49/cldr-common-49.zip "$work/cldr.zip"
+        echo "c704a2baf9ce4e28f40e242f8b2fbd0123579bb2c56daaaf8a92d72abd02485a1f60095c3cc4fe89eaf2d5c9f5fd07954c2eaee88839f97e18b1ff37cd62e2d8  $work/cldr.zip" \
+            | sha512sum -c --quiet
+        unzip -oq "$work/cldr.zip" 'common/rbnf/*.xml' 'common/main/*.xml' \
+            common/supplemental/{numberingSystems,ordinals,plurals,supplementalData}.xml -d $cldr
+        unzip -oq "$work/cldr.zip" LICENSE -d $cldr
+    fi
 
     # The tools and the checksums of everything above.
     version=$(pdftotext -v 2>&1)

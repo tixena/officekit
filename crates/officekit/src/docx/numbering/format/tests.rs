@@ -1,6 +1,6 @@
 use officekit_markup::wordprocessing::StNumberFormatMember as F;
 
-use super::{format_custom, format_number};
+use super::{format_custom, format_number, format_number_in};
 
 /// Every member of `ST_NumberFormat`.
 const MEMBERS: [F; 63] = [
@@ -1162,5 +1162,150 @@ fn a_token_of_another_family_that_is_not_zeros_then_one_gives_none() {
         "\u{0661}\u{0660}",
     ] {
         assert_eq!(format_custom(5, token), None, "{token}");
+    }
+}
+
+/// `format` in `language` for each of `values`, `?` where it gives none.
+fn texts(format: F, language: &str, values: &[i64]) -> Vec<String> {
+    values
+        .iter()
+        .map(|value| format_number_in(*value, format, language).unwrap_or_else(|| "?".to_owned()))
+        .collect()
+}
+
+/// CLDR marks where German compounds may break with soft hyphens, U+00AD, which show only there.
+#[test]
+fn the_standard_s_examples_of_the_formats_in_the_run_s_language() {
+    assert_eq!(
+        texts(F::CardinalText, "es-ES", &[1, 2, 3]),
+        ["Uno", "Dos", "Tres"]
+    );
+    assert_eq!(
+        texts(F::OrdinalText, "es-ES", &[1, 2, 3]),
+        ["Primero", "Segundo", "Tercero"]
+    );
+    assert_eq!(texts(F::Ordinal, "fr-FR", &[1, 2, 3]), ["1er", "2e", "3e"]);
+    assert_eq!(
+        texts(F::OrdinalText, "de-DE", &[1, 2, 3, 11, 20, 21]),
+        [
+            "Erste",
+            "Zweite",
+            "Dritte",
+            "Elfte",
+            "Zwanzigste",
+            "Ein\u{AD}und\u{AD}zwanzigste"
+        ]
+    );
+    assert_eq!(
+        texts(F::CardinalText, "es", &[10, 11, 20, 21]),
+        ["Diez", "Once", "Veinte", "Veintiuno"]
+    );
+}
+
+#[test]
+fn dollar_text_is_the_cardinal_text_and_00_100() {
+    assert_eq!(
+        texts(F::DollarText, "en-US", &[1, 2, 3]),
+        ["one and 00/100", "two and 00/100", "three and 00/100"]
+    );
+    assert_eq!(texts(F::DollarText, "es-ES", &[2]), ["dos y 00/100"]);
+}
+
+#[test]
+fn english_words_and_ordinals() {
+    let values = [1, 2, 3, 11, 21, 100];
+    assert_eq!(
+        texts(F::CardinalText, "en-US", &values),
+        ["One", "Two", "Three", "Eleven", "Twenty-one", "One hundred"]
+    );
+    assert_eq!(
+        texts(F::OrdinalText, "en-US", &values),
+        [
+            "First",
+            "Second",
+            "Third",
+            "Eleventh",
+            "Twenty-first",
+            "One hundredth"
+        ]
+    );
+    assert_eq!(
+        texts(F::Ordinal, "en-US", &values),
+        ["1st", "2nd", "3rd", "11th", "21st", "100th"]
+    );
+    assert_eq!(texts(F::Ordinal, "en-US", &[1_000_002]), ["1,000,002nd"]);
+    assert_eq!(
+        texts(F::CardinalText, "en-US", &[0, -7]),
+        ["Zero", "Minus seven"]
+    );
+}
+
+#[test]
+fn a_language_cldr_has_no_rules_for_gives_none() {
+    for language in ["xx", "x-none", "0409", "", "az-Cyrl-AZ"] {
+        for format in [F::CardinalText, F::OrdinalText, F::Ordinal, F::DollarText] {
+            assert_eq!(format_number_in(1, format, language), None, "{language}");
+        }
+        assert_eq!(
+            format_number_in(27, F::LowerLetter, language).as_deref(),
+            Some("aa"),
+            "{language}"
+        );
+    }
+}
+
+#[test]
+fn a_tag_s_region_and_script_fall_back_to_the_language() {
+    assert_eq!(texts(F::CardinalText, "ES-mx", &[1]), ["Uno"]);
+    assert_eq!(texts(F::CardinalText, "en_GB", &[21]), ["Twenty-one"]);
+    assert_eq!(texts(F::OrdinalText, "de-CH-1996", &[1]), ["Erste"]);
+}
+
+#[test]
+fn the_letters_follow_the_latin_alphabet_of_the_run_s_language() {
+    assert_eq!(
+        texts(F::LowerLetter, "nn-NO", &[26, 27, 28, 29, 30]),
+        ["z", "\u{E6}", "\u{F8}", "\u{E5}", "aa"]
+    );
+    assert_eq!(texts(F::UpperLetter, "nb", &[27]), ["\u{C6}"]);
+    assert_eq!(
+        texts(F::UpperLetter, "es-ES", &[14, 15, 16]),
+        ["N", "\u{D1}", "O"]
+    );
+    assert_eq!(texts(F::UpperLetter, "es-ES", &[0, -2]), ["0", "-2"]);
+    for language in ["en-US", "de-DE", "ja-JP", "ru-RU"] {
+        for value in [1, 26, 27, 53] {
+            for format in [F::LowerLetter, F::UpperLetter] {
+                assert_eq!(
+                    format_number_in(value, format, language),
+                    format_number(value, format),
+                    "{language} {value}"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn every_other_format_is_written_as_without_a_language() {
+    for format in MEMBERS {
+        if matches!(
+            format,
+            F::CardinalText
+                | F::DollarText
+                | F::LowerLetter
+                | F::Ordinal
+                | F::OrdinalText
+                | F::UpperLetter
+        ) {
+            continue;
+        }
+        for value in [-1, 0, 1, 14, 27, 100] {
+            assert_eq!(
+                format_number_in(value, format, "es-ES"),
+                format_number(value, format),
+                "{format:?} {value}"
+            );
+        }
     }
 }

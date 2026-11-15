@@ -9,6 +9,7 @@ use alloc::vec::Vec;
 use officekit_markup::wordprocessing::StNumberFormatMember;
 
 use super::digits::DIGIT_ZEROS;
+use super::rule_based::{self, Spelled};
 
 /// `aiueo`, positions 1 to 46.
 const AIUEO: [&str; 46] = [
@@ -579,8 +580,8 @@ struct Grouped {
 /// `value` in the number format `format` (ECMA-376 Part 1, section 17.18.59), in decimal where
 /// the section gives the value no text.
 ///
-/// `None` for `bullet`, `custom`, `decimalFullWidth2` and the formats in the run's language:
-/// `cardinalText`, `ordinalText`, `ordinal` and `dollarText`.
+/// `None` for `bullet`, `custom`, `decimalFullWidth2` and the formats in the run's language,
+/// `cardinalText`, `ordinalText`, `ordinal` and `dollarText`, which [`format_number_in`] writes.
 #[must_use = "this only returns the value"]
 pub fn format_number(value: i64, format: StNumberFormatMember) -> Option<String> {
     use StNumberFormatMember as F;
@@ -664,6 +665,48 @@ pub fn format_number(value: i64, format: StNumberFormatMember) -> Option<String>
     Some(text.unwrap_or_else(|| value.to_string()))
 }
 
+/// `value` in `format` for a run in `language`, a tag such as `en-US` (section 17.18.59).
+///
+/// Words and letters as Unicode CLDR gives them; `None` in words for a language it lacks.
+#[must_use = "this only returns the value"]
+pub fn format_number_in(
+    value: i64,
+    format: StNumberFormatMember,
+    language: &str,
+) -> Option<String> {
+    use StNumberFormatMember as F;
+
+    if format == F::DollarText {
+        return rule_based::dollars(value, language);
+    }
+    if matches!(format, F::LowerLetter | F::UpperLetter) {
+        let Some(letters) = rule_based::alphabet(language, format == F::UpperLetter) else {
+            return format_number(value, format);
+        };
+        let positive = u64::try_from(value).ok().filter(|number| *number > 0);
+        return Some(
+            positive
+                .and_then(|number| repeated(number, letters))
+                .unwrap_or_else(|| value.to_string()),
+        );
+    }
+    let kind = if format == F::CardinalText {
+        Spelled::Cardinal
+    } else if format == F::OrdinalText {
+        Spelled::OrdinalText
+    } else if format == F::Ordinal {
+        Spelled::Ordinal
+    } else {
+        return format_number(value, format);
+    };
+    let text = rule_based::spelled(value, kind, language)?;
+    Some(if format == F::Ordinal {
+        text
+    } else {
+        capitalized(&text)
+    })
+}
+
 /// `value` in the format token `token` of the XSLT `format` attribute, which `w:numFmt w:format`
 /// uses (ECMA-376 Part 1, section 17.9.17; XSLT 1.0, section 7.7.1).
 ///
@@ -707,6 +750,15 @@ fn alphabetic(value: u64, letters: &[&str]) -> String {
         rest = index / size;
     }
     written.into_iter().rev().collect()
+}
+
+/// `text` with its first letter in upper case, as the section's examples of `cardinalText` and
+/// `ordinalText` write it.
+fn capitalized(text: &str) -> String {
+    let mut characters = text.chars();
+    characters.next().map_or_else(String::new, |first| {
+        first.to_uppercase().chain(characters).collect()
+    })
 }
 
 /// `chineseCounting` and `taiwaneseCounting`: 0 to 10 from the set; to 99 the tens digit, unless

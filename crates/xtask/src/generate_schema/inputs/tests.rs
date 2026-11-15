@@ -33,6 +33,30 @@ fn layout() -> MemorySystem {
             b"0030;DIGIT ZERO;Nd",
         )
         .unwrap()
+        .with_file("/inputs/cldr/49/LICENSE", b"Copyright")
+        .unwrap()
+        .with_file("/inputs/cldr/49/common/main/es.xml", b"<ldml/>")
+        .unwrap()
+        .with_file("/inputs/cldr/49/common/main/en.xml", b"<ldml/>")
+        .unwrap()
+        .with_file("/inputs/cldr/49/common/rbnf/en.xml", b"<ldml/>")
+        .unwrap()
+        .with_file("/inputs/cldr/49/common/rbnf/README.md", b"")
+        .unwrap();
+    for name in [
+        "numberingSystems",
+        "ordinals",
+        "plurals",
+        "supplementalData",
+    ] {
+        system = system
+            .with_file(
+                format!("/inputs/cldr/49/common/supplemental/{name}.xml"),
+                b"<supplementalData/>",
+            )
+            .unwrap();
+    }
+    system = system
         .with_file("/inputs/SHA256SUMS", b"abc  inputs/TOOLS\ndef  inputs/x\n")
         .unwrap()
         .with_file(
@@ -92,6 +116,22 @@ fn finds_every_input() {
     assert_eq!(
         inputs.unicode_data,
         Path::new("inputs/unicode/18.0.0/UnicodeData.txt")
+    );
+    assert_eq!(
+        inputs.cldr_main,
+        [
+            Path::new("inputs/cldr/49/common/main/en.xml"),
+            Path::new("inputs/cldr/49/common/main/es.xml"),
+        ]
+    );
+    assert_eq!(
+        inputs.cldr_rbnf,
+        [Path::new("inputs/cldr/49/common/rbnf/en.xml")]
+    );
+    assert_eq!(inputs.cldr_license, Path::new("inputs/cldr/49/LICENSE"));
+    assert_eq!(
+        inputs.cldr_supplemental,
+        Path::new("inputs/cldr/49/common/supplemental/supplementalData.xml")
     );
     assert_eq!(
         inputs.open_specifications,
@@ -181,6 +221,20 @@ fn names_the_missing_semantic_dump() {
 #[test]
 fn names_the_missing_unicode_data() {
     let path = "inputs/unicode/18.0.0/UnicodeData.txt";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
+}
+
+#[test]
+fn names_the_missing_cldr_plural_rules() {
+    let path = "inputs/cldr/49/common/supplemental/plurals.xml";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
+}
+
+#[test]
+fn names_the_missing_cldr_license() {
+    let path = "inputs/cldr/49/LICENSE";
     let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
     assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
 }

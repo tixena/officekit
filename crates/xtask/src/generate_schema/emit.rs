@@ -10,5 +10,6 @@ pub mod namespaces;
 pub mod paper_sizes;
 pub mod parts;
 pub mod preset_colors;
+pub mod rule_based;
 pub mod semantic;
 pub mod validation;

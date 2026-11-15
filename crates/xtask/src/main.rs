@@ -10,8 +10,9 @@
 //!   from the inputs under `inputs/`. Writes the namespace table, the
 //!   validation tables, the semantic constraint table, the typed tree, the
 //!   conformance classes' impls and tables, and the tables of preset colours,
-//!   paper sizes, built-in number formats, indexed colours and preset shapes,
-//!   and the zeros of the decimal digit families.
+//!   paper sizes, built-in number formats, indexed colours, preset shapes,
+//!   the zeros of the decimal digit families and the number formats in the
+//!   run's language.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 //! - `parity` -- print every error of the given kinds that the parity
@@ -28,7 +29,7 @@ use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
 use xtask::generate_schema::emit::{
     builtin_number_formats, classes, digits, geometry, indexed_colors, markup, namespaces,
-    paper_sizes, parts, preset_colors, semantic, validation,
+    paper_sizes, parts, preset_colors, rule_based, semantic, validation,
 };
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
@@ -197,38 +198,7 @@ fn main() -> Result<ExitCode> {
             parts_summary(&mut out, &part_modules)?;
             let written = classes::emit(&system, &inputs, &emitted, &catalog)?;
             classes_summary(&mut out, &written)?;
-            let colors = preset_colors::emit(&system, &inputs)?;
-            writeln!(
-                out,
-                "wrote {}: {colors} preset colours",
-                preset_colors::PATH
-            )?;
-            let papers = paper_sizes::emit(&system, &inputs)?;
-            writeln!(out, "wrote {}: {papers} paper sizes", paper_sizes::PATH)?;
-            let formats = builtin_number_formats::emit(&system, &inputs)?;
-            writeln!(
-                out,
-                "wrote {}: {formats} built-in number formats",
-                builtin_number_formats::PATH
-            )?;
-            let indexed = indexed_colors::emit(&system, &inputs)?;
-            writeln!(
-                out,
-                "wrote {}: {indexed} indexed colours",
-                indexed_colors::PATH
-            )?;
-            let shapes = geometry::emit(&system, &inputs, Path::new(geometry::PRESETS_PATH))?;
-            writeln!(
-                out,
-                "wrote {}: {shapes} preset shapes",
-                geometry::PRESETS_PATH
-            )?;
-            let families = digits::emit(&system, &inputs)?;
-            writeln!(
-                out,
-                "wrote {}: {families} decimal digit families",
-                digits::PATH
-            )?;
+            tables(&mut out, &system, &inputs)?;
             Ok(ExitCode::SUCCESS)
         }
         Commands::Parity {
@@ -368,6 +338,54 @@ fn parts_summary(out: &mut dyn Write, summary: &parts::Summary) -> Result<()> {
     for note in &summary.notes {
         writeln!(out, "  note: {note}")?;
     }
+    Ok(())
+}
+
+/// Write the tables read from the standard's text and from Unicode's data, each with its
+/// summary line.
+fn tables(out: &mut dyn Write, system: &RealSystem, inputs: &Inputs) -> Result<()> {
+    let colors = preset_colors::emit(system, inputs)?;
+    writeln!(
+        out,
+        "wrote {}: {colors} preset colours",
+        preset_colors::PATH
+    )?;
+    let papers = paper_sizes::emit(system, inputs)?;
+    writeln!(out, "wrote {}: {papers} paper sizes", paper_sizes::PATH)?;
+    let formats = builtin_number_formats::emit(system, inputs)?;
+    writeln!(
+        out,
+        "wrote {}: {formats} built-in number formats",
+        builtin_number_formats::PATH
+    )?;
+    let indexed = indexed_colors::emit(system, inputs)?;
+    writeln!(
+        out,
+        "wrote {}: {indexed} indexed colours",
+        indexed_colors::PATH
+    )?;
+    let shapes = geometry::emit(system, inputs, Path::new(geometry::PRESETS_PATH))?;
+    writeln!(
+        out,
+        "wrote {}: {shapes} preset shapes",
+        geometry::PRESETS_PATH
+    )?;
+    let families = digits::emit(system, inputs)?;
+    writeln!(
+        out,
+        "wrote {}: {families} decimal digit families",
+        digits::PATH
+    )?;
+    let languages = rule_based::emit(system, inputs)?;
+    writeln!(
+        out,
+        "wrote {}: {} locales, {} with words, {} alphabets, {} rule sets",
+        rule_based::PATH,
+        languages.locales,
+        languages.with_words,
+        languages.alphabets,
+        languages.rule_sets
+    )?;
     Ok(())
 }
 

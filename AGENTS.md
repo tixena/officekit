@@ -65,6 +65,7 @@ validation         the validator and its generated tables
   `crates/officekit/src/validation/generated/` (and `generated.rs`);
   `crates/officekit/src/drawing/color/preset.rs`;
   `crates/officekit/src/drawing/geometry/presets.rs`;
+  `crates/officekit/src/docx/numbering/rule_based/locales.rs`;
   `crates/officekit/src/xlsx/size/paper.rs`;
   `crates/officekit/src/xlsx/format/builtin.rs`;
   `crates/officekit/src/xlsx/color/palette.rs`;

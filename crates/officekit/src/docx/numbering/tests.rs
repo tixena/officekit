@@ -4,13 +4,14 @@ use alloc::vec::Vec;
 
 use officekit_markup::wordprocessing::{
     AbstractNumberingDefinition, DecimalNumberValue, DisplayAllLevelsUsingArabicNumerals,
-    NumberingDefinitionInstance, NumberingDefinitionInstanceReferenceNumId,
+    LanguagesForRunContent, NumberingDefinitionInstance, NumberingDefinitionInstanceReferenceNumId,
     NumberingDefinitionInstanceReferenceNumPr, NumberingDefinitions, NumberingFormat,
     NumberingLevelDefinitionOverride, NumberingLevelOverrideDefinition, NumberingLevelReference,
     NumberingLevelStartingValueOverride, NumberingLevelText, NumberingStyleDefinition,
     NumberingStyleReference, ParagraphProperties, ParagraphPropertiesPPrGeneral,
-    ReferencedParagraphStyle, RestartNumberingLevelSymbol, StNumberFormat, StNumberFormatMember,
-    StartingValue, StyleDefinition, StyleDefinitions, StyleTypes, StyleTypesMember,
+    ReferencedParagraphStyle, RestartNumberingLevelSymbol, RunProperties, RunPropertiesContent,
+    StNumberFormat, StNumberFormatMember, StartingValue, StyleDefinition, StyleDefinitions,
+    StyleTypes, StyleTypesMember,
 };
 
 use super::{ListCounters, Numbering};
@@ -576,6 +577,43 @@ fn a_null_level_text_is_the_null_character() {
     assert_eq!(labels_of(&single(Vec::from([null])), &[0]), ["\0"]);
     assert_eq!(labels_of(&single(Vec::from([empty_null])), &[0]), ["\0"]);
     assert_eq!(labels_of(&single(Vec::from([no_text])), &[0]), [""]);
+}
+
+/// `definition` whose run properties hold the `w:lang` `language`.
+fn in_language(
+    mut definition: NumberingLevelOverrideDefinition,
+    language: &str,
+) -> NumberingLevelOverrideDefinition {
+    let mut languages = LanguagesForRunContent::default();
+    languages.val = Some(language.to_owned());
+    let mut properties = RunProperties::default();
+    properties.content = Vec::from([RunPropertiesContent::LanguagesForRunContent(languages)]);
+    definition.run_properties = Some(Box::new(properties));
+    definition
+}
+
+#[test]
+fn a_level_writes_its_label_in_the_language_of_its_run_properties() {
+    let numbering = single(Vec::from([
+        in_language(level(0, StNumberFormatMember::CardinalText, "%1."), "es-ES"),
+        in_language(
+            level(1, StNumberFormatMember::OrdinalText, "%1, %2"),
+            "es-ES",
+        ),
+    ]));
+    assert_eq!(
+        labels_of(&numbering, &[0, 0, 0, 1, 1]),
+        ["Uno.", "Dos.", "Tres.", "Tres, Primero", "Tres, Segundo"]
+    );
+}
+
+#[test]
+fn a_language_cldr_has_no_rules_for_counts_in_decimal() {
+    let numbering = single(Vec::from([in_language(
+        level(0, StNumberFormatMember::CardinalText, "%1."),
+        "xx",
+    )]));
+    assert_eq!(labels_of(&numbering, &[0, 0]), ["1.", "2."]);
 }
 
 #[test]
