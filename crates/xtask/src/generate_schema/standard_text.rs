@@ -8,6 +8,7 @@ use alloc::collections::{BTreeMap, BTreeSet};
 const SECTION_SIGN: char = '\u{a7}';
 const PART_1_REFERENCE: &str = " (Part 1, \u{a7}";
 const PART_SECTIONS: [&str; 5] = ["11.3.", "12.3.", "13.3.", "14.2.", "15.2."];
+const RGB_VALUE: &str = "Specifies a color with RGB value (";
 const LABELS: [&str; 7] = [
     "Content Type:",
     "Content",
@@ -567,6 +568,40 @@ pub fn relationship_sections(text: &str) -> Vec<RelationshipSection> {
         }
     }
     sections
+}
+
+/// Each name section 20.1.10.48 of Part 1 lists for `ST_PresetColorVal`, with the red, green and blue
+/// its row states as `Specifies a color with RGB value (r,g,b)`, in the text's order.
+#[must_use = "this only returns the value"]
+pub fn preset_colors(text: &str) -> Vec<(String, [u8; 3])> {
+    let lines = lines(text);
+    let Some(start) = lines.iter().position(|line| {
+        heading(line, true).is_some_and(|found| found.local == "ST_PresetColorVal")
+    }) else {
+        return Vec::new();
+    };
+    lines[start + 1..]
+        .iter()
+        .take_while(|line| heading(line, true).is_none())
+        .filter_map(|line| preset_color(line))
+        .collect()
+}
+
+/// The name and the red, green and blue of a row of the preset colours' table.
+fn preset_color(line: &str) -> Option<(String, [u8; 3])> {
+    let (row, value) = line.split_once(RGB_VALUE)?;
+    let name = row.split_whitespace().next()?;
+    let mut components = value
+        .trim_end()
+        .strip_suffix(')')?
+        .split(',')
+        .map(|component| component.trim().parse::<u8>().ok());
+    let rgb = [
+        components.next()??,
+        components.next()??,
+        components.next()??,
+    ];
+    components.next().is_none().then(|| (name.to_owned(), rgb))
 }
 
 /// The counts the generator reports over the two texts, on one line.

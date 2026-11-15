@@ -1,6 +1,6 @@
 use super::{
-    element_headings, part_definitions, part_summary, relationship_sections, simple_type_headings,
-    transitional_parts, transitional_relationships,
+    element_headings, part_definitions, part_summary, preset_colors, relationship_sections,
+    simple_type_headings, transitional_parts, transitional_relationships,
 };
 
 #[test]
@@ -265,5 +265,35 @@ fn the_part_summary_joins_wrapped_cells_and_skips_page_furniture() {
     assert_eq!(
         rows,
         expected.map(|(part, root)| (part.to_owned(), root.map(str::to_owned)))
+    );
+}
+
+#[test]
+fn the_preset_colours_are_read_from_their_section_across_a_page_break_and_a_wrapped_title() {
+    let text = concat!(
+        "20.1.10.48   ST_PresetColorVal (Preset Color Value) ........................ 2967\n",
+        "20.1.10.47        ST_PresetCameraType (Preset Camera Type)\n",
+        "aqua (Aqua Preset Color)                Specifies a color with RGB value (1,1,1)\n",
+        "20.1.10.48        ST_PresetColorVal (Preset Color Value)\n",
+        "This simple type represents a preset color value.\n",
+        "                  Enumeration Value                                Description\n",
+        "aliceBlue (Alice Blue Preset Color)          Specifies a color with RGB value (240,248,255)\n",
+        "lightGoldenrodYellow (Light Goldenrod Yellow Preset   Specifies a color with RGB value (250,250,210)\n",
+        "Color)\n",
+        "\n\n                                                                          2968\n",
+        "\u{c}                                20. DrawingML - Framework Reference Material\n",
+        "black (Black Preset Color)                   Specifies a color with RGB value (0,0,0)\n",
+        "broken (Broken Preset Color)                 Specifies a color with RGB value (0,256,0)\n",
+        "20.1.10.49        ST_PresetLineDashVal (Preset Line Dash Value)\n",
+        "white (White Preset Color)                   Specifies a color with RGB value (255,255,255)\n",
+    );
+    let expected = [
+        ("aliceBlue", [240, 248, 255]),
+        ("lightGoldenrodYellow", [250, 250, 210]),
+        ("black", [0, 0, 0]),
+    ];
+    assert_eq!(
+        preset_colors(text),
+        expected.map(|(name, rgb)| (name.to_owned(), rgb))
     );
 }

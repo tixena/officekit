@@ -8,8 +8,8 @@
 //!
 //! - `generate-schema` -- regenerate the generated modules of `officekit`
 //!   from the inputs under `inputs/`. Writes the namespace table, the
-//!   validation tables, the semantic constraint table, the typed tree, and
-//!   the conformance classes' impls and tables.
+//!   validation tables, the semantic constraint table, the typed tree, the
+//!   conformance classes' impls and tables, and the table of preset colours.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 //! - `parity` -- print every error of the given kinds that the parity
@@ -24,7 +24,9 @@ use anyhow::{Context as _, Result};
 use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
-use xtask::generate_schema::emit::{classes, markup, namespaces, parts, semantic, validation};
+use xtask::generate_schema::emit::{
+    classes, markup, namespaces, parts, preset_colors, semantic, validation,
+};
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
 use xtask::parity;
@@ -192,6 +194,12 @@ fn main() -> Result<ExitCode> {
             parts_summary(&mut out, &part_modules)?;
             let written = classes::emit(&system, &inputs, &emitted, &catalog)?;
             classes_summary(&mut out, &written)?;
+            let presets = preset_colors::emit(&system, &inputs)?;
+            writeln!(
+                out,
+                "wrote {}: {presets} preset colours",
+                preset_colors::PATH
+            )?;
             Ok(ExitCode::SUCCESS)
         }
         Commands::Parity {
