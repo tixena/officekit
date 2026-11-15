@@ -1,4 +1,5 @@
-//! Row operations on a table: the trait [`TableRows`], which [`Table`] implements.
+//! Row operations on a table: the trait [`TableRows`], which [`Table`] implements; and the walks
+//! [`every_row`] and [`every_cell`] over the rows and cells the document has.
 
 use alloc::boxed::Box;
 use alloc::vec::Vec;
@@ -87,6 +88,24 @@ impl TableRows for Table {
     }
 }
 
+/// Every `w:tc` of `row` in order, those inside cell-level custom XML elements and content
+/// controls too (ECMA-376 Part 1, sections 17.4.65, 17.5.1.4 and 17.5.2.32).
+#[must_use = "this only returns the value"]
+pub fn every_cell(row: &TableRow) -> Vec<&TableCell> {
+    let mut cells = Vec::new();
+    push_cells(&row.content, &mut cells);
+    cells
+}
+
+/// Every `w:tr` of `table` in order, those inside row-level custom XML elements and content
+/// controls too (ECMA-376 Part 1, sections 17.4.78, 17.5.1.5 and 17.5.2.30).
+#[must_use = "this only returns the value"]
+pub fn every_row(table: &Table) -> Vec<&TableRow> {
+    let mut rows = Vec::new();
+    push_rows(&table.content_row_content, &mut rows);
+    rows
+}
+
 const fn is_header(item: &TableRowPropertiesContent) -> bool {
     matches!(item, TableRowPropertiesContent::RepeatTableRow(_))
 }
@@ -113,6 +132,48 @@ fn paragraph_of(text: &str) -> Paragraph {
     let mut paragraph = Paragraph::default();
     paragraph.content = alloc::vec![ParagraphContent::TextRun(run)];
     paragraph
+}
+
+/// What a cell-level custom XML element or content control holds; nothing for any other item.
+fn cell_children(item: &ContentCellContent) -> &[ContentCellContent] {
+    if let ContentCellContent::CellLevelCustomXMLElement(element) = item {
+        &element.content
+    } else if let ContentCellContent::CellLevelStructuredDocumentTag(tag) = item {
+        tag.content.as_deref().map_or(&[], |inner| &inner.content)
+    } else {
+        &[]
+    }
+}
+
+fn push_cells<'row>(content: &'row [ContentCellContent], cells: &mut Vec<&'row TableCell>) {
+    for item in content {
+        if let ContentCellContent::TableCell(cell) = item {
+            cells.push(cell);
+        } else {
+            push_cells(cell_children(item), cells);
+        }
+    }
+}
+
+fn push_rows<'table>(content: &'table [ContentRowContent], rows: &mut Vec<&'table TableRow>) {
+    for item in content {
+        if let ContentRowContent::TableRow(row) = item {
+            rows.push(row);
+        } else {
+            push_rows(row_children(item), rows);
+        }
+    }
+}
+
+/// What a row-level custom XML element or content control holds; nothing for any other item.
+fn row_children(item: &ContentRowContent) -> &[ContentRowContent] {
+    if let ContentRowContent::RowLevelCustomXMLElement(element) = item {
+        &element.content
+    } else if let ContentRowContent::RowLevelStructuredDocumentTag(tag) = item {
+        tag.content.as_deref().map_or(&[], |inner| &inner.content)
+    } else {
+        &[]
+    }
 }
 
 fn row_positions(table: &Table) -> Vec<usize> {

@@ -1,10 +1,12 @@
 use officekit_markup::wordprocessing::{
-    BookmarkStart, RowLevelStructuredDocumentTag, RowLevelStructuredDocumentTagContent,
+    BookmarkStart, CellLevelCustomXMLElement, CellLevelStructuredDocumentTag,
+    CellLevelStructuredDocumentTagContent, RowLevelCustomXMLElement, RowLevelStructuredDocumentTag,
+    RowLevelStructuredDocumentTagContent, TableCell,
 };
 
 use super::{
     BlockContent, ContentCellContent, ContentRowContent, ParagraphContent, Table, TableRow,
-    TableRowPropertiesContent, TableRows as _, TextRunContent,
+    TableRowPropertiesContent, TableRows as _, TextRunContent, every_cell, every_row,
 };
 use alloc::boxed::Box;
 use alloc::vec::Vec;
@@ -131,4 +133,54 @@ fn table_rows_skips_a_row_level_content_control() {
     let mut table = two_rows();
     table.content_row_content.insert(1, sdt_row());
     assert_eq!(table.table_rows().count(), 2);
+}
+
+#[test]
+fn every_row_takes_the_rows_inside_content_controls_and_custom_xml_in_order() {
+    let mut table = two_rows();
+    let mut control = RowLevelStructuredDocumentTag::default();
+    let mut inner = RowLevelStructuredDocumentTagContent::default();
+    inner.content = alloc::vec![ContentRowContent::TableRow(row_with_cells(3))];
+    control.content = Some(Box::new(inner));
+    let mut custom = RowLevelCustomXMLElement::default();
+    custom.content = alloc::vec![ContentRowContent::TableRow(row_with_cells(4))];
+    table
+        .content_row_content
+        .insert(1, ContentRowContent::RowLevelStructuredDocumentTag(control));
+    table
+        .content_row_content
+        .push(ContentRowContent::RowLevelCustomXMLElement(custom));
+    let widths: Vec<usize> = every_row(&table)
+        .iter()
+        .map(|row| row.content.len())
+        .collect();
+    assert_eq!(widths, [2, 3, 2, 4]);
+}
+
+#[test]
+fn every_cell_takes_the_cells_inside_content_controls_and_custom_xml_in_order() {
+    let tagged = |id: &str| {
+        let mut cell = TableCell::default();
+        cell.id = Some(id.to_owned());
+        ContentCellContent::TableCell(cell)
+    };
+    let mut control = CellLevelStructuredDocumentTag::default();
+    let mut inner = CellLevelStructuredDocumentTagContent::default();
+    inner.content = alloc::vec![tagged("b")];
+    control.content = Some(Box::new(inner));
+    let mut custom = CellLevelCustomXMLElement::default();
+    custom.content = alloc::vec![tagged("c")];
+    let mut row = TableRow::default();
+    row.content = alloc::vec![
+        tagged("a"),
+        ContentCellContent::CellLevelStructuredDocumentTag(control),
+        ContentCellContent::CellLevelCustomXMLElement(custom),
+        ContentCellContent::BookmarkStart(BookmarkStart::default()),
+        tagged("d"),
+    ];
+    let ids: Vec<Option<&str>> = every_cell(&row)
+        .iter()
+        .map(|cell| cell.id.as_deref())
+        .collect();
+    assert_eq!(ids, [Some("a"), Some("b"), Some("c"), Some("d")]);
 }

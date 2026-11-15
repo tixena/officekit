@@ -676,8 +676,12 @@ fn merge_property(held: &mut Element, over: &Element) {
             }
         }
     }
-    if ON_OFF.iter().any(|local| is_word(held, local)) {
-        // An absent `w:val` of an on/off property means on, so `over` replaces it whole.
+    if ON_OFF.iter().any(|local| is_word(held, local))
+        || is_word(held, "vMerge")
+        || is_word(held, "hMerge")
+    {
+        // An absent `w:val` of an on/off property means on, and of `w:vMerge` or `w:hMerge`
+        // continue (Part 1, section 17.4.84; Part 4, section 14.4.13), so `over` replaces it whole.
         let namespace = Namespace::from_uri(WORDPROCESSING);
         held.attributes.retain(|existing| {
             existing.name.namespace != namespace || existing.name.local != "val"

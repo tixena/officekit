@@ -22,8 +22,15 @@ use officekit_markup::wordprocessing::{
     TableWidthUnitsMember, VisuallyRightToLeftTable,
 };
 
-use super::CellPosition;
+use officekit_markup::wordprocessing::{
+    ContentCellContent, ContentRowContent, GridColumnDefinition, GridColumnsBeforeFirstCell,
+    GridColumnsSpanned, MergedCellType, MergedCellTypeMember, RowLevelStructuredDocumentTag,
+    RowLevelStructuredDocumentTagContent, Table, VerticallyMergedCell,
+};
+
+use super::{CellPosition, VerticalMerge};
 use crate::docx::effective::StyleSheet;
+use crate::docx::table::TableRows as _;
 use crate::docx::table_style::TableFormat;
 
 use ConditionalTableStyleFormattingTypesMember::{
@@ -48,6 +55,8 @@ macro_rules! width {
         Some(Box::new(edge))
     }};
 }
+
+const FROM_TOP_RIGHT: VerticalMerge = VerticalMerge::Continues { column: 1, row: 0 };
 
 fn position(row: usize, rows: usize, column: usize, columns: usize) -> CellPosition {
     CellPosition::new(row, rows, column, columns, false)
@@ -1135,5 +1144,258 @@ fn a_row_s_exception_cell_spacing_wins_over_the_first_row_format_s() {
     assert_eq!(
         spacing(&format.properties_at(position(0, 3, 0, 2))),
         Some("29")
+    );
+}
+
+/// Cell properties with a `w:vMerge` of `value`, or of no value.
+fn merged(value: Option<MergedCellTypeMember>) -> TableCellProperties {
+    let mut merge = VerticallyMergedCell::default();
+    merge.val = value.map(MergedCellType::from);
+    let mut cell = TableCellProperties::default();
+    cell.vertically_merged_cell = Some(Box::new(merge));
+    cell
+}
+
+fn restart() -> TableCellProperties {
+    merged(Some(MergedCellTypeMember::Restart))
+}
+
+fn continue_merge() -> TableCellProperties {
+    merged(Some(MergedCellTypeMember::Continue))
+}
+
+fn plain() -> TableCellProperties {
+    TableCellProperties::default()
+}
+
+/// `cell` spanning `span` grid columns.
+fn spanning(mut cell: TableCellProperties, span: i64) -> TableCellProperties {
+    let mut found = GridColumnsSpanned::default();
+    found.val = Some(DecimalNumberValue::from(span.to_string()));
+    cell.grid_columns_spanned = Some(Box::new(found));
+    cell
+}
+
+/// A table over `grid` grid columns with one row per item of `rows`, each cell with its
+/// properties.
+fn merge_table(grid: usize, rows: Vec<Vec<TableCellProperties>>) -> Table {
+    let mut table = Table::default();
+    table.grid.column_definition = alloc::vec![GridColumnDefinition::default(); grid];
+    for cells in rows {
+        let texts = alloc::vec!["x"; cells.len()];
+        let row = table.append_row(&texts);
+        for (item, properties) in row.content.iter_mut().zip(cells) {
+            if let ContentCellContent::TableCell(cell) = item {
+                cell.properties = Some(Box::new(properties));
+            }
+        }
+    }
+    table
+}
+
+fn merges(table: &Table) -> Vec<Vec<VerticalMerge>> {
+    StyleSheet::default()
+        .table(&table.properties)
+        .vertical_merges(table)
+}
+
+/// Gives the last row of `table` a `w:gridBefore` of `count`.
+fn skip_before_last_row(table: &mut Table, count: i64) {
+    let mut before = GridColumnsBeforeFirstCell::default();
+    before.val = Some(DecimalNumberValue::from(count.to_string()));
+    let mut properties = TableRowProperties::default();
+    properties.content = alloc::vec![TableRowPropertiesContent::GridColumnsBeforeFirstCell(
+        before
+    )];
+    if let Some(ContentRowContent::TableRow(row)) = table.content_row_content.last_mut() {
+        row.properties = Some(Box::new(properties));
+    }
+}
+
+#[test]
+fn a_merge_of_three_rows_starts_then_continues_twice() {
+    let table = merge_table(
+        2,
+        alloc::vec![
+            alloc::vec![plain(), restart()],
+            alloc::vec![plain(), continue_merge()],
+            alloc::vec![plain(), continue_merge()],
+        ],
+    );
+    assert_eq!(
+        merges(&table),
+        [
+            [VerticalMerge::NotMerged, VerticalMerge::Starts],
+            [VerticalMerge::NotMerged, FROM_TOP_RIGHT],
+            [VerticalMerge::NotMerged, FROM_TOP_RIGHT],
+        ]
+    );
+    let format = StyleSheet::default().table(&table.properties);
+    assert_eq!(format.vertical_merge(&table, 2, 1), Some(FROM_TOP_RIGHT));
+    assert_eq!(
+        format.vertical_merge(&table, 0, 1),
+        Some(VerticalMerge::Starts)
+    );
+    assert_eq!(format.vertical_merge(&table, 2, 2), None);
+    assert_eq!(format.vertical_merge(&table, 3, 0), None);
+}
+
+#[test]
+fn a_v_merge_with_no_value_continues_the_merge() {
+    let table = merge_table(
+        2,
+        alloc::vec![
+            alloc::vec![plain(), restart()],
+            alloc::vec![plain(), merged(None)]
+        ],
+    );
+    assert_eq!(
+        merges(&table)[1],
+        [VerticalMerge::NotMerged, FROM_TOP_RIGHT]
+    );
+}
+
+#[test]
+fn a_continuing_cell_under_no_cell_of_a_merge_is_ignored() {
+    let table = merge_table(
+        2,
+        alloc::vec![
+            alloc::vec![continue_merge(), plain()],
+            alloc::vec![continue_merge(), continue_merge()],
+        ],
+    );
+    assert_eq!(
+        merges(&table),
+        [
+            [VerticalMerge::NotMerged, VerticalMerge::NotMerged],
+            [VerticalMerge::NotMerged, VerticalMerge::NotMerged],
+        ]
+    );
+}
+
+#[test]
+fn a_cell_with_no_v_merge_closes_the_merge_and_restart_starts_another() {
+    let table = merge_table(
+        1,
+        alloc::vec![
+            alloc::vec![restart()],
+            alloc::vec![plain()],
+            alloc::vec![continue_merge()],
+            alloc::vec![restart()],
+            alloc::vec![continue_merge()],
+        ],
+    );
+    assert_eq!(
+        merges(&table),
+        [
+            [VerticalMerge::Starts],
+            [VerticalMerge::NotMerged],
+            [VerticalMerge::NotMerged],
+            [VerticalMerge::Starts],
+            [VerticalMerge::Continues { column: 0, row: 3 }],
+        ]
+    );
+}
+
+#[test]
+fn a_continuing_cell_under_a_merge_over_other_grid_columns_is_unsettled() {
+    let table = merge_table(
+        2,
+        alloc::vec![
+            alloc::vec![spanning(restart(), 2)],
+            alloc::vec![continue_merge(), plain()],
+            alloc::vec![continue_merge(), plain()],
+        ],
+    );
+    assert_eq!(
+        merges(&table),
+        [
+            alloc::vec![VerticalMerge::Starts],
+            alloc::vec![VerticalMerge::Unsettled, VerticalMerge::NotMerged],
+            alloc::vec![VerticalMerge::Unsettled, VerticalMerge::NotMerged],
+        ]
+    );
+}
+
+#[test]
+fn a_continuing_cell_whose_grid_span_is_no_count_is_unsettled() {
+    let table = merge_table(
+        1,
+        alloc::vec![
+            alloc::vec![restart()],
+            alloc::vec![spanning(continue_merge(), 0)]
+        ],
+    );
+    assert_eq!(merges(&table)[1], [VerticalMerge::Unsettled]);
+}
+
+#[test]
+fn grid_before_puts_the_continuing_cell_under_its_start() {
+    let mut table = merge_table(
+        3,
+        alloc::vec![
+            alloc::vec![plain(), plain(), restart()],
+            alloc::vec![plain(), continue_merge()],
+        ],
+    );
+    skip_before_last_row(&mut table, 1);
+    assert_eq!(
+        merges(&table)[1],
+        [
+            VerticalMerge::NotMerged,
+            VerticalMerge::Continues { column: 2, row: 0 }
+        ]
+    );
+}
+
+#[test]
+fn grid_before_larger_than_the_grid_is_ignored() {
+    let mut table = merge_table(
+        1,
+        alloc::vec![alloc::vec![restart()], alloc::vec![continue_merge()]],
+    );
+    skip_before_last_row(&mut table, 5);
+    assert_eq!(
+        merges(&table)[1],
+        [VerticalMerge::Continues { column: 0, row: 0 }]
+    );
+}
+
+#[test]
+fn a_table_style_s_v_merge_applies_and_a_cell_s_own_with_no_value_continues_it() {
+    let mut style = table_style("Merging", None, Vec::new());
+    style.table_cell_properties = Some(Box::new(restart()));
+    let sheet = sheet_of(alloc::vec![style]);
+    let mut table = merge_table(
+        1,
+        alloc::vec![alloc::vec![plain()], alloc::vec![merged(None)]],
+    );
+    *table.properties = own_table(Some("Merging"), None);
+    assert_eq!(
+        sheet.table(&table.properties).vertical_merges(&table),
+        [
+            [VerticalMerge::Starts],
+            [VerticalMerge::Continues { column: 0, row: 0 }]
+        ]
+    );
+}
+
+#[test]
+fn a_row_inside_a_content_control_continues_the_merge_above_it() {
+    let mut table = merge_table(1, alloc::vec![alloc::vec![restart()]]);
+    let inner_rows = merge_table(1, alloc::vec![alloc::vec![continue_merge()]]);
+    let mut inner = RowLevelStructuredDocumentTagContent::default();
+    inner.content = inner_rows.content_row_content;
+    let mut control = RowLevelStructuredDocumentTag::default();
+    control.content = Some(Box::new(inner));
+    table
+        .content_row_content
+        .push(ContentRowContent::RowLevelStructuredDocumentTag(control));
+    assert_eq!(
+        merges(&table),
+        [
+            [VerticalMerge::Starts],
+            [VerticalMerge::Continues { column: 0, row: 0 }]
+        ]
     );
 }

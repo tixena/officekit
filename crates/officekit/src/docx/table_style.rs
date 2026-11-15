@@ -6,21 +6,24 @@ mod tests;
 
 use alloc::boxed::Box;
 use alloc::vec::Vec;
+use core::ops::Range;
 
 use officekit_markup::Read as _;
 use officekit_markup::Shape;
 use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
-    ConditionalTableStyleFormattingTypesMember, DecimalNumberValue, ParagraphPropertiesPPrGeneral,
-    PreviousTableProperties, RunProperties, StyleConditionalTableFormattingProperties,
-    StyleDefinition, TABLE_CELL_PROPERTIES_SHAPE, TABLE_PROPERTIES_SHAPE,
-    TABLE_ROW_PROPERTIES_SHAPE, TableCellProperties, TableLevelPropertyExceptions, TableProperties,
-    TableRowProperties, TableStyleConditionalFormattingSettingsException, write,
+    ConditionalTableStyleFormattingTypesMember, DecimalNumberValue, MergedCellType,
+    MergedCellTypeMember, ParagraphPropertiesPPrGeneral, PreviousTableProperties, RunProperties,
+    StyleConditionalTableFormattingProperties, StyleDefinition, TABLE_CELL_PROPERTIES_SHAPE,
+    TABLE_PROPERTIES_SHAPE, TABLE_ROW_PROPERTIES_SHAPE, Table, TableCellProperties,
+    TableLevelPropertyExceptions, TableProperties, TableRow, TableRowProperties,
+    TableRowPropertiesContent, TableStyleConditionalFormattingSettingsException, write,
 };
 use officekit_xml::element::{Element, Node};
 use officekit_xml::write::Scope;
 
 use crate::docx::effective::{apply, empty, is_word};
+use crate::docx::table::{every_cell, every_row};
 
 /// The bits of `w:tblLook w:val` (ECMA-376 Part 4, section 14.4.12).
 const FIRST_ROW: u16 = 0x0020;
@@ -74,6 +77,15 @@ pub(super) enum Kind {
     Run,
     /// `w:tblPr`.
     Table,
+}
+
+/// A cell of the row above, as [`TableFormat::vertical_merges`] read it.
+struct Placed {
+    column: usize,
+    /// The grid columns it covers; `None` when the standard does not place it.
+    columns: Option<Range<usize>>,
+    merge: VerticalMerge,
+    row: usize,
 }
 
 /// The properties a table style, or one of its conditional formats, holds.
@@ -131,6 +143,33 @@ impl Sets<'_> {
                 .map(|found| write::previous_table_properties(found, &mut scope)),
         }
     }
+}
+
+/// A cell's place in a vertical merge (ECMA-376 Part 1, sections 17.4.84 and 17.18.57).
+///
+/// Of a continuing cell's content the standard says nothing: such cells "shall be merged into
+/// this merged cell group", and the content stays in the cell as the file holds it.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[non_exhaustive]
+pub enum VerticalMerge {
+    /// A `w:vMerge` of value `continue`, or of none ("its value shall be assumed to be
+    /// continue", section 17.4.84), under a cell of a merge over the same grid columns.
+    Continues {
+        /// The column of the cell that starts the merge, in cells of its row.
+        column: usize,
+        /// The row of the cell that starts the merge.
+        row: usize,
+    },
+    /// No `w:vMerge`: the cell "shall not be part of any vertically merged grouping of cells"; or
+    /// a `continue` under no cell of a merge, which "shall be ignored" (sections 17.4.84, 17.18.57).
+    NotMerged,
+    /// `w:vMerge w:val="restart"`: the cell "starts (or restarts) a group of merged cells in the
+    /// parent table" (section 17.18.57).
+    Starts,
+    /// A `continue` under a merge over other grid columns, which section 17.4.84 calls
+    /// "non-conformant", or one whose `w:val`, `w:gridSpan` or `w:gridBefore` the standard gives
+    /// no meaning.
+    Unsettled,
 }
 
 /// A table's style as that table uses it: the style's chain and the conditional formats the
@@ -283,6 +322,39 @@ impl TableFormat {
             .collect()
     }
 
+    /// Each cell's place in a vertical merge, for the first `count` rows of `table`.
+    fn merges_through(&self, table: &Table, count: usize) -> Vec<Vec<VerticalMerge>> {
+        let rows = every_row(table);
+        let grid = table.grid.column_definition.len();
+        let mut merges = Vec::new();
+        let mut above: Vec<Placed> = Vec::new();
+        for (row_index, row) in rows.iter().take(count).enumerate() {
+            let cells = every_cell(row);
+            let format = self.for_row(row.table_level_property_exceptions.as_deref());
+            let header = holds_header(row);
+            let at = |column| CellPosition::new(row_index, rows.len(), column, cells.len(), header);
+            let mut next = grid_before(&format.row(at(0), row.properties.as_deref()), grid);
+            let mut placed = Vec::with_capacity(cells.len());
+            for (column, cell) in cells.iter().enumerate() {
+                let properties = format.cell(at(column), cell.properties.as_deref());
+                let columns = next
+                    .zip(grid_span(&properties))
+                    .and_then(|(start, span)| Some(start..start.checked_add(span)?));
+                next = columns.as_ref().map(|found| found.end);
+                let merge = merge_of(&properties, columns.as_ref(), &above);
+                placed.push(Placed {
+                    column,
+                    columns,
+                    merge,
+                    row: row_index,
+                });
+            }
+            merges.push(placed.iter().map(|cell| cell.merge).collect());
+            above = placed;
+        }
+        merges
+    }
+
     /// The format of a table whose own properties are `own` and whose style's chain is `chain`.
     pub(super) fn new(chain: Vec<StyleDefinition>, own: &TableProperties) -> Self {
         let mut format = Self {
@@ -390,6 +462,29 @@ impl TableFormat {
         layers.extend(own.map(|found| write::table_row_properties(found, &mut Scope::default())));
         TableRowProperties::read(&laid("trPr", &TABLE_ROW_PROPERTIES_SHAPE, &layers))
     }
+
+    /// The place in a vertical merge of cell `column` of row `row` of `table`, the table of this
+    /// format, counted as [`TableFormat::vertical_merges`] counts; `None` when there is no such cell.
+    #[must_use = "this only returns the value"]
+    pub fn vertical_merge(
+        &self,
+        table: &Table,
+        row: usize,
+        column: usize,
+    ) -> Option<VerticalMerge> {
+        self.merges_through(table, row.saturating_add(1))
+            .get(row)?
+            .get(column)
+            .copied()
+    }
+
+    /// Each cell's place in a vertical merge, by row of [`every_row`] and cell of [`every_cell`],
+    /// from the cells' effective `w:vMerge`, `w:gridSpan` and `w:gridBefore` (sections 17.4.84,
+    /// 17.4.17, 17.4.15 and 17.7.6.9).
+    #[must_use = "this only returns the value"]
+    pub fn vertical_merges(&self, table: &Table) -> Vec<Vec<VerticalMerge>> {
+        self.merges_through(table, usize::MAX)
+    }
 }
 
 /// A band's size: `value`, or 1 when it is absent or below 1 (sections 17.7.6.5 and 17.7.6.7).
@@ -399,6 +494,43 @@ fn band_size(value: Option<&DecimalNumberValue>) -> usize {
         .and_then(|found| usize::try_from(found).ok())
         .filter(|found| *found >= 1)
         .unwrap_or(1)
+}
+
+/// A `continue` over the grid columns `own` under the cells `above`: it joins the merge of the one
+/// cell over the same columns, is ignored under cells of no merge (section 17.18.57), and is
+/// unsettled under a merge over other columns, which section 17.4.84 calls non-conformant.
+fn continued(own: &Range<usize>, above: &[Placed]) -> VerticalMerge {
+    if above.iter().any(|cell| cell.columns.is_none()) {
+        return VerticalMerge::Unsettled;
+    }
+    let over: Vec<&Placed> = above
+        .iter()
+        .filter(|cell| {
+            cell.columns
+                .as_ref()
+                .is_some_and(|theirs| theirs.start < own.end && own.start < theirs.end)
+        })
+        .collect();
+    if let [cell] = over.as_slice()
+        && cell.columns.as_ref() == Some(own)
+    {
+        return if cell.merge == VerticalMerge::Starts {
+            VerticalMerge::Continues {
+                column: cell.column,
+                row: cell.row,
+            }
+        } else {
+            cell.merge
+        };
+    }
+    if over
+        .iter()
+        .all(|cell| cell.merge == VerticalMerge::NotMerged)
+    {
+        VerticalMerge::NotMerged
+    } else {
+        VerticalMerge::Unsettled
+    }
 }
 
 /// `table` with each property `exceptions` states in its place: they "shall be applied to the
@@ -504,6 +636,43 @@ fn excepted(
     table
 }
 
+/// The grid columns skipped before a row's first cell (section 17.4.15): 0 when `w:gridBefore` is
+/// absent or larger than the `grid` columns; `None` when its value is no count.
+fn grid_before(row: &TableRowProperties, grid: usize) -> Option<usize> {
+    let Some(before) = row.content.iter().find_map(|item| {
+        if let TableRowPropertiesContent::GridColumnsBeforeFirstCell(found) = item {
+            Some(found)
+        } else {
+            None
+        }
+    }) else {
+        return Some(0);
+    };
+    let count = usize::try_from(before.val.as_ref()?.value().ok()?).ok()?;
+    Some(if count > grid { 0 } else { count })
+}
+
+/// The grid columns a cell spans (section 17.4.17): 1 when `w:gridSpan` is absent; `None` when its
+/// value is below 1 or no number, which the standard gives no meaning.
+fn grid_span(cell: &TableCellProperties) -> Option<usize> {
+    let Some(span) = cell.grid_columns_spanned.as_deref() else {
+        return Some(1);
+    };
+    usize::try_from(span.val.as_ref()?.value().ok()?)
+        .ok()
+        .filter(|count| *count >= 1)
+}
+
+/// Whether `row` holds `w:tblHeader` turned on (section 17.4.49).
+fn holds_header(row: &TableRow) -> bool {
+    row.properties.as_deref().is_some_and(|properties| {
+        properties.content.iter().any(|item| {
+            matches!(item, TableRowPropertiesContent::RepeatTableRow(found)
+                if found.val.as_ref().is_none_or(|on| !matches!(on.value(), Ok(false))))
+        })
+    })
+}
+
 /// An empty element `local` of `shape` with `layers` laid over it in order.
 fn laid(local: &str, shape: &Shape, layers: &[Element]) -> Element {
     let mut merged = empty(local);
@@ -541,6 +710,26 @@ fn look_of(element: Option<&TableStyleConditionalFormattingSettingsException>) -
         }
     }
     bits
+}
+
+/// The place in a vertical merge of a cell whose effective properties are `cell`, over the grid
+/// columns `columns`, under the cells `above` (sections 17.4.84 and 17.18.57).
+fn merge_of(
+    cell: &TableCellProperties,
+    columns: Option<&Range<usize>>,
+    above: &[Placed],
+) -> VerticalMerge {
+    let Some(merge) = cell.vertically_merged_cell.as_deref() else {
+        return VerticalMerge::NotMerged;
+    };
+    let value = merge.val.as_ref().map(MergedCellType::value);
+    if matches!(value, Some(Ok(MergedCellTypeMember::Restart))) {
+        VerticalMerge::Starts
+    } else if matches!(value, None | Some(Ok(MergedCellTypeMember::Continue))) {
+        columns.map_or(VerticalMerge::Unsettled, |own| continued(own, above))
+    } else {
+        VerticalMerge::Unsettled
+    }
 }
 
 /// `held` set to a clone of `over` when `over` is stated.
