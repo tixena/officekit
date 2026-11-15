@@ -9,6 +9,7 @@ use crate::generate_schema::model::Name;
 /// A struct with the attribute `val` and `children`, in schema order.
 fn node(children: Vec<Child>) -> Node {
     Node {
+        also: Vec::new(),
         attributes: vec![Attribute {
             field: "val".to_owned(),
             local: "val".to_owned(),
@@ -31,6 +32,7 @@ fn node(children: Vec<Child>) -> Node {
 
 fn child(field: &str, target: Target, occurs: Occurs) -> Child {
     Child {
+        also: Vec::new(),
         field: field.to_owned(),
         occurs,
         target,

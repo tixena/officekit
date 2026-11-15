@@ -96,6 +96,8 @@ pub struct Catalog {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct Child {
+    /// The other tags a struct child is written with at this position, outside the standard.
+    pub also: Vec<(Option<u8>, String)>,
     pub field: String,
     pub occurs: Occurs,
     pub target: Target,
@@ -146,6 +148,9 @@ pub struct Module {
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct Node {
+    /// The other tags its element is written with outside the standard, wherever an enum holds
+    /// it: the names the data gives a twin type.
+    pub also: Vec<(Option<u8>, String)>,
     pub attributes: Vec<Attribute>,
     pub body: Body,
     pub doc: String,
@@ -291,6 +296,7 @@ impl Catalog {
         builder.disambiguate();
         simple_types::name_variants(&mut builder.catalog.simples);
         builder.name_fields()?;
+        builder.other_names()?;
         builder.check_names();
         if !builder.problems.is_empty() {
             bail!(
@@ -374,6 +380,14 @@ impl<'data> Builder<'data> {
             && !sources.iter().any(|known| known == source)
         {
             sources.push(source.to_owned());
+        }
+    }
+
+    /// The data's name for a struct's type and tag, under which `SdkData::aliases` keeps a twin.
+    fn alias_name(&self, key: &NodeKey) -> Option<String> {
+        match &key.source {
+            Source::Data(name) => Some(name.clone()),
+            Source::Xsd(_) => self.data_name(key),
         }
     }
 
@@ -956,6 +970,7 @@ impl<'data> Builder<'data> {
             for (target, occurs) in targets {
                 let field = self.field_name(index, target, enum_slots)?;
                 children.push(Child {
+                    also: Vec::new(),
                     field,
                     occurs,
                     target,
@@ -1165,6 +1180,38 @@ impl<'data> Builder<'data> {
         index
     }
 
+    /// The other tags of each twin struct and of each struct child a twin holds: the names the
+    /// data gives them, which an application writes outside the standard.
+    fn other_names(&mut self) -> Result<()> {
+        let data = self.data;
+        for index in 0..self.catalog.nodes.len() {
+            let Some(names) = self
+                .alias_name(&self.catalog.nodes[index].key)
+                .and_then(|name| data.aliases.get(&name))
+            else {
+                continue;
+            };
+            let also = self.tags_of(&names.element)?;
+            let mut body = self.catalog.nodes[index].body.clone();
+            if let Body::Children(children) = &mut body {
+                for child in children {
+                    if let Target::Node(found) = child.target
+                        && let Some(other) = self
+                            .qualified(found)
+                            .and_then(|qualified| names.children.get(&qualified))
+                    {
+                        child.also = self.tags_of(other)?;
+                    }
+                }
+            }
+            if let Some(node) = self.catalog.nodes.get_mut(index) {
+                node.also = also;
+                node.body = body;
+            }
+        }
+        Ok(())
+    }
+
     /// The schema type of a struct, as a name.
     fn owner_type(&self, node: usize) -> Option<Name> {
         match &self.catalog.nodes.get(node)?.key.source {
@@ -1354,6 +1401,7 @@ impl<'data> Builder<'data> {
             let index = self.catalog.nodes.len();
             self.keys.insert(key.clone(), index);
             self.catalog.nodes.push(Node {
+                also: Vec::new(),
                 attributes: Vec::new(),
                 body: Body::Children(Vec::new()),
                 doc: String::new(),
@@ -1648,6 +1696,23 @@ impl<'data> Builder<'data> {
             self.simple(&other)?;
         }
         Ok(Value::Simple(index))
+    }
+
+    /// The tags of names the data writes `prefix:local`.
+    fn tags_of(&self, names: &[String]) -> Result<Vec<(Option<u8>, String)>> {
+        names
+            .iter()
+            .map(|name| {
+                let (prefix, local) = name
+                    .split_once(':')
+                    .with_context(|| format!("the name {name} has no prefix"))?;
+                let uri = self
+                    .data
+                    .uri(prefix)
+                    .with_context(|| format!("the prefix of {name} has no namespace"))?;
+                Ok((self.namespace_id(uri)?, local.to_owned()))
+            })
+            .collect()
     }
 
     /// The namespaces a list of `xsd:any` constraints allows, together.

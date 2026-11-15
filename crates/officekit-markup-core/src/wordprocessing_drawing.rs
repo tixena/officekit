@@ -207,7 +207,7 @@
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
-//   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
+//   d44e2b7e8f03819508c725f1571b84ffa77a1b78d018ec8717906eba3fdaaac3  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The typed tree of the namespace `http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing`, which files write with the prefix `wp`.
@@ -229,8 +229,13 @@ use officekit_xml::values::ValueError;
 const NS_A: Option<NamespaceId> = Some(0);
 const NS_PIC: Option<NamespaceId> = Some(84);
 const NS_R: Option<NamespaceId> = Some(88);
+const NS_W: Option<NamespaceId> = Some(97);
+const NS_WNE: Option<NamespaceId> = Some(110);
 const NS_WP: Option<NamespaceId> = Some(112);
 const NS_WP14: Option<NamespaceId> = Some(113);
+const NS_WPC: Option<NamespaceId> = Some(115);
+const NS_WPG: Option<NamespaceId> = Some(116);
+const NS_WPS: Option<NamespaceId> = Some(117);
 
 pub static RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE: officekit_markup_base::Shape =
     officekit_markup_base::Shape {
@@ -468,11 +473,11 @@ pub static GRAPHICAL_OBJECT_CONTAINER_SHAPE: officekit_markup_base::Shape =
         attributes: &[],
         name: (NS_WP, "graphicFrame"),
         slots: &[
-            officekit_markup_base::Slot::required((NS_WP, "cNvPr")),
-            officekit_markup_base::Slot::required((NS_WP, "cNvFrPr")),
-            officekit_markup_base::Slot::required((NS_WP, "xfrm")),
+            officekit_markup_base::Slot::required_also((NS_WP, "cNvPr"), &[(NS_WPG, "cNvPr")]),
+            officekit_markup_base::Slot::required_also((NS_WP, "cNvFrPr"), &[(NS_WPG, "cNvFrPr")]),
+            officekit_markup_base::Slot::required_also((NS_WP, "xfrm"), &[(NS_WPG, "xfrm")]),
             officekit_markup_base::Slot::required((NS_A, "graphic")),
-            officekit_markup_base::Slot::single((NS_WP, "extLst")),
+            officekit_markup_base::Slot::single_also((NS_WP, "extLst"), &[(NS_WPG, "extLst")]),
         ],
         text: false,
     };
@@ -481,11 +486,14 @@ pub static GROUP_SHAPE_SHAPE: officekit_markup_base::Shape = officekit_markup_ba
     attributes: &[],
     name: (NS_WP, "grpSp"),
     slots: &[
-        officekit_markup_base::Slot::single((NS_WP, "cNvPr")),
-        officekit_markup_base::Slot::required((NS_WP, "cNvGrpSpPr")),
-        officekit_markup_base::Slot::required((NS_WP, "grpSpPr")),
+        officekit_markup_base::Slot::single_also((NS_WP, "cNvPr"), &[(NS_WPG, "cNvPr")]),
+        officekit_markup_base::Slot::required_also(
+            (NS_WP, "cNvGrpSpPr"),
+            &[(NS_WPG, "cNvGrpSpPr")],
+        ),
+        officekit_markup_base::Slot::required_also((NS_WP, "grpSpPr"), &[(NS_WPG, "grpSpPr")]),
         officekit_markup_base::Slot::items(&GROUP_SHAPE_CONTENT_TAGS),
-        officekit_markup_base::Slot::single((NS_WP, "extLst")),
+        officekit_markup_base::Slot::single_also((NS_WP, "extLst"), &[(NS_WPG, "extLst")]),
     ],
     text: false,
 };
@@ -537,7 +545,10 @@ pub static TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE: officekit_markup_base::S
     officekit_markup_base::Shape {
         attributes: &[(None, "id"), (None, "seq")],
         name: (NS_WP, "linkedTxbx"),
-        slots: &[officekit_markup_base::Slot::single((NS_WP, "extLst"))],
+        slots: &[officekit_markup_base::Slot::single_also(
+            (NS_WP, "extLst"),
+            &[(NS_WPS, "extLst")],
+        )],
         text: false,
     };
 
@@ -628,8 +639,11 @@ pub static TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE: officekit_markup_base::Shape =
         attributes: &[(None, "id")],
         name: (NS_WP, "txbx"),
         slots: &[
-            officekit_markup_base::Slot::required((NS_WP, "txbxContent")),
-            officekit_markup_base::Slot::single((NS_WP, "extLst")),
+            officekit_markup_base::Slot::required_also(
+                (NS_WP, "txbxContent"),
+                &[(NS_W, "txbxContent"), (NS_WNE, "txbxContent")],
+            ),
+            officekit_markup_base::Slot::single_also((NS_WP, "extLst"), &[(NS_WPS, "extLst")]),
         ],
         text: false,
     };
@@ -649,11 +663,14 @@ pub static WORDPROCESSING_ML_SHAPE_GROUP_SHAPE: officekit_markup_base::Shape =
         attributes: &[],
         name: (NS_WP, "wgp"),
         slots: &[
-            officekit_markup_base::Slot::single((NS_WP, "cNvPr")),
-            officekit_markup_base::Slot::required((NS_WP, "cNvGrpSpPr")),
-            officekit_markup_base::Slot::required((NS_WP, "grpSpPr")),
+            officekit_markup_base::Slot::single_also((NS_WP, "cNvPr"), &[(NS_WPG, "cNvPr")]),
+            officekit_markup_base::Slot::required_also(
+                (NS_WP, "cNvGrpSpPr"),
+                &[(NS_WPG, "cNvGrpSpPr")],
+            ),
+            officekit_markup_base::Slot::required_also((NS_WP, "grpSpPr"), &[(NS_WPG, "grpSpPr")]),
             officekit_markup_base::Slot::items(&GROUP_SHAPE_CONTENT_TAGS),
-            officekit_markup_base::Slot::single((NS_WP, "extLst")),
+            officekit_markup_base::Slot::single_also((NS_WP, "extLst"), &[(NS_WPG, "extLst")]),
         ],
         text: false,
     };
@@ -674,10 +691,10 @@ pub static WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE: officekit_markup_base::Shape 
         attributes: &[],
         name: (NS_WP, "wpc"),
         slots: &[
-            officekit_markup_base::Slot::single((NS_WP, "bg")),
-            officekit_markup_base::Slot::single((NS_WP, "whole")),
+            officekit_markup_base::Slot::single_also((NS_WP, "bg"), &[(NS_WPC, "bg")]),
+            officekit_markup_base::Slot::single_also((NS_WP, "whole"), &[(NS_WPC, "whole")]),
             officekit_markup_base::Slot::items(&DRAWING_CANVAS_CONTENT_TAGS),
-            officekit_markup_base::Slot::single((NS_WP, "extLst")),
+            officekit_markup_base::Slot::single_also((NS_WP, "extLst"), &[(NS_WPC, "extLst")]),
         ],
         text: false,
     };
@@ -745,13 +762,13 @@ pub static WORDPROCESSING_ML_SHAPE_SHAPE: officekit_markup_base::Shape =
         attributes: &[(None, "normalEastAsianFlow")],
         name: (NS_WP, "wsp"),
         slots: &[
-            officekit_markup_base::Slot::single((NS_WP, "cNvPr")),
+            officekit_markup_base::Slot::single_also((NS_WP, "cNvPr"), &[(NS_WPS, "cNvPr")]),
             officekit_markup_base::Slot::required_choice(&SHAPE_NON_VISUAL_PROPERTIES_CONTENT_TAGS),
-            officekit_markup_base::Slot::required((NS_WP, "spPr")),
-            officekit_markup_base::Slot::single((NS_WP, "style")),
-            officekit_markup_base::Slot::single((NS_WP, "extLst")),
+            officekit_markup_base::Slot::required_also((NS_WP, "spPr"), &[(NS_WPS, "spPr")]),
+            officekit_markup_base::Slot::single_also((NS_WP, "style"), &[(NS_WPS, "style")]),
+            officekit_markup_base::Slot::single_also((NS_WP, "extLst"), &[(NS_WPS, "extLst")]),
             officekit_markup_base::Slot::choice(&SHAPE_TEXT_CONTENT_TAGS),
-            officekit_markup_base::Slot::required((NS_WP, "bodyPr")),
+            officekit_markup_base::Slot::required_also((NS_WP, "bodyPr"), &[(NS_WPS, "bodyPr")]),
         ],
         text: false,
     };
@@ -803,9 +820,13 @@ pub static DRAWING_CANVAS_CONTENT_TAGS: officekit_markup_base::Accept =
         tags: &[
             (NS_WP, "contentPart"),
             (NS_WP, "graphicFrame"),
+            (NS_WPC, "graphicFrame"),
+            (NS_WPG, "graphicFrame"),
             (NS_PIC, "pic"),
             (NS_WP, "wsp"),
+            (NS_WPS, "wsp"),
             (NS_WP, "wgp"),
+            (NS_WPG, "wgp"),
         ],
     };
 
@@ -815,21 +836,35 @@ pub static GROUP_SHAPE_CONTENT_TAGS: officekit_markup_base::Accept =
         tags: &[
             (NS_WP, "contentPart"),
             (NS_WP, "graphicFrame"),
+            (NS_WPC, "graphicFrame"),
+            (NS_WPG, "graphicFrame"),
             (NS_WP, "grpSp"),
+            (NS_WPG, "grpSp"),
             (NS_PIC, "pic"),
             (NS_WP, "wsp"),
+            (NS_WPS, "wsp"),
         ],
     };
 
 pub static SHAPE_NON_VISUAL_PROPERTIES_CONTENT_TAGS: officekit_markup_base::Accept =
     officekit_markup_base::Accept {
         any: None,
-        tags: &[(NS_WP, "cNvCnPr"), (NS_WP, "cNvSpPr")],
+        tags: &[
+            (NS_WP, "cNvCnPr"),
+            (NS_WPS, "cNvCnPr"),
+            (NS_WP, "cNvSpPr"),
+            (NS_WPS, "cNvSpPr"),
+        ],
     };
 
 pub static SHAPE_TEXT_CONTENT_TAGS: officekit_markup_base::Accept = officekit_markup_base::Accept {
     any: None,
-    tags: &[(NS_WP, "linkedTxbx"), (NS_WP, "txbx")],
+    tags: &[
+        (NS_WP, "linkedTxbx"),
+        (NS_WPS, "linkedTxbx"),
+        (NS_WP, "txbx"),
+        (NS_WPS, "txbx"),
+    ],
 };
 
 /// The `wp:posOffset` element, Absolute Position Offset (ECMA-376 Part 1, section 20.4.2.12). Its
@@ -2861,14 +2896,14 @@ impl officekit_markup_base::Read for DrawingCanvasContent {
     fn read(element: &Element) -> Self {
         match officekit_markup_base::name(element) {
             Some((NS_WP, "contentPart")) => Self::ContentPart(officekit_markup_base::read(element)),
-            Some((NS_WP, "graphicFrame")) => {
+            Some((NS_WP | NS_WPC | NS_WPG, "graphicFrame")) => {
                 Self::GraphicalObjectContainer(officekit_markup_base::read(element))
             }
             Some((NS_PIC, "pic")) => Self::Picture(officekit_markup_base::read(element)),
-            Some((NS_WP, "wsp")) => {
+            Some((NS_WP | NS_WPS, "wsp")) => {
                 Self::WordprocessingMLShape(officekit_markup_base::read(element))
             }
-            Some((NS_WP, "wgp")) => {
+            Some((NS_WP | NS_WPG, "wgp")) => {
                 Self::WordprocessingMLShapeGroup(officekit_markup_base::read(element))
             }
             _ => Self::Other(Node::Element(element.clone())),
@@ -3165,12 +3200,14 @@ impl officekit_markup_base::Read for GroupShapeContent {
     fn read(element: &Element) -> Self {
         match officekit_markup_base::name(element) {
             Some((NS_WP, "contentPart")) => Self::ContentPart(officekit_markup_base::read(element)),
-            Some((NS_WP, "graphicFrame")) => {
+            Some((NS_WP | NS_WPC | NS_WPG, "graphicFrame")) => {
                 Self::GraphicalObjectContainer(officekit_markup_base::read(element))
             }
-            Some((NS_WP, "grpSp")) => Self::GroupShape(officekit_markup_base::read(element)),
+            Some((NS_WP | NS_WPG, "grpSp")) => {
+                Self::GroupShape(officekit_markup_base::read(element))
+            }
             Some((NS_PIC, "pic")) => Self::Picture(officekit_markup_base::read(element)),
-            Some((NS_WP, "wsp")) => {
+            Some((NS_WP | NS_WPS, "wsp")) => {
                 Self::WordprocessingMLShape(officekit_markup_base::read(element))
             }
             _ => Self::Other(Node::Element(element.clone())),
@@ -4091,10 +4128,10 @@ impl officekit_markup_base::Read for ShapeNonVisualPropertiesContent {
 
     fn read(element: &Element) -> Self {
         match officekit_markup_base::name(element) {
-            Some((NS_WP, "cNvCnPr")) => {
+            Some((NS_WP | NS_WPS, "cNvCnPr")) => {
                 Self::NonVisualConnectorShapeDrawingProperties(officekit_markup_base::read(element))
             }
-            Some((NS_WP, "cNvSpPr")) => {
+            Some((NS_WP | NS_WPS, "cNvSpPr")) => {
                 Self::NonVisualDrawingPropertiesForAShape(officekit_markup_base::read(element))
             }
             _ => Self::Other(Node::Element(element.clone())),
@@ -4258,10 +4295,10 @@ impl officekit_markup_base::Read for ShapeTextContent {
 
     fn read(element: &Element) -> Self {
         match officekit_markup_base::name(element) {
-            Some((NS_WP, "linkedTxbx")) => {
+            Some((NS_WP | NS_WPS, "linkedTxbx")) => {
                 Self::TextualContentsOfShapeLinkedTxbx(officekit_markup_base::read(element))
             }
-            Some((NS_WP, "txbx")) => {
+            Some((NS_WP | NS_WPS, "txbx")) => {
                 Self::TextualContentsOfShapeTxbx(officekit_markup_base::read(element))
             }
             _ => Self::Other(Node::Element(element.clone())),

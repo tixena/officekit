@@ -19,11 +19,13 @@ pub enum Class {
     Transitional,
 }
 
-/// One node's impl: its struct, its reader and writer function, its tag, and
-/// the `conformance` attribute of a part's root.
+/// One node's impl: its struct, its reader and writer function, its tag and the other tags
+/// it is read under, and the `conformance` attribute of a part's root.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub struct Impl {
+    /// The other tags an application writes the node's element with, outside the standard.
+    pub also: Vec<Tag>,
     pub conformance: Option<Tag>,
     pub function: String,
     pub name: String,
@@ -98,6 +100,7 @@ pub fn module(
                 .tag
                 .0
                 .into_iter()
+                .chain(found.also.iter().filter_map(|tag| tag.0))
                 .chain(found.conformance.iter().filter_map(|tag| tag.0))
         })
         .collect();
@@ -715,6 +718,9 @@ fn impl_text(class: Class, module: &str, prefixes: &[String], found: &Impl) -> S
         out,
         "    fn from_{lower}(element: &Element) -> Result<Self, ReadError> {{"
     );
+    if !found.also.is_empty() {
+        out.push_str(&other_names(prefixes, found));
+    }
     layout::line(
         "        ",
         &Expr::call(
@@ -748,6 +754,45 @@ fn impl_text(class: Class, module: &str, prefixes: &[String], found: &Impl) -> S
     );
     layout::line("        ", &call, "", &mut out);
     out.push_str("    }\n}\n");
+    out
+}
+
+/// The read of a node whose element has one of its other tags: `if`, each tag's check joined
+/// by `||` as rustfmt lays the condition out, and the read returned.
+fn other_names(prefixes: &[String], found: &Impl) -> String {
+    let checks: Vec<String> = found
+        .also
+        .iter()
+        .map(|other| {
+            Expr::call(
+                "class_rules::is",
+                vec![tag(prefixes, other), Expr::atom("&element.name")],
+            )
+            .one_line()
+        })
+        .collect();
+    let flat = format!("        if {} {{\n", checks.join(" || "));
+    let mut out = if flat.len() - 1 <= layout::MAX_WIDTH {
+        flat
+    } else {
+        format!(
+            "        if {}\n        {{\n",
+            checks.join("\n            || ")
+        )
+    };
+    layout::line(
+        "            return ",
+        &Expr::call(
+            "Ok",
+            vec![Expr::call(
+                &format!("read::{}", found.function),
+                vec![Expr::atom("element")],
+            )],
+        ),
+        ";",
+        &mut out,
+    );
+    out.push_str("        }\n");
     out
 }
 

@@ -16,6 +16,7 @@ const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 /// and an application.
 fn data(rules: &[(&str, &str, &str)]) -> SdkData {
     SdkData {
+        aliases: BTreeMap::default(),
         enumerations: BTreeMap::default(),
         namespaces: vec![DataNamespace {
             prefix: "w".to_owned(),

@@ -16,6 +16,7 @@ fn module(name: &str) -> Module {
 
 fn node(module: usize, name: &str) -> Node {
     Node {
+        also: Vec::new(),
         attributes: Vec::new(),
         body: Body::Children(Vec::new()),
         doc: String::new(),

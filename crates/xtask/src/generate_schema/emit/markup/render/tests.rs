@@ -17,6 +17,7 @@ fn node(body: Body) -> Node {
         value: Value::Text,
     };
     Node {
+        also: Vec::new(),
         attributes: vec![attribute("val"), attribute("alignment")],
         body,
         doc: String::new(),
@@ -35,6 +36,7 @@ fn node(body: Body) -> Node {
 #[test]
 fn without_children_copies_the_attributes_and_leaves_each_declared_child_at_its_default() {
     let sample = node(Body::Children(vec![Child {
+        also: Vec::new(),
         field: "properties".to_owned(),
         occurs: Occurs::Optional,
         target: Target::Node(0),
@@ -77,16 +79,19 @@ fn without_children_copies_a_text_value_beside_the_attributes() {
 fn into_user_data_catalog() -> Catalog {
     let mut sample = node(Body::Children(vec![
         Child {
+            also: Vec::new(),
             field: "content".to_owned(),
             occurs: Occurs::List,
             target: Target::Enum(0),
         },
         Child {
+            also: Vec::new(),
             field: "properties".to_owned(),
             occurs: Occurs::Optional,
             target: Target::Node(1),
         },
         Child {
+            also: Vec::new(),
             field: "required".to_owned(),
             occurs: Occurs::Required,
             target: Target::Node(1),

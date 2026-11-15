@@ -198,7 +198,7 @@ fn declared_order(
 }
 
 /// The element of a type's name: `w:pPr` of `w:CT_PPr/w:pPr`.
-fn element_of(type_name: &str) -> &str {
+pub(super) fn element_of(type_name: &str) -> &str {
     type_name
         .split_once('/')
         .map_or(type_name, |(_, element)| element)
@@ -412,6 +412,51 @@ fn declaration<'set>(
         .complex_types
         .get(&Name::new(&namespace.uri, local))
         .with_context(|| format!("the standard has no `{schema_type}`"))
+}
+
+/// Whether the standard's `schema_type`, `wp:CT_TextboxInfo`, declares the element `element`,
+/// `wp:txbxContent`, in its content model or a group it references.
+pub(super) fn declares(
+    data: &SdkData,
+    standard: &SchemaSet,
+    schema_type: &str,
+    element: &str,
+) -> Result<bool> {
+    fn held_in(standard: &SchemaSet, particle: &Particle, element: &Name) -> bool {
+        match &particle.kind {
+            ParticleKind::Element {
+                name,
+                type_ref: _type_ref,
+            } => name == element,
+            ParticleKind::All(items)
+            | ParticleKind::Choice(items)
+            | ParticleKind::Sequence(items) => {
+                items.iter().any(|item| held_in(standard, item, element))
+            }
+            ParticleKind::GroupRef(name) => standard
+                .groups
+                .get(name)
+                .is_some_and(|group| held_in(standard, &group.particle, element)),
+            ParticleKind::Any {
+                namespace: _namespace,
+                process_contents: _process_contents,
+            } => false,
+        }
+    }
+    let (prefix, local) = element
+        .split_once(':')
+        .with_context(|| format!("`{element}` has no `:`"))?;
+    let uri = &data
+        .namespaces
+        .iter()
+        .find(|namespace| namespace.prefix == prefix)
+        .with_context(|| format!("the data has no namespace `{prefix}`"))?
+        .uri;
+    let declared = standard.effective(declaration(data, standard, schema_type)?);
+    Ok(match &declared.content {
+        Content::Particle(particle) => held_in(standard, particle, &Name::new(uri, local)),
+        Content::Empty | Content::Simple(_) => false,
+    })
 }
 
 /// Point every choice that holds `before` at `member`, ahead of it.

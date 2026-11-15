@@ -970,8 +970,20 @@ fn tag(
     local: &str,
     namespaces: &mut BTreeSet<Option<u8>>,
 ) -> Expr {
+    Expr::Tuple(vec![
+        Expr::Atom(space(names, namespace, namespaces)),
+        Expr::Atom(layout::string(local)),
+    ])
+}
+
+/// A tag's namespace, `NS_W`, or `None`.
+fn space(
+    names: &Names<'_>,
+    namespace: Option<u8>,
+    namespaces: &mut BTreeSet<Option<u8>>,
+) -> String {
     namespaces.insert(namespace);
-    let space = namespace.map_or_else(
+    namespace.map_or_else(
         || "None".to_owned(),
         |id| {
             namespace_constant(
@@ -982,8 +994,36 @@ fn tag(
                     .map_or_else(String::new, Clone::clone),
             )
         },
-    );
-    Expr::Tuple(vec![Expr::Atom(space), Expr::Atom(layout::string(local))])
+    )
+}
+
+/// The tag literals an enum reads a struct's arm by: its own, then each of its other names.
+fn arm_tags(names: &Names<'_>, node: &Node, namespaces: &mut BTreeSet<Option<u8>>) -> Vec<Expr> {
+    iter::once((node.namespace, node.key.tag.local.as_str()))
+        .chain(node.also.iter().map(|(id, local)| (*id, local.as_str())))
+        .map(|(id, local)| tag(names, id, local, namespaces))
+        .collect()
+}
+
+/// The pattern an enum's read matches a struct's arm by, its other names nested as clippy's
+/// `unnested_or_patterns` asks: `Some((NS_WP | NS_WPS, "wsp"))`.
+fn arm_pattern(names: &Names<'_>, node: &Node, namespaces: &mut BTreeSet<Option<u8>>) -> String {
+    let mut by_local: Vec<(&str, Vec<String>)> = Vec::new();
+    for (id, local) in iter::once((node.namespace, node.key.tag.local.as_str()))
+        .chain(node.also.iter().map(|(id, local)| (*id, local.as_str())))
+    {
+        let constant = space(names, id, namespaces);
+        if let Some((_, spaces)) = by_local.iter_mut().find(|(known, _)| *known == local) {
+            spaces.push(constant);
+        } else {
+            by_local.push((local, vec![constant]));
+        }
+    }
+    let alternatives: Vec<String> = by_local
+        .iter()
+        .map(|(local, spaces)| format!("({}, {})", spaces.join(" | "), layout::string(local)))
+        .collect();
+    format!("Some({})", alternatives.join(" | "))
 }
 
 /// A struct's definition, `NameWith<X>`, with the alias `Name` for the tree a
@@ -1355,15 +1395,25 @@ fn shape_text(
                             Occurs::Required => "required",
                         };
                         let found = &catalog.nodes[child_index];
-                        Expr::call(
-                            &format!("{runtime}::Slot::{function}"),
-                            vec![tag(
-                                names,
-                                found.namespace,
-                                &found.key.tag.local,
-                                namespaces,
-                            )],
-                        )
+                        let mut arguments = vec![tag(
+                            names,
+                            found.namespace,
+                            &found.key.tag.local,
+                            namespaces,
+                        )];
+                        let suffix = if child.also.is_empty() {
+                            ""
+                        } else {
+                            arguments.push(Expr::Slice(
+                                child
+                                    .also
+                                    .iter()
+                                    .map(|(id, local)| tag(names, *id, local, namespaces))
+                                    .collect(),
+                            ));
+                            "_also"
+                        };
+                        Expr::call(&format!("{runtime}::Slot::{function}{suffix}"), arguments)
                     }
                     (Target::Enum(found), occurs) => {
                         let function = match (catalog.enums[found].kind, occurs) {
@@ -1404,7 +1454,8 @@ fn shape_text(
     out
 }
 
-/// An enum's tags: those of its arms, and its wildcard's namespaces.
+/// An enum's tags: those of its arms, each followed by its other names, and its wildcard's
+/// namespaces.
 fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Option<u8>>) -> String {
     let catalog = names.catalog;
     let runtime = names.runtime();
@@ -1414,10 +1465,7 @@ fn tags_text(names: &Names<'_>, found: &EnumDef, namespaces: &mut BTreeSet<Optio
         found
             .arms
             .iter()
-            .map(|(_, arm)| {
-                let node = &catalog.nodes[*arm];
-                tag(names, node.namespace, &node.key.tag.local, namespaces)
-            })
+            .flat_map(|(_, arm)| arm_tags(names, &catalog.nodes[*arm], namespaces))
             .collect()
     };
     let any = found.wildcard.as_ref().map_or_else(
@@ -1654,15 +1702,14 @@ fn enum_read(
         .arms
         .iter()
         .map(|(variant, arm)| {
-            let node = &catalog.nodes[*arm];
-            let key = tag(names, node.namespace, &node.key.tag.local, namespaces);
+            let pattern = arm_pattern(names, &catalog.nodes[*arm], namespaces);
             let read = Expr::call(&format!("{runtime}::read"), vec![Expr::atom("element")]);
             let value = if found.boxed.contains(arm) {
                 Expr::call("Box::new", vec![read])
             } else {
                 read
             };
-            (format!("Some({})", key.one_line()), variant.clone(), value)
+            (pattern, variant.clone(), value)
         })
         .collect();
     let arm_text =

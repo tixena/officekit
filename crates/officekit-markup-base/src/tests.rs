@@ -1,18 +1,26 @@
 use officekit_xml::element::{Document, Element, NamespaceDeclaration, Node};
-use officekit_xml::name::Namespace;
+use officekit_xml::name::{Namespace, NamespaceId, QName};
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
-use super::{Children, Extra, Pending, Placement, Scope, Shape, Slot, Unknown};
+use super::{
+    Children, Extra, Field, Pending, Placement, Reader, Scope, Shape, Slot, Unknown, Writer,
+};
 
 const EXTENDED_PROPERTIES: &str =
     "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
+const WP: &str = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
+const WPS: &str = "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
 const XML: &str = "http://www.w3.org/XML/1998/namespace";
 const DECLARE_W: &str = "xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"";
 const DECLARE_X: &str = "xmlns:x=\"urn:x\"";
+
+/// The ids of `wp` and `wps` in the table of namespaces.
+const WP_ID: Option<NamespaceId> = Some(112);
+const WPS_ID: Option<NamespaceId> = Some(117);
 
 static KEEP_SHAPE: Shape = Shape {
     attributes: &[],
@@ -21,6 +29,18 @@ static KEEP_SHAPE: Shape = Shape {
         Slot::single((Some(97), "pStyle")),
         Slot::single((Some(97), "keepNext")),
         Slot::list((None, "other")),
+    ],
+    text: false,
+};
+
+/// `wp:wsp`, each of whose positions Word also writes in `wps`.
+static SHAPE_WITH_OTHER_NAMES: Shape = Shape {
+    attributes: &[],
+    name: (WP_ID, "wsp"),
+    slots: &[
+        Slot::single_also((WP_ID, "cNvPr"), &[(WPS_ID, "cNvPr")]),
+        Slot::required_also((WP_ID, "spPr"), &[(WPS_ID, "spPr")]),
+        Slot::list_also((WP_ID, "extLst"), &[(WPS_ID, "extLst")]),
     ],
     text: false,
 };
@@ -163,6 +183,7 @@ fn unknown_of(element: &Element) -> Unknown {
         absent: Vec::new(),
         attributes: element.attributes.clone(),
         children: Vec::new(),
+        name: None,
         namespace_declarations: element.namespace_declarations.clone(),
     }
 }
@@ -377,4 +398,105 @@ fn a_shape_gives_the_position_that_takes_an_element() {
         .map(|element| KEEP_SHAPE.slot_of(element))
         .collect();
     assert_eq!(found, [Some(1), Some(0), None, None, Some(2)]);
+}
+
+/// An element `prefix:local` of `uri` holding `children`.
+fn element_of(prefix: &str, local: &str, uri: &str, children: Vec<Element>) -> Element {
+    let mut element = Element::new(QName::prefixed(prefix, local, uri));
+    element.children = children.into_iter().map(Node::Element).collect();
+    element
+}
+
+#[test]
+fn the_ids_of_the_word_drawing_namespaces_are_the_tables() {
+    assert_eq!(Namespace::from_uri(WP), Namespace::Known(WP_ID.unwrap()));
+    assert_eq!(Namespace::from_uri(WPS), Namespace::Known(WPS_ID.unwrap()));
+}
+
+#[test]
+fn a_position_takes_its_child_under_its_own_name_and_each_other_name() {
+    let children = [
+        element_of("wps", "cNvPr", WPS, Vec::new()),
+        element_of("wp", "cNvPr", WP, Vec::new()),
+        element_of("wps", "spPr", WPS, Vec::new()),
+        element_of("wps", "extLst", WPS, Vec::new()),
+        element_of("wp", "extLst", WP, Vec::new()),
+        element_of("w", "cNvPr", W, Vec::new()),
+        element_of("wps", "bodyPr", WPS, Vec::new()),
+    ];
+    let found: Vec<Option<usize>> = children
+        .iter()
+        .map(|element| SHAPE_WITH_OTHER_NAMES.slot_of(element))
+        .collect();
+    assert_eq!(
+        found,
+        [Some(0), Some(0), Some(1), Some(2), Some(2), None, None]
+    );
+}
+
+#[test]
+fn a_node_read_under_another_name_keeps_it_and_is_written_with_it() {
+    let element = element_of(
+        "wps",
+        "wsp",
+        WPS,
+        vec![
+            element_of("wps", "cNvPr", WPS, Vec::new()),
+            element_of("wps", "spPr", WPS, Vec::new()),
+            element_of("wps", "extLst", WPS, Vec::new()),
+            element_of("wps", "extLst", WPS, Vec::new()),
+        ],
+    );
+    let mut reader = Reader::new(&element, &SHAPE_WITH_OTHER_NAMES);
+    let mut read: Vec<(usize, QName)> = Vec::new();
+    for (index, field) in &mut reader {
+        if let Field::Element(child) = field {
+            read.push((index, child.name.clone()));
+        }
+    }
+    let unknown = reader.finish();
+    let names: Vec<(usize, &str)> = read
+        .iter()
+        .map(|(index, name)| (*index, name.local.as_str()))
+        .collect();
+    assert_eq!(
+        names,
+        [(0, "cNvPr"), (1, "spPr"), (2, "extLst"), (2, "extLst")]
+    );
+    assert_eq!(unknown.absent, []);
+    assert_eq!(unknown.children, []);
+    assert_eq!(unknown.name, Some(Box::new(element.name.clone())));
+
+    let mut scope = Scope::default();
+    let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, &unknown).finish();
+    assert_eq!(written.name, element.name);
+}
+
+#[test]
+fn a_node_read_under_its_own_name_or_built_in_code_is_written_with_its_shapes_name() {
+    let element = element_of("wp", "wsp", WP, Vec::new());
+    let unknown = Reader::new(&element, &SHAPE_WITH_OTHER_NAMES).finish();
+    assert_eq!(unknown.name, None);
+    assert_eq!(unknown.absent, [1]);
+
+    for kept in [unknown, Unknown::default()] {
+        let mut scope = Scope::default();
+        let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, &kept).finish();
+        assert_eq!(written.name, QName::prefixed("wp", "wsp", WP));
+    }
+}
+
+#[test]
+fn a_name_set_in_code_names_the_element_written() {
+    let unknown = Unknown {
+        name: Some(Box::new(QName::prefixed("wps", "wsp", WPS))),
+        ..Unknown::default()
+    };
+    let mut scope = Scope::default();
+    let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, &unknown).finish();
+    assert_eq!(written.name, QName::prefixed("wps", "wsp", WPS));
+    assert_eq!(
+        written.namespace_declarations,
+        [NamespaceDeclaration::new("wps".to_owned(), WPS.to_owned())]
+    );
 }

@@ -165,12 +165,14 @@ fn a_module_line_past_the_width_is_braced_across_three_lines() {
 fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
     let impls = [
         Impl {
+            also: Vec::new(),
             conformance: Some((Some(0), "conformance".to_owned())),
             function: "document".to_owned(),
             name: "Document".to_owned(),
             tag: (Some(0), "document".to_owned()),
         },
         Impl {
+            also: Vec::new(),
             conformance: None,
             function: "paragraph".to_owned(),
             name: "Paragraph".to_owned(),
@@ -225,6 +227,59 @@ fn a_module_holds_each_node_impl_and_a_root_sets_conformance() {
              }\n\
          }\n"
     );
+}
+
+#[test]
+fn a_node_with_other_names_reads_under_each_before_its_own() {
+    let prefixes = ["wp".to_owned(), "wpg".to_owned(), "wps".to_owned()];
+    let impls = [
+        Impl {
+            also: vec![
+                (Some(1), "extLst".to_owned()),
+                (Some(2), "extLst".to_owned()),
+            ],
+            conformance: None,
+            function: "extension_list".to_owned(),
+            name: "ExtensionList".to_owned(),
+            tag: (Some(0), "extLst".to_owned()),
+        },
+        Impl {
+            also: vec![(Some(2), "wsp".to_owned())],
+            conformance: None,
+            function: "wordprocessing_ml_shape".to_owned(),
+            name: "WordprocessingMLShape".to_owned(),
+            tag: (Some(0), "wsp".to_owned()),
+        },
+    ];
+    let module = text::module(
+        "",
+        Class::Transitional,
+        "wordprocessing_drawing",
+        &prefixes,
+        &impls,
+    );
+    let expected = [
+        "const NS_WP: Option<NamespaceId> = Some(0);\n\
+         const NS_WPG: Option<NamespaceId> = Some(1);\n\
+         const NS_WPS: Option<NamespaceId> = Some(2);\n",
+        "    fn from_transitional(element: &Element) -> Result<Self, ReadError> {\n        \
+             if class_rules::is((NS_WPG, \"extLst\"), &element.name)\n            \
+                 || class_rules::is((NS_WPS, \"extLst\"), &element.name)\n        \
+             {\n            \
+                 return Ok(read::extension_list(element));\n        \
+             }\n        \
+             class_rules::read(element, (NS_WP, \"extLst\"), read::extension_list)\n    \
+         }\n",
+        "    fn from_transitional(element: &Element) -> Result<Self, ReadError> {\n        \
+             if class_rules::is((NS_WPS, \"wsp\"), &element.name) {\n            \
+                 return Ok(read::wordprocessing_ml_shape(element));\n        \
+             }\n        \
+             class_rules::read(element, (NS_WP, \"wsp\"), read::wordprocessing_ml_shape)\n    \
+         }\n",
+    ];
+    for text in expected {
+        assert!(module.contains(text), "{text}\nis not in\n{module}");
+    }
 }
 
 #[test]

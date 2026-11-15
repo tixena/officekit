@@ -38,7 +38,7 @@ use super::namespaces;
 use super::validation::{self, Emitted};
 use crate::generate_schema::inputs::{Inputs, listed};
 use crate::generate_schema::model::{Name, SchemaSet, TypeRef};
-use crate::generate_schema::sdk_data::{DataVersion, SdkData};
+use crate::generate_schema::sdk_data::{DataVersion, SdkData, TwinNames};
 
 #[cfg(test)]
 mod tests;
@@ -110,6 +110,8 @@ pub enum Source {
 /// SDK 3.5.1's data, with the lookups the typed tree needs.
 #[non_exhaustive]
 pub struct Data<'data> {
+    /// The names the data gives each twin type and its children, from the corrected data.
+    pub aliases: &'data BTreeMap<String, TwinNames>,
     /// The ECMA tags of the Transitional schemas, each with its types.
     pub ecma_tags: BTreeMap<Name, Vec<TypeRef>>,
     /// The prefixes of the namespaces dated Office 2010 to Microsoft 365.
@@ -183,6 +185,7 @@ impl<'data> Data<'data> {
                 .push(type_ref.clone());
         }
         Self {
+            aliases: &sdk.aliases,
             ecma_tags,
             extension_prefixes: sdk
                 .namespaces
@@ -380,7 +383,8 @@ where
     let sdk_corrections_text =
         ready_now(system.read_to_string(Path::new(validation::SDK_CORRECTIONS_PATH)))
             .with_context(|| format!("cannot read {}", validation::SDK_CORRECTIONS_PATH))?;
-    let data = Data::new(&emitted.data, &transitional);
+    let mut data = Data::new(&emitted.data, &transitional);
+    data.aliases = &emitted.corrected.aliases;
     let mut catalog = structs::Catalog::build(
         &data,
         &strict,

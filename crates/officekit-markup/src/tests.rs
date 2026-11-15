@@ -47,9 +47,9 @@ fn the_plain_tree_is_eq() {
 
 #[test]
 fn the_slot_adds_nothing_to_the_size() {
-    assert_eq!(size_of::<Paragraph>(), 320);
-    assert_eq!(size_of::<Document>(), 136);
-    assert_eq!(size_of::<TextRun>(), 200);
+    assert_eq!(size_of::<Paragraph>(), 328);
+    assert_eq!(size_of::<Document>(), 144);
+    assert_eq!(size_of::<TextRun>(), 208);
 }
 
 #[test]

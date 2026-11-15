@@ -5,8 +5,8 @@ use os_shim::mock::MemorySystem;
 
 use super::names::{Overrides, Titles};
 use super::render::layout::{self, Expr};
-use super::structs::{Attribute, Body, Catalog, Value};
-use super::{Crate, Data, assign, namespaces};
+use super::structs::{Attribute, Body, Catalog, Child, Node, Target, Value};
+use super::{Crate, Data, assign, enums, namespaces, render};
 use crate::generate_schema::model::SchemaSet;
 use crate::generate_schema::sdk_data::SdkData;
 
@@ -40,6 +40,69 @@ const SML_DATA: &str = r#"{"TargetNamespace": "http://schemas.openxmlformats.org
   {"Name": "x:CT_Lone/x:lone", "IsDerived": true, "IsLeafText": true}
 ]}"#;
 
+/// The namespaces of the twin data set: `w`, the standard's `wp`, and Word's `wps`.
+const WORD_NAMESPACES: &str = r#"[
+  {"Prefix": "w", "Uri": "urn:w"},
+  {"Prefix": "wp", "Uri": "urn:wp"},
+  {"Prefix": "wps", "Uri": "urn:wps"}
+]"#;
+
+/// The standard's `wp:shape`, with an optional, a required and a repeated child, and
+/// `wp:group`, whose choice holds `wp:shape`.
+const WORD_DRAWING: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="urn:wp" targetNamespace="urn:wp" elementFormDefault="qualified">
+  <xsd:complexType name="CT_Props"/>
+  <xsd:complexType name="CT_Text"/>
+  <xsd:complexType name="CT_Shape">
+    <xsd:sequence>
+      <xsd:element name="props" type="CT_Props" minOccurs="0"/>
+      <xsd:element name="body" type="CT_Text"/>
+      <xsd:element name="note" type="CT_Text" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CT_Group">
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+      <xsd:element ref="shape"/>
+      <xsd:element name="props" type="CT_Props"/>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:element name="shape" type="CT_Shape"/>
+  <xsd:element name="group" type="CT_Group"/>
+</xsd:schema>"#;
+
+/// Word's `wps:shape`, the data's only form of the standard's `wp:shape`, its note in `w`.
+const WORD_DATA: &str = r#"{"TargetNamespace": "urn:wps", "Types": [
+  {"Name": "wps:CT_Shape/wps:shape",
+   "Children": [{"Name": "wps:CT_Props/wps:props"}, {"Name": "wps:CT_Text/wps:body"}, {"Name": "w:CT_Text/w:note"}],
+   "Particle": {"Kind": "Sequence", "Items": [
+     {"Name": "wps:CT_Props/wps:props", "Occurs": [{"Max": 1}]},
+     {"Name": "wps:CT_Text/wps:body"},
+     {"Name": "w:CT_Text/w:note", "Occurs": [{}]}
+   ]}},
+  {"Name": "wps:CT_Props/wps:props"},
+  {"Name": "wps:CT_Text/wps:body"},
+  {"Name": "w:CT_Text/w:note"},
+  {"Name": "wps:CT_Holder/wps:holder"}
+]}"#;
+
+/// The twin of `wps:shape` in `wp`, whose note Word writes `w:note`.
+const WORD_TWIN: &str = r#"
+[[twin]]
+roots = ["wps:CT_Shape/wps:shape"]
+from = ["wps"]
+prefix = "wp"
+parent = "wps:CT_Holder/wps:holder"
+also = [["wps:CT_Shape/wps:shape", "wp:note", "w:note"]]
+"#;
+
+const WORD_ENUMS: &str = r#"
+[[enum]]
+module = "wordprocessing_drawing"
+name = "GroupContent"
+source = "local choice in CT_Group"
+types = ["CT_Group"]
+"#;
+
 fn sml_catalog() -> Catalog {
     let system = MemorySystem::new()
         .with_file("/data/namespaces.json", NAMESPACES.as_bytes())
@@ -67,6 +130,63 @@ fn sml_catalog() -> Catalog {
         &[],
     )
     .unwrap()
+}
+
+/// The typed tree of the twin data set, built as `emit` builds it: from the data as read, with
+/// the names of the corrected data's twins.
+fn word_catalog() -> Catalog {
+    let system = MemorySystem::new()
+        .with_file("/data/namespaces.json", WORD_NAMESPACES.as_bytes())
+        .unwrap()
+        .with_file("/data/typed/namespaces.json", b"[]")
+        .unwrap()
+        .with_file("/data/parts/none.json", br#"{"Name": "None"}"#)
+        .unwrap()
+        .with_file("/data/schematrons.json", b"[]")
+        .unwrap()
+        .with_file("/data/schemas/wps.json", WORD_DATA.as_bytes())
+        .unwrap()
+        .with_file(
+            "/xsd/dml-wordprocessingDrawing.xsd",
+            WORD_DRAWING.as_bytes(),
+        )
+        .unwrap();
+    let sdk = SdkData::read(&system, Path::new("data")).unwrap();
+    let transitional = SchemaSet::read(&system, &["/xsd/dml-wordprocessingDrawing.xsd"]).unwrap();
+    let mut corrected = sdk.clone();
+    corrected.correct(WORD_TWIN, &transitional).unwrap();
+    let strict = SchemaSet::default();
+    let rows = namespaces::rows(&sdk, &transitional, &strict, &SchemaSet::default()).unwrap();
+    let mut data = Data::new(&sdk, &transitional);
+    data.aliases = &corrected.aliases;
+    let mut catalog = Catalog::build(
+        &data,
+        &strict,
+        &rows,
+        &Titles::read("", ""),
+        &Overrides::parse("").unwrap(),
+        &enums::rows(WORD_ENUMS).unwrap(),
+    )
+    .unwrap();
+    catalog.crates = assign(&render::references(&catalog).unwrap());
+    catalog
+}
+
+/// The struct of the tag `wp:local`.
+fn word_node<'catalog>(catalog: &'catalog Catalog, local: &str) -> &'catalog Node {
+    catalog
+        .nodes
+        .iter()
+        .find(|node| node.key.tag.local == local)
+        .unwrap()
+}
+
+/// The children of a struct that holds children.
+fn children_of(node: &Node) -> Option<&[Child]> {
+    let Body::Children(children) = &node.body else {
+        return None;
+    };
+    Some(children)
 }
 
 fn text_node_attributes(catalog: &Catalog, tag: &str) -> Vec<Attribute> {
@@ -244,6 +364,68 @@ fn a_simple_typed_element_with_no_such_base_in_the_data_takes_no_attribute() {
     let catalog = sml_catalog();
     assert_eq!(text_node_attributes(&catalog, "plain"), []);
     assert_eq!(text_node_attributes(&catalog, "lone"), []);
+}
+
+#[test]
+fn a_twin_struct_takes_its_own_other_names_and_each_child_those_under_it() {
+    let catalog = word_catalog();
+    let id = |prefix: &str| {
+        catalog
+            .prefixes
+            .iter()
+            .position(|found| found == prefix)
+            .map(|index| u8::try_from(index).unwrap())
+    };
+    let shape = word_node(&catalog, "shape");
+    assert_eq!(shape.also, [(id("wps"), "shape".to_owned())]);
+    let children = children_of(shape).unwrap();
+    let also: Vec<_> = children
+        .iter()
+        .map(|child| (child.field.as_str(), child.also.clone()))
+        .collect();
+    assert_eq!(
+        also,
+        [
+            ("props", vec![(id("wps"), "props".to_owned())]),
+            ("body", vec![(id("wps"), "body".to_owned())]),
+            ("note", vec![(id("w"), "note".to_owned())]),
+        ]
+    );
+    let group = word_node(&catalog, "group");
+    assert_eq!(group.also, []);
+    let group_children = children_of(group).unwrap();
+    assert_eq!(group_children.len(), 1);
+    assert!(matches!(group_children[0].target, Target::Enum(_)));
+    assert_eq!(group_children[0].also, []);
+}
+
+#[test]
+fn the_module_reads_each_position_and_arm_under_its_other_names() {
+    let catalog = word_catalog();
+    let files = render::files(&MemorySystem::new(), "", &catalog).unwrap();
+    let (_, text) = files
+        .iter()
+        .find(|(path, _)| path.ends_with("wordprocessing_drawing.rs"))
+        .unwrap();
+    for expected in [
+        "const NS_W: Option<NamespaceId> = Some(0);",
+        "const NS_WPS: Option<NamespaceId> = Some(2);",
+        "Slot::single_also((NS_WP, \"props\"), &[(NS_WPS, \"props\")])",
+        "Slot::required_also((NS_WP, \"body\"), &[(NS_WPS, \"body\")])",
+        "Slot::list_also((NS_WP, \"note\"), &[(NS_W, \"note\")])",
+        "Some((NS_WP | NS_WPS, \"shape\")) =>",
+        "Some((NS_WP | NS_WPS, \"props\")) =>",
+    ] {
+        assert!(text.contains(expected), "{expected} is not in\n{text}");
+    }
+    let tags = text
+        .split("pub static GROUP_CONTENT_TAGS")
+        .nth(1)
+        .and_then(|rest| rest.split("};").next())
+        .unwrap();
+    assert!(tags.contains("(NS_WP, \"shape\"),"), "{tags}");
+    assert!(tags.contains("(NS_WPS, \"shape\"),"), "{tags}");
+    assert!(tags.contains("(NS_WPS, \"props\"),"), "{tags}");
 }
 
 #[test]

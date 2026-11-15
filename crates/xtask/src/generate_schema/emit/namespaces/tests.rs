@@ -26,6 +26,7 @@ fn set(system: &MemorySystem, paths: &[&str]) -> SchemaSet {
 
 fn data(namespaces: &[(&str, &str, Option<DataVersion>)]) -> SdkData {
     SdkData {
+        aliases: BTreeMap::default(),
         enumerations: BTreeMap::default(),
         namespaces: namespaces
             .iter()

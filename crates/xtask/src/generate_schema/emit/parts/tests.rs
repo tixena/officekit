@@ -170,6 +170,7 @@ fn data() -> SdkData {
     let mut package = data_part("WordprocessingDocument", None, None);
     package.base = Some("OpenXmlPackage".to_owned());
     SdkData {
+        aliases: BTreeMap::new(),
         enumerations: BTreeMap::new(),
         namespaces: Vec::new(),
         parts: vec![

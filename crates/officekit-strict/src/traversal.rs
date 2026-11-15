@@ -81,6 +81,7 @@ use officekit_markup::{
     AttributeValue, Context, Descend, Extra, Nodes, Positions, Shape, Unknown, Visitor, Written,
     uri,
 };
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::{is_whitespace_text, preserves_space, qualified};
@@ -445,7 +446,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         Ok(())
     }
 
-    /// Start writing a node of `shape` with the unknown content it keeps:
+    /// Start writing a node of `shape` with the unknown content it keeps, named as it was read:
     /// its element takes the prefix `out` binds to its namespace, or declares
     /// the table's.
     #[must_use = "the result is returned and kept nowhere else"]
@@ -454,12 +455,18 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         shape: &'static Shape,
         unknown: &'node Unknown,
     ) -> Self {
-        let (namespace, local) = shape.name;
-        let element = out.scope().element(
-            namespace.map_or("", uri),
-            local,
-            &unknown.namespace_declarations,
+        let (namespace, local) = unknown.name.as_deref().map_or_else(
+            || (shape.name.0.map_or("", uri), shape.name.1),
+            |name| {
+                (
+                    name.namespace.uri(ConformanceClass::Transitional),
+                    name.local.as_str(),
+                )
+            },
         );
+        let element = out
+            .scope()
+            .element(namespace, local, &unknown.namespace_declarations);
         Self {
             element,
             opened: false,
@@ -800,8 +807,8 @@ where
 }
 
 /// A node's unknown content rebuilt: each `Extra`'s node transformed through
-/// the root `element` hook, the attributes, declarations, and absent
-/// positions as they are.
+/// the root `element` hook, the attributes, declarations, absent positions,
+/// and the name it was read under as they are.
 ///
 /// Each `Extra` is placed, by `rebase`, after what the declared children
 /// before it became.
@@ -811,10 +818,12 @@ pub fn transform_unknown(unknown: &Unknown, ctx: &mut dyn Context, rebase: &Reba
         .iter()
         .map(|extra| Extra::new(rebase.place(extra.after), extra.node.transform(ctx)))
         .collect();
-    Unknown::new(
+    let mut rebuilt = Unknown::new(
         unknown.absent.clone(),
         unknown.attributes.clone(),
         children,
         unknown.namespace_declarations.clone(),
-    )
+    );
+    rebuilt.name.clone_from(&unknown.name);
+    rebuilt
 }

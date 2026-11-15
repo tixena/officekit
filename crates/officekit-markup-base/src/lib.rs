@@ -41,6 +41,8 @@
 //! - Whitespace-only text between children is dropped.
 //! - A required single child the element lacked is recorded in `unknown.absent`, and the
 //!   writer leaves it out while the field still holds its default.
+//! - An element read under another name than its node's, as Word's `wps:wsp` for `wp:wsp`, keeps
+//!   that name in `unknown.name`, and the writer gives it back.
 //!
 //! Simple types keep their text as read. Calling `.value()` on a newtype checks it later and
 //! gives a `ValueError` for text that does not fit, so a read never fails inside a node.
@@ -118,6 +120,7 @@ use alloc::collections::VecDeque;
 use core::num::ParseFloatError;
 use core::{mem, slice};
 
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName, tag_of};
@@ -190,11 +193,12 @@ pub struct Bounds {
     pub min_inclusive: Option<f64>,
 }
 
-/// What a declared child position takes.
+/// What a declared child position takes: an enum's tags, or one struct's tag and the other
+/// tags its child is also written with.
 #[derive(Debug)]
 enum Accepted {
     Enum(&'static Accept),
-    Tag(Tag),
+    Tag(Tag, &'static [Tag]),
 }
 
 /// Writes declared children in schema order, with each `Extra` before the
@@ -381,6 +385,10 @@ pub struct Unknown {
     pub attributes: Vec<Attribute>,
     /// Unknown children at positions no list covers.
     pub children: Vec<Extra>,
+    /// The name of the element the node was read from when it is not its shape's own, as Word's
+    /// `wps:wsp` for the standard's `wp:wsp` (ECMA-376 Part 1, 20.4.2.37 to 20.4.2.42); a write
+    /// gives it back. `None` for a node built in code or read under its own name.
+    pub name: Option<Box<QName>>,
     /// The `xmlns` declarations the element carried, written back on it.
     pub namespace_declarations: Vec<NamespaceDeclaration>,
 }
@@ -847,6 +855,7 @@ impl<'element> Reader<'element> {
                 absent: Vec::new(),
                 attributes: Vec::new(),
                 children: Vec::new(),
+                name: (!is_tag(shape.name, &element.name)).then(|| Box::new(element.name.clone())),
                 namespace_declarations: element.namespace_declarations.clone(),
             },
         }
@@ -932,7 +941,9 @@ impl Slot {
                         .any
                         .is_some_and(|wildcard| wildcard.allows(&element.name.namespace))
             }
-            Accepted::Tag(tag) => is_tag(tag, &element.name),
+            Accepted::Tag(tag, also) => {
+                is_tag(tag, &element.name) || also.iter().any(|other| is_tag(*other, &element.name))
+            }
         }
     }
 
@@ -957,8 +968,14 @@ impl Slot {
     /// A list of one struct type.
     #[must_use = "this only builds the value"]
     pub const fn list(tag: Tag) -> Self {
+        Self::list_also(tag, &[])
+    }
+
+    /// As [`Slot::single_also`], for a list of one struct type.
+    #[must_use = "this only builds the value"]
+    pub const fn list_also(tag: Tag, also: &'static [Tag]) -> Self {
         Self {
-            accept: Accepted::Tag(tag),
+            accept: Accepted::Tag(tag, also),
             occurs: SlotOccurs::List,
         }
     }
@@ -975,8 +992,14 @@ impl Slot {
     /// A required single position of one struct type.
     #[must_use = "this only builds the value"]
     pub const fn required(tag: Tag) -> Self {
+        Self::required_also(tag, &[])
+    }
+
+    /// As [`Slot::single_also`], for a position the schema requires.
+    #[must_use = "this only builds the value"]
+    pub const fn required_also(tag: Tag, also: &'static [Tag]) -> Self {
         Self {
-            accept: Accepted::Tag(tag),
+            accept: Accepted::Tag(tag, also),
             occurs: SlotOccurs::Required,
         }
     }
@@ -993,8 +1016,16 @@ impl Slot {
     /// An optional single position of one struct type.
     #[must_use = "this only builds the value"]
     pub const fn single(tag: Tag) -> Self {
+        Self::single_also(tag, &[])
+    }
+
+    /// A single position of one struct type whose child is also written under `also`, the names
+    /// an application gives it outside the standard, as Word's `wps:cNvPr` for `wp:cNvPr`
+    /// (ECMA-376 Part 1, 20.4.2.37 to 20.4.2.42).
+    #[must_use = "this only builds the value"]
+    pub const fn single_also(tag: Tag, also: &'static [Tag]) -> Self {
         Self {
-            accept: Accepted::Tag(tag),
+            accept: Accepted::Tag(tag, also),
             occurs: SlotOccurs::Single,
         }
     }
@@ -1025,6 +1056,7 @@ impl Unknown {
             absent,
             attributes,
             children,
+            name: None,
             namespace_declarations,
         }
     }
@@ -1086,15 +1118,19 @@ impl<'scope, 'node> Writer<'scope, 'node> {
     }
 
     /// Start writing a node of `shape`, with its own namespace declarations
-    /// and the unknown content it keeps.
+    /// and the unknown content it keeps, named as it was read.
     #[must_use = "the result is returned and kept nowhere else"]
     pub fn new(scope: &'scope mut Scope, shape: &'static Shape, unknown: &'node Unknown) -> Self {
-        let (namespace, local) = shape.name;
-        let element = scope.element(
-            namespace.map_or("", uri),
-            local,
-            &unknown.namespace_declarations,
+        let (namespace, local) = unknown.name.as_deref().map_or_else(
+            || (shape.name.0.map_or("", uri), shape.name.1),
+            |name| {
+                (
+                    name.namespace.uri(ConformanceClass::Transitional),
+                    name.local.as_str(),
+                )
+            },
         );
+        let element = scope.element(namespace, local, &unknown.namespace_declarations);
         Self {
             children: Children::new(&unknown.children),
             element,

@@ -356,7 +356,9 @@ after = ["w:CT_ParaRPrChange/w:rPrChange"]
 
 # ECMA-376 declares wsp, wgp and wpc in wordprocessingDrawing, and Word's Strict
 # files write them there (dml-wordprocessingDrawing.xsd). The data has them only
-# in Microsoft's three namespaces, with the same content.
+# in Microsoft's three namespaces, with the same content. Each twin keeps the
+# names the data gives it and its children, which Word's Transitional files
+# write, as other names of the standard's.
 [[twin]]
 roots = [
   "wps:CT_WordprocessingShape/wps:wsp",
@@ -366,6 +368,12 @@ roots = [
 from = ["wps", "wpg", "wpc"]
 prefix = "wp"
 parent = "a:CT_GraphicalObjectData/a:graphicData"
+# Under the twin of the first name, the second is also written as each of the
+# others: a text box's content, wp:txbxContent in ECMA-376 (20.4.2.38), is
+# w:txbxContent in the data and wne:txbxContent by row 8.
+also = [
+  ["wps:CT_TextboxInfo/wps:txbx", "wp:txbxContent", "w:txbxContent", "wne:txbxContent"],
+]
 
 # Attributes ECMA-376 requires that the data does not declare. The generator
 # adds the required check of every attribute the Transitional schemas require

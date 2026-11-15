@@ -259,6 +259,7 @@ fn node_impls(catalog: &Catalog, module: usize) -> Result<Vec<Impl>> {
             })
             .flatten();
         impls.push(Impl {
+            also: node.also.clone(),
             conformance,
             function: function.clone(),
             name: node.name.clone(),

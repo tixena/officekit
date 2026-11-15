@@ -207,7 +207,7 @@
 //   1ccb90bdf037137918dfb7ed2e243c2377dec75cfcc65808a1b8904f084302e2  inputs/open-xml-sdk/data/schemas/www_w3_org_XML_1998_namespace.json
 //   faa0956ead6fa73f20a3ea60eec008389b059f72512d83029c27109a69a87e0f  crates/xtask/data/enum_names.toml
 //   93359b15195272341d911db4d3805cc3291bd678a341ec44c5fb051522212890  crates/xtask/data/name_overrides.toml
-//   6833bb8339d1dc179b970db58c13333ff6139e649ef9e044ef10623bed172323  crates/xtask/data/sdk_corrections.toml
+//   d44e2b7e8f03819508c725f1571b84ffa77a1b78d018ec8717906eba3fdaaac3  crates/xtask/data/sdk_corrections.toml
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 //! The typed tree of the namespace `http://schemas.microsoft.com/office/drawing/2017/model3d`, which files write with the prefix `am3d`.
@@ -277,6 +277,9 @@ const NS_VT: Option<NamespaceId> = Some(96);
 const NS_W: Option<NamespaceId> = Some(97);
 const NS_W10: Option<NamespaceId> = Some(98);
 const NS_WP: Option<NamespaceId> = Some(112);
+const NS_WPC: Option<NamespaceId> = Some(115);
+const NS_WPG: Option<NamespaceId> = Some(116);
+const NS_WPS: Option<NamespaceId> = Some(117);
 const NS_X: Option<NamespaceId> = Some(118);
 const NS_XDR: Option<NamespaceId> = Some(129);
 const NS_XVML: Option<NamespaceId> = Some(162);
@@ -786,8 +789,11 @@ pub static MODEL3D_EXTENSION_CONTENT_TAGS: officekit_markup_base::Accept =
             (NS_X, "volTypes"),
             (NS_W, "webSettings"),
             (NS_WP, "wpc"),
+            (NS_WPC, "wpc"),
             (NS_WP, "wsp"),
+            (NS_WPS, "wsp"),
             (NS_WP, "wgp"),
+            (NS_WPG, "wgp"),
             (NS_X, "workbook"),
             (NS_X, "worksheet"),
             (NS_XDR, "wsDr"),
@@ -5902,13 +5908,13 @@ fn read_model3d_extension_6(element: &Element) -> Option<Model3DExtensionContent
         Some((NS_W, "webSettings")) => {
             Model3DExtensionContent::WebPageSettings(officekit_markup_base::read(element))
         }
-        Some((NS_WP, "wpc")) => Model3DExtensionContent::WordprocessingMLDrawingCanvas(
+        Some((NS_WP | NS_WPC, "wpc")) => Model3DExtensionContent::WordprocessingMLDrawingCanvas(
             officekit_markup_base::read(element),
         ),
-        Some((NS_WP, "wsp")) => {
+        Some((NS_WP | NS_WPS, "wsp")) => {
             Model3DExtensionContent::WordprocessingMLShape(officekit_markup_base::read(element))
         }
-        Some((NS_WP, "wgp")) => Model3DExtensionContent::WordprocessingMLShapeGroup(
+        Some((NS_WP | NS_WPG, "wgp")) => Model3DExtensionContent::WordprocessingMLShapeGroup(
             officekit_markup_base::read(element),
         ),
         Some((NS_X, "workbook")) => {

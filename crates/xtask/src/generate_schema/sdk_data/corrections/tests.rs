@@ -1,3 +1,4 @@
+use alloc::collections::BTreeMap;
 use std::path::Path;
 
 use os_shim::mock::MemorySystem;
@@ -178,6 +179,21 @@ prefix = "wp"
 parent = "w:CT_Holder/w:holder"
 "#;
 
+/// The other name of the twin's `wp:a`, which follows `TWIN_ROW` in its row.
+const ALSO_ROW: &str = r#"also = [["wps:CT_Shape/wps:shape", "wp:a", "w:a"]]
+"#;
+
+/// The standard's `wp:CT_Shape`, which declares `wp:text` and `wp:a`.
+const WP_STANDARD: &str = r#"<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:wp" targetNamespace="urn:wp" elementFormDefault="qualified">
+  <xsd:complexType name="CT_Text"/>
+  <xsd:complexType name="CT_Shape">
+    <xsd:sequence>
+      <xsd:element name="text" type="CT_Text" minOccurs="0"/>
+      <xsd:element name="a" type="CT_Text"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>"#;
+
 const ORDER_ROW: &str = r#"
 [[any_order]]
 type = "w:CT_Props/w:props"
@@ -278,6 +294,16 @@ fn standard() -> SchemaSet {
         .with_file("/standard.xsd", STANDARD.as_bytes())
         .unwrap();
     SchemaSet::read(&system, &["standard.xsd"]).unwrap()
+}
+
+/// `standard` with the namespace of the twins, `urn:wp`.
+fn word_standard() -> SchemaSet {
+    let system = MemorySystem::new()
+        .with_file("/standard.xsd", STANDARD.as_bytes())
+        .unwrap()
+        .with_file("/wp.xsd", WP_STANDARD.as_bytes())
+        .unwrap();
+    SchemaSet::read(&system, &["standard.xsd", "wp.xsd"]).unwrap()
 }
 
 #[test]
@@ -916,6 +942,61 @@ fn a_twin_row_builds_the_types_in_the_other_namespace_and_places_the_root() {
             .children
             .contains(&"wp:CT_Shape/wp:shape".to_owned())
     );
+}
+
+#[test]
+fn a_twin_row_keeps_the_names_the_data_gives_each_twin_and_its_children() {
+    let mut data = read_word();
+    data.correct(TWIN_ROW, &standard()).unwrap();
+    assert_eq!(data.aliases.len(), 2);
+    let shape = &data.aliases["wp:CT_Shape/wp:shape"];
+    assert_eq!(shape.element, ["wps:shape"]);
+    assert_eq!(shape.children.len(), 1);
+    assert_eq!(shape.children["wp:text"], ["wps:text"]);
+    let text = &data.aliases["wp:CT_Text/wp:text"];
+    assert_eq!(text.element, ["wps:text"]);
+    assert_eq!(text.children, BTreeMap::new());
+}
+
+#[test]
+fn an_also_row_gives_a_child_the_standard_declares_the_names_of_children_the_twin_has() {
+    let mut data = read_word();
+    data.correct(&format!("{TWIN_ROW}{ALSO_ROW}"), &word_standard())
+        .unwrap();
+    let shape = &data.aliases["wp:CT_Shape/wp:shape"];
+    assert_eq!(shape.children["wp:a"], ["w:a"]);
+    assert_eq!(shape.children["wp:text"], ["wps:text"]);
+}
+
+#[test]
+fn an_also_row_naming_what_the_twin_or_the_standard_lacks_stops_the_generator() {
+    for (from, to, said) in [
+        (
+            "\"wps:CT_Shape/wps:shape\"",
+            "\"w:CT_A/w:a\"",
+            "the row twins no `w:CT_A/w:a`",
+        ),
+        (
+            "\"wp:a\"",
+            "\"wp:b\"",
+            "the standard declares no `wp:b` in `wp:CT_Shape`",
+        ),
+        (
+            "\"w:a\"]",
+            "\"w:b\"]",
+            "`wp:CT_Shape/wp:shape` has no child `w:b`",
+        ),
+        (
+            ", \"w:a\"]",
+            "]",
+            "names fewer than a type, a child and a name",
+        ),
+    ] {
+        let mut data = read_word();
+        let rows = format!("{TWIN_ROW}{}", ALSO_ROW.replace(from, to));
+        let error = data.correct(&rows, &word_standard()).unwrap_err();
+        assert!(format!("{error:#}").contains(said), "{error:#}");
+    }
 }
 
 #[test]

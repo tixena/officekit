@@ -184,6 +184,9 @@ pub struct Occurs {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct SdkData {
+    /// For a twin type, by its name: the element name the data has for it, and for each child of
+    /// the twin, the element name the data has for that child.
+    pub aliases: BTreeMap<String, TwinNames>,
     /// By simple-type name, `w:ST_Jc`.
     pub enumerations: BTreeMap<String, Enumeration>,
     pub namespaces: Vec<DataNamespace>,
@@ -194,6 +197,17 @@ pub struct SdkData {
     pub typed_namespaces: BTreeMap<String, String>,
     /// By the data's name, `w:CT_TblCellMar/w:tblCellMar`.
     pub types: BTreeMap<String, DataType>,
+}
+
+/// The names Word writes a twin type's element and its children with, outside the standard's.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct TwinNames {
+    /// The child's twin element name, such as `wp:cNvPr`, to the names Word writes it with
+    /// under this parent, such as `wps:cNvPr`.
+    pub children: BTreeMap<String, Vec<String>>,
+    /// The names Word writes this element with, such as `wps:wsp`.
+    pub element: Vec<String>,
 }
 
 /// A validator of an attribute or of a leaf element's text.
@@ -338,6 +352,7 @@ impl SdkData {
             .to_vec();
 
         Ok(Self {
+            aliases: BTreeMap::new(),
             enumerations,
             namespaces,
             parts,

@@ -224,6 +224,9 @@ use officekit_xml::name::NamespaceId;
 use officekit_xml::write::Scope;
 
 const NS_WP: Option<NamespaceId> = Some(112);
+const NS_WPC: Option<NamespaceId> = Some(115);
+const NS_WPG: Option<NamespaceId> = Some(116);
+const NS_WPS: Option<NamespaceId> = Some(117);
 
 impl Strict for wordprocessing_drawing::AbsolutePositionOffset {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
@@ -258,6 +261,9 @@ impl Strict for wordprocessing_drawing::AnchorForFloatingDrawingMLObject {
 
 impl Strict for wordprocessing_drawing::BackgroundFormatting {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPC, "bg"), &element.name) {
+            return Ok(read::background_formatting(element));
+        }
         class_rules::read(element, (NS_WP, "bg"), read::background_formatting)
     }
 
@@ -268,6 +274,9 @@ impl Strict for wordprocessing_drawing::BackgroundFormatting {
 
 impl Strict for wordprocessing_drawing::BodyProperties {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "bodyPr"), &element.name) {
+            return Ok(read::body_properties(element));
+        }
         class_rules::read(element, (NS_WP, "bodyPr"), read::body_properties)
     }
 
@@ -332,6 +341,12 @@ impl Strict for wordprocessing_drawing::DrawingObjectSize {
 
 impl Strict for wordprocessing_drawing::ExtensionList {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPC, "extLst"), &element.name)
+            || class_rules::is((NS_WPG, "extLst"), &element.name)
+            || class_rules::is((NS_WPS, "extLst"), &element.name)
+        {
+            return Ok(read::extension_list(element));
+        }
         class_rules::read(element, (NS_WP, "extLst"), read::extension_list)
     }
 
@@ -342,6 +357,11 @@ impl Strict for wordprocessing_drawing::ExtensionList {
 
 impl Strict for wordprocessing_drawing::GraphicalObjectContainer {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPC, "graphicFrame"), &element.name)
+            || class_rules::is((NS_WPG, "graphicFrame"), &element.name)
+        {
+            return Ok(read::graphical_object_container(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "graphicFrame"),
@@ -359,6 +379,9 @@ impl Strict for wordprocessing_drawing::GraphicalObjectContainer {
 
 impl Strict for wordprocessing_drawing::GroupShape {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPG, "grpSp"), &element.name) {
+            return Ok(read::group_shape(element));
+        }
         class_rules::read(element, (NS_WP, "grpSp"), read::group_shape)
     }
 
@@ -369,6 +392,9 @@ impl Strict for wordprocessing_drawing::GroupShape {
 
 impl Strict for wordprocessing_drawing::GroupShapeProperties {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPG, "grpSpPr"), &element.name) {
+            return Ok(read::group_shape_properties(element));
+        }
         class_rules::read(element, (NS_WP, "grpSpPr"), read::group_shape_properties)
     }
 
@@ -409,6 +435,9 @@ impl Strict for wordprocessing_drawing::NoTextWrapping {
 
 impl Strict for wordprocessing_drawing::NonVisualConnectorShapeDrawingProperties {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "cNvCnPr"), &element.name) {
+            return Ok(read::non_visual_connector_shape_drawing_properties(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "cNvCnPr"),
@@ -443,6 +472,11 @@ impl Strict for wordprocessing_drawing::NonVisualContentPartDrawingProperties {
 
 impl Strict for wordprocessing_drawing::NonVisualDrawingProperties {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPG, "cNvPr"), &element.name)
+            || class_rules::is((NS_WPS, "cNvPr"), &element.name)
+        {
+            return Ok(read::non_visual_drawing_properties(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "cNvPr"),
@@ -460,6 +494,9 @@ impl Strict for wordprocessing_drawing::NonVisualDrawingProperties {
 
 impl Strict for wordprocessing_drawing::NonVisualDrawingPropertiesForAShape {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "cNvSpPr"), &element.name) {
+            return Ok(read::non_visual_drawing_properties_for_a_shape(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "cNvSpPr"),
@@ -477,6 +514,9 @@ impl Strict for wordprocessing_drawing::NonVisualDrawingPropertiesForAShape {
 
 impl Strict for wordprocessing_drawing::NonVisualGraphicFrameDrawingProperties {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPG, "cNvFrPr"), &element.name) {
+            return Ok(read::non_visual_graphic_frame_drawing_properties(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "cNvFrPr"),
@@ -494,6 +534,9 @@ impl Strict for wordprocessing_drawing::NonVisualGraphicFrameDrawingProperties {
 
 impl Strict for wordprocessing_drawing::NonVisualGroupShapeDrawingProperties {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPG, "cNvGrpSpPr"), &element.name) {
+            return Ok(read::non_visual_group_shape_drawing_properties(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "cNvGrpSpPr"),
@@ -589,6 +632,9 @@ impl Strict for wordprocessing_drawing::RichTextBoxContentContainer {
 
 impl Strict for wordprocessing_drawing::ShapeProperties {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "spPr"), &element.name) {
+            return Ok(read::shape_properties(element));
+        }
         class_rules::read(element, (NS_WP, "spPr"), read::shape_properties)
     }
 
@@ -599,6 +645,9 @@ impl Strict for wordprocessing_drawing::ShapeProperties {
 
 impl Strict for wordprocessing_drawing::ShapeStyle {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "style"), &element.name) {
+            return Ok(read::shape_style(element));
+        }
         class_rules::read(element, (NS_WP, "style"), read::shape_style)
     }
 
@@ -636,6 +685,9 @@ impl Strict for wordprocessing_drawing::SquareWrapping {
 
 impl Strict for wordprocessing_drawing::TextualContentsOfShapeLinkedTxbx {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "linkedTxbx"), &element.name) {
+            return Ok(read::textual_contents_of_shape_linked_txbx(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "linkedTxbx"),
@@ -653,6 +705,9 @@ impl Strict for wordprocessing_drawing::TextualContentsOfShapeLinkedTxbx {
 
 impl Strict for wordprocessing_drawing::TextualContentsOfShapeTxbx {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "txbx"), &element.name) {
+            return Ok(read::textual_contents_of_shape_txbx(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "txbx"),
@@ -714,6 +769,9 @@ impl Strict for wordprocessing_drawing::VerticalPositioning {
 
 impl Strict for wordprocessing_drawing::WholeE2OFormatting {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPC, "whole"), &element.name) {
+            return Ok(read::whole_e2o_formatting(element));
+        }
         class_rules::read(element, (NS_WP, "whole"), read::whole_e2o_formatting)
     }
 
@@ -724,6 +782,9 @@ impl Strict for wordprocessing_drawing::WholeE2OFormatting {
 
 impl Strict for wordprocessing_drawing::WordprocessingMLDrawingCanvas {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPC, "wpc"), &element.name) {
+            return Ok(read::wordprocessing_ml_drawing_canvas(element));
+        }
         class_rules::read(
             element,
             (NS_WP, "wpc"),
@@ -741,6 +802,9 @@ impl Strict for wordprocessing_drawing::WordprocessingMLDrawingCanvas {
 
 impl Strict for wordprocessing_drawing::WordprocessingMLShape {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPS, "wsp"), &element.name) {
+            return Ok(read::wordprocessing_ml_shape(element));
+        }
         class_rules::read(element, (NS_WP, "wsp"), read::wordprocessing_ml_shape)
     }
 
@@ -751,6 +815,9 @@ impl Strict for wordprocessing_drawing::WordprocessingMLShape {
 
 impl Strict for wordprocessing_drawing::WordprocessingMLShapeGroup {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPG, "wgp"), &element.name) {
+            return Ok(read::wordprocessing_ml_shape_group(element));
+        }
         class_rules::read(element, (NS_WP, "wgp"), read::wordprocessing_ml_shape_group)
     }
 
@@ -801,6 +868,9 @@ impl Strict for wordprocessing_drawing::WrappingPolygonStart {
 
 impl Strict for wordprocessing_drawing::Xfrm {
     fn from_strict(element: &Element) -> Result<Self, ReadError> {
+        if class_rules::is((NS_WPG, "xfrm"), &element.name) {
+            return Ok(read::xfrm(element));
+        }
         class_rules::read(element, (NS_WP, "xfrm"), read::xfrm)
     }
 

@@ -10,7 +10,7 @@ use core::slice;
 use anyhow::{Context as _, Result, bail};
 
 use self::requirements::{Kept, require};
-use self::standard::{FromStandard, place};
+use self::standard::{FromStandard, declares, element_of, place};
 use super::{DataParticle, DataType, DataVersion, Facet, Occurs, SdkData};
 use crate::generate_schema::model::SchemaSet;
 
@@ -89,8 +89,10 @@ struct AnyOrder {
 
 /// Types the standard declares in `prefix`'s namespace and the data has only in
 /// Microsoft's: each of `roots`, the types it reaches in the namespaces of
-/// `from`, element for element, and `parent` holding the roots.
+/// `from`, element for element, and `parent` holding the roots. Each row of
+/// `also` names a type, a child of its twin, and the names Word writes that child with there.
 struct Twin {
+    also: Vec<Vec<String>>,
     from: Vec<String>,
     parent: String,
     prefix: String,
@@ -178,7 +180,8 @@ pub(super) fn apply(data: &mut SdkData, text: &str, standard: &SchemaSet) -> Res
             .with_context(|| format!("in the correction of `{}`", row.type_name))?;
     }
     for row in twins(&table)? {
-        add_twins(data, &row).with_context(|| format!("in the correction of `{}`", row.parent))?;
+        add_twins(data, standard, &row)
+            .with_context(|| format!("in the correction of `{}`", row.parent))?;
     }
     Ok(())
 }
@@ -396,7 +399,7 @@ fn add_alternative(data: &mut SdkData, row: &Alternative) -> Result<()> {
     Ok(())
 }
 
-fn add_twins(data: &mut SdkData, row: &Twin) -> Result<()> {
+fn add_twins(data: &mut SdkData, standard: &SchemaSet, row: &Twin) -> Result<()> {
     let twin_name = |name: &str| -> String {
         let Some((schema_type, element)) = name.split_once('/') else {
             return name.to_owned();
@@ -417,9 +420,17 @@ fn add_twins(data: &mut SdkData, row: &Twin) -> Result<()> {
         }
         let renamed = twin_name(&name);
         let mut twin = known(data, &name)?.clone();
+        let names = data.aliases.entry(renamed.clone()).or_default();
+        add_name(&mut names.element, element_of(&name));
         for child in &twin.children {
-            if twin_name(child) != *child {
+            let child_twin = twin_name(child);
+            if child_twin != *child {
                 queue.push(child.clone());
+                let under = names
+                    .children
+                    .entry(element_of(&child_twin).to_owned())
+                    .or_default();
+                add_name(under, element_of(child));
             }
         }
         twin.name.clone_from(&renamed);
@@ -430,6 +441,9 @@ fn add_twins(data: &mut SdkData, row: &Twin) -> Result<()> {
         seen.push(name);
         data.types.entry(renamed).or_insert(twin);
     }
+    for names in &row.also {
+        add_also(data, standard, &seen, &twin_name, names)?;
+    }
     let parent = data
         .types
         .get_mut(&row.parent)
@@ -438,6 +452,55 @@ fn add_twins(data: &mut SdkData, row: &Twin) -> Result<()> {
         parent.children.push(twin_name(root));
     }
     Ok(())
+}
+
+/// Record a row of a twin's `also`: under the twin of `type`, a type the row twinned, its child
+/// `child`, which the standard declares there, is also written as each of `names`, the elements
+/// of children the twin has.
+fn add_also(
+    data: &mut SdkData,
+    standard: &SchemaSet,
+    twinned: &[String],
+    twin_name: &impl Fn(&str) -> String,
+    row: &[String],
+) -> Result<()> {
+    let [type_name, child, names @ ..] = row else {
+        bail!("an item of `also` names fewer than a type, a child and a name");
+    };
+    if !twinned.contains(type_name) {
+        bail!("the row twins no `{type_name}`");
+    }
+    let twin = twin_name(type_name);
+    let schema_type = twin
+        .split_once('/')
+        .map_or(twin.as_str(), |(schema_type, _)| schema_type);
+    if !declares(data, standard, schema_type, child)? {
+        bail!("the standard declares no `{child}` in `{schema_type}`");
+    }
+    let held = &known(data, &twin)?.children;
+    for name in names {
+        if !held.iter().any(|found| element_of(found) == name) {
+            bail!("`{twin}` has no child `{name}`");
+        }
+    }
+    let under = data
+        .aliases
+        .entry(twin)
+        .or_default()
+        .children
+        .entry(child.clone())
+        .or_default();
+    for name in names {
+        add_name(under, name);
+    }
+    Ok(())
+}
+
+/// `name` at the end of `names`, unless it is there.
+fn add_name(names: &mut Vec<String>, name: &str) {
+    if !names.iter().any(|found| found == name) {
+        names.push(name.to_owned());
+    }
 }
 
 fn rename_items(particle: &mut DataParticle, twin_name: &impl Fn(&str) -> String) {
@@ -655,7 +718,32 @@ fn twins(table: &toml::Table) -> Result<Vec<Twin>> {
     rows(table, "twin")?
         .into_iter()
         .map(|row| {
+            let also = match row.get("also") {
+                None => Vec::new(),
+                Some(value) => value
+                    .as_array()
+                    .context("`also` of a `twin` row is not a list")?
+                    .iter()
+                    .map(|item| {
+                        let names: Vec<String> = item
+                            .as_array()
+                            .context("an item of `also` is not a list")?
+                            .iter()
+                            .map(|name| {
+                                name.as_str()
+                                    .map(str::to_owned)
+                                    .context("a name of `also` is not text")
+                            })
+                            .collect::<Result<_>>()?;
+                        if names.len() < 3 {
+                            bail!("an item of `also` names fewer than a type, a child and a name");
+                        }
+                        Ok(names)
+                    })
+                    .collect::<Result<_>>()?,
+            };
             Ok(Twin {
+                also,
                 from: texts(row, "from")?,
                 parent: text_field(row, "parent")?,
                 prefix: text_field(row, "prefix")?,
