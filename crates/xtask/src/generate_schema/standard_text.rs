@@ -9,6 +9,7 @@ const SECTION_SIGN: char = '\u{a7}';
 const PART_1_REFERENCE: &str = " (Part 1, \u{a7}";
 const PART_SECTIONS: [&str; 5] = ["11.3.", "12.3.", "13.3.", "14.2.", "15.2."];
 const RGB_VALUE: &str = "Specifies a color with RGB value (";
+const PAGE_SETUP_SECTION: &str = "18.3.1.63";
 const LABELS: [&str; 7] = [
     "Content Type:",
     "Content",
@@ -77,6 +78,26 @@ pub struct SummaryRow {
     pub part: String,
     /// `None` where the table says `Not applicable` or that Part 2 defines it.
     pub root_element: Option<String>,
+}
+
+/// A paper of the list under `paperSize` in section 18.3.1.63 of Part 1: `9 = A4 paper (210 mm by
+/// 297 mm)`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct Paper {
+    pub code: u32,
+    /// The second number of the parentheses, as written, with its unit.
+    pub height: (String, PaperUnit),
+    /// The first number of the parentheses, as written, with its unit.
+    pub width: (String, PaperUnit),
+}
+
+/// The unit of a number of the paper list: `in.`, or `in` as some lines write it, and `mm`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum PaperUnit {
+    Inch,
+    Millimetre,
 }
 
 /// A row of the summary being read: its cells so far and the columns its first line used.
@@ -602,6 +623,59 @@ fn preset_color(line: &str) -> Option<(String, [u8; 3])> {
         components.next()??,
     ];
     components.next().is_none().then(|| (name.to_owned(), rgb))
+}
+
+/// Each paper section 18.3.1.63 of Part 1 lists under `paperSize` with a size, in the text's
+/// order: the lines `1 = Letter paper (8.5 in. by 11 in.)` and `70 = A6 (105 mm x 148 mm)`.
+#[must_use = "this only returns the value"]
+pub fn paper_sizes(text: &str) -> Vec<Paper> {
+    let lines = lines(text);
+    let Some(start) = lines.iter().position(|line| {
+        heading(line, false).is_some_and(|found| found.section == PAGE_SETUP_SECTION)
+    }) else {
+        return Vec::new();
+    };
+    lines[start + 1..]
+        .iter()
+        .take_while(|line| heading(line, false).is_none())
+        .filter_map(|line| paper(line))
+        .collect()
+}
+
+/// The paper a line of the list states: a code, `=`, a name, and its two numbers in parentheses
+/// at the end, each with its unit, `by` or `x` between them.
+fn paper(line: &str) -> Option<Paper> {
+    let (before, after) = line.split_once(" = ")?;
+    let code = before.split_whitespace().next_back()?.parse().ok()?;
+    let (_, inside) = after
+        .trim_end()
+        .trim_end_matches('.')
+        .strip_suffix(')')?
+        .rsplit_once('(')?;
+    let words: Vec<&str> = inside.split_whitespace().collect();
+    let [width, width_unit, separator, height, height_unit] = words.as_slice() else {
+        return None;
+    };
+    if !matches!(*separator, "by" | "x") {
+        return None;
+    }
+    Some(Paper {
+        code,
+        height: paper_length(height, height_unit)?,
+        width: paper_length(width, width_unit)?,
+    })
+}
+
+/// A number of the paper list with its unit, when the number is digits with at most one point.
+fn paper_length(number: &str, unit_text: &str) -> Option<(String, PaperUnit)> {
+    let unit = match unit_text {
+        "in." | "in" => PaperUnit::Inch,
+        "mm" => PaperUnit::Millimetre,
+        _ => return None,
+    };
+    let (whole, fraction) = number.split_once('.').unwrap_or((number, "0"));
+    let digits = |part: &str| !part.is_empty() && part.bytes().all(|byte| byte.is_ascii_digit());
+    (digits(whole) && digits(fraction)).then(|| (number.to_owned(), unit))
 }
 
 /// The counts the generator reports over the two texts, on one line.

@@ -26,7 +26,7 @@ use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
 use xtask::generate_schema::emit::{
-    classes, geometry, markup, namespaces, parts, preset_colors, semantic, validation,
+    classes, geometry, markup, namespaces, paper_sizes, parts, preset_colors, semantic, validation,
 };
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
@@ -201,6 +201,8 @@ fn main() -> Result<ExitCode> {
                 "wrote {}: {colors} preset colours",
                 preset_colors::PATH
             )?;
+            let papers = paper_sizes::emit(&system, &inputs)?;
+            writeln!(out, "wrote {}: {papers} paper sizes", paper_sizes::PATH)?;
             let shapes = geometry::emit(&system, &inputs, Path::new(geometry::PRESETS_PATH))?;
             writeln!(
                 out,

@@ -65,6 +65,7 @@ validation         the validator and its generated tables
   `crates/officekit/src/validation/generated/` (and `generated.rs`);
   `crates/officekit/src/drawing/color/preset.rs`;
   `crates/officekit/src/drawing/geometry/presets.rs`;
+  `crates/officekit/src/xlsx/size/paper.rs`;
   `crates/officekit-markup-macros/src/kinds.rs`;
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-xml/src/packaging/relationship_type.rs`. Change the generator

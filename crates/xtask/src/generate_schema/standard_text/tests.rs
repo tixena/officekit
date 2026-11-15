@@ -1,6 +1,6 @@
 use super::{
-    element_headings, part_definitions, part_summary, preset_colors, relationship_sections,
-    simple_type_headings, transitional_parts, transitional_relationships,
+    Paper, PaperUnit, element_headings, paper_sizes, part_definitions, part_summary, preset_colors,
+    relationship_sections, simple_type_headings, transitional_parts, transitional_relationships,
 };
 
 #[test]
@@ -295,5 +295,50 @@ fn the_preset_colours_are_read_from_their_section_across_a_page_break_and_a_wrap
     assert_eq!(
         preset_colors(text),
         expected.map(|(name, rgb)| (name.to_owned(), rgb))
+    );
+}
+
+fn paper(code: u32, width: (&str, PaperUnit), height: (&str, PaperUnit)) -> Paper {
+    Paper {
+        code,
+        height: (height.0.to_owned(), height.1),
+        width: (width.0.to_owned(), width.1),
+    }
+}
+
+#[test]
+fn the_paper_sizes_are_read_from_the_first_list_of_their_section_in_both_spellings() {
+    let text = concat!(
+        "18.3.1.63   pageSetup (Page Setup Settings)........................................ 1655\n",
+        "18.3.1.62        pageMargins (Page Margins)\n",
+        "                      0 = Before paper (1 in. by 1 in.)\n",
+        "18.3.1.63         pageSetup (Page Setup Settings)\n",
+        "paperSize (Paper      Paper size\n",
+        "Size)                 1 = Letter paper (8.5 in. by 11 in.)\n",
+        "                      9 = A4 paper (210 mm by 297 mm)\n",
+        "                      37 = Monarch envelope (3.875 in. by 7.5 in.).\n",
+        "\n\n                                                                          1658\n",
+        "\u{c}                            18. SpreadsheetML Reference Material\n",
+        "             70 = A6 (105 mm x 148 mm)\n",
+        "             71 = Japanese Envelope Kaku #2\n",
+        "             75 = Letter Rotated (11in x 8 1/2 11 in)\n",
+        "             90 = (12 in x 11 in)\n",
+        "             95 = PRC 32K(Big) (97 mm x 151 mm)\n",
+        "                      10 - 10%\n",
+        "18.3.1.64         pageSetup (Chart Sheet Page Setup)\n",
+        "                      1 = Letter paper (8.5 in. by 11 in.)\n",
+    );
+    let inch = PaperUnit::Inch;
+    let millimetre = PaperUnit::Millimetre;
+    assert_eq!(
+        paper_sizes(text),
+        [
+            paper(1, ("8.5", inch), ("11", inch)),
+            paper(9, ("210", millimetre), ("297", millimetre)),
+            paper(37, ("3.875", inch), ("7.5", inch)),
+            paper(70, ("105", millimetre), ("148", millimetre)),
+            paper(90, ("12", inch), ("11", inch)),
+            paper(95, ("97", millimetre), ("151", millimetre)),
+        ]
     );
 }

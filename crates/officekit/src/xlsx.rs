@@ -1,6 +1,8 @@
 //! The `.xlsx` file type.
 
 pub mod number_format;
+pub mod sheets;
+pub mod size;
 #[cfg(test)]
 mod tests;
 
@@ -9,16 +11,17 @@ use std::path::Path;
 use crate::parts::kinds::SpreadsheetKind;
 #[cfg(feature = "strict")]
 use crate::parts::pivot_table_cache_definition;
-use crate::parts::workbook;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::parts::worksheet;
 #[cfg(feature = "strict")]
 use crate::parts::{pivot_table, table_definition};
+use crate::parts::{shared_string_table, styles, theme, workbook};
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::{SaveWarning, convert_date_cells};
+use officekit_markup::drawing::Theme;
 #[cfg(feature = "strict")]
 use officekit_markup::spreadsheet;
-use officekit_markup::spreadsheet::Workbook;
+use officekit_markup::spreadsheet::{SharedStringTable, StyleSheet, Workbook};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
 #[cfg(feature = "strict")]
@@ -27,6 +30,7 @@ use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
+use officekit_xml::packaging::relationship::RelationshipType;
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::values::parse::boolean;
 use officekit_xml::write::WriteOptions;
@@ -38,6 +42,7 @@ use crate::file;
 use crate::new_parts;
 use crate::validation::fix::{Fix, Validation};
 use crate::validation::validator::Validator;
+use crate::xlsx::sheets::SheetEntry;
 
 /// A `.xlsx`-family file: its package, its workbook part, and the class and kind they give.
 ///
@@ -225,6 +230,18 @@ impl Xlsx {
         &mut self.package
     }
 
+    /// The root of the first part the workbook part relates to by `relationship_type`, loaded by
+    /// `load`; `None` when it relates to none the package holds.
+    fn related_root<R>(
+        &self,
+        relationship_type: &RelationshipType,
+        load: fn(&Package, &PartName, OpenOptions) -> Result<R, PackageError>,
+    ) -> Result<Option<R>, PackageError> {
+        sheets::first_related(&self.package, &self.main, relationship_type)?
+            .map(|name| load(&self.package, &name, self.options))
+            .transpose()
+    }
+
     /// Write the file to `path` in the Strict class; nothing is written when it fails. Needs the
     /// feature `strict`.
     ///
@@ -285,6 +302,30 @@ impl Xlsx {
         self.write_options = options;
     }
 
+    /// The shared string table's root (ECMA-376 Part 1, section 12.3.15); `None` when the workbook
+    /// part relates to none.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`] and [`shared_string_table::load`].
+    pub fn shared_strings(&self) -> Result<Option<SharedStringTable>, PackageError> {
+        self.related_root(
+            &shared_string_table::RELATIONSHIP_TYPE,
+            shared_string_table::load,
+        )
+    }
+
+    /// The sheets of this workbook in the order of its sheet list (ECMA-376 Part 1, sections
+    /// 18.2.19 and 18.2.20). An entry whose relationship names no part of this package is passed
+    /// over.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Xlsx::workbook`] and [`Package::related`].
+    pub fn sheets(&self) -> Result<Vec<SheetEntry>, PackageError> {
+        sheets::of(&self.package, &self.main, &self.workbook()?)
+    }
+
     /// Everything [`to_bytes_strict`](Self::to_bytes_strict) refuses, in one call: one row per part
     /// and refused content. Empty when the save takes every part. Needs the feature `strict`.
     ///
@@ -294,6 +335,26 @@ impl Xlsx {
     #[cfg(feature = "strict")]
     pub fn strict_refusals(&self) -> Result<Vec<crate::StrictRefusal>, PackageError> {
         file::strict_refusals(&self.package, self.class, self.options)
+    }
+
+    /// The styles part's root (ECMA-376 Part 1, section 12.3.20); `None` when the workbook part
+    /// relates to none.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`] and [`styles::load`].
+    pub fn styles(&self) -> Result<Option<StyleSheet>, PackageError> {
+        self.related_root(&styles::RELATIONSHIP_TYPE, styles::load)
+    }
+
+    /// The theme part's root (ECMA-376 Part 1, section 14.2.7); `None` when the workbook part
+    /// relates to none.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`] and [`theme::load`].
+    pub fn theme(&self) -> Result<Option<Theme>, PackageError> {
+        self.related_root(&theme::RELATIONSHIP_TYPE, theme::load)
     }
 
     /// The file's bytes in the Strict class: as they are when it was read Strict, else every
