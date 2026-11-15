@@ -1122,7 +1122,6 @@ fn numbers_past_a_format_s_reach_are_decimal() {
         format_number(1_000_001, F::Hebrew1).as_deref(),
         Some("1000001")
     );
-    assert_eq!(format_number(100, F::KoreanLegal).as_deref(), Some("100"));
     assert_eq!(
         format_number(i64::MAX, F::UpperLetter),
         Some(i64::MAX.to_string())
@@ -1246,6 +1245,69 @@ fn the_group_systems_past_the_standard_s_values_are_cldr_s() {
             "{format:?}"
         );
     }
+}
+
+#[test]
+fn korean_legal_to_99_is_the_standard_s_tens_and_ones_words() {
+    let ones = [
+        "",
+        "\u{D558}\u{B098}",
+        "\u{B458}",
+        "\u{C14B}",
+        "\u{B137}",
+        "\u{B2E4}\u{C12F}",
+        "\u{C5EC}\u{C12F}",
+        "\u{C77C}\u{ACF1}",
+        "\u{C5EC}\u{B35F}",
+        "\u{C544}\u{D649}",
+    ];
+    let tens = [
+        "",
+        "\u{C5F4}",
+        "\u{C2A4}\u{BB3C}",
+        "\u{C11C}\u{B978}",
+        "\u{B9C8}\u{D754}",
+        "\u{C270}",
+        "\u{C608}\u{C21C}",
+        "\u{C77C}\u{D754}",
+        "\u{C5EC}\u{B4E0}",
+        "\u{C544}\u{D754}",
+    ];
+    for (ten, tens_word) in (0_i64..).zip(tens) {
+        for (one, ones_word) in (0_i64..).zip(ones) {
+            let value = ten * 10 + one;
+            if value > 0 {
+                assert_eq!(
+                    format_number(value, F::KoreanLegal),
+                    Some(format!("{tens_word}{ones_word}")),
+                    "{value}"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn korean_legal_from_100_is_cldr_s_native_cardinal_to_ten_to_the_eighteenth() {
+    assert_eq!(
+        format_number(100, F::KoreanLegal).as_deref(),
+        Some("\u{BC31}")
+    );
+    assert_eq!(
+        format_number(101, F::KoreanLegal).as_deref(),
+        Some("\u{BC31}\u{C77C}")
+    );
+    let group = " \u{AD6C}\u{CC9C}\u{AD6C}\u{BC31}\u{AD6C}\u{C2ED}\u{AD6C}";
+    assert_eq!(
+        format_number(LAST_IN_WORDS, F::KoreanLegal),
+        Some(format!(
+            "\u{AD6C}\u{C2ED}\u{AD6C}\u{ACBD}{group}\u{C870}{group}\u{C5B5}{group}\u{B9CC}{group}"
+        ))
+    );
+    assert_eq!(
+        format_number(LAST_IN_WORDS + 1, F::KoreanLegal),
+        Some((LAST_IN_WORDS + 1).to_string())
+    );
 }
 
 #[test]

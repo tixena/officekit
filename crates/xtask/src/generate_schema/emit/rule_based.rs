@@ -28,7 +28,7 @@ const CARDINAL: [&str; 1] = ["%spellout-numbering"];
 
 /// The number formats section 17.18.59 spells only to a limit: each `StNumberFormatMember`
 /// variant and the CLDR rule set, by locale, grouping and name, that writes it past that limit.
-pub const COUNTING: [(&str, &str, &str, &str); 11] = [
+pub const COUNTING: [(&str, &str, &str, &str); 12] = [
     (
         "ChineseCountingThousand",
         "zh",
@@ -62,6 +62,7 @@ pub const COUNTING: [(&str, &str, &str, &str); 11] = [
         SPELLOUT,
         "%spellout-cardinal-sinokorean",
     ),
+    ("KoreanLegal", "ko", SPELLOUT, "%spellout-cardinal-native"),
     (
         "TaiwaneseCountingThousand",
         "zh_Hant",

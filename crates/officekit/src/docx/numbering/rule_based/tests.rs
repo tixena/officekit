@@ -199,6 +199,7 @@ fn each_format_spelled_to_a_limit_has_a_rule_set() {
             F::JapaneseCounting,
             F::JapaneseLegal,
             F::KoreanCounting,
+            F::KoreanLegal,
             F::TaiwaneseCountingThousand,
             F::ThaiCounting,
             F::VietnameseCounting,
