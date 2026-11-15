@@ -1467,6 +1467,42 @@ fn a_language_cldr_has_no_rules_for_gives_none() {
 }
 
 #[test]
+fn korean_ordinal_text_is_cldr_s_native_ordinal() {
+    for language in ["ko", "ko-KR", "ko-KP"] {
+        assert_eq!(
+            texts(F::OrdinalText, language, &[1, 2, 3, 10, 21]),
+            [
+                "\u{CCAB}\u{C9F8}",
+                "\u{B458}\u{C9F8}",
+                "\u{C14B}\u{C9F8}",
+                "\u{C5F4}\u{C9F8}",
+                "\u{C2A4}\u{BB3C}\u{D55C}\u{C9F8}"
+            ],
+            "{language}"
+        );
+    }
+}
+
+/// CLDR's rules for these languages hold no ordinal words; their cardinal words stay.
+#[test]
+fn the_languages_with_no_ordinal_rule_set_give_no_ordinal_text() {
+    for language in [
+        "bs", "chr", "cy", "et", "fa", "fo", "ga", "hy", "is", "ka", "kl", "lrc", "lv", "mk", "nn",
+        "se", "sq",
+    ] {
+        assert_eq!(
+            format_number_in(1, F::OrdinalText, language),
+            None,
+            "{language}"
+        );
+        assert!(
+            format_number_in(1, F::CardinalText, language).is_some(),
+            "{language}"
+        );
+    }
+}
+
+#[test]
 fn a_tag_s_region_and_script_fall_back_to_the_language() {
     assert_eq!(texts(F::CardinalText, "ES-mx", &[1]), ["Uno"]);
     assert_eq!(texts(F::CardinalText, "en_GB", &[21]), ["Twenty-one"]);

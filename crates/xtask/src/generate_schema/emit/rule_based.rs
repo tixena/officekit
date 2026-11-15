@@ -75,11 +75,13 @@ pub const COUNTING: [(&str, &str, &str, &str); 11] = [
 /// The rule set of `ordinal`.
 const ORDINAL: [&str; 1] = ["%digits-ordinal"];
 
-/// The rule set of `ordinalText`: the first of these a locale has.
-const ORDINAL_TEXT: [&str; 3] = [
+/// The rule set of `ordinalText`: the first of these a locale has. Only Korean's rules hold
+/// `%spellout-ordinal-native`, its native ordinals.
+const ORDINAL_TEXT: [&str; 4] = [
     "%spellout-ordinal",
     "%spellout-ordinal-masculine",
     "%spellout-ordinal-common",
+    "%spellout-ordinal-native",
 ];
 
 const SPELLOUT: &str = "SpelloutRules";

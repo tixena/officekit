@@ -608,6 +608,29 @@ fn a_level_writes_its_label_in_the_language_of_its_run_properties() {
 }
 
 #[test]
+fn an_ordinal_text_level_is_decimal_in_welsh_and_latvian() {
+    for language in ["cy", "cy-GB", "lv", "lv-LV"] {
+        let numbering = single(Vec::from([in_language(
+            level(0, StNumberFormatMember::OrdinalText, "%1"),
+            language,
+        )]));
+        assert_eq!(labels_of(&numbering, &[0, 0]), ["1", "2"], "{language}");
+    }
+}
+
+#[test]
+fn a_korean_ordinal_text_level_writes_native_ordinals() {
+    let numbering = single(Vec::from([in_language(
+        level(0, StNumberFormatMember::OrdinalText, "%1"),
+        "ko-KR",
+    )]));
+    assert_eq!(
+        labels_of(&numbering, &[0, 0, 0]),
+        ["\u{CCAB}\u{C9F8}", "\u{B458}\u{C9F8}", "\u{C14B}\u{C9F8}"]
+    );
+}
+
+#[test]
 fn a_turkish_level_cases_i_as_turkish_does() {
     let numbering = single(Vec::from([
         in_language(level(0, StNumberFormatMember::CardinalText, "%1."), "tr-TR"),
