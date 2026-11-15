@@ -13,11 +13,10 @@ use officekit_markup::spreadsheet::Worksheet;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::values::DateTime;
 
+use crate::xlsx::number_format::{DAY, days_from_civil};
+
 #[cfg(test)]
 mod tests;
-
-/// Nanoseconds in a day.
-const DAY: i128 = 86_400_000_000_000;
 
 /// The decimal places of a serial date-time's text, past an `f64`'s precision.
 const PLACES: u32 = 20;
@@ -198,17 +197,6 @@ fn calendar_date(text: &str) -> Option<(i32, u8, u8)> {
         && (1_u8..=12_u8).contains(&month)
         && (1..=days_in_month(year, month)).contains(&day);
     valid.then_some((year, month, day))
-}
-
-/// Days from 1970-01-01 to a date of the proleptic Gregorian calendar.
-const fn days_from_civil(year: i64, month: i64, day: i64) -> i64 {
-    let shifted_year = if month <= 2 { year - 1 } else { year };
-    let era = shifted_year.div_euclid(400);
-    let year_of_era = shifted_year.rem_euclid(400);
-    let shifted_month = (month + 9).rem_euclid(12);
-    let day_of_year = (153 * shifted_month + 2) / 5 + day - 1;
-    let day_of_era = year_of_era * 365 + year_of_era / 4 - year_of_era / 100 + day_of_year;
-    era * 146_097 + day_of_era - 719_468
 }
 
 /// The days of a month in the proleptic Gregorian calendar.

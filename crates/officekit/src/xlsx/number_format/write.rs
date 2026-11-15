@@ -3,7 +3,7 @@
 use super::decimal::{Decimal, count, increment};
 use super::general::{MOST, unsigned};
 use super::parse::{Placeholder, Token};
-use super::{Piece, Section, Shown};
+use super::{FormatColor, Piece, Section, Shown};
 
 /// The most digits of a fraction's denominator searched (section 18.8.31, `/`).
 const DENOMINATOR_DIGITS: usize = 9;
@@ -13,12 +13,12 @@ const FRACTION_PLACES: usize = 20;
 
 /// The text each token of a section shows, and the pieces they make, `Text` pieces joined.
 #[derive(Default)]
-struct Writer {
+pub(super) struct Writer {
     pieces: Vec<Piece>,
 }
 
 impl Writer {
-    fn push(&mut self, piece: Piece) {
+    pub(super) fn push(&mut self, piece: Piece) {
         match (self.pieces.last_mut(), piece) {
             (_, Piece::Text(text)) if text.is_empty() => {}
             (Some(Piece::Text(before)), Piece::Text(text)) => before.push_str(&text),
@@ -26,12 +26,20 @@ impl Writer {
         }
     }
 
-    fn text(&mut self, text: &str) {
+    /// What the pieces show, in `color`.
+    pub(super) fn shown(self, color: Option<FormatColor>) -> Shown {
+        Shown {
+            color,
+            pieces: self.pieces,
+        }
+    }
+
+    pub(super) fn text(&mut self, text: &str) {
         self.push(Piece::Text(text.to_owned()));
     }
 
     /// What `token` shows of itself, when it is a literal, a `%`, a `_` or a `*`.
-    fn token(&mut self, token: &Token) {
+    pub(super) fn token(&mut self, token: &Token) {
         if let Some(piece) = token.piece() {
             self.push(piece);
         }
@@ -46,11 +54,8 @@ struct Fraction {
 }
 
 /// `value` under `section`; the section writes the minus sign when `signed` and the value is
-/// negative. `None` for a section of dates and times, and when the general format cannot write it.
+/// negative. `None` when the general format cannot write it.
 pub(super) fn number(section: &Section, value: &Decimal, signed: bool) -> Option<Shown> {
-    if section.dates {
-        return None;
-    }
     let mut writer = Writer::default();
     let has = |wanted: fn(&Token) -> bool| section.tokens.iter().any(wanted);
     let general = has(|token| *token == Token::General);

@@ -167,6 +167,40 @@ impl Decimal {
         }
     }
 
+    /// This number times `factor`, rounded to a whole number, a half upward; `None` beyond an
+    /// `i128`.
+    pub(super) fn times_rounded(&self, factor: u128) -> Option<i128> {
+        let mut carry = 0_u128;
+        let mut reversed = Vec::with_capacity(self.digits.len());
+        for digit in self.digits.iter().rev() {
+            let sum = u128::from(*digit).checked_mul(factor)?.checked_add(carry)?;
+            reversed.push(u8::try_from(sum % 10).ok()?);
+            carry = sum / 10;
+        }
+        while carry > 0 {
+            reversed.push(u8::try_from(carry % 10).ok()?);
+            carry /= 10;
+        }
+        reversed.reverse();
+        let product = Self::normal(false, reversed, self.power);
+        let whole_text = product.whole_digits();
+        let whole = if whole_text.is_empty() {
+            0
+        } else {
+            whole_text.parse::<i128>().ok()?
+        };
+        let half = product.digit_at(-1).cmp(&5).then(if product.power < -1 {
+            Ordering::Greater
+        } else {
+            Ordering::Equal
+        });
+        if self.negative {
+            whole.checked_add(i128::from(half.is_gt()))?.checked_neg()
+        } else {
+            whole.checked_add(i128::from(half.is_ge()))
+        }
+    }
+
     /// The digits of the whole part, with no zero first; empty when it is zero.
     pub(super) fn whole_digits(&self) -> String {
         match self.exponent() {

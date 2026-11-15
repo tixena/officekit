@@ -1,6 +1,11 @@
 use officekit_markup::spreadsheet::{CellValue, NumberFormat as NumFmt};
 
-use super::{FormatColor, FormatError, FormatKind, NumberFormat, Piece, Shown, general};
+use super::{
+    DateSystem, FormatColor, FormatError, FormatKind, NumberFormat, Piece, Shown, general,
+};
+
+/// The date system a code of numbers is given, which none of them reads.
+const ANY: DateSystem = DateSystem::V1900Transitional;
 
 /// The code read, or a failed test.
 fn format(code: &str) -> NumberFormat {
@@ -9,12 +14,12 @@ fn format(code: &str) -> NumberFormat {
 
 /// `number` under `code`, as one text.
 fn plain(code: &str, number: &str) -> Option<String> {
-    format(code).number(number).map(|shown| shown.plain())
+    format(code).number(number, ANY).map(|shown| shown.plain())
 }
 
 /// `number` under `code`, as its pieces.
 fn pieces(code: &str, number: &str) -> Option<Vec<Piece>> {
-    format(code).number(number).map(|shown| shown.pieces)
+    format(code).number(number, ANY).map(|shown| shown.pieces)
 }
 
 fn text(written: &str) -> Piece {
@@ -83,12 +88,12 @@ fn the_standards_surplus_and_shortage() {
 #[test]
 fn the_standards_conditions_and_colours() {
     let code = format("[Red][<=100];[Blue][>100]");
-    let low = code.number("50").unwrap();
+    let low = code.number("50", ANY).unwrap();
     assert_eq!(
         (low.plain().as_str(), low.color),
         ("50", Some(FormatColor::Red))
     );
-    let high = code.number("150").unwrap();
+    let high = code.number("150", ANY).unwrap();
     assert_eq!(
         (high.plain().as_str(), high.color),
         ("150", Some(FormatColor::Blue))
@@ -98,22 +103,30 @@ fn the_standards_conditions_and_colours() {
 #[test]
 fn a_number_no_condition_serves_gives_none() {
     let code = format("[>=100]0;[<0]0");
-    assert_eq!(code.number("50"), None);
+    assert_eq!(code.number("50", ANY), None);
     assert_eq!(
-        code.number("-5").map(|shown| shown.plain()).as_deref(),
+        code.number("-5", ANY).map(|shown| shown.plain()).as_deref(),
         Some("-5")
     );
     assert_eq!(
-        code.number("100").map(|shown| shown.plain()).as_deref(),
+        code.number("100", ANY)
+            .map(|shown| shown.plain())
+            .as_deref(),
         Some("100")
     );
     let fallback = format("[=1]\"one\";0.0");
     assert_eq!(
-        fallback.number("1").map(|shown| shown.plain()).as_deref(),
+        fallback
+            .number("1", ANY)
+            .map(|shown| shown.plain())
+            .as_deref(),
         Some("one")
     );
     assert_eq!(
-        fallback.number("2").map(|shown| shown.plain()).as_deref(),
+        fallback
+            .number("2", ANY)
+            .map(|shown| shown.plain())
+            .as_deref(),
         Some("2.0")
     );
 }
@@ -206,11 +219,13 @@ fn a_semicolon_that_is_text() {
     let code = format("0\";\"0;-0");
     assert_eq!(code.numbers.len(), 2);
     assert_eq!(
-        code.number("12").map(|shown| shown.plain()).as_deref(),
+        code.number("12", ANY).map(|shown| shown.plain()).as_deref(),
         Some("1;2")
     );
     assert_eq!(
-        code.number("-12").map(|shown| shown.plain()).as_deref(),
+        code.number("-12", ANY)
+            .map(|shown| shown.plain())
+            .as_deref(),
         Some("-12")
     );
     assert_eq!(format("[$;-409]0").numbers.len(), 1);
@@ -243,9 +258,9 @@ fn a_currency_in_brackets() {
 }
 
 #[test]
-fn a_dates_code_writes_no_number_yet() {
-    assert_eq!(plain("yyyy-mm-dd", "46000"), None);
-    assert_eq!(plain("0;[h]:mm", "-1"), None);
+fn a_section_of_dates_for_negative_numbers_writes_their_magnitude() {
+    assert_eq!(plain("yyyy-mm-dd", "46000").as_deref(), Some("2025-12-09"));
+    assert_eq!(plain("0;[h]:mm", "-1").as_deref(), Some("24:00"));
     assert_eq!(plain("0;[h]:mm", "1").as_deref(), Some("1"));
 }
 
@@ -292,7 +307,7 @@ fn a_negative_number_rounded_to_zero() {
 
 #[test]
 fn a_palette_colour() {
-    let color = |code: &str| format(code).number("1").unwrap().color;
+    let color = |code: &str| format(code).number("1", ANY).unwrap().color;
     assert_eq!(color("[Color3]0"), Some(FormatColor::Palette(3)));
     assert_eq!(color("[color56]0"), Some(FormatColor::Palette(56)));
     assert_eq!(color("[Color57]0"), None);
@@ -311,7 +326,7 @@ fn the_eight_colours() {
         ("[YELLOW]", FormatColor::Yellow),
     ];
     for (bracket, color) in names {
-        let shown = format(&format!("{bracket}0")).number("1").unwrap();
+        let shown = format(&format!("{bracket}0")).number("1", ANY).unwrap();
         assert_eq!(shown.color, Some(color), "{bracket}");
     }
 }
@@ -319,7 +334,7 @@ fn the_eight_colours() {
 #[test]
 fn sections_by_sign() {
     let code = format("0.0;(0.0);\"zero\"");
-    let shown = |number: &str| code.number(number).map(|found| found.plain());
+    let shown = |number: &str| code.number(number, ANY).map(|found| found.plain());
     assert_eq!(shown("1").as_deref(), Some("1.0"));
     assert_eq!(shown("-1").as_deref(), Some("(1.0)"));
     assert_eq!(shown("0").as_deref(), Some("zero"));
@@ -338,7 +353,7 @@ fn general_as_a_section() {
         Some("Total 3.5")
     );
     assert_eq!(plain("General;-General", "-3").as_deref(), Some("-3"));
-    let colored = format("[Red]General").number("123456789012").unwrap();
+    let colored = format("[Red]General").number("123456789012", ANY).unwrap();
     assert_eq!(
         (colored.plain().as_str(), colored.color),
         ("1.23457E+11", Some(FormatColor::Red))
@@ -353,7 +368,7 @@ fn a_cells_number_under_a_number_format_element() {
     let mut cell = CellValue::default();
     cell.value = "-1234.5".to_owned();
     let code = NumberFormat::parse(element.format_code.as_deref().unwrap_or("General")).unwrap();
-    let shown = code.number(&cell.value).unwrap();
+    let shown = code.number(&cell.value, ANY).unwrap();
     assert_eq!(
         (shown.plain().as_str(), shown.color),
         ("-1,234.50", Some(FormatColor::Red))
@@ -364,10 +379,10 @@ fn a_cells_number_under_a_number_format_element() {
 fn the_sample() {
     let code = format("#,##0.00;[Red]-#,##0.00");
     assert_eq!(
-        code.number("1234.5").map(|shown| shown.plain()),
+        code.number("1234.5", ANY).map(|shown| shown.plain()),
         Some("1,234.50".to_owned())
     );
-    let negative = code.number("-5").unwrap();
+    let negative = code.number("-5", ANY).unwrap();
     assert_eq!(
         (negative.plain().as_str(), negative.color),
         ("-5.00", Some(FormatColor::Red))

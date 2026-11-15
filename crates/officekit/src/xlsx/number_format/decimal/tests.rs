@@ -68,3 +68,14 @@ fn compares() {
     assert_eq!(read("1E2"), read("100.0"));
     assert!(read("0.5") < read("0.51"));
 }
+
+#[test]
+fn times_a_whole_number_rounded_a_half_upward() {
+    assert_eq!(read("0.4207639").times_rounded(86_400), Some(36_354));
+    assert_eq!(read("2.5").times_rounded(1), Some(3));
+    assert_eq!(read("-2.5").times_rounded(1), Some(-2));
+    assert_eq!(read("-2.51").times_rounded(1), Some(-3));
+    assert_eq!(read("-2.00000001").times_rounded(86_400), Some(-172_800));
+    assert_eq!(read("0").times_rounded(86_400), Some(0));
+    assert_eq!(read("1e300").times_rounded(86_400), None);
+}

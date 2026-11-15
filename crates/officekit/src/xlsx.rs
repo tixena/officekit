@@ -31,7 +31,6 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
-#[cfg(any(feature = "strict", feature = "transitional"))]
 use officekit_xml::values::parse::boolean;
 use officekit_xml::write::WriteOptions;
 use os_shim::System;
@@ -42,6 +41,7 @@ use crate::file;
 use crate::new_parts;
 use crate::validation::fix::{Fix, Validation};
 use crate::validation::validator::Validator;
+use crate::xlsx::number_format::DateSystem;
 use crate::xlsx::sheets::SheetEntry;
 
 /// A `.xlsx`-family file: its package, its workbook part, and the class and kind they give.
@@ -135,6 +135,22 @@ impl Xlsx {
         let xlsx = Self::new(kind)?;
         xlsx.package.save(system, path).await?;
         Ok(xlsx)
+    }
+
+    /// The workbook's date system: 1904 when `workbookPr/@date1904` is on, else 1900 as the
+    /// file's class counts it (Part 1, section 18.17.4.1; Part 4, section 15.3.4).
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`workbook`](Self::workbook).
+    pub fn date_system(&self) -> Result<DateSystem, PackageError> {
+        Ok(if date1904(&self.workbook()?) {
+            DateSystem::V1904
+        } else if self.class == ConformanceClass::Transitional {
+            DateSystem::V1900Transitional
+        } else {
+            DateSystem::V1900
+        })
     }
 
     /// The file whose bytes are `bytes`.
@@ -514,7 +530,6 @@ impl spreadsheet::Context for IsoDates {
 }
 
 /// Whether the workbook counts its dates in the 1904 date system (`workbookPr/@date1904`).
-#[cfg(any(feature = "strict", feature = "transitional"))]
 fn date1904(workbook: &Workbook) -> bool {
     workbook
         .properties

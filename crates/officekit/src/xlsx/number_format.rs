@@ -1,19 +1,29 @@
-//! A number written as the text a number format gives it (ECMA-376 Part 1, sections 18.8.30
-//! and 18.8.31).
+//! A number, a date or a time written as the text a number format gives it (ECMA-376 Part 1,
+//! sections 18.8.30, 18.8.31 and 18.17.4).
 //!
 //! ```
-//! use officekit::xlsx::number_format::{FormatColor, NumberFormat, general};
+//! use officekit::xlsx::number_format::{DateSystem, FormatColor, NumberFormat, date_time, general};
 //!
 //! # fn main() -> Result<(), Box<dyn core::error::Error>> {
+//! let system = DateSystem::V1900Transitional;
 //! let format = NumberFormat::parse("#,##0.00;[Red]-#,##0.00")?;
-//! assert_eq!(format.number("1234.5").map(|shown| shown.plain()), Some("1,234.50".to_owned()));
-//! let negative = format.number("-5").ok_or("a number")?;
+//! let shown = format.number("1234.5", system).map(|shown| shown.plain());
+//! assert_eq!(shown, Some("1,234.50".to_owned()));
+//! let negative = format.number("-5", system).ok_or("a number")?;
 //! assert_eq!((negative.plain().as_str(), negative.color), ("-5.00", Some(FormatColor::Red)));
 //! assert_eq!(general("123456789012", 11).as_deref(), Some("1.23457E+11"));
+//! let date = NumberFormat::parse("yyyy-mm-dd")?;
+//! let shown = date.number("46000", system).map(|shown| shown.plain());
+//! assert_eq!(shown, Some("2025-12-09".to_owned()));
+//! let time = NumberFormat::parse("h:mm AM/PM")?;
+//! let shown = time.number("0.4207639", system).map(|shown| shown.plain());
+//! assert_eq!(shown, Some("10:05 AM".to_owned()));
+//! assert_eq!(date_time("60", DateSystem::V1900Transitional), None);
 //! # Ok(())
 //! # }
 //! ```
 
+mod date;
 mod decimal;
 mod general;
 mod parse;
@@ -21,6 +31,9 @@ mod parse;
 mod tests;
 mod write;
 
+#[cfg(feature = "transitional")]
+pub(crate) use date::{DAY, days_from_civil};
+pub use date::{DateSystem, date_time};
 pub use general::general;
 
 use decimal::Decimal;
@@ -88,10 +101,11 @@ impl NumberFormat {
         }
     }
 
-    /// `number`, the text of an XML Schema double, written under its section (section 18.8.31);
-    /// `None` when it is no number, no section serves it, or its section writes a date or a time.
+    /// `number`, the text of an XML Schema double, written under its section (section 18.8.31),
+    /// a serial date-time in `dates` under a section of dates and times (section 18.17.4); `None`
+    /// when it is no number, no section serves it, or a date or a time code cannot write it.
     #[must_use = "this only returns the value"]
-    pub fn number(&self, number: &str) -> Option<Shown> {
+    pub fn number(&self, number: &str, dates: DateSystem) -> Option<Shown> {
         let value = Decimal::parse(number)?;
         let Some(last) = self.numbers.len().checked_sub(1) else {
             let text = general::unsigned(&value.abs(), general::MOST)?;
@@ -112,7 +126,7 @@ impl NumberFormat {
                     .as_ref()
                     .is_none_or(|condition| condition.holds(&value))
             })?;
-            return write::number(section, &value, true);
+            return written(section, &value, true, dates);
         }
         let (index, signed) = if value.is_negative() && last >= 1 {
             (1, false)
@@ -121,7 +135,7 @@ impl NumberFormat {
         } else {
             (0, true)
         };
-        write::number(&self.numbers[index], &value, signed)
+        written(&self.numbers[index], &value, signed, dates)
     }
 
     /// Read `code`: up to four sections at each `;` outside quotation marks and brackets and not
@@ -197,5 +211,18 @@ impl Shown {
                 Piece::Text(text) => text,
             })
             .collect()
+    }
+}
+
+/// `value` under `section`, signed as [`write::number`] signs it; a section of dates and times
+/// writes `value` itself, or its magnitude when it is not `signed`.
+fn written(section: &Section, value: &Decimal, signed: bool, dates: DateSystem) -> Option<Shown> {
+    if !section.dates {
+        return write::number(section, value, signed);
+    }
+    if signed {
+        date::write(section, value, dates)
+    } else {
+        date::write(section, &value.abs(), dates)
     }
 }

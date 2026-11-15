@@ -15,13 +15,14 @@ use crate::parts::{pivot_table, table_definition};
 use crate::transitional::dates::SaveWarning;
 #[cfg(feature = "transitional")]
 use crate::validation::validator::Validator;
+use officekit_markup::spreadsheet::WorkbookProperties;
 #[cfg(feature = "strict")]
 use officekit_markup::spreadsheet::{
     AutoFilterColumn, AutoFilterColumnContent, AutoFilterSettings, DynamicFilter, FileSharing,
     Filters, NumberFormatId, PivotCacheDefinition, PivotCacheField,
     PivotCacheSourceDescriptionContent, PivotCacheType, PivotFilterTypes, PivotTableAdvancedFilter,
     PivotTableDefinition, StDynamicFilterType, Table, TableColumn, UnsignedShortHex,
-    WorkbookProperties, WorksheetPivotCacheSource,
+    WorksheetPivotCacheSource,
 };
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row};
@@ -46,13 +47,13 @@ use officekit_xml::write::WriteOptions;
 use os_shim::mock::MemorySystem;
 
 use super::Xlsx;
+use super::number_format::DateSystem;
 
 fn name(text: &str) -> PartName {
     PartName::new(text).unwrap()
 }
 
 /// Turn `workbookPr/@date1904` of `xlsx`'s workbook to `date1904` when it names a value.
-#[cfg(feature = "strict")]
 fn date_system(xlsx: &mut Xlsx, date1904: Option<&str>) {
     if let Some(value) = date1904 {
         let mut workbook = xlsx.workbook().unwrap();
@@ -244,6 +245,30 @@ fn strict_dated(date1904: bool) -> Xlsx {
     dated.sheet_data.row = vec![row];
     put(&mut xlsx, &sheet, worksheet::CONTENT_TYPE, &dated);
     xlsx
+}
+
+#[test]
+fn the_date_system_of_a_transitional_workbook() {
+    let mut xlsx = Xlsx::new(SpreadsheetKind::Workbook).unwrap();
+    assert_eq!(xlsx.date_system().unwrap(), DateSystem::V1900Transitional);
+    date_system(&mut xlsx, Some("1"));
+    assert_eq!(xlsx.date_system().unwrap(), DateSystem::V1904);
+    date_system(&mut xlsx, Some("false"));
+    assert_eq!(xlsx.date_system().unwrap(), DateSystem::V1900Transitional);
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn the_date_system_of_a_strict_workbook() {
+    let strict = Xlsx::new(SpreadsheetKind::Workbook)
+        .unwrap()
+        .to_bytes_strict()
+        .unwrap();
+    let mut xlsx = Xlsx::from_bytes(strict, OpenOptions::default()).unwrap();
+    assert_eq!(xlsx.conformance_class(), ConformanceClass::Strict);
+    assert_eq!(xlsx.date_system().unwrap(), DateSystem::V1900);
+    date_system(&mut xlsx, Some("true"));
+    assert_eq!(xlsx.date_system().unwrap(), DateSystem::V1904);
 }
 
 #[test]
