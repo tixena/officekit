@@ -2,20 +2,26 @@ use alloc::boxed::Box;
 use alloc::format;
 use alloc::vec::Vec;
 
-use officekit_markup::common_simple_types::OnOffValue;
+use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue};
 use officekit_markup::office_word_2010_wordml::ConflictInsTrackChange;
 use officekit_markup::wordprocessing::{
-    Bold, ConflictChangeContent, DeletedTableRow, InsertedTableRow, MeasurementInHalfPoints,
-    MoveDestinationParagraph, MoveSourceParagraph, NonComplexScriptFontSize,
-    ParagraphMarkRunPropertiesRevision, ParagraphProperties, ParagraphPropertiesPPrGeneral,
-    ReferencedCharacterStyle, RunFonts, RunProperties, RunPropertiesContent,
-    RunPropertiesForTheParagraphMark, SpacingBetweenLinesAndAboveBelowParagraph, StyleDefinition,
-    StyleDefinitions, StyleTypes, StyleTypesMember,
+    AbstractNumberingDefinition, Bold, ColorValue, ConflictChangeContent, DecimalNumberValue,
+    DeletedTableRow, InsertedTableRow, MeasurementInHalfPoints, MoveDestinationParagraph,
+    MoveSourceParagraph, NonComplexScriptFontSize, NumberingDefinitionInstance,
+    NumberingDefinitionInstanceReferenceNumId, NumberingDefinitionInstanceReferenceNumPr,
+    NumberingDefinitions, NumberingLevelOverrideDefinition, NumberingLevelReference,
+    ParagraphIndentation, ParagraphMarkRunPropertiesRevision, ParagraphProperties,
+    ParagraphPropertiesPPrGeneral, ReferencedCharacterStyle, ReferencedParagraphStyle,
+    RunContentColor, RunFonts, RunProperties, RunPropertiesContent,
+    RunPropertiesForTheParagraphMark, SignedMeasurementInTwentiethsOfPoint,
+    SpacingBetweenLinesAndAboveBelowParagraph, StyleDefinition, StyleDefinitions, StyleTypes,
+    StyleTypesMember,
 };
 use officekit_xml::parse::parse;
 
 use super::{StyleSheet, WORDPROCESSING};
 use crate::docx::Docx;
+use crate::docx::numbering::Numbering;
 use crate::parts::kinds::WordprocessingKind;
 
 macro_rules! toggle_arms {
@@ -664,4 +670,182 @@ fn the_mark_revision_marks_are_left_out() {
         effective,
         effective_mark(&styles, mark_of(vec![font_size("48")]))
     );
+}
+
+fn decimal_number(value: i64) -> DecimalNumberValue {
+    DecimalNumberValue::from(value.to_string())
+}
+
+fn indentation(left: &str, hanging: Option<&str>) -> ParagraphIndentation {
+    let mut found = ParagraphIndentation::default();
+    found.left = Some(SignedMeasurementInTwentiethsOfPoint::from(left.to_owned()));
+    found.hanging = hanging.map(|value| MeasurementInTwentiethsOfAPoint::from(value.to_owned()));
+    found
+}
+
+fn numbered(num_id: i64, ilvl: Option<i64>) -> NumberingDefinitionInstanceReferenceNumPr {
+    let mut reference = NumberingDefinitionInstanceReferenceNumId::default();
+    reference.val = Some(decimal_number(num_id));
+    let mut found = NumberingDefinitionInstanceReferenceNumPr::default();
+    found.numbering_definition_instance_reference_num_id = Some(Box::new(reference));
+    found.numbering_level_reference = ilvl.map(|value| {
+        let mut level = NumberingLevelReference::default();
+        level.val = Some(decimal_number(value));
+        Box::new(level)
+    });
+    found
+}
+
+/// A paragraph style `id` whose paragraph properties are `general`.
+fn paragraph_style(id: &str, general: ParagraphPropertiesPPrGeneral) -> StyleDefinition {
+    let mut style = StyleDefinition::default();
+    style.style_id = Some(id.to_owned());
+    style.r#type = Some(StyleTypes::from(StyleTypesMember::Paragraph));
+    style.paragraph_properties_p_pr_general = Some(Box::new(general));
+    style
+}
+
+fn sheet_of(styles: Vec<StyleDefinition>) -> StyleSheet {
+    let mut definitions = StyleDefinitions::default();
+    definitions.style_definition = styles;
+    StyleSheet::new(&definitions)
+}
+
+/// The instance 5 of the abstract definition 4, whose level 0 has the indentation left 720 and
+/// hanging 360, a `w:numPr` naming the instance 9, and the run properties `run`.
+fn list_of(styles: &StyleSheet, run: Vec<RunPropertiesContent>) -> Numbering {
+    let mut general = ParagraphPropertiesPPrGeneral::default();
+    general.paragraph_indentation = Some(Box::new(indentation("720", Some("360"))));
+    general.numbering_definition_instance_reference_num_pr = Some(Box::new(numbered(9, None)));
+    let mut label = RunProperties::default();
+    label.content = run;
+    let mut level = NumberingLevelOverrideDefinition::default();
+    level.ilvl = Some(decimal_number(0));
+    level.paragraph_properties_p_pr_general = Some(Box::new(general));
+    level.run_properties = Some(Box::new(label));
+    let mut definition = AbstractNumberingDefinition::default();
+    definition.abstract_num_id = Some(decimal_number(4));
+    definition.numbering_level_override_definition.push(level);
+    let mut instance = NumberingDefinitionInstance::default();
+    instance.num_id = Some(decimal_number(5));
+    instance.abstract_numbering_definition_reference.val = Some(decimal_number(4));
+    let mut part = NumberingDefinitions::default();
+    part.abstract_numbering_definition.push(definition);
+    part.numbering_definition_instance.push(instance);
+    Numbering::new(&part, styles)
+}
+
+/// A paragraph's own properties naming the style `style`, with `numbering` and `indent`.
+fn own_of(
+    style: &str,
+    numbering: Option<NumberingDefinitionInstanceReferenceNumPr>,
+    indent: Option<ParagraphIndentation>,
+) -> ParagraphProperties {
+    let mut reference = ReferencedParagraphStyle::default();
+    reference.val = Some(style.to_owned());
+    let mut own = ParagraphProperties::default();
+    own.referenced_paragraph_style = Some(Box::new(reference));
+    own.numbering_definition_instance_reference_num_pr = numbering.map(Box::new);
+    own.paragraph_indentation = indent.map(Box::new);
+    own
+}
+
+/// The left and hanging indentation of `paragraph`.
+fn indents(paragraph: &ParagraphPropertiesPPrGeneral) -> (Option<&str>, Option<&str>) {
+    let found = paragraph.paragraph_indentation.as_deref();
+    (
+        found
+            .and_then(|indent| indent.left.as_ref())
+            .map(|value| value.0.as_str()),
+        found
+            .and_then(|indent| indent.hanging.as_ref())
+            .map(|value| value.0.as_str()),
+    )
+}
+
+#[test]
+fn a_paragraph_with_no_num_pr_or_num_id_zero_is_no_list_item() {
+    let mut listed = ParagraphPropertiesPPrGeneral::default();
+    listed.numbering_definition_instance_reference_num_pr = Some(Box::new(numbered(5, None)));
+    let styles = sheet_of(vec![paragraph_style("Listed", listed)]);
+    let numbering = list_of(&styles, vec![]);
+
+    let (plain, none) = styles.numbered_paragraph(&numbering, None);
+    assert_eq!(none, None);
+    assert_eq!(plain, styles.paragraph(None));
+
+    let removed = own_of("Listed", Some(numbered(0, None)), None);
+    let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&removed));
+    assert_eq!(level, None);
+    assert_eq!(paragraph, styles.paragraph(Some(&removed)));
+}
+
+#[test]
+fn the_level_s_indents_go_over_the_style_s_and_under_the_paragraph_s_own() {
+    let mut indented = ParagraphPropertiesPPrGeneral::default();
+    indented.paragraph_indentation = Some(Box::new(indentation("100", None)));
+    let styles = sheet_of(vec![paragraph_style("Indented", indented)]);
+    let numbering = list_of(&styles, vec![]);
+
+    let own = own_of("Indented", Some(numbered(5, Some(0))), None);
+    let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&own));
+    assert_eq!(level.map(|found| found.ilvl), Some(0));
+    assert_eq!(indents(&paragraph.properties), (Some("720"), Some("360")));
+    let num_id = paragraph
+        .properties
+        .numbering_definition_instance_reference_num_pr
+        .as_deref()
+        .and_then(|found| {
+            found
+                .numbering_definition_instance_reference_num_id
+                .as_deref()
+        })
+        .and_then(|found| found.val.as_ref())
+        .map(|value| value.0.as_str());
+    assert_eq!(num_id, Some("5"));
+
+    let wider = own_of(
+        "Indented",
+        Some(numbered(5, Some(0))),
+        Some(indentation("1440", None)),
+    );
+    let (own_indent, _) = styles.numbered_paragraph(&numbering, Some(&wider));
+    assert_eq!(indents(&own_indent.properties), (Some("1440"), Some("360")));
+}
+
+#[test]
+fn numbering_from_the_style_goes_under_the_style_s_indents() {
+    let mut listed = ParagraphPropertiesPPrGeneral::default();
+    listed.numbering_definition_instance_reference_num_pr = Some(Box::new(numbered(5, None)));
+    listed.paragraph_indentation = Some(Box::new(indentation("100", None)));
+    let styles = sheet_of(vec![paragraph_style("Listed", listed)]);
+    let numbering = list_of(&styles, vec![]);
+
+    let own = own_of("Listed", None, None);
+    let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&own));
+    assert_eq!(level.map(|found| found.ilvl), Some(0));
+    assert_eq!(indents(&paragraph.properties), (Some("100"), Some("360")));
+}
+
+#[test]
+fn the_label_takes_the_mark_s_properties_under_the_level_s() {
+    let mut red = RunContentColor::default();
+    red.val = Some(ColorValue::from("FF0000".to_owned()));
+    let styles = typed_sheet(vec![font_size("22")], vec![]);
+    let numbering = list_of(
+        &styles,
+        vec![
+            RunPropertiesContent::Bold(Bold::default()),
+            RunPropertiesContent::RunContentColor(red),
+        ],
+    );
+    let mut off = Bold::default();
+    off.val = Some(false.into());
+    let mark = mark_of(vec![RunPropertiesContent::Bold(off), font_size("48")]);
+    let own = own_of("Normal", Some(numbered(5, Some(0))), None);
+    let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&own));
+    let label = styles.label(&paragraph, Some(&mark), &level.unwrap());
+    assert_eq!(size(&label), Some("48"));
+    assert_eq!(bold(&label), Some(true));
+    assert_eq!(color(&label), Some("FF0000"));
 }

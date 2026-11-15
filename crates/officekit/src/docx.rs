@@ -5,6 +5,7 @@ pub mod effective;
 mod header_footer;
 pub mod image;
 mod merge;
+pub mod numbering;
 pub mod protection;
 pub mod table;
 #[cfg(test)]
@@ -13,7 +14,9 @@ mod tests;
 use std::path::Path;
 
 use crate::parts::kinds::WordprocessingKind;
-use crate::parts::{document_settings, header, main_document, style_definitions, theme};
+use crate::parts::{
+    document_settings, header, main_document, numbering_definitions, style_definitions, theme,
+};
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
 use officekit_markup::drawing::Theme;
@@ -34,6 +37,7 @@ use os_shim::bucket::Condition;
 
 use crate::compact::{self, Comments};
 use crate::docx::effective::StyleSheet;
+use crate::docx::numbering::Numbering;
 use crate::drawing::scheme::{SchemeMap, ThemeColors};
 use crate::file;
 use crate::new_parts;
@@ -303,6 +307,21 @@ impl Docx {
             package,
             write_options: WriteOptions::default(),
         })
+    }
+
+    /// The numbering definitions of this file, ready to answer which level a paragraph is
+    /// numbered with; empty when the main part relates to no numbering part.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`Package::related_by_type`], [`numbering_definitions::load`] and
+    /// [`Docx::style_sheet`].
+    pub fn numbering(&self) -> Result<Numbering, PackageError> {
+        let Some(name) = self.related_part(&numbering_definitions::RELATIONSHIP_TYPE)? else {
+            return Ok(Numbering::default());
+        };
+        let definitions = numbering_definitions::load(&self.package, &name, self.options)?;
+        Ok(Numbering::new(&definitions, &self.style_sheet()?))
     }
 
     /// The file at `path`, read through `system`.

@@ -1135,3 +1135,57 @@ fn a_word_file_with_no_theme_part_has_no_theme_no_settings_and_no_colour() {
         assert_eq!(colors.color(member), None, "{member:?}");
     }
 }
+
+#[cfg(feature = "transitional")]
+#[test]
+fn numbering_reads_the_numbering_part_the_main_part_relates_to() {
+    use crate::parts::numbering_definitions;
+    use officekit_markup::wordprocessing::{
+        AbstractNumberingDefinition, DecimalNumberValue, NumberingDefinitionInstance,
+        NumberingDefinitions, NumberingLevelOverrideDefinition,
+    };
+    use officekit_xml::write::WriteOptions as PartWriteOptions;
+
+    let mut level = NumberingLevelOverrideDefinition::default();
+    level.ilvl = Some(DecimalNumberValue::from("0".to_owned()));
+    let mut definition = AbstractNumberingDefinition::default();
+    definition.abstract_num_id = Some(DecimalNumberValue::from("4".to_owned()));
+    definition
+        .numbering_level_override_definition
+        .push(level.clone());
+    let mut instance = NumberingDefinitionInstance::default();
+    instance.num_id = Some(DecimalNumberValue::from("5".to_owned()));
+    instance.abstract_numbering_definition_reference.val =
+        Some(DecimalNumberValue::from("4".to_owned()));
+    let mut root = NumberingDefinitions::default();
+    root.abstract_numbering_definition.push(definition);
+    root.numbering_definition_instance.push(instance);
+
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let part = name("/word/numbering.xml");
+    numbering_definitions::store_transitional(
+        docx.package_mut(),
+        &part,
+        &root,
+        PartWriteOptions::default(),
+    )
+    .unwrap();
+    docx.package_mut()
+        .relate(
+            Some(&main),
+            &part,
+            numbering_definitions::RELATIONSHIP_TYPE.transitional,
+        )
+        .unwrap();
+
+    let found = docx.numbering().unwrap().level(5, 0).unwrap();
+    assert_eq!(found.abstract_id, 4);
+    assert_eq!(found.definition, level);
+}
+
+#[test]
+fn a_word_file_with_no_numbering_part_has_no_level() {
+    let docx = Docx::new(WordprocessingKind::Document).unwrap();
+    assert_eq!(docx.numbering().unwrap().level(1, 0), None);
+}

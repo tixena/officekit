@@ -21,6 +21,8 @@ use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
+use crate::docx::numbering::{self, ListLevel, Numbering};
+
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
 /// The toggle properties of section 17.7.3.
@@ -41,7 +43,7 @@ const TOGGLES: [&str; 12] = [
 
 /// A paragraph after the document defaults, its style's chain and its own properties.
 ///
-/// Table styles and numbering levels are not applied.
+/// Table styles are not applied; [`StyleSheet::numbered_paragraph`] applies numbering levels.
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct EffectiveParagraph {
@@ -54,10 +56,22 @@ pub struct EffectiveParagraph {
     pub style: Option<String>,
 }
 
+/// Where a numbering level's `w:pPr` goes among the layers of a paragraph (ECMA-376 Part 1,
+/// section 17.7.2).
+#[derive(Clone, Copy)]
+enum LevelLayer {
+    /// Over the paragraph style's chain and under the paragraph's own properties: the paragraph
+    /// states the numbering itself.
+    OverStyles,
+    /// Over the document defaults and under the paragraph style's chain: the numbering comes
+    /// from the style.
+    UnderStyles,
+}
+
 /// The styles of a Word file, by id, with the document defaults.
 ///
-/// Table styles and numbering levels are not applied by [`StyleSheet::paragraph`] or
-/// [`StyleSheet::run`].
+/// Table styles are not applied by [`StyleSheet::paragraph`] or [`StyleSheet::run`];
+/// [`StyleSheet::numbered_paragraph`] applies numbering levels.
 #[derive(Clone, Debug, Default)]
 pub struct StyleSheet {
     by_id: BTreeMap<String, StyleDefinition>,
@@ -92,6 +106,31 @@ impl StyleSheet {
         self.default_paragraph.as_deref()
     }
 
+    /// The effective properties of a list item's label (ECMA-376 Part 1, section 17.9.24): those
+    /// of the paragraph's mark, with the run properties of `level` laid over them.
+    #[must_use = "this only returns the value"]
+    pub fn label(
+        &self,
+        paragraph: &EffectiveParagraph,
+        mark: Option<&RunPropertiesForTheParagraphMark>,
+        level: &ListLevel,
+    ) -> RunProperties {
+        let mut merged = run_element(&self.paragraph_mark(paragraph, mark));
+        if let Some(own) = level.definition.run_properties.as_deref() {
+            let mut element = run_element(own);
+            element.children.retain(
+                |node| !matches!(node, Node::Element(child) if is_word(child, "rPrChange")),
+            );
+            apply(&mut merged, &element, Some(&RUN_PROPERTIES_SHAPE));
+            for name in TOGGLES {
+                if let Some(on) = toggle_of(&element, name) {
+                    set_toggle(&mut merged, name, Some(on));
+                }
+            }
+        }
+        RunProperties::read(&merged)
+    }
+
     #[must_use = "this only builds the value"]
     pub fn new(styles: &StyleDefinitions) -> Self {
         let mut sheet = Self::default();
@@ -118,11 +157,61 @@ impl StyleSheet {
         sheet
     }
 
+    /// The effective properties of a paragraph that may be a list item (ECMA-376 Part 1,
+    /// sections 17.7.2, 17.9.18 and 17.9.22): those of [`StyleSheet::paragraph`] with the `w:pPr`
+    /// of the level it is numbered with laid in, and that level.
+    #[must_use = "this only returns the value"]
+    pub fn numbered_paragraph(
+        &self,
+        numbering: &Numbering,
+        properties: Option<&ParagraphProperties>,
+    ) -> (EffectiveParagraph, Option<ListLevel>) {
+        let plain = self.paragraph_over(properties, None);
+        let Some(level) = numbering.level_of(&plain, properties) else {
+            return (plain, None);
+        };
+        let layer = if numbering::states_num_id(properties) {
+            LevelLayer::OverStyles
+        } else {
+            LevelLayer::UnderStyles
+        };
+        let own = level
+            .definition
+            .paragraph_properties_p_pr_general
+            .as_deref();
+        let numbered = self.paragraph_over(properties, own.map(|found| (found, layer)));
+        (numbered, Some(level))
+    }
+
     /// The effective properties of a paragraph whose own properties are `properties`: the
     /// document defaults, then the paragraph style's chain from its last ancestor down, then
     /// `properties`. A paragraph that names no style takes the default paragraph style.
     #[must_use = "this only returns the value"]
     pub fn paragraph(&self, properties: Option<&ParagraphProperties>) -> EffectiveParagraph {
+        self.paragraph_over(properties, None)
+    }
+
+    /// The effective run properties of a paragraph's mark (ECMA-376 Part 1, section 17.3.1.29):
+    /// what `paragraph` gives its runs, then the chain of the character style `mark` names, then
+    /// `mark` without its revision marks, with the toggle properties of section 17.7.3.
+    #[must_use = "this only returns the value"]
+    pub fn paragraph_mark(
+        &self,
+        paragraph: &EffectiveParagraph,
+        mark: Option<&RunPropertiesForTheParagraphMark>,
+    ) -> RunProperties {
+        let content = mark.map_or(&[][..], |own| own.run_properties_content.as_slice());
+        let own = mark.map(mark_element);
+        self.run_over(paragraph, own.as_ref(), character_style(content))
+    }
+
+    /// `paragraph`'s properties with a numbering level's `w:pPr`, less its `w:numPr`, laid in
+    /// where `level` says (section 17.7.2).
+    fn paragraph_over(
+        &self,
+        properties: Option<&ParagraphProperties>,
+        level: Option<(&ParagraphPropertiesPPrGeneral, LevelLayer)>,
+    ) -> EffectiveParagraph {
         let named = properties
             .and_then(|own| own.referenced_paragraph_style.as_ref())
             .and_then(|style| style.val.as_deref())
@@ -134,6 +223,20 @@ impl StyleSheet {
             || empty("pPr"),
             |defaults| write::paragraph_properties_p_pr_general(defaults, &mut scope),
         );
+        let numbered = level.map(|(general, layer)| {
+            let mut element = write::paragraph_properties_p_pr_general(general, &mut scope);
+            element
+                .children
+                .retain(|node| !matches!(node, Node::Element(child) if is_word(child, "numPr")));
+            (element, layer)
+        });
+        if let Some((element, LevelLayer::UnderStyles)) = &numbered {
+            apply(
+                &mut paragraph,
+                element,
+                Some(&PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE),
+            );
+        }
         for style in chain.iter().rev() {
             if let Some(general) = style.paragraph_properties_p_pr_general.as_deref() {
                 apply(
@@ -142,6 +245,13 @@ impl StyleSheet {
                     Some(&PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE),
                 );
             }
+        }
+        if let Some((element, LevelLayer::OverStyles)) = &numbered {
+            apply(
+                &mut paragraph,
+                element,
+                Some(&PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE),
+            );
         }
         if let Some(own) = properties {
             let mut element = write::paragraph_properties(own, &mut scope);
@@ -181,20 +291,6 @@ impl StyleSheet {
             run_properties: RunProperties::read(&runs),
             style: chain.first().and_then(|style| style.style_id.clone()),
         }
-    }
-
-    /// The effective run properties of a paragraph's mark (ECMA-376 Part 1, section 17.3.1.29):
-    /// what `paragraph` gives its runs, then the chain of the character style `mark` names, then
-    /// `mark` without its revision marks, with the toggle properties of section 17.7.3.
-    #[must_use = "this only returns the value"]
-    pub fn paragraph_mark(
-        &self,
-        paragraph: &EffectiveParagraph,
-        mark: Option<&RunPropertiesForTheParagraphMark>,
-    ) -> RunProperties {
-        let content = mark.map_or(&[][..], |own| own.run_properties_content.as_slice());
-        let own = mark.map(mark_element);
-        self.run_over(paragraph, own.as_ref(), character_style(content))
     }
 
     /// The effective properties of a run of `paragraph` whose own properties are `properties`:
