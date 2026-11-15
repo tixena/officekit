@@ -232,9 +232,10 @@ impl Rgb {
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[non_exhaustive]
 pub enum ShadingFill {
-    /// One colour fills: `w:fill` for `clear`, whose mask is all fill colour; `w:color` for
-    /// `solid`, whose mask is all pattern colour.
-    Color(WordColor),
+    /// `clear`, whose mask is all fill colour: `w:fill`. Section 17.3.5 leaves its `auto` to "a
+    /// consumer to automatically determine the background shading color as appropriate", and
+    /// section 17.18.39 to "the context of the parent XML element".
+    Clear(WordColor),
     /// `nil`: section 17.18.78 names it "No Pattern" and draws its mask all in the pattern colour,
     /// so the text gives no single fill.
     Nil {
@@ -252,6 +253,10 @@ pub enum ShadingFill {
         /// The pattern's name.
         pattern: ShadingPatternsMember,
     },
+    /// `solid`, whose mask is all pattern colour: `w:color`. Section 17.3.5 leaves its `auto` to "a
+    /// consumer to automatically determine the foreground shading color as appropriate", and
+    /// section 17.18.39 to "the context of the parent XML element".
+    Solid(WordColor),
     /// `w:val` is absent or no value of `ST_Shd`: `CT_Shd` requires it and the text gives no
     /// meaning to its absence.
     Unstated,
@@ -441,8 +446,8 @@ impl<X: UserData> From<&ParagraphShadingWith<X>> for ShadingFill {
             },
         );
         match pattern {
-            ShadingPatternsMember::Clear => Self::Color(fill),
-            ShadingPatternsMember::Solid => Self::Color(color),
+            ShadingPatternsMember::Clear => Self::Clear(fill),
+            ShadingPatternsMember::Solid => Self::Solid(color),
             ShadingPatternsMember::Nil => Self::Nil { color, fill },
             ShadingPatternsMember::DiagCross | _ => Self::Pattern {
                 color,

@@ -246,13 +246,48 @@ fn every_border_element_type_reads_the_same() {
 #[test]
 fn clear_fills_with_the_fill_and_solid_with_the_pattern_colour() {
     let clear = ShadingFill::from(&shading(Some("clear"), Some("FF0000"), Some("C3D69B")));
-    assert_eq!(clear, ShadingFill::Color(plain(hex("C3D69B"))));
+    assert_eq!(clear, ShadingFill::Clear(plain(hex("C3D69B"))));
     let solid = ShadingFill::from(&shading(Some("solid"), Some("FF0000"), Some("C3D69B")));
-    assert_eq!(solid, ShadingFill::Color(plain(hex("FF0000"))));
+    assert_eq!(solid, ShadingFill::Solid(plain(hex("FF0000"))));
     let automatic = ShadingFill::from(&shading(Some("solid"), None, None));
-    assert_eq!(automatic, ShadingFill::Color(plain(HexColor::Automatic)));
+    assert_eq!(automatic, ShadingFill::Solid(plain(HexColor::Automatic)));
     let auto_fill = ShadingFill::from(&shading(Some("clear"), None, Some("auto")));
-    assert_eq!(auto_fill, ShadingFill::Color(plain(HexColor::Automatic)));
+    assert_eq!(auto_fill, ShadingFill::Clear(plain(HexColor::Automatic)));
+}
+
+#[test]
+fn solid_with_an_automatic_pattern_colour_is_the_automatic_pattern_colour_not_the_fill() {
+    let found = ShadingFill::from(&shading(Some("solid"), Some("auto"), Some("FFFFFF")));
+    assert_eq!(found, ShadingFill::Solid(plain(HexColor::Automatic)));
+}
+
+#[test]
+fn clear_with_an_automatic_fill_is_the_automatic_fill_not_the_pattern_colour() {
+    let found = ShadingFill::from(&shading(Some("clear"), Some("FF0000"), Some("auto")));
+    assert_eq!(found, ShadingFill::Clear(plain(HexColor::Automatic)));
+}
+
+#[test]
+fn clear_takes_the_fill_theme_and_solid_the_pattern_theme() {
+    let mut element = shading(Some("clear"), Some("FF0000"), Some("C3D69B"));
+    element.theme_color = Some(ThemeColor::from("accent6".to_owned()));
+    element.theme_fill = Some(ThemeColor::from("accent3".to_owned()));
+    let themed = |name: ThemeColorMember, value: &str| WordColor {
+        theme: Stated::Value(Some(ThemeReference {
+            change: Stated::Value(ThemeChange::Plain),
+            name,
+        })),
+        value: Stated::Value(hex(value)),
+    };
+    assert_eq!(
+        ShadingFill::from(&element),
+        ShadingFill::Clear(themed(ThemeColorMember::Accent3, "C3D69B"))
+    );
+    element.val = Some(ShadingPatterns::from("solid".to_owned()));
+    assert_eq!(
+        ShadingFill::from(&element),
+        ShadingFill::Solid(themed(ThemeColorMember::Accent6, "FF0000"))
+    );
 }
 
 #[test]
@@ -447,7 +482,7 @@ fn a_fill_with_both_a_tint_and_a_shade_has_no_stated_change() {
         })),
         value: Stated::Value(hex("FFFFFF")),
     };
-    assert_eq!(ShadingFill::from(&found), ShadingFill::Color(fill));
+    assert_eq!(ShadingFill::from(&found), ShadingFill::Clear(fill));
     assert_eq!(
         fill.resolve(&theme_with_accent2("4F81BD")),
         Stated::Unstated
