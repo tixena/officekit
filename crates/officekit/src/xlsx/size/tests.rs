@@ -76,6 +76,12 @@ fn papers_in_millimetres_are_their_size_in_emu() {
 }
 
 #[test]
+fn letter_rotated_is_letter_with_its_width_and_height_exchanged() {
+    assert_eq!(paper_size(75), Some(PaperSize::new(10_058_400, 7_772_400)));
+    assert_eq!(paper_size(1), Some(PaperSize::new(7_772_400, 10_058_400)));
+}
+
+#[test]
 fn a_code_with_no_size_and_a_code_not_listed_give_nothing() {
     assert_eq!(paper_size(71), None);
     assert_eq!(paper_size(0), None);

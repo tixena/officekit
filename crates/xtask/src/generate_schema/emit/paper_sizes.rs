@@ -1,5 +1,8 @@
-//! The paper sizes: the width and the height of each code of `paperSize` the standard gives a size,
-//! read from section 18.3.1.63 of Part 1 and written to `crates/officekit/src/xlsx/size/paper.rs`.
+//! The paper sizes: the width and the height of each code of `paperSize`, written to
+//! `crates/officekit/src/xlsx/size/paper.rs`.
+//!
+//! Section 18.3.1.63 of Part 1 gives the sizes; `paper_sizes.toml` gives the codes whose line in
+//! that section states no size.
 
 use core::fmt::{self, Write as _};
 use core::slice;
@@ -19,6 +22,9 @@ mod tests;
 
 /// Where the table is written, from the workspace root.
 pub const PATH: &str = "crates/officekit/src/xlsx/size/paper.rs";
+
+/// The sizes of the codes section 18.3.1.63 states no readable size for.
+pub const UNSTATED_PATH: &str = "crates/xtask/data/paper_sizes.toml";
 
 /// EMU in an inch.
 const EMU_PER_INCH: i64 = 914_400;
@@ -56,6 +62,75 @@ pub fn checked(papers: &[Paper]) -> Result<Vec<(u32, i64, i64)>> {
     Ok(rows)
 }
 
+/// The papers of `paper_sizes.toml`.
+///
+/// # Errors
+///
+/// Text that is not TOML, or a row without its code, width, height, unit, or reason.
+pub fn unstated(text: &str) -> Result<Vec<Paper>> {
+    let table: toml::Table = text
+        .parse()
+        .with_context(|| format!("{UNSTATED_PATH} is not TOML"))?;
+    let rows = table
+        .get("paper")
+        .and_then(toml::Value::as_array)
+        .with_context(|| format!("{UNSTATED_PATH} has no `[[paper]]` rows"))?;
+    rows.iter()
+        .map(|row| {
+            let field = |key: &str| {
+                row.get(key)
+                    .and_then(toml::Value::as_str)
+                    .filter(|value| !value.trim().is_empty())
+                    .with_context(|| format!("a row of {UNSTATED_PATH} without `{key}`"))
+            };
+            let number = row
+                .get("code")
+                .and_then(toml::Value::as_integer)
+                .with_context(|| format!("a row of {UNSTATED_PATH} without `code`"))?;
+            let code = u32::try_from(number).with_context(|| {
+                format!("the paper code {number} of {UNSTATED_PATH} is no code")
+            })?;
+            let unit = match field("unit")? {
+                "in" => PaperUnit::Inch,
+                "mm" => PaperUnit::Millimetre,
+                other => bail!("the paper code {code} of {UNSTATED_PATH} has the unit {other}"),
+            };
+            field("reason")?;
+            Ok(Paper {
+                code,
+                height: (field("height")?.to_owned(), unit),
+                width: (field("width")?.to_owned(), unit),
+            })
+        })
+        .collect()
+}
+
+/// The rows of the papers section 18.3.1.63 of `part1_text` gives a size, and of the papers of
+/// `unstated_text`.
+///
+/// # Errors
+///
+/// No paper in the section, a paper of `unstated_text` the section gives a size, or a row
+/// [`checked`] refuses.
+pub fn table(part1_text: &str, unstated_text: &str) -> Result<Vec<(u32, i64, i64)>> {
+    let stated = standard_text::paper_sizes(part1_text);
+    if stated.is_empty() {
+        bail!("section 18.3.1.63 gives no paper size");
+    }
+    let added = unstated(unstated_text)?;
+    if let Some(paper) = added
+        .iter()
+        .find(|paper| stated.iter().any(|found| found.code == paper.code))
+    {
+        bail!(
+            "section 18.3.1.63 gives a size for the paper code {}: remove its row from \
+             {UNSTATED_PATH}",
+            paper.code
+        );
+    }
+    checked(&[stated, added].concat())
+}
+
 /// `number` of `unit` in EMU, exactly.
 ///
 /// # Errors
@@ -83,7 +158,8 @@ pub fn emu(number: &str, unit: PaperUnit) -> Result<i64> {
     Ok(scaled / denominator)
 }
 
-/// Read section 18.3.1.63 of Part 1 and write the table; the count of papers written.
+/// Read section 18.3.1.63 of Part 1 and `paper_sizes.toml` and write the table; the count of
+/// papers written.
 ///
 /// # Errors
 ///
@@ -94,12 +170,14 @@ where
 {
     let text = ready_now(system.read_to_string(&inputs.part1_text))
         .with_context(|| format!("cannot read {}", inputs.part1_text.display()))?;
-    let rows = checked(&standard_text::paper_sizes(&text))?;
+    let unstated_text = ready_now(system.read_to_string(Path::new(UNSTATED_PATH)))
+        .with_context(|| format!("cannot read {UNSTATED_PATH}"))?;
+    let rows = table(&text, &unstated_text)?;
     let header = namespaces::header(
         inputs.checksums(),
         inputs.tools(),
         slice::from_ref(&inputs.part1_text),
-        &[],
+        &[(Path::new(UNSTATED_PATH), unstated_text.as_bytes())],
     )?;
     let out = Path::new(PATH);
     if let Some(parent) = out.parent() {

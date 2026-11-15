@@ -1,5 +1,14 @@
-use super::{checked, emu, render};
+use super::{checked, emu, render, table, unstated};
 use crate::generate_schema::standard_text::{Paper, PaperUnit};
+
+const LETTER_ROTATED: &str = concat!(
+    "[[paper]]\n",
+    "code = 75\n",
+    "width = \"11\"\n",
+    "height = \"8.5\"\n",
+    "unit = \"in\"\n",
+    "reason = \"the rotated pair of code 1\"\n",
+);
 
 fn paper(code: u32, width: &str, height: &str, unit: PaperUnit) -> Paper {
     Paper {
@@ -66,5 +75,74 @@ fn the_table_is_one_row_per_paper_after_the_header() {
             "    (70, 3_780_000, 5_328_000),\n",
             "];\n",
         )
+    );
+}
+
+/// Section 18.3.1.63 of Part 1 with code 1 and the line `75` writes.
+fn section(code_75: &str) -> String {
+    format!(
+        concat!(
+            "18.3.1.63         pageSetup (Page Setup Settings)\n",
+            "paperSize (Paper      Paper size\n",
+            "Size)                 1 = Letter paper (8.5 in. by 11 in.)\n",
+            "             {}\n",
+            "18.3.1.64         pageSetup (Chart Sheet Page Setup)\n",
+        ),
+        code_75
+    )
+}
+
+#[test]
+fn a_code_the_section_gives_no_size_takes_its_size_from_the_data() {
+    let rows = table(
+        &section("75 = Letter Rotated (11in x 8 1/2 11 in)"),
+        LETTER_ROTATED,
+    )
+    .unwrap();
+    assert_eq!(
+        rows,
+        [(1, 7_772_400, 10_058_400), (75, 10_058_400, 7_772_400)]
+    );
+}
+
+#[test]
+fn a_code_the_section_gives_a_size_and_the_data_names_stops_the_generation() {
+    let error = table(
+        &section("75 = Letter Rotated (11 in x 8.5 in)"),
+        LETTER_ROTATED,
+    )
+    .unwrap_err();
+    assert!(
+        error
+            .to_string()
+            .contains("gives a size for the paper code 75")
+    );
+}
+
+#[test]
+fn a_row_of_the_data_without_its_reason_or_with_an_unknown_unit_stops_the_generation() {
+    let without_reason = LETTER_ROTATED.replace("reason = \"the rotated pair of code 1\"\n", "");
+    assert!(
+        unstated(&without_reason)
+            .unwrap_err()
+            .to_string()
+            .contains("without `reason`")
+    );
+    let in_points = LETTER_ROTATED.replace("unit = \"in\"", "unit = \"pt\"");
+    assert!(
+        unstated(&in_points)
+            .unwrap_err()
+            .to_string()
+            .contains("has the unit pt")
+    );
+}
+
+#[test]
+fn a_section_with_no_paper_stops_the_generation_whatever_the_data_adds() {
+    assert!(
+        table("", LETTER_ROTATED)
+            .unwrap_err()
+            .to_string()
+            .contains("no paper size")
     );
 }

@@ -1,0 +1,18 @@
+# The sizes of the paper codes of `paperSize` whose line in Part 1, section
+# 18.3.1.63, states no size the generator can read. The generator adds each row
+# to `crates/officekit/src/xlsx/size/paper.rs` and stops when the section's text
+# gives a size for its code.
+#
+# Each `[[paper]]` row is a code, its width and height as decimal numbers in
+# `unit` (`in` or `mm`), and the reason for the size.
+
+[[paper]]
+code = 75
+width = "11"
+height = "8.5"
+unit = "in"
+reason = """
+The section writes code 75 as `Letter Rotated (11in x 8 1/2 11 in)`, which is \
+no size. Every other rotated code of the section is its pair with the width and \
+the height exchanged (76 to 83 and 89), and code 1, Letter, is 8.5 in. by 11 in.\
+"""
