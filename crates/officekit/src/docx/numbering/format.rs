@@ -662,6 +662,38 @@ pub fn format_number(value: i64, format: StNumberFormatMember) -> Option<String>
     Some(text.unwrap_or_else(|| value.to_string()))
 }
 
+/// `value` in the format token `token` of the XSLT `format` attribute, which `w:numFmt w:format`
+/// uses (ECMA-376 Part 1, section 17.9.17; XSLT 1.0, section 7.7.1).
+///
+/// `None` for a token the recommendation leaves to the implementation, and for a value below 1.
+#[must_use = "this only returns the value"]
+pub fn format_custom(value: i64, token: &str) -> Option<String> {
+    let number = u64::try_from(value).ok().filter(|found| *found > 0)?;
+    match token {
+        "A" => Some(alphabetic(number, &UPPER_LETTER)),
+        "a" => Some(alphabetic(number, &LOWER_LETTER)),
+        "I" => roman(number, &UPPER_ROMAN),
+        "i" => roman(number, &LOWER_ROMAN),
+        _ => token
+            .strip_suffix('1')
+            .filter(|zeros| zeros.bytes().all(|byte| byte == b'0'))
+            .map(|_| format!("{number:0>width$}", width = token.len())),
+    }
+}
+
+/// The XSLT alphabetic sequence of `letters`: past the last letter, two letters, the first
+/// counting as a digit before the second (`Z`, `AA`, `AB`).
+fn alphabetic(value: u64, letters: &[&str]) -> String {
+    let size = letters.len() as u64;
+    let mut written = Vec::new();
+    let mut rest = value;
+    while let Some(index) = rest.checked_sub(1) {
+        written.push(symbol(letters, index % size));
+        rest = index / size;
+    }
+    written.into_iter().rev().collect()
+}
+
 /// `chineseCounting` and `taiwaneseCounting`: 0 to 10 from the set; to 99 the tens digit, unless
 /// it is one, the symbol of ten and the ones digit, unless it is zero; past 99 digit by digit.
 fn counting(value: u64) -> String {

@@ -64,6 +64,17 @@ fn restarting(
     definition
 }
 
+/// `definition` with the `w:format` `format` on its `w:numFmt`.
+fn custom(
+    mut definition: NumberingLevelOverrideDefinition,
+    format: &str,
+) -> NumberingLevelOverrideDefinition {
+    if let Some(numbering_format) = definition.numbering_format.as_deref_mut() {
+        numbering_format.format = Some(format.to_owned());
+    }
+    definition
+}
+
 /// The decimal levels 0 to 2, each starting at 1, with the texts `%1.`, `%1.%2` and `%1.%2.%3`.
 fn outline() -> Vec<NumberingLevelOverrideDefinition> {
     Vec::from([
@@ -592,4 +603,53 @@ fn an_earlier_level_writes_its_format_in_the_item_s_instance() {
         &StyleSheet::default(),
     );
     assert_eq!(labels(&numbering, &[(6, 0), (6, 1)]), ["I.", "I.1"]);
+}
+
+#[test]
+fn a_level_s_custom_format_writes_its_first_token() {
+    let numbering = single(Vec::from([custom(
+        level(0, StNumberFormatMember::Custom, "%1."),
+        "001, 002, 003, ...",
+    )]));
+    assert_eq!(labels_of(&numbering, &[0, 0, 0]), ["001.", "002.", "003."]);
+}
+
+#[test]
+fn a_custom_format_wins_over_the_val_and_numbers_the_deeper_levels_labels() {
+    let numbering = single(Vec::from([
+        custom(level(0, StNumberFormatMember::Decimal, "%1"), "(A)"),
+        level(1, StNumberFormatMember::LowerRoman, "%1-%2"),
+    ]));
+    assert_eq!(labels_of(&numbering, &[0, 1, 1]), ["A", "A-i", "A-ii"]);
+}
+
+#[test]
+fn an_unknown_custom_format_is_written_in_the_val() {
+    let numbering = single(Vec::from([
+        custom(level(0, StNumberFormatMember::LowerRoman, "%1"), "?"),
+        custom(level(1, StNumberFormatMember::Custom, "%2"), "\u{30A2}"),
+    ]));
+    assert_eq!(labels_of(&numbering, &[0, 0, 0]), ["i", "ii", "iii"]);
+    assert_eq!(labels_of(&numbering, &[0, 1, 1]), ["i", "1", "2"]);
+}
+
+#[test]
+fn a_legal_level_writes_a_custom_format_in_decimal() {
+    let mut legal = level(1, StNumberFormatMember::Decimal, "%1.%2");
+    legal.display_all_levels_using_arabic_numerals =
+        Some(Box::new(DisplayAllLevelsUsingArabicNumerals::default()));
+    let numbering = single(Vec::from([
+        custom(level(0, StNumberFormatMember::Custom, "%1"), "01"),
+        legal,
+    ]));
+    assert_eq!(labels_of(&numbering, &[0, 1]), ["01", "1.1"]);
+}
+
+#[test]
+fn a_custom_format_of_a_level_counted_from_zero_writes_zero_in_the_val() {
+    let numbering = single(Vec::from([custom(
+        unstarted(0, StNumberFormatMember::DecimalZero, "%1"),
+        "001",
+    )]));
+    assert_eq!(labels_of(&numbering, &[0, 0]), ["0", "001"]);
 }

@@ -1,6 +1,6 @@
 use officekit_markup::wordprocessing::StNumberFormatMember as F;
 
-use super::format_number;
+use super::{format_custom, format_number};
 
 /// Every member of `ST_NumberFormat`.
 const MEMBERS: [F; 63] = [
@@ -1063,4 +1063,65 @@ fn the_sample_values_of_a_page_number() {
     assert_eq!(format_number(27, F::UpperLetter).as_deref(), Some("AA"));
     assert_eq!(format_number(7, F::Decimal).as_deref(), Some("7"));
     assert_eq!(format_number(7, F::CardinalText), None);
+}
+
+#[test]
+fn a_token_of_zeros_ending_in_one_is_decimal_of_its_least_width() {
+    assert_eq!(format_custom(7, "001").as_deref(), Some("007"));
+    assert_eq!(format_custom(123, "001").as_deref(), Some("123"));
+    assert_eq!(format_custom(123, "01").as_deref(), Some("123"));
+    assert_eq!(format_custom(7, "1").as_deref(), Some("7"));
+    assert_eq!(format_custom(123, "1").as_deref(), Some("123"));
+}
+
+#[test]
+fn the_letter_tokens_count_past_z_with_two_letters() {
+    for (value, upper) in [
+        (1, "A"),
+        (26, "Z"),
+        (27, "AA"),
+        (28, "AB"),
+        (52, "AZ"),
+        (53, "BA"),
+    ] {
+        assert_eq!(format_custom(value, "A").as_deref(), Some(upper));
+        let lower = upper.to_lowercase();
+        assert_eq!(format_custom(value, "a"), Some(lower));
+    }
+    assert_eq!(format_custom(702, "A").as_deref(), Some("ZZ"));
+    assert_eq!(format_custom(703, "A").as_deref(), Some("AAA"));
+}
+
+#[test]
+fn the_roman_tokens_write_roman_numerals() {
+    for (value, upper) in [(4, "IV"), (9, "IX"), (14, "XIV")] {
+        assert_eq!(format_custom(value, "I").as_deref(), Some(upper));
+        let lower = upper.to_lowercase();
+        assert_eq!(format_custom(value, "i"), Some(lower));
+    }
+    assert_eq!(format_custom(i64::MAX, "I"), None);
+}
+
+#[test]
+fn a_token_the_recommendation_leaves_to_the_implementation_gives_none() {
+    for token in ["\u{30A2}", "nonsense", "11", "0", "2", "01a", "B", "ii", ""] {
+        assert_eq!(format_custom(1, token), None, "{token}");
+    }
+}
+
+#[test]
+fn a_value_below_one_gives_none() {
+    for token in ["1", "001", "A", "a", "I", "i"] {
+        assert_eq!(format_custom(0, token), None, "{token}");
+        assert_eq!(format_custom(-3, token), None, "{token}");
+    }
+}
+
+#[test]
+fn the_sample_values_of_a_custom_format() {
+    assert_eq!(format_custom(7, "001").as_deref(), Some("007"));
+    assert_eq!(format_custom(123, "01").as_deref(), Some("123"));
+    assert_eq!(format_custom(27, "A").as_deref(), Some("AA"));
+    assert_eq!(format_custom(4, "i").as_deref(), Some("iv"));
+    assert_eq!(format_custom(1, "\u{30A2}"), None);
 }

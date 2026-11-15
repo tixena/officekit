@@ -15,7 +15,7 @@ use officekit_markup::wordprocessing::{
     StNumberFormatMember, StyleDefinition,
 };
 
-pub use format::format_number;
+pub use format::{format_custom, format_number};
 
 use crate::docx::effective::{EffectiveParagraph, StyleSheet};
 
@@ -266,6 +266,18 @@ pub(super) fn states_num_id(own: Option<&ParagraphProperties>) -> bool {
     })
 }
 
+/// The first format token of a level's `w:format`: its first run of letters and digits (section
+/// 17.9.17; XSLT 1.0, section 7.7.1).
+fn custom_token(definition: &NumberingLevelOverrideDefinition) -> Option<&str> {
+    definition
+        .numbering_format
+        .as_deref()?
+        .format
+        .as_deref()?
+        .split(|character: char| !character.is_alphanumeric())
+        .find(|token| !token.is_empty())
+}
+
 fn decimal(value: Option<&DecimalNumberValue>) -> Option<i64> {
     value?.value().ok()
 }
@@ -350,6 +362,13 @@ fn number(
         .get(&at)
         .copied()
         .unwrap_or_else(|| definition.map_or(0, start_of));
+    if !legal
+        && let Some(text) = definition
+            .and_then(custom_token)
+            .and_then(|token| format_custom(value, token))
+    {
+        return text;
+    }
     let format = if legal {
         StNumberFormatMember::Decimal
     } else {
