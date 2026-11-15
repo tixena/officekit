@@ -1,7 +1,10 @@
 use officekit_markup::common_simple_types::HexadecimalColorValue;
 use officekit_markup::drawing::{
-    ColorContent, ColorScheme, RGBColorModelHexVariant, StSchemeColorValMember,
+    ColorContent, ColorScheme, OverrideColorMapping, RGBColorModelHexVariant,
+    StSchemeColorValMember, ThemeColorReference as ColorSchemeIndex,
+    ThemeColorReferenceMember as ColorSchemeIndexMember,
 };
+use officekit_markup::presentation::ColorSchemeMap;
 use officekit_markup::wordprocessing::{
     ThemeColorMappings, ThemeColorReference, ThemeColorReferenceMember,
 };
@@ -268,4 +271,78 @@ fn with_no_theme_no_name_has_a_colour() {
             assert_eq!(colors.slot(slot), None, "{slot:?}");
         }
     }
+}
+
+/// A `p:clrMap` whose twelve attributes each name a colour other than their own.
+fn master_map() -> ColorSchemeMap {
+    let mut map = ColorSchemeMap::default();
+    map.accent1 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Lt2));
+    map.accent2 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Lt1));
+    map.accent3 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Hlink));
+    map.accent4 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::FolHlink));
+    map.accent5 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Dk2));
+    map.accent6 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Dk1));
+    map.bg1 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Accent6));
+    map.bg2 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Accent5));
+    map.fol_hlink = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Accent4));
+    map.hlink = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Accent3));
+    map.tx1 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Accent2));
+    map.tx2 = Some(ColorSchemeIndex::from(ColorSchemeIndexMember::Accent1));
+    map
+}
+
+#[test]
+fn each_attribute_of_a_master_s_clr_map_maps_its_own_name() {
+    let expected = SchemeMap {
+        accent1: ThemeSlot::Light2,
+        accent2: ThemeSlot::Light1,
+        accent3: ThemeSlot::Hyperlink,
+        accent4: ThemeSlot::FollowedHyperlink,
+        accent5: ThemeSlot::Dark2,
+        accent6: ThemeSlot::Dark1,
+        bg1: ThemeSlot::Accent6,
+        bg2: ThemeSlot::Accent5,
+        fol_hlink: ThemeSlot::Accent4,
+        hlink: ThemeSlot::Accent3,
+        tx1: ThemeSlot::Accent2,
+        tx2: ThemeSlot::Accent1,
+    };
+    assert_eq!(SchemeMap::from_master(&master_map()), expected);
+}
+
+#[test]
+fn an_attribute_of_a_clr_map_that_is_absent_or_no_value_keeps_the_default() {
+    let mut map = ColorSchemeMap::default();
+    map.bg1 = Some(ColorSchemeIndex::from("nonsense".to_owned()));
+    let read = SchemeMap::from_master(&map);
+    assert_eq!(read.tx1, ThemeSlot::Dark1);
+    assert_eq!(read.bg1, ThemeSlot::Light1);
+    assert_eq!(read, SchemeMap::default());
+
+    let mut mapping = OverrideColorMapping::default();
+    mapping.bg1 = Some(ColorSchemeIndex::from("nonsense".to_owned()));
+    assert_eq!(SchemeMap::from_override(&mapping), SchemeMap::default());
+}
+
+#[test]
+fn a_master_s_clr_map_and_an_override_of_the_same_values_agree() {
+    let map = master_map();
+    let mut mapping = OverrideColorMapping::default();
+    mapping.accent1.clone_from(&map.accent1);
+    mapping.accent2.clone_from(&map.accent2);
+    mapping.accent3.clone_from(&map.accent3);
+    mapping.accent4.clone_from(&map.accent4);
+    mapping.accent5.clone_from(&map.accent5);
+    mapping.accent6.clone_from(&map.accent6);
+    mapping.bg1.clone_from(&map.bg1);
+    mapping.bg2.clone_from(&map.bg2);
+    mapping.fol_hlink.clone_from(&map.fol_hlink);
+    mapping.hlink.clone_from(&map.hlink);
+    mapping.tx1.clone_from(&map.tx1);
+    mapping.tx2.clone_from(&map.tx2);
+    assert_eq!(
+        SchemeMap::from_override(&mapping),
+        SchemeMap::from_master(&map)
+    );
+    assert_ne!(SchemeMap::from_master(&map), SchemeMap::default());
 }

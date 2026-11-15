@@ -1,12 +1,14 @@
 //! The `.pptx` file type.
 
+pub mod color_map;
+pub mod slides;
 #[cfg(test)]
 mod tests;
 
 use std::path::Path;
 
 use crate::parts::kinds::PresentationKind;
-use crate::parts::presentation;
+use crate::parts::{presentation, slide, slide_layout, slide_master, theme};
 #[cfg(feature = "transitional")]
 use crate::transitional::dates::SaveWarning;
 use officekit_markup::presentation::Presentation;
@@ -20,8 +22,10 @@ use os_shim::System;
 use os_shim::bucket::Condition;
 
 use crate::compact::{self, Comments};
+use crate::drawing::scheme::ThemeColors;
 use crate::file;
 use crate::new_parts;
+use crate::pptx::slides::SlideParts;
 use crate::validation::fix::{Fix, Validation};
 use crate::validation::validator::Validator;
 
@@ -269,6 +273,44 @@ impl Pptx {
     /// The options every store through the file writes with, its saves included.
     pub const fn set_write_options(&mut self, options: WriteOptions) {
         self.write_options = options;
+    }
+
+    /// The theme's colours under the colour map in force for the slide `parts` names (ECMA-376
+    /// Part 1, section 19.3.1.7).
+    ///
+    /// # Errors
+    ///
+    /// The errors of loading the slide, its layout, its master and, when it has one, its theme:
+    /// those of [`slide::load`], [`slide_layout::load`], [`slide_master::load`] and
+    /// [`theme::load`].
+    pub fn slide_colors(&self, parts: &SlideParts) -> Result<ThemeColors, PackageError> {
+        let slide_root = slide::load(&self.package, &parts.slide, self.options)?;
+        let layout = slide_layout::load(&self.package, &parts.layout, self.options)?;
+        let master = slide_master::load(&self.package, &parts.master, self.options)?;
+        let theme_root = parts
+            .theme
+            .as_ref()
+            .map(|name| theme::load(&self.package, name, self.options))
+            .transpose()?;
+        Ok(color_map::theme_colors(
+            &slide_root,
+            &layout,
+            &master,
+            theme_root.as_ref(),
+        ))
+    }
+
+    /// The slides of this presentation in the order of `p:sldIdLst` (ECMA-376 Part 1, section
+    /// 19.2.1.34), each with its part, its layout's, its master's and its theme's. An entry whose
+    /// relationship names no part of this package is passed over.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Read`] naming a slide part that relates to no layout part or a layout part
+    /// that relates to no master part; the errors of [`Pptx::presentation`] and
+    /// [`Package::related`].
+    pub fn slides(&self) -> Result<Vec<SlideParts>, PackageError> {
+        slides::of(&self.package, &self.main, &self.presentation()?)
     }
 
     /// Everything [`to_bytes_strict`](Self::to_bytes_strict) refuses, in one call: one row per part

@@ -4,7 +4,11 @@
 #[cfg(test)]
 mod tests;
 
-use officekit_markup::drawing::{ColorContent, ColorScheme, StSchemeColorValMember};
+use officekit_markup::drawing::{
+    ColorContent, ColorScheme, OverrideColorMapping, StSchemeColorValMember,
+    ThemeColorReference as ColorSchemeIndex, ThemeColorReferenceMember as ColorSchemeIndexMember,
+};
+use officekit_markup::presentation::ColorSchemeMap;
 use officekit_markup::wordprocessing::{
     ThemeColorMappings, ThemeColorReference, ThemeColorReferenceMember,
 };
@@ -93,6 +97,88 @@ impl Default for SchemeMap {
 }
 
 impl SchemeMap {
+    /// The mapping the twelve attributes of a `CT_ColorMapping` state, given in the order of this
+    /// type's fields. An attribute that is absent, or whose text is no value of
+    /// `ST_ColorSchemeIndex` (section 20.1.10.14), keeps the default.
+    fn from_color_mapping(attributes: [Option<&ColorSchemeIndex>; 12]) -> Self {
+        let defaults = Self::default();
+        let stated = |attribute: Option<&ColorSchemeIndex>, omitted: ThemeSlot| {
+            attribute
+                .and_then(|reference| reference.value().ok())
+                .and_then(scheme_index_slot)
+                .unwrap_or(omitted)
+        };
+        let [
+            accent1,
+            accent2,
+            accent3,
+            accent4,
+            accent5,
+            accent6,
+            bg1,
+            bg2,
+            fol_hlink,
+            hlink,
+            tx1,
+            tx2,
+        ] = attributes;
+        Self {
+            accent1: stated(accent1, defaults.accent1),
+            accent2: stated(accent2, defaults.accent2),
+            accent3: stated(accent3, defaults.accent3),
+            accent4: stated(accent4, defaults.accent4),
+            accent5: stated(accent5, defaults.accent5),
+            accent6: stated(accent6, defaults.accent6),
+            bg1: stated(bg1, defaults.bg1),
+            bg2: stated(bg2, defaults.bg2),
+            fol_hlink: stated(fol_hlink, defaults.fol_hlink),
+            hlink: stated(hlink, defaults.hlink),
+            tx1: stated(tx1, defaults.tx1),
+            tx2: stated(tx2, defaults.tx2),
+        }
+    }
+
+    /// The mapping a slide master's `p:clrMap` states (ECMA-376 Part 1, section 19.3.1.6). An
+    /// attribute that is absent, or whose text is no value of `ST_ColorSchemeIndex`, keeps the
+    /// default.
+    #[must_use = "this only builds the value"]
+    pub fn from_master(map: &ColorSchemeMap) -> Self {
+        Self::from_color_mapping([
+            map.accent1.as_ref(),
+            map.accent2.as_ref(),
+            map.accent3.as_ref(),
+            map.accent4.as_ref(),
+            map.accent5.as_ref(),
+            map.accent6.as_ref(),
+            map.bg1.as_ref(),
+            map.bg2.as_ref(),
+            map.fol_hlink.as_ref(),
+            map.hlink.as_ref(),
+            map.tx1.as_ref(),
+            map.tx2.as_ref(),
+        ])
+    }
+
+    /// The mapping an `a:overrideClrMapping` states (section 20.1.6.8), read as
+    /// [`SchemeMap::from_master`] reads a master's.
+    #[must_use = "this only builds the value"]
+    pub fn from_override(map: &OverrideColorMapping) -> Self {
+        Self::from_color_mapping([
+            map.accent1.as_ref(),
+            map.accent2.as_ref(),
+            map.accent3.as_ref(),
+            map.accent4.as_ref(),
+            map.accent5.as_ref(),
+            map.accent6.as_ref(),
+            map.bg1.as_ref(),
+            map.bg2.as_ref(),
+            map.fol_hlink.as_ref(),
+            map.hlink.as_ref(),
+            map.tx1.as_ref(),
+            map.tx2.as_ref(),
+        ])
+    }
+
     /// The mapping a Word file's `w:clrSchemeMapping` states (section 17.15.1.20), where the two
     /// text names are written `t1` and `t2`. An attribute that is absent, or whose text is no
     /// value of `ST_WmlColorSchemeIndex`, keeps the default.
@@ -199,6 +285,26 @@ impl ThemeColors {
             ThemeSlot::Light2 => &scheme.light_2.content,
         };
         Some(content)
+    }
+}
+
+/// The theme colour a value of `ST_ColorSchemeIndex` names (section 20.1.10.14); `None` for a
+/// member this code does not know.
+const fn scheme_index_slot(member: ColorSchemeIndexMember) -> Option<ThemeSlot> {
+    match member {
+        ColorSchemeIndexMember::Accent1 => Some(ThemeSlot::Accent1),
+        ColorSchemeIndexMember::Accent2 => Some(ThemeSlot::Accent2),
+        ColorSchemeIndexMember::Accent3 => Some(ThemeSlot::Accent3),
+        ColorSchemeIndexMember::Accent4 => Some(ThemeSlot::Accent4),
+        ColorSchemeIndexMember::Accent5 => Some(ThemeSlot::Accent5),
+        ColorSchemeIndexMember::Accent6 => Some(ThemeSlot::Accent6),
+        ColorSchemeIndexMember::Dk1 => Some(ThemeSlot::Dark1),
+        ColorSchemeIndexMember::Dk2 => Some(ThemeSlot::Dark2),
+        ColorSchemeIndexMember::FolHlink => Some(ThemeSlot::FollowedHyperlink),
+        ColorSchemeIndexMember::Hlink => Some(ThemeSlot::Hyperlink),
+        ColorSchemeIndexMember::Lt1 => Some(ThemeSlot::Light1),
+        ColorSchemeIndexMember::Lt2 => Some(ThemeSlot::Light2),
+        _ => None,
     }
 }
 
