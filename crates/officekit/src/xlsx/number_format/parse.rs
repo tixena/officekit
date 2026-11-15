@@ -3,7 +3,7 @@
 
 use core::mem;
 
-use super::date::is_system_format;
+use super::date::{is_system_format, system_tag};
 use super::decimal::Decimal;
 use super::{FormatColor, FormatError, Piece, Section};
 
@@ -304,8 +304,12 @@ fn color(lower: &str) -> Option<FormatColor> {
 }
 
 /// The language id of a bracket's language info, its bytes 0 and 1 (section 18.8.31,
-/// `[$USD-409]`); `None` when the info is not one to eight hexadecimal digits.
+/// `[$USD-409]`), or of the tag `x-sysdate` or `x-systime`; `None` when the info is neither a tag
+/// nor one to eight hexadecimal digits.
 fn language_id(info: &str) -> Option<u16> {
+    if let Some(id) = system_tag(info) {
+        return Some(id);
+    }
     if info.is_empty() || !info.bytes().all(|byte| byte.is_ascii_hexdigit()) {
         return None;
     }

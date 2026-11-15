@@ -497,7 +497,7 @@ fn the_codes_bracket_names_the_language_before_the_callers() {
         Some("R6")
     );
     assert_eq!(
-        shown_in("[$-x-sysdate]ge", "45413", Some("ja")).as_deref(),
+        shown_in("[$-x-private]ge", "45413", Some("ja")).as_deref(),
         Some("R6")
     );
 }
@@ -744,6 +744,58 @@ fn a_system_format_keeps_its_colour_and_is_a_section_of_dates() {
         Some("15 de enero de 2024")
     );
     assert_eq!(shown("[$-F800]yyyy", "0", TRANSITIONAL), None);
+}
+
+#[test]
+fn the_tags_x_sysdate_and_x_systime_write_as_f800_and_f400() {
+    for (tag, hex) in [
+        ("x-sysdate", "F800"),
+        ("X-SysDate", "F800"),
+        ("x-systime", "F400"),
+        ("X-SYSTIME", "F400"),
+    ] {
+        for language in [Some("es-ES"), Some("en-US"), None, Some("ko-KR")] {
+            for serial in [MONDAY, "45306.75"] {
+                assert_eq!(
+                    shown_in(&format!("[$-{tag}]h:mm"), serial, language),
+                    shown_in(&format!("[$-{hex}]h:mm"), serial, language),
+                    "{tag} {language:?} {serial}"
+                );
+            }
+        }
+    }
+    assert_eq!(
+        shown_in("[$-x-systime]h:mm", "45306.75", Some("es")).as_deref(),
+        Some("18:00:00")
+    );
+}
+
+#[test]
+fn a_system_tag_keeps_its_colour_and_is_a_section_of_dates() {
+    let format = NumberFormat::parse("[Blue][$-x-sysdate]0.00").unwrap();
+    assert_eq!(format.kind(), FormatKind::DateTime);
+    let written = format.number_in(MONDAY, STRICT, Some("es")).unwrap();
+    assert_eq!(
+        (written.plain().as_str(), written.color),
+        ("15 de enero de 2024", Some(FormatColor::Blue))
+    );
+}
+
+#[test]
+fn other_language_info_reads_as_before() {
+    for (code, expected) in [
+        ("[$-x-sysdates]0.00", "45306.00"),
+        ("[$-x-sys]0.00", "45306.00"),
+        ("[$-sysdate]0.00", "45306.00"),
+        ("[$-x-sysdate-x]yyyy", "2024"),
+        ("[$-409]yyyy", "2024"),
+    ] {
+        assert_eq!(
+            shown_in(code, MONDAY, Some("es")).as_deref(),
+            Some(expected),
+            "{code}"
+        );
+    }
 }
 
 #[test]

@@ -22,6 +22,14 @@ pub(in super::super) const fn is_system_format(id: u16) -> bool {
     matches!(id, LONG_DATE | TIME)
 }
 
+/// The language id of the language info `x-sysdate` or `x-systime`, in any case: the system long
+/// date or time, as [MS-XLSX] section 2.5.4 (formatCode16) pairs them.
+pub(in super::super) fn system_tag(info: &str) -> Option<u16> {
+    [("x-sysdate", LONG_DATE), ("x-systime", TIME)]
+        .into_iter()
+        .find_map(|(tag, id)| info.eq_ignore_ascii_case(tag).then_some(id))
+}
+
 /// The section that writes `section`'s system long date or time, by the patterns of CLDR's
 /// locale at `locale` in [`SYSTEM`], in `section`'s colour.
 pub(super) fn section(section: &Section, locale: usize) -> Option<Section> {

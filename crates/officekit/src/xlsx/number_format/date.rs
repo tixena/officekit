@@ -20,7 +20,7 @@ use super::write::Writer;
 use super::{Section, Shown, language_tag};
 use crate::docx::fonts::likely_subtags;
 
-pub(super) use self::system_format::is_system_format;
+pub(super) use self::system_format::{is_system_format, system_tag};
 
 /// Nanoseconds in a day.
 pub const DAY: i128 = 86_400_000_000_000;
