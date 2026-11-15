@@ -36,6 +36,8 @@ pub struct Inputs {
     pub tools: String,
     /// The 26 Transitional schemas.
     pub transitional_schemas: Vec<PathBuf>,
+    /// The Unicode Character Database's `UnicodeData.txt`, version 18.0.0.
+    pub unicode_data: PathBuf,
 }
 
 impl Inputs {
@@ -81,6 +83,10 @@ impl Inputs {
             .collect();
 
         let semantic_dump = file(system, root.join("sdk-3.5.1-semantic.json"))?;
+        let unicode_data = file(
+            system,
+            root.join("unicode").join("18.0.0").join("UnicodeData.txt"),
+        )?;
 
         let checksums = read(system, &file(system, root.join("SHA256SUMS"))?)?;
         let tools = read(system, &file(system, root.join("TOOLS"))?)?;
@@ -97,6 +103,7 @@ impl Inputs {
             strict_schemas,
             tools,
             transitional_schemas,
+            unicode_data,
         })
     }
 

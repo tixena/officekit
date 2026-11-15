@@ -6,4 +6,5 @@ pub mod inputs;
 pub mod model;
 pub mod sdk_data;
 pub mod standard_text;
+pub mod unicode_data;
 pub mod xsd;

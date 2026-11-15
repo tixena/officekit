@@ -8,6 +8,8 @@ use alloc::vec::Vec;
 
 use officekit_markup::wordprocessing::StNumberFormatMember;
 
+use super::digits::DIGIT_ZEROS;
+
 /// `aiueo`, positions 1 to 46.
 const AIUEO: [&str; 46] = [
     "\u{FF71}", "\u{FF72}", "\u{FF73}", "\u{FF74}", "\u{FF75}", "\u{FF76}", "\u{FF77}", "\u{FF78}",
@@ -674,11 +676,24 @@ pub fn format_custom(value: i64, token: &str) -> Option<String> {
         "a" => Some(alphabetic(number, &LOWER_LETTER)),
         "I" => roman(number, &UPPER_ROMAN),
         "i" => roman(number, &LOWER_ROMAN),
-        _ => token
-            .strip_suffix('1')
-            .filter(|zeros| zeros.bytes().all(|byte| byte == b'0'))
-            .map(|_| format!("{number:0>width$}", width = token.len())),
+        _ => decimal(number, token),
     }
+}
+
+/// A decimal token: the digit one of a Unicode digit family after any number of that family's
+/// zeros; the number in the family's digits, padded with its zero to the token's length.
+fn decimal(number: u64, token: &str) -> Option<String> {
+    let one = token.chars().next_back()?;
+    let zero = char::from_u32(u32::from(one).checked_sub(1)?)?;
+    DIGIT_ZEROS.binary_search(&zero).ok()?;
+    token
+        .strip_suffix(one)?
+        .chars()
+        .all(|leading| leading == zero)
+        .then(|| format!("{number:0>width$}", width = token.chars().count()))?
+        .chars()
+        .map(|digit| char::from_u32(u32::from(zero) + digit.to_digit(10)?))
+        .collect()
 }
 
 /// The XSLT alphabetic sequence of `letters`: past the last letter, two letters, the first

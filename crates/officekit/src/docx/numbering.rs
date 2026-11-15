@@ -1,6 +1,7 @@
 //! The numbering of a Word file's list items: the level a paragraph is numbered with, its
 //! counters and the text of its label (ECMA-376 Part 1, sections 17.9.1 to 17.9.29 and 17.18.59).
 
+mod digits;
 mod format;
 #[cfg(test)]
 mod tests;

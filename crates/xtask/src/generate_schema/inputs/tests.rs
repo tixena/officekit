@@ -28,6 +28,11 @@ fn layout() -> MemorySystem {
         .unwrap()
         .with_file("/inputs/sdk-3.5.1-semantic.json", b"[]")
         .unwrap()
+        .with_file(
+            "/inputs/unicode/18.0.0/UnicodeData.txt",
+            b"0030;DIGIT ZERO;Nd",
+        )
+        .unwrap()
         .with_file("/inputs/SHA256SUMS", b"abc  inputs/TOOLS\ndef  inputs/x\n")
         .unwrap()
         .with_file(
@@ -83,6 +88,10 @@ fn finds_every_input() {
     assert_eq!(
         inputs.semantic_dump,
         Path::new("inputs/sdk-3.5.1-semantic.json")
+    );
+    assert_eq!(
+        inputs.unicode_data,
+        Path::new("inputs/unicode/18.0.0/UnicodeData.txt")
     );
     assert_eq!(
         inputs.open_specifications,
@@ -167,6 +176,13 @@ fn names_the_missing_semantic_dump() {
         err.to_string(),
         format!("{MISSING_PREFIX}inputs/sdk-3.5.1-semantic.json")
     );
+}
+
+#[test]
+fn names_the_missing_unicode_data() {
+    let path = "inputs/unicode/18.0.0/UnicodeData.txt";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
 }
 
 #[test]

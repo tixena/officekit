@@ -241,6 +241,10 @@ inputs:
     TABLE
     mv -f $osdir/SOURCES.part $osdir/SOURCES
 
+    # The Unicode Character Database's UnicodeData.txt, version 18.0.0 (Unicode License v3).
+    mkdir -p inputs/unicode/18.0.0
+    fetch https://www.unicode.org/Public/18.0.0/ucd/UnicodeData.txt inputs/unicode/18.0.0/UnicodeData.txt
+
     # The tools and the checksums of everything above.
     version=$(pdftotext -v 2>&1)
     printf '%s\nopen-xml-sdk %s (v3.5.1)\n' "${version%%$'\n'*}" "$sdk_commit" > inputs/TOOLS

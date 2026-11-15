@@ -615,6 +615,18 @@ fn a_level_s_custom_format_writes_its_first_token() {
 }
 
 #[test]
+fn a_level_s_custom_format_in_full_width_digits_writes_full_width_labels() {
+    let numbering = single(Vec::from([custom(
+        level(0, StNumberFormatMember::Custom, "%1."),
+        "\u{FF10}\u{FF11}",
+    )]));
+    assert_eq!(
+        labels_of(&numbering, &[0, 0]),
+        ["\u{FF10}\u{FF11}.", "\u{FF10}\u{FF12}."]
+    );
+}
+
+#[test]
 fn a_custom_format_wins_over_the_val_and_numbers_the_deeper_levels_labels() {
     let numbering = single(Vec::from([
         custom(level(0, StNumberFormatMember::Decimal, "%1"), "(A)"),

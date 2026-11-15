@@ -1125,3 +1125,42 @@ fn the_sample_values_of_a_custom_format() {
     assert_eq!(format_custom(4, "i").as_deref(), Some("iv"));
     assert_eq!(format_custom(1, "\u{30A2}"), None);
 }
+
+#[test]
+fn a_decimal_token_in_another_digit_family_writes_that_familys_digits() {
+    assert_eq!(
+        format_custom(5, "\u{FF10}\u{FF11}").as_deref(),
+        Some("\u{FF10}\u{FF15}")
+    );
+    assert_eq!(
+        format_custom(12, "\u{0660}\u{0660}\u{0661}").as_deref(),
+        Some("\u{0660}\u{0661}\u{0662}")
+    );
+    assert_eq!(
+        format_custom(1234, "\u{0661}").as_deref(),
+        Some("\u{0661}\u{0662}\u{0663}\u{0664}")
+    );
+    assert_eq!(
+        format_custom(90, "\u{1E950}\u{1E950}\u{1E951}").as_deref(),
+        Some("\u{1E950}\u{1E959}\u{1E950}")
+    );
+}
+
+#[test]
+fn a_token_mixing_two_digit_families_gives_none() {
+    for token in ["0\u{FF11}", "\u{FF10}1", "\u{0660}\u{FF11}"] {
+        assert_eq!(format_custom(5, token), None, "{token}");
+    }
+}
+
+#[test]
+fn a_token_of_another_family_that_is_not_zeros_then_one_gives_none() {
+    for token in [
+        "\u{FF11}\u{FF11}",
+        "\u{FF10}",
+        "\u{FF12}",
+        "\u{0661}\u{0660}",
+    ] {
+        assert_eq!(format_custom(5, token), None, "{token}");
+    }
+}

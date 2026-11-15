@@ -68,6 +68,7 @@ validation         the validator and its generated tables
   `crates/officekit/src/xlsx/size/paper.rs`;
   `crates/officekit/src/xlsx/format/builtin.rs`;
   `crates/officekit/src/xlsx/color/palette.rs`;
+  `crates/officekit/src/docx/numbering/digits.rs`;
   `crates/officekit-markup-macros/src/kinds.rs`;
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-xml/src/packaging/relationship_type.rs`. Change the generator

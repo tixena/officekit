@@ -10,7 +10,8 @@
 //!   from the inputs under `inputs/`. Writes the namespace table, the
 //!   validation tables, the semantic constraint table, the typed tree, the
 //!   conformance classes' impls and tables, and the tables of preset colours,
-//!   paper sizes, built-in number formats, indexed colours and preset shapes.
+//!   paper sizes, built-in number formats, indexed colours and preset shapes,
+//!   and the zeros of the decimal digit families.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 //! - `parity` -- print every error of the given kinds that the parity
@@ -26,8 +27,8 @@ use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
 use xtask::generate_schema::emit::{
-    builtin_number_formats, classes, geometry, indexed_colors, markup, namespaces, paper_sizes,
-    parts, preset_colors, semantic, validation,
+    builtin_number_formats, classes, digits, geometry, indexed_colors, markup, namespaces,
+    paper_sizes, parts, preset_colors, semantic, validation,
 };
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
@@ -221,6 +222,12 @@ fn main() -> Result<ExitCode> {
                 out,
                 "wrote {}: {shapes} preset shapes",
                 geometry::PRESETS_PATH
+            )?;
+            let families = digits::emit(&system, &inputs)?;
+            writeln!(
+                out,
+                "wrote {}: {families} decimal digit families",
+                digits::PATH
             )?;
             Ok(ExitCode::SUCCESS)
         }
