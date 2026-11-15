@@ -10,6 +10,7 @@ pub mod sheets;
 pub mod size;
 #[cfg(test)]
 mod tests;
+pub mod value;
 
 use std::path::Path;
 
@@ -51,6 +52,7 @@ use crate::xlsx::color::Palette;
 use crate::xlsx::format::CellFormats;
 use crate::xlsx::number_format::DateSystem;
 use crate::xlsx::sheets::SheetEntry;
+use crate::xlsx::value::SharedStrings;
 
 /// A `.xlsx`-family file: its package, its workbook part, and the class and kind they give.
 ///
@@ -382,6 +384,16 @@ impl Xlsx {
     #[cfg(feature = "strict")]
     pub fn strict_refusals(&self) -> Result<Vec<crate::StrictRefusal>, PackageError> {
         file::strict_refusals(&self.package, self.class, self.options)
+    }
+
+    /// The string items of the shared string table (ECMA-376 Part 1, section 18.4.9), ready to
+    /// answer for an index; none when the workbook part relates to no such part.
+    ///
+    /// # Errors
+    ///
+    /// The errors of [`shared_strings`](Self::shared_strings).
+    pub fn string_table(&self) -> Result<SharedStrings, PackageError> {
+        Ok(SharedStrings::from_table(self.shared_strings()?))
     }
 
     /// The styles part's root (ECMA-376 Part 1, section 12.3.20); `None` when the workbook part
