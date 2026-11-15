@@ -5,6 +5,7 @@ pub mod effective;
 pub mod fonts;
 mod header_footer;
 pub mod image;
+pub mod lines;
 mod merge;
 pub mod numbering;
 pub mod protection;

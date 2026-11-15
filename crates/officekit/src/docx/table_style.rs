@@ -4,6 +4,7 @@
 #[cfg(test)]
 mod tests;
 
+use alloc::boxed::Box;
 use alloc::vec::Vec;
 
 use officekit_markup::Read as _;
@@ -13,7 +14,8 @@ use officekit_markup::wordprocessing::{
     ConditionalTableStyleFormattingTypesMember, DecimalNumberValue, ParagraphPropertiesPPrGeneral,
     PreviousTableProperties, RunProperties, StyleConditionalTableFormattingProperties,
     StyleDefinition, TABLE_CELL_PROPERTIES_SHAPE, TABLE_PROPERTIES_SHAPE,
-    TABLE_ROW_PROPERTIES_SHAPE, TableCellProperties, TableProperties, TableRowProperties, write,
+    TABLE_ROW_PROPERTIES_SHAPE, TableCellProperties, TableLevelPropertyExceptions, TableProperties,
+    TableRowProperties, TableStyleConditionalFormattingSettingsException, write,
 };
 use officekit_xml::element::{Element, Node};
 use officekit_xml::write::Scope;
@@ -140,6 +142,8 @@ pub struct TableFormat {
     chain: Vec<StyleDefinition>,
     /// How many columns a column band holds, at least 1.
     column_band: usize,
+    /// The `w:tblPrEx` of the row this format is for, from [`TableFormat::for_row`].
+    exceptions: Option<TableLevelPropertyExceptions>,
     /// What `w:tblLook` turns on, as the bits of its `w:val`.
     look: u16,
     /// The table's own `w:tblPr`.
@@ -175,6 +179,28 @@ impl TableFormat {
                 .iter()
                 .any(|conditional| type_of(conditional) == Some(format))
         })
+    }
+
+    /// This format as the row whose `w:tblPrEx` is `exceptions` sees it (ECMA-376 Part 1, section
+    /// 17.4.60): its properties, and the look its conditional formats take; `None` gives the table's.
+    #[must_use = "this only returns the value"]
+    pub fn for_row(&self, exceptions: Option<&TableLevelPropertyExceptions>) -> Self {
+        let own_look = self
+            .own
+            .table_style_conditional_formatting_settings_exception
+            .as_deref();
+        let look = exceptions
+            .and_then(|found| {
+                found
+                    .table_style_conditional_formatting_settings_exception
+                    .as_deref()
+            })
+            .or(own_look);
+        Self {
+            exceptions: exceptions.cloned(),
+            look: look_of(look),
+            ..self.clone()
+        }
     }
 
     /// The conditional formats of the table's style that apply at `position`, in the order
@@ -262,7 +288,11 @@ impl TableFormat {
         let mut format = Self {
             chain,
             column_band: 1,
-            look: look_of(own),
+            exceptions: None,
+            look: look_of(
+                own.table_style_conditional_formatting_settings_exception
+                    .as_deref(),
+            ),
             own: own.clone(),
             row_band: 1,
         };
@@ -283,7 +313,8 @@ impl TableFormat {
     }
 
     /// The effective properties of the table: the style chain's `w:tblPr`, from the last
-    /// ancestor down, then the table's own (sections 17.7.6.4 and 17.4.59).
+    /// ancestor down, then the table's own (sections 17.7.6.4 and 17.4.59), then those of the
+    /// row's `w:tblPrEx` for a format from [`TableFormat::for_row`].
     #[must_use = "this only returns the value"]
     pub fn properties(&self) -> TableProperties {
         use ConditionalTableStyleFormattingTypesMember::WholeTable;
@@ -296,7 +327,22 @@ impl TableFormat {
         own.children
             .retain(|node| !matches!(node, Node::Element(child) if is_word(child, "tblPrChange")));
         layers.push(own);
-        TableProperties::read(&laid("tblPr", &TABLE_PROPERTIES_SHAPE, &layers))
+        let table = TableProperties::read(&laid("tblPr", &TABLE_PROPERTIES_SHAPE, &layers));
+        match &self.exceptions {
+            Some(exceptions) => excepted(table, exceptions),
+            None => table,
+        }
+    }
+
+    /// The table properties in effect for the row whose `w:tblPrEx` is `exceptions`: those of
+    /// [`TableFormat::properties`] with each one the exceptions state in its place (section
+    /// 17.4.60); `None` gives [`TableFormat::properties`].
+    #[must_use = "this only returns the value"]
+    pub fn properties_for_row(
+        &self,
+        exceptions: Option<&TableLevelPropertyExceptions>,
+    ) -> TableProperties {
+        self.for_row(exceptions).properties()
     }
 
     /// The effective properties of the row of `position` whose own properties are `own`: the
@@ -340,6 +386,109 @@ fn band_size(value: Option<&DecimalNumberValue>) -> usize {
         .unwrap_or(1)
 }
 
+/// `table` with each property `exceptions` states in its place: they "shall be applied to the
+/// contents of this row in place of the table properties specified in the tblPr element" (section
+/// 17.4.60). A border or a margin is a property of its own, so a side the exceptions omit stays.
+fn excepted(
+    mut table: TableProperties,
+    exceptions: &TableLevelPropertyExceptions,
+) -> TableProperties {
+    replace(
+        &mut table.paragraph_shading,
+        exceptions.paragraph_shading.as_ref(),
+    );
+    replace(
+        &mut table.preferred_table_width,
+        exceptions.preferred_table_width.as_ref(),
+    );
+    replace(
+        &mut table.table_alignment_exception,
+        exceptions.table_alignment_exception.as_ref(),
+    );
+    replace(
+        &mut table.table_indent_from_leading_margin,
+        exceptions.table_indent_from_leading_margin.as_ref(),
+    );
+    replace(&mut table.table_layout, exceptions.table_layout.as_ref());
+    replace(
+        &mut table.table_row_cell_spacing,
+        exceptions.table_row_cell_spacing.as_ref(),
+    );
+    replace(
+        &mut table.table_style_conditional_formatting_settings_exception,
+        exceptions
+            .table_style_conditional_formatting_settings_exception
+            .as_ref(),
+    );
+    if let Some(over) = exceptions.table_borders.as_deref() {
+        let held = table.table_borders.get_or_insert_with(Box::default);
+        replace(
+            &mut held.left_paragraph_border,
+            over.left_paragraph_border.as_ref(),
+        );
+        replace(
+            &mut held.paragraph_border_above_identical_paragraphs,
+            over.paragraph_border_above_identical_paragraphs.as_ref(),
+        );
+        replace(
+            &mut held.paragraph_border_below_identical_paragraphs,
+            over.paragraph_border_below_identical_paragraphs.as_ref(),
+        );
+        replace(
+            &mut held.right_paragraph_border,
+            over.right_paragraph_border.as_ref(),
+        );
+        replace(
+            &mut held.table_cell_leading_edge_border,
+            over.table_cell_leading_edge_border.as_ref(),
+        );
+        replace(
+            &mut held.table_cell_trailing_margin_exception,
+            over.table_cell_trailing_margin_exception.as_ref(),
+        );
+        replace(
+            &mut held.table_inside_horizontal_edges_border,
+            over.table_inside_horizontal_edges_border.as_ref(),
+        );
+        replace(
+            &mut held.table_inside_vertical_edges_border,
+            over.table_inside_vertical_edges_border.as_ref(),
+        );
+    }
+    if let Some(over) = exceptions.table_cell_margin_exceptions.as_deref() {
+        let held = table
+            .table_cell_margin_exceptions
+            .get_or_insert_with(Box::default);
+        replace(
+            &mut held.left_paragraph_border_tbl_width,
+            over.left_paragraph_border_tbl_width.as_ref(),
+        );
+        replace(
+            &mut held.paragraph_border_above_identical_paragraphs_tbl_width,
+            over.paragraph_border_above_identical_paragraphs_tbl_width
+                .as_ref(),
+        );
+        replace(
+            &mut held.paragraph_border_below_identical_paragraphs_tbl_width,
+            over.paragraph_border_below_identical_paragraphs_tbl_width
+                .as_ref(),
+        );
+        replace(
+            &mut held.right_paragraph_border_tbl_width,
+            over.right_paragraph_border_tbl_width.as_ref(),
+        );
+        replace(
+            &mut held.table_cell_leading_edge_border_tbl_width,
+            over.table_cell_leading_edge_border_tbl_width.as_ref(),
+        );
+        replace(
+            &mut held.table_cell_trailing_margin_exception_tbl_width,
+            over.table_cell_trailing_margin_exception_tbl_width.as_ref(),
+        );
+    }
+    table
+}
+
 /// An empty element `local` of `shape` with `layers` laid over it in order.
 fn laid(local: &str, shape: &Shape, layers: &[Element]) -> Element {
     let mut merged = empty(local);
@@ -349,14 +498,11 @@ fn laid(local: &str, shape: &Shape, layers: &[Element]) -> Element {
     merged
 }
 
-/// What the table's `w:tblLook` turns on, as the bits of `w:val` (ECMA-376 Part 1, section
+/// What a `w:tblLook` turns on, as the bits of `w:val` (ECMA-376 Part 1, sections 17.4.54 and
 /// 17.4.55, and Part 4, section 14.4.12): an attribute states its own setting, `w:val` the ones
 /// whose attribute is absent; no `w:tblLook` turns on the bands only.
-fn look_of(own: &TableProperties) -> u16 {
-    let Some(look) = own
-        .table_style_conditional_formatting_settings_exception
-        .as_deref()
-    else {
+fn look_of(element: Option<&TableStyleConditionalFormattingSettingsException>) -> u16 {
+    let Some(look) = element else {
         return 0;
     };
     let mut bits = look
@@ -380,6 +526,16 @@ fn look_of(own: &TableProperties) -> u16 {
         }
     }
     bits
+}
+
+/// `held` set to a clone of `over` when `over` is stated.
+fn replace<T>(held: &mut Option<T>, over: Option<&T>)
+where
+    T: Clone,
+{
+    if let Some(found) = over {
+        *held = Some(found.clone());
+    }
 }
 
 /// The type of a conditional format, when it has a valid one.

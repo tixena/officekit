@@ -9,14 +9,14 @@ use officekit_markup::wordprocessing::{
     NumberOfRowsInRowBand, ParagraphBorderAboveIdenticalParagraphs,
     ParagraphBorderAboveIdenticalParagraphsTblWidth, ParagraphBorderBelowIdenticalParagraphs,
     ParagraphBorderBelowIdenticalParagraphsTblWidth, ParagraphShading, ParentStyleID,
-    PreviousTableProperties, ReferencedTableStyle, RunContentColor, RunProperties,
-    RunPropertiesContent, ShadingPatterns, ShadingPatternsMember, SingleTableCellMargins,
-    StyleConditionalTableFormattingProperties, StyleDefinition, StyleDefinitions, StyleTypes,
-    StyleTypesMember, TableBorders, TableCellLeadingEdgeBorder, TableCellLeadingEdgeBorderTblWidth,
-    TableCellMarginExceptions, TableCellProperties, TableCellTrailingMarginException,
-    TableCellTrailingMarginExceptionTblWidth, TableInsideHorizontalEdgesBorder,
-    TableInsideVerticalEdgesBorder, TableProperties, TableRowCannotBreakAcrossPages,
-    TableRowProperties, TableRowPropertiesContent,
+    PreferredTableWidth, PreviousTableProperties, ReferencedTableStyle, RunContentColor,
+    RunProperties, RunPropertiesContent, ShadingPatterns, ShadingPatternsMember,
+    SingleTableCellMargins, StyleConditionalTableFormattingProperties, StyleDefinition,
+    StyleDefinitions, StyleTypes, StyleTypesMember, TableBorders, TableCellLeadingEdgeBorder,
+    TableCellLeadingEdgeBorderTblWidth, TableCellMarginExceptions, TableCellProperties,
+    TableCellTrailingMarginException, TableCellTrailingMarginExceptionTblWidth,
+    TableInsideHorizontalEdgesBorder, TableInsideVerticalEdgesBorder, TableLevelPropertyExceptions,
+    TableProperties, TableRowCannotBreakAcrossPages, TableRowProperties, TableRowPropertiesContent,
     TableStyleConditionalFormattingSettingsException, TableWidthUnits, TableWidthUnitsMember,
 };
 
@@ -621,4 +621,185 @@ fn the_last_default_table_style_is_the_one() {
             .table_borders,
         example_table_properties().table_borders
     );
+}
+
+/// The `w:sz` of a table's top border, when stated.
+fn top_size(table: &TableProperties) -> Option<String> {
+    table
+        .table_borders
+        .as_deref()
+        .and_then(|borders| {
+            borders
+                .paragraph_border_above_identical_paragraphs
+                .as_deref()
+        })
+        .and_then(|top| top.sz.as_ref())
+        .map(|size| size.0.clone())
+}
+
+#[test]
+fn a_row_with_no_exceptions_sees_the_table_s_properties() {
+    let sheet = example_sheet();
+    let format = sheet.table(&own_table(
+        Some("TestTableStyle"),
+        Some(first_row_look(true, false)),
+    ));
+    let empty = TableLevelPropertyExceptions::default();
+    assert_eq!(format.properties_for_row(None), format.properties());
+    assert_eq!(format.properties_for_row(Some(&empty)), format.properties());
+    let top = position(0, 3, 0, 2);
+    for row in [format.for_row(None), format.for_row(Some(&empty))] {
+        assert_eq!(row.formats(top), format.formats(top));
+        assert_eq!(row.cell(top, None), format.cell(top, None));
+        assert_eq!(row.row(top, None), format.row(top, None));
+    }
+}
+
+#[test]
+fn a_row_s_exception_borders_replace_the_table_s() {
+    let mut borders = TableBorders::default();
+    borders.paragraph_border_above_identical_paragraphs = border!(
+        ParagraphBorderAboveIdenticalParagraphs,
+        BorderStylesMember::Single,
+        "4",
+        "000000"
+    );
+    borders.table_inside_horizontal_edges_border = border!(
+        TableInsideHorizontalEdgesBorder,
+        BorderStylesMember::Single,
+        "4",
+        "000000"
+    );
+    let mut own = own_table(None, None);
+    own.table_borders = Some(Box::new(borders));
+    let format = sheet_of(Vec::new()).table(&own);
+
+    let mut none = TableBorders::default();
+    none.paragraph_border_above_identical_paragraphs = border!(
+        ParagraphBorderAboveIdenticalParagraphs,
+        BorderStylesMember::None,
+        "0",
+        "auto"
+    );
+    none.table_inside_horizontal_edges_border = border!(
+        TableInsideHorizontalEdgesBorder,
+        BorderStylesMember::None,
+        "0",
+        "auto"
+    );
+    let mut exceptions = TableLevelPropertyExceptions::default();
+    exceptions.table_borders = Some(Box::new(none.clone()));
+    let row = format.properties_for_row(Some(&exceptions));
+    assert_eq!(row.table_borders.as_deref(), Some(&none));
+}
+
+#[test]
+fn a_row_s_exception_margin_replaces_that_margin_only() {
+    let mut margins = TableCellMarginExceptions::default();
+    margins.paragraph_border_above_identical_paragraphs_tbl_width =
+        width!(ParagraphBorderAboveIdenticalParagraphsTblWidth, "0");
+    margins.table_cell_leading_edge_border_tbl_width =
+        width!(TableCellLeadingEdgeBorderTblWidth, "108");
+    let mut own = own_table(None, None);
+    own.table_cell_margin_exceptions = Some(Box::new(margins));
+    own.preferred_table_width = width!(PreferredTableWidth, "5000");
+    let format = sheet_of(Vec::new()).table(&own);
+
+    let mut over = TableCellMarginExceptions::default();
+    over.paragraph_border_above_identical_paragraphs_tbl_width =
+        width!(ParagraphBorderAboveIdenticalParagraphsTblWidth, "288");
+    let mut exceptions = TableLevelPropertyExceptions::default();
+    exceptions.table_cell_margin_exceptions = Some(Box::new(over));
+    let row = format.properties_for_row(Some(&exceptions));
+
+    let found = row.table_cell_margin_exceptions.unwrap();
+    let top = found
+        .paragraph_border_above_identical_paragraphs_tbl_width
+        .unwrap();
+    let start = found.table_cell_leading_edge_border_tbl_width.unwrap();
+    assert_eq!(top.w.map(|value| value.0), Some("288".to_owned()));
+    assert_eq!(start.w.map(|value| value.0), Some("108".to_owned()));
+    assert_eq!(row.preferred_table_width, own.preferred_table_width);
+    assert_eq!(row.table_borders, format.properties().table_borders);
+}
+
+#[test]
+fn a_row_s_exceptions_lie_over_the_table_s_own_properties_over_the_style_s() {
+    let sheet = example_sheet();
+    let mut own_borders = TableBorders::default();
+    own_borders.paragraph_border_below_identical_paragraphs = border!(
+        ParagraphBorderBelowIdenticalParagraphs,
+        BorderStylesMember::Double,
+        "8",
+        "auto"
+    );
+    let mut own = own_table(Some("TestTableStyle"), None);
+    own.table_borders = Some(Box::new(own_borders));
+    let format = sheet.table(&own);
+
+    let mut over = TableBorders::default();
+    over.paragraph_border_above_identical_paragraphs = border!(
+        ParagraphBorderAboveIdenticalParagraphs,
+        BorderStylesMember::ThinThickThinMediumGap,
+        "24",
+        "auto"
+    );
+    let mut exceptions = TableLevelPropertyExceptions::default();
+    exceptions.table_borders = Some(Box::new(over));
+    let row = format.properties_for_row(Some(&exceptions));
+    let borders = row.table_borders.as_deref().unwrap();
+
+    assert_eq!(top_size(&row), Some("24".to_owned()));
+    assert_eq!(top_size(&format.properties()), Some("4".to_owned()));
+    let bottom = borders
+        .paragraph_border_below_identical_paragraphs
+        .as_deref()
+        .unwrap();
+    assert_eq!(bottom.sz.as_ref().map(|size| size.0.as_str()), Some("8"));
+    let inside = borders
+        .table_inside_horizontal_edges_border
+        .as_deref()
+        .unwrap();
+    assert_eq!(inside.sz.as_ref().map(|size| size.0.as_str()), Some("4"));
+}
+
+#[test]
+fn a_row_s_exception_look_turns_the_first_row_format_off_for_its_cells() {
+    let sheet = example_sheet();
+    let format = sheet.table(&own_table(
+        Some("TestTableStyle"),
+        Some(first_row_look(true, false)),
+    ));
+    let mut exceptions = TableLevelPropertyExceptions::default();
+    exceptions.table_style_conditional_formatting_settings_exception =
+        Some(Box::new(first_row_look(false, false)));
+    let row = format.for_row(Some(&exceptions));
+    for column in 0..2 {
+        let top = position(0, 3, column, 2);
+        assert!(!row.formats(top).contains(&FirstRow));
+        assert_eq!(fill(&row.cell(top, None)), None);
+        assert_eq!(bold(&run_at(&sheet, &row, top)), None);
+        assert_eq!(fill(&format.cell(top, None)), Some("ED1C24"));
+    }
+    assert_eq!(
+        row.properties()
+            .table_style_conditional_formatting_settings_exception
+            .as_deref(),
+        Some(&first_row_look(false, false))
+    );
+}
+
+#[test]
+fn a_row_s_exception_look_turns_the_first_row_format_on_where_the_table_has_it_off() {
+    let sheet = example_sheet();
+    let format = sheet.table(&own_table(Some("TestTableStyle"), None));
+    let mut exceptions = TableLevelPropertyExceptions::default();
+    exceptions.table_style_conditional_formatting_settings_exception =
+        Some(Box::new(first_row_look(true, false)));
+    let row = format.for_row(Some(&exceptions));
+    let top = position(0, 3, 0, 2);
+    assert!(row.formats(top).contains(&FirstRow));
+    assert_eq!(fill(&row.cell(top, None)), Some("ED1C24"));
+    assert_eq!(bold(&run_at(&sheet, &row, top)), Some(true));
+    assert_eq!(fill(&format.cell(top, None)), None);
 }

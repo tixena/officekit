@@ -472,6 +472,31 @@ pub(super) fn positive_fixed_percentage(text: &str) -> Option<u32> {
     u32::try_from(PercentKind::PositiveFixed.thousandths(text)?).ok()
 }
 
+/// `rgb` with its luminance changed by `change`, in hue, saturation and luminance.
+fn with_luminance(rgb: [u8; 3], change: impl FnOnce(i128) -> i128) -> [u8; 3] {
+    let changed = Shares::opaque(rgb)
+        .in_hsl(|hsl| Hsl {
+            lum: clamp(change(hsl.lum)),
+            ..hsl
+        })
+        .rgba();
+    [changed.red, changed.green, changed.blue]
+}
+
+/// `rgb` under a `WordprocessingML` theme shade of `shade` / 255: "L′ = L ∗ Shadepercentage"
+/// (ECMA-376 Part 1, section 17.3.4).
+pub(crate) fn word_shade(rgb: [u8; 3], shade: u8) -> [u8; 3] {
+    let factor = i128::from(shade) * (SCALE / 255);
+    with_luminance(rgb, |lum| product(lum, factor))
+}
+
+/// `rgb` under a `WordprocessingML` theme tint of `tint` / 255: "L′ = L ∗ Tint pct + (1 − Tint
+/// pct)" (ECMA-376 Part 1, section 17.3.4).
+pub(crate) fn word_tint(rgb: [u8; 3], tint: u8) -> [u8; 3] {
+    let share = i128::from(tint) * (SCALE / 255);
+    with_luminance(rgb, |lum| product(lum, share) + SCALE - share)
+}
+
 /// The red, green and blue section 20.1.10.48 states for `name`.
 fn preset_color(name: PresetColorValueMember) -> Option<[u8; 3]> {
     let index = PRESET_COLORS
