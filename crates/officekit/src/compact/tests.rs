@@ -7,6 +7,7 @@ use officekit_markup::chart::{
 };
 use officekit_markup::drawing::{
     self, TextParagraphs, TextParagraphsContent, TextRun as DrawingRun, TextString,
+    read as drawing_read, write as drawing_write,
 };
 use officekit_markup::presentation::{
     CommonSlideData, GroupShapeContent, NotesSlide, Presentation, PresentationSlideSlide, Shape,
@@ -29,7 +30,7 @@ use officekit_markup::wordprocessing::{
     TextRunContent, read, write,
 };
 use officekit_strict::traversal::Visit;
-use officekit_xml::element::{Document as XmlDocument, Element};
+use officekit_xml::element::{Document as XmlDocument, Element, Node};
 #[cfg(feature = "transitional")]
 use officekit_xml::name::OfficeVersion;
 use officekit_xml::packaging::package::Package;
@@ -38,7 +39,7 @@ use officekit_xml::packaging::relationship::RelationshipType;
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, Scope, WriteOptions};
 
-use super::{Comments, Compaction, PartCompaction, compact_package, compact_tree};
+use super::{Comments, Compaction, PartCompaction, compact_package, compact_tree, space_attribute};
 #[cfg(feature = "transitional")]
 use crate::parts::kinds::SpreadsheetKind;
 #[cfg(feature = "transitional")]
@@ -804,6 +805,115 @@ fn a_spreadsheetml_run_already_holding_two_texts_takes_no_third() {
     }
 }
 
+#[test]
+fn a_spreadsheetml_run_holding_two_texts_is_left_as_it_is_and_ends_the_stretch() {
+    for index in [0, 1] {
+        let mut table = rich_text_with_two_texts(&["a", "b", "c"], index);
+        let source = table.clone();
+        assert_eq!(compact_tree(&mut table, Comments::Keep), merged(0));
+        assert_eq!(table, source, "{index}");
+    }
+}
+
+#[test]
+fn runs_after_a_spreadsheetml_run_holding_two_texts_still_merge() {
+    let mut table = rich_text_with_two_texts(&["a", "b", "c", "d"], 0);
+    assert_eq!(compact_tree(&mut table, Comments::Keep), merged(1));
+    assert_eq!(table, rich_text_with_two_texts(&["a", "b", "cd"], 0));
+}
+
+#[test]
+fn a_drawingml_run_holding_two_texts_is_left_as_it_is() {
+    let mut paragraph = written_drawing(&["a", "b", "c"]);
+    fold_next_run(&mut paragraph, 0);
+    assert_eq!(texts_per_run(&paragraph), [2, 1]);
+    let source = paragraph.clone();
+    assert_eq!(compact_tree(&mut paragraph, Comments::Keep), merged(0));
+    assert_eq!(paragraph, source);
+}
+
+#[test]
+fn a_drawingml_run_holding_no_text_is_left_as_it_is() {
+    let mut paragraph = written_drawing(&["a", "b"]);
+    as_element(&mut paragraph.children[1])
+        .unwrap()
+        .children
+        .clear();
+    let source = paragraph.clone();
+    assert_eq!(compact_tree(&mut paragraph, Comments::Keep), merged(0));
+    assert_eq!(paragraph, source);
+}
+
+#[test]
+fn a_word_run_holding_two_texts_still_merges() {
+    let source = paragraph(vec![
+        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("a"), plain_text("b")])),
+        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("c")])),
+    ]);
+    let (compacted, done) = compact_paragraph(&source, Comments::Keep);
+    assert_eq!(done, merged(1));
+    assert_eq!(shape(&compacted.content), [r#"[b] "a" "bc""#]);
+}
+
+#[test]
+fn a_drawingml_text_holding_a_comment_stays_in_its_own_run() {
+    let mut paragraph = written_drawing(&["onetwo", "three"]);
+    drawing_text(&mut paragraph, 0).children = vec![
+        Node::Text("one".to_owned()),
+        Node::Comment(" c ".to_owned()),
+        Node::Text("two".to_owned()),
+    ];
+    let source = paragraph.clone();
+    assert_eq!(compact_tree(&mut paragraph, Comments::Keep), merged(0));
+    assert_eq!(paragraph, source);
+}
+
+#[test]
+fn a_drawingml_text_holding_an_attribute_stays_in_its_own_run() {
+    let mut paragraph = written_drawing(&["one", " two"]);
+    drawing_text(&mut paragraph, 1)
+        .attributes
+        .push(space_attribute("preserve"));
+    let source = paragraph.clone();
+    assert_eq!(compact_tree(&mut paragraph, Comments::Keep), merged(0));
+    assert_eq!(paragraph, source);
+}
+
+#[test]
+fn drawingml_runs_of_plain_texts_become_one_run_of_one_text() {
+    let mut paragraph = written_drawing(&["one", "two"]);
+    assert_eq!(compact_tree(&mut paragraph, Comments::Keep), merged(1));
+    assert_eq!(texts_per_run(&paragraph), [1]);
+    assert_eq!(
+        runs_in(&drawing_read::text_paragraphs(&paragraph)),
+        [r#""onetwo""#]
+    );
+}
+
+#[test]
+fn a_drawingml_run_left_apart_starts_a_new_stretch() {
+    let compact_with_attribute = |values: &[&str], apart: usize| {
+        let mut paragraph = written_drawing(values);
+        drawing_text(&mut paragraph, apart)
+            .attributes
+            .push(space_attribute("preserve"));
+        let done = compact_tree(&mut paragraph, Comments::Keep);
+        (
+            done.merged,
+            texts_per_run(&paragraph),
+            runs_in(&drawing_read::text_paragraphs(&paragraph)),
+        )
+    };
+    assert_eq!(
+        compact_with_attribute(&["one", " two", "three"], 1),
+        (0, vec![1, 1, 1], vec![r#""one" " two" "three""#.to_owned()])
+    );
+    assert_eq!(
+        compact_with_attribute(&[" one", "two", "three"], 0),
+        (1, vec![1, 1], vec![r#"" one" "twothree""#.to_owned()])
+    );
+}
+
 #[cfg(feature = "transitional")]
 #[test]
 fn the_validator_passes_runs_left_apart_and_refuses_two_texts_in_one_run() {
@@ -937,16 +1047,83 @@ fn fragmented_document() -> String {
 
 /// A `DrawingML` paragraph holding the runs of `a` and `b`, which merge.
 fn fragmented_drawing() -> TextParagraphs {
-    let run_of = |value: &str| {
-        let mut text = TextString::default();
-        text.value = value.to_owned();
-        let mut found = DrawingRun::default();
-        found.text_string = Box::new(text);
-        TextParagraphsContent::TextRun(found)
-    };
+    drawing_paragraph(&["a", "b"])
+}
+
+/// A `DrawingML` paragraph holding a run of each of `values`, with no properties.
+fn drawing_paragraph(values: &[&str]) -> TextParagraphs {
     let mut paragraph = TextParagraphs::default();
-    paragraph.content = vec![run_of("a"), run_of("b")];
+    paragraph.content = values
+        .iter()
+        .map(|&value| {
+            let mut text = TextString::default();
+            text.value = value.to_owned();
+            let mut found = DrawingRun::default();
+            found.text_string = Box::new(text);
+            TextParagraphsContent::TextRun(found)
+        })
+        .collect();
     paragraph
+}
+
+/// The element of [`drawing_paragraph`].
+fn written_drawing(values: &[&str]) -> Element {
+    drawing_write::text_paragraphs(&drawing_paragraph(values), &mut Scope::default())
+}
+
+/// The text element of the run that is the `index`-th child of `paragraph`.
+fn drawing_text(paragraph: &mut Element, index: usize) -> &mut Element {
+    let found = as_element(&mut paragraph.children[index]).unwrap();
+    as_element(&mut found.children[0]).unwrap()
+}
+
+/// The element `node` is.
+fn as_element(node: &mut Node) -> Option<&mut Element> {
+    if let Node::Element(found) = node {
+        Some(found)
+    } else {
+        None
+    }
+}
+
+/// Move the content of the run after the `index`-th child of `parent` but its properties into
+/// that run, and drop the run it came from.
+fn fold_next_run(parent: &mut Element, index: usize) {
+    let mut next = parent.children.remove(index + 1);
+    let content = as_element(&mut next)
+        .unwrap()
+        .children
+        .drain(..)
+        .filter(|node| !matches!(node, Node::Element(child) if child.name.local == "rPr"));
+    as_element(&mut parent.children[index])
+        .unwrap()
+        .children
+        .extend(content);
+}
+
+/// How many text elements each run among the children of `parent` holds.
+fn texts_per_run(parent: &Element) -> Vec<usize> {
+    parent
+        .child_elements()
+        .filter(|child| child.name.local == "r")
+        .map(|found| {
+            found
+                .child_elements()
+                .filter(|child| child.name.local == "t")
+                .count()
+        })
+        .collect()
+}
+
+/// The element of [`rich_text_table`], the run at `index` of its item also holding the text of
+/// the run after it.
+fn rich_text_with_two_texts(values: &[&str], index: usize) -> Element {
+    let mut table =
+        spreadsheet_write::shared_string_table(&rich_text_table(values), &mut Scope::default());
+    let item = as_element(&mut table.children[0]).unwrap();
+    fold_next_run(item, index);
+    assert_eq!(texts_per_run(item)[index], 2);
+    table
 }
 
 /// `SpreadsheetML` rich text runs of `values`, with no properties and no `xml:space`.

@@ -2,8 +2,9 @@
 //! of neighbouring runs that render the same becomes one run.
 //!
 //! Two runs merge when both hold only their properties element and text
-//! content, and the run properties that count are equal; two `x:r` also need
-//! their texts to join, as an `x:r` holds one `x:t`. Between them may sit
+//! content, and the run properties that count are equal; two `x:r` or two
+//! `a:r` also need their texts to join, as each holds one text element, and
+//! one that holds two or none is left as it is. Between them may sit
 //! white space and `w:proofErr`, and under [`Comments::Remove`] the nodes of a
 //! Word comment; every other node ends the stretch. The merged run is the
 //! first run followed by the content of the others, adjacent text elements
@@ -395,12 +396,12 @@ fn join(
     true
 }
 
-/// Whether merging `next` into `first` adds no `x:t`, as an `x:r` holds one: [`absorb`] joins each
-/// `x:t` of `next` to the last child of `first`. `around` is whether `xml:space="preserve"` is in
-/// force around both.
-fn texts_join(first: &Element, next: &Element, around: bool) -> bool {
+/// Whether merging `next` into `first` adds no text element, as an `x:r` and an `a:r` hold one:
+/// [`absorb`] joins each text of `next` to the last child of `first`. `around` is whether
+/// `xml:space="preserve"` is in force around both.
+fn texts_join(first: &Element, next: &Element, kind: Kind, around: bool) -> bool {
     let joins = |text: &Element, preserves: bool| {
-        is(text, "x", "t") && text_of(text, Kind::Spreadsheet, preserves).is_some()
+        is(text, kind.prefix(), "t") && text_of(text, kind, preserves).is_some()
     };
     let first_preserves = preserves_space(first, around);
     let next_preserves = preserves_space(next, around);
@@ -410,7 +411,7 @@ fn texts_join(first: &Element, next: &Element, around: bool) -> bool {
         .is_some_and(|last| joins(last, first_preserves))
         && next
             .child_elements()
-            .filter(|child| !is(child, "x", "rPr"))
+            .filter(|child| !is(child, kind.prefix(), "rPr"))
             .all(|text| joins(text, next_preserves))
 }
 
@@ -439,11 +440,11 @@ fn keep_space(content: &mut Element, kind: Kind, preserved: bool) {
 }
 
 /// Whether a run of `kind` holds its properties element, at most one, and
-/// only text content besides; an `x:r` also needs its `x:t`, which sets a
-/// rich text run apart from a pivot cache record, also `x:r`.
+/// only text content besides; an `x:r` and an `a:r` hold exactly one text
+/// element, which also sets a rich text run apart from a pivot cache record.
 fn mergeable(run: &Element, kind: Kind) -> bool {
     let mut properties = 0_usize;
-    let mut holds_text = false;
+    let mut texts = 0_usize;
     for node in &run.children {
         if let Node::Element(child) = node {
             if is(child, kind.prefix(), "rPr") {
@@ -453,7 +454,9 @@ fn mergeable(run: &Element, kind: Kind) -> bool {
             if prefix(&child.name.namespace) == Some(kind.prefix())
                 && kind.content().contains(&child.name.local.as_str())
             {
-                holds_text = holds_text || child.name.local == "t";
+                if child.name.local == "t" {
+                    texts += 1;
+                }
                 continue;
             }
             return false;
@@ -462,7 +465,7 @@ fn mergeable(run: &Element, kind: Kind) -> bool {
             return false;
         }
     }
-    properties <= 1 && (holds_text || kind != Kind::Spreadsheet)
+    properties <= 1 && (kind == Kind::Wordprocessing || texts == 1)
 }
 
 /// Merge the stretches of runs among the children of `element`, with
@@ -495,7 +498,7 @@ fn merge_children(
                     && kind
                         .counted()
                         .equal(properties(first_run, kind), properties(&run, kind))
-                    && (kind != Kind::Spreadsheet || texts_join(first_run, &run, preserve))
+                    && (kind == Kind::Wordprocessing || texts_join(first_run, &run, kind, preserve))
                 {
                     absorb(first_run, run, kind, preserve);
                     between.clear();
