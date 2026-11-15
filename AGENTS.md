@@ -64,6 +64,7 @@ validation         the validator and its generated tables
   under `crates/officekit/src/parts` but `part_root.rs` and the unit tests;
   `crates/officekit/src/validation/generated/` (and `generated.rs`);
   `crates/officekit/src/drawing/color/preset.rs`;
+  `crates/officekit/src/drawing/geometry/presets.rs`;
   `crates/officekit-markup-macros/src/kinds.rs`;
   `crates/officekit-xml/src/name/table.rs`; and
   `crates/officekit-xml/src/packaging/relationship_type.rs`. Change the generator

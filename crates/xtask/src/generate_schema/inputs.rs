@@ -23,6 +23,8 @@ pub struct Inputs {
     pub part1_text: PathBuf,
     /// `pdftotext -layout` of ECMA-376 Part 4.
     pub part4_text: PathBuf,
+    /// ECMA-376 Part 1's `presetShapeDefinitions.xml`, the definitions of the preset shapes.
+    pub preset_shapes: PathBuf,
     /// The SDK's `data/` folder.
     pub sdk_data: PathBuf,
     /// SDK 3.5.1's semantic constraint registrations, read from its package
@@ -55,6 +57,10 @@ impl Inputs {
         let ecma = root.join("ecma-376");
         let part1_text = file(system, ecma.join("part1.txt"))?;
         let part4_text = file(system, ecma.join("part4.txt"))?;
+        let preset_shapes = file(
+            system,
+            ecma.join("geometries").join("presetShapeDefinitions.xml"),
+        )?;
         let strict_schemas = xsds(system, &ecma.join("strict"))?;
         let transitional_schemas = xsds(system, &ecma.join("transitional"))?;
         let opc_schemas = xsds(system, &ecma.join("opc"))?;
@@ -85,6 +91,7 @@ impl Inputs {
             open_specifications,
             part1_text,
             part4_text,
+            preset_shapes,
             sdk_data,
             semantic_dump,
             strict_schemas,

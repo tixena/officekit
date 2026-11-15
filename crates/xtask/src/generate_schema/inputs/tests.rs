@@ -13,6 +13,11 @@ fn layout() -> MemorySystem {
         .unwrap()
         .with_file("/inputs/ecma-376/part4.txt", b"part 4")
         .unwrap()
+        .with_file(
+            "/inputs/ecma-376/geometries/presetShapeDefinitions.xml",
+            b"<presetShapeDefinitons/>",
+        )
+        .unwrap()
         .with_dir("/inputs/open-xml-sdk/data")
         .unwrap()
         .with_file("/inputs/open-specifications/SOURCES", b"sources")
@@ -70,6 +75,10 @@ fn finds_every_input() {
     assert_eq!(inputs.opc_schemas.len(), 4);
     assert_eq!(inputs.part1_text, Path::new("inputs/ecma-376/part1.txt"));
     assert_eq!(inputs.part4_text, Path::new("inputs/ecma-376/part4.txt"));
+    assert_eq!(
+        inputs.preset_shapes,
+        Path::new("inputs/ecma-376/geometries/presetShapeDefinitions.xml")
+    );
     assert_eq!(inputs.sdk_data, Path::new("inputs/open-xml-sdk/data"));
     assert_eq!(
         inputs.semantic_dump,
@@ -107,6 +116,13 @@ fn names_the_missing_part4_text() {
         err.to_string(),
         format!("{MISSING_PREFIX}inputs/ecma-376/part4.txt")
     );
+}
+
+#[test]
+fn names_the_missing_preset_shapes() {
+    let path = "inputs/ecma-376/geometries/presetShapeDefinitions.xml";
+    let err = Inputs::open(&without(path), Path::new("inputs")).unwrap_err();
+    assert_eq!(err.to_string(), format!("{MISSING_PREFIX}{path}"));
 }
 
 #[test]

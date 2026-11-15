@@ -9,7 +9,8 @@
 //! - `generate-schema` -- regenerate the generated modules of `officekit`
 //!   from the inputs under `inputs/`. Writes the namespace table, the
 //!   validation tables, the semantic constraint table, the typed tree, the
-//!   conformance classes' impls and tables, and the table of preset colours.
+//!   conformance classes' impls and tables, and the tables of preset colours
+//!   and preset shapes.
 //! - `schema-counts` -- read the schema sets under `inputs/` into the schema
 //!   model and print its counts and the comparison of the two classes.
 //! - `parity` -- print every error of the given kinds that the parity
@@ -25,7 +26,7 @@ use clap::{Parser, Subcommand};
 use os_shim::real::RealSystem;
 use xtask::generate_schema::compare;
 use xtask::generate_schema::emit::{
-    classes, markup, namespaces, parts, preset_colors, semantic, validation,
+    classes, geometry, markup, namespaces, parts, preset_colors, semantic, validation,
 };
 use xtask::generate_schema::inputs::Inputs;
 use xtask::generate_schema::model::{Content, Name, ParticleKind, SchemaSet, SimpleType};
@@ -194,11 +195,17 @@ fn main() -> Result<ExitCode> {
             parts_summary(&mut out, &part_modules)?;
             let written = classes::emit(&system, &inputs, &emitted, &catalog)?;
             classes_summary(&mut out, &written)?;
-            let presets = preset_colors::emit(&system, &inputs)?;
+            let colors = preset_colors::emit(&system, &inputs)?;
             writeln!(
                 out,
-                "wrote {}: {presets} preset colours",
+                "wrote {}: {colors} preset colours",
                 preset_colors::PATH
+            )?;
+            let shapes = geometry::emit(&system, &inputs, Path::new(geometry::PRESETS_PATH))?;
+            writeln!(
+                out,
+                "wrote {}: {shapes} preset shapes",
+                geometry::PRESETS_PATH
             )?;
             Ok(ExitCode::SUCCESS)
         }

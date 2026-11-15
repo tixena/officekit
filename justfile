@@ -146,7 +146,7 @@ inputs:
     done
     work=$(mktemp -d)
     trap 'rm -rf "$work"' EXIT
-    mkdir -p inputs/ecma-376/{strict,transitional,opc} inputs/open-specifications
+    mkdir -p inputs/ecma-376/{strict,transitional,opc,geometries} inputs/open-specifications
 
     fetch() { # fetch <url> <destination>
         [ -s "$2" ] && return 0
@@ -170,6 +170,12 @@ inputs:
     for part in part1 part4; do
         [ -s $ecma/$part.txt ] || pdftotext -layout $ecma/$part.pdf $ecma/$part.txt
     done
+
+    # The preset shape definitions, from the DrawingML geometries zip inside Part 1.
+    if [ ! -s $ecma/geometries/presetShapeDefinitions.xml ]; then
+        unzip -p $ecma/part1.zip OfficeOpenXML-DrawingMLGeometries.zip > "$work/geometries.zip"
+        unzip -p "$work/geometries.zip" presetShapeDefinitions.xml > $ecma/geometries/presetShapeDefinitions.xml
+    fi
 
     # The schemas: Strict from Part 1, Transitional from Part 4, OPC from Part 2.
     schemas() { # schemas <part zip> <inner zip> <destination folder>
