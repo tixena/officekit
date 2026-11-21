@@ -297,8 +297,7 @@ where
     }
 }
 
-/// Every directory and every file under `root`, each sorted by path and spelled from `root`:
-/// `read_dir` gives a path resolved against the current folder.
+/// Every directory and every file under `root`, each sorted by path and spelled from `root`.
 async fn tree<S>(system: &S, root: &Path) -> StorageResult<(Vec<PathBuf>, Vec<PathBuf>)>
 where
     S: System + ?Sized,

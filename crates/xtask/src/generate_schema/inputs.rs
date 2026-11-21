@@ -166,8 +166,8 @@ impl Inputs {
     }
 }
 
-/// The entries of `folder`, spelled from `folder` as given: `read_dir` gives a path resolved
-/// against the current folder, and `SHA256SUMS` names each input from the repository's root.
+/// The entries of `folder`, spelled from `folder` as given: `SHA256SUMS` names each input from
+/// the repository's root.
 ///
 /// # Errors
 ///
