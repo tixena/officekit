@@ -30,7 +30,8 @@
 //!   spells otherwise take its spelling. For instance, the alignment `left` is `start`.
 //! - A bitmask unpacks into the attributes it packs.
 //! - A protection holding no password hash takes Part 1's `algorithmName` and `spinCount`.
-//! - The settings in [`REMOVED_SETTINGS`] are removed, as Word's own Strict files leave them out.
+//! - The children in [`REMOVED_CHILDREN`] are removed: settings Word's own Strict files leave
+//!   out, and a list level's `w:legacy`.
 //! - A `w:font` drops a `w:charset` holding `01` or `02`, which Part 4 gives no name.
 //! - The text of the `wp14` relative sizes and positions, a bare number counting thousandths of a
 //!   percent, becomes a percentage, as Word writes it in Strict.
@@ -182,10 +183,12 @@ const PROTECTION_ALGORITHM: [&str; 5] = [
     "cryptSpinCount",
 ];
 
-/// Settings Word writes on its own that Strict has no form for, and that Word's own Strict files
-/// leave out. A Strict save removes them, with what they hold.
-const REMOVED_SETTINGS: [&str; 5] = [
+/// Children Strict has no form for that a Strict save removes, with what they hold, instead of
+/// refusing them: settings Word writes on its own and leaves out of its own Strict files, and
+/// `legacy`, the number layout a list level keeps for Word 6.0/95.
+const REMOVED_CHILDREN: [&str; 6] = [
     "hdrShapeDefaults",
+    "legacy",
     "relyOnVML",
     "shapeDefaults",
     "shapeLayoutLikeWW8",
@@ -517,7 +520,7 @@ fn convert_children(
             index = match rule {
                 Some(ChildRule::Refuse(label)) => {
                     if let Node::Element(child) = element.children.remove(index)
-                        && !REMOVED_SETTINGS.contains(label)
+                        && !REMOVED_CHILDREN.contains(label)
                     {
                         found.push(Refusal {
                             prefix: name_prefix(&child),

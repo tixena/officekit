@@ -28,10 +28,11 @@ use officekit_markup::wordprocessing::{
     DocumentSettings, DropDownListFormFieldProperties, EightDigitHexadecimalValue, EmbeddedObject,
     EmbeddedObjectContent, EmbeddedObjectUpdateModes, FontFamily, FontFamilyValue,
     FourDigitHexadecimalValue, FramesetSplitterProperties, HorizontalAlignmentType,
-    HorizontalAlignmentTypeMember, LeftParagraphBorder, LinkedObjectProperties, Paragraph,
-    ParagraphAlignment, ParagraphConditionalFormatting, ParagraphContent, ParagraphIndentation,
-    ParagraphProperties, PreferredTableWidth, PropertiesForASingleFont, RightParagraphBorder,
-    RunProperties, SignedMeasurementInTwentiethsOfPoint, SuggestedSorting, TableCellBorders,
+    HorizontalAlignmentTypeMember, LeftParagraphBorder, LegacyNumberingLevelProperties,
+    LinkedObjectProperties, NumberingLevelOverrideDefinition, Paragraph, ParagraphAlignment,
+    ParagraphConditionalFormatting, ParagraphContent, ParagraphIndentation, ParagraphProperties,
+    PreferredTableWidth, PropertiesForASingleFont, RightParagraphBorder, RunProperties,
+    SignedMeasurementInTwentiethsOfPoint, SuggestedSorting, TableCellBorders,
     TableCellLeadingEdgeBorder, TableStyleConditionalFormattingSettingsException, Text as WordText,
     TextRun, TextRunContent, TwoDigitHexadecimalValue, VMLObject, VmlElementContent,
     VmlOfficeDrawingElementContent, WebPageSettings, WriteProtection, write,
@@ -781,6 +782,21 @@ fn a_strict_save_removes_the_settings_word_leaves_out() {
         refused(&compatibility),
         Some("footnoteLayoutLikeWW8"),
         "what else the part holds stays refused"
+    );
+}
+
+#[test]
+fn a_strict_save_removes_the_legacy_layout_of_a_list_level() {
+    assert_eq!(
+        strict::<NumberingLevelOverrideDefinition>(
+            "<w:lvl xmlns:w=\"{w}\" w:ilvl=\"0\"><w:numFmt w:val=\"bullet\"/><w:legacy w:legacy=\"1\" w:legacySpace=\"0\" w:legacyIndent=\"283\"/></w:lvl>"
+        ),
+        format!("<w:lvl xmlns:w=\"{W_STRICT}\" w:ilvl=\"0\"><w:numFmt w:val=\"bullet\"/></w:lvl>")
+    );
+    assert_eq!(
+        refused(&LegacyNumberingLevelProperties::default()),
+        Some("legacy"),
+        "the element written alone stays refused"
     );
 }
 

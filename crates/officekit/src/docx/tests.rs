@@ -825,6 +825,49 @@ fn a_strict_save_removes_the_settings_word_leaves_out_and_goes_on() {
 
 #[cfg(feature = "strict")]
 #[test]
+fn a_strict_save_removes_the_legacy_layout_of_a_list_level_and_goes_on() {
+    use crate::parts::numbering_definitions;
+
+    let legacy = "<w:legacy w:legacy=\"1\" w:legacySpace=\"0\" w:legacyIndent=\"283\"/>";
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    let main = docx.main_document_part().clone();
+    let (part, _) = docx
+        .package_mut()
+        .add_part(
+            Some(&main),
+            numbering_definitions::RELATIONSHIP_TYPE.transitional,
+            numbering_definitions::CONTENT_TYPE,
+            "/word/numbering{}.xml",
+            format!(
+                "<w:numbering xmlns:w=\"{W}\"><w:abstractNum w:abstractNumId=\"0\"><w:lvl w:ilvl=\"0\"><w:numFmt w:val=\"bullet\"/>{legacy}</w:lvl></w:abstractNum><w:num w:numId=\"1\"><w:abstractNumId w:val=\"0\"/><w:lvlOverride w:ilvl=\"0\"><w:lvl w:ilvl=\"0\"><w:numFmt w:val=\"bullet\"/>{legacy}</w:lvl></w:lvlOverride></w:num></w:numbering>"
+            )
+            .as_bytes(),
+        )
+        .unwrap();
+    assert_eq!(docx.strict_refusals().unwrap(), []);
+    let strict = Package::from_bytes(docx.to_bytes_strict().unwrap()).unwrap();
+    let written = numbering_definitions::load(&strict, &part, OpenOptions::default()).unwrap();
+    let overrides = written
+        .numbering_definition_instance
+        .iter()
+        .flat_map(|instance| &instance.numbering_level_definition_override)
+        .filter_map(|level_override| {
+            level_override
+                .numbering_level_override_definition
+                .as_deref()
+        });
+    let legacies = written
+        .abstract_numbering_definition
+        .iter()
+        .flat_map(|definition| &definition.numbering_level_override_definition)
+        .chain(overrides)
+        .map(|level| level.legacy_numbering_level_properties.clone())
+        .collect::<Vec<_>>();
+    assert_eq!(legacies, [None, None]);
+}
+
+#[cfg(feature = "strict")]
+#[test]
 fn strict_refusals_is_empty_for_a_file_a_strict_save_takes() {
     let docx = Docx::new(WordprocessingKind::Document).unwrap();
     assert_eq!(docx.strict_refusals().unwrap(), []);
