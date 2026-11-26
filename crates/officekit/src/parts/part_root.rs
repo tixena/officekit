@@ -4,9 +4,9 @@
 //! [`Package`] and [`store`] writes one back in a conformance class. Every generated part module
 //! calls them with its own root.
 
-use officekit_markup::{Events, Item};
 #[cfg(feature = "strict")]
 use officekit_markup::Tag;
+use officekit_markup::{Events, Item};
 #[cfg(feature = "strict")]
 use officekit_strict::StrictRules;
 #[cfg(feature = "strict")]

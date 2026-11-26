@@ -851,6 +851,30 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
     ));
     out.push_str(TO_TREE_BODY);
     out.push('\n');
+    write_part_impl(root, &mut out);
+    out.push_str("    }\n}\n\n");
+    out.push_str(SHARED_WRITER);
+    out.push_str(&layout::signature(
+        0,
+        "fn shared_tree",
+        &[format!("root: &{path}")],
+        "Element",
+    ));
+    layout::line(
+        "    ",
+        &Expr::call(
+            &format!("{}::write::{}", root.module, root.function),
+            vec![Expr::atom("root"), Expr::atom("&mut Scope::default()")],
+        ),
+        "",
+        &mut out,
+    );
+    out.push_str("}\n");
+    out
+}
+
+/// The `write_part` of a typed module's `impl PartRoot`, behind the Strict feature.
+fn write_part_impl(root: &RootText, out: &mut String) {
     out.push_str("    ");
     out.push_str(STRICT_ONLY);
     out.push_str(&layout::signature(
@@ -882,27 +906,8 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
             ],
         ),
         "",
-        &mut out,
+        out,
     );
-    out.push_str("    }\n}\n\n");
-    out.push_str(SHARED_WRITER);
-    out.push_str(&layout::signature(
-        0,
-        "fn shared_tree",
-        &[format!("root: &{path}")],
-        "Element",
-    ));
-    layout::line(
-        "    ",
-        &Expr::call(
-            &format!("{}::write::{}", root.module, root.function),
-            vec![Expr::atom("root"), Expr::atom("&mut Scope::default()")],
-        ),
-        "",
-        &mut out,
-    );
-    out.push_str("}\n");
-    out
 }
 
 /// `lib.rs`: the module declarations, `MODULES`, the helpers the modules

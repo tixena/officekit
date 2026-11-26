@@ -1,7 +1,5 @@
 #[cfg(all(feature = "strict", feature = "transitional"))]
 use officekit_markup::spreadsheet::Worksheet;
-#[cfg(feature = "strict")]
-use officekit_markup::wordprocessing::Document;
 #[cfg(feature = "transitional")]
 use officekit_markup::wordprocessing::Footer;
 use officekit_markup::wordprocessing::{BlockContent, Document};
@@ -489,6 +487,7 @@ fn a_part_that_cannot_be_read_is_an_xml_error() {
             "got {error:?}"
         );
     }
+}
 
 /// What a store of `root` gives in `class` with `options`: the part's bytes, or the error.
 #[cfg(feature = "strict")]
