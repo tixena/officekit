@@ -265,6 +265,19 @@ impl WriteThrough for office_spreadsheetml_2025_pivot_data_source::PivotCacheDat
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2025_pivot_data_source::PIVOT_CACHE_DATA_SOURCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2025_pivot_data_source::write::pivot_cache_data_source(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2025_pivot_data_source::PIVOT_CACHE_DATA_SOURCE_SHAPE,

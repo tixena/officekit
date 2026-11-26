@@ -265,6 +265,15 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_taskpanes_2010_11::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_webextensions_taskpanes_2010_11::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::EXT_LST_SHAPE,
@@ -346,6 +355,16 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Taskpane {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_taskpanes_2010_11::TASKPANE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_taskpanes_2010_11::write::taskpane(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::TASKPANE_SHAPE,
@@ -431,6 +450,16 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Taskpanes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_taskpanes_2010_11::TASKPANES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_taskpanes_2010_11::write::taskpanes(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::TASKPANES_SHAPE,
@@ -506,6 +535,16 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Webextensionref {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_taskpanes_2010_11::WEBEXTENSIONREF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_taskpanes_2010_11::write::webextensionref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::WEBEXTENSIONREF_SHAPE,

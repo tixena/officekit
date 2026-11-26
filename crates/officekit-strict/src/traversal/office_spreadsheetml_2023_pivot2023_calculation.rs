@@ -261,6 +261,18 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::Aggregati
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::AGGREGATION_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_pivot2023_calculation::write::aggregation_info(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::AGGREGATION_INFO_SHAPE,
@@ -337,6 +349,19 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::FeatureSu
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::FEATURE_SUPPORT_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2023_pivot2023_calculation::write::feature_support_info(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::FEATURE_SUPPORT_INFO_SHAPE,
@@ -411,6 +436,15 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotArea
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_pivot2023_calculation::write::pivot_area_reference_subtotals(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE,
@@ -476,6 +510,15 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_pivot2023_calculation::write::pivot_field_subtotal_line_items(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE,
@@ -547,6 +590,19 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTALS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2023_pivot2023_calculation::write::pivot_field_subtotals(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTALS_SHAPE,
@@ -622,6 +678,19 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalL
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_LINE_ITEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2023_pivot2023_calculation::write::subtotal_line_item(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_LINE_ITEM_SHAPE,
@@ -698,6 +767,15 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_pivot2023_calculation::write::subtotal_pivot_item_subtotal(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE,
@@ -769,6 +847,15 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_pivot2023_calculation::write::subtotal_pivot_subtotal_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE,

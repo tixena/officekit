@@ -266,6 +266,16 @@ impl WriteThrough for document_properties_custom::CustomFileProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_custom::CUSTOM_FILE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_custom::write::custom_file_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_custom::CUSTOM_FILE_PROPERTIES_SHAPE,
@@ -345,6 +355,16 @@ impl WriteThrough for document_properties_custom::CustomFileProperty {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_custom::CUSTOM_FILE_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_custom::write::custom_file_property(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_custom::CUSTOM_FILE_PROPERTY_SHAPE,

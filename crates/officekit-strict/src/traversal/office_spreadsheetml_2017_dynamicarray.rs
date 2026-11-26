@@ -265,6 +265,18 @@ impl WriteThrough for office_spreadsheetml_2017_dynamicarray::DynamicArrayProper
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_dynamicarray::DYNAMIC_ARRAY_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_dynamicarray::write::dynamic_array_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_dynamicarray::DYNAMIC_ARRAY_PROPERTIES_SHAPE,
@@ -346,6 +358,15 @@ impl WriteThrough for office_spreadsheetml_2017_dynamicarray::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_dynamicarray::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_dynamicarray::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_dynamicarray::EXT_LST_SHAPE,

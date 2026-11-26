@@ -1,3 +1,7 @@
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use officekit_markup::spreadsheet::Worksheet;
+#[cfg(feature = "strict")]
+use officekit_markup::wordprocessing::Document;
 #[cfg(feature = "transitional")]
 use officekit_markup::wordprocessing::Footer;
 use officekit_markup::wordprocessing::{BlockContent, Document};
@@ -10,8 +14,12 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
+#[cfg(feature = "strict")]
+use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
+#[cfg(feature = "strict")]
+use super::store_tree;
 use super::{PartRoot, load, store};
 #[cfg(feature = "transitional")]
 use crate::parts::footer;
@@ -20,6 +28,29 @@ const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
+
+/// Word documents, in either class, holding what the classes' writes change: spellings, values
+/// only one class has, Word's shapes and VML, unknown content, and unused declarations.
+#[cfg(feature = "strict")]
+const DOCUMENTS: [&str; 6] = [
+    r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" mc:Ignorable="w14 w15"><w:body><w:p w14:paraId="1"><w:pPr><w:jc w:val="left"/><w:ind w:left="720" w:right="1"/></w:pPr><w:r><w:rPr><w:b/><w:w w:val="150"/></w:rPr><w:t xml:space="preserve"> Hello &amp; &lt;you&gt; </w:t></w:r><w:hyperlink r:id="rId1"><w:r><w:t>link</w:t></w:r></w:hyperlink></w:p><w:tbl><w:tblPr><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:left w:val="single"/><w:right w:val="single"/></w:tblBorders></w:tblPr><w:tblGrid><w:gridCol w:w="100"/></w:tblGrid><w:tr><w:tc><w:tcPr><w:tcW w:w="100" w:type="dxa"/></w:tcPr><w:p/></w:tc></w:tr></w:tbl><w:sectPr><w:pgSz w:w="12240" w:h="15840"/></w:sectPr></w:body></w:document>"#,
+    r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" mc:Ignorable="wp14"><w:body><w:p><w:r><mc:AlternateContent><mc:Choice Requires="wps"><w:drawing><wp:anchor distT="0" distB="0" distL="0" distR="0" simplePos="0" relativeHeight="1" behindDoc="0" locked="0" layoutInCell="1" allowOverlap="1"><wp:simplePos x="0" y="0"/><wp:positionH relativeFrom="column"><wp:posOffset>0</wp:posOffset></wp:positionH><wp:positionV relativeFrom="paragraph"><wp:posOffset>0</wp:posOffset></wp:positionV><wp:extent cx="10" cy="10"/><wp:wrapNone/><wp:docPr id="1" name="Box"/><a:graphic><a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wps:wsp><wps:spPr/><wps:txbx><w:txbxContent><w:p><w:r><w:t>box</w:t></w:r></w:p></w:txbxContent></wps:txbx><wps:bodyPr/></wps:wsp></a:graphicData></a:graphic><wp14:sizeRelH relativeFrom="margin"><wp14:pctWidth>50000</wp14:pctWidth></wp14:sizeRelH></wp:anchor></w:drawing></mc:Choice><mc:Fallback><w:pict><v:rect o:spid="_x0000_s1" style="width:1pt"/></w:pict></mc:Fallback></mc:AlternateContent></w:r><w:r><w:pict><v:rect o:spid="_x0000_s2"/></w:pict></w:r></w:p><mc:AlternateContent><mc:Choice Requires="wps"><w:p/></mc:Choice></mc:AlternateContent><w:sectPr/></w:body></w:document>"#,
+    r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:x="urn:x" x:root="1"><!-- a comment --><w:body><x:thing x:a="1"><w:p/></x:thing><w:p xmlns:y="urn:y" y:a="2"><w:r><w:t>a</w:t></w:r><w:r><w:t></w:t></w:r><w:r><w:t xml:space="preserve">   </w:t></w:r><w:fldSimple w:instr="PAGE"><w:r><w:t>1</w:t></w:r></w:fldSimple></w:p><w:p><w:pPr><w:rPr><w:w w:val="90"/></w:rPr></w:pPr></w:p></w:body></w:document>"#,
+    r#"<w:document xmlns:w="http://purl.oclc.org/ooxml/wordprocessingml/main" xmlns:wp="http://purl.oclc.org/ooxml/drawingml/wordprocessingDrawing" xmlns:a="http://purl.oclc.org/ooxml/drawingml/main" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" w:conformance="strict"><w:body><w:p><w:pPr><w:jc w:val="start"/></w:pPr><w:r><w:drawing><wp:inline><wp:extent cx="1" cy="1"/><wp:docPr id="2" name="Shape"/><a:graphic><a:graphicData uri="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"><wp:wsp><wp:spPr/><wp:txbx><wne:txbxContent><w:p><w:r><w:t>strict</w:t></w:r></w:p></wne:txbxContent></wp:txbx><wp:bodyPr/></wp:wsp></a:graphicData></a:graphic></wp:inline></w:drawing></w:r><w:r><mc:AlternateContent><mc:Choice Requires="v"><w:pict/></mc:Choice></mc:AlternateContent></w:r></w:p><w:sectPr/></w:body></w:document>"#,
+    r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body><w:tbl><w:tr><w:tc><w:tcPr><w:hMerge w:val="restart"/></w:tcPr><w:p/></w:tc></w:tr></w:tbl></w:body></w:document>"#,
+    r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:o="urn:schemas-microsoft-com:office:office"><w:body><w:p o:gfxdata="x"><w:r><w:t>a</w:t></w:r></w:p></w:body></w:document>"#,
+];
+
+/// A store of a typed root `R`: [`store`], or the store through its tree.
+#[cfg(feature = "strict")]
+type Store<R> = fn(
+    &mut Package,
+    &PartName,
+    &str,
+    &R,
+    ConformanceClass,
+    WriteOptions,
+) -> Result<(), PackageError>;
 
 /// A typed root for the tests: `<w:note>` holding its text.
 #[derive(Debug, PartialEq, Eq)]
@@ -458,4 +489,85 @@ fn a_part_that_cannot_be_read_is_an_xml_error() {
             "got {error:?}"
         );
     }
+
+/// What a store of `root` gives in `class` with `options`: the part's bytes, or the error.
+#[cfg(feature = "strict")]
+fn stored(
+    root: &Document,
+    class: ConformanceClass,
+    options: WriteOptions,
+    store_with: Store<Document>,
+) -> Result<String, String> {
+    let mut package = document();
+    let main = name("/word/document.xml");
+    store_with(&mut package, &main, MAIN, root, class, options)
+        .map_err(|error| format!("{error:?}"))?;
+    let bytes = package
+        .part_bytes(&main)
+        .map_err(|error| format!("{error:?}"))?;
+    String::from_utf8(bytes).map_err(|error| error.to_string())
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_store_written_through_gives_the_bytes_and_the_refusals_of_the_tree() {
+    let mut refused = 0;
+    for xml in DOCUMENTS {
+        let root = Document::from_tree(&parse(xml.as_bytes()).unwrap().root).unwrap();
+        for class in [ConformanceClass::Strict, ConformanceClass::Transitional] {
+            for cleanup in [true, false] {
+                let options = WriteOptions::new(Layout::Compact, cleanup);
+                let through = stored(&root, class, options, store);
+                let tree = stored(&root, class, options, store_tree);
+                assert_eq!(through, tree, "{class:?}, cleanup {cleanup}: {xml}");
+                refused += usize::from(through.is_err());
+            }
+        }
+    }
+    assert_eq!(
+        refused, 4,
+        "the hMerge and the o: attribute are refused in Strict"
+    );
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_store_in_the_pretty_layout_writes_the_tree() {
+    let root = Document::from_tree(&parse(DOCUMENTS[0].as_bytes()).unwrap().root).unwrap();
+    let options = WriteOptions::new(Layout::Pretty, true);
+    let pretty = stored(&root, ConformanceClass::Strict, options, store).unwrap();
+    assert!(pretty.contains("\n  <w:body>"), "{pretty}");
+    assert_eq!(
+        Ok(pretty),
+        stored(&root, ConformanceClass::Strict, options, store_tree)
+    );
+}
+
+#[cfg(all(feature = "strict", feature = "transitional"))]
+#[test]
+fn a_date_cell_is_refused_in_transitional_as_the_tree_refuses_it() {
+    let sheet = Worksheet::from_tree(
+        &parse(b"<x:worksheet xmlns:x=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\"><x:sheetData><x:row r=\"1\"><x:c r=\"A1\"><x:v>1</x:v></x:c><x:c r=\"B1\" t=\"d\"><x:v>2026-10-14T00:00:00</x:v></x:c></x:row></x:sheetData></x:worksheet>")
+            .unwrap()
+            .root,
+    )
+    .unwrap();
+    let part = name("/xl/worksheets/sheet1.xml");
+    let outcome = |write: Store<Worksheet>| {
+        let mut package = Package::new();
+        let error = write(
+            &mut package,
+            &part,
+            "application/xml",
+            &sheet,
+            ConformanceClass::Transitional,
+            WriteOptions::default(),
+        )
+        .unwrap_err();
+        (format!("{error:?}"), package.contains(&part))
+    };
+    let through = outcome(store);
+    assert_eq!(through, outcome(store_tree));
+    assert!(through.0.contains("c/@t"), "{}", through.0);
+    assert!(!through.1);
 }

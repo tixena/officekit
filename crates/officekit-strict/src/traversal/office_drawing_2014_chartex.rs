@@ -261,6 +261,15 @@ impl WriteThrough for office_drawing_2014_chartex::Address {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::ADDRESS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::address(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ADDRESS_SHAPE,
@@ -342,6 +351,15 @@ impl WriteThrough for office_drawing_2014_chartex::Aggregation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::AGGREGATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::aggregation(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2014_chartex::AGGREGATION_SHAPE,
@@ -442,6 +460,12 @@ impl WriteThrough for office_drawing_2014_chartex::Axis {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::AXIS_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::axis(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::AXIS_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -624,6 +648,15 @@ impl WriteThrough for office_drawing_2014_chartex::AxisId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::AXIS_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::axis_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::AXIS_ID_SHAPE,
@@ -699,6 +732,15 @@ impl WriteThrough for office_drawing_2014_chartex::BinCount {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::BIN_COUNT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::bin_count(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BIN_COUNT_SHAPE,
@@ -774,6 +816,15 @@ impl WriteThrough for office_drawing_2014_chartex::BinSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::BIN_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::bin_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BIN_SIZE_SHAPE,
@@ -849,6 +900,15 @@ impl WriteThrough for office_drawing_2014_chartex::Binary {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::BINARY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::binary(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BINARY_SHAPE,
@@ -928,6 +988,15 @@ impl WriteThrough for office_drawing_2014_chartex::Binning {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::BINNING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::binning(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BINNING_SHAPE,
@@ -1103,6 +1172,15 @@ impl WriteThrough for office_drawing_2014_chartex::CatScaling {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::CAT_SCALING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::cat_scaling(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CAT_SCALING_SHAPE,
@@ -1188,6 +1266,15 @@ impl WriteThrough for office_drawing_2014_chartex::ChartChart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::CHART_CHART_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::chart_chart(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_CHART_SHAPE,
@@ -1274,6 +1361,15 @@ impl WriteThrough for office_drawing_2014_chartex::ChartData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::CHART_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::chart_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_DATA_SHAPE,
@@ -1351,6 +1447,15 @@ impl WriteThrough for office_drawing_2014_chartex::ChartRelId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::CHART_REL_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::chart_rel_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_REL_ID_SHAPE,
@@ -1444,6 +1549,15 @@ impl WriteThrough for office_drawing_2014_chartex::ChartSpace {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::CHART_SPACE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::chart_space(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_SPACE_SHAPE,
@@ -1549,6 +1663,15 @@ impl WriteThrough for office_drawing_2014_chartex::Clear {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::CLEAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::clear(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CLEAR_SHAPE,
@@ -1632,6 +1755,15 @@ impl WriteThrough for office_drawing_2014_chartex::ClrMapOvr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::CLR_MAP_OVR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::clr_map_ovr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CLR_MAP_OVR_SHAPE,
@@ -1719,6 +1851,15 @@ impl WriteThrough for office_drawing_2014_chartex::Copyright {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::COPYRIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::copyright(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::COPYRIGHT_SHAPE,
@@ -1798,6 +1939,15 @@ impl WriteThrough for office_drawing_2014_chartex::Copyrights {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::COPYRIGHTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::copyrights(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::COPYRIGHTS_SHAPE,
@@ -1879,6 +2029,12 @@ impl WriteThrough for office_drawing_2014_chartex::Data {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -2071,6 +2227,15 @@ impl WriteThrough for office_drawing_2014_chartex::DataId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::DATA_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::data_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_ID_SHAPE,
@@ -2161,6 +2326,15 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::DATA_LABEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::data_label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_LABEL_SHAPE,
@@ -2243,6 +2417,15 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabelHidden {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::DATA_LABEL_HIDDEN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::data_label_hidden(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_LABEL_HIDDEN_SHAPE,
@@ -2337,6 +2520,15 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabels {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::DATA_LABELS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::data_labels(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_LABELS_SHAPE,
@@ -2426,6 +2618,15 @@ impl WriteThrough for office_drawing_2014_chartex::DataPt {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::DATA_PT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::data_pt(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_PT_SHAPE,
@@ -2503,6 +2704,15 @@ impl WriteThrough for office_drawing_2014_chartex::EntityType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::ENTITY_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::entity_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ENTITY_TYPE_SHAPE,
@@ -2578,6 +2788,15 @@ impl WriteThrough for office_drawing_2014_chartex::EvenFooter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::EVEN_FOOTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::even_footer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EVEN_FOOTER_SHAPE,
@@ -2653,6 +2872,15 @@ impl WriteThrough for office_drawing_2014_chartex::EvenHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::EVEN_HEADER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::even_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EVEN_HEADER_SHAPE,
@@ -2732,6 +2960,12 @@ impl WriteThrough for office_drawing_2014_chartex::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::EXT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::ext(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::EXT_SHAPE, &self.unknown);
         through.attribute(0, &self.uri);
@@ -2809,6 +3043,15 @@ impl WriteThrough for office_drawing_2014_chartex::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EXT_LST_SHAPE,
@@ -2884,6 +3127,15 @@ impl WriteThrough for office_drawing_2014_chartex::ExternalData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::EXTERNAL_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::external_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EXTERNAL_DATA_SHAPE,
@@ -2960,6 +3212,15 @@ impl WriteThrough for office_drawing_2014_chartex::ExtremeValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::EXTREME_VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::extreme_value(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EXTREME_VALUE_SHAPE,
@@ -3034,6 +3295,11 @@ impl WriteThrough for office_drawing_2014_chartex::F {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2014_chartex::F_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::f(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::F_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -3106,6 +3372,15 @@ impl WriteThrough for office_drawing_2014_chartex::FirstFooter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::FIRST_FOOTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::first_footer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FIRST_FOOTER_SHAPE,
@@ -3181,6 +3456,15 @@ impl WriteThrough for office_drawing_2014_chartex::FirstHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::FIRST_HEADER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::first_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FIRST_HEADER_SHAPE,
@@ -3262,6 +3546,15 @@ impl WriteThrough for office_drawing_2014_chartex::FmtOvr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::FMT_OVR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::fmt_ovr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FMT_OVR_SHAPE,
@@ -3343,6 +3636,15 @@ impl WriteThrough for office_drawing_2014_chartex::FmtOvrs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::FMT_OVRS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::fmt_ovrs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FMT_OVRS_SHAPE,
@@ -3422,6 +3724,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoCache {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_CACHE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_cache(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CACHE_SHAPE,
@@ -3503,6 +3814,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntities {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_child_entities(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_SHAPE,
@@ -3582,6 +3902,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQuery {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_child_entities_query(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_SHAPE,
@@ -3666,6 +3996,18 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQueryResult {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_child_entities_query_result(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULT_SHAPE,
@@ -3747,6 +4089,18 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQueryResults 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_child_entities_query_results(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULTS_SHAPE,
@@ -3826,6 +4180,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildTypes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_CHILD_TYPES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_child_types(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_TYPES_SHAPE,
@@ -3907,6 +4270,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_SHAPE,
@@ -3989,6 +4361,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQuery {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_data_entity_query(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_SHAPE,
@@ -4072,6 +4454,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQueryResult {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_data_entity_query_result(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULT_SHAPE,
@@ -4153,6 +4545,18 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQueryResults {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_data_entity_query_results(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULTS_SHAPE,
@@ -4228,6 +4632,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointQuery {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_POINT_QUERY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_data_point_query(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_QUERY_SHAPE,
@@ -4305,6 +4719,18 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQuery {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_data_point_to_entity_query(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_SHAPE,
@@ -4389,6 +4815,18 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_data_point_to_entity_query_result(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULT_SHAPE,
@@ -4473,6 +4911,19 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_data_point_to_entity_query_results(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULTS_SHAPE,
@@ -4548,6 +4999,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoEntity {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_ENTITY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_entity(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_ENTITY_SHAPE,
@@ -4624,6 +5084,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoHierarchyEntity {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_HIERARCHY_ENTITY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_hierarchy_entity(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_HIERARCHY_ENTITY_SHAPE,
@@ -4705,6 +5175,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_LOCATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_location(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_SHAPE,
@@ -4784,6 +5263,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQuery {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_LOCATION_QUERY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_location_query(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_SHAPE,
@@ -4870,6 +5358,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQueryResult {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_location_query_result(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULT_SHAPE,
@@ -4951,6 +5449,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQueryResults {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_location_query_results(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULTS_SHAPE,
@@ -5030,6 +5538,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocations {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_LOCATIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_locations(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATIONS_SHAPE,
@@ -5105,6 +5622,16 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQuery {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::geo_parent_entities_query(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_SHAPE,
@@ -5189,6 +5716,18 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQueryResult 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_parent_entities_query_result(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE,
@@ -5271,6 +5810,18 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQueryResults
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_parent_entities_query_results(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULTS_SHAPE,
@@ -5346,6 +5897,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntity {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_PARENT_ENTITY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_parent_entity(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITY_SHAPE,
@@ -5421,6 +5981,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoPolygon {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_POLYGON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_polygon(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_POLYGON_SHAPE,
@@ -5502,6 +6071,15 @@ impl WriteThrough for office_drawing_2014_chartex::GeoPolygons {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEO_POLYGONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geo_polygons(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_POLYGONS_SHAPE,
@@ -5581,6 +6159,15 @@ impl WriteThrough for office_drawing_2014_chartex::Geography {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::GEOGRAPHY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::geography(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEOGRAPHY_SHAPE,
@@ -5793,6 +6380,15 @@ impl WriteThrough for office_drawing_2014_chartex::HeaderFooter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::HEADER_FOOTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::header_footer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::HEADER_FOOTER_SHAPE,
@@ -5876,6 +6472,12 @@ impl WriteThrough for office_drawing_2014_chartex::Idx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::IDX_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::idx(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::IDX_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -5972,6 +6574,15 @@ impl WriteThrough for office_drawing_2014_chartex::LayoutPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::LAYOUT_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::layout_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LAYOUT_PR_SHAPE,
@@ -6064,6 +6675,15 @@ impl WriteThrough for office_drawing_2014_chartex::Legend {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::LEGEND_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::legend(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LEGEND_SHAPE,
@@ -6149,6 +6769,15 @@ impl WriteThrough for office_drawing_2014_chartex::LvlNumericLevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::LVL_NUMERIC_LEVEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::lvl_numeric_level(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LVL_NUMERIC_LEVEL_SHAPE,
@@ -6231,6 +6860,15 @@ impl WriteThrough for office_drawing_2014_chartex::LvlStringLevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::LVL_STRING_LEVEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::lvl_string_level(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LVL_STRING_LEVEL_SHAPE,
@@ -6314,6 +6952,15 @@ impl WriteThrough for office_drawing_2014_chartex::MajorGridlines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MAJOR_GRIDLINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::major_gridlines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MAJOR_GRIDLINES_SHAPE,
@@ -6394,6 +7041,15 @@ impl WriteThrough for office_drawing_2014_chartex::MajorTickMarks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MAJOR_TICK_MARKS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::major_tick_marks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MAJOR_TICK_MARKS_SHAPE,
@@ -6473,6 +7129,12 @@ impl WriteThrough for office_drawing_2014_chartex::Max {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::MAX_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::max(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::MAX_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -6549,6 +7211,15 @@ impl WriteThrough for office_drawing_2014_chartex::MaxColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MAX_COLOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::max_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MAX_COLOR_SHAPE,
@@ -6628,6 +7299,12 @@ impl WriteThrough for office_drawing_2014_chartex::Mid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::MID_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::mid(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::MID_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -6704,6 +7381,15 @@ impl WriteThrough for office_drawing_2014_chartex::MidColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MID_COLOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::mid_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MID_COLOR_SHAPE,
@@ -6783,6 +7469,12 @@ impl WriteThrough for office_drawing_2014_chartex::Min {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::MIN_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::min(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::MIN_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -6859,6 +7551,15 @@ impl WriteThrough for office_drawing_2014_chartex::MinColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MIN_COLOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::min_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MIN_COLOR_SHAPE,
@@ -6940,6 +7641,15 @@ impl WriteThrough for office_drawing_2014_chartex::MinorGridlines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MINOR_GRIDLINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::minor_gridlines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MINOR_GRIDLINES_SHAPE,
@@ -7020,6 +7730,15 @@ impl WriteThrough for office_drawing_2014_chartex::MinorTickMarks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MINOR_TICK_MARKS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::minor_tick_marks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MINOR_TICK_MARKS_SHAPE,
@@ -7095,6 +7814,11 @@ impl WriteThrough for office_drawing_2014_chartex::Nf {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2014_chartex::NF_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::nf(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::NF_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -7171,6 +7895,15 @@ impl WriteThrough for office_drawing_2014_chartex::NumDim {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::NUM_DIM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::num_dim(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::NUM_DIM_SHAPE,
@@ -7247,6 +7980,15 @@ impl WriteThrough for office_drawing_2014_chartex::NumFmt {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::NUM_FMT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::num_fmt(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::NUM_FMT_SHAPE,
@@ -7323,6 +8065,15 @@ impl WriteThrough for office_drawing_2014_chartex::Number {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::NUMBER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::NUMBER_SHAPE,
@@ -7523,6 +8274,15 @@ impl WriteThrough for office_drawing_2014_chartex::OddFooter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::ODD_FOOTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::odd_footer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ODD_FOOTER_SHAPE,
@@ -7598,6 +8358,15 @@ impl WriteThrough for office_drawing_2014_chartex::OddHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::ODD_HEADER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::odd_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ODD_HEADER_SHAPE,
@@ -7673,6 +8442,15 @@ impl WriteThrough for office_drawing_2014_chartex::Offset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::OFFSET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::OFFSET_SHAPE,
@@ -7749,6 +8527,19 @@ impl WriteThrough for office_drawing_2014_chartex::Openxmlsdk49BECFFA3B034D13827
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::OPENXMLSDK49BECFFA3B034D138272D6CCB22579E3_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::openxmlsdk49becffa3b034d138272d6ccb22579e3(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::OPENXMLSDK49BECFFA3B034D138272D6CCB22579E3_SHAPE,
@@ -7824,6 +8615,15 @@ impl WriteThrough for office_drawing_2014_chartex::PageMargins {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PAGE_MARGINS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::page_margins(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PAGE_MARGINS_SHAPE,
@@ -7904,6 +8704,15 @@ impl WriteThrough for office_drawing_2014_chartex::PageSetup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PAGE_SETUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::page_setup(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PAGE_SETUP_SHAPE,
@@ -7987,6 +8796,16 @@ impl WriteThrough for office_drawing_2014_chartex::ParentLabelLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PARENT_LABEL_LAYOUT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::parent_label_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PARENT_LABEL_LAYOUT_SHAPE,
@@ -8062,6 +8881,15 @@ impl WriteThrough for office_drawing_2014_chartex::Percent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PERCENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::percent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PERCENT_SHAPE,
@@ -8147,6 +8975,15 @@ impl WriteThrough for office_drawing_2014_chartex::PlotArea {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PLOT_AREA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::plot_area(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PLOT_AREA_SHAPE,
@@ -8233,6 +9070,15 @@ impl WriteThrough for office_drawing_2014_chartex::PlotAreaRegion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PLOT_AREA_REGION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::plot_area_region(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PLOT_AREA_REGION_SHAPE,
@@ -8316,6 +9162,15 @@ impl WriteThrough for office_drawing_2014_chartex::PlotSurface {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PLOT_SURFACE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::plot_surface(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PLOT_SURFACE_SHAPE,
@@ -8400,6 +9255,15 @@ impl WriteThrough for office_drawing_2014_chartex::PrintSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PRINT_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::print_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PRINT_SETTINGS_SHAPE,
@@ -8477,6 +9341,15 @@ impl WriteThrough for office_drawing_2014_chartex::PtNumericValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PT_NUMERIC_VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::pt_numeric_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PT_NUMERIC_VALUE_SHAPE,
@@ -8553,6 +9426,15 @@ impl WriteThrough for office_drawing_2014_chartex::PtStringValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::PT_STRING_VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::pt_string_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PT_STRING_VALUE_SHAPE,
@@ -8629,6 +9511,16 @@ impl WriteThrough for office_drawing_2014_chartex::RegionLabelLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::REGION_LABEL_LAYOUT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::region_label_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::REGION_LABEL_LAYOUT_SHAPE,
@@ -8712,6 +9604,12 @@ impl WriteThrough for office_drawing_2014_chartex::Rich {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_chartex::RICH_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::rich(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::RICH_SHAPE, &self.unknown);
         through.child(&self.body_properties, ctx)?;
@@ -8786,6 +9684,15 @@ impl WriteThrough for office_drawing_2014_chartex::Separator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::SEPARATOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::separator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SEPARATOR_SHAPE,
@@ -8884,6 +9791,15 @@ impl WriteThrough for office_drawing_2014_chartex::Series {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::SERIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::series(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SERIES_SHAPE,
@@ -9091,6 +10007,15 @@ impl WriteThrough for office_drawing_2014_chartex::SpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SP_PR_SHAPE,
@@ -9174,6 +10099,15 @@ impl WriteThrough for office_drawing_2014_chartex::Statistics {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::STATISTICS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::statistics(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::STATISTICS_SHAPE,
@@ -9253,6 +10187,15 @@ impl WriteThrough for office_drawing_2014_chartex::StrDim {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::STR_DIM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::str_dim(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::STR_DIM_SHAPE,
@@ -9458,6 +10401,15 @@ impl WriteThrough for office_drawing_2014_chartex::Subtotals {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::SUBTOTALS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::subtotals(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SUBTOTALS_SHAPE,
@@ -9731,6 +10683,15 @@ impl WriteThrough for office_drawing_2014_chartex::TickLabels {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::TICK_LABELS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::tick_labels(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TICK_LABELS_SHAPE,
@@ -9818,6 +10779,15 @@ impl WriteThrough for office_drawing_2014_chartex::TitleAxisTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::TITLE_AXIS_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::title_axis_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TITLE_AXIS_TITLE_SHAPE,
@@ -9909,6 +10879,15 @@ impl WriteThrough for office_drawing_2014_chartex::TitleChartTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::TITLE_CHART_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::title_chart_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TITLE_CHART_TITLE_SHAPE,
@@ -9995,6 +10974,11 @@ impl WriteThrough for office_drawing_2014_chartex::Tx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2014_chartex::TX_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::tx(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::TX_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -10071,6 +11055,15 @@ impl WriteThrough for office_drawing_2014_chartex::TxData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::TX_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::tx_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TX_DATA_SHAPE,
@@ -10154,6 +11147,15 @@ impl WriteThrough for office_drawing_2014_chartex::TxPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::TX_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::tx_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TX_PR_SHAPE,
@@ -10237,6 +11239,15 @@ impl WriteThrough for office_drawing_2014_chartex::Units {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::UNITS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::units(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::UNITS_SHAPE,
@@ -10324,6 +11335,15 @@ impl WriteThrough for office_drawing_2014_chartex::UnitsLabel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::UNITS_LABEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::units_label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::UNITS_LABEL_SHAPE,
@@ -10402,6 +11422,11 @@ impl WriteThrough for office_drawing_2014_chartex::V {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2014_chartex::V_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_chartex::write::v(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2014_chartex::V_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -10474,6 +11499,15 @@ impl WriteThrough for office_drawing_2014_chartex::ValScaling {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::VAL_SCALING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::val_scaling(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VAL_SCALING_SHAPE,
@@ -10761,6 +11795,16 @@ impl WriteThrough for office_drawing_2014_chartex::ValueColorPositions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::VALUE_COLOR_POSITIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::value_color_positions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VALUE_COLOR_POSITIONS_SHAPE,
@@ -10847,6 +11891,15 @@ impl WriteThrough for office_drawing_2014_chartex::ValueColors {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::VALUE_COLORS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::value_colors(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VALUE_COLORS_SHAPE,
@@ -10924,6 +11977,18 @@ impl WriteThrough for office_drawing_2014_chartex::VisibilityDataLabelVisibiliti
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::VISIBILITY_DATA_LABEL_VISIBILITIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_chartex::write::visibility_data_label_visibilities(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VISIBILITY_DATA_LABEL_VISIBILITIES_SHAPE,
@@ -11001,6 +12066,19 @@ impl WriteThrough for office_drawing_2014_chartex::VisibilitySeriesElementVisibi
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::VISIBILITY_SERIES_ELEMENT_VISIBILITIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2014_chartex::write::visibility_series_element_visibilities(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VISIBILITY_SERIES_ELEMENT_VISIBILITIES_SHAPE,

@@ -259,6 +259,11 @@ impl WriteThrough for diagram::Algorithm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::ALGORITHM_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::algorithm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::ALGORITHM_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.rev);
@@ -329,6 +334,11 @@ impl WriteThrough for diagram::BackgroundFormatting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::BACKGROUND_FORMATTING_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::background_formatting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::BACKGROUND_FORMATTING_SHAPE, &self.unknown);
         through.choice(&self.fill_properties_content, ctx)?;
@@ -390,6 +400,11 @@ impl WriteThrough for diagram::Category {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CATEGORY_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::category(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::CATEGORY_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.pri);
@@ -449,6 +464,11 @@ impl WriteThrough for diagram::CategoryList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CATEGORY_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::category_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::CATEGORY_LIST_SHAPE, &self.unknown);
         through.child(&self.category, ctx)?;
         through.finish(ctx)
@@ -521,6 +541,15 @@ impl WriteThrough for diagram::CategoryListSDCategories {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::CATEGORY_LIST_SD_CATEGORIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::category_list_sd_categories(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::CATEGORY_LIST_SD_CATEGORIES_SHAPE,
@@ -592,6 +621,11 @@ impl WriteThrough for diagram::CategorySDCategory {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CATEGORY_SD_CATEGORY_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::category_sd_category(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::CATEGORY_SD_CATEGORY_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -659,6 +693,11 @@ impl WriteThrough for diagram::ChooseElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CHOOSE_ELEMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::choose_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::CHOOSE_ELEMENT_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.child(&self.r#if, ctx)?;
@@ -728,6 +767,12 @@ impl WriteThrough for diagram::ColorTransformCategory {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &diagram::COLOR_TRANSFORM_CATEGORY_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::color_transform_category(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::COLOR_TRANSFORM_CATEGORY_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -806,6 +851,15 @@ impl WriteThrough for diagram::ColorTransformCategoryList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::COLOR_TRANSFORM_CATEGORY_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::color_transform_category_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::COLOR_TRANSFORM_CATEGORY_LIST_SHAPE,
@@ -893,6 +947,15 @@ impl WriteThrough for diagram::ColorTransformDefinitionHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::COLOR_TRANSFORM_DEFINITION_HEADER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::color_transform_definition_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::COLOR_TRANSFORM_DEFINITION_HEADER_SHAPE,
@@ -988,6 +1051,15 @@ impl WriteThrough for diagram::ColorTransformDefinitions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::COLOR_TRANSFORM_DEFINITIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::color_transform_definitions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::COLOR_TRANSFORM_DEFINITIONS_SHAPE,
@@ -1074,6 +1146,15 @@ impl WriteThrough for diagram::ColorTransformHeaderList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::COLOR_TRANSFORM_HEADER_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::color_transform_header_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::COLOR_TRANSFORM_HEADER_LIST_SHAPE,
@@ -1153,6 +1234,15 @@ impl WriteThrough for diagram::ColorTransformSampleData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::COLOR_TRANSFORM_SAMPLE_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::color_transform_sample_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::COLOR_TRANSFORM_SAMPLE_DATA_SHAPE,
@@ -1225,6 +1315,11 @@ impl WriteThrough for diagram::Connection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CONNECTION_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::connection(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::CONNECTION_SHAPE, &self.unknown);
         through.attribute(0, &self.model_id);
         through.attribute(1, &self.r#type);
@@ -1293,6 +1388,11 @@ impl WriteThrough for diagram::ConnectionList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CONNECTION_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::connection_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::CONNECTION_LIST_SHAPE, &self.unknown);
         through.child(&self.connection, ctx)?;
         through.finish(ctx)
@@ -1356,6 +1456,11 @@ impl WriteThrough for diagram::Constraint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CONSTRAINT_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::constraint(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::CONSTRAINT_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.r#for);
@@ -1426,6 +1531,11 @@ impl WriteThrough for diagram::ConstraintList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::CONSTRAINT_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::constraint_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::CONSTRAINT_LIST_SHAPE, &self.unknown);
         through.child(&self.constraint, ctx)?;
         through.finish(ctx)
@@ -1499,6 +1609,11 @@ impl WriteThrough for diagram::DataModel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::DATA_MODEL_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::data_model(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::DATA_MODEL_SHAPE, &self.unknown);
         through.child(&self.point_list, ctx)?;
         through.child(&self.connection_list, ctx)?;
@@ -1558,6 +1673,11 @@ impl WriteThrough for diagram::Description {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::DESCRIPTION_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::description(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::DESCRIPTION_SHAPE, &self.unknown);
         through.attribute(0, &self.lang);
         through.attribute(1, &self.val);
@@ -1626,6 +1746,15 @@ impl WriteThrough for diagram::DescriptionCTDescription {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::DESCRIPTION_CT_DESCRIPTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::description_ct_description(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::DESCRIPTION_CT_DESCRIPTION_SHAPE,
@@ -1694,6 +1823,11 @@ impl WriteThrough for diagram::DiagramDirection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::DIAGRAM_DIRECTION_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::diagram_direction(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::DIAGRAM_DIRECTION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -1767,6 +1901,15 @@ impl WriteThrough for diagram::DiagramLayoutHeaderList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::DIAGRAM_LAYOUT_HEADER_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::diagram_layout_header_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::DIAGRAM_LAYOUT_HEADER_LIST_SHAPE,
@@ -1838,6 +1981,11 @@ impl WriteThrough for diagram::EffectColorList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::EFFECT_COLOR_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::effect_color_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::EFFECT_COLOR_LIST_SHAPE, &self.unknown);
         through.attribute(0, &self.meth);
@@ -1904,6 +2052,11 @@ impl WriteThrough for diagram::Else {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::ELSE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::r#else(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::ELSE_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.items(&self.content, ctx)?;
@@ -1967,6 +2120,16 @@ impl WriteThrough for diagram::ExplicitRelationshipsToDiagramParts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::EXPLICIT_RELATIONSHIPS_TO_DIAGRAM_PARTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                diagram::write::explicit_relationships_to_diagram_parts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::EXPLICIT_RELATIONSHIPS_TO_DIAGRAM_PARTS_SHAPE,
@@ -2041,6 +2204,11 @@ impl WriteThrough for diagram::ExtensionList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::EXTENSION_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::extension_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::EXTENSION_LIST_SHAPE, &self.unknown);
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -2104,6 +2272,11 @@ impl WriteThrough for diagram::FillColorList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::FILL_COLOR_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::fill_color_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::FILL_COLOR_LIST_SHAPE, &self.unknown);
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
@@ -2169,6 +2342,11 @@ impl WriteThrough for diagram::ForEach {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::FOR_EACH_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::for_each(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::FOR_EACH_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.attribute(1, &self.r#ref);
@@ -2235,6 +2413,11 @@ impl WriteThrough for diagram::If {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::IF_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::r#if(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::IF_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.attribute(1, &self.axis);
@@ -2319,6 +2502,11 @@ impl WriteThrough for diagram::LayoutDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::LAYOUT_DEFINITION_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::layout_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::LAYOUT_DEFINITION_SHAPE, &self.unknown);
         through.attribute(0, &self.unique_id);
@@ -2407,6 +2595,12 @@ impl WriteThrough for diagram::LayoutDefinitionHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &diagram::LAYOUT_DEFINITION_HEADER_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::layout_definition_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::LAYOUT_DEFINITION_HEADER_SHAPE, &self.unknown);
         through.attribute(0, &self.unique_id);
@@ -2633,6 +2827,11 @@ impl WriteThrough for diagram::LayoutNode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::LAYOUT_NODE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::layout_node(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::LAYOUT_NODE_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.attribute(1, &self.style_lbl);
@@ -2862,6 +3061,11 @@ impl WriteThrough for diagram::LevelAnimation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::LEVEL_ANIMATION_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::level_animation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::LEVEL_ANIMATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2925,6 +3129,11 @@ impl WriteThrough for diagram::LineColorList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::LINE_COLOR_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::line_color_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::LINE_COLOR_LIST_SHAPE, &self.unknown);
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
@@ -2999,6 +3208,15 @@ impl WriteThrough for diagram::ListOfStyleDefinitionHeaders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::LIST_OF_STYLE_DEFINITION_HEADERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::list_of_style_definition_headers(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::LIST_OF_STYLE_DEFINITION_HEADERS_SHAPE,
@@ -3066,6 +3284,11 @@ impl WriteThrough for diagram::MaximumChildren {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::MAXIMUM_CHILDREN_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::maximum_children(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::MAXIMUM_CHILDREN_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3133,6 +3356,15 @@ impl WriteThrough for diagram::OneByOneAnimationString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::ONE_BY_ONE_ANIMATION_STRING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::one_by_one_animation_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::ONE_BY_ONE_ANIMATION_STRING_SHAPE,
@@ -3208,6 +3440,15 @@ impl WriteThrough for diagram::OrganizationChartBranchStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::ORGANIZATION_CHART_BRANCH_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::organization_chart_branch_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::ORGANIZATION_CHART_BRANCH_STYLE_SHAPE,
@@ -3275,6 +3516,11 @@ impl WriteThrough for diagram::Parameter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::PARAMETER_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::parameter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::PARAMETER_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.val);
@@ -3341,6 +3587,11 @@ impl WriteThrough for diagram::Point {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::POINT_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::POINT_SHAPE, &self.unknown);
         through.attribute(0, &self.model_id);
         through.attribute(1, &self.r#type);
@@ -3405,6 +3656,11 @@ impl WriteThrough for diagram::PointList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::POINT_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::point_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::POINT_LIST_SHAPE, &self.unknown);
         through.child(&self.point, ctx)?;
         through.finish(ctx)
@@ -3468,6 +3724,15 @@ impl WriteThrough for diagram::PreferredNumberOfChildren {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::PREFERRED_NUMBER_OF_CHILDREN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::preferred_number_of_children(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::PREFERRED_NUMBER_OF_CHILDREN_SHAPE,
@@ -3571,6 +3836,15 @@ impl WriteThrough for diagram::PresentationLayoutVariables {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::PRESENTATION_LAYOUT_VARIABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::presentation_layout_variables(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::PRESENTATION_LAYOUT_VARIABLES_SHAPE,
@@ -3650,6 +3924,11 @@ impl WriteThrough for diagram::PresentationOf {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::PRESENTATION_OF_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::presentation_of(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::PRESENTATION_OF_SHAPE, &self.unknown);
         through.attribute(0, &self.axis);
         through.attribute(1, &self.pt_type);
@@ -3722,6 +4001,11 @@ impl WriteThrough for diagram::PropertySet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::PROPERTY_SET_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::property_set(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::PROPERTY_SET_SHAPE, &self.unknown);
         through.attribute(0, &self.pres_assoc_id);
         through.attribute(1, &self.pres_name);
@@ -3814,6 +4098,11 @@ impl WriteThrough for diagram::Rule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::RULE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::rule(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::RULE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.r#for);
@@ -3879,6 +4168,11 @@ impl WriteThrough for diagram::RuleList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::RULE_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::rule_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::RULE_LIST_SHAPE, &self.unknown);
         through.child(&self.rule, ctx)?;
         through.finish(ctx)
@@ -3938,6 +4232,11 @@ impl WriteThrough for diagram::SampleData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SAMPLE_DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::sample_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SAMPLE_DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.use_def);
         through.child(&self.model, ctx)?;
@@ -4008,6 +4307,11 @@ impl WriteThrough for diagram::Scene3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SCENE3D_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::scene3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SCENE3D_SHAPE, &self.unknown);
         through.child(&self.camera, ctx)?;
         through.child(&self.light_rig, ctx)?;
@@ -4071,6 +4375,11 @@ impl WriteThrough for diagram::Shape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SHAPE_SHAPE, &self.unknown);
         through.attribute(0, &self.rot);
         through.attribute(1, &self.r#type);
@@ -4133,6 +4442,11 @@ impl WriteThrough for diagram::ShapeAdjust {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SHAPE_ADJUST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::shape_adjust(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SHAPE_ADJUST_SHAPE, &self.unknown);
         through.attribute(0, &self.idx);
         through.attribute(1, &self.val);
@@ -4197,6 +4511,11 @@ impl WriteThrough for diagram::ShapeAdjustList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SHAPE_ADJUST_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::shape_adjust_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::SHAPE_ADJUST_LIST_SHAPE, &self.unknown);
         through.child(&self.shape_adjust, ctx)?;
@@ -4277,6 +4596,11 @@ impl WriteThrough for diagram::ShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SHAPE_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
@@ -4348,6 +4672,11 @@ impl WriteThrough for diagram::ShapeResizeStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SHAPE_RESIZE_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::shape_resize_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::SHAPE_RESIZE_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -4418,6 +4747,11 @@ impl WriteThrough for diagram::ShapeStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SHAPE_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::shape_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SHAPE_STYLE_SHAPE, &self.unknown);
         through.child(&self.line_reference, ctx)?;
         through.child(&self.fill_reference, ctx)?;
@@ -4480,6 +4814,11 @@ impl WriteThrough for diagram::ShowInsertNode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SHOW_INSERT_NODE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::show_insert_node(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SHOW_INSERT_NODE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4547,6 +4886,15 @@ impl WriteThrough for diagram::ShowOrganizationChartUserInterface {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &diagram::SHOW_ORGANIZATION_CHART_USER_INTERFACE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = diagram::write::show_organization_chart_user_interface(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &diagram::SHOW_ORGANIZATION_CHART_USER_INTERFACE_SHAPE,
@@ -4626,6 +4974,11 @@ impl WriteThrough for diagram::Sp3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::SP3D_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::sp3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::SP3D_SHAPE, &self.unknown);
         through.attribute(0, &self.z);
         through.attribute(1, &self.extrusion_h);
@@ -4692,6 +5045,11 @@ impl WriteThrough for diagram::StyleData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::STYLE_DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::style_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::STYLE_DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.use_def);
         through.child(&self.model, ctx)?;
@@ -4765,6 +5123,11 @@ impl WriteThrough for diagram::StyleDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::STYLE_DEFINITION_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::style_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::STYLE_DEFINITION_SHAPE, &self.unknown);
         through.attribute(0, &self.unique_id);
         through.attribute(1, &self.min_ver);
@@ -4851,6 +5214,12 @@ impl WriteThrough for diagram::StyleDefinitionHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &diagram::STYLE_DEFINITION_HEADER_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::style_definition_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::STYLE_DEFINITION_HEADER_SHAPE, &self.unknown);
         through.attribute(0, &self.unique_id);
@@ -4940,6 +5309,11 @@ impl WriteThrough for diagram::StyleLabel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::STYLE_LABEL_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::style_label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::STYLE_LABEL_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.child(&self.fill_color_list, ctx)?;
@@ -5014,6 +5388,12 @@ impl WriteThrough for diagram::StyleLabelDescription {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &diagram::STYLE_LABEL_DESCRIPTION_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::style_label_description(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::STYLE_LABEL_DESCRIPTION_SHAPE, &self.unknown);
         through.attribute(0, &self.lang);
@@ -5099,6 +5479,12 @@ impl WriteThrough for diagram::StyleLabelStyleLabel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &diagram::STYLE_LABEL_STYLE_LABEL_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::style_label_style_label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::STYLE_LABEL_STYLE_LABEL_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
@@ -5176,6 +5562,11 @@ impl WriteThrough for diagram::TextBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TEXT_BODY_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::text_body(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::TEXT_BODY_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.child(&self.text_list_styles, ctx)?;
@@ -5245,6 +5636,11 @@ impl WriteThrough for diagram::TextEffectColorList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TEXT_EFFECT_COLOR_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::text_effect_color_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::TEXT_EFFECT_COLOR_LIST_SHAPE, &self.unknown);
         through.attribute(0, &self.meth);
@@ -5319,6 +5715,11 @@ impl WriteThrough for diagram::TextFillColorList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TEXT_FILL_COLOR_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::text_fill_color_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::TEXT_FILL_COLOR_LIST_SHAPE, &self.unknown);
         through.attribute(0, &self.meth);
@@ -5389,6 +5790,11 @@ impl WriteThrough for diagram::TextLineColorList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TEXT_LINE_COLOR_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::text_line_color_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::TEXT_LINE_COLOR_LIST_SHAPE, &self.unknown);
         through.attribute(0, &self.meth);
@@ -5455,6 +5861,11 @@ impl WriteThrough for diagram::TextProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TEXT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::text_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::TEXT_PROPERTIES_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -5514,6 +5925,11 @@ impl WriteThrough for diagram::Title {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::TITLE_SHAPE, &self.unknown);
         through.attribute(0, &self.lang);
         through.attribute(1, &self.val);
@@ -5569,6 +5985,11 @@ impl WriteThrough for diagram::TitleCTName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TITLE_CT_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::title_ct_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::TITLE_CT_NAME_SHAPE, &self.unknown);
         through.attribute(0, &self.lang);
         through.attribute(1, &self.val);
@@ -5629,6 +6050,11 @@ impl WriteThrough for diagram::TitleSDName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::TITLE_SD_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::title_sd_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::TITLE_SD_NAME_SHAPE, &self.unknown);
         through.attribute(0, &self.lang);
         through.attribute(1, &self.val);
@@ -5717,6 +6143,11 @@ impl WriteThrough for diagram::VariableList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::VARIABLE_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::variable_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &diagram::VARIABLE_LIST_SHAPE, &self.unknown);
         through.child(&self.show_organization_chart_user_interface, ctx)?;
         through.child(&self.maximum_children, ctx)?;
@@ -5794,6 +6225,11 @@ impl WriteThrough for diagram::WholeE2OFormatting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &diagram::WHOLE_E2O_FORMATTING_SHAPE, &self.unknown);
+        if converted {
+            let element = diagram::write::whole_e2o_formatting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &diagram::WHOLE_E2O_FORMATTING_SHAPE, &self.unknown);
         through.child(&self.outline, ctx)?;

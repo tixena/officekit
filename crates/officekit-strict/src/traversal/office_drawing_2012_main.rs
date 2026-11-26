@@ -261,6 +261,15 @@ impl WriteThrough for office_drawing_2012_main::BackgroundPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_main::BACKGROUND_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_main::write::background_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::BACKGROUND_PR_SHAPE,
@@ -339,6 +348,16 @@ impl WriteThrough for office_drawing_2012_main::NonVisualGroupProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_main::NON_VISUAL_GROUP_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_main::write::non_visual_group_props(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::NON_VISUAL_GROUP_PROPS_SHAPE,
@@ -414,6 +433,15 @@ impl WriteThrough for office_drawing_2012_main::ObjectPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_main::OBJECT_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_main::write::object_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::OBJECT_PR_SHAPE,
@@ -491,6 +519,15 @@ impl WriteThrough for office_drawing_2012_main::SignatureLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_main::SIGNATURE_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_main::write::signature_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::SIGNATURE_LINE_SHAPE,

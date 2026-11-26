@@ -261,6 +261,16 @@ impl WriteThrough for custom_xml_schema_properties::CustomXMLSchemaReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &custom_xml_schema_properties::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                custom_xml_schema_properties::write::custom_xml_schema_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &custom_xml_schema_properties::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE,
@@ -344,6 +354,19 @@ impl WriteThrough for custom_xml_schema_properties::EmbeddedCustomXMLSchemaSuppl
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &custom_xml_schema_properties::EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                custom_xml_schema_properties::write::embedded_custom_xml_schema_supplementary_data(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &custom_xml_schema_properties::EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE,

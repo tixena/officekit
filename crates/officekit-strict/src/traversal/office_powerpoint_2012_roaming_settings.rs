@@ -261,6 +261,15 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Key {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_roaming_settings::KEY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_roaming_settings::write::key(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_roaming_settings::KEY_SHAPE,
@@ -342,6 +351,15 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Props {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_roaming_settings::PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_roaming_settings::write::props(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_roaming_settings::PROPS_SHAPE,
@@ -418,6 +436,15 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Value {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_roaming_settings::VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_roaming_settings::write::value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_roaming_settings::VALUE_SHAPE,

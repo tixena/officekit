@@ -261,6 +261,19 @@ impl WriteThrough for office_spreadsheetml_2024_pivot_dynamic_arrays::PivotCache
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2024_pivot_dynamic_arrays::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2024_pivot_dynamic_arrays::write::pivot_cache_dynamic_array(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2024_pivot_dynamic_arrays::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE,

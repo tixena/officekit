@@ -261,6 +261,16 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::Checksum {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_threadedcomments2::CHECKSUM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2020_threadedcomments2::write::checksum(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_threadedcomments2::CHECKSUM_SHAPE,
@@ -340,6 +350,16 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_threadedcomments2::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2020_threadedcomments2::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_threadedcomments2::EXT_LST_SHAPE,
@@ -419,6 +439,16 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::Hyperlink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_threadedcomments2::HYPERLINK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2020_threadedcomments2::write::hyperlink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_threadedcomments2::HYPERLINK_SHAPE,

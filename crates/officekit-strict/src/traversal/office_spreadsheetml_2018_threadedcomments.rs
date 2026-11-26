@@ -265,6 +265,16 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2018_threadedcomments::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::EXT_LST_SHAPE,
@@ -340,6 +350,16 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Mention {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::MENTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2018_threadedcomments::write::mention(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::MENTION_SHAPE,
@@ -422,6 +442,16 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Mentions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::MENTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2018_threadedcomments::write::mentions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::MENTIONS_SHAPE,
@@ -501,6 +531,16 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Person {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::PERSON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2018_threadedcomments::write::person(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::PERSON_SHAPE,
@@ -586,6 +626,16 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::PersonList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::PERSON_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2018_threadedcomments::write::person_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::PERSON_LIST_SHAPE,
@@ -662,6 +712,16 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Text {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2018_threadedcomments::write::text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::TEXT_SHAPE,
@@ -745,6 +805,18 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2018_threadedcomments::write::threaded_comment(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENT_SHAPE,
@@ -834,6 +906,18 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2018_threadedcomments::write::threaded_comments(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENTS_SHAPE,

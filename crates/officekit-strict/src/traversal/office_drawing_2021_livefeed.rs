@@ -267,6 +267,15 @@ impl WriteThrough for office_drawing_2021_livefeed::BackgroundProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_livefeed::BACKGROUND_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_livefeed::write::background_props(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::BACKGROUND_PROPS_SHAPE,
@@ -347,6 +356,15 @@ impl WriteThrough for office_drawing_2021_livefeed::Blur {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_livefeed::BLUR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_livefeed::write::blur(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::BLUR_SHAPE,
@@ -426,6 +444,15 @@ impl WriteThrough for office_drawing_2021_livefeed::Custom {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_livefeed::CUSTOM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_livefeed::write::custom(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::CUSTOM_SHAPE,
@@ -505,6 +532,15 @@ impl WriteThrough for office_drawing_2021_livefeed::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_livefeed::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_livefeed::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::EXT_LST_SHAPE,
@@ -697,6 +733,15 @@ impl WriteThrough for office_drawing_2021_livefeed::LiveFeedProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_livefeed::LIVE_FEED_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_livefeed::write::live_feed_props(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::LIVE_FEED_PROPS_SHAPE,
@@ -777,6 +822,15 @@ impl WriteThrough for office_drawing_2021_livefeed::Normal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_livefeed::NORMAL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_livefeed::write::normal(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::NORMAL_SHAPE,
@@ -856,6 +910,15 @@ impl WriteThrough for office_drawing_2021_livefeed::Removed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_livefeed::REMOVED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_livefeed::write::removed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::REMOVED_SHAPE,

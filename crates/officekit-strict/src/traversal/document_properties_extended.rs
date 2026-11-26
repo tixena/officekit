@@ -261,6 +261,15 @@ impl WriteThrough for document_properties_extended::ApplicationName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::APPLICATION_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::application_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::APPLICATION_NAME_SHAPE,
@@ -340,6 +349,18 @@ impl WriteThrough for document_properties_extended::ApplicationSpecificFilePrope
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::application_specific_file_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE,
@@ -509,6 +530,16 @@ impl WriteThrough for document_properties_extended::ApplicationVersion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::APPLICATION_VERSION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::application_version(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::APPLICATION_VERSION_SHAPE,
@@ -584,6 +615,16 @@ impl WriteThrough for document_properties_extended::CharactersWithSpaces {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::CHARACTERS_WITH_SPACES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::characters_with_spaces(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::CHARACTERS_WITH_SPACES_SHAPE,
@@ -663,6 +704,15 @@ impl WriteThrough for document_properties_extended::DigitalSignature {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::DIGITAL_SIGNATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::digital_signature(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::DIGITAL_SIGNATURE_SHAPE,
@@ -738,6 +788,15 @@ impl WriteThrough for document_properties_extended::DocumentSecurity {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::DOCUMENT_SECURITY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::document_security(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::DOCUMENT_SECURITY_SHAPE,
@@ -817,6 +876,15 @@ impl WriteThrough for document_properties_extended::HeadingPairs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::HEADING_PAIRS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::heading_pairs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::HEADING_PAIRS_SHAPE,
@@ -896,6 +964,15 @@ impl WriteThrough for document_properties_extended::HyperlinkList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::HYPERLINK_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::hyperlink_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::HYPERLINK_LIST_SHAPE,
@@ -971,6 +1048,16 @@ impl WriteThrough for document_properties_extended::HyperlinksChanged {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::HYPERLINKS_CHANGED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::hyperlinks_changed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::HYPERLINKS_CHANGED_SHAPE,
@@ -1046,6 +1133,18 @@ impl WriteThrough for document_properties_extended::IntendedFormatOfPresentation
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::INTENDED_FORMAT_OF_PRESENTATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::intended_format_of_presentation(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::INTENDED_FORMAT_OF_PRESENTATION_SHAPE,
@@ -1121,6 +1220,15 @@ impl WriteThrough for document_properties_extended::LinksUpToDate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::LINKS_UP_TO_DATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::links_up_to_date(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::LINKS_UP_TO_DATE_SHAPE,
@@ -1196,6 +1304,15 @@ impl WriteThrough for document_properties_extended::NameOfCompany {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::NAME_OF_COMPANY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::name_of_company(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::NAME_OF_COMPANY_SHAPE,
@@ -1271,6 +1388,16 @@ impl WriteThrough for document_properties_extended::NameOfDocumentTemplate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::NAME_OF_DOCUMENT_TEMPLATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::name_of_document_template(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::NAME_OF_DOCUMENT_TEMPLATE_SHAPE,
@@ -1346,6 +1473,15 @@ impl WriteThrough for document_properties_extended::NameOfManager {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::NAME_OF_MANAGER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::name_of_manager(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::NAME_OF_MANAGER_SHAPE,
@@ -1421,6 +1557,16 @@ impl WriteThrough for document_properties_extended::NumberOfHiddenSlides {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::NUMBER_OF_HIDDEN_SLIDES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::number_of_hidden_slides(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::NUMBER_OF_HIDDEN_SLIDES_SHAPE,
@@ -1496,6 +1642,15 @@ impl WriteThrough for document_properties_extended::NumberOfLines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::NUMBER_OF_LINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::number_of_lines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::NUMBER_OF_LINES_SHAPE,
@@ -1571,6 +1726,18 @@ impl WriteThrough for document_properties_extended::NumberOfSlidesContainingNote
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::number_of_slides_containing_notes(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::NUMBER_OF_SLIDES_CONTAINING_NOTES_SHAPE,
@@ -1650,6 +1817,15 @@ impl WriteThrough for document_properties_extended::PartTitles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::PART_TITLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::part_titles(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::PART_TITLES_SHAPE,
@@ -1725,6 +1901,16 @@ impl WriteThrough for document_properties_extended::RelativeHyperlinkBase {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::RELATIVE_HYPERLINK_BASE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::relative_hyperlink_base(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::RELATIVE_HYPERLINK_BASE_SHAPE,
@@ -1800,6 +1986,15 @@ impl WriteThrough for document_properties_extended::SharedDocument {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::SHARED_DOCUMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::shared_document(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::SHARED_DOCUMENT_SHAPE,
@@ -1875,6 +2070,16 @@ impl WriteThrough for document_properties_extended::SlidesMetadataElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::SLIDES_METADATA_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::slides_metadata_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::SLIDES_METADATA_ELEMENT_SHAPE,
@@ -1950,6 +2155,16 @@ impl WriteThrough for document_properties_extended::ThumbnailDisplayMode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::THUMBNAIL_DISPLAY_MODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::thumbnail_display_mode(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::THUMBNAIL_DISPLAY_MODE_SHAPE,
@@ -2025,6 +2240,18 @@ impl WriteThrough for document_properties_extended::TotalEditTimeMetadataElement
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::total_edit_time_metadata_element(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::TOTAL_EDIT_TIME_METADATA_ELEMENT_SHAPE,
@@ -2100,6 +2327,16 @@ impl WriteThrough for document_properties_extended::TotalNumberOfCharacters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::TOTAL_NUMBER_OF_CHARACTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::total_number_of_characters(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::TOTAL_NUMBER_OF_CHARACTERS_SHAPE,
@@ -2175,6 +2412,18 @@ impl WriteThrough for document_properties_extended::TotalNumberOfMultimediaClips
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::total_number_of_multimedia_clips(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::TOTAL_NUMBER_OF_MULTIMEDIA_CLIPS_SHAPE,
@@ -2250,6 +2499,16 @@ impl WriteThrough for document_properties_extended::TotalNumberOfPages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::TOTAL_NUMBER_OF_PAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::total_number_of_pages(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::TOTAL_NUMBER_OF_PAGES_SHAPE,
@@ -2325,6 +2584,16 @@ impl WriteThrough for document_properties_extended::TotalNumberOfParagraphs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_extended::write::total_number_of_paragraphs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::TOTAL_NUMBER_OF_PARAGRAPHS_SHAPE,
@@ -2400,6 +2669,15 @@ impl WriteThrough for document_properties_extended::WordCount {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_extended::WORD_COUNT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_extended::write::word_count(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_extended::WORD_COUNT_SHAPE,

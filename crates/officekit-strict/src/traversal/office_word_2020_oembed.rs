@@ -261,6 +261,11 @@ impl WriteThrough for office_word_2020_oembed::Oembed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2020_oembed::OEMBED_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2020_oembed::write::oembed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2020_oembed::OEMBED_SHAPE, &self.unknown);
         through.attribute(0, &self.o_embed_url);

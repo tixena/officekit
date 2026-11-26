@@ -257,6 +257,11 @@ impl WriteThrough for drawing::Accent1 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ACCENT1_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::accent1(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ACCENT1_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -315,6 +320,11 @@ impl WriteThrough for drawing::Accent2 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ACCENT2_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::accent2(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ACCENT2_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -373,6 +383,11 @@ impl WriteThrough for drawing::Accent3 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ACCENT3_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::accent3(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ACCENT3_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -431,6 +446,11 @@ impl WriteThrough for drawing::Accent4 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ACCENT4_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::accent4(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ACCENT4_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -489,6 +509,11 @@ impl WriteThrough for drawing::Accent5 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ACCENT5_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::accent5(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ACCENT5_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -547,6 +572,11 @@ impl WriteThrough for drawing::Accent6 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ACCENT6_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::accent6(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ACCENT6_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -601,6 +631,11 @@ impl WriteThrough for drawing::Alpha {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ALPHA_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -659,6 +694,11 @@ impl WriteThrough for drawing::AlphaBiLevelEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_BI_LEVEL_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_bi_level_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::ALPHA_BI_LEVEL_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.thresh);
@@ -723,6 +763,11 @@ impl WriteThrough for drawing::AlphaCeilingEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_CEILING_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_ceiling_effect(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::ALPHA_CEILING_EFFECT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -785,6 +830,11 @@ impl WriteThrough for drawing::AlphaFloorEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_FLOOR_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_floor_effect(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::ALPHA_FLOOR_EFFECT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -851,6 +901,15 @@ impl WriteThrough for drawing::AlphaInsetOutsetEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::ALPHA_INSET_OUTSET_EFFECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::alpha_inset_outset_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::ALPHA_INSET_OUTSET_EFFECT_SHAPE,
@@ -926,6 +985,11 @@ impl WriteThrough for drawing::AlphaInverseEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_INVERSE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_inverse_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::ALPHA_INVERSE_EFFECT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -994,6 +1058,11 @@ impl WriteThrough for drawing::AlphaModulateEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_MODULATE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_modulate_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::ALPHA_MODULATE_EFFECT_SHAPE, &self.unknown);
         through.child(&self.container_cont, ctx)?;
@@ -1062,6 +1131,15 @@ impl WriteThrough for drawing::AlphaModulateFixedEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::ALPHA_MODULATE_FIXED_EFFECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::alpha_modulate_fixed_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::ALPHA_MODULATE_FIXED_EFFECT_SHAPE,
@@ -1129,6 +1207,11 @@ impl WriteThrough for drawing::AlphaModulation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_MODULATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_modulation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ALPHA_MODULATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1188,6 +1271,11 @@ impl WriteThrough for drawing::AlphaOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ALPHA_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1251,6 +1339,11 @@ impl WriteThrough for drawing::AlphaReplaceEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ALPHA_REPLACE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::alpha_replace_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::ALPHA_REPLACE_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.a);
@@ -1311,6 +1404,11 @@ impl WriteThrough for drawing::AnchorPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ANCHOR_POINT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::anchor_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ANCHOR_POINT_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -1504,6 +1602,12 @@ impl WriteThrough for drawing::Apply3DShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::APPLY3D_SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::apply3d_shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::APPLY3D_SHAPE_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.z);
@@ -1576,6 +1680,11 @@ impl WriteThrough for drawing::AudioEndTime {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::AUDIO_END_TIME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::audio_end_time(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::AUDIO_END_TIME_SHAPE, &self.unknown);
         through.attribute(0, &self.track);
         through.attribute(1, &self.time);
@@ -1644,6 +1753,11 @@ impl WriteThrough for drawing::AudioFromCD {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::AUDIO_FROM_CD_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::audio_from_cd(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::AUDIO_FROM_CD_SHAPE, &self.unknown);
         through.child(&self.audio_start_time, ctx)?;
         through.child(&self.audio_end_time, ctx)?;
@@ -1709,6 +1823,11 @@ impl WriteThrough for drawing::AudioFromFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::AUDIO_FROM_FILE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::audio_from_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::AUDIO_FROM_FILE_SHAPE, &self.unknown);
         through.attribute(0, &self.link);
         through.attribute(1, &self.content_type);
@@ -1774,6 +1893,11 @@ impl WriteThrough for drawing::AudioFromWAVFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::AUDIO_FROM_WAV_FILE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::audio_from_wav_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::AUDIO_FROM_WAV_FILE_SHAPE, &self.unknown);
         through.attribute(0, &self.embed);
@@ -1835,6 +1959,11 @@ impl WriteThrough for drawing::AudioStartTime {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::AUDIO_START_TIME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::audio_start_time(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::AUDIO_START_TIME_SHAPE, &self.unknown);
         through.attribute(0, &self.track);
         through.attribute(1, &self.time);
@@ -1899,6 +2028,11 @@ impl WriteThrough for drawing::AutoNumberedBullet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::AUTO_NUMBERED_BULLET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::auto_numbered_bullet(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::AUTO_NUMBERED_BULLET_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -1970,6 +2104,11 @@ impl WriteThrough for drawing::BackdropPlane {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BACKDROP_PLANE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::backdrop_plane(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BACKDROP_PLANE_SHAPE, &self.unknown);
         through.child(&self.anchor_point, ctx)?;
         through.child(&self.normal, ctx)?;
@@ -2036,6 +2175,11 @@ impl WriteThrough for drawing::BackgroundColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BACKGROUND_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::background_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BACKGROUND_COLOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -2107,6 +2251,15 @@ impl WriteThrough for drawing::BackgroundFillStyleList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::BACKGROUND_FILL_STYLE_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::background_fill_style_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::BACKGROUND_FILL_STYLE_LIST_SHAPE,
@@ -2181,6 +2334,11 @@ impl WriteThrough for drawing::Band1Horizontal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BAND1HORIZONTAL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::band1horizontal(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BAND1HORIZONTAL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -2248,6 +2406,11 @@ impl WriteThrough for drawing::Band1Vertical {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BAND1VERTICAL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::band1vertical(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BAND1VERTICAL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -2315,6 +2478,11 @@ impl WriteThrough for drawing::Band2Horizontal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BAND2HORIZONTAL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::band2horizontal(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BAND2HORIZONTAL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -2382,6 +2550,11 @@ impl WriteThrough for drawing::Band2Vertical {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BAND2VERTICAL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::band2vertical(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BAND2VERTICAL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -2442,6 +2615,11 @@ impl WriteThrough for drawing::Bevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BEVEL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::bevel(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BEVEL_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
         through.attribute(1, &self.h);
@@ -2498,6 +2676,11 @@ impl WriteThrough for drawing::BiLevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BI_LEVEL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::bi_level(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BI_LEVEL_SHAPE, &self.unknown);
         through.attribute(0, &self.thresh);
         through.finish(ctx)
@@ -2556,6 +2739,11 @@ impl WriteThrough for drawing::BlendEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BLEND_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::blend_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BLEND_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.blend);
         through.child(&self.container_cont, ctx)?;
@@ -2622,6 +2810,11 @@ impl WriteThrough for drawing::Blip {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BLIP_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::blip(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BLIP_SHAPE, &self.unknown);
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
@@ -2887,6 +3080,11 @@ impl WriteThrough for drawing::Blue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BLUE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::blue(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BLUE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2941,6 +3139,11 @@ impl WriteThrough for drawing::BlueModulation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BLUE_MODULATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::blue_modulation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BLUE_MODULATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3000,6 +3203,11 @@ impl WriteThrough for drawing::BlueOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BLUE_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::blue_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BLUE_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3059,6 +3267,11 @@ impl WriteThrough for drawing::BlurEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BLUR_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::blur_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BLUR_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.rad);
         through.attribute(1, &self.grow);
@@ -3132,6 +3345,11 @@ impl WriteThrough for drawing::BodyProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BODY_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::body_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BODY_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.rot);
         through.attribute(1, &self.spc_first_last_para);
@@ -3214,6 +3432,11 @@ impl WriteThrough for drawing::BottomBevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BOTTOM_BEVEL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::bottom_bevel(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BOTTOM_BEVEL_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
         through.attribute(1, &self.h);
@@ -3279,6 +3502,11 @@ impl WriteThrough for drawing::BottomBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BOTTOM_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::bottom_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BOTTOM_BORDER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3362,6 +3590,15 @@ impl WriteThrough for drawing::BottomBorderLineProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::BOTTOM_BORDER_LINE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::bottom_border_line_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::BOTTOM_BORDER_LINE_PROPERTIES_SHAPE,
@@ -3462,6 +3699,16 @@ impl WriteThrough for drawing::BottomLeftToTopRightBorderLineProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::BOTTOM_LEFT_TO_TOP_RIGHT_BORDER_LINE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::bottom_left_to_top_right_border_line_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::BOTTOM_LEFT_TO_TOP_RIGHT_BORDER_LINE_PROPERTIES_SHAPE,
@@ -3538,6 +3785,11 @@ impl WriteThrough for drawing::BuildChart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BUILD_CHART_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::build_chart(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BUILD_CHART_SHAPE, &self.unknown);
         through.attribute(0, &self.bld);
         through.attribute(1, &self.anim_bg);
@@ -3598,6 +3850,11 @@ impl WriteThrough for drawing::BuildDiagram {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BUILD_DIAGRAM_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::build_diagram(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::BUILD_DIAGRAM_SHAPE, &self.unknown);
         through.attribute(0, &self.bld);
         through.attribute(1, &self.rev);
@@ -3755,6 +4012,12 @@ impl WriteThrough for drawing::BulletSizeFollowsText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::BULLET_SIZE_FOLLOWS_TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::bullet_size_follows_text(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &drawing::BULLET_SIZE_FOLLOWS_TEXT_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -3826,6 +4089,11 @@ impl WriteThrough for drawing::BulletSizePercentage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BULLET_SIZE_PERCENTAGE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::bullet_size_percentage(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::BULLET_SIZE_PERCENTAGE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -3894,6 +4162,11 @@ impl WriteThrough for drawing::BulletSizePoints {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::BULLET_SIZE_POINTS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::bullet_size_points(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::BULLET_SIZE_POINTS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -3958,6 +4231,11 @@ impl WriteThrough for drawing::Camera {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CAMERA_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::camera(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CAMERA_SHAPE, &self.unknown);
         through.attribute(0, &self.prst);
         through.attribute(1, &self.fov);
@@ -4023,6 +4301,11 @@ impl WriteThrough for drawing::Cell3D {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CELL3D_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::cell3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CELL3D_SHAPE, &self.unknown);
         through.attribute(0, &self.prst_material);
         through.child(&self.bevel, ctx)?;
@@ -4084,6 +4367,11 @@ impl WriteThrough for drawing::ChangeColorFrom {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CHANGE_COLOR_FROM_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::change_color_from(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::CHANGE_COLOR_FROM_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -4148,6 +4436,11 @@ impl WriteThrough for drawing::ChangeColorTo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CHANGE_COLOR_TO_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::change_color_to(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CHANGE_COLOR_TO_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -4207,6 +4500,11 @@ impl WriteThrough for drawing::CharacterBullet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CHARACTER_BULLET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::character_bullet(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CHARACTER_BULLET_SHAPE, &self.unknown);
         through.attribute(0, &self.char);
         through.finish(ctx)
@@ -4266,6 +4564,11 @@ impl WriteThrough for drawing::ChartToAnimate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CHART_TO_ANIMATE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::chart_to_animate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CHART_TO_ANIMATE_SHAPE, &self.unknown);
         through.attribute(0, &self.series_idx);
         through.attribute(1, &self.category_idx);
@@ -4327,6 +4630,11 @@ impl WriteThrough for drawing::ChildExtents {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CHILD_EXTENTS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::child_extents(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CHILD_EXTENTS_SHAPE, &self.unknown);
         through.attribute(0, &self.cx);
         through.attribute(1, &self.cy);
@@ -4387,6 +4695,11 @@ impl WriteThrough for drawing::ChildOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CHILD_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::child_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CHILD_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -4453,6 +4766,11 @@ impl WriteThrough for drawing::ClickHyperlink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CLICK_HYPERLINK_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::click_hyperlink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CLICK_HYPERLINK_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.invalid_url);
@@ -4521,6 +4839,11 @@ impl WriteThrough for drawing::CloseShapePath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CLOSE_SHAPE_PATH_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::close_shape_path(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::CLOSE_SHAPE_PATH_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -4589,6 +4912,11 @@ impl WriteThrough for drawing::ColorChangeEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::COLOR_CHANGE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::color_change_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::COLOR_CHANGE_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.use_a);
@@ -4780,6 +5108,11 @@ impl WriteThrough for drawing::ColorMap {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::COLOR_MAP_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::color_map(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::COLOR_MAP_SHAPE, &self.unknown);
         through.attribute(0, &self.bg1);
         through.attribute(1, &self.tx1);
@@ -4876,6 +5209,11 @@ impl WriteThrough for drawing::ColorScheme {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::COLOR_SCHEME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::color_scheme(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::COLOR_SCHEME_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.child(&self.dark_1, ctx)?;
@@ -5049,6 +5387,11 @@ impl WriteThrough for drawing::ColorSpecified {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::COLOR_SPECIFIED_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::color_specified(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::COLOR_SPECIFIED_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -5199,6 +5542,11 @@ impl WriteThrough for drawing::Complement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::COMPLEMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::complement(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::COMPLEMENT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -5257,6 +5605,11 @@ impl WriteThrough for drawing::ComplexScriptFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::COMPLEX_SCRIPT_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::complex_script_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::COMPLEX_SCRIPT_FONT_SHAPE, &self.unknown);
         through.attribute(0, &self.typeface);
@@ -5320,6 +5673,11 @@ impl WriteThrough for drawing::ConnectionEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CONNECTION_END_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::connection_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CONNECTION_END_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.idx);
@@ -5391,6 +5749,11 @@ impl WriteThrough for drawing::ConnectionShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CONNECTION_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::connection_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CONNECTION_SHAPE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.properties, ctx)?;
@@ -5465,6 +5828,11 @@ impl WriteThrough for drawing::ConnectionShapeLocks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CONNECTION_SHAPE_LOCKS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::connection_shape_locks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::CONNECTION_SHAPE_LOCKS_SHAPE, &self.unknown);
         through.attribute(0, &self.no_grp);
@@ -5539,6 +5907,11 @@ impl WriteThrough for drawing::ConnectionStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CONNECTION_START_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::connection_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CONNECTION_START_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.idx);
@@ -5607,6 +5980,11 @@ impl WriteThrough for drawing::ContentPartLocks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CONTENT_PART_LOCKS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::content_part_locks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::CONTENT_PART_LOCKS_SHAPE, &self.unknown);
         through.attribute(0, &self.no_grp);
@@ -5681,6 +6059,11 @@ impl WriteThrough for drawing::ContourColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CONTOUR_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::contour_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CONTOUR_COLOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -5744,6 +6127,11 @@ impl WriteThrough for drawing::CustomColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CUSTOM_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::custom_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CUSTOM_COLOR_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.choice(&self.content, ctx)?;
@@ -5808,6 +6196,11 @@ impl WriteThrough for drawing::CustomColorList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CUSTOM_COLOR_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::custom_color_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::CUSTOM_COLOR_LIST_SHAPE, &self.unknown);
         through.child(&self.custom_color, ctx)?;
@@ -5872,6 +6265,11 @@ impl WriteThrough for drawing::CustomDash {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CUSTOM_DASH_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::custom_dash(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CUSTOM_DASH_SHAPE, &self.unknown);
         through.child(&self.stop, ctx)?;
         through.finish(ctx)
@@ -5951,6 +6349,11 @@ impl WriteThrough for drawing::CustomGeometry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::CUSTOM_GEOMETRY_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::custom_geometry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::CUSTOM_GEOMETRY_SHAPE, &self.unknown);
         through.child(&self.list_of_shape_adjust_values, ctx)?;
         through.child(&self.list_of_shape_guides, ctx)?;
@@ -6019,6 +6422,11 @@ impl WriteThrough for drawing::Dark1 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::DARK1_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::dark1(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::DARK1_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -6077,6 +6485,11 @@ impl WriteThrough for drawing::Dark2 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::DARK2_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::dark2(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::DARK2_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -6131,6 +6544,11 @@ impl WriteThrough for drawing::DashStop {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::DASH_STOP_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::dash_stop(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::DASH_STOP_SHAPE, &self.unknown);
         through.attribute(0, &self.d);
         through.attribute(1, &self.sp);
@@ -6222,6 +6640,12 @@ impl WriteThrough for drawing::DefaultParagraphStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::DEFAULT_PARAGRAPH_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::default_paragraph_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::DEFAULT_PARAGRAPH_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -6350,6 +6774,15 @@ impl WriteThrough for drawing::DefaultTextRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::DEFAULT_TEXT_RUN_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::default_text_run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::DEFAULT_TEXT_RUN_PROPERTIES_SHAPE,
@@ -6453,6 +6886,11 @@ impl WriteThrough for drawing::DiagramToAnimate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::DIAGRAM_TO_ANIMATE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::diagram_to_animate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::DIAGRAM_TO_ANIMATE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -6514,6 +6952,11 @@ impl WriteThrough for drawing::DrawArcTo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::DRAW_ARC_TO_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::draw_arc_to(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::DRAW_ARC_TO_SHAPE, &self.unknown);
         through.attribute(0, &self.w_r);
         through.attribute(1, &self.h_r);
@@ -6588,6 +7031,15 @@ impl WriteThrough for drawing::DrawCubicBezierCurveTo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::DRAW_CUBIC_BEZIER_CURVE_TO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::draw_cubic_bezier_curve_to(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::DRAW_CUBIC_BEZIER_CURVE_TO_SHAPE,
@@ -6659,6 +7111,11 @@ impl WriteThrough for drawing::DrawLineTo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::DRAW_LINE_TO_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::draw_line_to(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::DRAW_LINE_TO_SHAPE, &self.unknown);
         through.child(&self.shape_path_point, ctx)?;
         through.finish(ctx)
@@ -6730,6 +7187,15 @@ impl WriteThrough for drawing::DrawQuadraticBezierCurveTo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::DRAW_QUADRATIC_BEZIER_CURVE_TO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::draw_quadratic_bezier_curve_to(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::DRAW_QUADRATIC_BEZIER_CURVE_TO_SHAPE,
@@ -6801,6 +7267,11 @@ impl WriteThrough for drawing::DuotoneEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::DUOTONE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::duotone_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::DUOTONE_EFFECT_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -6860,6 +7331,11 @@ impl WriteThrough for drawing::EastAsianFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EAST_ASIAN_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::east_asian_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EAST_ASIAN_FONT_SHAPE, &self.unknown);
         through.attribute(0, &self.typeface);
         through.attribute(1, &self.panose);
@@ -6926,6 +7402,11 @@ impl WriteThrough for drawing::Effect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EFFECT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -6988,6 +7469,11 @@ impl WriteThrough for drawing::EffectContainerCont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EFFECT_CONTAINER_CONT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::effect_container_cont(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::EFFECT_CONTAINER_CONT_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -7157,6 +7643,15 @@ impl WriteThrough for drawing::EffectContainerEffectDag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::EFFECT_CONTAINER_EFFECT_DAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::effect_container_effect_dag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::EFFECT_CONTAINER_EFFECT_DAG_SHAPE,
@@ -7255,6 +7750,15 @@ impl WriteThrough for drawing::EffectContainerEffectLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::EFFECT_CONTAINER_EFFECT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::effect_container_effect_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::EFFECT_CONTAINER_EFFECT_LST_SHAPE,
@@ -7337,6 +7841,12 @@ impl WriteThrough for drawing::EffectEffectReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::EFFECT_EFFECT_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::effect_effect_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::EFFECT_EFFECT_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#ref);
@@ -7490,6 +8000,11 @@ impl WriteThrough for drawing::EffectReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EFFECT_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::effect_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EFFECT_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.idx);
         through.choice(&self.content, ctx)?;
@@ -7559,6 +8074,11 @@ impl WriteThrough for drawing::EffectStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EFFECT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::effect_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EFFECT_STYLE_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.child(&self.scene3d, ctx)?;
@@ -7624,6 +8144,11 @@ impl WriteThrough for drawing::EffectStyleList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EFFECT_STYLE_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::effect_style_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::EFFECT_STYLE_LIST_SHAPE, &self.unknown);
         through.child(&self.effect_style, ctx)?;
@@ -7728,6 +8253,15 @@ impl WriteThrough for drawing::EndParagraphRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::END_PARAGRAPH_RUN_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::end_paragraph_run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::END_PARAGRAPH_RUN_PROPERTIES_SHAPE,
@@ -7831,6 +8365,11 @@ impl WriteThrough for drawing::Extension {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EXTENSION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::extension(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EXTENSION_SHAPE, &self.unknown);
         through.attribute(0, &self.uri);
         through.items(&self.content, ctx)?;
@@ -7891,6 +8430,11 @@ impl WriteThrough for drawing::ExtensionList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EXTENSION_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::extension_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EXTENSION_LIST_SHAPE, &self.unknown);
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -7950,6 +8494,11 @@ impl WriteThrough for drawing::Extents {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EXTENTS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::extents(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EXTENTS_SHAPE, &self.unknown);
         through.attribute(0, &self.cx);
         through.attribute(1, &self.cy);
@@ -8015,6 +8564,11 @@ impl WriteThrough for drawing::ExtraColorScheme {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EXTRA_COLOR_SCHEME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::extra_color_scheme(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::EXTRA_COLOR_SCHEME_SHAPE, &self.unknown);
         through.child(&self.color_scheme, ctx)?;
@@ -8089,6 +8643,12 @@ impl WriteThrough for drawing::ExtraColorSchemeList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::EXTRA_COLOR_SCHEME_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::extra_color_scheme_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::EXTRA_COLOR_SCHEME_LIST_SHAPE, &self.unknown);
         through.child(&self.extra_color_scheme, ctx)?;
@@ -8157,6 +8717,11 @@ impl WriteThrough for drawing::ExtrusionColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::EXTRUSION_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::extrusion_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::EXTRUSION_COLOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -8220,6 +8785,11 @@ impl WriteThrough for drawing::Fill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FILL_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -8278,6 +8848,11 @@ impl WriteThrough for drawing::FillFillEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FILL_FILL_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::fill_fill_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FILL_FILL_EFFECT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -8426,6 +9001,11 @@ impl WriteThrough for drawing::FillOverlayEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FILL_OVERLAY_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::fill_overlay_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::FILL_OVERLAY_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.blend);
@@ -8617,6 +9197,11 @@ impl WriteThrough for drawing::FillRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FILL_RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::fill_rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FILL_RECTANGLE_SHAPE, &self.unknown);
         through.attribute(0, &self.l);
         through.attribute(1, &self.t);
@@ -8683,6 +9268,11 @@ impl WriteThrough for drawing::FillReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FILL_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::fill_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FILL_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.idx);
         through.choice(&self.content, ctx)?;
@@ -8747,6 +9337,11 @@ impl WriteThrough for drawing::FillStyleList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FILL_STYLE_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::fill_style_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FILL_STYLE_LIST_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -8806,6 +9401,11 @@ impl WriteThrough for drawing::FillToRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FILL_TO_RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::fill_to_rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::FILL_TO_RECTANGLE_SHAPE, &self.unknown);
         through.attribute(0, &self.l);
@@ -8876,6 +9476,11 @@ impl WriteThrough for drawing::FirstColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FIRST_COLUMN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::first_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FIRST_COLUMN_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -8943,6 +9548,11 @@ impl WriteThrough for drawing::FirstRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FIRST_ROW_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::first_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FIRST_ROW_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -9003,6 +9613,11 @@ impl WriteThrough for drawing::FollowTextBuClrTx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FOLLOW_TEXT_BU_CLR_TX_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::follow_text_bu_clr_tx(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &drawing::FOLLOW_TEXT_BU_CLR_TX_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -9070,6 +9685,11 @@ impl WriteThrough for drawing::FollowTextBuFontTx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FOLLOW_TEXT_BU_FONT_TX_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::follow_text_bu_font_tx(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &drawing::FOLLOW_TEXT_BU_FONT_TX_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -9141,6 +9761,11 @@ impl WriteThrough for drawing::FollowedHyperlink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FOLLOWED_HYPERLINK_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::followed_hyperlink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::FOLLOWED_HYPERLINK_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -9201,6 +9826,11 @@ impl WriteThrough for drawing::Font {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FONT_SHAPE, &self.unknown);
         through.attribute(0, &self.script);
         through.attribute(1, &self.typeface);
@@ -9273,6 +9903,11 @@ impl WriteThrough for drawing::FontFontCollection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FONT_FONT_COLLECTION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::font_font_collection(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::FONT_FONT_COLLECTION_SHAPE, &self.unknown);
         through.child(&self.latin_font, ctx)?;
@@ -9341,6 +9976,11 @@ impl WriteThrough for drawing::FontReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FONT_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::font_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FONT_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.idx);
         through.choice(&self.content, ctx)?;
@@ -9409,6 +10049,11 @@ impl WriteThrough for drawing::FontScheme {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FONT_SCHEME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::font_scheme(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FONT_SCHEME_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.child(&self.major_font, ctx)?;
@@ -9475,6 +10120,11 @@ impl WriteThrough for drawing::ForegroundColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FOREGROUND_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::foreground_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FOREGROUND_COLOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -9545,6 +10195,11 @@ impl WriteThrough for drawing::FormatScheme {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::FORMAT_SCHEME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::format_scheme(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::FORMAT_SCHEME_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.child(&self.fill_style_list, ctx)?;
@@ -9608,6 +10263,11 @@ impl WriteThrough for drawing::Gamma {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GAMMA_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::gamma(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::GAMMA_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -9745,6 +10405,11 @@ impl WriteThrough for drawing::GlowEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GLOW_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::glow_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GLOW_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.rad);
         through.choice(&self.content, ctx)?;
@@ -9814,6 +10479,11 @@ impl WriteThrough for drawing::GradientFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRADIENT_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::gradient_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GRADIENT_FILL_SHAPE, &self.unknown);
         through.attribute(0, &self.flip);
         through.attribute(1, &self.rot_with_shape);
@@ -9974,6 +10644,11 @@ impl WriteThrough for drawing::GradientStopList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRADIENT_STOP_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::gradient_stop_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::GRADIENT_STOP_LIST_SHAPE, &self.unknown);
         through.child(&self.gradient_stops, ctx)?;
@@ -10038,6 +10713,11 @@ impl WriteThrough for drawing::GradientStops {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRADIENT_STOPS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::gradient_stops(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GRADIENT_STOPS_SHAPE, &self.unknown);
         through.attribute(0, &self.pos);
         through.choice(&self.content, ctx)?;
@@ -10194,6 +10874,11 @@ impl WriteThrough for drawing::GraphicFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRAPHIC_FRAME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::graphic_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GRAPHIC_FRAME_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.graphic_object, ctx)?;
@@ -10264,6 +10949,11 @@ impl WriteThrough for drawing::GraphicFrameLocks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRAPHIC_FRAME_LOCKS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::graphic_frame_locks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::GRAPHIC_FRAME_LOCKS_SHAPE, &self.unknown);
         through.attribute(0, &self.no_grp);
@@ -10334,6 +11024,11 @@ impl WriteThrough for drawing::GraphicObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRAPHIC_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::graphic_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GRAPHIC_OBJECT_SHAPE, &self.unknown);
         through.child(&self.data, ctx)?;
         through.finish(ctx)
@@ -10401,6 +11096,11 @@ impl WriteThrough for drawing::GraphicObjectData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRAPHIC_OBJECT_DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::graphic_object_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::GRAPHIC_OBJECT_DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.uri);
@@ -10462,6 +11162,11 @@ impl WriteThrough for drawing::Gray {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRAY_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::gray(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::GRAY_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -10515,6 +11220,11 @@ impl WriteThrough for drawing::GrayScaleEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GRAY_SCALE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::gray_scale_effect(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::GRAY_SCALE_EFFECT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -10573,6 +11283,11 @@ impl WriteThrough for drawing::Green {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GREEN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::green(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GREEN_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -10627,6 +11342,11 @@ impl WriteThrough for drawing::GreenModulation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GREEN_MODULATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::green_modulation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GREEN_MODULATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -10686,6 +11406,11 @@ impl WriteThrough for drawing::GreenOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GREEN_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::green_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GREEN_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -10745,6 +11470,11 @@ impl WriteThrough for drawing::GroupFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GROUP_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::group_fill(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::GROUP_FILL_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -10811,6 +11541,11 @@ impl WriteThrough for drawing::GroupShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GROUP_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::group_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::GROUP_SHAPE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.visual_group_shape_properties, ctx)?;
@@ -11022,6 +11757,11 @@ impl WriteThrough for drawing::GroupShapeLocks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::GROUP_SHAPE_LOCKS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::group_shape_locks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::GROUP_SHAPE_LOCKS_SHAPE, &self.unknown);
         through.attribute(0, &self.no_grp);
@@ -11093,6 +11833,11 @@ impl WriteThrough for drawing::HeaderCellReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HEADER_CELL_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::header_cell_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::HEADER_CELL_REFERENCE_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -11166,6 +11911,16 @@ impl WriteThrough for drawing::HeaderCellsAssociatedWithTableCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::HEADER_CELLS_ASSOCIATED_WITH_TABLE_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::header_cells_associated_with_table_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::HEADER_CELLS_ASSOCIATED_WITH_TABLE_CELL_SHAPE,
@@ -11237,6 +11992,11 @@ impl WriteThrough for drawing::HighlightColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HIGHLIGHT_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::highlight_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::HIGHLIGHT_COLOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -11296,6 +12056,11 @@ impl WriteThrough for drawing::HorizontalRatio {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HORIZONTAL_RATIO_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::horizontal_ratio(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::HORIZONTAL_RATIO_SHAPE, &self.unknown);
         through.attribute(0, &self.n);
         through.attribute(1, &self.d);
@@ -11356,6 +12121,11 @@ impl WriteThrough for drawing::Hue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HUE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::hue(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::HUE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -11410,6 +12180,11 @@ impl WriteThrough for drawing::HueModulate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HUE_MODULATE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::hue_modulate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::HUE_MODULATE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -11469,6 +12244,11 @@ impl WriteThrough for drawing::HueOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HUE_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::hue_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::HUE_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -11536,6 +12316,15 @@ impl WriteThrough for drawing::HueSaturationLuminanceColorModel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::HUE_SATURATION_LUMINANCE_COLOR_MODEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::hue_saturation_luminance_color_model(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::HUE_SATURATION_LUMINANCE_COLOR_MODEL_SHAPE,
@@ -11614,6 +12403,15 @@ impl WriteThrough for drawing::HueSaturationLuminanceEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::HUE_SATURATION_LUMINANCE_EFFECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::hue_saturation_luminance_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::HUE_SATURATION_LUMINANCE_EFFECT_SHAPE,
@@ -11687,6 +12485,11 @@ impl WriteThrough for drawing::Hyperlink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HYPERLINK_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::hyperlink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::HYPERLINK_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -11752,6 +12555,11 @@ impl WriteThrough for drawing::HyperlinkForHover {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HYPERLINK_FOR_HOVER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::hyperlink_for_hover(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::HYPERLINK_FOR_HOVER_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -11821,6 +12629,11 @@ impl WriteThrough for drawing::HyperlinkSound {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::HYPERLINK_SOUND_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::hyperlink_sound(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::HYPERLINK_SOUND_SHAPE, &self.unknown);
         through.attribute(0, &self.embed);
         through.attribute(1, &self.name);
@@ -11889,6 +12702,11 @@ impl WriteThrough for drawing::InnerShadowEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::INNER_SHADOW_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::inner_shadow_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::INNER_SHADOW_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.blur_rad);
@@ -11964,6 +12782,12 @@ impl WriteThrough for drawing::InsideHorizontalBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::INSIDE_HORIZONTAL_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::inside_horizontal_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::INSIDE_HORIZONTAL_BORDER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -12040,6 +12864,11 @@ impl WriteThrough for drawing::InsideVerticalBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::INSIDE_VERTICAL_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::inside_vertical_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::INSIDE_VERTICAL_BORDER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -12104,6 +12933,11 @@ impl WriteThrough for drawing::Inverse {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::INVERSE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::inverse(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::INVERSE_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -12157,6 +12991,11 @@ impl WriteThrough for drawing::InverseGamma {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::INVERSE_GAMMA_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::inverse_gamma(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::INVERSE_GAMMA_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -12222,6 +13061,11 @@ impl WriteThrough for drawing::LastColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LAST_COLUMN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::last_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LAST_COLUMN_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -12289,6 +13133,11 @@ impl WriteThrough for drawing::LastRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LAST_ROW_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::last_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LAST_ROW_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -12344,6 +13193,11 @@ impl WriteThrough for drawing::LatinFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LATIN_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::latin_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LATIN_FONT_SHAPE, &self.unknown);
         through.attribute(0, &self.typeface);
         through.attribute(1, &self.panose);
@@ -12406,6 +13260,11 @@ impl WriteThrough for drawing::LeftBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LEFT_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::left_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LEFT_BORDER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -12489,6 +13348,15 @@ impl WriteThrough for drawing::LeftBorderLineProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::LEFT_BORDER_LINE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::left_border_line_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::LEFT_BORDER_LINE_PROPERTIES_SHAPE,
@@ -12569,6 +13437,11 @@ impl WriteThrough for drawing::Light1 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIGHT1_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::light1(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LIGHT1_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -12627,6 +13500,11 @@ impl WriteThrough for drawing::Light2 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIGHT2_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::light2(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LIGHT2_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -12685,6 +13563,11 @@ impl WriteThrough for drawing::LightRig {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIGHT_RIG_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::light_rig(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LIGHT_RIG_SHAPE, &self.unknown);
         through.attribute(0, &self.rig);
         through.attribute(1, &self.dir);
@@ -12835,6 +13718,11 @@ impl WriteThrough for drawing::LineDefault {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LINE_DEFAULT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::line_default(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LINE_DEFAULT_SHAPE, &self.unknown);
         through.child(&self.shape_properties, ctx)?;
         through.child(&self.body_properties, ctx)?;
@@ -12997,6 +13885,11 @@ impl WriteThrough for drawing::LineHeadEndStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LINE_HEAD_END_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::line_head_end_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LINE_HEAD_END_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -13059,6 +13952,11 @@ impl WriteThrough for drawing::LineJoinBevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LINE_JOIN_BEVEL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::line_join_bevel(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::LINE_JOIN_BEVEL_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -13209,6 +14107,11 @@ impl WriteThrough for drawing::LineReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LINE_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::line_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LINE_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.idx);
         through.choice(&self.content, ctx)?;
@@ -13273,6 +14176,11 @@ impl WriteThrough for drawing::LineSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LINE_SPACING_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::line_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LINE_SPACING_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -13336,6 +14244,11 @@ impl WriteThrough for drawing::LineStyleList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LINE_STYLE_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::line_style_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LINE_STYLE_LIST_SHAPE, &self.unknown);
         through.child(&self.outline, ctx)?;
         through.finish(ctx)
@@ -13399,6 +14312,11 @@ impl WriteThrough for drawing::LinearGradientFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LINEAR_GRADIENT_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::linear_gradient_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LINEAR_GRADIENT_FILL_SHAPE, &self.unknown);
         through.attribute(0, &self.ang);
@@ -13491,6 +14409,11 @@ impl WriteThrough for drawing::ListLevel1TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL1TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level1text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL1TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -13602,6 +14525,11 @@ impl WriteThrough for drawing::ListLevel2TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL2TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level2text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL2TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -13713,6 +14641,11 @@ impl WriteThrough for drawing::ListLevel3TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL3TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level3text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL3TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -13824,6 +14757,11 @@ impl WriteThrough for drawing::ListLevel4TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL4TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level4text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL4TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -13935,6 +14873,11 @@ impl WriteThrough for drawing::ListLevel5TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL5TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level5text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL5TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -14046,6 +14989,11 @@ impl WriteThrough for drawing::ListLevel6TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL6TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level6text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL6TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -14157,6 +15105,11 @@ impl WriteThrough for drawing::ListLevel7TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL7TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level7text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL7TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -14268,6 +15221,11 @@ impl WriteThrough for drawing::ListLevel8TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL8TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level8text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL8TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -14379,6 +15337,11 @@ impl WriteThrough for drawing::ListLevel9TextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_LEVEL9TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_level9text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_LEVEL9TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -14471,6 +15434,15 @@ impl WriteThrough for drawing::ListOfShapeAdjustHandles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::LIST_OF_SHAPE_ADJUST_HANDLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::list_of_shape_adjust_handles(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::LIST_OF_SHAPE_ADJUST_HANDLES_SHAPE,
@@ -14550,6 +15522,15 @@ impl WriteThrough for drawing::ListOfShapeAdjustValues {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::LIST_OF_SHAPE_ADJUST_VALUES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::list_of_shape_adjust_values(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::LIST_OF_SHAPE_ADJUST_VALUES_SHAPE,
@@ -14630,6 +15611,15 @@ impl WriteThrough for drawing::ListOfShapeConnectionSites {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::LIST_OF_SHAPE_CONNECTION_SITES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::list_of_shape_connection_sites(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::LIST_OF_SHAPE_CONNECTION_SITES_SHAPE,
@@ -14705,6 +15695,11 @@ impl WriteThrough for drawing::ListOfShapeGuides {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_OF_SHAPE_GUIDES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_of_shape_guides(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_OF_SHAPE_GUIDES_SHAPE, &self.unknown);
         through.child(&self.shape_guide, ctx)?;
@@ -14773,6 +15768,11 @@ impl WriteThrough for drawing::ListOfShapePaths {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LIST_OF_SHAPE_PATHS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::list_of_shape_paths(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LIST_OF_SHAPE_PATHS_SHAPE, &self.unknown);
         through.child(&self.shape_path, ctx)?;
@@ -14833,6 +15833,11 @@ impl WriteThrough for drawing::Luminance {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LUMINANCE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::luminance(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LUMINANCE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -14888,6 +15893,11 @@ impl WriteThrough for drawing::LuminanceEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LUMINANCE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::luminance_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LUMINANCE_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.bright);
         through.attribute(1, &self.contrast);
@@ -14952,6 +15962,11 @@ impl WriteThrough for drawing::LuminanceModulation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LUMINANCE_MODULATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::luminance_modulation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::LUMINANCE_MODULATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -15012,6 +16027,11 @@ impl WriteThrough for drawing::LuminanceOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::LUMINANCE_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::luminance_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::LUMINANCE_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -15084,6 +16104,11 @@ impl WriteThrough for drawing::MajorFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::MAJOR_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::major_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::MAJOR_FONT_SHAPE, &self.unknown);
         through.child(&self.latin_font, ctx)?;
         through.child(&self.east_asian_font, ctx)?;
@@ -15147,6 +16172,11 @@ impl WriteThrough for drawing::MasterColorMapping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::MASTER_COLOR_MAPPING_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::master_color_mapping(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::MASTER_COLOR_MAPPING_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -15218,6 +16248,11 @@ impl WriteThrough for drawing::MinorFonts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::MINOR_FONTS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::minor_fonts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::MINOR_FONTS_SHAPE, &self.unknown);
         through.child(&self.latin_font, ctx)?;
         through.child(&self.east_asian_font, ctx)?;
@@ -15281,6 +16316,11 @@ impl WriteThrough for drawing::MiterLineJoin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::MITER_LINE_JOIN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::miter_line_join(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::MITER_LINE_JOIN_SHAPE, &self.unknown);
         through.attribute(0, &self.lim);
         through.finish(ctx)
@@ -15350,6 +16390,11 @@ impl WriteThrough for drawing::MouseOverHyperlink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::MOUSE_OVER_HYPERLINK_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::mouse_over_hyperlink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::MOUSE_OVER_HYPERLINK_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -15423,6 +16468,11 @@ impl WriteThrough for drawing::MovePathTo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::MOVE_PATH_TO_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::move_path_to(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::MOVE_PATH_TO_SHAPE, &self.unknown);
         through.child(&self.shape_path_point, ctx)?;
         through.finish(ctx)
@@ -15482,6 +16532,11 @@ impl WriteThrough for drawing::NoAutoFit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NO_AUTO_FIT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::no_auto_fit(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::NO_AUTO_FIT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -15540,6 +16595,11 @@ impl WriteThrough for drawing::NoBullet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NO_BULLET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::no_bullet(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::NO_BULLET_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -15594,6 +16654,11 @@ impl WriteThrough for drawing::NoFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NO_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::no_fill(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::NO_FILL_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -15651,6 +16716,11 @@ impl WriteThrough for drawing::NoTextIn3DScene {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NO_TEXT_IN3D_SCENE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::no_text_in3d_scene(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::NO_TEXT_IN3D_SCENE_SHAPE, &self.unknown);
         through.attribute(0, &self.z);
@@ -15730,6 +16800,16 @@ impl WriteThrough for drawing::NonVisualConnectorShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::non_visual_connector_shape_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -15817,6 +16897,15 @@ impl WriteThrough for drawing::NonVisualDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::non_visual_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -15906,6 +16995,16 @@ impl WriteThrough for drawing::NonVisualGraphicFrameDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::non_visual_graphic_frame_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
@@ -15988,6 +17087,16 @@ impl WriteThrough for drawing::NonVisualGroupShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::non_visual_group_shape_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -16070,6 +17179,15 @@ impl WriteThrough for drawing::NonVisualPictureDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::non_visual_picture_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
@@ -16158,6 +17276,16 @@ impl WriteThrough for drawing::NonVisualPropertiesForAConnectionShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::non_visual_properties_for_a_connection_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE,
@@ -16245,6 +17373,16 @@ impl WriteThrough for drawing::NonVisualPropertiesForAGraphicFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::non_visual_properties_for_a_graphic_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE,
@@ -16332,6 +17470,16 @@ impl WriteThrough for drawing::NonVisualPropertiesForAGroupShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::non_visual_properties_for_a_group_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE,
@@ -16419,6 +17567,15 @@ impl WriteThrough for drawing::NonVisualPropertiesForAPicture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::non_visual_properties_for_a_picture(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE,
@@ -16503,6 +17660,15 @@ impl WriteThrough for drawing::NonVisualPropertiesForAShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::non_visual_properties_for_a_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE,
@@ -16585,6 +17751,15 @@ impl WriteThrough for drawing::NonVisualShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::non_visual_shape_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -16654,6 +17829,11 @@ impl WriteThrough for drawing::Normal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NORMAL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::normal(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::NORMAL_SHAPE, &self.unknown);
         through.attribute(0, &self.dx);
         through.attribute(1, &self.dy);
@@ -16710,6 +17890,11 @@ impl WriteThrough for drawing::NormalAutoFit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NORMAL_AUTO_FIT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::normal_auto_fit(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::NORMAL_AUTO_FIT_SHAPE, &self.unknown);
         through.attribute(0, &self.font_scale);
         through.attribute(1, &self.ln_spc_reduction);
@@ -16777,6 +17962,11 @@ impl WriteThrough for drawing::NortheastCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NORTHEAST_CELL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::northeast_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::NORTHEAST_CELL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -16844,6 +18034,11 @@ impl WriteThrough for drawing::NorthwestCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::NORTHWEST_CELL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::northwest_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::NORTHWEST_CELL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -16914,6 +18109,11 @@ impl WriteThrough for drawing::ObjectDefaults {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::OBJECT_DEFAULTS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::object_defaults(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::OBJECT_DEFAULTS_SHAPE, &self.unknown);
         through.child(&self.shape_default, ctx)?;
         through.child(&self.line_default, ctx)?;
@@ -16976,6 +18176,11 @@ impl WriteThrough for drawing::Offset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -17039,6 +18244,11 @@ impl WriteThrough for drawing::OuterShadowEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::OUTER_SHADOW_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::outer_shadow_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::OUTER_SHADOW_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.blur_rad);
@@ -17124,6 +18334,11 @@ impl WriteThrough for drawing::Outline {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::OUTLINE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::outline(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::OUTLINE_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
         through.attribute(1, &self.cap);
@@ -17199,6 +18414,11 @@ impl WriteThrough for drawing::OverrideColorMapping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::OVERRIDE_COLOR_MAPPING_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::override_color_mapping(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::OVERRIDE_COLOR_MAPPING_SHAPE, &self.unknown);
         through.attribute(0, &self.bg1);
@@ -17279,6 +18499,11 @@ impl WriteThrough for drawing::PathGradient {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PATH_GRADIENT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::path_gradient(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PATH_GRADIENT_SHAPE, &self.unknown);
         through.attribute(0, &self.path);
         through.child(&self.fill_to_rectangle, ctx)?;
@@ -17345,6 +18570,11 @@ impl WriteThrough for drawing::PatternFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PATTERN_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::pattern_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PATTERN_FILL_SHAPE, &self.unknown);
         through.attribute(0, &self.prst);
         through.child(&self.foreground_color, ctx)?;
@@ -17419,6 +18649,11 @@ impl WriteThrough for drawing::Picture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PICTURE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::picture(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PICTURE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.fill, ctx)?;
@@ -17481,6 +18716,11 @@ impl WriteThrough for drawing::PictureBullet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PICTURE_BULLET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::picture_bullet(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PICTURE_BULLET_SHAPE, &self.unknown);
         through.child(&self.blip, ctx)?;
         through.finish(ctx)
@@ -17548,6 +18788,11 @@ impl WriteThrough for drawing::PictureFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PICTURE_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::picture_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PICTURE_FILL_SHAPE, &self.unknown);
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
@@ -17615,6 +18860,11 @@ impl WriteThrough for drawing::PictureLocks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PICTURE_LOCKS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::picture_locks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PICTURE_LOCKS_SHAPE, &self.unknown);
         through.attribute(0, &self.no_grp);
         through.attribute(1, &self.no_select);
@@ -17694,6 +18944,11 @@ impl WriteThrough for drawing::PolarAdjustHandle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::POLAR_ADJUST_HANDLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::polar_adjust_handle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::POLAR_ADJUST_HANDLE_SHAPE, &self.unknown);
         through.attribute(0, &self.gd_ref_r);
@@ -17764,6 +19019,11 @@ impl WriteThrough for drawing::PresetColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PRESET_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::preset_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PRESET_COLOR_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.items(&self.content, ctx)?;
@@ -17824,6 +19084,11 @@ impl WriteThrough for drawing::PresetDash {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PRESET_DASH_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::preset_dash(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PRESET_DASH_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -17888,6 +19153,11 @@ impl WriteThrough for drawing::PresetGeometry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PRESET_GEOMETRY_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::preset_geometry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PRESET_GEOMETRY_SHAPE, &self.unknown);
         through.attribute(0, &self.prst);
         through.child(&self.list_of_shape_adjust_values, ctx)?;
@@ -17952,6 +19222,11 @@ impl WriteThrough for drawing::PresetShadow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PRESET_SHADOW_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::preset_shadow(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PRESET_SHADOW_SHAPE, &self.unknown);
         through.attribute(0, &self.prst);
         through.attribute(1, &self.dist);
@@ -18019,6 +19294,11 @@ impl WriteThrough for drawing::PresetTextWarp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::PRESET_TEXT_WARP_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::preset_text_warp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::PRESET_TEXT_WARP_SHAPE, &self.unknown);
         through.attribute(0, &self.prst);
         through.child(&self.list_of_shape_adjust_values, ctx)?;
@@ -18087,6 +19367,11 @@ impl WriteThrough for drawing::QuickTimeFromFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::QUICK_TIME_FROM_FILE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::quick_time_from_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::QUICK_TIME_FROM_FILE_SHAPE, &self.unknown);
         through.attribute(0, &self.link);
@@ -18160,6 +19445,15 @@ impl WriteThrough for drawing::RGBColorModelHexVariant {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::RGB_COLOR_MODEL_HEX_VARIANT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::rgb_color_model_hex_variant(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::RGB_COLOR_MODEL_HEX_VARIANT_SHAPE,
@@ -18241,6 +19535,15 @@ impl WriteThrough for drawing::RGBColorModelPercentageVariant {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::RGB_COLOR_MODEL_PERCENTAGE_VARIANT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::rgb_color_model_percentage_variant(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::RGB_COLOR_MODEL_PERCENTAGE_VARIANT_SHAPE,
@@ -18311,6 +19614,11 @@ impl WriteThrough for drawing::Red {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::RED_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::red(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::RED_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -18365,6 +19673,11 @@ impl WriteThrough for drawing::RedModulation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::RED_MODULATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::red_modulation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::RED_MODULATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -18424,6 +19737,11 @@ impl WriteThrough for drawing::RedOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::RED_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::red_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::RED_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -18479,6 +19797,11 @@ impl WriteThrough for drawing::ReflectionEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::REFLECTION_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::reflection_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::REFLECTION_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.blur_rad);
@@ -18560,6 +19883,11 @@ impl WriteThrough for drawing::RelativeOffsetEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::RELATIVE_OFFSET_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::relative_offset_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::RELATIVE_OFFSET_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.tx);
@@ -18629,6 +19957,11 @@ impl WriteThrough for drawing::RightBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::RIGHT_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::right_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::RIGHT_BORDER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -18712,6 +20045,15 @@ impl WriteThrough for drawing::RightBorderLineProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::RIGHT_BORDER_LINE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::right_border_line_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::RIGHT_BORDER_LINE_PROPERTIES_SHAPE,
@@ -18788,6 +20130,11 @@ impl WriteThrough for drawing::RightToLeftRun {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::RIGHT_TO_LEFT_RUN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::right_to_left_run(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::RIGHT_TO_LEFT_RUN_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -18848,6 +20195,11 @@ impl WriteThrough for drawing::Rotation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ROTATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::rotation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::ROTATION_SHAPE, &self.unknown);
         through.attribute(0, &self.lat);
         through.attribute(1, &self.lon);
@@ -18904,6 +20256,11 @@ impl WriteThrough for drawing::RoundLineJoin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::ROUND_LINE_JOIN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::round_line_join(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::ROUND_LINE_JOIN_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -18962,6 +20319,11 @@ impl WriteThrough for drawing::Saturation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SATURATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::saturation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SATURATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -19021,6 +20383,11 @@ impl WriteThrough for drawing::SaturationModulation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SATURATION_MODULATION_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::saturation_modulation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::SATURATION_MODULATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -19081,6 +20448,11 @@ impl WriteThrough for drawing::SaturationOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SATURATION_OFFSET_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::saturation_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::SATURATION_OFFSET_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -19151,6 +20523,11 @@ impl WriteThrough for drawing::Scene3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SCENE3D_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::scene3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SCENE3D_SHAPE, &self.unknown);
         through.child(&self.camera, ctx)?;
         through.child(&self.light_rig, ctx)?;
@@ -19212,6 +20589,11 @@ impl WriteThrough for drawing::SchemeColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SCHEME_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::scheme_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SCHEME_COLOR_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.items(&self.content, ctx)?;
@@ -19272,6 +20654,11 @@ impl WriteThrough for drawing::Shade {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHADE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shade(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHADE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -19339,6 +20726,11 @@ impl WriteThrough for drawing::Shape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.properties, ctx)?;
@@ -19507,6 +20899,11 @@ impl WriteThrough for drawing::ShapeAutoFit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_AUTO_FIT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_auto_fit(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::SHAPE_AUTO_FIT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -19574,6 +20971,11 @@ impl WriteThrough for drawing::ShapeConnectionSite {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_CONNECTION_SITE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_connection_site(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::SHAPE_CONNECTION_SITE_SHAPE, &self.unknown);
         through.attribute(0, &self.ang);
@@ -19647,6 +21049,11 @@ impl WriteThrough for drawing::ShapeDefault {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_DEFAULT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_default(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_DEFAULT_SHAPE, &self.unknown);
         through.child(&self.shape_properties, ctx)?;
         through.child(&self.body_properties, ctx)?;
@@ -19710,6 +21117,11 @@ impl WriteThrough for drawing::ShapeGuide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_GUIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_guide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_GUIDE_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.attribute(1, &self.fmla);
@@ -19774,6 +21186,11 @@ impl WriteThrough for drawing::ShapeLocks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_LOCKS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_locks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_LOCKS_SHAPE, &self.unknown);
         through.attribute(0, &self.no_grp);
         through.attribute(1, &self.no_select);
@@ -19848,6 +21265,11 @@ impl WriteThrough for drawing::ShapePath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_PATH_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_PATH_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
         through.attribute(1, &self.h);
@@ -20046,6 +21468,11 @@ impl WriteThrough for drawing::ShapePathPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_PATH_POINT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_path_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_PATH_POINT_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -20114,6 +21541,15 @@ impl WriteThrough for drawing::ShapePositionCoordinate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::SHAPE_POSITION_COORDINATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::shape_position_coordinate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::SHAPE_POSITION_COORDINATE_SHAPE,
@@ -20202,6 +21638,11 @@ impl WriteThrough for drawing::ShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
@@ -20279,6 +21720,11 @@ impl WriteThrough for drawing::ShapeStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_STYLE_SHAPE, &self.unknown);
         through.child(&self.line_reference, ctx)?;
         through.child(&self.fill_reference, ctx)?;
@@ -20349,6 +21795,11 @@ impl WriteThrough for drawing::ShapeTextBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_text_body(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.child(&self.text_list_styles, ctx)?;
@@ -20414,6 +21865,11 @@ impl WriteThrough for drawing::ShapeTextRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SHAPE_TEXT_RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::shape_text_rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::SHAPE_TEXT_RECTANGLE_SHAPE, &self.unknown);
         through.attribute(0, &self.l);
@@ -20477,6 +21933,11 @@ impl WriteThrough for drawing::SoftEdgeEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SOFT_EDGE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::soft_edge_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SOFT_EDGE_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.rad);
         through.finish(ctx)
@@ -20548,6 +22009,12 @@ impl WriteThrough for drawing::SolidColorReplacement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::SOLID_COLOR_REPLACEMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::solid_color_replacement(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::SOLID_COLOR_REPLACEMENT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -20616,6 +22083,11 @@ impl WriteThrough for drawing::SolidFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SOLID_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::solid_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SOLID_FILL_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -20671,6 +22143,11 @@ impl WriteThrough for drawing::SourceRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SOURCE_RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::source_rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SOURCE_RECTANGLE_SHAPE, &self.unknown);
         through.attribute(0, &self.l);
         through.attribute(1, &self.t);
@@ -20740,6 +22217,11 @@ impl WriteThrough for drawing::SoutheastCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SOUTHEAST_CELL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::southeast_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SOUTHEAST_CELL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -20807,6 +22289,11 @@ impl WriteThrough for drawing::SouthwestCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SOUTHWEST_CELL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::southwest_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SOUTHWEST_CELL_SHAPE, &self.unknown);
         through.child(&self.table_cell_text_style, ctx)?;
         through.child(&self.table_cell_style, ctx)?;
@@ -20871,6 +22358,11 @@ impl WriteThrough for drawing::SpaceAfter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SPACE_AFTER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::space_after(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SPACE_AFTER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -20934,6 +22426,11 @@ impl WriteThrough for drawing::SpaceBefore {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SPACE_BEFORE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::space_before(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SPACE_BEFORE_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -20993,6 +22490,11 @@ impl WriteThrough for drawing::SpacingPercent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SPACING_PERCENT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::spacing_percent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SPACING_PERCENT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -21052,6 +22554,11 @@ impl WriteThrough for drawing::SpacingPoints {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SPACING_POINTS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::spacing_points(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SPACING_POINTS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -21111,6 +22618,11 @@ impl WriteThrough for drawing::Specified {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SPECIFIED_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::specified(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SPECIFIED_SHAPE, &self.unknown);
         through.attribute(0, &self.typeface);
         through.attribute(1, &self.panose);
@@ -21173,6 +22685,11 @@ impl WriteThrough for drawing::Stretch {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::STRETCH_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::stretch(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::STRETCH_SHAPE, &self.unknown);
         through.child(&self.fill_rectangle, ctx)?;
         through.finish(ctx)
@@ -21227,6 +22744,11 @@ impl WriteThrough for drawing::SymbolFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SYMBOL_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::symbol_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SYMBOL_FONT_SHAPE, &self.unknown);
         through.attribute(0, &self.typeface);
         through.attribute(1, &self.panose);
@@ -21293,6 +22815,11 @@ impl WriteThrough for drawing::SystemColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::SYSTEM_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::system_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::SYSTEM_COLOR_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.attribute(1, &self.last_clr);
@@ -21358,6 +22885,11 @@ impl WriteThrough for drawing::TabList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TAB_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::tab_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TAB_LIST_SHAPE, &self.unknown);
         through.child(&self.tab_stop, ctx)?;
         through.finish(ctx)
@@ -21412,6 +22944,11 @@ impl WriteThrough for drawing::TabStop {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TAB_STOP_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::tab_stop(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TAB_STOP_SHAPE, &self.unknown);
         through.attribute(0, &self.pos);
         through.attribute(1, &self.algn);
@@ -21475,6 +23012,11 @@ impl WriteThrough for drawing::Table {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.child(&self.grid, ctx)?;
@@ -21538,6 +23080,11 @@ impl WriteThrough for drawing::TableBackground {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_BACKGROUND_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_background(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_BACKGROUND_SHAPE, &self.unknown);
         through.choice(&self.themeable_fill_style_content, ctx)?;
         through.choice(&self.effect_content, ctx)?;
@@ -21703,6 +23250,11 @@ impl WriteThrough for drawing::TableCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_CELL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_CELL_SHAPE, &self.unknown);
         through.attribute(0, &self.row_span);
         through.attribute(1, &self.grid_span);
@@ -21793,6 +23345,11 @@ impl WriteThrough for drawing::TableCellBorders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_CELL_BORDERS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_cell_borders(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::TABLE_CELL_BORDERS_SHAPE, &self.unknown);
         through.child(&self.left_border, ctx)?;
@@ -21909,6 +23466,11 @@ impl WriteThrough for drawing::TableCellProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_CELL_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_cell_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::TABLE_CELL_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.mar_l);
@@ -21995,6 +23557,11 @@ impl WriteThrough for drawing::TableCellStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_CELL_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_cell_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_CELL_STYLE_SHAPE, &self.unknown);
         through.child(&self.table_cell_borders, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -22068,6 +23635,11 @@ impl WriteThrough for drawing::TableCellTextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_CELL_TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_cell_text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::TABLE_CELL_TEXT_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.b);
@@ -22233,6 +23805,11 @@ impl WriteThrough for drawing::TableGrid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_GRID_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_grid(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_GRID_SHAPE, &self.unknown);
         through.child(&self.column, ctx)?;
         through.finish(ctx)
@@ -22292,6 +23869,11 @@ impl WriteThrough for drawing::TableGridColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_GRID_COLUMN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_grid_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::TABLE_GRID_COLUMN_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
@@ -22365,6 +23947,11 @@ impl WriteThrough for drawing::TableProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.rtl);
         through.attribute(1, &self.first_row);
@@ -22537,6 +24124,11 @@ impl WriteThrough for drawing::TableRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_ROW_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_ROW_SHAPE, &self.unknown);
         through.attribute(0, &self.h);
         through.child(&self.table_cell, ctx)?;
@@ -22626,6 +24218,11 @@ impl WriteThrough for drawing::TableStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.style_id);
         through.attribute(1, &self.style_name);
@@ -22701,6 +24298,11 @@ impl WriteThrough for drawing::TableStyleID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_STYLE_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_style_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_STYLE_ID_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -22765,6 +24367,11 @@ impl WriteThrough for drawing::TableStyleList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_STYLE_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_style_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TABLE_STYLE_LIST_SHAPE, &self.unknown);
         through.attribute(0, &self.def);
         through.child(&self.table_style_tbl_style, ctx)?;
@@ -22861,6 +24468,11 @@ impl WriteThrough for drawing::TableStyleTblStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TABLE_STYLE_TBL_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::table_style_tbl_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::TABLE_STYLE_TBL_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.style_id);
@@ -22941,6 +24553,11 @@ impl WriteThrough for drawing::TailLineEndStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TAIL_LINE_END_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::tail_line_end_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::TAIL_LINE_END_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -23552,6 +25169,11 @@ impl WriteThrough for drawing::TextDefault {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_DEFAULT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_default(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_DEFAULT_SHAPE, &self.unknown);
         through.child(&self.shape_properties, ctx)?;
         through.child(&self.body_properties, ctx)?;
@@ -23625,6 +25247,11 @@ impl WriteThrough for drawing::TextField {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_FIELD_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_field(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_FIELD_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.r#type);
@@ -23689,6 +25316,11 @@ impl WriteThrough for drawing::TextLineBreak {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_LINE_BREAK_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_line_break(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_LINE_BREAK_SHAPE, &self.unknown);
         through.child(&self.text_run_properties, ctx)?;
         through.finish(ctx)
@@ -23782,6 +25414,11 @@ impl WriteThrough for drawing::TextListStyles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_LIST_STYLES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_list_styles(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_LIST_STYLES_SHAPE, &self.unknown);
         through.child(&self.default_paragraph_style, ctx)?;
         through.child(&self.list_level_1_text_style, ctx)?;
@@ -23886,6 +25523,15 @@ impl WriteThrough for drawing::TextParagraphProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::TEXT_PARAGRAPH_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::text_paragraph_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::TEXT_PARAGRAPH_PROPERTIES_SHAPE,
@@ -23983,6 +25629,11 @@ impl WriteThrough for drawing::TextParagraphs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_PARAGRAPHS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_paragraphs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_PARAGRAPHS_SHAPE, &self.unknown);
         through.child(&self.text_paragraph_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -24182,6 +25833,11 @@ impl WriteThrough for drawing::TextRun {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_RUN_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_run(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_RUN_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.child(&self.text_string, ctx)?;
@@ -24277,6 +25933,11 @@ impl WriteThrough for drawing::TextRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_RUN_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::TEXT_RUN_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.kumimoji);
@@ -24377,6 +26038,11 @@ impl WriteThrough for drawing::TextShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_SHAPE_SHAPE, &self.unknown);
         through.child(&self.text_body, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -24608,6 +26274,11 @@ impl WriteThrough for drawing::TextString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TEXT_STRING_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::text_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TEXT_STRING_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -24858,6 +26529,11 @@ impl WriteThrough for drawing::Theme {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::THEME_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::theme(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::THEME_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
         through.attribute(1, &self.id);
@@ -24928,6 +26604,11 @@ impl WriteThrough for drawing::ThemeElements {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::THEME_ELEMENTS_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::theme_elements(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::THEME_ELEMENTS_SHAPE, &self.unknown);
         through.child(&self.color_scheme, ctx)?;
         through.child(&self.font_scheme, ctx)?;
@@ -24990,6 +26671,11 @@ impl WriteThrough for drawing::ThemeManager {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::THEME_MANAGER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::theme_manager(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &drawing::THEME_MANAGER_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -25056,6 +26742,11 @@ impl WriteThrough for drawing::ThemeOverride {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::THEME_OVERRIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::theme_override(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::THEME_OVERRIDE_SHAPE, &self.unknown);
         through.child(&self.color_scheme, ctx)?;
         through.child(&self.font_scheme, ctx)?;
@@ -25295,6 +26986,11 @@ impl WriteThrough for drawing::Tile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TILE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::tile(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TILE_SHAPE, &self.unknown);
         through.attribute(0, &self.tx);
         through.attribute(1, &self.ty);
@@ -25354,6 +27050,11 @@ impl WriteThrough for drawing::TileRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TILE_RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::tile_rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TILE_RECTANGLE_SHAPE, &self.unknown);
         through.attribute(0, &self.l);
         through.attribute(1, &self.t);
@@ -25416,6 +27117,11 @@ impl WriteThrough for drawing::Tint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TINT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::tint(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TINT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -25470,6 +27176,11 @@ impl WriteThrough for drawing::TintEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TINT_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::tint_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TINT_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.hue);
         through.attribute(1, &self.amt);
@@ -25530,6 +27241,11 @@ impl WriteThrough for drawing::TopBevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TOP_BEVEL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::top_bevel(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TOP_BEVEL_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
         through.attribute(1, &self.h);
@@ -25591,6 +27307,11 @@ impl WriteThrough for drawing::TopBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TOP_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::top_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TOP_BORDER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -25670,6 +27391,15 @@ impl WriteThrough for drawing::TopBorderLineProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::TOP_BORDER_LINE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::top_border_line_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::TOP_BORDER_LINE_PROPERTIES_SHAPE,
@@ -25758,6 +27488,15 @@ impl WriteThrough for drawing::TopLeftToBottomRightBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::top_left_to_bottom_right_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_SHAPE,
@@ -25849,6 +27588,16 @@ impl WriteThrough for drawing::TopLeftToBottomRightBorderLineProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_LINE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                drawing::write::top_left_to_bottom_right_border_line_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_LINE_PROPERTIES_SHAPE,
@@ -25937,6 +27686,15 @@ impl WriteThrough for drawing::TopRightToBottomLeftBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::TOP_RIGHT_TO_BOTTOM_LEFT_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::top_right_to_bottom_left_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::TOP_RIGHT_TO_BOTTOM_LEFT_BORDER_SHAPE,
@@ -26004,6 +27762,11 @@ impl WriteThrough for drawing::TransformEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::TRANSFORM_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::transform_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::TRANSFORM_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.sx);
         through.attribute(1, &self.sy);
@@ -26072,6 +27835,11 @@ impl WriteThrough for drawing::UnderlineFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::UNDERLINE_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::underline_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::UNDERLINE_FILL_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -26139,6 +27907,15 @@ impl WriteThrough for drawing::UnderlineFillPropertiesFollowText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::UNDERLINE_FILL_PROPERTIES_FOLLOW_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::underline_fill_properties_follow_text(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &drawing::UNDERLINE_FILL_PROPERTIES_FOLLOW_TEXT_SHAPE,
@@ -26213,6 +27990,11 @@ impl WriteThrough for drawing::UnderlineFollowsText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::UNDERLINE_FOLLOWS_TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::underline_follows_text(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &drawing::UNDERLINE_FOLLOWS_TEXT_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -26292,6 +28074,11 @@ impl WriteThrough for drawing::UnderlineStroke {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::UNDERLINE_STROKE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::underline_stroke(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::UNDERLINE_STROKE_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
         through.attribute(1, &self.cap);
@@ -26360,6 +28147,11 @@ impl WriteThrough for drawing::UpVector {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::UP_VECTOR_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::up_vector(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::UP_VECTOR_SHAPE, &self.unknown);
         through.attribute(0, &self.dx);
         through.attribute(1, &self.dy);
@@ -26425,6 +28217,12 @@ impl WriteThrough for drawing::UseShapeTextRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &drawing::USE_SHAPE_TEXT_RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::use_shape_text_rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &drawing::USE_SHAPE_TEXT_RECTANGLE_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -26488,6 +28286,11 @@ impl WriteThrough for drawing::VerticalRatio {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::VERTICAL_RATIO_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::vertical_ratio(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::VERTICAL_RATIO_SHAPE, &self.unknown);
         through.attribute(0, &self.n);
         through.attribute(1, &self.d);
@@ -26552,6 +28355,11 @@ impl WriteThrough for drawing::VideoFromFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::VIDEO_FROM_FILE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::video_from_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::VIDEO_FROM_FILE_SHAPE, &self.unknown);
         through.attribute(0, &self.link);
         through.attribute(1, &self.content_type);
@@ -26636,6 +28444,15 @@ impl WriteThrough for drawing::VisualGroupShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &drawing::VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = drawing::write::visual_group_shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &drawing::VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE,
@@ -26714,6 +28531,11 @@ impl WriteThrough for drawing::WholeTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::WHOLE_TABLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::whole_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::WHOLE_TABLE_SHAPE, &self.unknown);
         through.child(&self.cell_text_style, ctx)?;
         through.child(&self.cell_style, ctx)?;
@@ -26779,6 +28601,11 @@ impl WriteThrough for drawing::XYAdjustHandle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::XY_ADJUST_HANDLE_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::xy_adjust_handle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::XY_ADJUST_HANDLE_SHAPE, &self.unknown);
         through.attribute(0, &self.gd_ref_x);
         through.attribute(1, &self.min_x);
@@ -26862,6 +28689,11 @@ impl WriteThrough for drawing::XfrmGroupTransform2D {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::XFRM_GROUP_TRANSFORM2D_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::xfrm_group_transform2d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &drawing::XFRM_GROUP_TRANSFORM2D_SHAPE, &self.unknown);
         through.attribute(0, &self.rot);
@@ -26938,6 +28770,11 @@ impl WriteThrough for drawing::XfrmTransform2D {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &drawing::XFRM_TRANSFORM2D_SHAPE, &self.unknown);
+        if converted {
+            let element = drawing::write::xfrm_transform2d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &drawing::XFRM_TRANSFORM2D_SHAPE, &self.unknown);
         through.attribute(0, &self.rot);
         through.attribute(1, &self.flip_h);

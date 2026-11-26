@@ -261,6 +261,15 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmMK {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2019_9_main_command::CM_MK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2019_9_main_command::write::cm_mk(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_MK_SHAPE,
@@ -342,6 +351,16 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmMkLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2019_9_main_command::CM_MK_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_powerpoint_2019_9_main_command::write::cm_mk_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_MK_LST_SHAPE,
@@ -418,6 +437,16 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmRplyMk {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2019_9_main_command::CM_RPLY_MK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_powerpoint_2019_9_main_command::write::cm_rply_mk(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_RPLY_MK_SHAPE,
@@ -499,6 +528,16 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmRplyMkLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2019_9_main_command::CM_RPLY_MK_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_powerpoint_2019_9_main_command::write::cm_rply_mk_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_RPLY_MK_LST_SHAPE,

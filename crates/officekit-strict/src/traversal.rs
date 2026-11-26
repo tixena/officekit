@@ -83,6 +83,7 @@ use officekit_markup::{
 };
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Element, Node};
+use officekit_xml::name::tag_of;
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::{is_whitespace_text, preserves_space, qualified};
 
@@ -486,7 +487,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
             self.element
                 .attributes
                 .extend(self.unknown.attributes.iter().cloned());
-            self.out.open(&self.element)?;
+            self.out.open_node(&mut self.element)?;
         }
         Ok(())
     }
@@ -581,6 +582,9 @@ impl WriteThrough for Node {
         let Self::Element(element) = self else {
             return out.node(self);
         };
+        if out.has_rules() {
+            return out.converted(element.clone());
+        }
         if !element
             .children
             .iter()
@@ -705,6 +709,20 @@ impl<'node> Walk<'node> {
             unknown,
         }
     }
+}
+
+/// Whether the class rules `out` writes in convert a node of `shape` with the unknown content
+/// `unknown` as one element, which the node then writes through [`PartWriter::converted`];
+/// `false` when `out` has no rules.
+#[must_use = "this only answers the question"]
+pub fn converts(out: &PartWriter<'_>, shape: &'static Shape, unknown: &Unknown) -> bool {
+    let Some(name) = unknown.name.as_deref() else {
+        return out.converts(shape.name, shape.attributes, &unknown.attributes);
+    };
+    tag_of(name).map_or_else(
+        || out.has_rules(),
+        |tag| out.converts(tag, shape.attributes, &unknown.attributes),
+    )
 }
 
 /// A tree or list hook's answer about `node`, from the hooks a namespace

@@ -269,6 +269,16 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::ColumnFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::COLUMN_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2019_namedsheetviews::write::column_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::COLUMN_FILTER_SHAPE,
@@ -366,6 +376,15 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::Dxf {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2019_namedsheetviews::write::dxf(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::DXF_SHAPE,
@@ -451,6 +470,16 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2019_namedsheetviews::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::EXT_LST_SHAPE,
@@ -530,6 +559,16 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::Filter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2019_namedsheetviews::write::filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::FILTER_SHAPE,
@@ -614,6 +653,18 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NamedSheetView 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2019_namedsheetviews::write::named_sheet_view(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEW_SHAPE,
@@ -698,6 +749,18 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NamedSheetViews
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEWS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2019_namedsheetviews::write::named_sheet_views(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEWS_SHAPE,
@@ -782,6 +845,16 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NsvFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::NSV_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2019_namedsheetviews::write::nsv_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NSV_FILTER_SHAPE,
@@ -862,6 +935,18 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::RichSortConditi
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::RICH_SORT_CONDITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2019_namedsheetviews::write::rich_sort_condition(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::RICH_SORT_CONDITION_SHAPE,
@@ -944,6 +1029,16 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortCondition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::SORT_CONDITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2019_namedsheetviews::write::sort_condition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_CONDITION_SHAPE,
@@ -1031,6 +1126,16 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::SORT_RULE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2019_namedsheetviews::write::sort_rule(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_RULE_SHAPE,
@@ -1212,6 +1317,16 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_namedsheetviews::SORT_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2019_namedsheetviews::write::sort_rules(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_RULES_SHAPE,

@@ -261,6 +261,15 @@ impl WriteThrough for office_word_2016_wordml_cid::CommentId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2016_wordml_cid::COMMENT_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2016_wordml_cid::write::comment_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2016_wordml_cid::COMMENT_ID_SHAPE,
@@ -341,6 +350,15 @@ impl WriteThrough for office_word_2016_wordml_cid::CommentsIds {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2016_wordml_cid::COMMENTS_IDS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2016_wordml_cid::write::comments_ids(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2016_wordml_cid::COMMENTS_IDS_SHAPE,

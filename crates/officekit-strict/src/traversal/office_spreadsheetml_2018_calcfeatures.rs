@@ -265,6 +265,16 @@ impl WriteThrough for office_spreadsheetml_2018_calcfeatures::CalcFeatures {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_calcfeatures::CALC_FEATURES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2018_calcfeatures::write::calc_features(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_calcfeatures::CALC_FEATURES_SHAPE,
@@ -340,6 +350,15 @@ impl WriteThrough for office_spreadsheetml_2018_calcfeatures::Feature {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2018_calcfeatures::FEATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2018_calcfeatures::write::feature(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_calcfeatures::FEATURE_SHAPE,

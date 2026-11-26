@@ -360,6 +360,8 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
+#[cfg(feature = "strict")]
+use officekit_xml::stream::writer::PartWriter;
 #[cfg(not(all(feature = "strict", feature = "transitional")))]
 use officekit_xml::write::Scope;
 #[cfg(any(feature = "strict", feature = "transitional"))]
@@ -397,6 +399,15 @@ impl PartRoot for office_webextensions_taskpanes_2010_11::Taskpanes {
         #[cfg(not(feature = "transitional"))]
         let transitional = |root: &Self| Ok(shared_tree(root));
         super::tree_in_class(self, class, strict, transitional)
+    }
+
+    #[cfg(feature = "strict")]
+    fn write_part(
+        &self,
+        class: ConformanceClass,
+        out: &mut PartWriter<'_>,
+    ) -> Result<(), WriteError> {
+        part_root::write_through(self, class, None, out)
     }
 }
 

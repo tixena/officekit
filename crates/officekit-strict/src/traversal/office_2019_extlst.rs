@@ -265,6 +265,11 @@ impl WriteThrough for office_2019_extlst::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_2019_extlst::EXT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2019_extlst::write::ext(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &office_2019_extlst::EXT_SHAPE, &self.unknown);
         through.attribute(0, &self.uri);
         through.choice(&self.content, ctx)?;

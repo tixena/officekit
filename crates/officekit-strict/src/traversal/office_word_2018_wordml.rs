@@ -265,6 +265,11 @@ impl WriteThrough for office_word_2018_wordml::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2018_wordml::EXT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2018_wordml::write::ext(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2018_wordml::EXT_SHAPE, &self.unknown);
         through.attribute(0, &self.uri);

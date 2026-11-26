@@ -265,6 +265,15 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::A {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::A_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::a(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::A_SHAPE,
@@ -484,6 +493,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BBoolFeature
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::B_BOOL_FEATURE_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::b_bool_feature_property(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::B_BOOL_FEATURE_PROPERTY_SHAPE,
@@ -560,6 +582,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BBoolean {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::B_BOOLEAN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::b_boolean(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::B_BOOLEAN_SHAPE,
@@ -639,6 +671,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Bag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::BAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::bag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_SHAPE,
@@ -722,6 +764,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagExt {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::BAG_EXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::bag_ext(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_EXT_SHAPE,
@@ -797,6 +849,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagIdBagFeat
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::BAG_ID_BAG_FEATURE_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::bag_id_bag_feature_property(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_ID_BAG_FEATURE_PROPERTY_SHAPE,
@@ -868,6 +933,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagIdUnsigne
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::BAG_ID_UNSIGNED_INT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::bag_id_unsigned_int(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_ID_UNSIGNED_INT_SHAPE,
@@ -949,6 +1026,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnBodyRe
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::COLUMN_BODY_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::column_body_rev_dxf(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_BODY_REV_DXF_SHAPE,
@@ -1031,6 +1120,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnHeader
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::COLUMN_HEADER_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::column_header_rev_dxf(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_HEADER_REV_DXF_SHAPE,
@@ -1113,6 +1215,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnTotals
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::COLUMN_TOTALS_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::column_totals_rev_dxf(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_TOTALS_REV_DXF_SHAPE,
@@ -1189,6 +1304,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DDecimalFeat
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::D_DECIMAL_FEATURE_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::d_decimal_feature_property(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::D_DECIMAL_FEATURE_PROPERTY_SHAPE,
@@ -1265,6 +1393,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DDouble {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::D_DOUBLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::d_double(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::D_DOUBLE_SHAPE,
@@ -1340,6 +1478,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DXFComplemen
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::DXF_COMPLEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::dxf_complement(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DXF_COMPLEMENT_SHAPE,
@@ -1421,6 +1571,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DataRevDxf {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::DATA_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::data_rev_dxf(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DATA_REV_DXF_SHAPE,
@@ -1515,6 +1677,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Dxf {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::dxf(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DXF_SHAPE,
@@ -1600,6 +1772,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::EXT_LST_SHAPE,
@@ -1836,6 +2018,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::FeaturePrope
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::FEATURE_PROPERTY_BAGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::feature_property_bags(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::FEATURE_PROPERTY_BAGS_SHAPE,
@@ -1922,6 +2117,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Fpbs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::FPBS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::fpbs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::FPBS_SHAPE,
@@ -2005,6 +2210,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::HeaderRowBor
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_BORDER_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::header_row_border_rev_dxf(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_BORDER_REV_DXF_SHAPE,
@@ -2087,6 +2305,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::HeaderRowRev
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::header_row_rev_dxf(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_REV_DXF_SHAPE,
@@ -2163,6 +2393,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::IIntFeatureP
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::I_INT_FEATURE_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::i_int_feature_property(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::I_INT_FEATURE_PROPERTY_SHAPE,
@@ -2239,6 +2482,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::IInteger {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::I_INTEGER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::i_integer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::I_INTEGER_SHAPE,
@@ -2314,6 +2567,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::RelRelFeatur
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::REL_REL_FEATURE_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::rel_rel_feature_property(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REL_REL_FEATURE_PROPERTY_SHAPE,
@@ -2390,6 +2656,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::RelString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::REL_STRING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::rel_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REL_STRING_SHAPE,
@@ -2471,6 +2747,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Revdxf {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::REVDXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::revdxf(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REVDXF_SHAPE,
@@ -2547,6 +2833,16 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::SString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::S_STRING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::s_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::S_STRING_SHAPE,
@@ -2622,6 +2918,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::SStringFeatu
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::S_STRING_FEATURE_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::s_string_feature_property(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::S_STRING_FEATURE_PROPERTY_SHAPE,
@@ -2704,6 +3013,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TableBorderR
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::TABLE_BORDER_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::table_border_rev_dxf(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TABLE_BORDER_REV_DXF_SHAPE,
@@ -2786,6 +3107,19 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TotalsRowBor
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_BORDER_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_featurepropertybag::write::totals_row_border_rev_dxf(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_BORDER_REV_DXF_SHAPE,
@@ -2868,6 +3202,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TotalsRowRev
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_REV_DXF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::totals_row_rev_dxf(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_REV_DXF_SHAPE,
@@ -2944,6 +3290,18 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::XfComplement
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_featurepropertybag::XF_COMPLEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_featurepropertybag::write::xf_complement(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::XF_COMPLEMENT_SHAPE,

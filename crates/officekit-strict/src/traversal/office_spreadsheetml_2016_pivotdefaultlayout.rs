@@ -261,6 +261,19 @@ impl WriteThrough for office_spreadsheetml_2016_pivotdefaultlayout::PivotTableDe
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2016_pivotdefaultlayout::PIVOT_TABLE_DEFINITION16_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2016_pivotdefaultlayout::write::pivot_table_definition16(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2016_pivotdefaultlayout::PIVOT_TABLE_DEFINITION16_SHAPE,

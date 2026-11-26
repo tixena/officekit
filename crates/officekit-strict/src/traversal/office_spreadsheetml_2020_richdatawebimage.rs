@@ -261,6 +261,16 @@ impl WriteThrough for office_spreadsheetml_2020_richdatawebimage::Address {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_richdatawebimage::ADDRESS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2020_richdatawebimage::write::address(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richdatawebimage::ADDRESS_SHAPE,
@@ -335,6 +345,16 @@ impl WriteThrough for office_spreadsheetml_2020_richdatawebimage::Blip {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_richdatawebimage::BLIP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2020_richdatawebimage::write::blip(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richdatawebimage::BLIP_SHAPE,
@@ -413,6 +433,16 @@ impl WriteThrough for office_spreadsheetml_2020_richdatawebimage::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_richdatawebimage::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2020_richdatawebimage::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richdatawebimage::EXT_LST_SHAPE,
@@ -488,6 +518,18 @@ impl WriteThrough for office_spreadsheetml_2020_richdatawebimage::MoreImagesAddr
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_richdatawebimage::MORE_IMAGES_ADDRESS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2020_richdatawebimage::write::more_images_address(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richdatawebimage::MORE_IMAGES_ADDRESS_SHAPE,
@@ -571,6 +613,16 @@ impl WriteThrough for office_spreadsheetml_2020_richdatawebimage::WebImageSrd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_richdatawebimage::WEB_IMAGE_SRD_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2020_richdatawebimage::write::web_image_srd(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richdatawebimage::WEB_IMAGE_SRD_SHAPE,
@@ -654,6 +706,18 @@ impl WriteThrough for office_spreadsheetml_2020_richdatawebimage::WebImagesSrd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_richdatawebimage::WEB_IMAGES_SRD_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2020_richdatawebimage::write::web_images_srd(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richdatawebimage::WEB_IMAGES_SRD_SHAPE,

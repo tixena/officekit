@@ -261,6 +261,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ActiveTabTopLevelEntity
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::ACTIVE_TAB_TOP_LEVEL_ENTITY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::active_tab_top_level_entity(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::ACTIVE_TAB_TOP_LEVEL_ENTITY_SHAPE,
@@ -346,6 +358,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::AutoFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::AUTO_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::auto_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::AUTO_FILTER_SHAPE,
@@ -424,6 +445,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Bounds {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::BOUNDS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::bounds(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::BOUNDS_SHAPE,
@@ -504,6 +534,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::C {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::C_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::c(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::C_SHAPE,
@@ -582,6 +621,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::CacheHierarchy {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::CACHE_HIERARCHY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::cache_hierarchy(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::CACHE_HIERARCHY_SHAPE,
@@ -657,6 +706,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::CachedUniqueName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::CACHED_UNIQUE_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::cached_unique_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::CACHED_UNIQUE_NAME_SHAPE,
@@ -738,6 +797,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::CachedUniqueNames {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::CACHED_UNIQUE_NAMES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::cached_unique_names(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::CACHED_UNIQUE_NAMES_SHAPE,
@@ -813,6 +882,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::CalculatedMember {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::CALCULATED_MEMBER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::calculated_member(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::CALCULATED_MEMBER_SHAPE,
@@ -902,6 +981,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Connection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::CONNECTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::connection(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::CONNECTION_SHAPE,
@@ -990,6 +1078,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DataFeedPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DATA_FEED_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::data_feed_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DATA_FEED_PR_SHAPE,
@@ -1066,6 +1163,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DataField {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DATA_FIELD_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::data_field(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DATA_FIELD_SHAPE,
@@ -1149,6 +1255,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DataModel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DATA_MODEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::data_model(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DATA_MODEL_SHAPE,
@@ -1324,6 +1439,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DbCommand {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DB_COMMAND_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::db_command(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DB_COMMAND_SHAPE,
@@ -1399,6 +1523,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DbTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DB_TABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::db_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DB_TABLE_SHAPE,
@@ -1478,6 +1611,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DbTables {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DB_TABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::db_tables(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DB_TABLES_SHAPE,
@@ -1557,6 +1699,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DescriptionPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DESCRIPTION_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::description_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DESCRIPTION_PR_SHAPE,
@@ -1636,6 +1788,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Dxfs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::DXFS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::dxfs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::DXFS_SHAPE,
@@ -1716,6 +1877,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::EXT_LST_SHAPE,
@@ -1791,6 +1961,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ModelRelationship {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::MODEL_RELATIONSHIP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::model_relationship(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::MODEL_RELATIONSHIP_SHAPE,
@@ -1874,6 +2054,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ModelRelationships {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::MODEL_RELATIONSHIPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::model_relationships(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::MODEL_RELATIONSHIPS_SHAPE,
@@ -1949,6 +2139,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ModelTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::MODEL_TABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::model_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::MODEL_TABLE_SHAPE,
@@ -2030,6 +2229,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ModelTables {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::MODEL_TABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::model_tables(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::MODEL_TABLES_SHAPE,
@@ -2105,6 +2313,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ModelTextPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::MODEL_TEXT_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::model_text_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::MODEL_TEXT_PR_SHAPE,
@@ -2180,6 +2398,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::MovingPeriodState {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::MOVING_PERIOD_STATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::moving_period_state(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::MOVING_PERIOD_STATE_SHAPE,
@@ -2263,6 +2491,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::OledbPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::OLEDB_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::oledb_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::OLEDB_PR_SHAPE,
@@ -2339,6 +2576,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotCacheDecoupled {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_CACHE_DECOUPLED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::pivot_cache_decoupled(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_CACHE_DECOUPLED_SHAPE,
@@ -2414,6 +2661,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotCacheIdVersion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_CACHE_ID_VERSION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::pivot_cache_id_version(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_CACHE_ID_VERSION_SHAPE,
@@ -2494,6 +2751,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotCaches {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_CACHES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::pivot_caches(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_CACHES_SHAPE,
@@ -2569,6 +2835,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::pivot_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_FILTER_SHAPE,
@@ -2648,6 +2923,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_ROW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::pivot_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_ROW_SHAPE,
@@ -2725,6 +3009,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_TABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::pivot_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_TABLE_SHAPE,
@@ -2805,6 +3098,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotTableData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_TABLE_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::pivot_table_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_TABLE_DATA_SHAPE,
@@ -2883,6 +3186,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotTableReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_TABLE_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::pivot_table_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_TABLE_REFERENCE_SHAPE,
@@ -2963,6 +3276,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotTableReferences {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_TABLE_REFERENCES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::pivot_table_references(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_TABLE_REFERENCES_SHAPE,
@@ -3042,6 +3365,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotTableServerFormats
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_TABLE_SERVER_FORMATS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::pivot_table_server_formats(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_TABLE_SERVER_FORMATS_SHAPE,
@@ -3125,6 +3460,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotTableUISettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_TABLE_UI_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::pivot_table_ui_settings(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_TABLE_UI_SETTINGS_SHAPE,
@@ -3207,6 +3554,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::PivotTables {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::PIVOT_TABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::pivot_tables(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::PIVOT_TABLES_SHAPE,
@@ -3282,6 +3638,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::QueryTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::QUERY_TABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::query_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::QUERY_TABLE_SHAPE,
@@ -3365,6 +3730,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Question {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::QUESTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::question(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::QUESTION_SHAPE,
@@ -3454,6 +3828,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::QuestionPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::QUESTION_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::question_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::QUESTION_PR_SHAPE,
@@ -3535,6 +3918,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Questions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::QUESTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::questions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::QUESTIONS_SHAPE,
@@ -3615,6 +4007,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::QuestionsPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::QUESTIONS_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::questions_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::QUESTIONS_PR_SHAPE,
@@ -3690,6 +4091,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::RangePr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::RANGE_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::range_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::RANGE_PR_SHAPE,
@@ -3765,6 +4175,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Selection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SELECTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::selection(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SELECTION_SHAPE,
@@ -3839,6 +4258,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::ServerFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SERVER_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::server_format(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SERVER_FORMAT_SHAPE,
@@ -3920,6 +4349,19 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::SlicerCacheHideItemsWit
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SLICER_CACHE_HIDE_ITEMS_WITH_NO_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::slicer_cache_hide_items_with_no_data(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SLICER_CACHE_HIDE_ITEMS_WITH_NO_DATA_SHAPE,
@@ -3996,6 +4438,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::SlicerCacheOlapLevelNam
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SLICER_CACHE_OLAP_LEVEL_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::slicer_cache_olap_level_name(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SLICER_CACHE_OLAP_LEVEL_NAME_SHAPE,
@@ -4076,6 +4530,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::SlicerCachePivotTables 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SLICER_CACHE_PIVOT_TABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::slicer_cache_pivot_tables(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SLICER_CACHE_PIVOT_TABLES_SHAPE,
@@ -4155,6 +4621,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::SlicerCaches {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SLICER_CACHES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::slicer_caches(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SLICER_CACHES_SHAPE,
@@ -4240,6 +4716,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::State {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::STATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::state(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::STATE_SHAPE,
@@ -4338,6 +4823,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Survey {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SURVEY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::survey(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SURVEY_SHAPE,
@@ -4425,6 +4919,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::SurveyPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::SURVEY_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::survey_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::SURVEY_PR_SHAPE,
@@ -4504,6 +5007,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TableSlicerCache {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TABLE_SLICER_CACHE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::table_slicer_cache(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TABLE_SLICER_CACHE_SHAPE,
@@ -4588,6 +5101,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TextPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TEXT_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::text_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TEXT_PR_SHAPE,
@@ -4683,6 +5205,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Timeline {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::timeline(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_SHAPE,
@@ -4777,6 +5308,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineCacheDefinition
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::timeline_cache_definition(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_DEFINITION_SHAPE,
@@ -4860,6 +5403,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineCachePivotCache
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_PIVOT_CACHES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::timeline_cache_pivot_caches(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_PIVOT_CACHES_SHAPE,
@@ -4935,6 +5490,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineCacheRef {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_REF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::timeline_cache_ref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_REF_SHAPE,
@@ -5015,6 +5580,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineCacheRefs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_REFS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::timeline_cache_refs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_CACHE_REFS_SHAPE,
@@ -5090,6 +5665,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelinePivotCacheDefin
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_PIVOT_CACHE_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::timeline_pivot_cache_definition(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_PIVOT_CACHE_DEFINITION_SHAPE,
@@ -5165,6 +5752,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineRef {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_REF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::timeline_ref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_REF_SHAPE,
@@ -5244,6 +5840,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineRefs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_REFS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::timeline_refs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_REFS_SHAPE,
@@ -5323,6 +5929,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::timeline_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_STYLE_SHAPE,
@@ -5399,6 +6015,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineStyleElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_STYLE_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::timeline_style_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_STYLE_ELEMENT_SHAPE,
@@ -5480,6 +6106,18 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineStyleElements {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_STYLE_ELEMENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::timeline_style_elements(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_STYLE_ELEMENTS_SHAPE,
@@ -5559,6 +6197,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TimelineStyles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINE_STYLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::timeline_styles(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINE_STYLES_SHAPE,
@@ -5639,6 +6287,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::Timelines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TIMELINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::timelines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TIMELINES_SHAPE,
@@ -5718,6 +6375,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::TitlePr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::TITLE_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::title_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::TITLE_PR_SHAPE,
@@ -5793,6 +6459,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::V {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::V_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::v(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::V_SHAPE,
@@ -5872,6 +6547,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::WebExtension {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::WEB_EXTENSION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::web_extension(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::WEB_EXTENSION_SHAPE,
@@ -5952,6 +6637,16 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::WebExtensions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::WEB_EXTENSIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2010_11_main::write::web_extensions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::WEB_EXTENSIONS_SHAPE,
@@ -6027,6 +6722,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::WorkbookPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::WORKBOOK_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::workbook_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::WORKBOOK_PR_SHAPE,
@@ -6102,6 +6806,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::X {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_main::X_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_main::write::x(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_main::X_SHAPE,

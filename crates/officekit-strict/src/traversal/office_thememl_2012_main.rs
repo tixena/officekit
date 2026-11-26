@@ -265,6 +265,12 @@ impl WriteThrough for office_thememl_2012_main::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_thememl_2012_main::EXT_LST_SHAPE, &self.unknown);
+        if converted {
+            let element = office_thememl_2012_main::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_thememl_2012_main::EXT_LST_SHAPE, &self.unknown);
         through.child(&self.extension, ctx)?;
@@ -341,6 +347,15 @@ impl WriteThrough for office_thememl_2012_main::ThemeFamily {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_thememl_2012_main::THEME_FAMILY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_thememl_2012_main::write::theme_family(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_thememl_2012_main::THEME_FAMILY_SHAPE,
@@ -423,6 +438,15 @@ impl WriteThrough for office_thememl_2012_main::ThemeVariant {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_thememl_2012_main::THEME_VARIANT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_thememl_2012_main::write::theme_variant(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_thememl_2012_main::THEME_VARIANT_SHAPE,
@@ -507,6 +531,15 @@ impl WriteThrough for office_thememl_2012_main::ThemeVariantLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_thememl_2012_main::THEME_VARIANT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_thememl_2012_main::write::theme_variant_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_thememl_2012_main::THEME_VARIANT_LST_SHAPE,

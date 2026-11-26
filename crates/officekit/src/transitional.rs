@@ -116,6 +116,8 @@ use officekit_xml::name::{Namespace, NamespaceId, QName, tag_of};
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::Package;
 use officekit_xml::packaging::part_name::PartName;
+#[cfg(feature = "strict")]
+use officekit_xml::stream::class::{ClassRules, Site};
 use officekit_xml::write::WriteOptions;
 
 #[cfg(test)]
@@ -169,6 +171,18 @@ pub trait Transitional: Sized {
     fn to_transitional(&self) -> Result<Element, WriteError>;
 }
 
+/// The rules of a Transitional write through a part writer, which give the bytes
+/// [`Transitional::to_transitional`] gives without building the part's tree.
+///
+/// A typed node whose element the write changes, a `w:drawing`, an `a:graphicData`, a
+/// `wne:txbxContent` or the owner of a value only Strict has, is written as one element the write
+/// converts; every other is written tag by tag. A main part's root loses `conformance="strict"`.
+#[cfg(feature = "strict")]
+#[derive(Debug)]
+pub(crate) struct TransitionalRules {
+    conformance: Option<Tag>,
+}
+
 /// What a save from Strict to Transitional does with an attribute.
 enum BackRule {
     /// A name of `codes` written as its code in the attribute `to`, in place of this one.
@@ -211,6 +225,60 @@ enum Bits {
 /// A prefix and its namespace: the `uri` of the `graphicData` that holds Word's shape, group or
 /// canvas, and of the elements inside it.
 type WordNamespace = (&'static str, &'static str);
+
+#[cfg(feature = "strict")]
+impl TransitionalRules {
+    /// The rules of a part whose root drops `conformance="strict"` from the attribute
+    /// `conformance`, when it is a main part's root, or of any other part with `None`.
+    pub(crate) const fn new(conformance: Option<Tag>) -> Self {
+        Self { conformance }
+    }
+}
+
+#[cfg(feature = "strict")]
+impl ClassRules for TransitionalRules {
+    fn convert(&mut self, element: Element, site: &Site<'_>) -> Result<Vec<Node>, WriteError> {
+        let root = site.is_root();
+        let required = if root { None } else { strict_drawing(&element) };
+        let mut written = write(element)?;
+        if let (true, Some(conformance)) = (root, self.conformance) {
+            drop_strict_conformance(&mut written, conformance);
+        }
+        let mut node = match required {
+            Some(namespace) => alternate_content(Node::Element(written), namespace),
+            None => written,
+        };
+        node.set_class(ConformanceClass::Transitional);
+        Ok(vec![Node::Element(node)])
+    }
+
+    fn converts(
+        &self,
+        tag: (Option<NamespaceId>, &str),
+        _declared: &[(Option<NamespaceId>, &'static str)],
+        _unknown: &[Attribute],
+    ) -> bool {
+        let named = |uri: &str, local: &str| {
+            tag.1 == local
+                && tag.0.is_some()
+                && Namespace::from_uri(uri) == tag.0.map_or(Namespace::None, Namespace::Known)
+        };
+        STRICT_ONLY
+            .binary_search_by(|(owner, _, _, _)| order(*owner, tag))
+            .is_ok()
+            || named(WORDPROCESSING, "drawing")
+            || named(DRAWING, "graphicData")
+            || named(WORD_ML, "txbxContent")
+    }
+
+    fn open(&mut self, element: &mut Element, site: &Site<'_>) -> Result<(), WriteError> {
+        element.set_class(ConformanceClass::Transitional);
+        if let (true, Some(conformance)) = (site.is_root(), self.conformance) {
+            drop_strict_conformance(element, conformance);
+        }
+        Ok(())
+    }
+}
 
 /// `drawing` in an `mc:AlternateContent` whose only branch is a Choice requiring `namespace`.
 fn alternate_content(drawing: Node, namespace: WordNamespace) -> Element {
@@ -817,8 +885,12 @@ fn write(mut element: Element) -> Result<Element, WriteError> {
 /// `conformance` when it says `strict`: an absent one means transitional.
 fn write_root(element: Element, conformance: Tag) -> Result<Element, WriteError> {
     let mut written = write(element)?;
-    written
-        .attributes
-        .retain(|found| !(is(conformance, &found.name) && found.value == "strict"));
+    drop_strict_conformance(&mut written, conformance);
     Ok(written)
+}
+
+/// Remove a main part's attribute `conformance` when it says `strict`.
+fn drop_strict_conformance(root: &mut Element, conformance: Tag) {
+    root.attributes
+        .retain(|found| !(is(conformance, &found.name) && found.value == "strict"));
 }

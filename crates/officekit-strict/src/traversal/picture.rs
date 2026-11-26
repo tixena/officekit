@@ -270,6 +270,15 @@ impl WriteThrough for picture::NonVisualDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &picture::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = picture::write::non_visual_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &picture::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -358,6 +367,15 @@ impl WriteThrough for picture::NonVisualPictureDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &picture::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = picture::write::non_visual_picture_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &picture::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
@@ -446,6 +464,15 @@ impl WriteThrough for picture::NonVisualPictureProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &picture::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = picture::write::non_visual_picture_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &picture::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
@@ -527,6 +554,11 @@ impl WriteThrough for picture::Picture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &picture::PICTURE_SHAPE, &self.unknown);
+        if converted {
+            let element = picture::write::picture(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &picture::PICTURE_SHAPE, &self.unknown);
         through.child(&self.non_visual_picture_properties, ctx)?;
         through.child(&self.fill, ctx)?;
@@ -593,6 +625,11 @@ impl WriteThrough for picture::PictureFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &picture::PICTURE_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = picture::write::picture_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &picture::PICTURE_FILL_SHAPE, &self.unknown);
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
@@ -676,6 +713,11 @@ impl WriteThrough for picture::ShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &picture::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = picture::write::shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &picture::SHAPE_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;

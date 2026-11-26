@@ -267,6 +267,15 @@ impl WriteThrough for office_drawing_2008_diagram::CNvGrpSpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::C_NV_GRP_SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::c_nv_grp_sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::C_NV_GRP_SP_PR_SHAPE,
@@ -352,6 +361,15 @@ impl WriteThrough for office_drawing_2008_diagram::CNvPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::C_NV_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::c_nv_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::C_NV_PR_SHAPE,
@@ -440,6 +458,15 @@ impl WriteThrough for office_drawing_2008_diagram::CNvSpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::C_NV_SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::c_nv_sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::C_NV_SP_PR_SHAPE,
@@ -517,6 +544,15 @@ impl WriteThrough for office_drawing_2008_diagram::DataModelExt {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::DATA_MODEL_EXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::data_model_ext(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::DATA_MODEL_EXT_SHAPE,
@@ -597,6 +633,15 @@ impl WriteThrough for office_drawing_2008_diagram::Drawing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::DRAWING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::drawing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::DRAWING_SHAPE,
@@ -676,6 +721,15 @@ impl WriteThrough for office_drawing_2008_diagram::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::EXT_LST_SHAPE,
@@ -879,6 +933,15 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::GRP_SP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::grp_sp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::GRP_SP_SHAPE,
@@ -972,6 +1035,15 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::GRP_SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::grp_sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::GRP_SP_PR_SHAPE,
@@ -1058,6 +1130,15 @@ impl WriteThrough for office_drawing_2008_diagram::NvGrpSpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::NV_GRP_SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::nv_grp_sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::NV_GRP_SP_PR_SHAPE,
@@ -1140,6 +1221,15 @@ impl WriteThrough for office_drawing_2008_diagram::NvSpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::NV_SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::nv_sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::NV_SP_PR_SHAPE,
@@ -1230,6 +1320,11 @@ impl WriteThrough for office_drawing_2008_diagram::Sp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2008_diagram::SP_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2008_diagram::write::sp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2008_diagram::SP_SHAPE, &self.unknown);
         through.attribute(0, &self.model_id);
@@ -1329,6 +1424,15 @@ impl WriteThrough for office_drawing_2008_diagram::SpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::SP_PR_SHAPE,
@@ -1422,6 +1526,15 @@ impl WriteThrough for office_drawing_2008_diagram::SpTree {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::SP_TREE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::sp_tree(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::SP_TREE_SHAPE,
@@ -1510,6 +1623,15 @@ impl WriteThrough for office_drawing_2008_diagram::Style {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::STYLE_SHAPE,
@@ -1596,6 +1718,15 @@ impl WriteThrough for office_drawing_2008_diagram::TxBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::TX_BODY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::tx_body(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::TX_BODY_SHAPE,
@@ -1679,6 +1810,15 @@ impl WriteThrough for office_drawing_2008_diagram::TxXfrm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::TX_XFRM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2008_diagram::write::tx_xfrm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::TX_XFRM_SHAPE,

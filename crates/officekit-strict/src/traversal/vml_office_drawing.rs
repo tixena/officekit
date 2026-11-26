@@ -261,6 +261,11 @@ impl WriteThrough for vml_office_drawing::Callout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_office_drawing::CALLOUT_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::callout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_office_drawing::CALLOUT_SHAPE, &self.unknown);
         through.attribute(0, &self.ext);
@@ -346,6 +351,11 @@ impl WriteThrough for vml_office_drawing::Complex {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_office_drawing::COMPLEX_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::complex(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_office_drawing::COMPLEX_SHAPE, &self.unknown);
         through.attribute(0, &self.ext);
@@ -418,6 +428,15 @@ impl WriteThrough for vml_office_drawing::DiagramRelationship {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::DIAGRAM_RELATIONSHIP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::diagram_relationship(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::DIAGRAM_RELATIONSHIP_SHAPE,
@@ -501,6 +520,15 @@ impl WriteThrough for vml_office_drawing::DiagramRelationshipTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::DIAGRAM_RELATIONSHIP_TABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::diagram_relationship_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::DIAGRAM_RELATIONSHIP_TABLE_SHAPE,
@@ -577,6 +605,15 @@ impl WriteThrough for vml_office_drawing::DigitalSignatureLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::DIGITAL_SIGNATURE_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::digital_signature_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::DIGITAL_SIGNATURE_LINE_SHAPE,
@@ -678,6 +715,15 @@ impl WriteThrough for vml_office_drawing::EmbeddedOLEObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::EMBEDDED_OLE_OBJECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::embedded_ole_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::EMBEDDED_OLE_OBJECT_SHAPE,
@@ -762,6 +808,18 @@ impl WriteThrough for vml_office_drawing::EmbeddedObjectAlternateImageRequest {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::EMBEDDED_OBJECT_ALTERNATE_IMAGE_REQUEST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::embedded_object_alternate_image_request(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::EMBEDDED_OBJECT_ALTERNATE_IMAGE_REQUEST_SHAPE,
@@ -837,6 +895,16 @@ impl WriteThrough for vml_office_drawing::EmbeddedObjectCannotBeRefreshed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::EMBEDDED_OBJECT_CANNOT_BE_REFRESHED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_office_drawing::write::embedded_object_cannot_be_refreshed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::EMBEDDED_OBJECT_CANNOT_BE_REFRESHED_SHAPE,
@@ -912,6 +980,11 @@ impl WriteThrough for vml_office_drawing::Extrusion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_office_drawing::EXTRUSION_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::extrusion(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_office_drawing::EXTRUSION_SHAPE, &self.unknown);
         through.attribute(0, &self.ext);
@@ -1016,6 +1089,11 @@ impl WriteThrough for vml_office_drawing::Ink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_office_drawing::INK_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::ink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml_office_drawing::INK_SHAPE, &self.unknown);
         through.attribute(0, &self.i);
         through.attribute(1, &self.annotation);
@@ -1089,6 +1167,15 @@ impl WriteThrough for vml_office_drawing::MostRecentlyUsedColors {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::MOST_RECENTLY_USED_COLORS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::most_recently_used_colors(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::MOST_RECENTLY_USED_COLORS_SHAPE,
@@ -1169,6 +1256,15 @@ impl WriteThrough for vml_office_drawing::NewShapeDefaults {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::NEW_SHAPE_DEFAULTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::new_shape_defaults(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::NEW_SHAPE_DEFAULTS_SHAPE,
@@ -1426,6 +1522,12 @@ impl WriteThrough for vml_office_drawing::RegroupEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &vml_office_drawing::REGROUP_ENTRY_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::regroup_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_office_drawing::REGROUP_ENTRY_SHAPE, &self.unknown);
         through.attribute(0, &self.new);
@@ -1503,6 +1605,11 @@ impl WriteThrough for vml_office_drawing::Rule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_office_drawing::RULE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::rule(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml_office_drawing::RULE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.r#type);
@@ -1582,6 +1689,11 @@ impl WriteThrough for vml_office_drawing::RuleSet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_office_drawing::RULE_SET_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::rule_set(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_office_drawing::RULE_SET_SHAPE, &self.unknown);
         through.attribute(0, &self.ext);
@@ -1655,6 +1767,15 @@ impl WriteThrough for vml_office_drawing::ShapeClippingPath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::SHAPE_CLIPPING_PATH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::shape_clipping_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::SHAPE_CLIPPING_PATH_SHAPE,
@@ -1730,6 +1851,16 @@ impl WriteThrough for vml_office_drawing::ShapeFillExtendedProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::SHAPE_FILL_EXTENDED_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_office_drawing::write::shape_fill_extended_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::SHAPE_FILL_EXTENDED_PROPERTIES_SHAPE,
@@ -1810,6 +1941,15 @@ impl WriteThrough for vml_office_drawing::ShapeGroupingHistory {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::SHAPE_GROUPING_HISTORY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::shape_grouping_history(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::SHAPE_GROUPING_HISTORY_SHAPE,
@@ -1886,6 +2026,12 @@ impl WriteThrough for vml_office_drawing::ShapeIDMap {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &vml_office_drawing::SHAPE_ID_MAP_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::shape_id_map(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_office_drawing::SHAPE_ID_MAP_SHAPE, &self.unknown);
         through.attribute(0, &self.ext);
@@ -1963,6 +2109,15 @@ impl WriteThrough for vml_office_drawing::ShapeLayoutProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::SHAPE_LAYOUT_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::shape_layout_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::SHAPE_LAYOUT_PROPERTIES_SHAPE,
@@ -2164,6 +2319,15 @@ impl WriteThrough for vml_office_drawing::ShapeProtections {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::SHAPE_PROTECTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::shape_protections(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::SHAPE_PROTECTIONS_SHAPE,
@@ -2250,6 +2414,15 @@ impl WriteThrough for vml_office_drawing::ShapeReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::SHAPE_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::shape_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::SHAPE_REFERENCE_SHAPE,
@@ -2328,6 +2501,15 @@ impl WriteThrough for vml_office_drawing::SkewTransform {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::SKEW_TRANSFORM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::skew_transform(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::SKEW_TRANSFORM_SHAPE,
@@ -2412,6 +2594,16 @@ impl WriteThrough for vml_office_drawing::StorageForAlternateMathContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_office_drawing::write::storage_for_alternate_math_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::STORAGE_FOR_ALTERNATE_MATH_CONTENT_SHAPE,
@@ -2488,6 +2680,15 @@ impl WriteThrough for vml_office_drawing::TextBoxBottomStroke {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::TEXT_BOX_BOTTOM_STROKE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::text_box_bottom_stroke(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::TEXT_BOX_BOTTOM_STROKE_SHAPE,
@@ -2589,6 +2790,15 @@ impl WriteThrough for vml_office_drawing::TextBoxInteriorStroke {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::TEXT_BOX_INTERIOR_STROKE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::text_box_interior_stroke(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::TEXT_BOX_INTERIOR_STROKE_SHAPE,
@@ -2690,6 +2900,15 @@ impl WriteThrough for vml_office_drawing::TextBoxLeftStroke {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::TEXT_BOX_LEFT_STROKE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::text_box_left_stroke(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::TEXT_BOX_LEFT_STROKE_SHAPE,
@@ -2791,6 +3010,15 @@ impl WriteThrough for vml_office_drawing::TextBoxRightStroke {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::TEXT_BOX_RIGHT_STROKE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::text_box_right_stroke(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::TEXT_BOX_RIGHT_STROKE_SHAPE,
@@ -2892,6 +3120,15 @@ impl WriteThrough for vml_office_drawing::TextBoxTopStroke {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::TEXT_BOX_TOP_STROKE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::text_box_top_stroke(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::TEXT_BOX_TOP_STROKE_SHAPE,
@@ -2993,6 +3230,15 @@ impl WriteThrough for vml_office_drawing::UIDefaultColors {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::UI_DEFAULT_COLORS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_office_drawing::write::ui_default_colors(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::UI_DEFAULT_COLORS_SHAPE,
@@ -3077,6 +3323,11 @@ impl WriteThrough for vml_office_drawing::VMLDiagram {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_office_drawing::VML_DIAGRAM_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_office_drawing::write::vml_diagram(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_office_drawing::VML_DIAGRAM_SHAPE, &self.unknown);
         through.attribute(0, &self.ext);
@@ -3159,6 +3410,16 @@ impl WriteThrough for vml_office_drawing::WordprocessingMLFieldSwitches {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_office_drawing::WORDPROCESSING_ML_FIELD_SWITCHES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_office_drawing::write::wordprocessing_ml_field_switches(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_office_drawing::WORDPROCESSING_ML_FIELD_SWITCHES_SHAPE,

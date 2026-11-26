@@ -959,6 +959,9 @@ fn through(
 ) {
     let shape = names.shape(index);
     let module = &names.catalog.modules[node.module].name;
+    let before = out.lines().count();
+    in_class(names, index, module, &shape, out);
+    let converting = out.lines().count() - before;
     let own = through_calls(node, "self", "        ");
     let binding = if own.is_empty() {
         "through"
@@ -977,7 +980,7 @@ fn through(
         ),
         out,
     );
-    if own.iter().map(|text| text.lines().count()).sum::<usize>() + 3 < BODY_LINES {
+    if own.iter().map(|text| text.lines().count()).sum::<usize>() + converting + 3 < BODY_LINES {
         for text in own {
             out.push_str(&text);
         }
@@ -1002,6 +1005,34 @@ fn through(
         }
     }
     out.push_str("        through.finish(ctx)\n");
+}
+
+/// The start of a struct's `write_children_through`: the node written as one element, for the
+/// class rules of the part writer to convert, when they convert a node of its shape.
+fn in_class(names: &Names<'_>, index: usize, module: &str, shape: &str, out: &mut String) {
+    let function = names.node_functions.get(&index).map_or("", String::as_str);
+    layout::statement(
+        "        let converted = ",
+        &Expr::call(
+            "super::converts",
+            vec![
+                Expr::atom("out"),
+                Expr::Atom(format!("&{module}::{shape}")),
+                Expr::atom("&self.unknown"),
+            ],
+        ),
+        out,
+    );
+    out.push_str("        if converted {\n");
+    layout::statement(
+        "            let element = ",
+        &Expr::call(
+            &format!("{module}::write::{function}"),
+            vec![Expr::atom("self"), Expr::atom("out.scope()")],
+        ),
+        out,
+    );
+    out.push_str("            return out.converted(element);\n        }\n");
 }
 
 /// A helper writing one run of a large struct's attributes and children,

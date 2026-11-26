@@ -261,6 +261,16 @@ impl WriteThrough for custom_xml_data_properties::AssociatedXMLSchema {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &custom_xml_data_properties::ASSOCIATED_XML_SCHEMA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                custom_xml_data_properties::write::associated_xml_schema(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &custom_xml_data_properties::ASSOCIATED_XML_SCHEMA_SHAPE,
@@ -341,6 +351,16 @@ impl WriteThrough for custom_xml_data_properties::CustomXMLDataProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &custom_xml_data_properties::CUSTOM_XML_DATA_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                custom_xml_data_properties::write::custom_xml_data_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &custom_xml_data_properties::CUSTOM_XML_DATA_PROPERTIES_SHAPE,
@@ -422,6 +442,16 @@ impl WriteThrough for custom_xml_data_properties::SetOfAssociatedXMLSchemas {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &custom_xml_data_properties::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                custom_xml_data_properties::write::set_of_associated_xml_schemas(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &custom_xml_data_properties::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE,

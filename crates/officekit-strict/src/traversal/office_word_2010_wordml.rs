@@ -261,6 +261,11 @@ impl WriteThrough for office_word_2010_wordml::Alpha {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::ALPHA_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::alpha(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::ALPHA_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -332,6 +337,11 @@ impl WriteThrough for office_word_2010_wordml::Bevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::BEVEL_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::bevel(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::BEVEL_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -403,6 +413,12 @@ impl WriteThrough for office_word_2010_wordml::BevelB {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::BEVEL_B_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::bevel_b(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::BEVEL_B_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -474,6 +490,12 @@ impl WriteThrough for office_word_2010_wordml::BevelT {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::BEVEL_T_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::bevel_t(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::BEVEL_T_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -551,6 +573,15 @@ impl WriteThrough for office_word_2010_wordml::CNvContentPartPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::C_NV_CONTENT_PART_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::c_nv_content_part_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::C_NV_CONTENT_PART_PR_SHAPE,
@@ -637,6 +668,12 @@ impl WriteThrough for office_word_2010_wordml::CNvPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::C_NV_PR_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::c_nv_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::C_NV_PR_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -716,6 +753,11 @@ impl WriteThrough for office_word_2010_wordml::Camera {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::CAMERA_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::camera(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::CAMERA_SHAPE, &self.unknown);
         through.attribute(0, &self.prst);
@@ -796,6 +838,12 @@ impl WriteThrough for office_word_2010_wordml::Checkbox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::CHECKBOX_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::checkbox(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::CHECKBOX_SHAPE, &self.unknown);
         through.child(&self.checked, ctx)?;
@@ -870,6 +918,12 @@ impl WriteThrough for office_word_2010_wordml::Checked {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::CHECKED_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::checked(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::CHECKED_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -941,6 +995,15 @@ impl WriteThrough for office_word_2010_wordml::CheckedState {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CHECKED_STATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::checked_state(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::CHECKED_STATE_SHAPE,
@@ -1015,6 +1078,15 @@ impl WriteThrough for office_word_2010_wordml::CntxtAlts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CNTXT_ALTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::cntxt_alts(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::CNTXT_ALTS_SHAPE,
@@ -1364,6 +1436,16 @@ impl WriteThrough for office_word_2010_wordml::ConflictDelRunTrackChange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordml::write::conflict_del_run_track_change(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE,
@@ -1442,6 +1524,16 @@ impl WriteThrough for office_word_2010_wordml::ConflictDelTrackChange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CONFLICT_DEL_TRACK_CHANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordml::write::conflict_del_track_change(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_DEL_TRACK_CHANGE_SHAPE,
@@ -1523,6 +1615,16 @@ impl WriteThrough for office_word_2010_wordml::ConflictInsRunTrackChange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordml::write::conflict_ins_run_track_change(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE,
@@ -1601,6 +1703,16 @@ impl WriteThrough for office_word_2010_wordml::ConflictInsTrackChange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CONFLICT_INS_TRACK_CHANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordml::write::conflict_ins_track_change(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_INS_TRACK_CHANGE_SHAPE,
@@ -1678,6 +1790,15 @@ impl WriteThrough for office_word_2010_wordml::ConflictMode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CONFLICT_MODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::conflict_mode(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_MODE_SHAPE,
@@ -1761,6 +1882,15 @@ impl WriteThrough for office_word_2010_wordml::ContentPart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CONTENT_PART_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::content_part(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONTENT_PART_SHAPE,
@@ -1844,6 +1974,15 @@ impl WriteThrough for office_word_2010_wordml::ContourClr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CONTOUR_CLR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::contour_clr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONTOUR_CLR_SHAPE,
@@ -1919,6 +2058,18 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictDelRangeEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::custom_xml_conflict_del_range_end(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_END_SHAPE,
@@ -1994,6 +2145,18 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictDelRangeStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::custom_xml_conflict_del_range_start(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_START_SHAPE,
@@ -2071,6 +2234,18 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictInsRangeEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::custom_xml_conflict_ins_range_end(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_END_SHAPE,
@@ -2146,6 +2321,18 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictInsRangeStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::custom_xml_conflict_ins_range_start(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_START_SHAPE,
@@ -2223,6 +2410,15 @@ impl WriteThrough for office_word_2010_wordml::DefaultImageDpi {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::DEFAULT_IMAGE_DPI_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::default_image_dpi(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::DEFAULT_IMAGE_DPI_SHAPE,
@@ -2298,6 +2494,16 @@ impl WriteThrough for office_word_2010_wordml::DiscardImageEditingData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::DISCARD_IMAGE_EDITING_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordml::write::discard_image_editing_data(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::DISCARD_IMAGE_EDITING_DATA_SHAPE,
@@ -2372,6 +2578,11 @@ impl WriteThrough for office_word_2010_wordml::DocId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::DOC_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::doc_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::DOC_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -2444,6 +2655,15 @@ impl WriteThrough for office_word_2010_wordml::EntityPicker {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::ENTITY_PICKER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::entity_picker(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::ENTITY_PICKER_SHAPE,
@@ -2522,6 +2742,12 @@ impl WriteThrough for office_word_2010_wordml::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::EXT_LST_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::EXT_LST_SHAPE, &self.unknown);
         through.child(&self.extension, ctx)?;
@@ -2598,6 +2824,15 @@ impl WriteThrough for office_word_2010_wordml::ExtrusionClr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::EXTRUSION_CLR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::extrusion_clr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::EXTRUSION_CLR_SHAPE,
@@ -2777,6 +3012,15 @@ impl WriteThrough for office_word_2010_wordml::FillToRect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::FILL_TO_RECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::fill_to_rect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::FILL_TO_RECT_SHAPE,
@@ -2859,6 +3103,11 @@ impl WriteThrough for office_word_2010_wordml::Glow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::GLOW_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::glow(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::GLOW_SHAPE, &self.unknown);
         through.attribute(0, &self.rad);
@@ -2938,6 +3187,15 @@ impl WriteThrough for office_word_2010_wordml::GradFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::GRAD_FILL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::grad_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::GRAD_FILL_SHAPE,
@@ -3115,6 +3373,11 @@ impl WriteThrough for office_word_2010_wordml::Gs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::GS_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::gs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::GS_SHAPE, &self.unknown);
         through.attribute(0, &self.pos);
@@ -3192,6 +3455,11 @@ impl WriteThrough for office_word_2010_wordml::GsLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::GS_LST_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::gs_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::GS_LST_SHAPE, &self.unknown);
         through.child(&self.gs, ctx)?;
@@ -3264,6 +3532,12 @@ impl WriteThrough for office_word_2010_wordml::HueMod {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::HUE_MOD_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::hue_mod(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::HUE_MOD_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -3336,6 +3610,15 @@ impl WriteThrough for office_word_2010_wordml::Ligatures {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::LIGATURES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::ligatures(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::LIGATURES_SHAPE,
@@ -3415,6 +3698,15 @@ impl WriteThrough for office_word_2010_wordml::LightRig {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::LIGHT_RIG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::light_rig(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::LIGHT_RIG_SHAPE,
@@ -3492,6 +3784,11 @@ impl WriteThrough for office_word_2010_wordml::Lin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::LIN_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::lin(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::LIN_SHAPE, &self.unknown);
         through.attribute(0, &self.ang);
@@ -3669,6 +3966,11 @@ impl WriteThrough for office_word_2010_wordml::Lum {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::LUM_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::lum(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &office_word_2010_wordml::LUM_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -3739,6 +4041,12 @@ impl WriteThrough for office_word_2010_wordml::LumMod {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::LUM_MOD_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::lum_mod(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::LUM_MOD_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -3810,6 +4118,12 @@ impl WriteThrough for office_word_2010_wordml::LumOff {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::LUM_OFF_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::lum_off(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::LUM_OFF_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -3881,6 +4195,11 @@ impl WriteThrough for office_word_2010_wordml::Miter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::MITER_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::miter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::MITER_SHAPE, &self.unknown);
         through.attribute(0, &self.lim);
@@ -3953,6 +4272,12 @@ impl WriteThrough for office_word_2010_wordml::NoFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::NO_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::no_fill(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::NO_FILL_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -4024,6 +4349,12 @@ impl WriteThrough for office_word_2010_wordml::NumForm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::NUM_FORM_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::num_form(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::NUM_FORM_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -4096,6 +4427,15 @@ impl WriteThrough for office_word_2010_wordml::NumSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::NUM_SPACING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::num_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::NUM_SPACING_SHAPE,
@@ -4177,6 +4517,15 @@ impl WriteThrough for office_word_2010_wordml::NvContentPartPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::NV_CONTENT_PART_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::nv_content_part_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::NV_CONTENT_PART_PR_SHAPE,
@@ -4257,6 +4606,11 @@ impl WriteThrough for office_word_2010_wordml::Path {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::PATH_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::PATH_SHAPE, &self.unknown);
         through.attribute(0, &self.path);
@@ -4340,6 +4694,12 @@ impl WriteThrough for office_word_2010_wordml::Props3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::PROPS3D_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::props3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::PROPS3D_SHAPE, &self.unknown);
         through.attribute(0, &self.extrusion_h);
@@ -4418,6 +4778,15 @@ impl WriteThrough for office_word_2010_wordml::PrstDash {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::PRST_DASH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::prst_dash(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::PRST_DASH_SHAPE,
@@ -4493,6 +4862,15 @@ impl WriteThrough for office_word_2010_wordml::Reflection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::REFLECTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::reflection(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::REFLECTION_SHAPE,
@@ -4580,6 +4958,11 @@ impl WriteThrough for office_word_2010_wordml::Rot {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::ROT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::rot(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::ROT_SHAPE, &self.unknown);
         through.attribute(0, &self.lat);
@@ -4654,6 +5037,11 @@ impl WriteThrough for office_word_2010_wordml::Round {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::ROUND_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::round(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::ROUND_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -4725,6 +5113,11 @@ impl WriteThrough for office_word_2010_wordml::Sat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::SAT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::sat(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &office_word_2010_wordml::SAT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -4795,6 +5188,12 @@ impl WriteThrough for office_word_2010_wordml::SatMod {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::SAT_MOD_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::sat_mod(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::SAT_MOD_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -4866,6 +5265,12 @@ impl WriteThrough for office_word_2010_wordml::SatOff {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::SAT_OFF_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::sat_off(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::SAT_OFF_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -4943,6 +5348,12 @@ impl WriteThrough for office_word_2010_wordml::Scene3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::SCENE3D_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::scene3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::SCENE3D_SHAPE, &self.unknown);
         through.child(&self.camera, ctx)?;
@@ -5020,6 +5431,15 @@ impl WriteThrough for office_word_2010_wordml::SchemeClr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SCHEME_CLR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::scheme_clr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::SCHEME_CLR_SHAPE,
@@ -5096,6 +5516,11 @@ impl WriteThrough for office_word_2010_wordml::Shade {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::SHADE_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::shade(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_word_2010_wordml::SHADE_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -5171,6 +5596,11 @@ impl WriteThrough for office_word_2010_wordml::Shadow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::SHADOW_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::shadow(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::SHADOW_SHAPE, &self.unknown);
         through.attribute(0, &self.blur_rad);
@@ -5255,6 +5685,15 @@ impl WriteThrough for office_word_2010_wordml::SolidFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SOLID_FILL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::solid_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::SOLID_FILL_SHAPE,
@@ -5334,6 +5773,12 @@ impl WriteThrough for office_word_2010_wordml::SrgbClr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_word_2010_wordml::SRGB_CLR_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::srgb_clr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::SRGB_CLR_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -5407,6 +5852,15 @@ impl WriteThrough for office_word_2010_wordml::StyleSet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::STYLE_SET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::style_set(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::STYLE_SET_SHAPE,
@@ -5487,6 +5941,15 @@ impl WriteThrough for office_word_2010_wordml::StylisticSets {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::STYLISTIC_SETS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::stylistic_sets(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::STYLISTIC_SETS_SHAPE,
@@ -5566,6 +6029,15 @@ impl WriteThrough for office_word_2010_wordml::TextFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::TEXT_FILL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::text_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::TEXT_FILL_SHAPE,
@@ -5650,6 +6122,15 @@ impl WriteThrough for office_word_2010_wordml::TextOutline {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::TEXT_OUTLINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::text_outline(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::TEXT_OUTLINE_SHAPE,
@@ -5731,6 +6212,11 @@ impl WriteThrough for office_word_2010_wordml::Tint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::TINT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::tint(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &office_word_2010_wordml::TINT_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -5801,6 +6287,15 @@ impl WriteThrough for office_word_2010_wordml::UncheckedState {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::UNCHECKED_STATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordml::write::unchecked_state(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::UNCHECKED_STATE_SHAPE,
@@ -5881,6 +6376,11 @@ impl WriteThrough for office_word_2010_wordml::Xfrm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_word_2010_wordml::XFRM_SHAPE, &self.unknown);
+        if converted {
+            let element = office_word_2010_wordml::write::xfrm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_word_2010_wordml::XFRM_SHAPE, &self.unknown);
         through.attribute(0, &self.rot);

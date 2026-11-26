@@ -6,8 +6,11 @@ use std::io::{self, Write};
 use quick_xml::Writer;
 use quick_xml::events::{BytesEnd, BytesStart, BytesText, Event};
 
+use super::class::{ClassRules, Site};
 use super::reader::PartEvent;
-use crate::element::{Element, NamespaceDeclaration, Node};
+use crate::element::{Attribute, Element, NamespaceDeclaration, Node};
+use crate::name::{Namespace, NamespaceId, QName};
+use crate::parse::split_qualified;
 use crate::write::{
     Layout, Scope, escape, is_whitespace, preserves_space, qualified, start_tag, write_element,
     write_node,
@@ -30,16 +33,22 @@ const DECLARATION: &[u8] = b"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone
 /// from, and their `xml:space` state, so the compact layout drops
 /// whitespace-only text outside a preserve scope, unless whitespace is all its
 /// element holds, as the generic tree's writer does.
+///
+/// Given a class's [`ClassRules`], it writes each typed node as that class writes it.
 pub struct PartWriter<'sink> {
     /// Whitespace-only text written since the start tag still waiting in `pending`.
     held: String,
     layout: Layout,
     /// The qualified names of the elements started and not ended.
     names: Vec<String>,
+    /// The names of the elements started and not ended, kept while `rules` are set.
+    parents: Vec<Option<QName>>,
     /// The start tag waiting for its element's first content.
     pending: Option<BytesStart<'static>>,
     /// Whether whitespace is preserved inside each open element.
     preserve: Vec<bool>,
+    /// The rules of the class the part is written in.
+    rules: Option<Box<dyn ClassRules>>,
     scope: Scope,
     writer: Writer<&'sink mut dyn Write>,
 }
@@ -49,6 +58,7 @@ impl<'sink> PartWriter<'sink> {
     fn close(&mut self, name: &str) -> io::Result<()> {
         self.scope.end();
         self.preserve.pop();
+        self.parents.pop();
         match self.pending.take() {
             Some(start) if self.held.is_empty() => self.writer.write_event(Event::Empty(start)),
             Some(start) => {
@@ -60,6 +70,43 @@ impl<'sink> PartWriter<'sink> {
             }
             None => self.writer.write_event(Event::End(BytesEnd::new(name))),
         }
+    }
+
+    /// An element written whole at the writer's place: as it is, or, with a class's rules set,
+    /// as the nodes the rules convert it to.
+    ///
+    /// # Errors
+    ///
+    /// The sink's, and a [`WriteError`](crate::error::WriteError) the rules refuse the element
+    /// with, carried as the error's inner error.
+    pub fn converted(&mut self, element: Element) -> io::Result<()> {
+        let Some(rules) = self.rules.as_mut() else {
+            return self.element(&element);
+        };
+        let site = Site {
+            parent: self.parents.last().and_then(Option::as_ref),
+            scope: &self.scope,
+        };
+        let nodes = rules.convert(element, &site).map_err(io::Error::other)?;
+        for node in &nodes {
+            self.node(node)?;
+        }
+        Ok(())
+    }
+
+    /// Whether the class's rules write a typed node named `tag`, with the declared attributes
+    /// `declared` and the unknown ones `unknown`, as one element through
+    /// [`converted`](Self::converted); `false` with no rules set.
+    #[must_use = "this only answers the question"]
+    pub fn converts(
+        &self,
+        tag: (Option<NamespaceId>, &str),
+        declared: &[(Option<NamespaceId>, &'static str)],
+        unknown: &[Attribute],
+    ) -> bool {
+        self.rules
+            .as_ref()
+            .is_some_and(|rules| rules.converts(tag, declared, unknown))
     }
 
     /// `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` and the `\r\n`
@@ -117,6 +164,12 @@ impl<'sink> PartWriter<'sink> {
         }
     }
 
+    /// Whether a class's rules are set.
+    #[must_use = "this only answers the question"]
+    pub const fn has_rules(&self) -> bool {
+        self.rules.is_some()
+    }
+
     /// A writer into `sink`, in `layout`, before anything is written.
     #[must_use = "the result is returned and kept nowhere else"]
     pub fn new(sink: &'sink mut dyn Write, layout: Layout) -> Self {
@@ -128,8 +181,10 @@ impl<'sink> PartWriter<'sink> {
             held: String::new(),
             layout,
             names: Vec::new(),
+            parents: Vec::new(),
             pending: None,
             preserve: Vec::new(),
+            rules: None,
             scope: Scope::default(),
             writer,
         }
@@ -167,7 +222,27 @@ impl<'sink> PartWriter<'sink> {
             name.len(),
         ));
         self.names.push(name);
+        self.parents
+            .push(self.rules.is_some().then(|| element.name.clone()));
         Ok(())
+    }
+
+    /// The start tag of a typed node's element, as [`Self::open`] writes it, after the class's
+    /// rules, when set, change it in place.
+    ///
+    /// # Errors
+    ///
+    /// The sink's, and a [`WriteError`](crate::error::WriteError) the rules refuse the element
+    /// with, carried as the error's inner error.
+    pub fn open_node(&mut self, element: &mut Element) -> io::Result<()> {
+        if let Some(rules) = self.rules.as_mut() {
+            let site = Site {
+                parent: self.parents.last().and_then(Option::as_ref),
+                scope: &self.scope,
+            };
+            rules.open(element, &site).map_err(io::Error::other)?;
+        }
+        self.open(element)
     }
 
     /// Whether whitespace is preserved around the next node.
@@ -189,6 +264,12 @@ impl<'sink> PartWriter<'sink> {
     /// its prefixes from.
     pub const fn scope(&mut self) -> &mut Scope {
         &mut self.scope
+    }
+
+    /// Set the rules of the class the nodes written next are in, `None` for none; the rules
+    /// set before are returned. Set them before a root and take them back after it.
+    pub fn set_rules(&mut self, rules: Option<Box<dyn ClassRules>>) -> Option<Box<dyn ClassRules>> {
+        mem::replace(&mut self.rules, rules)
     }
 
     /// `<name xmlns:p="..." a="v">`: the namespace declarations first, then the
@@ -213,6 +294,15 @@ impl<'sink> PartWriter<'sink> {
         self.preserve.push(preserve);
         self.pending = Some(tag(name, declarations, attributes));
         self.names.push(name.to_owned());
+        let parent = self.rules.is_some().then(|| {
+            let (prefix, local) = split_qualified(name);
+            let namespace = self
+                .scope
+                .uri_of(prefix)
+                .map_or(Namespace::None, Namespace::from_uri);
+            QName::new(prefix.to_owned(), local.to_owned(), namespace)
+        });
+        self.parents.push(parent);
         Ok(())
     }
 

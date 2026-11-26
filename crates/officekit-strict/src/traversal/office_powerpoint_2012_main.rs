@@ -261,6 +261,16 @@ impl WriteThrough for office_powerpoint_2012_main::ChartTrackingRefBased {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::CHART_TRACKING_REF_BASED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_powerpoint_2012_main::write::chart_tracking_ref_based(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::CHART_TRACKING_REF_BASED_SHAPE,
@@ -340,6 +350,12 @@ impl WriteThrough for office_powerpoint_2012_main::Clr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_powerpoint_2012_main::CLR_SHAPE, &self.unknown);
+        if converted {
+            let element = office_powerpoint_2012_main::write::clr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_powerpoint_2012_main::CLR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -416,6 +432,15 @@ impl WriteThrough for office_powerpoint_2012_main::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::EXT_LST_SHAPE,
@@ -497,6 +522,15 @@ impl WriteThrough for office_powerpoint_2012_main::Guide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::GUIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::guide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::GUIDE_SHAPE,
@@ -584,6 +618,15 @@ impl WriteThrough for office_powerpoint_2012_main::NotesGuideLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::NOTES_GUIDE_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::notes_guide_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::NOTES_GUIDE_LST_SHAPE,
@@ -660,6 +703,15 @@ impl WriteThrough for office_powerpoint_2012_main::ParentCm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::PARENT_CM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::parent_cm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::PARENT_CM_SHAPE,
@@ -736,6 +788,15 @@ impl WriteThrough for office_powerpoint_2012_main::PresenceInfo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::PRESENCE_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::presence_info(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::PRESENCE_INFO_SHAPE,
@@ -812,6 +873,15 @@ impl WriteThrough for office_powerpoint_2012_main::PrstTrans {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::PRST_TRANS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::prst_trans(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::PRST_TRANS_SHAPE,
@@ -895,6 +965,15 @@ impl WriteThrough for office_powerpoint_2012_main::SldGuideLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::SLD_GUIDE_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::sld_guide_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::SLD_GUIDE_LST_SHAPE,
@@ -975,6 +1054,15 @@ impl WriteThrough for office_powerpoint_2012_main::ThreadingInfo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2012_main::THREADING_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2012_main::write::threading_info(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_main::THREADING_INFO_SHAPE,

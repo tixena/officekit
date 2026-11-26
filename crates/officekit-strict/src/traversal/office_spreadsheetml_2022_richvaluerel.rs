@@ -265,6 +265,15 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_richvaluerel::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_richvaluerel::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_richvaluerel::EXT_LST_SHAPE,
@@ -340,6 +349,15 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::Rel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_richvaluerel::REL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_richvaluerel::write::rel(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_richvaluerel::REL_SHAPE,
@@ -421,6 +439,16 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::RichValueRels {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_richvaluerel::RICH_VALUE_RELS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2022_richvaluerel::write::rich_value_rels(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_richvaluerel::RICH_VALUE_RELS_SHAPE,

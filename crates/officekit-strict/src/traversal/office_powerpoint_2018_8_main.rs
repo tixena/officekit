@@ -266,6 +266,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::Author {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::AUTHOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::author(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::AUTHOR_SHAPE,
@@ -350,6 +359,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::AuthorLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::AUTHOR_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::author_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::AUTHOR_LST_SHAPE,
@@ -441,6 +459,12 @@ impl WriteThrough for office_powerpoint_2018_8_main::Cm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_powerpoint_2018_8_main::CM_SHAPE, &self.unknown);
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::cm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_powerpoint_2018_8_main::CM_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -533,6 +557,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::CmLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::CM_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::cm_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::CM_LST_SHAPE,
@@ -782,6 +815,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::CommentRel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::COMMENT_REL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::comment_rel(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::COMMENT_REL_SHAPE,
@@ -861,6 +903,19 @@ impl WriteThrough for office_powerpoint_2018_8_main::ExtLstCommentPropertiesExte
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::EXT_LST_COMMENT_PROPERTIES_EXTENSION_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_powerpoint_2018_8_main::write::ext_lst_comment_properties_extension_list(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::EXT_LST_COMMENT_PROPERTIES_EXTENSION_LIST_SHAPE,
@@ -940,6 +995,16 @@ impl WriteThrough for office_powerpoint_2018_8_main::ExtLstExtensionList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::EXT_LST_EXTENSION_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_powerpoint_2018_8_main::write::ext_lst_extension_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::EXT_LST_EXTENSION_LIST_SHAPE,
@@ -1015,6 +1080,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::Pos {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::POS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::pos(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::POS_SHAPE,
@@ -1101,6 +1175,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::Reply {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::REPLY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::reply(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::REPLY_SHAPE,
@@ -1187,6 +1270,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::ReplyLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::REPLY_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::reply_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::REPLY_LST_SHAPE,
@@ -1270,6 +1362,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::TxBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::TX_BODY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::tx_body(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::TX_BODY_SHAPE,
@@ -1347,6 +1448,15 @@ impl WriteThrough for office_powerpoint_2018_8_main::UnknownAnchor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2018_8_main::UNKNOWN_ANCHOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2018_8_main::write::unknown_anchor(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_powerpoint_2018_8_main::UNKNOWN_ANCHOR_SHAPE,

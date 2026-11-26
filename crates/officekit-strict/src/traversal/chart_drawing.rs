@@ -270,6 +270,15 @@ impl WriteThrough for chart_drawing::AbsoluteAnchorShapeSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::absolute_anchor_shape_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
@@ -356,6 +365,11 @@ impl WriteThrough for chart_drawing::ConnectionShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::CONNECTION_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::connection_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::CONNECTION_SHAPE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#macro);
@@ -446,6 +460,15 @@ impl WriteThrough for chart_drawing::ConnectorNonVisualProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::connector_non_visual_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE,
@@ -530,6 +553,15 @@ impl WriteThrough for chart_drawing::EndingAnchorPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::ENDING_ANCHOR_POINT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::ending_anchor_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::ENDING_ANCHOR_POINT_SHAPE,
@@ -615,6 +647,11 @@ impl WriteThrough for chart_drawing::GraphicFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::GRAPHIC_FRAME_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::graphic_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::GRAPHIC_FRAME_SHAPE, &self.unknown);
         through.attribute(0, &self.r#macro);
@@ -697,6 +734,15 @@ impl WriteThrough for chart_drawing::GraphicFrameTransform {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::GRAPHIC_FRAME_TRANSFORM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::graphic_frame_transform(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::GRAPHIC_FRAME_TRANSFORM_SHAPE,
@@ -785,6 +831,11 @@ impl WriteThrough for chart_drawing::GroupShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::GROUP_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::group_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::GROUP_SHAPE_SHAPE, &self.unknown);
         through.child(&self.non_visual_group_shape_properties, ctx)?;
@@ -874,6 +925,15 @@ impl WriteThrough for chart_drawing::GroupShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::GROUP_SHAPE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::group_shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::GROUP_SHAPE_PROPERTIES_SHAPE,
@@ -965,6 +1025,18 @@ impl WriteThrough for chart_drawing::NonVisualConnectionShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::non_visual_connection_shape_drawing_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -1052,6 +1124,15 @@ impl WriteThrough for chart_drawing::NonVisualDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::non_visual_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -1141,6 +1222,18 @@ impl WriteThrough for chart_drawing::NonVisualGraphicFrameDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::non_visual_graphic_frame_drawing_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
@@ -1228,6 +1321,16 @@ impl WriteThrough for chart_drawing::NonVisualGraphicFrameProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                chart_drawing::write::non_visual_graphic_frame_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE,
@@ -1310,6 +1413,16 @@ impl WriteThrough for chart_drawing::NonVisualGroupShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                chart_drawing::write::non_visual_group_shape_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -1397,6 +1510,16 @@ impl WriteThrough for chart_drawing::NonVisualGroupShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                chart_drawing::write::non_visual_group_shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE,
@@ -1479,6 +1602,16 @@ impl WriteThrough for chart_drawing::NonVisualPictureDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                chart_drawing::write::non_visual_picture_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
@@ -1567,6 +1700,15 @@ impl WriteThrough for chart_drawing::NonVisualPictureProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::non_visual_picture_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
@@ -1649,6 +1791,16 @@ impl WriteThrough for chart_drawing::NonVisualShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                chart_drawing::write::non_visual_shape_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -1734,6 +1886,15 @@ impl WriteThrough for chart_drawing::NonVisualShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::NON_VISUAL_SHAPE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::non_visual_shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_SHAPE_PROPERTIES_SHAPE,
@@ -1955,6 +2116,11 @@ impl WriteThrough for chart_drawing::Picture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::PICTURE_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::picture(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &chart_drawing::PICTURE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#macro);
         through.attribute(1, &self.f_published);
@@ -2035,6 +2201,11 @@ impl WriteThrough for chart_drawing::PictureFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::PICTURE_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::picture_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::PICTURE_FILL_SHAPE, &self.unknown);
         through.attribute(0, &self.dpi);
@@ -2121,6 +2292,15 @@ impl WriteThrough for chart_drawing::RelativeAnchorShapeSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::relative_anchor_shape_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE,
@@ -2198,6 +2378,15 @@ impl WriteThrough for chart_drawing::RelativeXCoordinate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::RELATIVE_X_COORDINATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::relative_x_coordinate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::RELATIVE_X_COORDINATE_SHAPE,
@@ -2273,6 +2462,15 @@ impl WriteThrough for chart_drawing::RelativeYCoordinate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::RELATIVE_Y_COORDINATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::relative_y_coordinate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::RELATIVE_Y_COORDINATE_SHAPE,
@@ -2351,6 +2549,11 @@ impl WriteThrough for chart_drawing::Shape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &chart_drawing::SHAPE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#macro);
         through.attribute(1, &self.textlink);
@@ -2425,6 +2628,11 @@ impl WriteThrough for chart_drawing::ShapeExtent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::SHAPE_EXTENT_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::shape_extent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::SHAPE_EXTENT_SHAPE, &self.unknown);
         through.attribute(0, &self.cx);
@@ -2518,6 +2726,11 @@ impl WriteThrough for chart_drawing::ShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::SHAPE_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.bw_mode);
@@ -2608,6 +2821,11 @@ impl WriteThrough for chart_drawing::ShapeStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::SHAPE_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::shape_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::SHAPE_STYLE_SHAPE, &self.unknown);
         through.child(&self.line_reference, ctx)?;
@@ -2691,6 +2909,11 @@ impl WriteThrough for chart_drawing::ShapeTextBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &chart_drawing::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
+        if converted {
+            let element = chart_drawing::write::shape_text_body(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &chart_drawing::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
@@ -2773,6 +2996,15 @@ impl WriteThrough for chart_drawing::StartingAnchorPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &chart_drawing::STARTING_ANCHOR_POINT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = chart_drawing::write::starting_anchor_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &chart_drawing::STARTING_ANCHOR_POINT_SHAPE,

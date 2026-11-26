@@ -265,6 +265,16 @@ impl WriteThrough for office_drawing_2016_11_diagram::AutoBuNodeInfo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2016_11_diagram::write::auto_bu_node_info(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_SHAPE,
@@ -346,6 +356,16 @@ impl WriteThrough for office_drawing_2016_11_diagram::AutoBuNodeInfoLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2016_11_diagram::write::auto_bu_node_info_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_LST_SHAPE,
@@ -425,6 +445,15 @@ impl WriteThrough for office_drawing_2016_11_diagram::BuPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2016_11_diagram::BU_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2016_11_diagram::write::bu_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_11_diagram::BU_PR_SHAPE,

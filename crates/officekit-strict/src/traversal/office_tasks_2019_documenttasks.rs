@@ -267,6 +267,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Anchor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::ANCHOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::anchor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::ANCHOR_SHAPE,
@@ -343,6 +352,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Assign {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::ASSIGN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::assign(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::ASSIGN_SHAPE,
@@ -417,6 +435,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Attribution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::ATTRIBUTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::attribution(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::ATTRIBUTION_SHAPE,
@@ -491,6 +518,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Comment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::COMMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::comment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::COMMENT_SHAPE,
@@ -566,6 +602,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Create {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::CREATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::create(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::CREATE_SHAPE,
@@ -640,6 +685,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Delete {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::DELETE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::delete(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::DELETE_SHAPE,
@@ -724,6 +778,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Event {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::EVENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::event(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::EVENT_SHAPE,
@@ -808,6 +871,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::EXT_LST_SHAPE,
@@ -887,6 +959,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::History {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::HISTORY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::history(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::HISTORY_SHAPE,
@@ -962,6 +1043,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Priority {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::PRIORITY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::priority(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::PRIORITY_SHAPE,
@@ -1037,6 +1127,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Progress {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::PROGRESS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::progress(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::PROGRESS_SHAPE,
@@ -1112,6 +1211,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Schedule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::SCHEDULE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::schedule(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::SCHEDULE_SHAPE,
@@ -1188,6 +1296,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::SetTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::SET_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::set_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::SET_TITLE_SHAPE,
@@ -1271,6 +1388,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Task {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::TASK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::task(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::TASK_SHAPE,
@@ -1515,6 +1641,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Tasks {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::TASKS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::tasks(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::TASKS_SHAPE,
@@ -1591,6 +1726,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Unassign {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::UNASSIGN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::unassign(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNASSIGN_SHAPE,
@@ -1665,6 +1809,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::UnassignAll {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::UNASSIGN_ALL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::unassign_all(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNASSIGN_ALL_SHAPE,
@@ -1739,6 +1892,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Undelete {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::UNDELETE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::undelete(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNDELETE_SHAPE,
@@ -1813,6 +1975,15 @@ impl WriteThrough for office_tasks_2019_documenttasks::Undo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_tasks_2019_documenttasks::UNDO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_tasks_2019_documenttasks::write::undo(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNDO_SHAPE,

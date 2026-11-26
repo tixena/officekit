@@ -261,6 +261,16 @@ impl WriteThrough for office_word_2012_wordprocessing_drawing::WebVideoPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2012_wordprocessing_drawing::WEB_VIDEO_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2012_wordprocessing_drawing::write::web_video_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2012_wordprocessing_drawing::WEB_VIDEO_PR_SHAPE,

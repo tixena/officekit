@@ -267,6 +267,15 @@ impl WriteThrough for office_powerpoint_2020_02_main::DesignPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2020_02_main::DESIGN_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2020_02_main::write::design_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2020_02_main::DESIGN_PR_SHAPE,
@@ -344,6 +353,15 @@ impl WriteThrough for office_powerpoint_2020_02_main::DesignTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2020_02_main::DESIGN_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2020_02_main::write::design_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2020_02_main::DESIGN_TAG_SHAPE,
@@ -424,6 +442,15 @@ impl WriteThrough for office_powerpoint_2020_02_main::DesignTagLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2020_02_main::DESIGN_TAG_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2020_02_main::write::design_tag_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2020_02_main::DESIGN_TAG_LST_SHAPE,
@@ -503,6 +530,15 @@ impl WriteThrough for office_powerpoint_2020_02_main::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2020_02_main::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2020_02_main::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2020_02_main::EXT_LST_SHAPE,

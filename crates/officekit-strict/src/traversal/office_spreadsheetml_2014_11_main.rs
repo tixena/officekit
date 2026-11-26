@@ -261,6 +261,16 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::CalculatedTimeColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2014_11_main::CALCULATED_TIME_COLUMN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2014_11_main::write::calculated_time_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2014_11_main::CALCULATED_TIME_COLUMN_SHAPE,
@@ -344,6 +354,16 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::ModelTimeGrouping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2014_11_main::write::model_time_grouping(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPING_SHAPE,
@@ -427,6 +447,16 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::ModelTimeGroupings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2014_11_main::write::model_time_groupings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPINGS_SHAPE,

@@ -261,6 +261,18 @@ impl WriteThrough for office_spreadsheetml_2024_pivot_auto_refresh::AutoRefresh 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2024_pivot_auto_refresh::AUTO_REFRESH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2024_pivot_auto_refresh::write::auto_refresh(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2024_pivot_auto_refresh::AUTO_REFRESH_SHAPE,

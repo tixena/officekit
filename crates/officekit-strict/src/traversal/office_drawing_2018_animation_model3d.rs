@@ -265,6 +265,15 @@ impl WriteThrough for office_drawing_2018_animation_model3d::AnimPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_animation_model3d::ANIM_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_animation_model3d::write::anim_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation_model3d::ANIM_PR_SHAPE,
@@ -353,6 +362,16 @@ impl WriteThrough for office_drawing_2018_animation_model3d::EmbedAnim {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_animation_model3d::EMBED_ANIM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2018_animation_model3d::write::embed_anim(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation_model3d::EMBED_ANIM_SHAPE,
@@ -434,6 +453,15 @@ impl WriteThrough for office_drawing_2018_animation_model3d::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_animation_model3d::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_animation_model3d::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation_model3d::EXT_LST_SHAPE,
@@ -509,6 +537,16 @@ impl WriteThrough for office_drawing_2018_animation_model3d::PosterFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_animation_model3d::POSTER_FRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2018_animation_model3d::write::poster_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation_model3d::POSTER_FRAME_SHAPE,

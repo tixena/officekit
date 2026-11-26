@@ -261,6 +261,15 @@ impl WriteThrough for bibliography::AbbreviatedCaseNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &bibliography::ABBREVIATED_CASE_NUMBER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = bibliography::write::abbreviated_case_number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &bibliography::ABBREVIATED_CASE_NUMBER_SHAPE,
@@ -332,6 +341,11 @@ impl WriteThrough for bibliography::AlbumTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::ALBUM_TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::album_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::ALBUM_TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -395,6 +409,11 @@ impl WriteThrough for bibliography::Artist {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::ARTIST_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::artist(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::ARTIST_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -458,6 +477,11 @@ impl WriteThrough for bibliography::Author {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::AUTHOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::author(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::AUTHOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -525,6 +549,11 @@ impl WriteThrough for bibliography::BookAuthor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::BOOK_AUTHOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::book_author(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::BOOK_AUTHOR_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -588,6 +617,11 @@ impl WriteThrough for bibliography::BookTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::BOOK_TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::book_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::BOOK_TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -655,6 +689,11 @@ impl WriteThrough for bibliography::BroadcastTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::BROADCAST_TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::broadcast_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::BROADCAST_TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -723,6 +762,11 @@ impl WriteThrough for bibliography::Broadcaster {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::BROADCASTER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::broadcaster(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::BROADCASTER_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -786,6 +830,11 @@ impl WriteThrough for bibliography::CaseNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::CASE_NUMBER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::case_number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::CASE_NUMBER_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -853,6 +902,11 @@ impl WriteThrough for bibliography::ChapterNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::CHAPTER_NUMBER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::chapter_number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::CHAPTER_NUMBER_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -917,6 +971,11 @@ impl WriteThrough for bibliography::City {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::CITY_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::city(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::CITY_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -980,6 +1039,11 @@ impl WriteThrough for bibliography::Comments {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::COMMENTS_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::comments(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::COMMENTS_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1047,6 +1111,11 @@ impl WriteThrough for bibliography::Compiler {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::COMPILER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::compiler(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::COMPILER_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -1114,6 +1183,11 @@ impl WriteThrough for bibliography::Composer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::COMPOSER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::composer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::COMPOSER_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -1181,6 +1255,11 @@ impl WriteThrough for bibliography::Conductor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::CONDUCTOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::conductor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::CONDUCTOR_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -1248,6 +1327,15 @@ impl WriteThrough for bibliography::ConferenceOrProceedingsName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &bibliography::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = bibliography::write::conference_or_proceedings_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &bibliography::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE,
@@ -1327,6 +1415,11 @@ impl WriteThrough for bibliography::ContributorsList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::CONTRIBUTORS_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::contributors_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::CONTRIBUTORS_LIST_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
@@ -1615,6 +1708,11 @@ impl WriteThrough for bibliography::CorporateAuthor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::CORPORATE_AUTHOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::corporate_author(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::CORPORATE_AUTHOR_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -1683,6 +1781,11 @@ impl WriteThrough for bibliography::Counsel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::COUNSEL_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::counsel(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::COUNSEL_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -1750,6 +1853,11 @@ impl WriteThrough for bibliography::CountryOrRegion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::COUNTRY_OR_REGION_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::country_or_region(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::COUNTRY_OR_REGION_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -1814,6 +1922,11 @@ impl WriteThrough for bibliography::Court {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::COURT_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::court(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::COURT_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1873,6 +1986,11 @@ impl WriteThrough for bibliography::Day {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::DAY_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::day(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::DAY_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1940,6 +2058,11 @@ impl WriteThrough for bibliography::DayAccessed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::DAY_ACCESSED_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::day_accessed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::DAY_ACCESSED_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -2008,6 +2131,11 @@ impl WriteThrough for bibliography::Department {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::DEPARTMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::department(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::DEPARTMENT_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2075,6 +2203,11 @@ impl WriteThrough for bibliography::Director {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::DIRECTOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::director(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::DIRECTOR_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -2138,6 +2271,11 @@ impl WriteThrough for bibliography::Distributor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::DISTRIBUTOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::distributor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::DISTRIBUTOR_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2201,6 +2339,11 @@ impl WriteThrough for bibliography::Editor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::EDITOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::editor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::EDITOR_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -2268,6 +2411,11 @@ impl WriteThrough for bibliography::EditorEdition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::EDITOR_EDITION_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::editor_edition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::EDITOR_EDITION_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -2332,6 +2480,11 @@ impl WriteThrough for bibliography::Guid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::GUID_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::guid(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::GUID_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2395,6 +2548,11 @@ impl WriteThrough for bibliography::Institution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::INSTITUTION_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::institution(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::INSTITUTION_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2462,6 +2620,12 @@ impl WriteThrough for bibliography::InternetSiteTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &bibliography::INTERNET_SITE_TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::internet_site_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::INTERNET_SITE_TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -2534,6 +2698,11 @@ impl WriteThrough for bibliography::Interviewee {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::INTERVIEWEE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::interviewee(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::INTERVIEWEE_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -2601,6 +2770,11 @@ impl WriteThrough for bibliography::Interviewer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::INTERVIEWER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::interviewer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::INTERVIEWER_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -2668,6 +2842,11 @@ impl WriteThrough for bibliography::Inventor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::INVENTOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::inventor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::INVENTOR_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -2727,6 +2906,11 @@ impl WriteThrough for bibliography::Issue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::ISSUE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::issue(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::ISSUE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2794,6 +2978,11 @@ impl WriteThrough for bibliography::JournalName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::JOURNAL_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::journal_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::JOURNAL_NAME_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -2862,6 +3051,11 @@ impl WriteThrough for bibliography::LocaleID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::LOCALE_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::locale_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::LOCALE_ID_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2921,6 +3115,11 @@ impl WriteThrough for bibliography::Medium {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::MEDIUM_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::medium(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::MEDIUM_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2980,6 +3179,11 @@ impl WriteThrough for bibliography::Month {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::MONTH_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::month(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::MONTH_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3047,6 +3251,11 @@ impl WriteThrough for bibliography::MonthAccessed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::MONTH_ACCESSED_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::month_accessed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::MONTH_ACCESSED_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -3119,6 +3328,11 @@ impl WriteThrough for bibliography::NameList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::NAME_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::name_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::NAME_LIST_SHAPE, &self.unknown);
         through.child(&self.person, ctx)?;
         through.finish(ctx)
@@ -3283,6 +3497,11 @@ impl WriteThrough for bibliography::NumberOfVolumes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::NUMBER_OF_VOLUMES_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::number_of_volumes(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::NUMBER_OF_VOLUMES_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -3347,6 +3566,11 @@ impl WriteThrough for bibliography::Pages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PAGES_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::pages(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::PAGES_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3414,6 +3638,11 @@ impl WriteThrough for bibliography::PatentNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PATENT_NUMBER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::patent_number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::PATENT_NUMBER_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -3482,6 +3711,11 @@ impl WriteThrough for bibliography::PatentType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PATENT_TYPE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::patent_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::PATENT_TYPE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3549,6 +3783,11 @@ impl WriteThrough for bibliography::Performer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PERFORMER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::performer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::PERFORMER_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3616,6 +3855,11 @@ impl WriteThrough for bibliography::PeriodicalTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PERIODICAL_TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::periodical_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::PERIODICAL_TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -3691,6 +3935,11 @@ impl WriteThrough for bibliography::Person {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PERSON_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::person(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::PERSON_SHAPE, &self.unknown);
         through.child(&self.persons_last_or_family_name, ctx)?;
         through.child(&self.persons_first_or_given_name, ctx)?;
@@ -3760,6 +4009,15 @@ impl WriteThrough for bibliography::PersonsFirstOrGivenName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &bibliography::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = bibliography::write::persons_first_or_given_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &bibliography::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE,
@@ -3835,6 +4093,15 @@ impl WriteThrough for bibliography::PersonsLastOrFamilyName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &bibliography::PERSONS_LAST_OR_FAMILY_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = bibliography::write::persons_last_or_family_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &bibliography::PERSONS_LAST_OR_FAMILY_NAME_SHAPE,
@@ -3910,6 +4177,15 @@ impl WriteThrough for bibliography::PersonsMiddleOrOtherName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &bibliography::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = bibliography::write::persons_middle_or_other_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &bibliography::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE,
@@ -3989,6 +4265,11 @@ impl WriteThrough for bibliography::ProducerName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PRODUCER_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::producer_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::PRODUCER_NAME_SHAPE, &self.unknown);
         through.child(&self.list, ctx)?;
@@ -4061,6 +4342,12 @@ impl WriteThrough for bibliography::ProductionCompany {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &bibliography::PRODUCTION_COMPANY_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::production_company(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::PRODUCTION_COMPANY_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -4133,6 +4420,11 @@ impl WriteThrough for bibliography::PublicationTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PUBLICATION_TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::publication_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::PUBLICATION_TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -4201,6 +4493,11 @@ impl WriteThrough for bibliography::Publisher {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::PUBLISHER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::publisher(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::PUBLISHER_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4268,6 +4565,11 @@ impl WriteThrough for bibliography::RecordingNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::RECORDING_NUMBER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::recording_number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::RECORDING_NUMBER_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -4340,6 +4642,11 @@ impl WriteThrough for bibliography::ReferenceOrder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::REFERENCE_ORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::reference_order(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::REFERENCE_ORDER_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -4408,6 +4715,11 @@ impl WriteThrough for bibliography::Reporter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::REPORTER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::reporter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::REPORTER_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4471,6 +4783,11 @@ impl WriteThrough for bibliography::ShortTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::SHORT_TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::short_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::SHORT_TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4534,6 +4851,11 @@ impl WriteThrough for bibliography::Source {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::SOURCE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::source(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::SOURCE_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -4707,6 +5029,11 @@ impl WriteThrough for bibliography::SourceType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::SOURCE_TYPE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::source_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::SOURCE_TYPE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4770,6 +5097,11 @@ impl WriteThrough for bibliography::Sources {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::SOURCES_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::sources(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::SOURCES_SHAPE, &self.unknown);
         through.attribute(0, &self.selected_style);
         through.attribute(1, &self.style_name);
@@ -4840,6 +5172,11 @@ impl WriteThrough for bibliography::StandardNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::STANDARD_NUMBER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::standard_number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::STANDARD_NUMBER_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -4912,6 +5249,11 @@ impl WriteThrough for bibliography::StateOrProvince {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::STATE_OR_PROVINCE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::state_or_province(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::STATE_OR_PROVINCE_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -4976,6 +5318,11 @@ impl WriteThrough for bibliography::Station {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::STATION_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::station(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::STATION_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5035,6 +5382,11 @@ impl WriteThrough for bibliography::Tag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::TAG_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::TAG_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5094,6 +5446,11 @@ impl WriteThrough for bibliography::Theater {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::THEATER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::theater(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::THEATER_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5157,6 +5514,11 @@ impl WriteThrough for bibliography::ThesisType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::THESIS_TYPE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::thesis_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::THESIS_TYPE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5216,6 +5578,11 @@ impl WriteThrough for bibliography::Title {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::TITLE_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::TITLE_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5283,6 +5650,11 @@ impl WriteThrough for bibliography::Translator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::TRANSLATOR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::translator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::TRANSLATOR_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -5342,6 +5714,11 @@ impl WriteThrough for bibliography::Url {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::URL_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::url(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::URL_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5401,6 +5778,11 @@ impl WriteThrough for bibliography::Version {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::VERSION_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::version(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::VERSION_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5460,6 +5842,11 @@ impl WriteThrough for bibliography::Volume {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::VOLUME_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::volume(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::VOLUME_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5523,6 +5910,11 @@ impl WriteThrough for bibliography::Writer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::WRITER_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::writer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::WRITER_SHAPE, &self.unknown);
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
@@ -5582,6 +5974,11 @@ impl WriteThrough for bibliography::Year {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::YEAR_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::year(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &bibliography::YEAR_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5649,6 +6046,11 @@ impl WriteThrough for bibliography::YearAccessed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &bibliography::YEAR_ACCESSED_SHAPE, &self.unknown);
+        if converted {
+            let element = bibliography::write::year_accessed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &bibliography::YEAR_ACCESSED_SHAPE, &self.unknown);
         through.text(&self.value)?;

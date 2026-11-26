@@ -295,6 +295,15 @@ impl WriteThrough for office_drawing_2016_12_diagram::LstStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2016_12_diagram::LST_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2016_12_diagram::write::lst_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_12_diagram::LST_STYLE_SHAPE,
@@ -401,6 +410,15 @@ impl WriteThrough for office_drawing_2016_12_diagram::SpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2016_12_diagram::SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2016_12_diagram::write::sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_12_diagram::SP_PR_SHAPE,

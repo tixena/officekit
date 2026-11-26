@@ -281,6 +281,15 @@ impl WriteThrough for office_drawing_2012_chart_style::AxisTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::AXIS_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::axis_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::AXIS_TITLE_SHAPE,
@@ -377,6 +386,15 @@ impl WriteThrough for office_drawing_2012_chart_style::BodyPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::BODY_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::body_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::BODY_PR_SHAPE,
@@ -475,6 +493,16 @@ impl WriteThrough for office_drawing_2012_chart_style::CategoryAxisAxisProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::CATEGORY_AXIS_AXIS_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::category_axis_axis_props(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::CATEGORY_AXIS_AXIS_PROPS_SHAPE,
@@ -569,6 +597,18 @@ impl WriteThrough for office_drawing_2012_chart_style::CategoryAxisStyleEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::CATEGORY_AXIS_STYLE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::category_axis_style_entry(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::CATEGORY_AXIS_STYLE_ENTRY_SHAPE,
@@ -672,6 +712,15 @@ impl WriteThrough for office_drawing_2012_chart_style::ChartArea {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::CHART_AREA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::chart_area(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::CHART_AREA_SHAPE,
@@ -830,6 +879,15 @@ impl WriteThrough for office_drawing_2012_chart_style::ChartStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::CHART_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::chart_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::CHART_STYLE_SHAPE,
@@ -945,6 +1003,15 @@ impl WriteThrough for office_drawing_2012_chart_style::ColorStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::COLOR_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::color_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::COLOR_STYLE_SHAPE,
@@ -1044,6 +1111,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DataLabel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_LABEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::data_label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_LABEL_SHAPE,
@@ -1147,6 +1223,16 @@ impl WriteThrough for office_drawing_2012_chart_style::DataLabelCallout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_LABEL_CALLOUT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::data_label_callout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_LABEL_CALLOUT_SHAPE,
@@ -1230,6 +1316,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DataLabels {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_LABELS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::data_labels(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_LABELS_SHAPE,
@@ -1330,6 +1425,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DataPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_POINT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::data_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_POINT_SHAPE,
@@ -1433,6 +1537,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DataPoint3D {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_POINT3D_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::data_point3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_POINT3D_SHAPE,
@@ -1536,6 +1649,16 @@ impl WriteThrough for office_drawing_2012_chart_style::DataPointLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_POINT_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::data_point_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_POINT_LINE_SHAPE,
@@ -1639,6 +1762,16 @@ impl WriteThrough for office_drawing_2012_chart_style::DataPointMarker {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_POINT_MARKER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::data_point_marker(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_POINT_MARKER_SHAPE,
@@ -1722,6 +1855,16 @@ impl WriteThrough for office_drawing_2012_chart_style::DataPointMarkerLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_POINT_MARKER_LAYOUT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::data_point_marker_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_POINT_MARKER_LAYOUT_SHAPE,
@@ -1818,6 +1961,16 @@ impl WriteThrough for office_drawing_2012_chart_style::DataPointWireframe {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_POINT_WIREFRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::data_point_wireframe(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_POINT_WIREFRAME_SHAPE,
@@ -1901,6 +2054,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DataSeries {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_SERIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::data_series(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_SERIES_SHAPE,
@@ -1983,6 +2145,18 @@ impl WriteThrough for office_drawing_2012_chart_style::DataTableDataTableProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_TABLE_DATA_TABLE_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::data_table_data_table_props(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_TABLE_DATA_TABLE_PROPS_SHAPE,
@@ -2081,6 +2255,16 @@ impl WriteThrough for office_drawing_2012_chart_style::DataTableStyleEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DATA_TABLE_STYLE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::data_table_style_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DATA_TABLE_STYLE_ENTRY_SHAPE,
@@ -2200,6 +2384,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DefRPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DEF_R_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::def_r_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DEF_R_PR_SHAPE,
@@ -2327,6 +2520,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DownBar {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DOWN_BAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::down_bar(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DOWN_BAR_SHAPE,
@@ -2430,6 +2632,15 @@ impl WriteThrough for office_drawing_2012_chart_style::DropLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::DROP_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::drop_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::DROP_LINE_SHAPE,
@@ -2519,6 +2730,15 @@ impl WriteThrough for office_drawing_2012_chart_style::EffectRef {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::EFFECT_REF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::effect_ref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::EFFECT_REF_SHAPE,
@@ -2615,6 +2835,15 @@ impl WriteThrough for office_drawing_2012_chart_style::ErrorBar {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::ERROR_BAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::error_bar(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::ERROR_BAR_SHAPE,
@@ -2702,6 +2931,15 @@ impl WriteThrough for office_drawing_2012_chart_style::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::EXT_LST_SHAPE,
@@ -2783,6 +3021,15 @@ impl WriteThrough for office_drawing_2012_chart_style::FillRef {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::FILL_REF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::fill_ref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::FILL_REF_SHAPE,
@@ -2879,6 +3126,15 @@ impl WriteThrough for office_drawing_2012_chart_style::Floor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::FLOOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::floor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::FLOOR_SHAPE,
@@ -2968,6 +3224,15 @@ impl WriteThrough for office_drawing_2012_chart_style::FontRef {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::FONT_REF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::font_ref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::FONT_REF_SHAPE,
@@ -3066,6 +3331,15 @@ impl WriteThrough for office_drawing_2012_chart_style::GridlineMajor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::GRIDLINE_MAJOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::gridline_major(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::GRIDLINE_MAJOR_SHAPE,
@@ -3169,6 +3443,15 @@ impl WriteThrough for office_drawing_2012_chart_style::GridlineMinor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::GRIDLINE_MINOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::gridline_minor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::GRIDLINE_MINOR_SHAPE,
@@ -3272,6 +3555,15 @@ impl WriteThrough for office_drawing_2012_chart_style::HiLoLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::HI_LO_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::hi_lo_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::HI_LO_LINE_SHAPE,
@@ -3375,6 +3667,15 @@ impl WriteThrough for office_drawing_2012_chart_style::LeaderLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::LEADER_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::leader_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::LEADER_LINE_SHAPE,
@@ -3458,6 +3759,16 @@ impl WriteThrough for office_drawing_2012_chart_style::LegendLegendProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::LEGEND_LEGEND_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::legend_legend_props(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::LEGEND_LEGEND_PROPS_SHAPE,
@@ -3555,6 +3866,16 @@ impl WriteThrough for office_drawing_2012_chart_style::LegendStyleEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::LEGEND_STYLE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::legend_style_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::LEGEND_STYLE_ENTRY_SHAPE,
@@ -3638,6 +3959,16 @@ impl WriteThrough for office_drawing_2012_chart_style::LineWidthScale {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::LINE_WIDTH_SCALE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::line_width_scale(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::LINE_WIDTH_SCALE_SHAPE,
@@ -3719,6 +4050,15 @@ impl WriteThrough for office_drawing_2012_chart_style::LnRef {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::LN_REF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::ln_ref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::LN_REF_SHAPE,
@@ -3815,6 +4155,15 @@ impl WriteThrough for office_drawing_2012_chart_style::PlotArea {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::PLOT_AREA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::plot_area(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::PLOT_AREA_SHAPE,
@@ -3918,6 +4267,15 @@ impl WriteThrough for office_drawing_2012_chart_style::PlotArea3D {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::PLOT_AREA3D_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::plot_area3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::PLOT_AREA3D_SHAPE,
@@ -4001,6 +4359,16 @@ impl WriteThrough for office_drawing_2012_chart_style::SeriesAxisAxisProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::SERIES_AXIS_AXIS_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::series_axis_axis_props(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::SERIES_AXIS_AXIS_PROPS_SHAPE,
@@ -4095,6 +4463,16 @@ impl WriteThrough for office_drawing_2012_chart_style::SeriesAxisStyleEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::SERIES_AXIS_STYLE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::series_axis_style_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::SERIES_AXIS_STYLE_ENTRY_SHAPE,
@@ -4198,6 +4576,15 @@ impl WriteThrough for office_drawing_2012_chart_style::SeriesLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::SERIES_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::series_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::SERIES_LINE_SHAPE,
@@ -4302,6 +4689,15 @@ impl WriteThrough for office_drawing_2012_chart_style::SpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::SP_PR_SHAPE,
@@ -4389,6 +4785,15 @@ impl WriteThrough for office_drawing_2012_chart_style::StyleClr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::STYLE_CLR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::style_clr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::STYLE_CLR_SHAPE,
@@ -4485,6 +4890,16 @@ impl WriteThrough for office_drawing_2012_chart_style::TitleStyleEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::TITLE_STYLE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::title_style_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::TITLE_STYLE_ENTRY_SHAPE,
@@ -4568,6 +4983,16 @@ impl WriteThrough for office_drawing_2012_chart_style::TitleTitleProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::TITLE_TITLE_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::title_title_props(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::TITLE_TITLE_PROPS_SHAPE,
@@ -4663,6 +5088,16 @@ impl WriteThrough for office_drawing_2012_chart_style::TrendlineLabel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::TRENDLINE_LABEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::trendline_label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::TRENDLINE_LABEL_SHAPE,
@@ -4766,6 +5201,16 @@ impl WriteThrough for office_drawing_2012_chart_style::TrendlineStyleEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::TRENDLINE_STYLE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::trendline_style_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::TRENDLINE_STYLE_ENTRY_SHAPE,
@@ -4849,6 +5294,18 @@ impl WriteThrough for office_drawing_2012_chart_style::TrendlineTrendlineProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::TRENDLINE_TRENDLINE_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::trendline_trendline_props(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::TRENDLINE_TRENDLINE_PROPS_SHAPE,
@@ -4946,6 +5403,15 @@ impl WriteThrough for office_drawing_2012_chart_style::UpBar {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::UP_BAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::up_bar(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::UP_BAR_SHAPE,
@@ -5029,6 +5495,16 @@ impl WriteThrough for office_drawing_2012_chart_style::ValueAxisAxisProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::VALUE_AXIS_AXIS_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::value_axis_axis_props(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::VALUE_AXIS_AXIS_PROPS_SHAPE,
@@ -5123,6 +5599,16 @@ impl WriteThrough for office_drawing_2012_chart_style::ValueAxisStyleEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::VALUE_AXIS_STYLE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2012_chart_style::write::value_axis_style_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::VALUE_AXIS_STYLE_ENTRY_SHAPE,
@@ -5210,6 +5696,15 @@ impl WriteThrough for office_drawing_2012_chart_style::Variation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::VARIATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::variation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::VARIATION_SHAPE,
@@ -5285,6 +5780,15 @@ impl WriteThrough for office_drawing_2012_chart_style::View3D {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::VIEW3D_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::view3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::VIEW3D_SHAPE,
@@ -5385,6 +5889,15 @@ impl WriteThrough for office_drawing_2012_chart_style::Wall {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart_style::WALL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2012_chart_style::write::wall(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart_style::WALL_SHAPE,

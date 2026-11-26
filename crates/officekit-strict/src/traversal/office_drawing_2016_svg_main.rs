@@ -261,6 +261,15 @@ impl WriteThrough for office_drawing_2016_svg_main::SvgBlip {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2016_svg_main::SVG_BLIP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2016_svg_main::write::svg_blip(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_svg_main::SVG_BLIP_SHAPE,

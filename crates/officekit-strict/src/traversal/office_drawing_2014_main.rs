@@ -261,6 +261,12 @@ impl WriteThrough for office_drawing_2014_main::ColId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_main::COL_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_main::write::col_id(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_drawing_2014_main::COL_ID_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -332,6 +338,15 @@ impl WriteThrough for office_drawing_2014_main::CreationId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_main::CREATION_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_main::write::creation_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_main::CREATION_ID_SHAPE,
@@ -407,6 +422,15 @@ impl WriteThrough for office_drawing_2014_main::CxnDERefs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_main::CXN_DE_REFS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_main::write::cxn_de_refs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_main::CXN_DE_REFS_SHAPE,
@@ -483,6 +507,15 @@ impl WriteThrough for office_drawing_2014_main::PredDERef {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_main::PRED_DE_REF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2014_main::write::pred_de_ref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_main::PRED_DE_REF_SHAPE,
@@ -558,6 +591,12 @@ impl WriteThrough for office_drawing_2014_main::RowId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2014_main::ROW_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2014_main::write::row_id(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &office_drawing_2014_main::ROW_ID_SHAPE, &self.unknown);
         through.finish(ctx)

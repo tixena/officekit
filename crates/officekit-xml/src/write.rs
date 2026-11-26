@@ -5,6 +5,8 @@
 //! `Scope` holds the namespace declarations in scope while a typed tree is
 //! written.
 
+mod bytes;
+
 use alloc::borrow::Cow;
 use alloc::collections::{BTreeMap, BTreeSet};
 use std::io;
@@ -17,6 +19,8 @@ use super::mc::{is_mc, requires};
 use super::name::table::NAMESPACES;
 use super::name::{Namespace, QName};
 use super::parse::split_qualified;
+
+pub use bytes::clean_namespace_bytes;
 
 #[cfg(test)]
 mod tests;
@@ -176,6 +180,17 @@ impl Scope {
     /// written by its name; `end` closes it.
     pub fn start(&mut self, declarations: &[NamespaceDeclaration]) {
         self.frames.push(declarations.to_vec());
+    }
+
+    /// The URI the innermost declaration in scope binds `prefix` to; `None` when none does.
+    #[must_use = "this only returns the value"]
+    pub fn uri_of(&self, prefix: &str) -> Option<&str> {
+        self.frames
+            .iter()
+            .rev()
+            .flat_map(|frame| frame.iter().rev())
+            .find(|declaration| declaration.prefix == prefix)
+            .map(|declaration| declaration.uri.as_str())
     }
 }
 

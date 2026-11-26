@@ -265,6 +265,15 @@ impl WriteThrough for office_word_2018_wordml_cex::CommentExtensible {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2018_wordml_cex::COMMENT_EXTENSIBLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2018_wordml_cex::write::comment_extensible(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2018_wordml_cex::COMMENT_EXTENSIBLE_SHAPE,
@@ -350,6 +359,16 @@ impl WriteThrough for office_word_2018_wordml_cex::CommentsExtensible {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2018_wordml_cex::COMMENTS_EXTENSIBLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2018_wordml_cex::write::comments_extensible(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2018_wordml_cex::COMMENTS_EXTENSIBLE_SHAPE,
@@ -430,6 +449,15 @@ impl WriteThrough for office_word_2018_wordml_cex::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2018_wordml_cex::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2018_wordml_cex::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2018_wordml_cex::EXT_LST_SHAPE,

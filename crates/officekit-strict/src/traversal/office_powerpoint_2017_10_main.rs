@@ -261,6 +261,16 @@ impl WriteThrough for office_powerpoint_2017_10_main::ReadonlyRecommended {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2017_10_main::READONLY_RECOMMENDED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_powerpoint_2017_10_main::write::readonly_recommended(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2017_10_main::READONLY_RECOMMENDED_SHAPE,

@@ -265,6 +265,15 @@ impl WriteThrough for office_drawing_2018_animation::AnimPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_animation::ANIM_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_animation::write::anim_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation::ANIM_PR_SHAPE,
@@ -351,6 +360,15 @@ impl WriteThrough for office_drawing_2018_animation::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_animation::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_animation::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation::EXT_LST_SHAPE,

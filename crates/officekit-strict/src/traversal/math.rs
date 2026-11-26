@@ -259,6 +259,11 @@ impl WriteThrough for math::Accent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ACCENT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::accent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ACCENT_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -321,6 +326,11 @@ impl WriteThrough for math::AccentProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ACCENT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::accent_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ACCENT_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.character, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -381,6 +391,11 @@ impl WriteThrough for math::AlignScripts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ALIGN_SCRIPTS_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::align_scripts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ALIGN_SCRIPTS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -435,6 +450,11 @@ impl WriteThrough for math::Alignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ALIGNMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::alignment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ALIGNMENT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -493,6 +513,11 @@ impl WriteThrough for math::ArgumentProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ARGUMENT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::argument_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ARGUMENT_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.argument_size, ctx)?;
         through.finish(ctx)
@@ -552,6 +577,11 @@ impl WriteThrough for math::ArgumentSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ARGUMENT_SIZE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::argument_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ARGUMENT_SIZE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -612,6 +642,11 @@ impl WriteThrough for math::ArrayObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ARRAY_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::array_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ARRAY_OBJECT_SHAPE, &self.unknown);
         through.child(&self.array_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -685,6 +720,11 @@ impl WriteThrough for math::ArrayProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ARRAY_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::array_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ARRAY_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.matrix_base_justification, ctx)?;
         through.child(&self.maximum_distribution, ctx)?;
@@ -751,6 +791,11 @@ impl WriteThrough for math::Bar {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BAR_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::bar(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::BAR_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -813,6 +858,11 @@ impl WriteThrough for math::BarProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BAR_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::bar_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::BAR_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.position, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -875,6 +925,11 @@ impl WriteThrough for math::BorderBoxObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BORDER_BOX_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::border_box_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::BORDER_BOX_OBJECT_SHAPE, &self.unknown);
         through.child(&self.border_box_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -972,6 +1027,11 @@ impl WriteThrough for math::BorderBoxProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BORDER_BOX_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::border_box_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::BORDER_BOX_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.hide_top_edge, ctx)?;
@@ -1048,6 +1108,16 @@ impl WriteThrough for math::BorderBoxStrikethroughBottomLeftToTopRight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::BORDER_BOX_STRIKETHROUGH_BOTTOM_LEFT_TO_TOP_RIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                math::write::border_box_strikethrough_bottom_left_to_top_right(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_BOTTOM_LEFT_TO_TOP_RIGHT_SHAPE,
@@ -1123,6 +1193,15 @@ impl WriteThrough for math::BorderBoxStrikethroughHorizontal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::BORDER_BOX_STRIKETHROUGH_HORIZONTAL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = math::write::border_box_strikethrough_horizontal(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_HORIZONTAL_SHAPE,
@@ -1198,6 +1277,16 @@ impl WriteThrough for math::BorderBoxStrikethroughTopLeftToBottomRight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::BORDER_BOX_STRIKETHROUGH_TOP_LEFT_TO_BOTTOM_RIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                math::write::border_box_strikethrough_top_left_to_bottom_right(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_TOP_LEFT_TO_BOTTOM_RIGHT_SHAPE,
@@ -1273,6 +1362,15 @@ impl WriteThrough for math::BorderBoxStrikethroughVertical {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::BORDER_BOX_STRIKETHROUGH_VERTICAL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = math::write::border_box_strikethrough_vertical(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_VERTICAL_SHAPE,
@@ -1346,6 +1444,11 @@ impl WriteThrough for math::BoxObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BOX_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::box_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::BOX_OBJECT_SHAPE, &self.unknown);
         through.child(&self.box_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -1416,6 +1519,11 @@ impl WriteThrough for math::BoxProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BOX_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::box_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::BOX_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.operator_emulator, ctx)?;
         through.child(&self.no_break, ctx)?;
@@ -1475,6 +1583,11 @@ impl WriteThrough for math::Break {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BREAK_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::r#break(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::BREAK_SHAPE, &self.unknown);
         through.attribute(0, &self.aln_at);
         through.finish(ctx)
@@ -1533,6 +1646,11 @@ impl WriteThrough for math::BreakOnBinaryOperators {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::BREAK_ON_BINARY_OPERATORS_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::break_on_binary_operators(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::BREAK_ON_BINARY_OPERATORS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -1597,6 +1715,12 @@ impl WriteThrough for math::BreakOnBinarySubtraction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &math::BREAK_ON_BINARY_SUBTRACTION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::break_on_binary_subtraction(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::BREAK_ON_BINARY_SUBTRACTION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -1657,6 +1781,11 @@ impl WriteThrough for math::Character {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::CHARACTER_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::CHARACTER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1715,6 +1844,11 @@ impl WriteThrough for math::ControlProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::CONTROL_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::control_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::CONTROL_PROPERTIES_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -1870,6 +2004,11 @@ impl WriteThrough for math::DefaultJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::DEFAULT_JUSTIFICATION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::default_justification(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::DEFAULT_JUSTIFICATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -1940,6 +2079,11 @@ impl WriteThrough for math::Degree {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::DEGREE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::degree(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::DEGREE_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -2004,6 +2148,15 @@ impl WriteThrough for math::DelimiterBeginningCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::DELIMITER_BEGINNING_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = math::write::delimiter_beginning_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::DELIMITER_BEGINNING_CHARACTER_SHAPE,
@@ -2075,6 +2228,12 @@ impl WriteThrough for math::DelimiterEndingCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &math::DELIMITER_ENDING_CHARACTER_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::delimiter_ending_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::DELIMITER_ENDING_CHARACTER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -2142,6 +2301,11 @@ impl WriteThrough for math::DelimiterObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::DELIMITER_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::delimiter_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::DELIMITER_OBJECT_SHAPE, &self.unknown);
         through.child(&self.delimiter_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -2216,6 +2380,11 @@ impl WriteThrough for math::DelimiterProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::DELIMITER_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::delimiter_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::DELIMITER_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.delimiter_beginning_character, ctx)?;
@@ -2289,6 +2458,15 @@ impl WriteThrough for math::DelimiterSeparatorCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::DELIMITER_SEPARATOR_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = math::write::delimiter_separator_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::DELIMITER_SEPARATOR_CHARACTER_SHAPE,
@@ -2366,6 +2544,11 @@ impl WriteThrough for math::Denominator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::DENOMINATOR_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::denominator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::DENOMINATOR_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -2422,6 +2605,11 @@ impl WriteThrough for math::Differential {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::DIFFERENTIAL_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::differential(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::DIFFERENTIAL_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2486,6 +2674,11 @@ impl WriteThrough for math::E {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::E_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::e(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::E_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -2551,6 +2744,11 @@ impl WriteThrough for math::FractionObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::FRACTION_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::fraction_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::FRACTION_OBJECT_SHAPE, &self.unknown);
         through.child(&self.fraction_properties, ctx)?;
         through.child(&self.numerator, ctx)?;
@@ -2615,6 +2813,11 @@ impl WriteThrough for math::FractionProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::FRACTION_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::fraction_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::FRACTION_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.fraction_type, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -2675,6 +2878,11 @@ impl WriteThrough for math::FractionType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::FRACTION_TYPE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::fraction_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::FRACTION_TYPE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2738,6 +2946,11 @@ impl WriteThrough for math::FunctionApplyObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::FUNCTION_APPLY_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::function_apply_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::FUNCTION_APPLY_OBJECT_SHAPE, &self.unknown);
         through.child(&self.function_properties, ctx)?;
@@ -2810,6 +3023,11 @@ impl WriteThrough for math::FunctionName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::FUNCTION_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::function_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::FUNCTION_NAME_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -2871,6 +3089,11 @@ impl WriteThrough for math::FunctionProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::FUNCTION_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::function_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::FUNCTION_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
@@ -2937,6 +3160,11 @@ impl WriteThrough for math::GroupCharacterObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::GROUP_CHARACTER_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::group_character_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::GROUP_CHARACTER_OBJECT_SHAPE, &self.unknown);
         through.child(&self.group_character_properties, ctx)?;
@@ -3014,6 +3242,12 @@ impl WriteThrough for math::GroupCharacterProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &math::GROUP_CHARACTER_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::group_character_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::GROUP_CHARACTER_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.character, ctx)?;
@@ -3077,6 +3311,11 @@ impl WriteThrough for math::Grow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::GROW_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::grow(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::GROW_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3131,6 +3370,11 @@ impl WriteThrough for math::HideBottomEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::HIDE_BOTTOM_EDGE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::hide_bottom_edge(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::HIDE_BOTTOM_EDGE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3186,6 +3430,11 @@ impl WriteThrough for math::HideDegree {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::HIDE_DEGREE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::hide_degree(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::HIDE_DEGREE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3240,6 +3489,11 @@ impl WriteThrough for math::HideLeftEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::HIDE_LEFT_EDGE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::hide_left_edge(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::HIDE_LEFT_EDGE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3294,6 +3548,11 @@ impl WriteThrough for math::HideRightEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::HIDE_RIGHT_EDGE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::hide_right_edge(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::HIDE_RIGHT_EDGE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3349,6 +3608,11 @@ impl WriteThrough for math::HideTopEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::HIDE_TOP_EDGE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::hide_top_edge(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::HIDE_TOP_EDGE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3407,6 +3671,11 @@ impl WriteThrough for math::IntegralLimitLocations {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::INTEGRAL_LIMIT_LOCATIONS_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::integral_limit_locations(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::INTEGRAL_LIMIT_LOCATIONS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -3467,6 +3736,11 @@ impl WriteThrough for math::InterEquationSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::INTER_EQUATION_SPACING_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::inter_equation_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::INTER_EQUATION_SPACING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -3527,6 +3801,11 @@ impl WriteThrough for math::IntraEquationSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::INTRA_EQUATION_SPACING_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::intra_equation_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::INTRA_EQUATION_SPACING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -3587,6 +3866,11 @@ impl WriteThrough for math::Justification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::JUSTIFICATION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::justification(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::JUSTIFICATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3641,6 +3925,11 @@ impl WriteThrough for math::LeftMargin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::LEFT_MARGIN_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::left_margin(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::LEFT_MARGIN_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3695,6 +3984,11 @@ impl WriteThrough for math::LimLoc {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::LIM_LOC_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::lim_loc(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::LIM_LOC_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3759,6 +4053,11 @@ impl WriteThrough for math::Limit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::LIMIT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::limit(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::LIMIT_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -3815,6 +4114,11 @@ impl WriteThrough for math::Literal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::LITERAL_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::literal(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::LITERAL_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3878,6 +4182,11 @@ impl WriteThrough for math::LowerLimitObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::LOWER_LIMIT_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::lower_limit_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::LOWER_LIMIT_OBJECT_SHAPE, &self.unknown);
         through.child(&self.lower_limit_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -3944,6 +4253,11 @@ impl WriteThrough for math::LowerLimitProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::LOWER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::lower_limit_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::LOWER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.control_properties, ctx)?;
@@ -4004,6 +4318,11 @@ impl WriteThrough for math::MathFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATH_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::math_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATH_FONT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4099,6 +4418,11 @@ impl WriteThrough for math::MathProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATH_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::math_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATH_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.math_font, ctx)?;
         through.child(&self.break_on_binary_operators, ctx)?;
@@ -4257,6 +4581,11 @@ impl WriteThrough for math::MatrixBaseJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_BASE_JUSTIFICATION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_base_justification(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::MATRIX_BASE_JUSTIFICATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -4321,6 +4650,11 @@ impl WriteThrough for math::MatrixColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_COLUMN_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATRIX_COLUMN_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.finish(ctx)
@@ -4375,6 +4709,11 @@ impl WriteThrough for math::MatrixColumnCount {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_COLUMN_COUNT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_column_count(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATRIX_COLUMN_COUNT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4434,6 +4773,11 @@ impl WriteThrough for math::MatrixColumnGap {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_COLUMN_GAP_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_column_gap(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATRIX_COLUMN_GAP_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4493,6 +4837,11 @@ impl WriteThrough for math::MatrixColumnGapRule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_COLUMN_GAP_RULE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_column_gap_rule(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::MATRIX_COLUMN_GAP_RULE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -4557,6 +4906,12 @@ impl WriteThrough for math::MatrixColumnJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &math::MATRIX_COLUMN_JUSTIFICATION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_column_justification(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::MATRIX_COLUMN_JUSTIFICATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -4629,6 +4984,11 @@ impl WriteThrough for math::MatrixColumnProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_COLUMN_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_column_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::MATRIX_COLUMN_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.matrix_column_count, ctx)?;
@@ -4694,6 +5054,11 @@ impl WriteThrough for math::MatrixColumns {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_COLUMNS_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_columns(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATRIX_COLUMNS_SHAPE, &self.unknown);
         through.child(&self.matrix_column, ctx)?;
         through.finish(ctx)
@@ -4754,6 +5119,11 @@ impl WriteThrough for math::MatrixObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATRIX_OBJECT_SHAPE, &self.unknown);
         through.child(&self.matrix_properties, ctx)?;
         through.child(&self.matrix_row, ctx)?;
@@ -4833,6 +5203,11 @@ impl WriteThrough for math::MatrixProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATRIX_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.matrix_base_justification, ctx)?;
         through.child(&self.plc_hide, ctx)?;
@@ -4904,6 +5279,11 @@ impl WriteThrough for math::MatrixRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MATRIX_ROW_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::matrix_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::MATRIX_ROW_SHAPE, &self.unknown);
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -4958,6 +5338,11 @@ impl WriteThrough for math::MaximumDistribution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::MAXIMUM_DISTRIBUTION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::maximum_distribution(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::MAXIMUM_DISTRIBUTION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -5022,6 +5407,12 @@ impl WriteThrough for math::MinimumMatrixColumnWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &math::MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::minimum_matrix_column_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -5092,6 +5483,11 @@ impl WriteThrough for math::Nary {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::NARY_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::nary(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::NARY_SHAPE, &self.unknown);
         through.child(&self.pr, ctx)?;
         through.child(&self.sub, ctx)?;
@@ -5149,6 +5545,11 @@ impl WriteThrough for math::NaryLim {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::NARY_LIM_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::nary_lim(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::NARY_LIM_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -5218,6 +5619,11 @@ impl WriteThrough for math::NaryPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::NARY_PR_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::nary_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::NARY_PR_SHAPE, &self.unknown);
         through.child(&self.character, ctx)?;
         through.child(&self.lim_loc, ctx)?;
@@ -5277,6 +5683,11 @@ impl WriteThrough for math::NoBreak {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::NO_BREAK_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::no_break(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::NO_BREAK_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -5331,6 +5742,11 @@ impl WriteThrough for math::NormalText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::NORMAL_TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::normal_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::NORMAL_TEXT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -5395,6 +5811,11 @@ impl WriteThrough for math::Numerator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::NUMERATOR_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::numerator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::NUMERATOR_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -5451,6 +5872,11 @@ impl WriteThrough for math::ObjectDistribution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::OBJECT_DISTRIBUTION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::object_distribution(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::OBJECT_DISTRIBUTION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -5514,6 +5940,11 @@ impl WriteThrough for math::OfficeMath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::OFFICE_MATH_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::office_math(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::OFFICE_MATH_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -5686,6 +6117,11 @@ impl WriteThrough for math::OfficeMathParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::OFFICE_MATH_PARAGRAPH_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::office_math_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::OFFICE_MATH_PARAGRAPH_SHAPE, &self.unknown);
         through.child(&self.custom_xml_conflict_ins_range_start, ctx)?;
@@ -5765,6 +6201,15 @@ impl WriteThrough for math::OfficeMathParagraphProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::OFFICE_MATH_PARAGRAPH_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = math::write::office_math_paragraph_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::OFFICE_MATH_PARAGRAPH_PROPERTIES_SHAPE,
@@ -5832,6 +6277,11 @@ impl WriteThrough for math::OperatorEmulator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::OPERATOR_EMULATOR_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::operator_emulator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::OPERATOR_EMULATOR_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -5898,6 +6348,11 @@ impl WriteThrough for math::PhantomObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PHANTOM_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::phantom_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::PHANTOM_OBJECT_SHAPE, &self.unknown);
         through.child(&self.phantom_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -5971,6 +6426,11 @@ impl WriteThrough for math::PhantomProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PHANTOM_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::phantom_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::PHANTOM_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.phantom_show, ctx)?;
         through.child(&self.phantom_zero_width, ctx)?;
@@ -6035,6 +6495,11 @@ impl WriteThrough for math::PhantomShow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PHANTOM_SHOW_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::phantom_show(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::PHANTOM_SHOW_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6089,6 +6554,11 @@ impl WriteThrough for math::PhantomZeroAscent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PHANTOM_ZERO_ASCENT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::phantom_zero_ascent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::PHANTOM_ZERO_ASCENT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6148,6 +6618,11 @@ impl WriteThrough for math::PhantomZeroDescent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PHANTOM_ZERO_DESCENT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::phantom_zero_descent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::PHANTOM_ZERO_DESCENT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -6208,6 +6683,11 @@ impl WriteThrough for math::PhantomZeroWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PHANTOM_ZERO_WIDTH_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::phantom_zero_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::PHANTOM_ZERO_WIDTH_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6267,6 +6747,11 @@ impl WriteThrough for math::PlcHide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PLC_HIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::plc_hide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::PLC_HIDE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6321,6 +6806,11 @@ impl WriteThrough for math::Position {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::POSITION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::position(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::POSITION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6375,6 +6865,11 @@ impl WriteThrough for math::PostParagraphSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::POST_PARAGRAPH_SPACING_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::post_paragraph_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::POST_PARAGRAPH_SPACING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -6435,6 +6930,11 @@ impl WriteThrough for math::PreParagraphSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::PRE_PARAGRAPH_SPACING_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::pre_paragraph_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::PRE_PARAGRAPH_SPACING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -6510,6 +7010,12 @@ impl WriteThrough for math::PreSubSuperscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &math::PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::pre_sub_superscript_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
         through.child(&self.pre_sub_superscript_properties, ctx)?;
@@ -6586,6 +7092,15 @@ impl WriteThrough for math::PreSubSuperscriptProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &math::PRE_SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = math::write::pre_sub_superscript_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &math::PRE_SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
@@ -6653,6 +7168,11 @@ impl WriteThrough for math::RSp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::R_SP_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::r_sp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::R_SP_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6716,6 +7236,11 @@ impl WriteThrough for math::RadicalObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::RADICAL_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::radical_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::RADICAL_OBJECT_SHAPE, &self.unknown);
         through.child(&self.radical_properties, ctx)?;
         through.child(&self.degree, ctx)?;
@@ -6779,6 +7304,11 @@ impl WriteThrough for math::RadicalProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::RADICAL_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::radical_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::RADICAL_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.hide_degree, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -6839,6 +7369,11 @@ impl WriteThrough for math::RightMargin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::RIGHT_MARGIN_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::right_margin(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::RIGHT_MARGIN_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6893,6 +7428,11 @@ impl WriteThrough for math::RowSpacingRule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::ROW_SPACING_RULE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::row_spacing_rule(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::ROW_SPACING_RULE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6956,6 +7496,11 @@ impl WriteThrough for math::Run {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::RUN_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::run(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::RUN_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
         through.child(&self.w_properties, ctx)?;
@@ -7108,6 +7653,11 @@ impl WriteThrough for math::RunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::RUN_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::RUN_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.literal, ctx)?;
         through.items(&self.content, ctx)?;
@@ -7278,6 +7828,11 @@ impl WriteThrough for math::Script {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SCRIPT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::script(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SCRIPT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -7332,6 +7887,11 @@ impl WriteThrough for math::Shp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SHP_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::shp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SHP_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -7386,6 +7946,11 @@ impl WriteThrough for math::SmallFraction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SMALL_FRACTION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::small_fraction(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SMALL_FRACTION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -7440,6 +8005,11 @@ impl WriteThrough for math::Sty {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::STY_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::sty(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::STY_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -7504,6 +8074,11 @@ impl WriteThrough for math::Sub {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUB_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::sub(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SUB_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -7560,6 +8135,11 @@ impl WriteThrough for math::SubHide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUB_HIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::sub_hide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SUB_HIDE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -7625,6 +8205,11 @@ impl WriteThrough for math::SubSuperscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::sub_superscript_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
         through.child(&self.sub_superscript_properties, ctx)?;
@@ -7699,6 +8284,12 @@ impl WriteThrough for math::SubSuperscriptProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &math::SUB_SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::sub_superscript_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::SUB_SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.align_scripts, ctx)?;
@@ -7769,6 +8360,11 @@ impl WriteThrough for math::SubscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUBSCRIPT_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::subscript_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SUBSCRIPT_OBJECT_SHAPE, &self.unknown);
         through.child(&self.subscript_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -7831,6 +8427,11 @@ impl WriteThrough for math::SubscriptProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUBSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::subscript_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::SUBSCRIPT_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.control_properties, ctx)?;
@@ -7901,6 +8502,11 @@ impl WriteThrough for math::Sup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUP_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::sup(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SUP_SHAPE, &self.unknown);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -7957,6 +8563,11 @@ impl WriteThrough for math::SupHide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUP_HIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::sup_hide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SUP_HIDE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -8020,6 +8631,11 @@ impl WriteThrough for math::SuperscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::superscript_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
         through.child(&self.superscript_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -8086,6 +8702,11 @@ impl WriteThrough for math::SuperscriptProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::superscript_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.control_properties, ctx)?;
@@ -8146,6 +8767,11 @@ impl WriteThrough for math::Text {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::TEXT_SHAPE, &self.unknown);
         through.attribute(0, &self.space);
         through.text(&self.value)?;
@@ -8201,6 +8827,11 @@ impl WriteThrough for math::Transp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::TRANSP_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::transp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::TRANSP_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -8264,6 +8895,11 @@ impl WriteThrough for math::UpperLimitObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::UPPER_LIMIT_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::upper_limit_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::UPPER_LIMIT_OBJECT_SHAPE, &self.unknown);
         through.child(&self.upper_limit_properties, ctx)?;
         through.child(&self.e, ctx)?;
@@ -8330,6 +8966,11 @@ impl WriteThrough for math::UpperLimitProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::UPPER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::upper_limit_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::UPPER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.control_properties, ctx)?;
@@ -8394,6 +9035,11 @@ impl WriteThrough for math::UseDisplayMathDefaults {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::USE_DISPLAY_MATH_DEFAULTS_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::use_display_math_defaults(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::USE_DISPLAY_MATH_DEFAULTS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -8454,6 +9100,11 @@ impl WriteThrough for math::VerticalJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::VERTICAL_JUSTIFICATION_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::vertical_justification(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &math::VERTICAL_JUSTIFICATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -8514,6 +9165,11 @@ impl WriteThrough for math::WrapIndent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::WRAP_INDENT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::wrap_indent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::WRAP_INDENT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -8568,6 +9224,11 @@ impl WriteThrough for math::WrapRight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &math::WRAP_RIGHT_SHAPE, &self.unknown);
+        if converted {
+            let element = math::write::wrap_right(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &math::WRAP_RIGHT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)

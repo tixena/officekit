@@ -265,6 +265,15 @@ impl WriteThrough for document_properties_variant_types::Array {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::ARRAY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::array(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::ARRAY_SHAPE,
@@ -566,6 +575,15 @@ impl WriteThrough for document_properties_variant_types::BasicString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BASIC_STRING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::basic_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BASIC_STRING_SHAPE,
@@ -641,6 +659,15 @@ impl WriteThrough for document_properties_variant_types::BinaryBlob {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BINARY_BLOB_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::binary_blob(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_BLOB_SHAPE,
@@ -716,6 +743,16 @@ impl WriteThrough for document_properties_variant_types::BinaryBlobObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BINARY_BLOB_OBJECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::binary_blob_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_BLOB_OBJECT_SHAPE,
@@ -791,6 +828,16 @@ impl WriteThrough for document_properties_variant_types::BinaryStorage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BINARY_STORAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::binary_storage(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STORAGE_SHAPE,
@@ -866,6 +913,16 @@ impl WriteThrough for document_properties_variant_types::BinaryStorageObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BINARY_STORAGE_OBJECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::binary_storage_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STORAGE_OBJECT_SHAPE,
@@ -941,6 +998,16 @@ impl WriteThrough for document_properties_variant_types::BinaryStream {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BINARY_STREAM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::binary_stream(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STREAM_SHAPE,
@@ -1016,6 +1083,16 @@ impl WriteThrough for document_properties_variant_types::BinaryStreamObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BINARY_STREAM_OBJECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::binary_stream_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STREAM_OBJECT_SHAPE,
@@ -1091,6 +1168,18 @@ impl WriteThrough for document_properties_variant_types::BinaryVersionedStream {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BINARY_VERSIONED_STREAM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::binary_versioned_stream(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_VERSIONED_STREAM_SHAPE,
@@ -1167,6 +1256,15 @@ impl WriteThrough for document_properties_variant_types::Boolean {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::BOOLEAN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::boolean(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BOOLEAN_SHAPE,
@@ -1242,6 +1340,15 @@ impl WriteThrough for document_properties_variant_types::ClassID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::CLASS_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::class_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::CLASS_ID_SHAPE,
@@ -1317,6 +1424,15 @@ impl WriteThrough for document_properties_variant_types::Currency {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::CURRENCY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::currency(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::CURRENCY_SHAPE,
@@ -1392,6 +1508,16 @@ impl WriteThrough for document_properties_variant_types::DateAndTime {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::DATE_AND_TIME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::date_and_time(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::DATE_AND_TIME_SHAPE,
@@ -1467,6 +1593,15 @@ impl WriteThrough for document_properties_variant_types::Decimal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::DECIMAL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::decimal(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::DECIMAL_SHAPE,
@@ -1542,6 +1677,15 @@ impl WriteThrough for document_properties_variant_types::Empty {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::EMPTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::empty(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &document_properties_variant_types::EMPTY_SHAPE,
@@ -1616,6 +1760,16 @@ impl WriteThrough for document_properties_variant_types::ErrorStatusCode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::ERROR_STATUS_CODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::error_status_code(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::ERROR_STATUS_CODE_SHAPE,
@@ -1691,6 +1845,15 @@ impl WriteThrough for document_properties_variant_types::FileTime {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::FILE_TIME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::file_time(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::FILE_TIME_SHAPE,
@@ -1766,6 +1929,15 @@ impl WriteThrough for document_properties_variant_types::I1 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::I1_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::i1(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I1_SHAPE,
@@ -1841,6 +2013,15 @@ impl WriteThrough for document_properties_variant_types::I2 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::I2_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::i2(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I2_SHAPE,
@@ -1916,6 +2097,15 @@ impl WriteThrough for document_properties_variant_types::I4 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::I4_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::i4(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I4_SHAPE,
@@ -1991,6 +2181,15 @@ impl WriteThrough for document_properties_variant_types::I8 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::I8_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::i8(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I8_SHAPE,
@@ -2066,6 +2265,15 @@ impl WriteThrough for document_properties_variant_types::Integer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::INTEGER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::integer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::INTEGER_SHAPE,
@@ -2141,6 +2349,15 @@ impl WriteThrough for document_properties_variant_types::Lpstr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::LPSTR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::lpstr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::LPSTR_SHAPE,
@@ -2216,6 +2433,15 @@ impl WriteThrough for document_properties_variant_types::Lpwstr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::LPWSTR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::lpwstr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::LPWSTR_SHAPE,
@@ -2291,6 +2517,15 @@ impl WriteThrough for document_properties_variant_types::Null {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::NULL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::null(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &document_properties_variant_types::NULL_SHAPE,
@@ -2365,6 +2600,15 @@ impl WriteThrough for document_properties_variant_types::R4 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::R4_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::r4(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::R4_SHAPE,
@@ -2440,6 +2684,15 @@ impl WriteThrough for document_properties_variant_types::R8 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::R8_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::r8(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::R8_SHAPE,
@@ -2515,6 +2768,15 @@ impl WriteThrough for document_properties_variant_types::Ui1 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::UI1_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::ui1(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI1_SHAPE,
@@ -2590,6 +2852,15 @@ impl WriteThrough for document_properties_variant_types::Ui2 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::UI2_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::ui2(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI2_SHAPE,
@@ -2665,6 +2936,15 @@ impl WriteThrough for document_properties_variant_types::Ui4 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::UI4_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::ui4(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI4_SHAPE,
@@ -2740,6 +3020,15 @@ impl WriteThrough for document_properties_variant_types::Ui8 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::UI8_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::ui8(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI8_SHAPE,
@@ -2815,6 +3104,16 @@ impl WriteThrough for document_properties_variant_types::UnsignedInteger {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::UNSIGNED_INTEGER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                document_properties_variant_types::write::unsigned_integer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UNSIGNED_INTEGER_SHAPE,
@@ -2894,6 +3193,15 @@ impl WriteThrough for document_properties_variant_types::Variant {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::VARIANT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::variant(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::VARIANT_SHAPE,
@@ -3059,6 +3367,15 @@ impl WriteThrough for document_properties_variant_types::Vector {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &document_properties_variant_types::VECTOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = document_properties_variant_types::write::vector(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::VECTOR_SHAPE,

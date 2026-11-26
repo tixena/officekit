@@ -269,6 +269,15 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::Bg {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_canvas::BG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordprocessing_canvas::write::bg(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_canvas::BG_SHAPE,
@@ -349,6 +358,15 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_canvas::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordprocessing_canvas::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_canvas::EXT_LST_SHAPE,
@@ -436,6 +454,16 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::GraphicFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_canvas::GRAPHIC_FRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordprocessing_canvas::write::graphic_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_canvas::GRAPHIC_FRAME_SHAPE,
@@ -521,6 +549,15 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::Whole {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_canvas::WHOLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordprocessing_canvas::write::whole(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_canvas::WHOLE_SHAPE,
@@ -746,6 +783,15 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::Wpc {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_canvas::WPC_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_word_2010_wordprocessing_canvas::write::wpc(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_canvas::WPC_SHAPE,

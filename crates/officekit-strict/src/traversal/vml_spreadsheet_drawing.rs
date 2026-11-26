@@ -261,6 +261,11 @@ impl WriteThrough for vml_spreadsheet_drawing::Anchor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml_spreadsheet_drawing::ANCHOR_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_spreadsheet_drawing::write::anchor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_spreadsheet_drawing::ANCHOR_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -337,6 +342,15 @@ impl WriteThrough for vml_spreadsheet_drawing::AttachedObjectData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::ATTACHED_OBJECT_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::attached_object_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::ATTACHED_OBJECT_DATA_SHAPE,
@@ -526,6 +540,15 @@ impl WriteThrough for vml_spreadsheet_drawing::AutoFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::AUTO_FILL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::auto_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::AUTO_FILL_SHAPE,
@@ -601,6 +624,15 @@ impl WriteThrough for vml_spreadsheet_drawing::AutoLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::AUTO_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::auto_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::AUTO_LINE_SHAPE,
@@ -676,6 +708,15 @@ impl WriteThrough for vml_spreadsheet_drawing::AutomaticallySize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::AUTOMATICALLY_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::automatically_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::AUTOMATICALLY_SIZE_SHAPE,
@@ -751,6 +792,15 @@ impl WriteThrough for vml_spreadsheet_drawing::CallbackType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::CALLBACK_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::callback_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::CALLBACK_TYPE_SHAPE,
@@ -826,6 +876,15 @@ impl WriteThrough for vml_spreadsheet_drawing::CameraSourceRange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::CAMERA_SOURCE_RANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::camera_source_range(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::CAMERA_SOURCE_RANGE_SHAPE,
@@ -901,6 +960,15 @@ impl WriteThrough for vml_spreadsheet_drawing::CameraTool {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::CAMERA_TOOL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::camera_tool(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::CAMERA_TOOL_SHAPE,
@@ -976,6 +1044,15 @@ impl WriteThrough for vml_spreadsheet_drawing::CancelButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::CANCEL_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::cancel_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::CANCEL_BUTTON_SHAPE,
@@ -1051,6 +1128,12 @@ impl WriteThrough for vml_spreadsheet_drawing::Checked {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &vml_spreadsheet_drawing::CHECKED_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_spreadsheet_drawing::write::checked(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_spreadsheet_drawing::CHECKED_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -1123,6 +1206,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ClipboardFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::CLIPBOARD_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::clipboard_format(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::CLIPBOARD_FORMAT_SHAPE,
@@ -1198,6 +1290,15 @@ impl WriteThrough for vml_spreadsheet_drawing::CommentColumnTarget {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::COMMENT_COLUMN_TARGET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::comment_column_target(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::COMMENT_COLUMN_TARGET_SHAPE,
@@ -1273,6 +1374,15 @@ impl WriteThrough for vml_spreadsheet_drawing::CommentRowTarget {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::COMMENT_ROW_TARGET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::comment_row_target(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::COMMENT_ROW_TARGET_SHAPE,
@@ -1348,6 +1458,16 @@ impl WriteThrough for vml_spreadsheet_drawing::CommentVisibilityToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::COMMENT_VISIBILITY_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::comment_visibility_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::COMMENT_VISIBILITY_TOGGLE_SHAPE,
@@ -1423,6 +1543,16 @@ impl WriteThrough for vml_spreadsheet_drawing::CommentsColumnIsHidden {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::COMMENTS_COLUMN_IS_HIDDEN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::comments_column_is_hidden(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::COMMENTS_COLUMN_IS_HIDDEN_SHAPE,
@@ -1498,6 +1628,15 @@ impl WriteThrough for vml_spreadsheet_drawing::CommentsRowIsHidden {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::COMMENTS_ROW_IS_HIDDEN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::comments_row_is_hidden(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::COMMENTS_ROW_IS_HIDDEN_SHAPE,
@@ -1573,6 +1712,15 @@ impl WriteThrough for vml_spreadsheet_drawing::DefaultButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DEFAULT_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::default_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DEFAULT_BUTTON_SHAPE,
@@ -1648,6 +1796,15 @@ impl WriteThrough for vml_spreadsheet_drawing::DefaultSizeToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DEFAULT_SIZE_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::default_size_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DEFAULT_SIZE_TOGGLE_SHAPE,
@@ -1723,6 +1880,15 @@ impl WriteThrough for vml_spreadsheet_drawing::Disable3DNoThreeD {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DISABLE3D_NO_THREE_D_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::disable3d_no_three_d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DISABLE3D_NO_THREE_D_SHAPE,
@@ -1798,6 +1964,15 @@ impl WriteThrough for vml_spreadsheet_drawing::Disable3DNoThreeD2 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DISABLE3D_NO_THREE_D2_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::disable3d_no_three_d2(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DISABLE3D_NO_THREE_D2_SHAPE,
@@ -1873,6 +2048,15 @@ impl WriteThrough for vml_spreadsheet_drawing::DismissButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DISMISS_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::dismiss_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DISMISS_BUTTON_SHAPE,
@@ -1948,6 +2132,15 @@ impl WriteThrough for vml_spreadsheet_drawing::DropdownColorToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DROPDOWN_COLOR_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::dropdown_color_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DROPDOWN_COLOR_TOGGLE_SHAPE,
@@ -2023,6 +2216,15 @@ impl WriteThrough for vml_spreadsheet_drawing::DropdownMaximumLines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DROPDOWN_MAXIMUM_LINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::dropdown_maximum_lines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DROPDOWN_MAXIMUM_LINES_SHAPE,
@@ -2098,6 +2300,15 @@ impl WriteThrough for vml_spreadsheet_drawing::DropdownStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DROPDOWN_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::dropdown_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DROPDOWN_STYLE_SHAPE,
@@ -2173,6 +2384,15 @@ impl WriteThrough for vml_spreadsheet_drawing::DynamicDataExchange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::DYNAMIC_DATA_EXCHANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::dynamic_data_exchange(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::DYNAMIC_DATA_EXCHANGE_SHAPE,
@@ -2248,6 +2468,15 @@ impl WriteThrough for vml_spreadsheet_drawing::EmbeddedControl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::EMBEDDED_CONTROL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::embedded_control(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::EMBEDDED_CONTROL_SHAPE,
@@ -2323,6 +2552,16 @@ impl WriteThrough for vml_spreadsheet_drawing::FarEastAlignmentToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::FAR_EAST_ALIGNMENT_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::far_east_alignment_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::FAR_EAST_ALIGNMENT_TOGGLE_SHAPE,
@@ -2398,6 +2637,15 @@ impl WriteThrough for vml_spreadsheet_drawing::FirstRadioButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::FIRST_RADIO_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::first_radio_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::FIRST_RADIO_BUTTON_SHAPE,
@@ -2473,6 +2721,15 @@ impl WriteThrough for vml_spreadsheet_drawing::FontAutoScale {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::FONT_AUTO_SCALE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::font_auto_scale(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::FONT_AUTO_SCALE_SHAPE,
@@ -2548,6 +2805,15 @@ impl WriteThrough for vml_spreadsheet_drawing::HTMLScriptAttributes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::HTML_SCRIPT_ATTRIBUTES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::html_script_attributes(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::HTML_SCRIPT_ATTRIBUTES_SHAPE,
@@ -2623,6 +2889,15 @@ impl WriteThrough for vml_spreadsheet_drawing::HTMLScriptLanguage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::HTML_SCRIPT_LANGUAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::html_script_language(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::HTML_SCRIPT_LANGUAGE_SHAPE,
@@ -2698,6 +2973,15 @@ impl WriteThrough for vml_spreadsheet_drawing::HTMLScriptLocation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::HTML_SCRIPT_LOCATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::html_script_location(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::HTML_SCRIPT_LOCATION_SHAPE,
@@ -2773,6 +3057,15 @@ impl WriteThrough for vml_spreadsheet_drawing::HTMLScriptText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::HTML_SCRIPT_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::html_script_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::HTML_SCRIPT_TEXT_SHAPE,
@@ -2848,6 +3141,15 @@ impl WriteThrough for vml_spreadsheet_drawing::HelpButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::HELP_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::help_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::HELP_BUTTON_SHAPE,
@@ -2923,6 +3225,16 @@ impl WriteThrough for vml_spreadsheet_drawing::HorizontalTextAlignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::HORIZONTAL_TEXT_ALIGNMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::horizontal_text_alignment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::HORIZONTAL_TEXT_ALIGNMENT_SHAPE,
@@ -2998,6 +3310,15 @@ impl WriteThrough for vml_spreadsheet_drawing::LinkedFormula {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::LINKED_FORMULA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::linked_formula(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::LINKED_FORMULA_SHAPE,
@@ -3073,6 +3394,16 @@ impl WriteThrough for vml_spreadsheet_drawing::LinkedFormulaGroupBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::LINKED_FORMULA_GROUP_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::linked_formula_group_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::LINKED_FORMULA_GROUP_BOX_SHAPE,
@@ -3148,6 +3479,16 @@ impl WriteThrough for vml_spreadsheet_drawing::ListItemsSourceRange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::LIST_ITEMS_SOURCE_RANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::list_items_source_range(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::LIST_ITEMS_SOURCE_RANGE_SHAPE,
@@ -3223,6 +3564,15 @@ impl WriteThrough for vml_spreadsheet_drawing::LockToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::LOCK_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::lock_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::LOCK_TOGGLE_SHAPE,
@@ -3298,6 +3648,15 @@ impl WriteThrough for vml_spreadsheet_drawing::MacroDisableToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::MACRO_DISABLE_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::macro_disable_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::MACRO_DISABLE_TOGGLE_SHAPE,
@@ -3373,6 +3732,15 @@ impl WriteThrough for vml_spreadsheet_drawing::MinimumWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::MINIMUM_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::minimum_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::MINIMUM_WIDTH_SHAPE,
@@ -3448,6 +3816,15 @@ impl WriteThrough for vml_spreadsheet_drawing::MoveWithCells {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::MOVE_WITH_CELLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::move_with_cells(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::MOVE_WITH_CELLS_SHAPE,
@@ -3523,6 +3900,15 @@ impl WriteThrough for vml_spreadsheet_drawing::MultiLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::MULTI_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::multi_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::MULTI_LINE_SHAPE,
@@ -3598,6 +3984,15 @@ impl WriteThrough for vml_spreadsheet_drawing::MultipleSelections {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::MULTIPLE_SELECTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::multiple_selections(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::MULTIPLE_SELECTIONS_SHAPE,
@@ -3673,6 +4068,15 @@ impl WriteThrough for vml_spreadsheet_drawing::NonLinkedListItem {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::NON_LINKED_LIST_ITEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::non_linked_list_item(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::NON_LINKED_LIST_ITEM_SHAPE,
@@ -3748,6 +4152,15 @@ impl WriteThrough for vml_spreadsheet_drawing::PasswordEdit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::PASSWORD_EDIT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::password_edit(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::PASSWORD_EDIT_SHAPE,
@@ -3823,6 +4236,16 @@ impl WriteThrough for vml_spreadsheet_drawing::PrimaryKeyboardAccelerator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::PRIMARY_KEYBOARD_ACCELERATOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::primary_keyboard_accelerator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::PRIMARY_KEYBOARD_ACCELERATOR_SHAPE,
@@ -3898,6 +4321,15 @@ impl WriteThrough for vml_spreadsheet_drawing::PrintToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::PRINT_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::print_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::PRINT_TOGGLE_SHAPE,
@@ -3973,6 +4405,15 @@ impl WriteThrough for vml_spreadsheet_drawing::RecalculationToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::RECALCULATION_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::recalculation_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::RECALCULATION_TOGGLE_SHAPE,
@@ -4048,6 +4489,16 @@ impl WriteThrough for vml_spreadsheet_drawing::ReferenceToCustomFunction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::REFERENCE_TO_CUSTOM_FUNCTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::reference_to_custom_function(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::REFERENCE_TO_CUSTOM_FUNCTION_SHAPE,
@@ -4123,6 +4574,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ResizeWithCells {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::RESIZE_WITH_CELLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::resize_with_cells(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::RESIZE_WITH_CELLS_SHAPE,
@@ -4198,6 +4658,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ScrollBarIncrement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SCROLL_BAR_INCREMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::scroll_bar_increment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SCROLL_BAR_INCREMENT_SHAPE,
@@ -4273,6 +4742,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ScrollBarMaximum {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SCROLL_BAR_MAXIMUM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::scroll_bar_maximum(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SCROLL_BAR_MAXIMUM_SHAPE,
@@ -4348,6 +4826,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ScrollBarMinimum {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SCROLL_BAR_MINIMUM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::scroll_bar_minimum(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SCROLL_BAR_MINIMUM_SHAPE,
@@ -4423,6 +4910,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ScrollBarOrientation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SCROLL_BAR_ORIENTATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::scroll_bar_orientation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SCROLL_BAR_ORIENTATION_SHAPE,
@@ -4498,6 +4994,16 @@ impl WriteThrough for vml_spreadsheet_drawing::ScrollBarPageIncrement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SCROLL_BAR_PAGE_INCREMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::scroll_bar_page_increment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SCROLL_BAR_PAGE_INCREMENT_SHAPE,
@@ -4573,6 +5079,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ScrollBarPosition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SCROLL_BAR_POSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::scroll_bar_position(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SCROLL_BAR_POSITION_SHAPE,
@@ -4648,6 +5163,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ScrollBarWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SCROLL_BAR_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::scroll_bar_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SCROLL_BAR_WIDTH_SHAPE,
@@ -4723,6 +5247,16 @@ impl WriteThrough for vml_spreadsheet_drawing::SecondaryKeyboardAccelerator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SECONDARY_KEYBOARD_ACCELERATOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::secondary_keyboard_accelerator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SECONDARY_KEYBOARD_ACCELERATOR_SHAPE,
@@ -4798,6 +5332,15 @@ impl WriteThrough for vml_spreadsheet_drawing::SelectedEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SELECTED_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::selected_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SELECTED_ENTRY_SHAPE,
@@ -4873,6 +5416,15 @@ impl WriteThrough for vml_spreadsheet_drawing::SelectionType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::SELECTION_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::selection_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::SELECTION_TYPE_SHAPE,
@@ -4948,6 +5500,15 @@ impl WriteThrough for vml_spreadsheet_drawing::TextFormula {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::TEXT_FORMULA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::text_formula(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::TEXT_FORMULA_SHAPE,
@@ -5023,6 +5584,15 @@ impl WriteThrough for vml_spreadsheet_drawing::TextLock {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::TEXT_LOCK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::text_lock(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::TEXT_LOCK_SHAPE,
@@ -5098,6 +5668,15 @@ impl WriteThrough for vml_spreadsheet_drawing::UIObjectToggle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::UI_OBJECT_TOGGLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::ui_object_toggle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::UI_OBJECT_TOGGLE_SHAPE,
@@ -5173,6 +5752,12 @@ impl WriteThrough for vml_spreadsheet_drawing::ValidID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &vml_spreadsheet_drawing::VALID_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = vml_spreadsheet_drawing::write::valid_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml_spreadsheet_drawing::VALID_ID_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -5245,6 +5830,15 @@ impl WriteThrough for vml_spreadsheet_drawing::ValidationType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::VALIDATION_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::validation_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::VALIDATION_TYPE_SHAPE,
@@ -5320,6 +5914,15 @@ impl WriteThrough for vml_spreadsheet_drawing::VerticalScroll {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::VERTICAL_SCROLL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_spreadsheet_drawing::write::vertical_scroll(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::VERTICAL_SCROLL_SHAPE,
@@ -5395,6 +5998,16 @@ impl WriteThrough for vml_spreadsheet_drawing::VerticalTextAlignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_spreadsheet_drawing::VERTICAL_TEXT_ALIGNMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_spreadsheet_drawing::write::vertical_text_alignment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_spreadsheet_drawing::VERTICAL_TEXT_ALIGNMENT_SHAPE,

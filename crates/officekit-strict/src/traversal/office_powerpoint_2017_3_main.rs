@@ -261,6 +261,15 @@ impl WriteThrough for office_powerpoint_2017_3_main::Track {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2017_3_main::TRACK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2017_3_main::write::track(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2017_3_main::TRACK_SHAPE,
@@ -344,6 +353,15 @@ impl WriteThrough for office_powerpoint_2017_3_main::TrackLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2017_3_main::TRACK_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2017_3_main::write::track_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2017_3_main::TRACK_LST_SHAPE,
@@ -423,6 +441,15 @@ impl WriteThrough for office_powerpoint_2017_3_main::TracksInfo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2017_3_main::TRACKS_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2017_3_main::write::tracks_info(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2017_3_main::TRACKS_INFO_SHAPE,

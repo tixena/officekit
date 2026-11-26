@@ -128,6 +128,8 @@ use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::mc;
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, NamespaceId, QName, tag_of};
+use officekit_xml::stream::class::{ClassRules, Site};
+use officekit_xml::write::Scope;
 
 #[cfg(test)]
 mod tests;
@@ -296,6 +298,27 @@ pub struct Refusal {
     pub tag: &'static str,
 }
 
+/// The namespace declarations around an element a Strict write converts: those of the converted
+/// tree's elements around it, outermost first, and, outside the tree, those a part writer has open.
+#[derive(Default)]
+struct Around<'base> {
+    base: Option<&'base Scope>,
+    declarations: Vec<NamespaceDeclaration>,
+}
+
+/// The rules of a Strict write through a part writer, which give the bytes [`Strict::to_strict`]
+/// gives without building the part's tree.
+///
+/// A typed node whose element no rule of the walk changes is written tag by tag; one whose
+/// element a rule changes is written as one element, converted by the walk. A main part's root
+/// takes `conformance="strict"` in its attribute `conformance`.
+#[derive(Debug)]
+pub struct StrictRules {
+    conformance: Option<Tag>,
+    /// Every tag a rule of the walk changes the element of, sorted by [`order`].
+    owners: Vec<Tag>,
+}
+
 /// A node of the typed tree read from, and written to, the Strict class.
 ///
 /// It is implemented for every node of every namespace of `officekit_markup`, and is in
@@ -316,6 +339,111 @@ pub trait Strict: Sized {
     /// [`WriteError::NotInClass`] naming the first content Strict has no form
     /// for.
     fn to_strict(&self) -> Result<Element, WriteError>;
+}
+
+impl StrictRules {
+    /// The rules of a part whose root takes `conformance="strict"` in the attribute
+    /// `conformance`, when it is a main part's root, or of any other part with `None`.
+    #[must_use = "this only builds the value"]
+    pub fn new(conformance: Option<Tag>) -> Self {
+        let word = known(WORDPROCESSING);
+        let drawing = known(WORDPROCESSING_DRAWING);
+        let walked = [
+            (drawing, "anchor"),
+            (drawing, "inline"),
+            (word, "background"),
+            (word, "documentProtection"),
+            (word, "font"),
+            (word, "r"),
+            (word, "writeProtection"),
+        ];
+        let mut owners: Vec<Tag> = ATTRIBUTES
+            .iter()
+            .map(|(owner, _, _)| *owner)
+            .chain(CHILDREN.iter().map(|(owner, _, _)| *owner))
+            .chain(CONTEXTUAL.iter().map(|(_, owner, _, _)| *owner))
+            .chain(TEXTS.iter().map(|(owner, _)| *owner))
+            .chain(ELEMENTS.iter().copied())
+            .chain(walked)
+            .collect();
+        owners.sort_by(|left, right| order(*left, *right));
+        owners.dedup();
+        Self {
+            conformance,
+            owners,
+        }
+    }
+}
+
+impl ClassRules for StrictRules {
+    fn convert(&mut self, element: Element, site: &Site<'_>) -> Result<Vec<Node>, WriteError> {
+        let parent = site.parent.and_then(tag_of);
+        let root = site.is_root();
+        let mut nodes = if !root && word_shape_block(&element) {
+            choice_content(element)
+        } else {
+            vec![Node::Element(element)]
+        };
+        let mut scope = Around {
+            base: Some(site.scope),
+            declarations: Vec::new(),
+        };
+        let mut found = Vec::new();
+        for node in &mut nodes {
+            if let Node::Element(inner) = node {
+                convert(inner, parent, &mut scope, &mut found);
+            }
+        }
+        if let Some(first) = found.first() {
+            return Err(not_in_class(first.tag));
+        }
+        for node in &mut nodes {
+            if let Node::Element(inner) = node {
+                inner.set_class(ConformanceClass::Strict);
+                if let (true, Some(conformance)) = (root, self.conformance) {
+                    set_conformance(inner, conformance);
+                }
+            }
+        }
+        Ok(nodes)
+    }
+
+    fn converts(
+        &self,
+        tag: (Option<NamespaceId>, &str),
+        declared: &[(Option<NamespaceId>, &'static str)],
+        unknown: &[Attribute],
+    ) -> bool {
+        let refused = |id: Option<NamespaceId>| {
+            id.is_some_and(|found| {
+                REFUSED_NAMESPACES
+                    .iter()
+                    .any(|(namespace, _)| *namespace == found)
+            })
+        };
+        tag.0.is_some() && tag.0 == known(MARKUP_COMPATIBILITY)
+            || refused(tag.0)
+            || self
+                .owners
+                .binary_search_by(|owner| order(*owner, tag))
+                .is_ok()
+            || declared.iter().any(|(namespace, _)| refused(*namespace))
+            || unknown.iter().any(|attribute| {
+                if let Namespace::Known(id) = attribute.name.namespace {
+                    refused(Some(id))
+                } else {
+                    false
+                }
+            })
+    }
+
+    fn open(&mut self, element: &mut Element, site: &Site<'_>) -> Result<(), WriteError> {
+        element.set_class(ConformanceClass::Strict);
+        if let (true, Some(conformance)) = (site.is_root(), self.conformance) {
+            set_conformance(element, conformance);
+        }
+        Ok(())
+    }
 }
 
 /// Apply one attribute rule to the attribute `attribute` of `element`, when
@@ -498,11 +626,7 @@ const fn civil_from_days(days: i64) -> (i64, i64, i64) {
 /// Rename the children of `element` its tag's rules name and take out, into `found`, those they
 /// refuse, then convert every child element. `scope` holds the declarations of the elements
 /// around `element`, outermost first.
-fn convert_children(
-    element: &mut Element,
-    scope: &mut Vec<NamespaceDeclaration>,
-    found: &mut Vec<Refusal>,
-) {
+fn convert_children(element: &mut Element, scope: &mut Around<'_>, found: &mut Vec<Refusal>) {
     unwrap_word_shapes(element);
     wrap_loose_vml(element, scope);
     if let Some(owner) = officekit_markup::name(element) {
@@ -535,14 +659,16 @@ fn convert_children(
         }
     }
     let parent = tag_of(&element.name);
-    let depth = scope.len();
-    scope.extend(element.namespace_declarations.iter().cloned());
+    let depth = scope.declarations.len();
+    scope
+        .declarations
+        .extend(element.namespace_declarations.iter().cloned());
     for child in &mut element.children {
         if let Node::Element(inner) = child {
             convert(inner, parent, scope, found);
         }
     }
-    scope.truncate(depth);
+    scope.declarations.truncate(depth);
 }
 
 /// Apply every rule to `element` and its subtree, each refusal into `found`; `parent` is the tag
@@ -551,7 +677,7 @@ fn convert_children(
 fn convert(
     element: &mut Element,
     parent: Option<(Option<NamespaceId>, &str)>,
-    scope: &mut Vec<NamespaceDeclaration>,
+    scope: &mut Around<'_>,
     found: &mut Vec<Refusal>,
 ) {
     if named(element, WORDPROCESSING_DRAWING, "anchor")
@@ -634,14 +760,12 @@ fn apply_rules(
 /// Convert what `element`, an `mc:Choice` requiring VML or an element inside one, holds. Nothing
 /// is refused; each element takes its tag's attribute rules, and a text box's `w:txbxContent`
 /// becomes `wne:txbxContent`, its content converted as anywhere else.
-fn convert_inside_vml(
-    element: &mut Element,
-    scope: &mut Vec<NamespaceDeclaration>,
-    found: &mut Vec<Refusal>,
-) {
+fn convert_inside_vml(element: &mut Element, scope: &mut Around<'_>, found: &mut Vec<Refusal>) {
     let parent = tag_of(&element.name);
-    let depth = scope.len();
-    scope.extend(element.namespace_declarations.iter().cloned());
+    let depth = scope.declarations.len();
+    scope
+        .declarations
+        .extend(element.namespace_declarations.iter().cloned());
     for node in &mut element.children {
         let Node::Element(child) = node else {
             continue;
@@ -660,7 +784,7 @@ fn convert_inside_vml(
             convert_inside_vml(child, scope, found);
         }
     }
-    scope.truncate(depth);
+    scope.declarations.truncate(depth);
 }
 
 /// The rules of `CONTEXTUAL` for an element `owner` under `parent`.
@@ -744,7 +868,7 @@ fn has_attribute(element: &Element, index: usize, local: &str) -> bool {
 
 /// Whether the `mc:Choice` `choice` requires VML: a prefix its `Requires` names is bound to VML,
 /// or is `v` and bound to nothing in reach.
-fn holds_vml_requirement(choice: &Element, scope: &[NamespaceDeclaration]) -> bool {
+fn holds_vml_requirement(choice: &Element, scope: &Around<'_>) -> bool {
     choice
         .attribute(&Namespace::None, "Requires")
         .is_some_and(|names| {
@@ -933,7 +1057,7 @@ fn protection_with_no_password(element: &mut Element) {
 #[must_use = "this only returns the value"]
 pub fn refusals(mut element: Element) -> Vec<Refusal> {
     let mut found = Vec::new();
-    convert(&mut element, None, &mut Vec::new(), &mut found);
+    convert(&mut element, None, &mut Around::default(), &mut found);
     found
 }
 
@@ -941,15 +1065,16 @@ pub fn refusals(mut element: Element) -> Vec<Refusal> {
 /// of `scope`'s.
 fn bound_uri<'tree>(
     element: &'tree Element,
-    scope: &'tree [NamespaceDeclaration],
+    scope: &'tree Around<'_>,
     prefix: &str,
 ) -> Option<&'tree str> {
     element
         .namespace_declarations
         .iter()
-        .chain(scope.iter().rev())
+        .chain(scope.declarations.iter().rev())
         .find(|declaration| declaration.prefix == prefix)
         .map(|declaration| declaration.uri.as_str())
+        .or_else(|| scope.base?.uri_of(prefix))
 }
 
 /// Fail on an element of a namespace with no Strict twin, or one no Strict
@@ -1222,7 +1347,7 @@ fn unwrap_word_shapes(element: &mut Element) {
 /// Put each child of the run `element` that [`loose_vml`] names inside
 /// `mc:AlternateContent/mc:Choice Requires="v"`, with no fallback, as Word writes VML in Strict.
 /// The block declares `mc` and `v` where neither the run nor `scope` binds them.
-fn wrap_loose_vml(element: &mut Element, scope: &[NamespaceDeclaration]) {
+fn wrap_loose_vml(element: &mut Element, scope: &Around<'_>) {
     if !named(element, WORDPROCESSING, "r")
         || !element
             .children
@@ -1289,7 +1414,7 @@ fn word_shape_choice(element: &Element) -> bool {
 /// every known namespace it declares.
 fn write(mut element: Element) -> Result<Element, WriteError> {
     let mut found = Vec::new();
-    convert(&mut element, None, &mut Vec::new(), &mut found);
+    convert(&mut element, None, &mut Around::default(), &mut found);
     if let Some(first) = found.first() {
         return Err(not_in_class(first.tag));
     }
@@ -1301,23 +1426,28 @@ fn write(mut element: Element) -> Result<Element, WriteError> {
 /// attribute `conformance`.
 fn write_root(element: Element, conformance: Tag) -> Result<Element, WriteError> {
     let mut written = write(element)?;
-    if let Some(found) = written
+    set_conformance(&mut written, conformance);
+    Ok(written)
+}
+
+/// Give a main part's root `conformance="strict"` in the attribute `conformance`.
+fn set_conformance(root: &mut Element, conformance: Tag) {
+    if let Some(found) = root
         .attributes
         .iter_mut()
         .find(|found| is(conformance, &found.name))
     {
         "strict".clone_into(&mut found.value);
-        return Ok(written);
+        return;
     }
     let (namespace, attribute_prefix) = conformance.0.map_or_else(
         || (Namespace::None, String::new()),
-        |id| (Namespace::Known(id), declared_prefix(&mut written, id)),
+        |id| (Namespace::Known(id), declared_prefix(root, id)),
     );
-    written.attributes.push(Attribute::new(
+    root.attributes.push(Attribute::new(
         QName::new(attribute_prefix, conformance.1.to_owned(), namespace),
         "strict".to_owned(),
     ));
-    Ok(written)
 }
 
 /// A prefix `element` binds to the namespace `id` for an attribute: its own
@@ -1340,4 +1470,13 @@ fn declared_prefix(element: &mut Element, id: NamespaceId) -> String {
             namespace.uri(ConformanceClass::Strict).to_owned(),
         ));
     table_prefix
+}
+
+/// The id of a namespace the table knows by its Transitional URI.
+fn known(uri: &str) -> Option<NamespaceId> {
+    if let Namespace::Known(id) = Namespace::from_uri(uri) {
+        Some(id)
+    } else {
+        None
+    }
 }

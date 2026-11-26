@@ -261,6 +261,11 @@ impl WriteThrough for office_excel_2006_main::F {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_excel_2006_main::F_SHAPE, &self.unknown);
+        if converted {
+            let element = office_excel_2006_main::write::f(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &office_excel_2006_main::F_SHAPE, &self.unknown);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -332,6 +337,11 @@ impl WriteThrough for office_excel_2006_main::Sqref {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_excel_2006_main::SQREF_SHAPE, &self.unknown);
+        if converted {
+            let element = office_excel_2006_main::write::sqref(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_excel_2006_main::SQREF_SHAPE, &self.unknown);
         through.text(&self.value)?;

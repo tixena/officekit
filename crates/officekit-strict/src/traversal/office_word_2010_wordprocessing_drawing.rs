@@ -261,6 +261,16 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctHeight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_drawing::PCT_HEIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordprocessing_drawing::write::pct_height(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_HEIGHT_SHAPE,
@@ -336,6 +346,16 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctPosHOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_drawing::PCT_POS_H_OFFSET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordprocessing_drawing::write::pct_pos_h_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_POS_H_OFFSET_SHAPE,
@@ -411,6 +431,16 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctPosVOffset {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_drawing::PCT_POS_V_OFFSET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordprocessing_drawing::write::pct_pos_v_offset(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_POS_V_OFFSET_SHAPE,
@@ -486,6 +516,16 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_drawing::PCT_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordprocessing_drawing::write::pct_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_WIDTH_SHAPE,
@@ -565,6 +605,16 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::SizeRelH {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_drawing::SIZE_REL_H_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordprocessing_drawing::write::size_rel_h(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::SIZE_REL_H_SHAPE,
@@ -645,6 +695,16 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::SizeRelV {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordprocessing_drawing::SIZE_REL_V_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_word_2010_wordprocessing_drawing::write::size_rel_v(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::SIZE_REL_V_SHAPE,

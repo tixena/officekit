@@ -261,6 +261,16 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::AbsoluteUrl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2021_extlinks2021::ABSOLUTE_URL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2021_extlinks2021::write::absolute_url(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2021_extlinks2021::ABSOLUTE_URL_SHAPE,
@@ -341,6 +351,16 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::AlternateUrls {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2021_extlinks2021::ALTERNATE_URLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2021_extlinks2021::write::alternate_urls(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2021_extlinks2021::ALTERNATE_URLS_SHAPE,
@@ -419,6 +439,16 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::RelativeUrl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2021_extlinks2021::RELATIVE_URL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2021_extlinks2021::write::relative_url(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2021_extlinks2021::RELATIVE_URL_SHAPE,

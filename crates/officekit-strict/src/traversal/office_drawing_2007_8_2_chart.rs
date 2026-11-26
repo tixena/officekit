@@ -261,6 +261,16 @@ impl WriteThrough for office_drawing_2007_8_2_chart::DropZoneCategories {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::DROP_ZONE_CATEGORIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2007_8_2_chart::write::drop_zone_categories(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::DROP_ZONE_CATEGORIES_SHAPE,
@@ -335,6 +345,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::DropZoneData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::DROP_ZONE_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::drop_zone_data(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::DROP_ZONE_DATA_SHAPE,
@@ -409,6 +428,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::DropZoneFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::DROP_ZONE_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::drop_zone_filter(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::DROP_ZONE_FILTER_SHAPE,
@@ -483,6 +511,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::DropZoneSeries {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::DROP_ZONE_SERIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::drop_zone_series(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::DROP_ZONE_SERIES_SHAPE,
@@ -557,6 +594,16 @@ impl WriteThrough for office_drawing_2007_8_2_chart::DropZonesVisible {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::DROP_ZONES_VISIBLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2007_8_2_chart::write::drop_zones_visible(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::DROP_ZONES_VISIBLE_SHAPE,
@@ -631,6 +678,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::InSketchMode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::IN_SKETCH_MODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::in_sketch_mode(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::IN_SKETCH_MODE_SHAPE,
@@ -709,6 +765,16 @@ impl WriteThrough for office_drawing_2007_8_2_chart::InvertSolidFillFmt {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::INVERT_SOLID_FILL_FMT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2007_8_2_chart::write::invert_solid_fill_fmt(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::INVERT_SOLID_FILL_FMT_SHAPE,
@@ -798,6 +864,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::PivotOptions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::PIVOT_OPTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::pivot_options(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::PIVOT_OPTIONS_SHAPE,
@@ -877,6 +952,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::ShowSketchBtn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::SHOW_SKETCH_BTN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::show_sketch_btn(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::SHOW_SKETCH_BTN_SHAPE,
@@ -958,6 +1042,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::SketchOptions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::SKETCH_OPTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::sketch_options(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::SKETCH_OPTIONS_SHAPE,
@@ -1055,6 +1148,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::SpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::SP_PR_SHAPE,
@@ -1138,6 +1240,15 @@ impl WriteThrough for office_drawing_2007_8_2_chart::Style {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2007_8_2_chart::STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2007_8_2_chart::write::style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2007_8_2_chart::STYLE_SHAPE,

@@ -257,6 +257,11 @@ impl WriteThrough for vml::ArcSegment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::ARC_SEGMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::arc_segment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::ARC_SEGMENT_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -370,6 +375,11 @@ impl WriteThrough for vml::BezierCurve {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::BEZIER_CURVE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::bezier_curve(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::BEZIER_CURVE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -486,6 +496,11 @@ impl WriteThrough for vml::DocumentBackground {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::DOCUMENT_BACKGROUND_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::document_background(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::DOCUMENT_BACKGROUND_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.filled);
@@ -552,6 +567,11 @@ impl WriteThrough for vml::ImageData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::IMAGE_DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::image_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::IMAGE_DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.src);
@@ -633,6 +653,11 @@ impl WriteThrough for vml::ImageFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::IMAGE_FILE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::image_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::IMAGE_FILE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -754,6 +779,11 @@ impl WriteThrough for vml::Line {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::LINE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::LINE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -880,6 +910,11 @@ impl WriteThrough for vml::LineStrokeSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::LINE_STROKE_SETTINGS_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::line_stroke_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::LINE_STROKE_SETTINGS_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.on);
@@ -976,6 +1011,11 @@ impl WriteThrough for vml::MultiplePathLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::MULTIPLE_PATH_LINE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::multiple_path_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::MULTIPLE_PATH_LINE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -1188,6 +1228,11 @@ impl WriteThrough for vml::Oval {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::OVAL_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::oval(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::OVAL_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -1299,6 +1344,11 @@ impl WriteThrough for vml::Rectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::RECTANGLE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -1410,6 +1460,11 @@ impl WriteThrough for vml::RoundedRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::ROUNDED_RECTANGLE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::rounded_rectangle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::ROUNDED_RECTANGLE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -1523,6 +1578,11 @@ impl WriteThrough for vml::SetOfFormulas {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SET_OF_FORMULAS_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::set_of_formulas(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SET_OF_FORMULAS_SHAPE, &self.unknown);
         through.child(&self.single_formula, ctx)?;
         through.finish(ctx)
@@ -1581,6 +1641,11 @@ impl WriteThrough for vml::SetOfHandles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SET_OF_HANDLES_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::set_of_handles(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SET_OF_HANDLES_SHAPE, &self.unknown);
         through.child(&self.shape_handle, ctx)?;
         through.finish(ctx)
@@ -1635,6 +1700,11 @@ impl WriteThrough for vml::ShadowEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SHADOW_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::shadow_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SHADOW_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.on);
@@ -1703,6 +1773,11 @@ impl WriteThrough for vml::ShapeDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SHAPE_DEFINITION_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::shape_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SHAPE_DEFINITION_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -2001,6 +2076,11 @@ impl WriteThrough for vml::ShapeFillProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SHAPE_FILL_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::shape_fill_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &vml::SHAPE_FILL_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -2092,6 +2172,11 @@ impl WriteThrough for vml::ShapeGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SHAPE_GROUP_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::shape_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SHAPE_GROUP_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -2276,6 +2361,11 @@ impl WriteThrough for vml::ShapeHandle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SHAPE_HANDLE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::shape_handle(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SHAPE_HANDLE_SHAPE, &self.unknown);
         through.attribute(0, &self.position);
         through.attribute(1, &self.polar);
@@ -2338,6 +2428,11 @@ impl WriteThrough for vml::ShapePath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SHAPE_PATH_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::shape_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SHAPE_PATH_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.v);
@@ -2412,6 +2507,11 @@ impl WriteThrough for vml::ShapeTemplate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SHAPE_TEMPLATE_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::shape_template(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SHAPE_TEMPLATE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -2523,6 +2623,11 @@ impl WriteThrough for vml::SingleFormula {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::SINGLE_FORMULA_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::single_formula(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::SINGLE_FORMULA_SHAPE, &self.unknown);
         through.attribute(0, &self.eqn);
         through.finish(ctx)
@@ -2581,6 +2686,11 @@ impl WriteThrough for vml::TextBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::TEXT_BOX_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::text_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::TEXT_BOX_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
@@ -2713,6 +2823,11 @@ impl WriteThrough for vml::TextLayoutPath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &vml::TEXT_LAYOUT_PATH_SHAPE, &self.unknown);
+        if converted {
+            let element = vml::write::text_layout_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &vml::TEXT_LAYOUT_PATH_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);

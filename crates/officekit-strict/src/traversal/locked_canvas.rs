@@ -276,6 +276,15 @@ impl WriteThrough for locked_canvas::LockedCanvasContainer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &locked_canvas::LOCKED_CANVAS_CONTAINER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = locked_canvas::write::locked_canvas_container(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &locked_canvas::LOCKED_CANVAS_CONTAINER_SHAPE,

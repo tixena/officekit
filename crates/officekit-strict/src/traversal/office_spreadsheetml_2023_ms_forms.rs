@@ -265,6 +265,15 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_ms_forms::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_ms_forms::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::EXT_LST_SHAPE,
@@ -347,6 +356,15 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::MsForm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_ms_forms::MS_FORM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_ms_forms::write::ms_form(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::MS_FORM_SHAPE,
@@ -431,6 +449,15 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::Question {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_ms_forms::QUESTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_ms_forms::write::question(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::QUESTION_SHAPE,
@@ -507,6 +534,16 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::SyncedQuestionId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_ms_forms::SYNCED_QUESTION_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2023_ms_forms::write::synced_question_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::SYNCED_QUESTION_ID_SHAPE,

@@ -261,6 +261,19 @@ impl WriteThrough for office_spreadsheetml_2023_external_code_service::ExternalC
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_external_code_service::EXTERNAL_CODE_SERVICE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2023_external_code_service::write::external_code_service(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_external_code_service::EXTERNAL_CODE_SERVICE_SHAPE,

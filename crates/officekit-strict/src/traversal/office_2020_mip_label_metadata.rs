@@ -265,6 +265,15 @@ impl WriteThrough for office_2020_mip_label_metadata::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2020_mip_label_metadata::EXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2020_mip_label_metadata::write::ext(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::EXT_SHAPE,
@@ -345,6 +354,15 @@ impl WriteThrough for office_2020_mip_label_metadata::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2020_mip_label_metadata::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2020_mip_label_metadata::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::EXT_LST_SHAPE,
@@ -420,6 +438,15 @@ impl WriteThrough for office_2020_mip_label_metadata::Label {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2020_mip_label_metadata::LABEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2020_mip_label_metadata::write::label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::LABEL_SHAPE,
@@ -509,6 +536,15 @@ impl WriteThrough for office_2020_mip_label_metadata::LabelList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2020_mip_label_metadata::LABEL_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2020_mip_label_metadata::write::label_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::LABEL_LIST_SHAPE,

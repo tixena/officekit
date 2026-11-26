@@ -268,6 +268,18 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::CacheVersion
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_pivot_version_info::CACHE_VERSION_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_pivot_version_info::write::cache_version_info(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::CACHE_VERSION_INFO_SHAPE,
@@ -344,6 +356,18 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::LastRefreshF
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_pivot_version_info::LAST_REFRESH_FEATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_pivot_version_info::write::last_refresh_feature(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::LAST_REFRESH_FEATURE_SHAPE,
@@ -419,6 +443,18 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::LastUpdateFe
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_pivot_version_info::LAST_UPDATE_FEATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_pivot_version_info::write::last_update_feature(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::LAST_UPDATE_FEATURE_SHAPE,
@@ -501,6 +537,18 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::PivotVersion
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_pivot_version_info::PIVOT_VERSION_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_pivot_version_info::write::pivot_version_info(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::PIVOT_VERSION_INFO_SHAPE,
@@ -577,6 +625,18 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::RequiredFeat
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2022_pivot_version_info::REQUIRED_FEATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2022_pivot_version_info::write::required_feature(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::REQUIRED_FEATURE_SHAPE,

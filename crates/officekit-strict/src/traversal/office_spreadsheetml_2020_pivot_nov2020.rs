@@ -261,6 +261,18 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::DataFieldFutureDa
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_pivot_nov2020::DATA_FIELD_FUTURE_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2020_pivot_nov2020::write::data_field_future_data(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::DATA_FIELD_FUTURE_DATA_SHAPE,
@@ -337,6 +349,18 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::IgnorableAfterVer
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_pivot_nov2020::IGNORABLE_AFTER_VERSION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2020_pivot_nov2020::write::ignorable_after_version(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::IGNORABLE_AFTER_VERSION_SHAPE,
@@ -412,6 +436,18 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::ImplicitMeasureSu
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2020_pivot_nov2020::IMPLICIT_MEASURE_SUPPORT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2020_pivot_nov2020::write::implicit_measure_support(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::IMPLICIT_MEASURE_SUPPORT_SHAPE,

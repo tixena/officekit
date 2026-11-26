@@ -266,6 +266,18 @@ impl WriteThrough for additional_characteristics::SetOfAdditionalCharacteristics
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &additional_characteristics::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = additional_characteristics::write::set_of_additional_characteristics(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &additional_characteristics::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE,
@@ -341,6 +353,16 @@ impl WriteThrough for additional_characteristics::SingleCharacteristic {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &additional_characteristics::SINGLE_CHARACTERISTIC_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                additional_characteristics::write::single_characteristic(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &additional_characteristics::SINGLE_CHARACTERISTIC_SHAPE,

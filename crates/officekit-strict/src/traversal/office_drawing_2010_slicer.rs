@@ -265,6 +265,15 @@ impl WriteThrough for office_drawing_2010_slicer::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_slicer::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_slicer::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_slicer::EXT_LST_SHAPE,
@@ -344,6 +353,15 @@ impl WriteThrough for office_drawing_2010_slicer::Slicer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_slicer::SLICER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_slicer::write::slicer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_slicer::SLICER_SHAPE,

@@ -261,6 +261,18 @@ impl WriteThrough for office_spreadsheetml_2019_extlinksprops::ExternalLinksPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2019_extlinksprops::EXTERNAL_LINKS_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2019_extlinksprops::write::external_links_pr(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_extlinksprops::EXTERNAL_LINKS_PR_SHAPE,

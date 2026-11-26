@@ -261,6 +261,15 @@ impl WriteThrough for office_powerpoint_2015_main::DesignElem {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2015_main::DESIGN_ELEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2015_main::write::design_elem(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2015_main::DESIGN_ELEM_SHAPE,

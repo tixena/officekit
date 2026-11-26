@@ -253,6 +253,11 @@ impl WriteThrough for presentation::AGuide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::A_GUIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::a_guide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::A_GUIDE_SHAPE, &self.unknown);
         through.attribute(0, &self.orient);
         through.attribute(1, &self.pos);
@@ -317,6 +322,11 @@ impl WriteThrough for presentation::AllSlides {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ALL_SLIDES_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::all_slides(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &presentation::ALL_SLIDES_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -382,6 +392,11 @@ impl WriteThrough for presentation::Animate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ANIMATE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::animate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::ANIMATE_SHAPE, &self.unknown);
         through.attribute(0, &self.by);
         through.attribute(1, &self.from);
@@ -466,6 +481,15 @@ impl WriteThrough for presentation::AnimateColorBehavior {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::ANIMATE_COLOR_BEHAVIOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::animate_color_behavior(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::ANIMATE_COLOR_BEHAVIOR_SHAPE,
@@ -649,6 +673,11 @@ impl WriteThrough for presentation::AnimateEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ANIMATE_EFFECT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::animate_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::ANIMATE_EFFECT_SHAPE, &self.unknown);
         through.attribute(0, &self.transition);
@@ -737,6 +766,11 @@ impl WriteThrough for presentation::AnimateMotion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ANIMATE_MOTION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::animate_motion(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::ANIMATE_MOTION_SHAPE, &self.unknown);
         through.attribute(0, &self.origin);
@@ -823,6 +857,11 @@ impl WriteThrough for presentation::AnimateRotation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ANIMATE_ROTATION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::animate_rotation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::ANIMATE_ROTATION_SHAPE, &self.unknown);
         through.attribute(0, &self.by);
@@ -909,6 +948,11 @@ impl WriteThrough for presentation::AnimateScale {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ANIMATE_SCALE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::animate_scale(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::ANIMATE_SCALE_SHAPE, &self.unknown);
         through.attribute(0, &self.zoom_contents);
@@ -1104,6 +1148,11 @@ impl WriteThrough for presentation::AttributeName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ATTRIBUTE_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::attribute_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::ATTRIBUTE_NAME_SHAPE, &self.unknown);
         through.text(&self.value)?;
@@ -1180,6 +1229,12 @@ impl WriteThrough for presentation::AttributeNameList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::ATTRIBUTE_NAME_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::attribute_name_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::ATTRIBUTE_NAME_LIST_SHAPE, &self.unknown);
         through.child(&self.attribute_name, ctx)?;
@@ -1249,6 +1304,11 @@ impl WriteThrough for presentation::Audio {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::AUDIO_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::audio(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::AUDIO_SHAPE, &self.unknown);
         through.attribute(0, &self.is_narration);
         through.child(&self.common_media_node_properties, ctx)?;
@@ -1313,6 +1373,11 @@ impl WriteThrough for presentation::Background {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BACKGROUND_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::background(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &presentation::BACKGROUND_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -1389,6 +1454,15 @@ impl WriteThrough for presentation::BackgroundProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::BACKGROUND_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::background_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::BACKGROUND_PROPERTIES_SHAPE,
@@ -1471,6 +1545,15 @@ impl WriteThrough for presentation::BackgroundStyleReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::BACKGROUND_STYLE_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::background_style_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::BACKGROUND_STYLE_REFERENCE_SHAPE,
@@ -1547,6 +1630,15 @@ impl WriteThrough for presentation::BlindsSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::BLINDS_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::blinds_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::BLINDS_SLIDE_TRANSITION_SHAPE,
@@ -1622,6 +1714,12 @@ impl WriteThrough for presentation::BoldEmbeddedFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::BOLD_EMBEDDED_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::bold_embedded_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::BOLD_EMBEDDED_FONT_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -1694,6 +1792,15 @@ impl WriteThrough for presentation::BoldItalicEmbeddedFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::BOLD_ITALIC_EMBEDDED_FONT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::bold_italic_embedded_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::BOLD_ITALIC_EMBEDDED_FONT_SHAPE,
@@ -1769,6 +1876,11 @@ impl WriteThrough for presentation::BooleanVariant {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BOOLEAN_VARIANT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::boolean_variant(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::BOOLEAN_VARIANT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -1841,6 +1953,15 @@ impl WriteThrough for presentation::BrowseSlideShowMode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::BROWSE_SLIDE_SHOW_MODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::browse_slide_show_mode(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::BROWSE_SLIDE_SHOW_MODE_SHAPE,
@@ -1916,6 +2037,11 @@ impl WriteThrough for presentation::BuildAsOne {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BUILD_AS_ONE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::build_as_one(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &presentation::BUILD_AS_ONE_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -1986,6 +2112,11 @@ impl WriteThrough for presentation::BuildDiagram {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BUILD_DIAGRAM_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::build_diagram(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::BUILD_DIAGRAM_SHAPE, &self.unknown);
         through.attribute(0, &self.spid);
@@ -2061,6 +2192,15 @@ impl WriteThrough for presentation::BuildEmbeddedChart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::BUILD_EMBEDDED_CHART_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::build_embedded_chart(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::BUILD_EMBEDDED_CHART_SHAPE,
@@ -2144,6 +2284,11 @@ impl WriteThrough for presentation::BuildGraphics {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BUILD_GRAPHICS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::build_graphics(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::BUILD_GRAPHICS_SHAPE, &self.unknown);
         through.attribute(0, &self.spid);
@@ -2316,6 +2461,11 @@ impl WriteThrough for presentation::BuildList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BUILD_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::build_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::BUILD_LIST_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -2520,6 +2670,11 @@ impl WriteThrough for presentation::BuildParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BUILD_PARAGRAPH_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::build_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::BUILD_PARAGRAPH_SHAPE, &self.unknown);
         through.attribute(0, &self.spid);
@@ -2605,6 +2760,12 @@ impl WriteThrough for presentation::BuildSubElements {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::BUILD_SUB_ELEMENTS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::build_sub_elements(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::BUILD_SUB_ELEMENTS_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -2673,6 +2834,11 @@ impl WriteThrough for presentation::By {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BY_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::by(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::BY_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -2736,6 +2902,11 @@ impl WriteThrough for presentation::ByTLPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::BY_TL_POINT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::by_tl_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::BY_TL_POINT_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -2804,6 +2975,11 @@ impl WriteThrough for presentation::CharacterRange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::CHARACTER_RANGE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::character_range(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::CHARACTER_RANGE_SHAPE, &self.unknown);
         through.attribute(0, &self.st);
@@ -2877,6 +3053,15 @@ impl WriteThrough for presentation::CheckerSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::CHECKER_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::checker_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::CHECKER_SLIDE_TRANSITION_SHAPE,
@@ -2956,6 +3141,15 @@ impl WriteThrough for presentation::ChildrenTimeNodeList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::CHILDREN_TIME_NODE_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::children_time_node_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::CHILDREN_TIME_NODE_LIST_SHAPE,
@@ -3031,6 +3225,15 @@ impl WriteThrough for presentation::CircleSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::CIRCLE_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::circle_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::CIRCLE_SLIDE_TRANSITION_SHAPE,
@@ -3105,6 +3308,11 @@ impl WriteThrough for presentation::ColorMRU {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COLOR_MRU_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::color_mru(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::COLOR_MRU_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -3176,6 +3384,11 @@ impl WriteThrough for presentation::ColorSchemeMap {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COLOR_SCHEME_MAP_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::color_scheme_map(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::COLOR_SCHEME_MAP_SHAPE, &self.unknown);
         through.attribute(0, &self.bg1);
@@ -3264,6 +3477,15 @@ impl WriteThrough for presentation::ColorSchemeMapOverride {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COLOR_SCHEME_MAP_OVERRIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::color_scheme_map_override(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COLOR_SCHEME_MAP_OVERRIDE_SHAPE,
@@ -3339,6 +3561,11 @@ impl WriteThrough for presentation::ColorValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COLOR_VALUE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::color_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::COLOR_VALUE_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3406,6 +3633,15 @@ impl WriteThrough for presentation::CombSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COMB_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::comb_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COMB_SLIDE_TRANSITION_SHAPE,
@@ -3477,6 +3713,11 @@ impl WriteThrough for presentation::Command {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COMMAND_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::command(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::COMMAND_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.cmd);
@@ -3551,6 +3792,11 @@ impl WriteThrough for presentation::Comment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COMMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::comment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::COMMENT_SHAPE, &self.unknown);
         through.attribute(0, &self.author_id);
         through.attribute(1, &self.dt);
@@ -3627,6 +3873,11 @@ impl WriteThrough for presentation::CommentAuthor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COMMENT_AUTHOR_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::comment_author(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::COMMENT_AUTHOR_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -3708,6 +3959,11 @@ impl WriteThrough for presentation::CommentList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COMMENT_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::comment_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::COMMENT_LIST_SHAPE, &self.unknown);
         through.child(&self.comment, ctx)?;
@@ -3780,6 +4036,11 @@ impl WriteThrough for presentation::CommentPosition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COMMENT_POSITION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::comment_position(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::COMMENT_POSITION_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
@@ -3853,6 +4114,15 @@ impl WriteThrough for presentation::CommentsTextContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COMMENTS_TEXT_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::comments_text_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COMMENTS_TEXT_CONTENT_SHAPE,
@@ -3938,6 +4208,11 @@ impl WriteThrough for presentation::CommonBehavior {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COMMON_BEHAVIOR_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::common_behavior(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::COMMON_BEHAVIOR_SHAPE, &self.unknown);
         through.attribute(0, &self.additive);
@@ -4027,6 +4302,15 @@ impl WriteThrough for presentation::CommonMediaNodeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COMMON_MEDIA_NODE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::common_media_node_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COMMON_MEDIA_NODE_PROPERTIES_SHAPE,
@@ -4120,6 +4404,11 @@ impl WriteThrough for presentation::CommonSlideData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::COMMON_SLIDE_DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::common_slide_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::COMMON_SLIDE_DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
@@ -4204,6 +4493,15 @@ impl WriteThrough for presentation::CommonSlideViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COMMON_SLIDE_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::common_slide_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COMMON_SLIDE_VIEW_PROPERTIES_SHAPE,
@@ -4301,6 +4599,15 @@ impl WriteThrough for presentation::CommonTimeNodeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COMMON_TIME_NODE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::common_time_node_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COMMON_TIME_NODE_PROPERTIES_SHAPE,
@@ -4411,6 +4718,15 @@ impl WriteThrough for presentation::CommonViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COMMON_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::common_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COMMON_VIEW_PROPERTIES_SHAPE,
@@ -4488,6 +4804,11 @@ impl WriteThrough for presentation::Condition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::CONDITION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::condition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::CONDITION_SHAPE, &self.unknown);
         through.attribute(0, &self.evt);
         through.attribute(1, &self.delay);
@@ -4572,6 +4893,11 @@ impl WriteThrough for presentation::ConnectionShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::CONNECTION_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::connection_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::CONNECTION_SHAPE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
@@ -4647,6 +4973,11 @@ impl WriteThrough for presentation::ContentPart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::CONTENT_PART_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::content_part(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::CONTENT_PART_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -4719,6 +5050,15 @@ impl WriteThrough for presentation::CoverSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::COVER_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::cover_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::COVER_SLIDE_TRANSITION_SHAPE,
@@ -4790,6 +5130,11 @@ impl WriteThrough for presentation::CustomShow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::CUSTOM_SHOW_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::custom_show(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::CUSTOM_SHOW_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -4864,6 +5209,15 @@ impl WriteThrough for presentation::CustomShowCustomShow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::CUSTOM_SHOW_CUSTOM_SHOW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::custom_show_custom_show(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::CUSTOM_SHOW_CUSTOM_SHOW_SHAPE,
@@ -4942,6 +5296,11 @@ impl WriteThrough for presentation::CustomerData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::CUSTOMER_DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::customer_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::CUSTOMER_DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -5021,6 +5380,12 @@ impl WriteThrough for presentation::CustomerDataList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::CUSTOMER_DATA_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::customer_data_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::CUSTOMER_DATA_LIST_SHAPE, &self.unknown);
         through.child(&self.customer_data, ctx)?;
@@ -5094,6 +5459,12 @@ impl WriteThrough for presentation::CustomerDataTags {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::CUSTOMER_DATA_TAGS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::customer_data_tags(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::CUSTOMER_DATA_TAGS_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -5166,6 +5537,15 @@ impl WriteThrough for presentation::CutSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::CUT_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::cut_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::CUT_SLIDE_TRANSITION_SHAPE,
@@ -5241,6 +5621,15 @@ impl WriteThrough for presentation::DiamondSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::DIAMOND_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::diamond_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::DIAMOND_SLIDE_TRANSITION_SHAPE,
@@ -5315,6 +5704,15 @@ impl WriteThrough for presentation::DissolveSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::DISSOLVE_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::dissolve_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::DISSOLVE_SLIDE_TRANSITION_SHAPE,
@@ -5389,6 +5787,15 @@ impl WriteThrough for presentation::EmbeddedChartElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::EMBEDDED_CHART_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::embedded_chart_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::EMBEDDED_CHART_ELEMENT_SHAPE,
@@ -5471,6 +5878,11 @@ impl WriteThrough for presentation::EmbeddedControl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::EMBEDDED_CONTROL_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::embedded_control(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::EMBEDDED_CONTROL_SHAPE, &self.unknown);
         through.attribute(0, &self.spid);
@@ -5562,6 +5974,11 @@ impl WriteThrough for presentation::EmbeddedFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::EMBEDDED_FONT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::embedded_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::EMBEDDED_FONT_SHAPE, &self.unknown);
         through.child(&self.name, ctx)?;
@@ -5642,6 +6059,12 @@ impl WriteThrough for presentation::EmbeddedFontList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::EMBEDDED_FONT_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::embedded_font_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::EMBEDDED_FONT_LIST_SHAPE, &self.unknown);
         through.child(&self.embedded_font, ctx)?;
@@ -5714,6 +6137,12 @@ impl WriteThrough for presentation::EmbeddedFontName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::EMBEDDED_FONT_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::embedded_font_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::EMBEDDED_FONT_NAME_SHAPE, &self.unknown);
         through.attribute(0, &self.typeface);
@@ -5890,6 +6319,15 @@ impl WriteThrough for presentation::EmbeddedObjectOrControl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::EMBEDDED_OBJECT_OR_CONTROL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::embedded_object_or_control(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::EMBEDDED_OBJECT_OR_CONTROL_SHAPE,
@@ -5972,6 +6410,15 @@ impl WriteThrough for presentation::EmbeddedObjectsAndControls {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::embedded_objects_and_controls(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::EMBEDDED_OBJECTS_AND_CONTROLS_SHAPE,
@@ -6059,6 +6506,12 @@ impl WriteThrough for presentation::EndConditionsList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::END_CONDITIONS_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::end_conditions_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::END_CONDITIONS_LIST_SHAPE, &self.unknown);
         through.child(&self.condition, ctx)?;
@@ -6131,6 +6584,11 @@ impl WriteThrough for presentation::EndSync {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::END_SYNC_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::end_sync(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::END_SYNC_SHAPE, &self.unknown);
         through.attribute(0, &self.evt);
         through.attribute(1, &self.delay);
@@ -6201,6 +6659,11 @@ impl WriteThrough for presentation::Exclusive {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::EXCLUSIVE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::exclusive(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::EXCLUSIVE_SHAPE, &self.unknown);
         through.child(&self.common_time_node_properties, ctx)?;
         through.finish(ctx)
@@ -6268,6 +6731,11 @@ impl WriteThrough for presentation::Extension {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::EXTENSION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::extension(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::EXTENSION_SHAPE, &self.unknown);
         through.attribute(0, &self.uri);
         through.items(&self.content, ctx)?;
@@ -6340,6 +6808,11 @@ impl WriteThrough for presentation::ExtensionList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::EXTENSION_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::extension_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::EXTENSION_LIST_SHAPE, &self.unknown);
         through.child(&self.extension, ctx)?;
@@ -6416,6 +6889,16 @@ impl WriteThrough for presentation::ExtensionListWithModificationFlag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::EXTENSION_LIST_WITH_MODIFICATION_FLAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::extension_list_with_modification_flag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::EXTENSION_LIST_WITH_MODIFICATION_FLAG_SHAPE,
@@ -6492,6 +6975,15 @@ impl WriteThrough for presentation::FadeSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::FADE_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::fade_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::FADE_SLIDE_TRANSITION_SHAPE,
@@ -6563,6 +7055,11 @@ impl WriteThrough for presentation::FloatValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::FLOAT_VALUE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::float_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::FLOAT_VALUE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -6634,6 +7131,11 @@ impl WriteThrough for presentation::FromColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::FROM_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::from_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::FROM_COLOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -6705,6 +7207,11 @@ impl WriteThrough for presentation::FromTLPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::FROM_TL_POINT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::from_tl_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::FROM_TL_POINT_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
@@ -6782,6 +7289,11 @@ impl WriteThrough for presentation::GraphicElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::GRAPHIC_ELEMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::graphic_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::GRAPHIC_ELEMENT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -6869,6 +7381,11 @@ impl WriteThrough for presentation::GraphicFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::GRAPHIC_FRAME_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::graphic_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::GRAPHIC_FRAME_SHAPE, &self.unknown);
         through.attribute(0, &self.bw_mode);
@@ -6945,6 +7462,11 @@ impl WriteThrough for presentation::GridSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::GRID_SPACING_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::grid_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::GRID_SPACING_SHAPE, &self.unknown);
         through.attribute(0, &self.cx);
@@ -7029,6 +7551,11 @@ impl WriteThrough for presentation::GroupShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::GROUP_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::group_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::GROUP_SHAPE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.properties, ctx)?;
@@ -7260,6 +7787,15 @@ impl WriteThrough for presentation::GroupShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::GROUP_SHAPE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::group_shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::GROUP_SHAPE_PROPERTIES_SHAPE,
@@ -7346,6 +7882,15 @@ impl WriteThrough for presentation::HTMLPublishingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::HTML_PUBLISHING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::html_publishing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::HTML_PUBLISHING_PROPERTIES_SHAPE,
@@ -7444,6 +7989,11 @@ impl WriteThrough for presentation::HandoutMaster {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::HANDOUT_MASTER_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::handout_master(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::HANDOUT_MASTER_SHAPE, &self.unknown);
         through.child(&self.common_slide_data, ctx)?;
@@ -7523,6 +8073,11 @@ impl WriteThrough for presentation::HandoutMasterID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::HANDOUT_MASTER_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::handout_master_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::HANDOUT_MASTER_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -7604,6 +8159,18 @@ impl WriteThrough for presentation::HeaderFooterInformationForASlideMaster {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::HEADER_FOOTER_INFORMATION_FOR_A_SLIDE_MASTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::header_footer_information_for_a_slide_master(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::HEADER_FOOTER_INFORMATION_FOR_A_SLIDE_MASTER_SHAPE,
@@ -7675,6 +8242,11 @@ impl WriteThrough for presentation::Hsl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::HSL_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::hsl(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::HSL_SHAPE, &self.unknown);
         through.attribute(0, &self.h);
         through.attribute(1, &self.s);
@@ -7740,6 +8312,11 @@ impl WriteThrough for presentation::InkTarget {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::INK_TARGET_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::ink_target(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::INK_TARGET_SHAPE, &self.unknown);
         through.attribute(0, &self.spid);
         through.finish(ctx)
@@ -7799,6 +8376,11 @@ impl WriteThrough for presentation::Integer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::INTEGER_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::integer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::INTEGER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -7866,6 +8448,15 @@ impl WriteThrough for presentation::ItalicEmbeddedFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::ITALIC_EMBEDDED_FONT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::italic_embedded_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::ITALIC_EMBEDDED_FONT_SHAPE,
@@ -7937,6 +8528,11 @@ impl WriteThrough for presentation::Iterate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ITERATE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::iterate(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::ITERATE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.backwards);
@@ -8103,6 +8699,11 @@ impl WriteThrough for presentation::KinsokuSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::KINSOKU_SETTINGS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::kinsoku_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::KINSOKU_SETTINGS_SHAPE, &self.unknown);
         through.attribute(0, &self.lang);
@@ -8177,6 +8778,15 @@ impl WriteThrough for presentation::KioskSlideShowMode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::KIOSK_SLIDE_SHOW_MODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::kiosk_slide_show_mode(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::KIOSK_SLIDE_SHOW_MODE_SHAPE,
@@ -8256,6 +8866,15 @@ impl WriteThrough for presentation::LinkedObjectOrControl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LINKED_OBJECT_OR_CONTROL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::linked_object_or_control(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LINKED_OBJECT_OR_CONTROL_SHAPE,
@@ -8336,6 +8955,15 @@ impl WriteThrough for presentation::ListOfCommentAuthors {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_COMMENT_AUTHORS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_comment_authors(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_COMMENT_AUTHORS_SHAPE,
@@ -8415,6 +9043,11 @@ impl WriteThrough for presentation::ListOfControls {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::LIST_OF_CONTROLS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::list_of_controls(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::LIST_OF_CONTROLS_SHAPE, &self.unknown);
         through.child(&self.embedded_control, ctx)?;
@@ -8492,6 +9125,15 @@ impl WriteThrough for presentation::ListOfCustomShows {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_CUSTOM_SHOWS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_custom_shows(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_CUSTOM_SHOWS_SHAPE,
@@ -8571,6 +9213,11 @@ impl WriteThrough for presentation::ListOfGuides {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::LIST_OF_GUIDES_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::list_of_guides(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::LIST_OF_GUIDES_SHAPE, &self.unknown);
         through.child(&self.a_guide, ctx)?;
@@ -8647,6 +9294,15 @@ impl WriteThrough for presentation::ListOfHandoutMasterIDs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_HANDOUT_MASTER_I_DS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_handout_master_i_ds(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_HANDOUT_MASTER_I_DS_SHAPE,
@@ -8726,6 +9382,15 @@ impl WriteThrough for presentation::ListOfNotesMasterIDs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_NOTES_MASTER_I_DS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_notes_master_i_ds(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_NOTES_MASTER_I_DS_SHAPE,
@@ -8806,6 +9471,15 @@ impl WriteThrough for presentation::ListOfPresentationSlides {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_PRESENTATION_SLIDES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_presentation_slides(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_PRESENTATION_SLIDES_SHAPE,
@@ -8889,6 +9563,18 @@ impl WriteThrough for presentation::ListOfPresentationSlidesOutlineViewSlideList
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_PRESENTATION_SLIDES_OUTLINE_VIEW_SLIDE_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_presentation_slides_outline_view_slide_list(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_PRESENTATION_SLIDES_OUTLINE_VIEW_SLIDE_LIST_SHAPE,
@@ -8968,6 +9654,12 @@ impl WriteThrough for presentation::ListOfSlideIDs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::LIST_OF_SLIDE_I_DS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::list_of_slide_i_ds(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::LIST_OF_SLIDE_I_DS_SHAPE, &self.unknown);
         through.child(&self.slide_id, ctx)?;
@@ -9044,6 +9736,15 @@ impl WriteThrough for presentation::ListOfSlideLayouts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_SLIDE_LAYOUTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_slide_layouts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_SLIDE_LAYOUTS_SHAPE,
@@ -9123,6 +9824,15 @@ impl WriteThrough for presentation::ListOfSlideMasterIDs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::LIST_OF_SLIDE_MASTER_I_DS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::list_of_slide_master_i_ds(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::LIST_OF_SLIDE_MASTER_I_DS_SHAPE,
@@ -9198,6 +9908,15 @@ impl WriteThrough for presentation::ModificationVerifier {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::MODIFICATION_VERIFIER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::modification_verifier(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::MODIFICATION_VERIFIER_SHAPE,
@@ -9288,6 +10007,15 @@ impl WriteThrough for presentation::NewsflashSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NEWSFLASH_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::newsflash_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::NEWSFLASH_SLIDE_TRANSITION_SHAPE,
@@ -9366,6 +10094,15 @@ impl WriteThrough for presentation::NextConditionsList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NEXT_CONDITIONS_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::next_conditions_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NEXT_CONDITIONS_LIST_SHAPE,
@@ -9452,6 +10189,18 @@ impl WriteThrough for presentation::NonVisualConnectorShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::non_visual_connector_shape_drawing_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -9539,6 +10288,15 @@ impl WriteThrough for presentation::NonVisualDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::non_visual_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
@@ -9627,6 +10385,16 @@ impl WriteThrough for presentation::NonVisualDrawingPropertiesForAShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::non_visual_drawing_properties_for_a_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
@@ -9711,6 +10479,16 @@ impl WriteThrough for presentation::NonVisualGraphicFrameDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::non_visual_graphic_frame_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
@@ -9793,6 +10571,16 @@ impl WriteThrough for presentation::NonVisualGroupShapeDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::non_visual_group_shape_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
@@ -9875,6 +10663,16 @@ impl WriteThrough for presentation::NonVisualPictureDrawingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::non_visual_picture_drawing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
@@ -9963,6 +10761,15 @@ impl WriteThrough for presentation::NonVisualProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::non_visual_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_PROPERTIES_SHAPE,
@@ -10175,6 +10982,18 @@ impl WriteThrough for presentation::NonVisualPropertiesForAConnectionShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::non_visual_properties_for_a_connection_shape(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE,
@@ -10266,6 +11085,16 @@ impl WriteThrough for presentation::NonVisualPropertiesForAGraphicFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::non_visual_properties_for_a_graphic_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE,
@@ -10357,6 +11186,16 @@ impl WriteThrough for presentation::NonVisualPropertiesForAGroupShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::non_visual_properties_for_a_group_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE,
@@ -10448,6 +11287,16 @@ impl WriteThrough for presentation::NonVisualPropertiesForAPicture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::non_visual_properties_for_a_picture(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE,
@@ -10539,6 +11388,15 @@ impl WriteThrough for presentation::NonVisualPropertiesForAShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::non_visual_properties_for_a_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE,
@@ -10626,6 +11484,15 @@ impl WriteThrough for presentation::NormalViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NORMAL_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::normal_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NORMAL_VIEW_PROPERTIES_SHAPE,
@@ -10708,6 +11575,16 @@ impl WriteThrough for presentation::NormalViewRestoredLeftProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NORMAL_VIEW_RESTORED_LEFT_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::normal_view_restored_left_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NORMAL_VIEW_RESTORED_LEFT_PROPERTIES_SHAPE,
@@ -10784,6 +11661,16 @@ impl WriteThrough for presentation::NormalViewRestoredTopProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NORMAL_VIEW_RESTORED_TOP_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::normal_view_restored_top_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NORMAL_VIEW_RESTORED_TOP_PROPERTIES_SHAPE,
@@ -10880,6 +11767,11 @@ impl WriteThrough for presentation::NotesMaster {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::NOTES_MASTER_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::notes_master(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::NOTES_MASTER_SHAPE, &self.unknown);
         through.child(&self.common_slide_data, ctx)?;
@@ -10960,6 +11852,11 @@ impl WriteThrough for presentation::NotesMasterID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::NOTES_MASTER_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::notes_master_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::NOTES_MASTER_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -11042,6 +11939,11 @@ impl WriteThrough for presentation::NotesSlide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::NOTES_SLIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::notes_slide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::NOTES_SLIDE_SHAPE, &self.unknown);
         through.attribute(0, &self.show_master_sp);
         through.attribute(1, &self.show_master_ph_anim);
@@ -11113,6 +12015,11 @@ impl WriteThrough for presentation::NotesSlideSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::NOTES_SLIDE_SIZE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::notes_slide_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::NOTES_SLIDE_SIZE_SHAPE, &self.unknown);
         through.attribute(0, &self.cx);
@@ -11220,6 +12127,11 @@ impl WriteThrough for presentation::NotesTextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::NOTES_TEXT_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::notes_text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::NOTES_TEXT_STYLE_SHAPE, &self.unknown);
         through.child(&self.default_paragraph_style, ctx)?;
@@ -11309,6 +12221,15 @@ impl WriteThrough for presentation::NotesTextViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NOTES_TEXT_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::notes_text_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NOTES_TEXT_VIEW_PROPERTIES_SHAPE,
@@ -11392,6 +12313,15 @@ impl WriteThrough for presentation::NotesViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::NOTES_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::notes_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::NOTES_VIEW_PROPERTIES_SHAPE,
@@ -11484,6 +12414,15 @@ impl WriteThrough for presentation::OutlineViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::OUTLINE_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::outline_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::OUTLINE_VIEW_PROPERTIES_SHAPE,
@@ -11564,6 +12503,15 @@ impl WriteThrough for presentation::ParagraphTextRange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PARAGRAPH_TEXT_RANGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::paragraph_text_range(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PARAGRAPH_TEXT_RANGE_SHAPE,
@@ -11645,6 +12593,12 @@ impl WriteThrough for presentation::ParallelTimeNode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::PARALLEL_TIME_NODE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::parallel_time_node(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::PARALLEL_TIME_NODE_SHAPE, &self.unknown);
         through.child(&self.common_time_node_properties, ctx)?;
@@ -11721,6 +12675,15 @@ impl WriteThrough for presentation::PenColorForSlideShow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PEN_COLOR_FOR_SLIDE_SHOW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::pen_color_for_slide_show(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PEN_COLOR_FOR_SLIDE_SHOW_SHAPE,
@@ -11800,6 +12763,15 @@ impl WriteThrough for presentation::PhotoAlbumInformation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PHOTO_ALBUM_INFORMATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::photo_album_information(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PHOTO_ALBUM_INFORMATION_SHAPE,
@@ -11888,6 +12860,11 @@ impl WriteThrough for presentation::Picture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::PICTURE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::picture(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::PICTURE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.fill, ctx)?;
@@ -11967,6 +12944,11 @@ impl WriteThrough for presentation::PictureFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::PICTURE_FILL_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::picture_fill(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::PICTURE_FILL_SHAPE, &self.unknown);
         through.attribute(0, &self.dpi);
@@ -12051,6 +13033,11 @@ impl WriteThrough for presentation::PlaceholderShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::PLACEHOLDER_SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::placeholder_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::PLACEHOLDER_SHAPE_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -12128,6 +13115,15 @@ impl WriteThrough for presentation::PlusSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PLUS_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::plus_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::PLUS_SLIDE_TRANSITION_SHAPE,
@@ -12243,6 +13239,11 @@ impl WriteThrough for presentation::Presentation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::PRESENTATION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::presentation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::PRESENTATION_SHAPE, &self.unknown);
         through.attribute(0, &self.server_zoom);
@@ -12375,6 +13376,15 @@ impl WriteThrough for presentation::PresentationDefaultTextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::presentation_default_text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PRESENTATION_DEFAULT_TEXT_STYLE_SHAPE,
@@ -12460,6 +13470,12 @@ impl WriteThrough for presentation::PresentationSlide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::PRESENTATION_SLIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::presentation_slide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::PRESENTATION_SLIDE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -12532,6 +13548,16 @@ impl WriteThrough for presentation::PresentationSlideOutlineViewSlideEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTATION_SLIDE_OUTLINE_VIEW_SLIDE_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::presentation_slide_outline_view_slide_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PRESENTATION_SLIDE_OUTLINE_VIEW_SLIDE_ENTRY_SHAPE,
@@ -12608,6 +13634,15 @@ impl WriteThrough for presentation::PresentationSlideSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTATION_SLIDE_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::presentation_slide_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PRESENTATION_SLIDE_SIZE_SHAPE,
@@ -12704,6 +13739,15 @@ impl WriteThrough for presentation::PresentationSlideSlide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTATION_SLIDE_SLIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::presentation_slide_slide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PRESENTATION_SLIDE_SLIDE_SHAPE,
@@ -12803,6 +13847,15 @@ impl WriteThrough for presentation::PresentationWideProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTATION_WIDE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::presentation_wide_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PRESENTATION_WIDE_PROPERTIES_SHAPE,
@@ -12895,6 +13948,15 @@ impl WriteThrough for presentation::PresentationWideShowProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::presentation_wide_show_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PRESENTATION_WIDE_SHOW_PROPERTIES_SHAPE,
@@ -13001,6 +14063,15 @@ impl WriteThrough for presentation::PresentationWideViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::presentation_wide_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PRESENTATION_WIDE_VIEW_PROPERTIES_SHAPE,
@@ -13085,6 +14156,15 @@ impl WriteThrough for presentation::PresenterSlideShowMode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PRESENTER_SLIDE_SHOW_MODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::presenter_slide_show_mode(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::PRESENTER_SLIDE_SHOW_MODE_SHAPE,
@@ -13163,6 +14243,15 @@ impl WriteThrough for presentation::PreviousConditionsList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PREVIOUS_CONDITIONS_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::previous_conditions_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PREVIOUS_CONDITIONS_LIST_SHAPE,
@@ -13242,6 +14331,12 @@ impl WriteThrough for presentation::PrintingProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::PRINTING_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::printing_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::PRINTING_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.prn_what);
@@ -13319,6 +14414,15 @@ impl WriteThrough for presentation::ProgrammableExtensibilityTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PROGRAMMABLE_EXTENSIBILITY_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::programmable_extensibility_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PROGRAMMABLE_EXTENSIBILITY_TAG_SHAPE,
@@ -13400,6 +14504,15 @@ impl WriteThrough for presentation::ProgrammableTabList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PROGRAMMABLE_TAB_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::programmable_tab_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PROGRAMMABLE_TAB_LIST_SHAPE,
@@ -13475,6 +14588,11 @@ impl WriteThrough for presentation::Progress {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::PROGRESS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::progress(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::PROGRESS_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -13542,6 +14660,15 @@ impl WriteThrough for presentation::PullSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PULL_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::pull_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PULL_SLIDE_TRANSITION_SHAPE,
@@ -13617,6 +14744,15 @@ impl WriteThrough for presentation::PushSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::PUSH_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::push_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::PUSH_SLIDE_TRANSITION_SHAPE,
@@ -13692,6 +14828,15 @@ impl WriteThrough for presentation::RandomBarSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::RANDOM_BAR_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::random_bar_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::RANDOM_BAR_SLIDE_TRANSITION_SHAPE,
@@ -13767,6 +14912,15 @@ impl WriteThrough for presentation::RandomSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::RANDOM_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::random_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::RANDOM_SLIDE_TRANSITION_SHAPE,
@@ -13841,6 +14995,15 @@ impl WriteThrough for presentation::RegularEmbeddedFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::REGULAR_EMBEDDED_FONT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::regular_embedded_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::REGULAR_EMBEDDED_FONT_SHAPE,
@@ -13908,6 +15071,11 @@ impl WriteThrough for presentation::Rgb {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::RGB_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::rgb(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::RGB_SHAPE, &self.unknown);
         through.attribute(0, &self.r);
         through.attribute(1, &self.g);
@@ -13977,6 +15145,11 @@ impl WriteThrough for presentation::RotationCenter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::ROTATION_CENTER_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::rotation_center(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::ROTATION_CENTER_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
@@ -14050,6 +15223,15 @@ impl WriteThrough for presentation::RuntimeNodeTriggerChoice {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::RUNTIME_NODE_TRIGGER_CHOICE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::runtime_node_trigger_choice(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::RUNTIME_NODE_TRIGGER_CHOICE_SHAPE,
@@ -14136,6 +15318,12 @@ impl WriteThrough for presentation::SequenceTimeNode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::SEQUENCE_TIME_NODE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::sequence_time_node(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SEQUENCE_TIME_NODE_SHAPE, &self.unknown);
         through.attribute(0, &self.concurrent);
@@ -14220,6 +15408,15 @@ impl WriteThrough for presentation::SetTimeNodeBehavior {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SET_TIME_NODE_BEHAVIOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::set_time_node_behavior(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SET_TIME_NODE_BEHAVIOR_SHAPE,
@@ -14305,6 +15502,11 @@ impl WriteThrough for presentation::Shape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SHAPE_SHAPE, &self.unknown);
         through.attribute(0, &self.use_bg_fill);
         through.child(&self.non_visual_properties, ctx)?;
@@ -14397,6 +15599,11 @@ impl WriteThrough for presentation::ShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::shape_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SHAPE_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.bw_mode);
@@ -14483,6 +15690,11 @@ impl WriteThrough for presentation::ShapeStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SHAPE_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::shape_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SHAPE_STYLE_SHAPE, &self.unknown);
         through.child(&self.line_reference, ctx)?;
         through.child(&self.fill_reference, ctx)?;
@@ -14557,6 +15769,11 @@ impl WriteThrough for presentation::ShapeTarget {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SHAPE_TARGET_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::shape_target(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SHAPE_TARGET_SHAPE, &self.unknown);
         through.attribute(0, &self.spid);
@@ -14756,6 +15973,11 @@ impl WriteThrough for presentation::ShapeTextBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::shape_text_body(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
@@ -14845,6 +16067,11 @@ impl WriteThrough for presentation::ShapeTree {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SHAPE_TREE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::shape_tree(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SHAPE_TREE_SHAPE, &self.unknown);
         through.child(&self.non_visual_properties_for_a_group_shape, ctx)?;
         through.child(&self.group_shape_properties, ctx)?;
@@ -15015,6 +16242,11 @@ impl WriteThrough for presentation::SlideBackground {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_BACKGROUND_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_background(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SLIDE_BACKGROUND_SHAPE, &self.unknown);
         through.attribute(0, &self.bw_mode);
@@ -15185,6 +16417,11 @@ impl WriteThrough for presentation::SlideID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SLIDE_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.r_id);
@@ -15278,6 +16515,11 @@ impl WriteThrough for presentation::SlideLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_LAYOUT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SLIDE_LAYOUT_SHAPE, &self.unknown);
         through.attribute(0, &self.show_master_sp);
@@ -15365,6 +16607,11 @@ impl WriteThrough for presentation::SlideLayoutId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_LAYOUT_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_layout_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SLIDE_LAYOUT_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -15561,6 +16808,11 @@ impl WriteThrough for presentation::SlideMaster {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_MASTER_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_master(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SLIDE_MASTER_SHAPE, &self.unknown);
         through.attribute(0, &self.preserve);
@@ -15675,6 +16927,15 @@ impl WriteThrough for presentation::SlideMasterBodyTextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_master_body_text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_MASTER_BODY_TEXT_STYLE_SHAPE,
@@ -15764,6 +17025,11 @@ impl WriteThrough for presentation::SlideMasterID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_MASTER_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_master_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SLIDE_MASTER_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -15872,6 +17138,15 @@ impl WriteThrough for presentation::SlideMasterOtherTextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_master_other_text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_MASTER_OTHER_TEXT_STYLE_SHAPE,
@@ -15970,6 +17245,15 @@ impl WriteThrough for presentation::SlideMasterTextStyles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_MASTER_TEXT_STYLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_master_text_styles(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_MASTER_TEXT_STYLES_SHAPE,
@@ -16082,6 +17366,15 @@ impl WriteThrough for presentation::SlideMasterTitleTextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_master_title_text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_MASTER_TITLE_TEXT_STYLE_SHAPE,
@@ -16163,6 +17456,11 @@ impl WriteThrough for presentation::SlideRange {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_RANGE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_range(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SLIDE_RANGE_SHAPE, &self.unknown);
         through.attribute(0, &self.st);
         through.attribute(1, &self.end);
@@ -16238,6 +17536,15 @@ impl WriteThrough for presentation::SlideSorterViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_SORTER_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_sorter_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_SORTER_VIEW_PROPERTIES_SHAPE,
@@ -16319,6 +17626,15 @@ impl WriteThrough for presentation::SlideSynchronizationProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_synchronization_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_SYNCHRONIZATION_PROPERTIES_SHAPE,
@@ -16397,6 +17713,11 @@ impl WriteThrough for presentation::SlideTarget {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SLIDE_TARGET_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::slide_target(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &presentation::SLIDE_TARGET_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -16479,6 +17800,15 @@ impl WriteThrough for presentation::SlideTimingInformation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_TIMING_INFORMATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_timing_information(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_TIMING_INFORMATION_SHAPE,
@@ -16657,6 +17987,16 @@ impl WriteThrough for presentation::SlideTransitionForASlideLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_TRANSITION_FOR_A_SLIDE_LAYOUT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                presentation::write::slide_transition_for_a_slide_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_TRANSITION_FOR_A_SLIDE_LAYOUT_SHAPE,
@@ -16744,6 +18084,15 @@ impl WriteThrough for presentation::SlideViewProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SLIDE_VIEW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::slide_view_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SLIDE_VIEW_PROPERTIES_SHAPE,
@@ -16816,6 +18165,11 @@ impl WriteThrough for presentation::SmartTags {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SMART_TAGS_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::smart_tags(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SMART_TAGS_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -16875,6 +18229,11 @@ impl WriteThrough for presentation::Sound {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SOUND_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::sound(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SOUND_SHAPE, &self.unknown);
         through.attribute(0, &self.embed);
         through.attribute(1, &self.name);
@@ -16947,6 +18306,11 @@ impl WriteThrough for presentation::SoundAction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SOUND_ACTION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::sound_action(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SOUND_ACTION_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -17116,6 +18480,11 @@ impl WriteThrough for presentation::SoundTarget {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SOUND_TARGET_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::sound_target(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SOUND_TARGET_SHAPE, &self.unknown);
         through.attribute(0, &self.embed);
@@ -17189,6 +18558,15 @@ impl WriteThrough for presentation::SplitSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::SPLIT_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::split_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::SPLIT_SLIDE_TRANSITION_SHAPE,
@@ -17269,6 +18647,15 @@ impl WriteThrough for presentation::StartConditionsList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::START_CONDITIONS_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::start_conditions_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::START_CONDITIONS_LIST_SHAPE,
@@ -17348,6 +18735,12 @@ impl WriteThrough for presentation::StartSoundAction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::START_SOUND_ACTION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::start_sound_action(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::START_SOUND_ACTION_SHAPE, &self.unknown);
         through.attribute(0, &self.r#loop);
@@ -17421,6 +18814,11 @@ impl WriteThrough for presentation::StopSoundAction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::STOP_SOUND_ACTION_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::stop_sound_action(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &presentation::STOP_SOUND_ACTION_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -17492,6 +18890,11 @@ impl WriteThrough for presentation::StringValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::STRING_VALUE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::string_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::STRING_VALUE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -17564,6 +18967,15 @@ impl WriteThrough for presentation::StripsSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::STRIPS_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::strips_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::STRIPS_SLIDE_TRANSITION_SHAPE,
@@ -17643,6 +19055,12 @@ impl WriteThrough for presentation::SubTimeNodesList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::SUB_TIME_NODES_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::sub_time_nodes_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::SUB_TIME_NODES_LIST_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
@@ -17711,6 +19129,11 @@ impl WriteThrough for presentation::Subshape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::SUBSHAPE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::subshape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::SUBSHAPE_SHAPE, &self.unknown);
         through.attribute(0, &self.spid);
         through.finish(ctx)
@@ -17782,6 +19205,11 @@ impl WriteThrough for presentation::TargetElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TARGET_ELEMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::target_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::TARGET_ELEMENT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -17976,6 +19404,15 @@ impl WriteThrough for presentation::TemplateEffectsTmpl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::TEMPLATE_EFFECTS_TMPL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::template_effects_tmpl(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::TEMPLATE_EFFECTS_TMPL_SHAPE,
@@ -18057,6 +19494,15 @@ impl WriteThrough for presentation::TemplateEffectsTmplLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::TEMPLATE_EFFECTS_TMPL_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::template_effects_tmpl_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::TEMPLATE_EFFECTS_TMPL_LST_SHAPE,
@@ -18136,6 +19582,11 @@ impl WriteThrough for presentation::TextElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TEXT_ELEMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::text_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::TEXT_ELEMENT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -18305,6 +19756,11 @@ impl WriteThrough for presentation::TimeAbsolute {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TIME_ABSOLUTE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::time_absolute(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::TIME_ABSOLUTE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -18381,6 +19837,12 @@ impl WriteThrough for presentation::TimeAnimateValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::TIME_ANIMATE_VALUE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::time_animate_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::TIME_ANIMATE_VALUE_SHAPE, &self.unknown);
         through.attribute(0, &self.tm);
@@ -18460,6 +19922,15 @@ impl WriteThrough for presentation::TimeAnimatedValueList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::TIME_ANIMATED_VALUE_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::time_animated_value_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::TIME_ANIMATED_VALUE_LIST_SHAPE,
@@ -18635,6 +20106,11 @@ impl WriteThrough for presentation::TimeNode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TIME_NODE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::time_node(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::TIME_NODE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -18706,6 +20182,11 @@ impl WriteThrough for presentation::TimeNodeList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TIME_NODE_LIST_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::time_node_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::TIME_NODE_LIST_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
@@ -18973,6 +20454,11 @@ impl WriteThrough for presentation::TimePercentage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TIME_PERCENTAGE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::time_percentage(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::TIME_PERCENTAGE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -19037,6 +20523,11 @@ impl WriteThrough for presentation::To {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TO_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::to(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::TO_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -19109,6 +20600,11 @@ impl WriteThrough for presentation::ToColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::TO_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::to_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::TO_COLOR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -19184,6 +20680,12 @@ impl WriteThrough for presentation::ToTLAnimVariant {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &presentation::TO_TL_ANIM_VARIANT_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::to_tl_anim_variant(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::TO_TL_ANIM_VARIANT_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -19252,6 +20754,11 @@ impl WriteThrough for presentation::Value {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::VALUE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::VALUE_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -19316,6 +20823,11 @@ impl WriteThrough for presentation::Video {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::VIDEO_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::video(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::VIDEO_SHAPE, &self.unknown);
         through.attribute(0, &self.full_scrn);
         through.child(&self.common_media_node_properties, ctx)?;
@@ -19380,6 +20892,11 @@ impl WriteThrough for presentation::ViewOrigin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::VIEW_ORIGIN_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::view_origin(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::VIEW_ORIGIN_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -19450,6 +20967,11 @@ impl WriteThrough for presentation::ViewScale {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::VIEW_SCALE_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::view_scale(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::VIEW_SCALE_SHAPE, &self.unknown);
         through.child(&self.horizontal_ratio, ctx)?;
         through.child(&self.vertical_ratio, ctx)?;
@@ -19522,6 +21044,11 @@ impl WriteThrough for presentation::WebProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::WEB_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::web_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &presentation::WEB_PROPERTIES_SHAPE, &self.unknown);
         through.attribute(0, &self.show_animation);
@@ -19603,6 +21130,15 @@ impl WriteThrough for presentation::WedgeSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::WEDGE_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::wedge_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &presentation::WEDGE_SLIDE_TRANSITION_SHAPE,
@@ -19677,6 +21213,15 @@ impl WriteThrough for presentation::WheelSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::WHEEL_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::wheel_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::WHEEL_SLIDE_TRANSITION_SHAPE,
@@ -19752,6 +21297,15 @@ impl WriteThrough for presentation::WipeSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::WIPE_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::wipe_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::WIPE_SLIDE_TRANSITION_SHAPE,
@@ -19825,6 +21379,11 @@ impl WriteThrough for presentation::Xfrm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &presentation::XFRM_SHAPE, &self.unknown);
+        if converted {
+            let element = presentation::write::xfrm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &presentation::XFRM_SHAPE, &self.unknown);
         through.attribute(0, &self.rot);
         through.attribute(1, &self.flip_h);
@@ -19896,6 +21455,15 @@ impl WriteThrough for presentation::ZoomSlideTransition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &presentation::ZOOM_SLIDE_TRANSITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = presentation::write::zoom_slide_transition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &presentation::ZOOM_SLIDE_TRANSITION_SHAPE,

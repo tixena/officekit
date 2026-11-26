@@ -265,6 +265,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::AArray {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::A_ARRAY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::a_array(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::A_ARRAY_SHAPE,
@@ -350,6 +359,19 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::ASupportingPropertyBa
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::a_supporting_property_bag_array(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::A_SUPPORTING_PROPERTY_BAG_ARRAY_SHAPE,
@@ -432,6 +454,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::ArrayData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::ARRAY_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::array_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::ARRAY_DATA_SHAPE,
@@ -509,6 +540,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::CustomFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::CUSTOM_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::custom_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::CUSTOM_FILTER_SHAPE,
@@ -590,6 +631,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::CustomFilters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::CUSTOM_FILTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::custom_filters(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::CUSTOM_FILTERS_SHAPE,
@@ -784,6 +835,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::DateGroupItem {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::DATE_GROUP_ITEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::date_group_item(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::DATE_GROUP_ITEM_SHAPE,
@@ -870,6 +931,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Dxfs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::DXFS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::dxfs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::DXFS_SHAPE,
@@ -946,6 +1016,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::DynamicFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::DYNAMIC_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::dynamic_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::DYNAMIC_FILTER_SHAPE,
@@ -1030,6 +1110,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::EXT_LST_SHAPE,
@@ -1105,6 +1194,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Filter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::FILTER_SHAPE,
@@ -1187,6 +1285,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::FilterColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::FILTER_COLUMN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::filter_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::FILTER_COLUMN_SHAPE,
@@ -1270,6 +1378,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Filters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::FILTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::filters(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::FILTERS_SHAPE,
@@ -1347,6 +1464,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Flag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::FLAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::flag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::FLAG_SHAPE,
@@ -1429,6 +1555,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Global {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::GLOBAL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::global(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::GLOBAL_SHAPE,
@@ -1505,6 +1640,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::K {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::K_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::k(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::K_SHAPE,
@@ -1585,6 +1729,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Key {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::KEY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::key(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::KEY_SHAPE,
@@ -1665,6 +1818,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::KeyFlags {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::KEY_FLAGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::key_flags(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::KEY_FLAGS_SHAPE,
@@ -1740,6 +1902,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::R_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::r_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::R_PR_SHAPE,
@@ -1820,6 +1991,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RSty {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::R_STY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::r_sty(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::R_STY_SHAPE,
@@ -2018,6 +2198,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RichProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::RICH_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::rich_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::RICH_PROPERTIES_SHAPE,
@@ -2093,6 +2283,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RichSortCondition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::RICH_SORT_CONDITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::rich_sort_condition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::RICH_SORT_CONDITION_SHAPE,
@@ -2185,6 +2385,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RichStyleSheet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::RICH_STYLE_SHEET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::rich_style_sheet(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::RICH_STYLE_SHEET_SHAPE,
@@ -2267,6 +2477,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RichStyles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::RICH_STYLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::rich_styles(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::RICH_STYLES_SHAPE,
@@ -2342,6 +2562,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Rpv {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::RPV_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::rpv(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::RPV_SHAPE,
@@ -2426,6 +2655,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RvTypesInfo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::RV_TYPES_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::rv_types_info(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::RV_TYPES_INFO_SHAPE,
@@ -2507,6 +2746,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::S {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::S_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::s(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::S_SHAPE,
@@ -2587,6 +2835,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Spb {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::SPB_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::spb(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::SPB_SHAPE,
@@ -2670,6 +2927,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::SpbArrays {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::SPB_ARRAYS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::spb_arrays(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::SPB_ARRAYS_SHAPE,
@@ -2753,6 +3019,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::SpbData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::SPB_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::spb_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::SPB_DATA_SHAPE,
@@ -2836,6 +3111,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::SpbStructures {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::SPB_STRUCTURES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::spb_structures(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::SPB_STRUCTURES_SHAPE,
@@ -2919,6 +3204,18 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::SupportingPropertyBag
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::SUPPORTING_PROPERTY_BAGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::supporting_property_bags(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::SUPPORTING_PROPERTY_BAGS_SHAPE,
@@ -2995,6 +3292,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Top10 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::TOP10_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::top10(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::TOP10_SHAPE,
@@ -3080,6 +3386,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Type {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::r#type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::TYPE_SHAPE,
@@ -3161,6 +3476,15 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::Types {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::TYPES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2017_richdata2::write::types(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::TYPES_SHAPE,
@@ -3236,6 +3560,16 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::VArrayValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::V_ARRAY_VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::v_array_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::V_ARRAY_VALUE_SHAPE,
@@ -3312,6 +3646,19 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::VSupportingPropertyBa
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::V_SUPPORTING_PROPERTY_BAG_ARRAY_VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::v_supporting_property_bag_array_value(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::V_SUPPORTING_PROPERTY_BAG_ARRAY_VALUE_SHAPE,
@@ -3383,6 +3730,19 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::VSupportingPropertyBa
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2017_richdata2::V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2017_richdata2::write::v_supporting_property_bag_value(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2017_richdata2::V_SUPPORTING_PROPERTY_BAG_VALUE_SHAPE,

@@ -261,6 +261,19 @@ impl WriteThrough for office_spreadsheetml_2023_data_source_versioning::LastEdit
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_data_source_versioning::LAST_EDIT_FEATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2023_data_source_versioning::write::last_edit_feature(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_data_source_versioning::LAST_EDIT_FEATURE_SHAPE,
@@ -336,6 +349,19 @@ impl WriteThrough for office_spreadsheetml_2023_data_source_versioning::LastRefr
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_data_source_versioning::LAST_REFRESH_FEATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_spreadsheetml_2023_data_source_versioning::write::last_refresh_feature(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_data_source_versioning::LAST_REFRESH_FEATURE_SHAPE,
@@ -411,6 +437,18 @@ impl WriteThrough for office_spreadsheetml_2023_data_source_versioning::Required
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_data_source_versioning::REQUIRED_FEATURE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_data_source_versioning::write::required_feature(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_data_source_versioning::REQUIRED_FEATURE_SHAPE,
@@ -495,6 +533,18 @@ impl WriteThrough for office_spreadsheetml_2023_data_source_versioning::VersionI
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2023_data_source_versioning::VERSION_INFO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2023_data_source_versioning::write::version_info(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_data_source_versioning::VERSION_INFO_SHAPE,

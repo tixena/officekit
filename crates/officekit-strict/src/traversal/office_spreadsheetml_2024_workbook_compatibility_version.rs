@@ -263,6 +263,18 @@ impl WriteThrough for office_spreadsheetml_2024_workbook_compatibility_version::
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2024_workbook_compatibility_version::VERSION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2024_workbook_compatibility_version::write::version(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2024_workbook_compatibility_version::VERSION_SHAPE,

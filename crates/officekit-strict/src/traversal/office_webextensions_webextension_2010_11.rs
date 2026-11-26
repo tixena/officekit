@@ -265,6 +265,18 @@ impl WriteThrough for office_webextensions_webextension_2010_11::AlternateRefere
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::ALTERNATE_REFERENCES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_webextensions_webextension_2010_11::write::alternate_references(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::ALTERNATE_REFERENCES_SHAPE,
@@ -344,6 +356,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Binding {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::BINDING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::binding(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::BINDING_SHAPE,
@@ -426,6 +448,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Bindings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::BINDINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::bindings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::BINDINGS_SHAPE,
@@ -505,6 +537,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::EXT_LST_SHAPE,
@@ -584,6 +626,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Properties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::PROPERTIES_SHAPE,
@@ -659,6 +711,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Property {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::property(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::PROPERTY_SHAPE,
@@ -739,6 +801,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Reference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::REFERENCE_SHAPE,
@@ -824,6 +896,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Snapshot {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::SNAPSHOT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::snapshot(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::SNAPSHOT_SHAPE,
@@ -918,6 +1000,16 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Webextension {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::WEBEXTENSION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_webextensions_webextension_2010_11::write::webextension(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::WEBEXTENSION_SHAPE,
@@ -1000,6 +1092,18 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Webextensionref
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_webextensions_webextension_2010_11::WEBEXTENSIONREF_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_webextensions_webextension_2010_11::write::webextensionref(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::WEBEXTENSIONREF_SHAPE,

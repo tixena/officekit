@@ -270,6 +270,15 @@ impl WriteThrough for office_drawing_2017_model3d::AmbientLight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::AMBIENT_LIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::ambient_light(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::AMBIENT_LIGHT_SHAPE,
@@ -348,6 +357,15 @@ impl WriteThrough for office_drawing_2017_model3d::AttrSrcUrl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::ATTR_SRC_URL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::attr_src_url(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::ATTR_SRC_URL_SHAPE,
@@ -429,6 +447,12 @@ impl WriteThrough for office_drawing_2017_model3d::Blip {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2017_model3d::BLIP_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::blip(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::BLIP_SHAPE, &self.unknown);
         through.attribute(0, &self.embed);
@@ -518,6 +542,15 @@ impl WriteThrough for office_drawing_2017_model3d::Camera {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::CAMERA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::camera(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::CAMERA_SHAPE,
@@ -601,6 +634,12 @@ impl WriteThrough for office_drawing_2017_model3d::Clr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2017_model3d::CLR_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::clr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::CLR_SHAPE, &self.unknown);
         through.choice(&self.content, ctx)?;
@@ -686,6 +725,15 @@ impl WriteThrough for office_drawing_2017_model3d::DirLight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::DIR_LIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::dir_light(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::DIR_LIGHT_SHAPE,
@@ -771,6 +819,12 @@ impl WriteThrough for office_drawing_2017_model3d::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2017_model3d::EXT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::ext(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::EXT_SHAPE, &self.unknown);
         through.attribute(0, &self.uri);
@@ -848,6 +902,18 @@ impl WriteThrough for office_drawing_2017_model3d::ExtLstModel3DExtensionList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::ext_lst_model3d_extension_list(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE,
@@ -927,6 +993,18 @@ impl WriteThrough for office_drawing_2017_model3d::ExtLstOfficeArtExtensionList 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::ext_lst_office_art_extension_list(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE,
@@ -1002,6 +1080,15 @@ impl WriteThrough for office_drawing_2017_model3d::Illuminance {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::ILLUMINANCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::illuminance(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::ILLUMINANCE_SHAPE,
@@ -1076,6 +1163,15 @@ impl WriteThrough for office_drawing_2017_model3d::Intensity {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::INTENSITY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::intensity(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::INTENSITY_SHAPE,
@@ -1150,6 +1246,15 @@ impl WriteThrough for office_drawing_2017_model3d::LookAt {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::LOOK_AT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::look_at(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::LOOK_AT_SHAPE,
@@ -1227,6 +1332,16 @@ impl WriteThrough for office_drawing_2017_model3d::MeterPerModelUnit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::METER_PER_MODEL_UNIT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2017_model3d::write::meter_per_model_unit(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::METER_PER_MODEL_UNIT_SHAPE,
@@ -1757,6 +1872,15 @@ impl WriteThrough for office_drawing_2017_model3d::Model3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::MODEL3D_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::model3d(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::MODEL3D_SHAPE,
@@ -1847,6 +1971,15 @@ impl WriteThrough for office_drawing_2017_model3d::ObjViewport {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::OBJ_VIEWPORT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::obj_viewport(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::OBJ_VIEWPORT_SHAPE,
@@ -1930,6 +2063,15 @@ impl WriteThrough for office_drawing_2017_model3d::Orthographic {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::ORTHOGRAPHIC_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::orthographic(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::ORTHOGRAPHIC_SHAPE,
@@ -2011,6 +2153,15 @@ impl WriteThrough for office_drawing_2017_model3d::Perspective {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::PERSPECTIVE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::perspective(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::PERSPECTIVE_SHAPE,
@@ -2087,6 +2238,12 @@ impl WriteThrough for office_drawing_2017_model3d::Pos {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2017_model3d::POS_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::pos(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::POS_SHAPE, &self.unknown);
         through.attribute(0, &self.x);
@@ -2161,6 +2318,15 @@ impl WriteThrough for office_drawing_2017_model3d::PostTrans {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::POST_TRANS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::post_trans(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::POST_TRANS_SHAPE,
@@ -2238,6 +2404,15 @@ impl WriteThrough for office_drawing_2017_model3d::PreTrans {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::PRE_TRANS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::pre_trans(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::PRE_TRANS_SHAPE,
@@ -2326,6 +2501,15 @@ impl WriteThrough for office_drawing_2017_model3d::PtLight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::PT_LIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::pt_light(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::PT_LIGHT_SHAPE,
@@ -2410,6 +2594,15 @@ impl WriteThrough for office_drawing_2017_model3d::Raster {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::RASTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::raster(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::RASTER_SHAPE,
@@ -2487,6 +2680,12 @@ impl WriteThrough for office_drawing_2017_model3d::Rot {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_drawing_2017_model3d::ROT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::rot(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::ROT_SHAPE, &self.unknown);
         through.attribute(0, &self.ax);
@@ -2569,6 +2768,15 @@ impl WriteThrough for office_drawing_2017_model3d::Scale {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::SCALE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::scale(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SCALE_SHAPE,
@@ -2667,6 +2875,15 @@ impl WriteThrough for office_drawing_2017_model3d::SpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::SP_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::sp_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SP_PR_SHAPE,
@@ -2763,6 +2980,15 @@ impl WriteThrough for office_drawing_2017_model3d::SpotLight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::SPOT_LIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::spot_light(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SPOT_LIGHT_SHAPE,
@@ -2845,6 +3071,11 @@ impl WriteThrough for office_drawing_2017_model3d::Sx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2017_model3d::SX_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::sx(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::SX_SHAPE, &self.unknown);
         through.attribute(0, &self.n);
@@ -2918,6 +3149,11 @@ impl WriteThrough for office_drawing_2017_model3d::Sy {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2017_model3d::SY_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::sy(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::SY_SHAPE, &self.unknown);
         through.attribute(0, &self.n);
@@ -2991,6 +3227,15 @@ impl WriteThrough for office_drawing_2017_model3d::SzPositiveRatio {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::SZ_POSITIVE_RATIO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::sz_positive_ratio(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SZ_POSITIVE_RATIO_SHAPE,
@@ -3065,6 +3310,15 @@ impl WriteThrough for office_drawing_2017_model3d::SzRatio {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::SZ_RATIO_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::sz_ratio(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SZ_RATIO_SHAPE,
@@ -3157,6 +3411,15 @@ impl WriteThrough for office_drawing_2017_model3d::Trans {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::TRANS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::trans(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::TRANS_SHAPE,
@@ -3237,6 +3500,15 @@ impl WriteThrough for office_drawing_2017_model3d::UnkLight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::UNK_LIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::unk_light(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::UNK_LIGHT_SHAPE,
@@ -3311,6 +3583,11 @@ impl WriteThrough for office_drawing_2017_model3d::Up {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_drawing_2017_model3d::UP_SHAPE, &self.unknown);
+        if converted {
+            let element = office_drawing_2017_model3d::write::up(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_drawing_2017_model3d::UP_SHAPE, &self.unknown);
         through.attribute(0, &self.dx);
@@ -3390,6 +3667,15 @@ impl WriteThrough for office_drawing_2017_model3d::WinViewport {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::WIN_VIEWPORT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_model3d::write::win_viewport(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::WIN_VIEWPORT_SHAPE,

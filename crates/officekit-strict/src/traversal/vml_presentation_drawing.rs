@@ -261,6 +261,15 @@ impl WriteThrough for vml_presentation_drawing::InkAnnotationFlag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_presentation_drawing::INK_ANNOTATION_FLAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_presentation_drawing::write::ink_annotation_flag(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &vml_presentation_drawing::INK_ANNOTATION_FLAG_SHAPE,
@@ -335,6 +344,15 @@ impl WriteThrough for vml_presentation_drawing::VMLDiagramText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_presentation_drawing::VML_DIAGRAM_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_presentation_drawing::write::vml_diagram_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_presentation_drawing::VML_DIAGRAM_TEXT_SHAPE,

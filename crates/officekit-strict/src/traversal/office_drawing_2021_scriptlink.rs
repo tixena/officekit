@@ -265,6 +265,15 @@ impl WriteThrough for office_drawing_2021_scriptlink::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_scriptlink::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_scriptlink::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_scriptlink::EXT_LST_SHAPE,
@@ -344,6 +353,15 @@ impl WriteThrough for office_drawing_2021_scriptlink::ScriptLink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2021_scriptlink::SCRIPT_LINK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2021_scriptlink::write::script_link(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_scriptlink::SCRIPT_LINK_SHAPE,

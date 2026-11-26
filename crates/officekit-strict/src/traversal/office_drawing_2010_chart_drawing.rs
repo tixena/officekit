@@ -267,6 +267,16 @@ impl WriteThrough for office_drawing_2010_chart_drawing::CNvContentPartPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_chart_drawing::C_NV_CONTENT_PART_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2010_chart_drawing::write::c_nv_content_part_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_chart_drawing::C_NV_CONTENT_PART_PR_SHAPE,
@@ -353,6 +363,15 @@ impl WriteThrough for office_drawing_2010_chart_drawing::CNvPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_chart_drawing::C_NV_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_chart_drawing::write::c_nv_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_chart_drawing::C_NV_PR_SHAPE,
@@ -446,6 +465,15 @@ impl WriteThrough for office_drawing_2010_chart_drawing::ContentPart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_chart_drawing::CONTENT_PART_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_chart_drawing::write::content_part(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_chart_drawing::CONTENT_PART_SHAPE,
@@ -530,6 +558,15 @@ impl WriteThrough for office_drawing_2010_chart_drawing::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_chart_drawing::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_chart_drawing::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_chart_drawing::EXT_LST_SHAPE,
@@ -611,6 +648,16 @@ impl WriteThrough for office_drawing_2010_chart_drawing::NvContentPartPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_chart_drawing::NV_CONTENT_PART_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2010_chart_drawing::write::nv_content_part_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_chart_drawing::NV_CONTENT_PART_PR_SHAPE,
@@ -687,6 +734,15 @@ impl WriteThrough for office_drawing_2010_chart_drawing::NvPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_chart_drawing::NV_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_chart_drawing::write::nv_pr(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_chart_drawing::NV_PR_SHAPE,
@@ -769,6 +825,15 @@ impl WriteThrough for office_drawing_2010_chart_drawing::Xfrm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_chart_drawing::XFRM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_chart_drawing::write::xfrm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_chart_drawing::XFRM_SHAPE,

@@ -261,6 +261,15 @@ impl WriteThrough for office_drawing_2010_compatibility::CompatSp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2010_compatibility::COMPAT_SP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2010_compatibility::write::compat_sp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2010_compatibility::COMPAT_SP_SHAPE,

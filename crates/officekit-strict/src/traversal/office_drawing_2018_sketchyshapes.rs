@@ -265,6 +265,15 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_sketchyshapes::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::EXT_LST_SHAPE,
@@ -340,6 +349,16 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchCurved {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::LINE_SKETCH_CURVED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2018_sketchyshapes::write::line_sketch_curved(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_CURVED_SHAPE,
@@ -414,6 +433,16 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchFreehand {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::LINE_SKETCH_FREEHAND_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2018_sketchyshapes::write::line_sketch_freehand(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_FREEHAND_SHAPE,
@@ -488,6 +517,16 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchNone {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::LINE_SKETCH_NONE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2018_sketchyshapes::write::line_sketch_none(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_NONE_SHAPE,
@@ -562,6 +601,16 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchScribble {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::LINE_SKETCH_SCRIBBLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2018_sketchyshapes::write::line_sketch_scribble(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_SCRIBBLE_SHAPE,
@@ -646,6 +695,18 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchStyleProps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::LINE_SKETCH_STYLE_PROPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_sketchyshapes::write::line_sketch_style_props(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_STYLE_PROPS_SHAPE,
@@ -836,6 +897,15 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::Seed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::SEED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_sketchyshapes::write::seed(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::SEED_SHAPE,
@@ -915,6 +985,15 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::Type {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2018_sketchyshapes::TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2018_sketchyshapes::write::r#type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::TYPE_SHAPE,

@@ -259,6 +259,11 @@ impl WriteThrough
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_spreadsheetml_2025_external_code_service2::EXTERNAL_CODE_SERVICE_IMAGE_AS_INPUT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_spreadsheetml_2025_external_code_service2::write::external_code_service_image_as_input(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &office_spreadsheetml_2025_external_code_service2::EXTERNAL_CODE_SERVICE_IMAGE_AS_INPUT_SHAPE, &self.unknown);
         through.attribute(0, &self.max_width);
         through.attribute(1, &self.max_height);

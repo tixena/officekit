@@ -261,6 +261,15 @@ impl WriteThrough for wordprocessing::AbsolutePositionTabCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ABSOLUTE_POSITION_TAB_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::absolute_position_tab_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ABSOLUTE_POSITION_TAB_CHARACTER_SHAPE,
@@ -359,6 +368,15 @@ impl WriteThrough for wordprocessing::AbstractNumberingDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::abstract_numbering_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_SHAPE,
@@ -441,6 +459,16 @@ impl WriteThrough for wordprocessing::AbstractNumberingDefinitionIdentifier {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_IDENTIFIER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::abstract_numbering_definition_identifier(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_IDENTIFIER_SHAPE,
@@ -516,6 +544,16 @@ impl WriteThrough for wordprocessing::AbstractNumberingDefinitionReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::abstract_numbering_definition_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_REFERENCE_SHAPE,
@@ -591,6 +629,16 @@ impl WriteThrough for wordprocessing::AbstractNumberingDefinitionType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::abstract_numbering_definition_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ABSTRACT_NUMBERING_DEFINITION_TYPE_SHAPE,
@@ -666,6 +714,15 @@ impl WriteThrough for wordprocessing::AddDocumentGridLinePitch {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ADD_DOCUMENT_GRID_LINE_PITCH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::add_document_grid_line_pitch(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ADD_DOCUMENT_GRID_LINE_PITCH_SHAPE,
@@ -741,6 +798,15 @@ impl WriteThrough for wordprocessing::AddSpaceBelowUnderlinedText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ADD_SPACE_BELOW_UNDERLINED_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::add_space_below_underlined_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ADD_SPACE_BELOW_UNDERLINED_TEXT_SHAPE,
@@ -816,6 +882,16 @@ impl WriteThrough for wordprocessing::AdjustSpacingEastAsianTextNumbers {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ADJUST_SPACING_EAST_ASIAN_TEXT_NUMBERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::adjust_spacing_east_asian_text_numbers(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ADJUST_SPACING_EAST_ASIAN_TEXT_NUMBERS_SHAPE,
@@ -891,6 +967,16 @@ impl WriteThrough for wordprocessing::AdjustSpacingLatinEastAsianText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ADJUST_SPACING_LATIN_EAST_ASIAN_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::adjust_spacing_latin_east_asian_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ADJUST_SPACING_LATIN_EAST_ASIAN_TEXT_SHAPE,
@@ -966,6 +1052,16 @@ impl WriteThrough for wordprocessing::AlignParagraphAndTableBorders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALIGN_PARAGRAPH_AND_TABLE_BORDERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::align_paragraph_and_table_borders(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALIGN_PARAGRAPH_AND_TABLE_BORDERS_SHAPE,
@@ -1041,6 +1137,15 @@ impl WriteThrough for wordprocessing::AlignTableRowsIndependently {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALIGN_TABLE_ROWS_INDEPENDENTLY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::align_table_rows_independently(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALIGN_TABLE_ROWS_INDEPENDENTLY_SHAPE,
@@ -1116,6 +1221,16 @@ impl WriteThrough for wordprocessing::AllowAutomaticFormattingOverride {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_AUTOMATIC_FORMATTING_OVERRIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::allow_automatic_formatting_override(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_AUTOMATIC_FORMATTING_OVERRIDE_SHAPE,
@@ -1191,6 +1306,18 @@ impl WriteThrough for wordprocessing::AllowContextualSpacingOfParagraphsInTables
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_CONTEXTUAL_SPACING_OF_PARAGRAPHS_IN_TABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::allow_contextual_spacing_of_paragraphs_in_tables(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_CONTEXTUAL_SPACING_OF_PARAGRAPHS_IN_TABLES_SHAPE,
@@ -1266,6 +1393,15 @@ impl WriteThrough for wordprocessing::AllowFirstLastLineDisplay {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_FIRST_LAST_LINE_DISPLAY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::allow_first_last_line_display(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_FIRST_LAST_LINE_DISPLAY_SHAPE,
@@ -1341,6 +1477,16 @@ impl WriteThrough for wordprocessing::AllowLineBreakingAtCharacterLevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_LINE_BREAKING_AT_CHARACTER_LEVEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::allow_line_breaking_at_character_level(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_LINE_BREAKING_AT_CHARACTER_LEVEL_SHAPE,
@@ -1416,6 +1562,15 @@ impl WriteThrough for wordprocessing::AllowPNGAsGraphicFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_PNG_AS_GRAPHIC_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::allow_png_as_graphic_format(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_PNG_AS_GRAPHIC_FORMAT_SHAPE,
@@ -1491,6 +1646,18 @@ impl WriteThrough for wordprocessing::AllowPunctuationExtendPastTextExtents {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_PUNCTUATION_EXTEND_PAST_TEXT_EXTENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::allow_punctuation_extend_past_text_extents(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_PUNCTUATION_EXTEND_PAST_TEXT_EXTENTS_SHAPE,
@@ -1566,6 +1733,16 @@ impl WriteThrough for wordprocessing::AllowSavingDocumentAsXMLFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_SAVING_DOCUMENT_AS_XML_FILE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::allow_saving_document_as_xml_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_SAVING_DOCUMENT_AS_XML_FILE_SHAPE,
@@ -1641,6 +1818,19 @@ impl WriteThrough for wordprocessing::AllowTableRowsToWrapInlineObjectsIndepende
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_TABLE_ROWS_TO_WRAP_INLINE_OBJECTS_INDEPENDENTLY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::allow_table_rows_to_wrap_inline_objects_independently(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_TABLE_ROWS_TO_WRAP_INLINE_OBJECTS_INDEPENDENTLY_SHAPE,
@@ -1716,6 +1906,18 @@ impl WriteThrough for wordprocessing::AllowTablesToAutoFitIntoPageMargins {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALLOW_TABLES_TO_AUTO_FIT_INTO_PAGE_MARGINS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::allow_tables_to_auto_fit_into_page_margins(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALLOW_TABLES_TO_AUTO_FIT_INTO_PAGE_MARGINS_SHAPE,
@@ -1791,6 +1993,15 @@ impl WriteThrough for wordprocessing::AlternateNamesForFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALTERNATE_NAMES_FOR_FONT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::alternate_names_for_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALTERNATE_NAMES_FOR_FONT_SHAPE,
@@ -1866,6 +2077,15 @@ impl WriteThrough for wordprocessing::AlternateStyleNames {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALTERNATE_STYLE_NAMES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::alternate_style_names(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALTERNATE_STYLE_NAMES_SHAPE,
@@ -1941,6 +2161,15 @@ impl WriteThrough for wordprocessing::AlwaysMergeEmptyNamespace {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALWAYS_MERGE_EMPTY_NAMESPACE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::always_merge_empty_namespace(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALWAYS_MERGE_EMPTY_NAMESPACE_SHAPE,
@@ -2016,6 +2245,15 @@ impl WriteThrough for wordprocessing::AlwaysShowPlaceholderText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALWAYS_SHOW_PLACEHOLDER_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::always_show_placeholder_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALWAYS_SHOW_PLACEHOLDER_TEXT_SHAPE,
@@ -2091,6 +2329,18 @@ impl WriteThrough for wordprocessing::AlwaysUseFixedWidthForHangulCharacters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ALWAYS_USE_FIXED_WIDTH_FOR_HANGUL_CHARACTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::always_use_fixed_width_for_hangul_characters(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ALWAYS_USE_FIXED_WIDTH_FOR_HANGUL_CHARACTERS_SHAPE,
@@ -2170,6 +2420,16 @@ impl WriteThrough for wordprocessing::AnchorForImportedExternalContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ANCHOR_FOR_IMPORTED_EXTERNAL_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::anchor_for_imported_external_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ANCHOR_FOR_IMPORTED_EXTERNAL_CONTENT_SHAPE,
@@ -2246,6 +2506,15 @@ impl WriteThrough for wordprocessing::AnchorForSubdocumentLocation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ANCHOR_FOR_SUBDOCUMENT_LOCATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::anchor_for_subdocument_location(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ANCHOR_FOR_SUBDOCUMENT_LOCATION_SHAPE,
@@ -2321,6 +2590,15 @@ impl WriteThrough for wordprocessing::AnimatedTextEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ANIMATED_TEXT_EFFECT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::animated_text_effect(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ANIMATED_TEXT_EFFECT_SHAPE,
@@ -2396,6 +2674,15 @@ impl WriteThrough for wordprocessing::AssociatedHTMLDivID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ASSOCIATED_HTML_DIV_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::associated_html_div_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ASSOCIATED_HTML_DIV_ID_SHAPE,
@@ -2471,6 +2758,15 @@ impl WriteThrough for wordprocessing::AssociatedHelpText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ASSOCIATED_HELP_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::associated_help_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ASSOCIATED_HELP_TEXT_SHAPE,
@@ -2547,6 +2843,15 @@ impl WriteThrough for wordprocessing::AssociatedOutlineLevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ASSOCIATED_OUTLINE_LEVEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::associated_outline_level(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ASSOCIATED_OUTLINE_LEVEL_SHAPE,
@@ -2622,6 +2927,15 @@ impl WriteThrough for wordprocessing::AssociatedParagraphStyleName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ASSOCIATED_PARAGRAPH_STYLE_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::associated_paragraph_style_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ASSOCIATED_PARAGRAPH_STYLE_NAME_SHAPE,
@@ -2697,6 +3011,15 @@ impl WriteThrough for wordprocessing::AssociatedStatusText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ASSOCIATED_STATUS_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::associated_status_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ASSOCIATED_STATUS_TEXT_SHAPE,
@@ -2773,6 +3096,15 @@ impl WriteThrough for wordprocessing::AttachedCustomXMLSchema {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ATTACHED_CUSTOM_XML_SCHEMA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::attached_custom_xml_schema(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ATTACHED_CUSTOM_XML_SCHEMA_SHAPE,
@@ -2848,6 +3180,15 @@ impl WriteThrough for wordprocessing::AttachedDocumentTemplate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ATTACHED_DOCUMENT_TEMPLATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::attached_document_template(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ATTACHED_DOCUMENT_TEMPLATE_SHAPE,
@@ -2923,6 +3264,15 @@ impl WriteThrough for wordprocessing::AutoSpaceLikeWord95 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTO_SPACE_LIKE_WORD95_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::auto_space_like_word95(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTO_SPACE_LIKE_WORD95_SHAPE,
@@ -2998,6 +3348,16 @@ impl WriteThrough for wordprocessing::AutofitToFirstFixedWidthCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOFIT_TO_FIRST_FIXED_WIDTH_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::autofit_to_first_fixed_width_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOFIT_TO_FIRST_FIXED_WIDTH_CELL_SHAPE,
@@ -3078,6 +3438,15 @@ impl WriteThrough for wordprocessing::AutomaticCaptioningSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOMATIC_CAPTIONING_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::automatic_captioning_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOMATIC_CAPTIONING_SETTINGS_SHAPE,
@@ -3153,6 +3522,16 @@ impl WriteThrough for wordprocessing::AutomaticallyAdjustRightIndent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOMATICALLY_ADJUST_RIGHT_INDENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::automatically_adjust_right_indent(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOMATICALLY_ADJUST_RIGHT_INDENT_SHAPE,
@@ -3228,6 +3607,19 @@ impl WriteThrough for wordprocessing::AutomaticallyHyphenateDocumentContentsWhen
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOMATICALLY_HYPHENATE_DOCUMENT_CONTENTS_WHEN_DISPLAYED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::automatically_hyphenate_document_contents_when_displayed(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOMATICALLY_HYPHENATE_DOCUMENT_CONTENTS_WHEN_DISPLAYED_SHAPE,
@@ -3303,6 +3695,16 @@ impl WriteThrough for wordprocessing::AutomaticallyMergeUserFormatting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOMATICALLY_MERGE_USER_FORMATTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::automatically_merge_user_formatting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOMATICALLY_MERGE_USER_FORMATTING_SHAPE,
@@ -3378,6 +3780,16 @@ impl WriteThrough for wordprocessing::AutomaticallyRecalculateFieldsOnOpen {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOMATICALLY_RECALCULATE_FIELDS_ON_OPEN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::automatically_recalculate_fields_on_open(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOMATICALLY_RECALCULATE_FIELDS_ON_OPEN_SHAPE,
@@ -3453,6 +3865,15 @@ impl WriteThrough for wordprocessing::AutomaticallySizeFormField {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOMATICALLY_SIZE_FORM_FIELD_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::automatically_size_form_field(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOMATICALLY_SIZE_FORM_FIELD_SHAPE,
@@ -3528,6 +3949,18 @@ impl WriteThrough for wordprocessing::AutomaticallyUpdateStylesFromDocumentTempl
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::AUTOMATICALLY_UPDATE_STYLES_FROM_DOCUMENT_TEMPLATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::automatically_update_styles_from_document_template(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::AUTOMATICALLY_UPDATE_STYLES_FROM_DOCUMENT_TEMPLATE_SHAPE,
@@ -3603,6 +4036,16 @@ impl WriteThrough for wordprocessing::BalanceSingleByteDoubleByteWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BALANCE_SINGLE_BYTE_DOUBLE_BYTE_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::balance_single_byte_double_byte_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BALANCE_SINGLE_BYTE_DOUBLE_BYTE_WIDTH_SHAPE,
@@ -3678,6 +4121,16 @@ impl WriteThrough for wordprocessing::BibliographyStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BIBLIOGRAPHY_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::bibliography_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::BIBLIOGRAPHY_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -3756,6 +4209,15 @@ impl WriteThrough for wordprocessing::BidirectionalEmbeddingLevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BIDIRECTIONAL_EMBEDDING_LEVEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::bidirectional_embedding_level(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BIDIRECTIONAL_EMBEDDING_LEVEL_SHAPE,
@@ -3836,6 +4298,15 @@ impl WriteThrough for wordprocessing::BidirectionalOverride {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BIDIRECTIONAL_OVERRIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::bidirectional_override(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BIDIRECTIONAL_OVERRIDE_SHAPE,
@@ -4017,6 +4488,15 @@ impl WriteThrough for wordprocessing::BlockLevelCustomXMLElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BLOCK_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::block_level_custom_xml_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BLOCK_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
@@ -4116,6 +4596,16 @@ impl WriteThrough for wordprocessing::BlockLevelStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BLOCK_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::block_level_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BLOCK_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -4201,6 +4691,18 @@ impl WriteThrough for wordprocessing::BlockLevelStructuredDocumentTagContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BLOCK_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::block_level_structured_document_tag_content(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BLOCK_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
@@ -4272,6 +4774,11 @@ impl WriteThrough for wordprocessing::Bold {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::BOLD_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::bold(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::BOLD_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4339,6 +4846,16 @@ impl WriteThrough for wordprocessing::BoldItalicFontStyleEmbedding {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BOLD_ITALIC_FONT_STYLE_EMBEDDING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::bold_italic_font_style_embedding(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BOLD_ITALIC_FONT_STYLE_EMBEDDING_SHAPE,
@@ -4416,6 +4933,15 @@ impl WriteThrough for wordprocessing::BoldStyleFontStyleEmbedding {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BOLD_STYLE_FONT_STYLE_EMBEDDING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::bold_style_font_style_embedding(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BOLD_STYLE_FONT_STYLE_EMBEDDING_SHAPE,
@@ -4493,6 +5019,15 @@ impl WriteThrough for wordprocessing::BookFoldPrinting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BOOK_FOLD_PRINTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::book_fold_printing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BOOK_FOLD_PRINTING_SHAPE,
@@ -4568,6 +5103,11 @@ impl WriteThrough for wordprocessing::BookmarkEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::BOOKMARK_END_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::bookmark_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::BOOKMARK_END_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -4641,6 +5181,11 @@ impl WriteThrough for wordprocessing::BookmarkStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::BOOKMARK_START_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::bookmark_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::BOOKMARK_START_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -4717,6 +5262,11 @@ impl WriteThrough for wordprocessing::BottomBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::BOTTOM_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::bottom_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::BOTTOM_BORDER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -4800,6 +5350,15 @@ impl WriteThrough for wordprocessing::BottomMarginForHTMLDiv {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BOTTOM_MARGIN_FOR_HTML_DIV_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::bottom_margin_for_html_div(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BOTTOM_MARGIN_FOR_HTML_DIV_SHAPE,
@@ -4871,6 +5430,11 @@ impl WriteThrough for wordprocessing::Break {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::BREAK_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::r#break(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::BREAK_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.clear);
@@ -4939,6 +5503,15 @@ impl WriteThrough for wordprocessing::BuiltInDocumentPart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BUILT_IN_DOCUMENT_PART_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::built_in_document_part(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BUILT_IN_DOCUMENT_PART_SHAPE,
@@ -5025,6 +5598,18 @@ impl WriteThrough for wordprocessing::BuiltInDocumentPartStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::BUILT_IN_DOCUMENT_PART_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::built_in_document_part_structured_document_tag(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::BUILT_IN_DOCUMENT_PART_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -5110,6 +5695,12 @@ impl WriteThrough for wordprocessing::CaptionSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::CAPTION_SETTINGS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::caption_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::CAPTION_SETTINGS_SHAPE, &self.unknown);
         through.child(&self.single_caption_type_definition, ctx)?;
@@ -5183,6 +5774,11 @@ impl WriteThrough for wordprocessing::CarriageReturn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::CARRIAGE_RETURN_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::carriage_return(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &wordprocessing::CARRIAGE_RETURN_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -5260,6 +5856,15 @@ impl WriteThrough for wordprocessing::CellLevelCustomXMLElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CELL_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::cell_level_custom_xml_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CELL_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
@@ -5359,6 +5964,16 @@ impl WriteThrough for wordprocessing::CellLevelStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CELL_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::cell_level_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CELL_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -5444,6 +6059,18 @@ impl WriteThrough for wordprocessing::CellLevelStructuredDocumentTagContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CELL_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::cell_level_structured_document_tag_content(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CELL_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
@@ -5623,6 +6250,16 @@ impl WriteThrough for wordprocessing::CharacterLevelWhitespaceCompression {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHARACTER_LEVEL_WHITESPACE_COMPRESSION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::character_level_whitespace_compression(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHARACTER_LEVEL_WHITESPACE_COMPRESSION_SHAPE,
@@ -5698,6 +6335,15 @@ impl WriteThrough for wordprocessing::CharacterSetSupportedByFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHARACTER_SET_SUPPORTED_BY_FONT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::character_set_supported_by_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHARACTER_SET_SUPPORTED_BY_FONT_SHAPE,
@@ -5774,6 +6420,15 @@ impl WriteThrough for wordprocessing::CharacterSpacingAdjustment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHARACTER_SPACING_ADJUSTMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::character_spacing_adjustment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHARACTER_SPACING_ADJUSTMENT_SHAPE,
@@ -5849,6 +6504,16 @@ impl WriteThrough for wordprocessing::CharactersWhichCannotBeginALine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHARACTERS_WHICH_CANNOT_BEGIN_A_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::characters_which_cannot_begin_a_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHARACTERS_WHICH_CANNOT_BEGIN_A_LINE_SHAPE,
@@ -5925,6 +6590,16 @@ impl WriteThrough for wordprocessing::CharactersWhichCannotEndALine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHARACTERS_WHICH_CANNOT_END_A_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::characters_which_cannot_end_a_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHARACTERS_WHICH_CANNOT_END_A_LINE_SHAPE,
@@ -6011,6 +6686,15 @@ impl WriteThrough for wordprocessing::CheckboxFormFieldProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHECKBOX_FORM_FIELD_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::checkbox_form_field_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHECKBOX_FORM_FIELD_PROPERTIES_SHAPE,
@@ -6185,6 +6869,15 @@ impl WriteThrough for wordprocessing::CheckboxFormFieldSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHECKBOX_FORM_FIELD_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::checkbox_form_field_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHECKBOX_FORM_FIELD_SIZE_SHAPE,
@@ -6260,6 +6953,15 @@ impl WriteThrough for wordprocessing::CheckboxFormFieldState {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHECKBOX_FORM_FIELD_STATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::checkbox_form_field_state(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHECKBOX_FORM_FIELD_STATE_SHAPE,
@@ -6343,6 +7045,15 @@ impl WriteThrough for wordprocessing::ChildDivElements {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CHILD_DIV_ELEMENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::child_div_elements(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CHILD_DIV_ELEMENTS_SHAPE,
@@ -6418,6 +7129,16 @@ impl WriteThrough for wordprocessing::CitationStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CITATION_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::citation_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::CITATION_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -6492,6 +7213,15 @@ impl WriteThrough for wordprocessing::ClickAndTypeStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CLICK_AND_TYPE_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::click_and_type_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CLICK_AND_TYPE_STYLE_SHAPE,
@@ -6567,6 +7297,16 @@ impl WriteThrough for wordprocessing::ColumnContainingEMailAddress {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COLUMN_CONTAINING_E_MAIL_ADDRESS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::column_containing_e_mail_address(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COLUMN_CONTAINING_E_MAIL_ADDRESS_SHAPE,
@@ -6647,6 +7387,15 @@ impl WriteThrough for wordprocessing::ColumnDefinitions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COLUMN_DEFINITIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::column_definitions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COLUMN_DEFINITIONS_SHAPE,
@@ -6726,6 +7475,16 @@ impl WriteThrough for wordprocessing::ColumnDelimiterForDataSource {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COLUMN_DELIMITER_FOR_DATA_SOURCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::column_delimiter_for_data_source(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COLUMN_DELIMITER_FOR_DATA_SOURCE_SHAPE,
@@ -6801,6 +7560,15 @@ impl WriteThrough for wordprocessing::ComboBoxListItem {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMBO_BOX_LIST_ITEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::combo_box_list_item(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMBO_BOX_LIST_ITEM_SHAPE,
@@ -6882,6 +7650,16 @@ impl WriteThrough for wordprocessing::ComboBoxStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMBO_BOX_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::combo_box_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMBO_BOX_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -6958,6 +7736,15 @@ impl WriteThrough for wordprocessing::CommentAnchorRangeEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMMENT_ANCHOR_RANGE_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::comment_anchor_range_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMMENT_ANCHOR_RANGE_END_SHAPE,
@@ -7034,6 +7821,15 @@ impl WriteThrough for wordprocessing::CommentAnchorRangeStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMMENT_ANCHOR_RANGE_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::comment_anchor_range_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMMENT_ANCHOR_RANGE_START_SHAPE,
@@ -7114,6 +7910,11 @@ impl WriteThrough for wordprocessing::CommentContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::COMMENT_CONTENT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::comment_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::COMMENT_CONTENT_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -7191,6 +7992,15 @@ impl WriteThrough for wordprocessing::CommentContentReferenceMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMMENT_CONTENT_REFERENCE_MARK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::comment_content_reference_mark(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMMENT_CONTENT_REFERENCE_MARK_SHAPE,
@@ -7266,6 +8076,15 @@ impl WriteThrough for wordprocessing::CommentInformationBlock {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMMENT_INFORMATION_BLOCK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::comment_information_block(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::COMMENT_INFORMATION_BLOCK_SHAPE,
@@ -7344,6 +8163,15 @@ impl WriteThrough for wordprocessing::CommentsCollection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMMENTS_COLLECTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::comments_collection(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMMENTS_COLLECTION_SHAPE,
@@ -7426,6 +8254,15 @@ impl WriteThrough for wordprocessing::CompatibilitySettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMPATIBILITY_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::compatibility_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMPATIBILITY_SETTINGS_SHAPE,
@@ -7506,6 +8343,15 @@ impl WriteThrough for wordprocessing::ComplexFieldCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMPLEX_FIELD_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::complex_field_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMPLEX_FIELD_CHARACTER_SHAPE,
@@ -7688,6 +8534,15 @@ impl WriteThrough for wordprocessing::ComplexScriptBold {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMPLEX_SCRIPT_BOLD_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::complex_script_bold(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMPLEX_SCRIPT_BOLD_SHAPE,
@@ -7763,6 +8618,15 @@ impl WriteThrough for wordprocessing::ComplexScriptFontSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMPLEX_SCRIPT_FONT_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::complex_script_font_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMPLEX_SCRIPT_FONT_SIZE_SHAPE,
@@ -7838,6 +8702,15 @@ impl WriteThrough for wordprocessing::ComplexScriptItalics {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMPLEX_SCRIPT_ITALICS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::complex_script_italics(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMPLEX_SCRIPT_ITALICS_SHAPE,
@@ -7913,6 +8786,16 @@ impl WriteThrough for wordprocessing::CompressPunctuationAtStartOfLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::COMPRESS_PUNCTUATION_AT_START_OF_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::compress_punctuation_at_start_of_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::COMPRESS_PUNCTUATION_AT_START_OF_LINE_SHAPE,
@@ -8085,6 +8968,16 @@ impl WriteThrough for wordprocessing::ContentBetweenNumberingSymbolAndText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CONTENT_BETWEEN_NUMBERING_SYMBOL_AND_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::content_between_numbering_symbol_and_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CONTENT_BETWEEN_NUMBERING_SYMBOL_AND_TEXT_SHAPE,
@@ -8374,6 +9267,11 @@ impl WriteThrough for wordprocessing::ContentPart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::CONTENT_PART_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::content_part(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::CONTENT_PART_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -8560,6 +9458,16 @@ impl WriteThrough for wordprocessing::ContentsOfGlossaryDocumentEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CONTENTS_OF_GLOSSARY_DOCUMENT_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::contents_of_glossary_document_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CONTENTS_OF_GLOSSARY_DOCUMENT_ENTRY_SHAPE,
@@ -8636,6 +9544,15 @@ impl WriteThrough for wordprocessing::ContinuationSeparatorMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CONTINUATION_SEPARATOR_MARK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::continuation_separator_mark(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::CONTINUATION_SEPARATOR_MARK_SHAPE,
@@ -8710,6 +9627,16 @@ impl WriteThrough for wordprocessing::CurrentContentsArePlaceholderText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CURRENT_CONTENTS_ARE_PLACEHOLDER_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::current_contents_are_placeholder_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CURRENT_CONTENTS_ARE_PLACEHOLDER_TEXT_SHAPE,
@@ -8785,6 +9712,15 @@ impl WriteThrough for wordprocessing::CustomCompatibilitySetting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_COMPATIBILITY_SETTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_compatibility_setting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_COMPATIBILITY_SETTING_SHAPE,
@@ -8862,6 +9798,12 @@ impl WriteThrough for wordprocessing::CustomFieldData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::CUSTOM_FIELD_DATA_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::custom_field_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::CUSTOM_FIELD_DATA_SHAPE, &self.unknown);
         through.attribute(0, &self.space);
@@ -8935,6 +9877,11 @@ impl WriteThrough for wordprocessing::CustomTabStop {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::CUSTOM_TAB_STOP_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::custom_tab_stop(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::CUSTOM_TAB_STOP_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -9009,6 +9956,15 @@ impl WriteThrough for wordprocessing::CustomXMLAttribute {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_ATTRIBUTE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_xml_attribute(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_ATTRIBUTE_SHAPE,
@@ -9086,6 +10042,16 @@ impl WriteThrough for wordprocessing::CustomXMLDataDateStorageFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_DATA_DATE_STORAGE_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::custom_xml_data_date_storage_format(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_DATA_DATE_STORAGE_FORMAT_SHAPE,
@@ -9161,6 +10127,16 @@ impl WriteThrough for wordprocessing::CustomXMLElementPlaceholderText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_ELEMENT_PLACEHOLDER_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::custom_xml_element_placeholder_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_ELEMENT_PLACEHOLDER_TEXT_SHAPE,
@@ -9244,6 +10220,15 @@ impl WriteThrough for wordprocessing::CustomXMLElementProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_ELEMENT_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_xml_element_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_ELEMENT_PROPERTIES_SHAPE,
@@ -9320,6 +10305,15 @@ impl WriteThrough for wordprocessing::CustomXMLMarkupDeletionEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MARKUP_DELETION_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_xml_markup_deletion_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MARKUP_DELETION_END_SHAPE,
@@ -9395,6 +10389,16 @@ impl WriteThrough for wordprocessing::CustomXMLMarkupDeletionStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MARKUP_DELETION_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::custom_xml_markup_deletion_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MARKUP_DELETION_START_SHAPE,
@@ -9472,6 +10476,15 @@ impl WriteThrough for wordprocessing::CustomXMLMarkupInsertionEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MARKUP_INSERTION_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_xml_markup_insertion_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MARKUP_INSERTION_END_SHAPE,
@@ -9547,6 +10560,16 @@ impl WriteThrough for wordprocessing::CustomXMLMarkupInsertionStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MARKUP_INSERTION_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::custom_xml_markup_insertion_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MARKUP_INSERTION_START_SHAPE,
@@ -9624,6 +10647,16 @@ impl WriteThrough for wordprocessing::CustomXMLMarkupMoveSourceEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MARKUP_MOVE_SOURCE_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::custom_xml_markup_move_source_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MARKUP_MOVE_SOURCE_END_SHAPE,
@@ -9699,6 +10732,16 @@ impl WriteThrough for wordprocessing::CustomXMLMarkupMoveSourceStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MARKUP_MOVE_SOURCE_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::custom_xml_markup_move_source_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MARKUP_MOVE_SOURCE_START_SHAPE,
@@ -9776,6 +10819,15 @@ impl WriteThrough for wordprocessing::CustomXSLTransform {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XSL_TRANSFORM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_xsl_transform(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XSL_TRANSFORM_SHAPE,
@@ -9852,6 +10904,15 @@ impl WriteThrough for wordprocessing::CustomXmlMoveToRangeEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MOVE_TO_RANGE_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_xml_move_to_range_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MOVE_TO_RANGE_END_SHAPE,
@@ -9927,6 +10988,15 @@ impl WriteThrough for wordprocessing::CustomXmlMoveToRangeStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::CUSTOM_XML_MOVE_TO_RANGE_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::custom_xml_move_to_range_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::CUSTOM_XML_MOVE_TO_RANGE_START_SHAPE,
@@ -10015,6 +11085,16 @@ impl WriteThrough for wordprocessing::DataAboutSingleDataSourceRecord {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATA_ABOUT_SINGLE_DATA_SOURCE_RECORD_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::data_about_single_data_source_record(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATA_ABOUT_SINGLE_DATA_SOURCE_RECORD_SHAPE,
@@ -10092,6 +11172,16 @@ impl WriteThrough for wordprocessing::DataForHTMLBlockquoteElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATA_FOR_HTML_BLOCKQUOTE_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::data_for_html_blockquote_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATA_FOR_HTML_BLOCKQUOTE_ELEMENT_SHAPE,
@@ -10167,6 +11257,15 @@ impl WriteThrough for wordprocessing::DataForHTMLBodyElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATA_FOR_HTML_BODY_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::data_for_html_body_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATA_FOR_HTML_BODY_ELEMENT_SHAPE,
@@ -10242,6 +11341,15 @@ impl WriteThrough for wordprocessing::DataSourceConnectionString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATA_SOURCE_CONNECTION_STRING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::data_source_connection_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATA_SOURCE_CONNECTION_STRING_SHAPE,
@@ -10317,6 +11425,15 @@ impl WriteThrough for wordprocessing::DataSourceFilePath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATA_SOURCE_FILE_PATH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::data_source_file_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATA_SOURCE_FILE_PATH_SHAPE,
@@ -10392,6 +11509,15 @@ impl WriteThrough for wordprocessing::DataSourceTableName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATA_SOURCE_TABLE_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::data_source_table_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATA_SOURCE_TABLE_NAME_SHAPE,
@@ -10467,6 +11593,12 @@ impl WriteThrough for wordprocessing::DataSourceType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::DATA_SOURCE_TYPE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::data_source_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DATA_SOURCE_TYPE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -10539,6 +11671,15 @@ impl WriteThrough for wordprocessing::DateBlockLongDayFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_BLOCK_LONG_DAY_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_block_long_day_format(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::DATE_BLOCK_LONG_DAY_FORMAT_SHAPE,
@@ -10613,6 +11754,15 @@ impl WriteThrough for wordprocessing::DateBlockLongMonthFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_BLOCK_LONG_MONTH_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_block_long_month_format(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::DATE_BLOCK_LONG_MONTH_FORMAT_SHAPE,
@@ -10687,6 +11837,15 @@ impl WriteThrough for wordprocessing::DateBlockLongYearFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_BLOCK_LONG_YEAR_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_block_long_year_format(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::DATE_BLOCK_LONG_YEAR_FORMAT_SHAPE,
@@ -10761,6 +11920,15 @@ impl WriteThrough for wordprocessing::DateBlockShortDayFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_BLOCK_SHORT_DAY_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_block_short_day_format(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::DATE_BLOCK_SHORT_DAY_FORMAT_SHAPE,
@@ -10835,6 +12003,15 @@ impl WriteThrough for wordprocessing::DateBlockShortMonthFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_BLOCK_SHORT_MONTH_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_block_short_month_format(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::DATE_BLOCK_SHORT_MONTH_FORMAT_SHAPE,
@@ -10909,6 +12086,15 @@ impl WriteThrough for wordprocessing::DateBlockShortYearFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_BLOCK_SHORT_YEAR_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_block_short_year_format(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::DATE_BLOCK_SHORT_YEAR_FORMAT_SHAPE,
@@ -10983,6 +12169,12 @@ impl WriteThrough for wordprocessing::DateDisplayMask {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::DATE_DISPLAY_MASK_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::date_display_mask(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DATE_DISPLAY_MASK_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -11055,6 +12247,15 @@ impl WriteThrough for wordprocessing::DatePickerCalendarType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_PICKER_CALENDAR_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_picker_calendar_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATE_PICKER_CALENDAR_TYPE_SHAPE,
@@ -11143,6 +12344,15 @@ impl WriteThrough for wordprocessing::DateStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DATE_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::date_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DATE_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -11222,6 +12432,16 @@ impl WriteThrough for wordprocessing::DefaultCheckboxFormFieldState {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_CHECKBOX_FORM_FIELD_STATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::default_checkbox_form_field_state(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_CHECKBOX_FORM_FIELD_STATE_SHAPE,
@@ -11297,6 +12517,16 @@ impl WriteThrough for wordprocessing::DefaultDropDownListItemIndex {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_DROP_DOWN_LIST_ITEM_INDEX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::default_drop_down_list_item_index(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_DROP_DOWN_LIST_ITEM_INDEX_SHAPE,
@@ -11376,6 +12606,15 @@ impl WriteThrough for wordprocessing::DefaultParagraphProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_PARAGRAPH_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::default_paragraph_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_PARAGRAPH_PROPERTIES_SHAPE,
@@ -11455,6 +12694,19 @@ impl WriteThrough for wordprocessing::DefaultPropertiesForVMLObjectsInHeaderAndF
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_HEADER_AND_FOOTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::default_properties_for_vml_objects_in_header_and_footer(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_HEADER_AND_FOOTER_SHAPE,
@@ -11534,6 +12786,19 @@ impl WriteThrough for wordprocessing::DefaultPropertiesForVMLObjectsInMainDocume
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_MAIN_DOCUMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::default_properties_for_vml_objects_in_main_document(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_MAIN_DOCUMENT_SHAPE,
@@ -11613,6 +12878,15 @@ impl WriteThrough for wordprocessing::DefaultRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_RUN_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::default_run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_RUN_PROPERTIES_SHAPE,
@@ -11688,6 +12962,15 @@ impl WriteThrough for wordprocessing::DefaultTableStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_TABLE_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::default_table_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_TABLE_STYLE_SHAPE,
@@ -11763,6 +13046,16 @@ impl WriteThrough for wordprocessing::DefaultTextBoxFormFieldString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DEFAULT_TEXT_BOX_FORM_FIELD_STRING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::default_text_box_form_field_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DEFAULT_TEXT_BOX_FORM_FIELD_STRING_SHAPE,
@@ -11835,6 +13128,11 @@ impl WriteThrough for wordprocessing::Del {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::DEL_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::del(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::DEL_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
@@ -11905,6 +13203,15 @@ impl WriteThrough for wordprocessing::DeletedFieldCode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DELETED_FIELD_CODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::deleted_field_code(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DELETED_FIELD_CODE_SHAPE,
@@ -11985,6 +13292,15 @@ impl WriteThrough for wordprocessing::DeletedMathControlCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DELETED_MATH_CONTROL_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::deleted_math_control_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DELETED_MATH_CONTROL_CHARACTER_SHAPE,
@@ -12068,6 +13384,15 @@ impl WriteThrough for wordprocessing::DeletedRunContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DELETED_RUN_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::deleted_run_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DELETED_RUN_CONTENT_SHAPE,
@@ -12146,6 +13471,12 @@ impl WriteThrough for wordprocessing::DeletedTableRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::DELETED_TABLE_ROW_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::deleted_table_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DELETED_TABLE_ROW_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -12220,6 +13551,11 @@ impl WriteThrough for wordprocessing::DeletedText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::DELETED_TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::deleted_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DELETED_TEXT_SHAPE, &self.unknown);
         through.attribute(0, &self.space);
@@ -12293,6 +13629,15 @@ impl WriteThrough for wordprocessing::DescriptionForEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DESCRIPTION_FOR_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::description_for_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DESCRIPTION_FOR_ENTRY_SHAPE,
@@ -12368,6 +13713,18 @@ impl WriteThrough for wordprocessing::DifferentEvenOddPageHeadersAndFooters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DIFFERENT_EVEN_ODD_PAGE_HEADERS_AND_FOOTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::different_even_odd_page_headers_and_footers(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DIFFERENT_EVEN_ODD_PAGE_HEADERS_AND_FOOTERS_SHAPE,
@@ -12443,6 +13800,16 @@ impl WriteThrough for wordprocessing::DifferentFirstPageHeadersAndFooters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DIFFERENT_FIRST_PAGE_HEADERS_AND_FOOTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::different_first_page_headers_and_footers(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DIFFERENT_FIRST_PAGE_HEADERS_AND_FOOTERS_SHAPE,
@@ -12518,6 +13885,15 @@ impl WriteThrough for wordprocessing::DisableFeaturesNotSupported {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISABLE_FEATURES_NOT_SUPPORTED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::disable_features_not_supported(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISABLE_FEATURES_NOT_SUPPORTED_SHAPE,
@@ -12594,6 +13970,16 @@ impl WriteThrough for wordprocessing::DisplayAllCharactersAsCapitalLetters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISPLAY_ALL_CHARACTERS_AS_CAPITAL_LETTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::display_all_characters_as_capital_letters(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISPLAY_ALL_CHARACTERS_AS_CAPITAL_LETTERS_SHAPE,
@@ -12669,6 +14055,16 @@ impl WriteThrough for wordprocessing::DisplayAllLevelsUsingArabicNumerals {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISPLAY_ALL_LEVELS_USING_ARABIC_NUMERALS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::display_all_levels_using_arabic_numerals(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISPLAY_ALL_LEVELS_USING_ARABIC_NUMERALS_SHAPE,
@@ -12744,6 +14140,15 @@ impl WriteThrough for wordprocessing::DisplayBackgroundShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISPLAY_BACKGROUND_SHAPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::display_background_shape(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISPLAY_BACKGROUND_SHAPE_SHAPE,
@@ -12819,6 +14224,15 @@ impl WriteThrough for wordprocessing::DisplayBackslashAsYenSign {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISPLAY_BACKSLASH_AS_YEN_SIGN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::display_backslash_as_yen_sign(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISPLAY_BACKSLASH_AS_YEN_SIGN_SHAPE,
@@ -12894,6 +14308,15 @@ impl WriteThrough for wordprocessing::DisplayCharacterOutline {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISPLAY_CHARACTER_OUTLINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::display_character_outline(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISPLAY_CHARACTER_OUTLINE_SHAPE,
@@ -12969,6 +14392,18 @@ impl WriteThrough for wordprocessing::DisplayPageColumnBreaksPresentInFrames {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISPLAY_PAGE_COLUMN_BREAKS_PRESENT_IN_FRAMES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::display_page_column_breaks_present_in_frames(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISPLAY_PAGE_COLUMN_BREAKS_PRESENT_IN_FRAMES_SHAPE,
@@ -13044,6 +14479,16 @@ impl WriteThrough for wordprocessing::DistanceBetweenAutomaticTabStops {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISTANCE_BETWEEN_AUTOMATIC_TAB_STOPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::distance_between_automatic_tab_stops(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISTANCE_BETWEEN_AUTOMATIC_TAB_STOPS_SHAPE,
@@ -13119,6 +14564,16 @@ impl WriteThrough for wordprocessing::DistanceBetweenHorizontalGridlines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISTANCE_BETWEEN_HORIZONTAL_GRIDLINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::distance_between_horizontal_gridlines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISTANCE_BETWEEN_HORIZONTAL_GRIDLINES_SHAPE,
@@ -13194,6 +14649,16 @@ impl WriteThrough for wordprocessing::DistanceBetweenPhoneticGuideText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISTANCE_BETWEEN_PHONETIC_GUIDE_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::distance_between_phonetic_guide_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISTANCE_BETWEEN_PHONETIC_GUIDE_TEXT_SHAPE,
@@ -13269,6 +14734,16 @@ impl WriteThrough for wordprocessing::DistanceBetweenVerticalGridlines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DISTANCE_BETWEEN_VERTICAL_GRIDLINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::distance_between_vertical_gridlines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DISTANCE_BETWEEN_VERTICAL_GRIDLINES_SHAPE,
@@ -13344,6 +14819,16 @@ impl WriteThrough for wordprocessing::DoNotAddLeadingBetweenLinesOfText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_ADD_LEADING_BETWEEN_LINES_OF_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_add_leading_between_lines_of_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_ADD_LEADING_BETWEEN_LINES_OF_TEXT_SHAPE,
@@ -13419,6 +14904,18 @@ impl WriteThrough for wordprocessing::DoNotAllowFloatingTablesToBreakAcrossPages
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_ALLOW_FLOATING_TABLES_TO_BREAK_ACROSS_PAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_allow_floating_tables_to_break_across_pages(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_ALLOW_FLOATING_TABLES_TO_BREAK_ACROSS_PAGES_SHAPE,
@@ -13494,6 +14991,16 @@ impl WriteThrough for wordprocessing::DoNotAutofitConstrainedTables {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_AUTOFIT_CONSTRAINED_TABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_autofit_constrained_tables(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_AUTOFIT_CONSTRAINED_TABLES_SHAPE,
@@ -13569,6 +15076,16 @@ impl WriteThrough for wordprocessing::DoNotAutomaticallyCompressImages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_AUTOMATICALLY_COMPRESS_IMAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_automatically_compress_images(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_AUTOMATICALLY_COMPRESS_IMAGES_SHAPE,
@@ -13644,6 +15161,18 @@ impl WriteThrough for wordprocessing::DoNotBalanceTextColumnsWithinASection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_BALANCE_TEXT_COLUMNS_WITHIN_A_SECTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_balance_text_columns_within_a_section(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_BALANCE_TEXT_COLUMNS_WITHIN_A_SECTION_SHAPE,
@@ -13719,6 +15248,16 @@ impl WriteThrough for wordprocessing::DoNotBreakConstrainedForcedTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_BREAK_CONSTRAINED_FORCED_TABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_break_constrained_forced_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_BREAK_CONSTRAINED_FORCED_TABLE_SHAPE,
@@ -13794,6 +15333,19 @@ impl WriteThrough for wordprocessing::DoNotBypassEastAsianComplexScriptLayoutCod
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_BYPASS_EAST_ASIAN_COMPLEX_SCRIPT_LAYOUT_CODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_bypass_east_asian_complex_script_layout_code(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_BYPASS_EAST_ASIAN_COMPLEX_SCRIPT_LAYOUT_CODE_SHAPE,
@@ -13869,6 +15421,19 @@ impl WriteThrough for wordprocessing::DoNotCenterContentOnLinesWithExactLineHeig
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_CENTER_CONTENT_ON_LINES_WITH_EXACT_LINE_HEIGHT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_center_content_on_lines_with_exact_line_height(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_CENTER_CONTENT_ON_LINES_WITH_EXACT_LINE_HEIGHT_SHAPE,
@@ -13944,6 +15509,16 @@ impl WriteThrough for wordprocessing::DoNotCheckSpellingOrGrammar {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_CHECK_SPELLING_OR_GRAMMAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_check_spelling_or_grammar(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_CHECK_SPELLING_OR_GRAMMAR_SHAPE,
@@ -14019,6 +15594,18 @@ impl WriteThrough for wordprocessing::DoNotCreateCustomTabStopForHangingIndent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_CREATE_CUSTOM_TAB_STOP_FOR_HANGING_INDENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_create_custom_tab_stop_for_hanging_indent(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_CREATE_CUSTOM_TAB_STOP_FOR_HANGING_INDENT_SHAPE,
@@ -14094,6 +15681,16 @@ impl WriteThrough for wordprocessing::DoNotDisplayFramesetSplitters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_DISPLAY_FRAMESET_SPLITTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_display_frameset_splitters(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_DISPLAY_FRAMESET_SPLITTERS_SHAPE,
@@ -14169,6 +15766,16 @@ impl WriteThrough for wordprocessing::DoNotDisplayGrammaticalErrors {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_DISPLAY_GRAMMATICAL_ERRORS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_display_grammatical_errors(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_DISPLAY_GRAMMATICAL_ERRORS_SHAPE,
@@ -14244,6 +15851,15 @@ impl WriteThrough for wordprocessing::DoNotDisplayPageBoundaries {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_DISPLAY_PAGE_BOUNDARIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_display_page_boundaries(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_DISPLAY_PAGE_BOUNDARIES_SHAPE,
@@ -14319,6 +15935,15 @@ impl WriteThrough for wordprocessing::DoNotDisplaySpellingErrors {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_DISPLAY_SPELLING_ERRORS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_display_spelling_errors(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_DISPLAY_SPELLING_ERRORS_SHAPE,
@@ -14394,6 +16019,16 @@ impl WriteThrough for wordprocessing::DoNotHyphenateCapitalLetters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_HYPHENATE_CAPITAL_LETTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_hyphenate_capital_letters(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_HYPHENATE_CAPITAL_LETTERS_SHAPE,
@@ -14469,6 +16104,15 @@ impl WriteThrough for wordprocessing::DoNotIncludeSubdocsInStats {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_INCLUDE_SUBDOCS_IN_STATS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_include_subdocs_in_stats(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_INCLUDE_SUBDOCS_IN_STATS_SHAPE,
@@ -14544,6 +16188,19 @@ impl WriteThrough for wordprocessing::DoNotIncreaseLineHeightForRaisedLoweredTex
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_INCREASE_LINE_HEIGHT_FOR_RAISED_LOWERED_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_increase_line_height_for_raised_lowered_text(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_INCREASE_LINE_HEIGHT_FOR_RAISED_LOWERED_TEXT_SHAPE,
@@ -14619,6 +16276,15 @@ impl WriteThrough for wordprocessing::DoNotPlaceSupportingFiles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_PLACE_SUPPORTING_FILES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_place_supporting_files(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_PLACE_SUPPORTING_FILES_SHAPE,
@@ -14694,6 +16360,15 @@ impl WriteThrough for wordprocessing::DoNotRelyOnCSS {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_RELY_ON_CSS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_rely_on_css(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_RELY_ON_CSS_SHAPE,
@@ -14769,6 +16444,16 @@ impl WriteThrough for wordprocessing::DoNotShowFormFieldIndicator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_SHOW_FORM_FIELD_INDICATOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_show_form_field_indicator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_SHOW_FORM_FIELD_INDICATOR_SHAPE,
@@ -14844,6 +16529,16 @@ impl WriteThrough for wordprocessing::DoNotShowInvalidMarkupIndicator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_SHOW_INVALID_MARKUP_INDICATOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_show_invalid_markup_indicator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_SHOW_INVALID_MARKUP_INDICATOR_SHAPE,
@@ -14919,6 +16614,19 @@ impl WriteThrough for wordprocessing::DoNotSnapToDocumentGridInTableCellsWithObj
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_SNAP_TO_DOCUMENT_GRID_IN_TABLE_CELLS_WITH_OBJECTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_snap_to_document_grid_in_table_cells_with_objects(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_SNAP_TO_DOCUMENT_GRID_IN_TABLE_CELLS_WITH_OBJECTS_SHAPE,
@@ -14994,6 +16702,15 @@ impl WriteThrough for wordprocessing::DoNotSuppressBlankLines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_SUPPRESS_BLANK_LINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_suppress_blank_lines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_SUPPRESS_BLANK_LINES_SHAPE,
@@ -15069,6 +16786,15 @@ impl WriteThrough for wordprocessing::DoNotSuppressIndentation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_SUPPRESS_INDENTATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_suppress_indentation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_SUPPRESS_INDENTATION_SHAPE,
@@ -15144,6 +16870,16 @@ impl WriteThrough for wordprocessing::DoNotSuppressParagraphBorders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_SUPPRESS_PARAGRAPH_BORDERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_suppress_paragraph_borders(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_SUPPRESS_PARAGRAPH_BORDERS_SHAPE,
@@ -15219,6 +16955,15 @@ impl WriteThrough for wordprocessing::DoNotTrackFormatting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_TRACK_FORMATTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_track_formatting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_TRACK_FORMATTING_SHAPE,
@@ -15294,6 +17039,16 @@ impl WriteThrough for wordprocessing::DoNotUseEastAsianBreakRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_USE_EAST_ASIAN_BREAK_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_use_east_asian_break_rules(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_USE_EAST_ASIAN_BREAK_RULES_SHAPE,
@@ -15369,6 +17124,15 @@ impl WriteThrough for wordprocessing::DoNotUseFileNames {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_USE_FILE_NAMES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_use_file_names(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_USE_FILE_NAMES_SHAPE,
@@ -15444,6 +17208,16 @@ impl WriteThrough for wordprocessing::DoNotUseHTMLParagraphAutoSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_USE_HTML_PARAGRAPH_AUTO_SPACING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_use_html_paragraph_auto_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_USE_HTML_PARAGRAPH_AUTO_SPACING_SHAPE,
@@ -15519,6 +17293,16 @@ impl WriteThrough for wordprocessing::DoNotUseIndentAsNumberingTabStop {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_USE_INDENT_AS_NUMBERING_TAB_STOP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::do_not_use_indent_as_numbering_tab_stop(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_USE_INDENT_AS_NUMBERING_TAB_STOP_SHAPE,
@@ -15594,6 +17378,18 @@ impl WriteThrough for wordprocessing::DoNotUseMarginsForDrawingGridOrigin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_USE_MARGINS_FOR_DRAWING_GRID_ORIGIN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_use_margins_for_drawing_grid_origin(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_USE_MARGINS_FOR_DRAWING_GRID_ORIGIN_SHAPE,
@@ -15669,6 +17465,15 @@ impl WriteThrough for wordprocessing::DoNotUseMoveSyntax {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_USE_MOVE_SYNTAX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_use_move_syntax(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_USE_MOVE_SYNTAX_SHAPE,
@@ -15744,6 +17549,15 @@ impl WriteThrough for wordprocessing::DoNotValidateAgainstSchema {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_VALIDATE_AGAINST_SCHEMA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_validate_against_schema(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_VALIDATE_AGAINST_SCHEMA_SHAPE,
@@ -15819,6 +17633,15 @@ impl WriteThrough for wordprocessing::DoNotVertAlignCellWithSp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_VERT_ALIGN_CELL_WITH_SP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_vert_align_cell_with_sp(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_VERT_ALIGN_CELL_WITH_SP_SHAPE,
@@ -15894,6 +17717,15 @@ impl WriteThrough for wordprocessing::DoNotWrapTextWithPunct {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DO_NOT_WRAP_TEXT_WITH_PUNCT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::do_not_wrap_text_with_punct(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DO_NOT_WRAP_TEXT_WITH_PUNCT_SHAPE,
@@ -15975,6 +17807,11 @@ impl WriteThrough for wordprocessing::Document {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::DOCUMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::document(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::DOCUMENT_SHAPE, &self.unknown);
         through.attribute(0, &self.conformance);
         through.child(&self.background, ctx)?;
@@ -16054,6 +17891,15 @@ impl WriteThrough for wordprocessing::DocumentBackground {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_BACKGROUND_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_background(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_BACKGROUND_SHAPE,
@@ -16141,6 +17987,11 @@ impl WriteThrough for wordprocessing::DocumentBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::DOCUMENT_BODY_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::document_body(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DOCUMENT_BODY_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
@@ -16214,6 +18065,15 @@ impl WriteThrough for wordprocessing::DocumentClassification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_CLASSIFICATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_classification(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_CLASSIFICATION_SHAPE,
@@ -16297,6 +18157,18 @@ impl WriteThrough for wordprocessing::DocumentDefaultParagraphAndRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_DEFAULT_PARAGRAPH_AND_RUN_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_default_paragraph_and_run_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_DEFAULT_PARAGRAPH_AND_RUN_PROPERTIES_SHAPE,
@@ -16373,6 +18245,15 @@ impl WriteThrough for wordprocessing::DocumentEditingRestrictions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_EDITING_RESTRICTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_editing_restrictions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_EDITING_RESTRICTIONS_SHAPE,
@@ -16470,6 +18351,12 @@ impl WriteThrough for wordprocessing::DocumentEndnotes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::DOCUMENT_ENDNOTES_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::document_endnotes(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DOCUMENT_ENDNOTES_SHAPE, &self.unknown);
         through.child(&self.endnote_content, ctx)?;
@@ -16609,6 +18496,16 @@ impl WriteThrough for wordprocessing::DocumentFinalSectionProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_FINAL_SECTION_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::document_final_section_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_FINAL_SECTION_PROPERTIES_SHAPE,
@@ -16713,6 +18610,15 @@ impl WriteThrough for wordprocessing::DocumentFootnotes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_FOOTNOTES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_footnotes(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_FOOTNOTES_SHAPE,
@@ -16788,6 +18694,11 @@ impl WriteThrough for wordprocessing::DocumentGrid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::DOCUMENT_GRID_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::document_grid(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DOCUMENT_GRID_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -16862,6 +18773,18 @@ impl WriteThrough for wordprocessing::DocumentGridInterLineParagraphSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_GRID_INTER_LINE_PARAGRAPH_SPACING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_grid_inter_line_paragraph_spacing(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_GRID_INTER_LINE_PARAGRAPH_SPACING_SHAPE,
@@ -16937,6 +18860,15 @@ impl WriteThrough for wordprocessing::DocumentPartCategoryFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_PART_CATEGORY_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_part_category_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_PART_CATEGORY_FILTER_SHAPE,
@@ -17012,6 +18944,15 @@ impl WriteThrough for wordprocessing::DocumentPartGalleryFilter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_PART_GALLERY_FILTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_part_gallery_filter(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_PART_GALLERY_FILTER_SHAPE,
@@ -17098,6 +19039,18 @@ impl WriteThrough for wordprocessing::DocumentPartGalleryStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_PART_GALLERY_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_part_gallery_structured_document_tag(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_PART_GALLERY_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -17175,6 +19128,15 @@ impl WriteThrough for wordprocessing::DocumentPartReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_PART_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_part_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_PART_REFERENCE_SHAPE,
@@ -17257,6 +19219,12 @@ impl WriteThrough for wordprocessing::DocumentSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::DOCUMENT_SETTINGS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::document_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DOCUMENT_SETTINGS_SHAPE, &self.unknown);
         write_document_settings_1(self, &mut through, ctx)?;
@@ -17335,6 +19303,15 @@ impl WriteThrough for wordprocessing::DocumentVariables {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_VARIABLES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_variables(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_VARIABLES_SHAPE,
@@ -17410,6 +19387,15 @@ impl WriteThrough for wordprocessing::DocumentViewSetting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_VIEW_SETTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::document_view_setting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_VIEW_SETTING_SHAPE,
@@ -17509,6 +19495,16 @@ impl WriteThrough for wordprocessing::DocumentWideEndnoteProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_WIDE_ENDNOTE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::document_wide_endnote_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_WIDE_ENDNOTE_PROPERTIES_SHAPE,
@@ -17613,6 +19609,16 @@ impl WriteThrough for wordprocessing::DocumentWideFootnoteProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOCUMENT_WIDE_FOOTNOTE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::document_wide_footnote_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOCUMENT_WIDE_FOOTNOTE_PROPERTIES_SHAPE,
@@ -17692,6 +19698,16 @@ impl WriteThrough for wordprocessing::DontJustifySoftLineBreakLines {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DONT_JUSTIFY_SOFT_LINE_BREAK_LINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::dont_justify_soft_line_break_lines(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DONT_JUSTIFY_SOFT_LINE_BREAK_LINES_SHAPE,
@@ -17767,6 +19783,15 @@ impl WriteThrough for wordprocessing::DontWrapCellContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DONT_WRAP_CELL_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::dont_wrap_cell_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DONT_WRAP_CELL_CONTENT_SHAPE,
@@ -17842,6 +19867,15 @@ impl WriteThrough for wordprocessing::DoubleStrikethrough {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DOUBLE_STRIKETHROUGH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::double_strikethrough(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DOUBLE_STRIKETHROUGH_SHAPE,
@@ -17917,6 +19951,16 @@ impl WriteThrough for wordprocessing::DrawingGridHorizontalGridUnitSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DRAWING_GRID_HORIZONTAL_GRID_UNIT_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::drawing_grid_horizontal_grid_unit_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DRAWING_GRID_HORIZONTAL_GRID_UNIT_SIZE_SHAPE,
@@ -17992,6 +20036,16 @@ impl WriteThrough for wordprocessing::DrawingGridHorizontalOriginPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DRAWING_GRID_HORIZONTAL_ORIGIN_POINT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::drawing_grid_horizontal_origin_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DRAWING_GRID_HORIZONTAL_ORIGIN_POINT_SHAPE,
@@ -18067,6 +20121,16 @@ impl WriteThrough for wordprocessing::DrawingGridVerticalGridUnitSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DRAWING_GRID_VERTICAL_GRID_UNIT_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::drawing_grid_vertical_grid_unit_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DRAWING_GRID_VERTICAL_GRID_UNIT_SIZE_SHAPE,
@@ -18142,6 +20206,16 @@ impl WriteThrough for wordprocessing::DrawingGridVerticalOriginPoint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DRAWING_GRID_VERTICAL_ORIGIN_POINT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::drawing_grid_vertical_origin_point(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DRAWING_GRID_VERTICAL_ORIGIN_POINT_SHAPE,
@@ -18221,6 +20295,12 @@ impl WriteThrough for wordprocessing::DrawingMLObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::DRAWING_ML_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::drawing_ml_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::DRAWING_ML_OBJECT_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
@@ -18411,6 +20491,15 @@ impl WriteThrough for wordprocessing::DropDownListEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DROP_DOWN_LIST_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::drop_down_list_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DROP_DOWN_LIST_ENTRY_SHAPE,
@@ -18497,6 +20586,16 @@ impl WriteThrough for wordprocessing::DropDownListFormFieldProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DROP_DOWN_LIST_FORM_FIELD_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::drop_down_list_form_field_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DROP_DOWN_LIST_FORM_FIELD_PROPERTIES_SHAPE,
@@ -18574,6 +20673,15 @@ impl WriteThrough for wordprocessing::DropDownListSelection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DROP_DOWN_LIST_SELECTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::drop_down_list_selection(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DROP_DOWN_LIST_SELECTION_SHAPE,
@@ -18654,6 +20762,16 @@ impl WriteThrough for wordprocessing::DropDownListStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::DROP_DOWN_LIST_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::drop_down_list_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::DROP_DOWN_LIST_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -18730,6 +20848,16 @@ impl WriteThrough for wordprocessing::EMailMessageCompositionStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::E_MAIL_MESSAGE_COMPOSITION_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::e_mail_message_composition_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::E_MAIL_MESSAGE_COMPOSITION_STYLE_SHAPE,
@@ -18805,6 +20933,15 @@ impl WriteThrough for wordprocessing::EMailMessageReplyStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::E_MAIL_MESSAGE_REPLY_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::e_mail_message_reply_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::E_MAIL_MESSAGE_REPLY_STYLE_SHAPE,
@@ -18880,6 +21017,15 @@ impl WriteThrough for wordprocessing::EMailMessageTextStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::E_MAIL_MESSAGE_TEXT_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::e_mail_message_text_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::E_MAIL_MESSAGE_TEXT_STYLE_SHAPE,
@@ -18955,6 +21101,15 @@ impl WriteThrough for wordprocessing::EastAsianTypographyRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EAST_ASIAN_TYPOGRAPHY_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::east_asian_typography_rules(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EAST_ASIAN_TYPOGRAPHY_RULES_SHAPE,
@@ -19030,6 +21185,15 @@ impl WriteThrough for wordprocessing::EastAsianTypographySettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EAST_ASIAN_TYPOGRAPHY_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::east_asian_typography_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EAST_ASIAN_TYPOGRAPHY_SETTINGS_SHAPE,
@@ -19109,6 +21273,15 @@ impl WriteThrough for wordprocessing::EmbedCommonSystemFonts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EMBED_COMMON_SYSTEM_FONTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::embed_common_system_fonts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EMBED_COMMON_SYSTEM_FONTS_SHAPE,
@@ -19184,6 +21357,15 @@ impl WriteThrough for wordprocessing::EmbedTrueTypeFonts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EMBED_TRUE_TYPE_FONTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::embed_true_type_fonts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EMBED_TRUE_TYPE_FONTS_SHAPE,
@@ -19259,6 +21441,12 @@ impl WriteThrough for wordprocessing::EmbeddedControl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::EMBEDDED_CONTROL_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::embedded_control(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::EMBEDDED_CONTROL_SHAPE, &self.unknown);
         through.attribute(0, &self.name);
@@ -19342,6 +21530,11 @@ impl WriteThrough for wordprocessing::EmbeddedObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::EMBEDDED_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::embedded_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::EMBEDDED_OBJECT_SHAPE, &self.unknown);
         through.attribute(0, &self.dxa_orig);
@@ -19530,6 +21723,15 @@ impl WriteThrough for wordprocessing::EmbeddedObjectProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EMBEDDED_OBJECT_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::embedded_object_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EMBEDDED_OBJECT_PROPERTIES_SHAPE,
@@ -19609,6 +21811,11 @@ impl WriteThrough for wordprocessing::EmbeddedVideo {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::EMBEDDED_VIDEO_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::embedded_video(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::EMBEDDED_VIDEO_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -19681,6 +21888,11 @@ impl WriteThrough for wordprocessing::Embossing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::EMBOSSING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::embossing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::EMBOSSING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -19752,6 +21964,11 @@ impl WriteThrough for wordprocessing::EmphasisMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::EMPHASIS_MARK_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::emphasis_mark(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::EMPHASIS_MARK_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -19828,6 +22045,11 @@ impl WriteThrough for wordprocessing::EndnoteContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::ENDNOTE_CONTENT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::endnote_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::ENDNOTE_CONTENT_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -19902,6 +22124,12 @@ impl WriteThrough for wordprocessing::EndnotePlacement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::ENDNOTE_PLACEMENT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::endnote_placement(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::ENDNOTE_PLACEMENT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -19974,6 +22202,12 @@ impl WriteThrough for wordprocessing::EndnoteReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::ENDNOTE_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::endnote_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::ENDNOTE_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.custom_mark_follows);
@@ -20047,6 +22281,15 @@ impl WriteThrough for wordprocessing::EndnoteReferenceMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ENDNOTE_REFERENCE_MARK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::endnote_reference_mark(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::ENDNOTE_REFERENCE_MARK_SHAPE,
@@ -20129,6 +22372,15 @@ impl WriteThrough for wordprocessing::EntryCategorization {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ENTRY_CATEGORIZATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::entry_categorization(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ENTRY_CATEGORIZATION_SHAPE,
@@ -20205,6 +22457,11 @@ impl WriteThrough for wordprocessing::EntryID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::ENTRY_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::entry_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::ENTRY_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -20276,6 +22533,15 @@ impl WriteThrough for wordprocessing::EntryInsertionBehavior {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ENTRY_INSERTION_BEHAVIOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::entry_insertion_behavior(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ENTRY_INSERTION_BEHAVIOR_SHAPE,
@@ -20356,6 +22622,15 @@ impl WriteThrough for wordprocessing::EntryInsertionBehaviors {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ENTRY_INSERTION_BEHAVIORS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::entry_insertion_behaviors(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ENTRY_INSERTION_BEHAVIORS_SHAPE,
@@ -20431,6 +22706,11 @@ impl WriteThrough for wordprocessing::EntryName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::ENTRY_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::entry_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::ENTRY_NAME_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -20504,6 +22784,11 @@ impl WriteThrough for wordprocessing::EntryType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::ENTRY_TYPE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::entry_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::ENTRY_TYPE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -20580,6 +22865,11 @@ impl WriteThrough for wordprocessing::EntryTypes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::ENTRY_TYPES_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::entry_types(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::ENTRY_TYPES_SHAPE, &self.unknown);
         through.attribute(0, &self.all);
@@ -20653,6 +22943,16 @@ impl WriteThrough for wordprocessing::EquationStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EQUATION_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::equation_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::EQUATION_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -20727,6 +23027,15 @@ impl WriteThrough for wordprocessing::ExecuteOnFormFieldEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EXECUTE_ON_FORM_FIELD_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::execute_on_form_field_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EXECUTE_ON_FORM_FIELD_ENTRY_SHAPE,
@@ -20802,6 +23111,15 @@ impl WriteThrough for wordprocessing::ExecuteOnFormFieldExit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EXECUTE_ON_FORM_FIELD_EXIT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::execute_on_form_field_exit(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EXECUTE_ON_FORM_FIELD_EXIT_SHAPE,
@@ -20877,6 +23195,15 @@ impl WriteThrough for wordprocessing::ExpandedCompressedText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EXPANDED_COMPRESSED_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::expanded_compressed_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EXPANDED_COMPRESSED_TEXT_SHAPE,
@@ -20957,6 +23284,16 @@ impl WriteThrough for wordprocessing::ExternalContentImportProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EXTERNAL_CONTENT_IMPORT_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::external_content_import_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EXTERNAL_CONTENT_IMPORT_PROPERTIES_SHAPE,
@@ -21055,6 +23392,16 @@ impl WriteThrough for wordprocessing::ExternalDataSourceMergeFieldMapping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::EXTERNAL_DATA_SOURCE_MERGE_FIELD_MAPPING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::external_data_source_merge_field_mapping(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::EXTERNAL_DATA_SOURCE_MERGE_FIELD_MAPPING_SHAPE,
@@ -21135,6 +23482,11 @@ impl WriteThrough for wordprocessing::FieldCode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FIELD_CODE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::field_code(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FIELD_CODE_SHAPE, &self.unknown);
         through.attribute(0, &self.space);
@@ -21208,6 +23560,15 @@ impl WriteThrough for wordprocessing::FirstRowContainsColumnNames {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FIRST_ROW_CONTAINS_COLUMN_NAMES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::first_row_contains_column_names(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FIRST_ROW_CONTAINS_COLUMN_NAMES_SHAPE,
@@ -21283,6 +23644,15 @@ impl WriteThrough for wordprocessing::FitTextWithinCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FIT_TEXT_WITHIN_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::fit_text_within_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FIT_TEXT_WITHIN_CELL_SHAPE,
@@ -21358,6 +23728,19 @@ impl WriteThrough for wordprocessing::FitToExpandedWidthWhenPerformingFullJustif
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FIT_TO_EXPANDED_WIDTH_WHEN_PERFORMING_FULL_JUSTIFICATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::fit_to_expanded_width_when_performing_full_justification(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FIT_TO_EXPANDED_WIDTH_WHEN_PERFORMING_FULL_JUSTIFICATION_SHAPE,
@@ -21433,6 +23816,15 @@ impl WriteThrough for wordprocessing::FloatingTableAllowsOverlap {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FLOATING_TABLE_ALLOWS_OVERLAP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::floating_table_allows_overlap(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FLOATING_TABLE_ALLOWS_OVERLAP_SHAPE,
@@ -21508,6 +23900,15 @@ impl WriteThrough for wordprocessing::FloatingTablePositioning {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FLOATING_TABLE_POSITIONING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::floating_table_positioning(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FLOATING_TABLE_POSITIONING_SHAPE,
@@ -21592,6 +23993,11 @@ impl WriteThrough for wordprocessing::FontFamily {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FONT_FAMILY_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::font_family(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FONT_FAMILY_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -21664,6 +24070,11 @@ impl WriteThrough for wordprocessing::FontKerning {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FONT_KERNING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::font_kerning(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FONT_KERNING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -21736,6 +24147,11 @@ impl WriteThrough for wordprocessing::FontPitch {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FONT_PITCH_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::font_pitch(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FONT_PITCH_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -21813,6 +24229,15 @@ impl WriteThrough for wordprocessing::FontTableRootElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FONT_TABLE_ROOT_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::font_table_root_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FONT_TABLE_ROOT_ELEMENT_SHAPE,
@@ -21888,6 +24313,11 @@ impl WriteThrough for wordprocessing::Footer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FOOTER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::footer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::FOOTER_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -21955,6 +24385,12 @@ impl WriteThrough for wordprocessing::FooterReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::FOOTER_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::footer_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FOOTER_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -22028,6 +24464,18 @@ impl WriteThrough for wordprocessing::FootnoteAndEndnoteNumberingRestartLocation
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FOOTNOTE_AND_ENDNOTE_NUMBERING_RESTART_LOCATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::footnote_and_endnote_numbering_restart_location(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FOOTNOTE_AND_ENDNOTE_NUMBERING_RESTART_LOCATION_SHAPE,
@@ -22103,6 +24551,18 @@ impl WriteThrough for wordprocessing::FootnoteAndEndnoteNumberingStartingValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FOOTNOTE_AND_ENDNOTE_NUMBERING_STARTING_VALUE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::footnote_and_endnote_numbering_starting_value(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FOOTNOTE_AND_ENDNOTE_NUMBERING_STARTING_VALUE_SHAPE,
@@ -22182,6 +24642,12 @@ impl WriteThrough for wordprocessing::FootnoteContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::FOOTNOTE_CONTENT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::footnote_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FOOTNOTE_CONTENT_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -22256,6 +24722,15 @@ impl WriteThrough for wordprocessing::FootnoteEndnoteSeparatorMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FOOTNOTE_ENDNOTE_SEPARATOR_MARK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::footnote_endnote_separator_mark(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::FOOTNOTE_ENDNOTE_SEPARATOR_MARK_SHAPE,
@@ -22330,6 +24805,15 @@ impl WriteThrough for wordprocessing::FootnotePlacement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FOOTNOTE_PLACEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::footnote_placement(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FOOTNOTE_PLACEMENT_SHAPE,
@@ -22405,6 +24889,15 @@ impl WriteThrough for wordprocessing::FootnoteReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FOOTNOTE_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::footnote_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FOOTNOTE_REFERENCE_SHAPE,
@@ -22481,6 +24974,15 @@ impl WriteThrough for wordprocessing::FootnoteReferenceMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FOOTNOTE_REFERENCE_MARK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::footnote_reference_mark(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::FOOTNOTE_REFERENCE_MARK_SHAPE,
@@ -22555,6 +25057,15 @@ impl WriteThrough for wordprocessing::ForgetLastTabAlignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FORGET_LAST_TAB_ALIGNMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::forget_last_tab_alignment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FORGET_LAST_TAB_ALIGNMENT_SHAPE,
@@ -22630,6 +25141,15 @@ impl WriteThrough for wordprocessing::FormFieldEnabled {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FORM_FIELD_ENABLED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::form_field_enabled(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FORM_FIELD_ENABLED_SHAPE,
@@ -22705,6 +25225,11 @@ impl WriteThrough for wordprocessing::FormFieldName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FORM_FIELD_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::form_field_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FORM_FIELD_NAME_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -22781,6 +25306,15 @@ impl WriteThrough for wordprocessing::FormFieldProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FORM_FIELD_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::form_field_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FORM_FIELD_PROPERTIES_SHAPE,
@@ -23044,6 +25578,15 @@ impl WriteThrough for wordprocessing::FrameCannotBeResized {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FRAME_CANNOT_BE_RESIZED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::frame_cannot_be_resized(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FRAME_CANNOT_BE_RESIZED_SHAPE,
@@ -23119,6 +25662,15 @@ impl WriteThrough for wordprocessing::FrameLongDescription {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FRAME_LONG_DESCRIPTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::frame_long_description(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FRAME_LONG_DESCRIPTION_SHAPE,
@@ -23194,6 +25746,15 @@ impl WriteThrough for wordprocessing::FrameOrFramesetTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FRAME_OR_FRAMESET_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::frame_or_frameset_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FRAME_OR_FRAMESET_TITLE_SHAPE,
@@ -23269,6 +25830,11 @@ impl WriteThrough for wordprocessing::FrameSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FRAME_SIZE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::frame_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FRAME_SIZE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -23459,6 +26025,11 @@ impl WriteThrough for wordprocessing::FramesetLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FRAMESET_LAYOUT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::frameset_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FRAMESET_LAYOUT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -23531,6 +26102,15 @@ impl WriteThrough for wordprocessing::FramesetSplitterBorderStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FRAMESET_SPLITTER_BORDER_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::frameset_splitter_border_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FRAMESET_SPLITTER_BORDER_STYLE_SHAPE,
@@ -23619,6 +26199,15 @@ impl WriteThrough for wordprocessing::FramesetSplitterProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FRAMESET_SPLITTER_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::frameset_splitter_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FRAMESET_SPLITTER_PROPERTIES_SHAPE,
@@ -23697,6 +26286,15 @@ impl WriteThrough for wordprocessing::FramesetSplitterWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FRAMESET_SPLITTER_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::frameset_splitter_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FRAMESET_SPLITTER_WIDTH_SHAPE,
@@ -23772,6 +26370,15 @@ impl WriteThrough for wordprocessing::FreezeDocumentLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::FREEZE_DOCUMENT_LAYOUT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::freeze_document_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::FREEZE_DOCUMENT_LAYOUT_SHAPE,
@@ -23850,6 +26457,11 @@ impl WriteThrough for wordprocessing::FriendlyName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::FRIENDLY_NAME_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::friendly_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::FRIENDLY_NAME_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -23922,6 +26534,15 @@ impl WriteThrough for wordprocessing::GalleryAssociatedWithEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GALLERY_ASSOCIATED_WITH_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::gallery_associated_with_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GALLERY_ASSOCIATED_WITH_ENTRY_SHAPE,
@@ -23997,6 +26618,16 @@ impl WriteThrough for wordprocessing::GenerateThumbnailForDocumentOnSave {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GENERATE_THUMBNAIL_FOR_DOCUMENT_ON_SAVE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::generate_thumbnail_for_document_on_save(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GENERATE_THUMBNAIL_FOR_DOCUMENT_ON_SAVE_SHAPE,
@@ -24078,6 +26709,15 @@ impl WriteThrough for wordprocessing::GlossaryDocumentEntry {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GLOSSARY_DOCUMENT_ENTRY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::glossary_document_entry(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GLOSSARY_DOCUMENT_ENTRY_SHAPE,
@@ -24158,6 +26798,16 @@ impl WriteThrough for wordprocessing::GlossaryDocumentEntryProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GLOSSARY_DOCUMENT_ENTRY_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::glossary_document_entry_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GLOSSARY_DOCUMENT_ENTRY_PROPERTIES_SHAPE,
@@ -24394,6 +27044,15 @@ impl WriteThrough for wordprocessing::GlossaryDocumentRootElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GLOSSARY_DOCUMENT_ROOT_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::glossary_document_root_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GLOSSARY_DOCUMENT_ROOT_ELEMENT_SHAPE,
@@ -24470,6 +27129,15 @@ impl WriteThrough for wordprocessing::GrammarCheckingSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GRAMMAR_CHECKING_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::grammar_checking_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GRAMMAR_CHECKING_SETTINGS_SHAPE,
@@ -24550,6 +27218,15 @@ impl WriteThrough for wordprocessing::GridColumnDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GRID_COLUMN_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::grid_column_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GRID_COLUMN_DEFINITION_SHAPE,
@@ -24625,6 +27302,15 @@ impl WriteThrough for wordprocessing::GridColumnsAfterLastCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GRID_COLUMNS_AFTER_LAST_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::grid_columns_after_last_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GRID_COLUMNS_AFTER_LAST_CELL_SHAPE,
@@ -24700,6 +27386,15 @@ impl WriteThrough for wordprocessing::GridColumnsBeforeFirstCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GRID_COLUMNS_BEFORE_FIRST_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::grid_columns_before_first_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GRID_COLUMNS_BEFORE_FIRST_CELL_SHAPE,
@@ -24775,6 +27470,15 @@ impl WriteThrough for wordprocessing::GridColumnsSpanned {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GRID_COLUMNS_SPANNED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::grid_columns_spanned(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GRID_COLUMNS_SPANNED_SHAPE,
@@ -24850,6 +27554,15 @@ impl WriteThrough for wordprocessing::GroupStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GROUP_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::group_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::GROUP_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -24924,6 +27637,15 @@ impl WriteThrough for wordprocessing::GutterOnRightSideOfPage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::GUTTER_ON_RIGHT_SIDE_OF_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::gutter_on_right_side_of_page(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::GUTTER_ON_RIGHT_SIDE_OF_PAGE_SHAPE,
@@ -24999,6 +27721,11 @@ impl WriteThrough for wordprocessing::Header {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::HEADER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::HEADER_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -25066,6 +27793,15 @@ impl WriteThrough for wordprocessing::HeaderCellReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::HEADER_CELL_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::header_cell_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::HEADER_CELL_REFERENCE_SHAPE,
@@ -25146,6 +27882,16 @@ impl WriteThrough for wordprocessing::HeaderCellsAssociatedWithTableCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::HEADER_CELLS_ASSOCIATED_WITH_TABLE_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::header_cells_associated_with_table_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::HEADER_CELLS_ASSOCIATED_WITH_TABLE_CELL_SHAPE,
@@ -25221,6 +27967,15 @@ impl WriteThrough for wordprocessing::HeaderDefinitionFilePath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::HEADER_DEFINITION_FILE_PATH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::header_definition_file_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::HEADER_DEFINITION_FILE_PATH_SHAPE,
@@ -25296,6 +28051,12 @@ impl WriteThrough for wordprocessing::HeaderReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::HEADER_REFERENCE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::header_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::HEADER_REFERENCE_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -25369,6 +28130,15 @@ impl WriteThrough for wordprocessing::HiddenTableRowMarker {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::HIDDEN_TABLE_ROW_MARKER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::hidden_table_row_marker(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::HIDDEN_TABLE_ROW_MARKER_SHAPE,
@@ -25444,6 +28214,11 @@ impl WriteThrough for wordprocessing::HiddenText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::HIDDEN_TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::hidden_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::HIDDEN_TEXT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -25516,6 +28291,16 @@ impl WriteThrough for wordprocessing::HideStyleFromMainUserInterface {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::HIDE_STYLE_FROM_MAIN_USER_INTERFACE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::hide_style_from_main_user_interface(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::HIDE_STYLE_FROM_MAIN_USER_INTERFACE_SHAPE,
@@ -25591,6 +28376,15 @@ impl WriteThrough for wordprocessing::HorizontallyMergedCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::HORIZONTALLY_MERGED_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::horizontally_merged_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::HORIZONTALLY_MERGED_CELL_SHAPE,
@@ -25670,6 +28464,11 @@ impl WriteThrough for wordprocessing::Hyperlink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::HYPERLINK_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::hyperlink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::HYPERLINK_SHAPE, &self.unknown);
         through.attribute(0, &self.tgt_frame);
         through.attribute(1, &self.tooltip);
@@ -25747,6 +28546,12 @@ impl WriteThrough for wordprocessing::HyphenationZone {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::HYPHENATION_ZONE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::hyphenation_zone(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::HYPHENATION_ZONE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -25819,6 +28624,15 @@ impl WriteThrough for wordprocessing::IgnoreEndOfCellMarker {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_END_OF_CELL_MARKER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::ignore_end_of_cell_marker(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_END_OF_CELL_MARKER_SHAPE,
@@ -25894,6 +28708,18 @@ impl WriteThrough for wordprocessing::IgnoreExactLineHeightForLastLineOnPage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_EXACT_LINE_HEIGHT_FOR_LAST_LINE_ON_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::ignore_exact_line_height_for_last_line_on_page(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_EXACT_LINE_HEIGHT_FOR_LAST_LINE_ON_PAGE_SHAPE,
@@ -25969,6 +28795,18 @@ impl WriteThrough for wordprocessing::IgnoreMinimumLineHeightForFirstLineOnPage 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_MINIMUM_LINE_HEIGHT_FOR_FIRST_LINE_ON_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::ignore_minimum_line_height_for_first_line_on_page(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_MINIMUM_LINE_HEIGHT_FOR_FIRST_LINE_ON_PAGE_SHAPE,
@@ -26044,6 +28882,15 @@ impl WriteThrough for wordprocessing::IgnoreMixedContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_MIXED_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::ignore_mixed_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_MIXED_CONTENT_SHAPE,
@@ -26119,6 +28966,18 @@ impl WriteThrough for wordprocessing::IgnorePageBreakFromContinuousSectionBreak 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_PAGE_BREAK_FROM_CONTINUOUS_SECTION_BREAK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::ignore_page_break_from_continuous_section_break(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_PAGE_BREAK_FROM_CONTINUOUS_SECTION_BREAK_SHAPE,
@@ -26194,6 +29053,15 @@ impl WriteThrough for wordprocessing::IgnoreSpacingAboveAndBelow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_SPACING_ABOVE_AND_BELOW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::ignore_spacing_above_and_below(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_SPACING_ABOVE_AND_BELOW_SHAPE,
@@ -26269,6 +29137,19 @@ impl WriteThrough for wordprocessing::IgnoreTextWrappingAroundObjectsAtBottomOfP
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_TEXT_WRAPPING_AROUND_OBJECTS_AT_BOTTOM_OF_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::ignore_text_wrapping_around_objects_at_bottom_of_page(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_TEXT_WRAPPING_AROUND_OBJECTS_AT_BOTTOM_OF_PAGE_SHAPE,
@@ -26344,6 +29225,16 @@ impl WriteThrough for wordprocessing::IgnoreVerticalAlignmentInTextboxes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::IGNORE_VERTICAL_ALIGNMENT_IN_TEXTBOXES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::ignore_vertical_alignment_in_textboxes(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::IGNORE_VERTICAL_ALIGNMENT_IN_TEXTBOXES_SHAPE,
@@ -26419,6 +29310,11 @@ impl WriteThrough for wordprocessing::Imprinting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::IMPRINTING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::imprinting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::IMPRINTING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -26496,6 +29392,16 @@ impl WriteThrough for wordprocessing::InclusionExclusionDataForDataSource {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INCLUSION_EXCLUSION_DATA_FOR_DATA_SOURCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::inclusion_exclusion_data_for_data_source(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INCLUSION_EXCLUSION_DATA_FOR_DATA_SOURCE_SHAPE,
@@ -26571,6 +29477,15 @@ impl WriteThrough for wordprocessing::IndexOfColumnBeingMapped {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INDEX_OF_COLUMN_BEING_MAPPED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::index_of_column_being_mapped(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INDEX_OF_COLUMN_BEING_MAPPED_SHAPE,
@@ -26654,6 +29569,16 @@ impl WriteThrough for wordprocessing::InformationAboutHTMLDivElements {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INFORMATION_ABOUT_HTML_DIV_ELEMENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::information_about_html_div_elements(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INFORMATION_ABOUT_HTML_DIV_ELEMENTS_SHAPE,
@@ -26755,6 +29680,16 @@ impl WriteThrough for wordprocessing::InformationAboutSingleHTMLDivElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INFORMATION_ABOUT_SINGLE_HTML_DIV_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::information_about_single_html_div_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INFORMATION_ABOUT_SINGLE_HTML_DIV_ELEMENT_SHAPE,
@@ -26844,6 +29779,15 @@ impl WriteThrough for wordprocessing::InlineLevelCustomXMLElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INLINE_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::inline_level_custom_xml_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INLINE_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
@@ -26928,6 +29872,15 @@ impl WriteThrough for wordprocessing::InlineLevelSmartTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INLINE_LEVEL_SMART_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::inline_level_smart_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INLINE_LEVEL_SMART_TAG_SHAPE,
@@ -27027,6 +29980,16 @@ impl WriteThrough for wordprocessing::InlineLevelStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INLINE_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::inline_level_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INLINE_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -27112,6 +30075,18 @@ impl WriteThrough for wordprocessing::InlineLevelStructuredDocumentTagContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INLINE_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::inline_level_structured_document_tag_content(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INLINE_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
@@ -27191,6 +30166,15 @@ impl WriteThrough for wordprocessing::InsertedMathControlCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INSERTED_MATH_CONTROL_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::inserted_math_control_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INSERTED_MATH_CONTROL_CHARACTER_SHAPE,
@@ -27371,6 +30355,15 @@ impl WriteThrough for wordprocessing::InsertedRunContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INSERTED_RUN_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::inserted_run_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INSERTED_RUN_CONTENT_SHAPE,
@@ -27449,6 +30442,15 @@ impl WriteThrough for wordprocessing::InsertedTableRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INSERTED_TABLE_ROW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::inserted_table_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INSERTED_TABLE_ROW_SHAPE,
@@ -27526,6 +30528,15 @@ impl WriteThrough for wordprocessing::InvalidatedFieldCache {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::INVALIDATED_FIELD_CACHE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::invalidated_field_cache(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::INVALIDATED_FIELD_CACHE_SHAPE,
@@ -27601,6 +30612,15 @@ impl WriteThrough for wordprocessing::ItalicFontStyleEmbedding {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ITALIC_FONT_STYLE_EMBEDDING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::italic_font_style_embedding(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ITALIC_FONT_STYLE_EMBEDDING_SHAPE,
@@ -27674,6 +30694,11 @@ impl WriteThrough for wordprocessing::Italics {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::ITALICS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::italics(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::ITALICS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -27741,6 +30766,11 @@ impl WriteThrough for wordprocessing::Justification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::JUSTIFICATION_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::justification(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::JUSTIFICATION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -27813,6 +30843,15 @@ impl WriteThrough for wordprocessing::KeepAllLinesOnOnePage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::KEEP_ALL_LINES_ON_ONE_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::keep_all_lines_on_one_page(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::KEEP_ALL_LINES_ON_ONE_PAGE_SHAPE,
@@ -27888,6 +30927,16 @@ impl WriteThrough for wordprocessing::KeepParagraphWithNextParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::KEEP_PARAGRAPH_WITH_NEXT_PARAGRAPH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::keep_paragraph_with_next_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::KEEP_PARAGRAPH_WITH_NEXT_PARAGRAPH_SHAPE,
@@ -27963,6 +31012,16 @@ impl WriteThrough for wordprocessing::KeepSourceFormattingOnImport {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::KEEP_SOURCE_FORMATTING_ON_IMPORT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::keep_source_formatting_on_import(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::KEEP_SOURCE_FORMATTING_ON_IMPORT_SHAPE,
@@ -28038,6 +31097,15 @@ impl WriteThrough for wordprocessing::LanguageIDForPhoneticGuide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LANGUAGE_ID_FOR_PHONETIC_GUIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::language_id_for_phonetic_guide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LANGUAGE_ID_FOR_PHONETIC_GUIDE_SHAPE,
@@ -28113,6 +31181,15 @@ impl WriteThrough for wordprocessing::LanguagesForRunContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LANGUAGES_FOR_RUN_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::languages_for_run_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LANGUAGES_FOR_RUN_CONTENT_SHAPE,
@@ -28190,6 +31267,18 @@ impl WriteThrough for wordprocessing::LastReviewedAbstractNumberingDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LAST_REVIEWED_ABSTRACT_NUMBERING_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::last_reviewed_abstract_numbering_definition(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LAST_REVIEWED_ABSTRACT_NUMBERING_DEFINITION_SHAPE,
@@ -28265,6 +31354,15 @@ impl WriteThrough for wordprocessing::LatentStyleException {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LATENT_STYLE_EXCEPTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::latent_style_exception(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LATENT_STYLE_EXCEPTION_SHAPE,
@@ -28350,6 +31448,15 @@ impl WriteThrough for wordprocessing::LatentStyleInformation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LATENT_STYLE_INFORMATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::latent_style_information(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LATENT_STYLE_INFORMATION_SHAPE,
@@ -28431,6 +31538,15 @@ impl WriteThrough for wordprocessing::LayoutRawTableWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LAYOUT_RAW_TABLE_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::layout_raw_table_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LAYOUT_RAW_TABLE_WIDTH_SHAPE,
@@ -28506,6 +31622,15 @@ impl WriteThrough for wordprocessing::LeftAndRightMarginForFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LEFT_AND_RIGHT_MARGIN_FOR_FRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::left_and_right_margin_for_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LEFT_AND_RIGHT_MARGIN_FOR_FRAME_SHAPE,
@@ -28581,6 +31706,11 @@ impl WriteThrough for wordprocessing::LeftBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::LEFT_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::left_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::LEFT_BORDER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -28662,6 +31792,15 @@ impl WriteThrough for wordprocessing::LeftMarginForHTMLDiv {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LEFT_MARGIN_FOR_HTML_DIV_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::left_margin_for_html_div(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LEFT_MARGIN_FOR_HTML_DIV_SHAPE,
@@ -28737,6 +31876,15 @@ impl WriteThrough for wordprocessing::LeftParagraphBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LEFT_PARAGRAPH_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::left_paragraph_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LEFT_PARAGRAPH_BORDER_SHAPE,
@@ -28820,6 +31968,15 @@ impl WriteThrough for wordprocessing::LeftParagraphBorderTblWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LEFT_PARAGRAPH_BORDER_TBL_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::left_paragraph_border_tbl_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LEFT_PARAGRAPH_BORDER_TBL_WIDTH_SHAPE,
@@ -28896,6 +32053,18 @@ impl WriteThrough for wordprocessing::LegacyEthiopicAmharicLineBreakingRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LEGACY_ETHIOPIC_AMHARIC_LINE_BREAKING_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::legacy_ethiopic_amharic_line_breaking_rules(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LEGACY_ETHIOPIC_AMHARIC_LINE_BREAKING_RULES_SHAPE,
@@ -28971,6 +32140,16 @@ impl WriteThrough for wordprocessing::LegacyNumberingLevelProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LEGACY_NUMBERING_LEVEL_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::legacy_numbering_level_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LEGACY_NUMBERING_LEVEL_PROPERTIES_SHAPE,
@@ -29048,6 +32227,15 @@ impl WriteThrough for wordprocessing::LineNumberingSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LINE_NUMBERING_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::line_numbering_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LINE_NUMBERING_SETTINGS_SHAPE,
@@ -29126,6 +32314,15 @@ impl WriteThrough for wordprocessing::LineWrapLikeWord6 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LINE_WRAP_LIKE_WORD6_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::line_wrap_like_word6(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LINE_WRAP_LIKE_WORD6_SHAPE,
@@ -29201,6 +32398,15 @@ impl WriteThrough for wordprocessing::LineWrapTrailingSpaces {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LINE_WRAP_TRAILING_SPACES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::line_wrap_trailing_spaces(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LINE_WRAP_TRAILING_SPACES_SHAPE,
@@ -29276,6 +32482,15 @@ impl WriteThrough for wordprocessing::LinkToExternalQueryFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LINK_TO_EXTERNAL_QUERY_FILE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::link_to_external_query_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LINK_TO_EXTERNAL_QUERY_FILE_SHAPE,
@@ -29351,6 +32566,15 @@ impl WriteThrough for wordprocessing::LinkedObjectProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LINKED_OBJECT_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::linked_object_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LINKED_OBJECT_PROPERTIES_SHAPE,
@@ -29432,6 +32656,15 @@ impl WriteThrough for wordprocessing::LinkedStyleReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LINKED_STYLE_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::linked_style_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LINKED_STYLE_REFERENCE_SHAPE,
@@ -29512,6 +32745,16 @@ impl WriteThrough for wordprocessing::ListOfGlossaryDocumentEntries {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LIST_OF_GLOSSARY_DOCUMENT_ENTRIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::list_of_glossary_document_entries(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LIST_OF_GLOSSARY_DOCUMENT_ENTRIES_SHAPE,
@@ -29587,6 +32830,16 @@ impl WriteThrough for wordprocessing::ListSeparatorForFieldCodeEvaluation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::LIST_SEPARATOR_FOR_FIELD_CODE_EVALUATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::list_separator_for_field_code_evaluation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::LIST_SEPARATOR_FOR_FIELD_CODE_EVALUATION_SHAPE,
@@ -29662,6 +32915,11 @@ impl WriteThrough for wordprocessing::LockingSetting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::LOCKING_SETTING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::locking_setting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::LOCKING_SETTING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -29734,6 +32992,15 @@ impl WriteThrough for wordprocessing::MagnificationSetting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MAGNIFICATION_SETTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::magnification_setting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MAGNIFICATION_SETTING_SHAPE,
@@ -29810,6 +33077,16 @@ impl WriteThrough for wordprocessing::MailMergeErrorReportingSetting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MAIL_MERGE_ERROR_REPORTING_SETTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::mail_merge_error_reporting_setting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MAIL_MERGE_ERROR_REPORTING_SETTING_SHAPE,
@@ -29937,6 +33214,15 @@ impl WriteThrough for wordprocessing::MailMergeSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MAIL_MERGE_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::mail_merge_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MAIL_MERGE_SETTINGS_SHAPE,
@@ -30027,6 +33313,15 @@ impl WriteThrough for wordprocessing::MaintainLinkToExistingFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MAINTAIN_LINK_TO_EXISTING_FILE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::maintain_link_to_existing_file(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MAINTAIN_LINK_TO_EXISTING_FILE_SHAPE,
@@ -30102,6 +33397,12 @@ impl WriteThrough for wordprocessing::ManualRunWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::MANUAL_RUN_WIDTH_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::manual_run_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::MANUAL_RUN_WIDTH_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -30175,6 +33476,18 @@ impl WriteThrough for wordprocessing::MaximumNumberOfConsecutivelyHyphenatedLine
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MAXIMUM_NUMBER_OF_CONSECUTIVELY_HYPHENATED_LINES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::maximum_number_of_consecutively_hyphenated_lines(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MAXIMUM_NUMBER_OF_CONSECUTIVELY_HYPHENATED_LINES_SHAPE,
@@ -30250,6 +33563,15 @@ impl WriteThrough for wordprocessing::MergeFieldMapping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MERGE_FIELD_MAPPING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::merge_field_mapping(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MERGE_FIELD_MAPPING_SHAPE,
@@ -30325,6 +33647,15 @@ impl WriteThrough for wordprocessing::MergedDocumentDestination {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MERGED_DOCUMENT_DESTINATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::merged_document_destination(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MERGED_DOCUMENT_DESTINATION_SHAPE,
@@ -30400,6 +33731,16 @@ impl WriteThrough for wordprocessing::MergedDocumentToEMailAttachment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MERGED_DOCUMENT_TO_E_MAIL_ATTACHMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::merged_document_to_e_mail_attachment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MERGED_DOCUMENT_TO_E_MAIL_ATTACHMENT_SHAPE,
@@ -30475,6 +33816,16 @@ impl WriteThrough for wordprocessing::MergedEMailOrFaxSubjectLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MERGED_E_MAIL_OR_FAX_SUBJECT_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::merged_e_mail_or_fax_subject_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MERGED_E_MAIL_OR_FAX_SUBJECT_LINE_SHAPE,
@@ -30550,6 +33901,15 @@ impl WriteThrough for wordprocessing::MirrorPageMargins {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MIRROR_PAGE_MARGINS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::mirror_page_margins(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MIRROR_PAGE_MARGINS_SHAPE,
@@ -30625,6 +33985,16 @@ impl WriteThrough for wordprocessing::MoveDestinationLocationContainerEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_DESTINATION_LOCATION_CONTAINER_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::move_destination_location_container_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_DESTINATION_LOCATION_CONTAINER_END_SHAPE,
@@ -30701,6 +34071,16 @@ impl WriteThrough for wordprocessing::MoveDestinationLocationContainerStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_DESTINATION_LOCATION_CONTAINER_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::move_destination_location_container_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_DESTINATION_LOCATION_CONTAINER_START_SHAPE,
@@ -30782,6 +34162,15 @@ impl WriteThrough for wordprocessing::MoveDestinationParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_DESTINATION_PARAGRAPH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::move_destination_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_DESTINATION_PARAGRAPH_SHAPE,
@@ -30863,6 +34252,15 @@ impl WriteThrough for wordprocessing::MoveDestinationRunContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_DESTINATION_RUN_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::move_destination_run_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_DESTINATION_RUN_CONTENT_SHAPE,
@@ -30941,6 +34339,16 @@ impl WriteThrough for wordprocessing::MoveSourceLocationContainerEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_SOURCE_LOCATION_CONTAINER_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::move_source_location_container_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_SOURCE_LOCATION_CONTAINER_END_SHAPE,
@@ -31017,6 +34425,16 @@ impl WriteThrough for wordprocessing::MoveSourceLocationContainerStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_SOURCE_LOCATION_CONTAINER_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::move_source_location_container_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_SOURCE_LOCATION_CONTAINER_START_SHAPE,
@@ -31098,6 +34516,15 @@ impl WriteThrough for wordprocessing::MoveSourceParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_SOURCE_PARAGRAPH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::move_source_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_SOURCE_PARAGRAPH_SHAPE,
@@ -31179,6 +34606,15 @@ impl WriteThrough for wordprocessing::MoveSourceRunContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::MOVE_SOURCE_RUN_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::move_source_run_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::MOVE_SOURCE_RUN_CONTENT_SHAPE,
@@ -31271,6 +34707,15 @@ impl WriteThrough for wordprocessing::NestedFramesetDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NESTED_FRAMESET_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::nested_frameset_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NESTED_FRAMESET_DEFINITION_SHAPE,
@@ -31350,6 +34795,16 @@ impl WriteThrough for wordprocessing::NeverKernPunctuationCharacters {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NEVER_KERN_PUNCTUATION_CHARACTERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::never_kern_punctuation_characters(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NEVER_KERN_PUNCTUATION_CHARACTERS_SHAPE,
@@ -31425,6 +34880,15 @@ impl WriteThrough for wordprocessing::NonBreakingHyphenCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NON_BREAKING_HYPHEN_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::non_breaking_hyphen_character(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::NON_BREAKING_HYPHEN_CHARACTER_SHAPE,
@@ -31499,6 +34963,15 @@ impl WriteThrough for wordprocessing::NonComplexScriptFontSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NON_COMPLEX_SCRIPT_FONT_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::non_complex_script_font_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NON_COMPLEX_SCRIPT_FONT_SIZE_SHAPE,
@@ -31574,6 +35047,15 @@ impl WriteThrough for wordprocessing::NotATrueTypeOutlineFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NOT_A_TRUE_TYPE_OUTLINE_FONT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::not_a_true_type_outline_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NOT_A_TRUE_TYPE_OUTLINE_FONT_SHAPE,
@@ -31649,6 +35131,16 @@ impl WriteThrough for wordprocessing::NumberOfColumnsInColumnBand {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBER_OF_COLUMNS_IN_COLUMN_BAND_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::number_of_columns_in_column_band(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBER_OF_COLUMNS_IN_COLUMN_BAND_SHAPE,
@@ -31724,6 +35216,15 @@ impl WriteThrough for wordprocessing::NumberOfPagesPerBooklet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBER_OF_PAGES_PER_BOOKLET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::number_of_pages_per_booklet(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBER_OF_PAGES_PER_BOOKLET_SHAPE,
@@ -31799,6 +35300,15 @@ impl WriteThrough for wordprocessing::NumberOfRowsInRowBand {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBER_OF_ROWS_IN_ROW_BAND_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::number_of_rows_in_row_band(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBER_OF_ROWS_IN_ROW_BAND_SHAPE,
@@ -31885,6 +35395,15 @@ impl WriteThrough for wordprocessing::NumberingDefinitionInstance {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_DEFINITION_INSTANCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_definition_instance(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_DEFINITION_INSTANCE_SHAPE,
@@ -31962,6 +35481,18 @@ impl WriteThrough for wordprocessing::NumberingDefinitionInstanceReferenceNumId 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_DEFINITION_INSTANCE_REFERENCE_NUM_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_definition_instance_reference_num_id(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_DEFINITION_INSTANCE_REFERENCE_NUM_ID_SHAPE,
@@ -32057,6 +35588,18 @@ impl WriteThrough for wordprocessing::NumberingDefinitionInstanceReferenceNumPr 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_DEFINITION_INSTANCE_REFERENCE_NUM_PR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_definition_instance_reference_num_pr(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_DEFINITION_INSTANCE_REFERENCE_NUM_PR_SHAPE,
@@ -32152,6 +35695,15 @@ impl WriteThrough for wordprocessing::NumberingDefinitions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_DEFINITIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_definitions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_DEFINITIONS_SHAPE,
@@ -32230,6 +35782,12 @@ impl WriteThrough for wordprocessing::NumberingFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::NUMBERING_FORMAT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::numbering_format(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::NUMBERING_FORMAT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -32314,6 +35872,16 @@ impl WriteThrough for wordprocessing::NumberingLevelDefinitionOverride {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_LEVEL_DEFINITION_OVERRIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::numbering_level_definition_override(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_LEVEL_DEFINITION_OVERRIDE_SHAPE,
@@ -32434,6 +36002,16 @@ impl WriteThrough for wordprocessing::NumberingLevelOverrideDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_LEVEL_OVERRIDE_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::numbering_level_override_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_LEVEL_OVERRIDE_DEFINITION_SHAPE,
@@ -32523,6 +36101,15 @@ impl WriteThrough for wordprocessing::NumberingLevelReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_LEVEL_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_level_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_LEVEL_REFERENCE_SHAPE,
@@ -32598,6 +36185,16 @@ impl WriteThrough for wordprocessing::NumberingLevelStartingValueOverride {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_LEVEL_STARTING_VALUE_OVERRIDE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::numbering_level_starting_value_override(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_LEVEL_STARTING_VALUE_OVERRIDE_SHAPE,
@@ -32673,6 +36270,15 @@ impl WriteThrough for wordprocessing::NumberingLevelText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_LEVEL_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_level_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_LEVEL_TEXT_SHAPE,
@@ -32749,6 +36355,15 @@ impl WriteThrough for wordprocessing::NumberingStyleDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_STYLE_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_style_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_STYLE_DEFINITION_SHAPE,
@@ -32824,6 +36439,15 @@ impl WriteThrough for wordprocessing::NumberingStyleReference {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_STYLE_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_style_reference(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_STYLE_REFERENCE_SHAPE,
@@ -32899,6 +36523,15 @@ impl WriteThrough for wordprocessing::NumberingTemplateCode {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::NUMBERING_TEMPLATE_CODE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::numbering_template_code(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::NUMBERING_TEMPLATE_CODE_SHAPE,
@@ -32974,6 +36607,15 @@ impl WriteThrough for wordprocessing::ODSODataSourceFilePath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ODSO_DATA_SOURCE_FILE_PATH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::odso_data_source_file_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ODSO_DATA_SOURCE_FILE_PATH_SHAPE,
@@ -33049,6 +36691,15 @@ impl WriteThrough for wordprocessing::ODSODataSourceType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ODSO_DATA_SOURCE_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::odso_data_source_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ODSO_DATA_SOURCE_TYPE_SHAPE,
@@ -33156,6 +36807,16 @@ impl WriteThrough for wordprocessing::OfficeDataSourceObjectSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::OFFICE_DATA_SOURCE_OBJECT_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::office_data_source_object_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::OFFICE_DATA_SOURCE_OBJECT_SETTINGS_SHAPE,
@@ -33238,6 +36899,15 @@ impl WriteThrough for wordprocessing::OfficeOpenXMLMath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::OFFICE_OPEN_XML_MATH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::office_open_xml_math(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::OFFICE_OPEN_XML_MATH_SHAPE,
@@ -33313,6 +36983,16 @@ impl WriteThrough for wordprocessing::OnlyAllowEditingOfFormFields {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ONLY_ALLOW_EDITING_OF_FORM_FIELDS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::only_allow_editing_of_form_fields(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ONLY_ALLOW_EDITING_OF_FORM_FIELDS_SHAPE,
@@ -33388,6 +37068,16 @@ impl WriteThrough for wordprocessing::OnlyExpandCondenseTextByWholePoints {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ONLY_EXPAND_CONDENSE_TEXT_BY_WHOLE_POINTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::only_expand_condense_text_by_whole_points(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ONLY_EXPAND_CONDENSE_TEXT_BY_WHOLE_POINTS_SHAPE,
@@ -33463,6 +37153,15 @@ impl WriteThrough for wordprocessing::OnlyPrintFormFieldContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ONLY_PRINT_FORM_FIELD_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::only_print_form_field_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ONLY_PRINT_FORM_FIELD_CONTENT_SHAPE,
@@ -33538,6 +37237,15 @@ impl WriteThrough for wordprocessing::OnlySaveCustomXMLMarkup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ONLY_SAVE_CUSTOM_XML_MARKUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::only_save_custom_xml_markup(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ONLY_SAVE_CUSTOM_XML_MARKUP_SHAPE,
@@ -33613,6 +37321,15 @@ impl WriteThrough for wordprocessing::OnlySaveFormFieldContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ONLY_SAVE_FORM_FIELD_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::only_save_form_field_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ONLY_SAVE_FORM_FIELD_CONTENT_SHAPE,
@@ -33688,6 +37405,15 @@ impl WriteThrough for wordprocessing::OptionalHyphenCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::OPTIONAL_HYPHEN_CHARACTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::optional_hyphen_character(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::OPTIONAL_HYPHEN_CHARACTER_SHAPE,
@@ -33762,6 +37488,16 @@ impl WriteThrough for wordprocessing::OptionalUserInterfaceSortingOrder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::OPTIONAL_USER_INTERFACE_SORTING_ORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::optional_user_interface_sorting_order(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::OPTIONAL_USER_INTERFACE_SORTING_ORDER_SHAPE,
@@ -33837,6 +37573,16 @@ impl WriteThrough for wordprocessing::OriginalDocumentRevisionSaveID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ORIGINAL_DOCUMENT_REVISION_SAVE_ID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::original_document_revision_save_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ORIGINAL_DOCUMENT_REVISION_SAVE_ID_SHAPE,
@@ -33912,6 +37658,11 @@ impl WriteThrough for wordprocessing::OutputEncoding {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::OUTPUT_ENCODING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::output_encoding(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::OUTPUT_ENCODING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -33984,6 +37735,15 @@ impl WriteThrough for wordprocessing::PageBorderExcludesFooter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PAGE_BORDER_EXCLUDES_FOOTER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::page_border_excludes_footer(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PAGE_BORDER_EXCLUDES_FOOTER_SHAPE,
@@ -34059,6 +37819,15 @@ impl WriteThrough for wordprocessing::PageBorderExcludesHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PAGE_BORDER_EXCLUDES_HEADER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::page_border_excludes_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PAGE_BORDER_EXCLUDES_HEADER_SHAPE,
@@ -34144,6 +37913,11 @@ impl WriteThrough for wordprocessing::PageBorders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::PAGE_BORDERS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::page_borders(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PAGE_BORDERS_SHAPE, &self.unknown);
         through.attribute(0, &self.z_order);
@@ -34222,6 +37996,11 @@ impl WriteThrough for wordprocessing::PageMargins {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::PAGE_MARGINS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::page_margins(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PAGE_MARGINS_SHAPE, &self.unknown);
         through.attribute(0, &self.top);
@@ -34300,6 +38079,12 @@ impl WriteThrough for wordprocessing::PageNumberBlock {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::PAGE_NUMBER_BLOCK_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::page_number_block(self, out.scope());
+            return out.converted(element);
+        }
         let through =
             super::Through::new(out, &wordprocessing::PAGE_NUMBER_BLOCK_SHAPE, &self.unknown);
         through.finish(ctx)
@@ -34371,6 +38156,15 @@ impl WriteThrough for wordprocessing::PageNumberingSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PAGE_NUMBERING_SETTINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::page_numbering_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PAGE_NUMBERING_SETTINGS_SHAPE,
@@ -34449,6 +38243,11 @@ impl WriteThrough for wordprocessing::PageSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::PAGE_SIZE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::page_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::PAGE_SIZE_SHAPE, &self.unknown);
         through.attribute(0, &self.w);
         through.attribute(1, &self.h);
@@ -34523,6 +38322,16 @@ impl WriteThrough for wordprocessing::Panose1TypefaceClassificationNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PANOSE1TYPEFACE_CLASSIFICATION_NUMBER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::panose1typeface_classification_number(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PANOSE1TYPEFACE_CLASSIFICATION_NUMBER_SHAPE,
@@ -34598,6 +38407,15 @@ impl WriteThrough for wordprocessing::PaperSourceInformation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PAPER_SOURCE_INFORMATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paper_source_information(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PAPER_SOURCE_INFORMATION_SHAPE,
@@ -34680,6 +38498,11 @@ impl WriteThrough for wordprocessing::Paragraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::PARAGRAPH_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::PARAGRAPH_SHAPE, &self.unknown);
         through.attribute(0, &self.rsid_r_pr);
         through.attribute(1, &self.rsid_r);
@@ -34760,6 +38583,15 @@ impl WriteThrough for wordprocessing::ParagraphAlignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_ALIGNMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_alignment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_ALIGNMENT_SHAPE,
@@ -34835,6 +38667,18 @@ impl WriteThrough for wordprocessing::ParagraphBorderAboveIdenticalParagraphs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_BORDER_ABOVE_IDENTICAL_PARAGRAPHS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_border_above_identical_paragraphs(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_BORDER_ABOVE_IDENTICAL_PARAGRAPHS_SHAPE,
@@ -34918,6 +38762,19 @@ impl WriteThrough for wordprocessing::ParagraphBorderAboveIdenticalParagraphsTbl
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_BORDER_ABOVE_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::paragraph_border_above_identical_paragraphs_tbl_width(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_BORDER_ABOVE_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE,
@@ -34994,6 +38851,18 @@ impl WriteThrough for wordprocessing::ParagraphBorderBelowIdenticalParagraphs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_BORDER_BELOW_IDENTICAL_PARAGRAPHS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_border_below_identical_paragraphs(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_BORDER_BELOW_IDENTICAL_PARAGRAPHS_SHAPE,
@@ -35077,6 +38946,19 @@ impl WriteThrough for wordprocessing::ParagraphBorderBelowIdenticalParagraphsTbl
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_BORDER_BELOW_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::paragraph_border_below_identical_paragraphs_tbl_width(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_BORDER_BELOW_IDENTICAL_PARAGRAPHS_TBL_WIDTH_SHAPE,
@@ -35153,6 +39035,16 @@ impl WriteThrough for wordprocessing::ParagraphBorderBetweenFacingPages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_BORDER_BETWEEN_FACING_PAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::paragraph_border_between_facing_pages(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_BORDER_BETWEEN_FACING_PAGES_SHAPE,
@@ -35236,6 +39128,18 @@ impl WriteThrough for wordprocessing::ParagraphBorderBetweenIdenticalParagraphs 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_BORDER_BETWEEN_IDENTICAL_PARAGRAPHS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_border_between_identical_paragraphs(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_BORDER_BETWEEN_IDENTICAL_PARAGRAPHS_SHAPE,
@@ -35351,6 +39255,12 @@ impl WriteThrough for wordprocessing::ParagraphBorders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::PARAGRAPH_BORDERS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::paragraph_borders(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PARAGRAPH_BORDERS_SHAPE, &self.unknown);
         through.child(&self.paragraph_border_above_identical_paragraphs, ctx)?;
@@ -35428,6 +39338,16 @@ impl WriteThrough for wordprocessing::ParagraphConditionalFormatting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_CONDITIONAL_FORMATTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::paragraph_conditional_formatting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_CONDITIONAL_FORMATTING_SHAPE,
@@ -35623,6 +39543,15 @@ impl WriteThrough for wordprocessing::ParagraphIndentation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_INDENTATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_indentation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_INDENTATION_SHAPE,
@@ -35709,6 +39638,15 @@ impl WriteThrough for wordprocessing::ParagraphMarkIsAlwaysHidden {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_MARK_IS_ALWAYS_HIDDEN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_mark_is_always_hidden(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_MARK_IS_ALWAYS_HIDDEN_SHAPE,
@@ -35792,6 +39730,16 @@ impl WriteThrough for wordprocessing::ParagraphMarkRunPropertiesRevision {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_MARK_RUN_PROPERTIES_REVISION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::paragraph_mark_run_properties_revision(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_MARK_RUN_PROPERTIES_REVISION_SHAPE,
@@ -35919,6 +39867,15 @@ impl WriteThrough for wordprocessing::ParagraphProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_PROPERTIES_SHAPE,
@@ -36075,6 +40032,16 @@ impl WriteThrough for wordprocessing::ParagraphPropertiesPPrGeneral {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::paragraph_properties_p_pr_general(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_PROPERTIES_P_PR_GENERAL_SHAPE,
@@ -36183,6 +40150,12 @@ impl WriteThrough for wordprocessing::ParagraphShading {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::PARAGRAPH_SHADING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::paragraph_shading(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PARAGRAPH_SHADING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -36263,6 +40236,15 @@ impl WriteThrough for wordprocessing::ParagraphTextFlowDirection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PARAGRAPH_TEXT_FLOW_DIRECTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::paragraph_text_flow_direction(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PARAGRAPH_TEXT_FLOW_DIRECTION_SHAPE,
@@ -36338,6 +40320,11 @@ impl WriteThrough for wordprocessing::ParentStyleID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::PARENT_STYLE_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::parent_style_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PARENT_STYLE_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -36410,6 +40397,15 @@ impl WriteThrough for wordprocessing::PercentageOfDocumentToUse {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PERCENTAGE_OF_DOCUMENT_TO_USE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::percentage_of_document_to_use(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PERCENTAGE_OF_DOCUMENT_TO_USE_SHAPE,
@@ -36493,6 +40489,11 @@ impl WriteThrough for wordprocessing::PhoneticGuide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::PHONETIC_GUIDE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::phonetic_guide(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PHONETIC_GUIDE_SHAPE, &self.unknown);
         through.child(&self.properties, ctx)?;
@@ -36571,6 +40572,15 @@ impl WriteThrough for wordprocessing::PhoneticGuideBaseText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PHONETIC_GUIDE_BASE_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::phonetic_guide_base_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PHONETIC_GUIDE_BASE_TEXT_SHAPE,
@@ -36646,6 +40656,16 @@ impl WriteThrough for wordprocessing::PhoneticGuideBaseTextFontSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PHONETIC_GUIDE_BASE_TEXT_FONT_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::phonetic_guide_base_text_font_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PHONETIC_GUIDE_BASE_TEXT_FONT_SIZE_SHAPE,
@@ -36848,6 +40868,15 @@ impl WriteThrough for wordprocessing::PhoneticGuideProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PHONETIC_GUIDE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::phonetic_guide_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PHONETIC_GUIDE_PROPERTIES_SHAPE,
@@ -36932,6 +40961,15 @@ impl WriteThrough for wordprocessing::PhoneticGuideText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PHONETIC_GUIDE_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::phonetic_guide_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PHONETIC_GUIDE_TEXT_SHAPE,
@@ -37007,6 +41045,15 @@ impl WriteThrough for wordprocessing::PhoneticGuideTextAlignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PHONETIC_GUIDE_TEXT_ALIGNMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::phonetic_guide_text_alignment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PHONETIC_GUIDE_TEXT_ALIGNMENT_SHAPE,
@@ -37082,6 +41129,15 @@ impl WriteThrough for wordprocessing::PhoneticGuideTextFontSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PHONETIC_GUIDE_TEXT_FONT_SIZE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::phonetic_guide_text_font_size(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PHONETIC_GUIDE_TEXT_FONT_SIZE_SHAPE,
@@ -37161,6 +41217,16 @@ impl WriteThrough for wordprocessing::PictureNumberingSymbolDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PICTURE_NUMBERING_SYMBOL_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::picture_numbering_symbol_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PICTURE_NUMBERING_SYMBOL_DEFINITION_SHAPE,
@@ -37334,6 +41400,18 @@ impl WriteThrough for wordprocessing::PictureNumberingSymbolDefinitionReference 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PICTURE_NUMBERING_SYMBOL_DEFINITION_REFERENCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::picture_numbering_symbol_definition_reference(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PICTURE_NUMBERING_SYMBOL_DEFINITION_REFERENCE_SHAPE,
@@ -37409,6 +41487,15 @@ impl WriteThrough for wordprocessing::PictureStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PICTURE_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::picture_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::PICTURE_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -37483,6 +41570,16 @@ impl WriteThrough for wordprocessing::PixelsPerInchForGraphicsImages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PIXELS_PER_INCH_FOR_GRAPHICS_IMAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::pixels_per_inch_for_graphics_images(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PIXELS_PER_INCH_FOR_GRAPHICS_IMAGES_SHAPE,
@@ -37558,6 +41655,16 @@ impl WriteThrough for wordprocessing::PlaceholderTextShouldBeResaved {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PLACEHOLDER_TEXT_SHOULD_BE_RESAVED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::placeholder_text_should_be_resaved(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PLACEHOLDER_TEXT_SHOULD_BE_RESAVED_SHAPE,
@@ -37633,6 +41740,16 @@ impl WriteThrough for wordprocessing::PlainTextStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PLAIN_TEXT_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::plain_text_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PLAIN_TEXT_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -37708,6 +41825,15 @@ impl WriteThrough for wordprocessing::PositionGutterAtTopOfPage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::POSITION_GUTTER_AT_TOP_OF_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::position_gutter_at_top_of_page(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::POSITION_GUTTER_AT_TOP_OF_PAGE_SHAPE,
@@ -37783,6 +41909,16 @@ impl WriteThrough for wordprocessing::PositionOfLastCalculatedPageBreak {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::POSITION_OF_LAST_CALCULATED_PAGE_BREAK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::position_of_last_calculated_page_break(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::POSITION_OF_LAST_CALCULATED_PAGE_BREAK_SHAPE,
@@ -37857,6 +41993,15 @@ impl WriteThrough for wordprocessing::PredefinedMergeFieldName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREDEFINED_MERGE_FIELD_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::predefined_merge_field_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREDEFINED_MERGE_FIELD_NAME_SHAPE,
@@ -37932,6 +42077,15 @@ impl WriteThrough for wordprocessing::PreferredTableCellWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREFERRED_TABLE_CELL_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::preferred_table_cell_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREFERRED_TABLE_CELL_WIDTH_SHAPE,
@@ -38008,6 +42162,15 @@ impl WriteThrough for wordprocessing::PreferredTableWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREFERRED_TABLE_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::preferred_table_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREFERRED_TABLE_WIDTH_SHAPE,
@@ -38084,6 +42247,15 @@ impl WriteThrough for wordprocessing::PreferredWidthAfterTableRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREFERRED_WIDTH_AFTER_TABLE_ROW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::preferred_width_after_table_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREFERRED_WIDTH_AFTER_TABLE_ROW_SHAPE,
@@ -38160,6 +42332,16 @@ impl WriteThrough for wordprocessing::PreferredWidthBeforeTableRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREFERRED_WIDTH_BEFORE_TABLE_ROW_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::preferred_width_before_table_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREFERRED_WIDTH_BEFORE_TABLE_ROW_SHAPE,
@@ -38236,6 +42418,16 @@ impl WriteThrough for wordprocessing::PreventModificationOfThemesPart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVENT_MODIFICATION_OF_THEMES_PART_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::prevent_modification_of_themes_part(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVENT_MODIFICATION_OF_THEMES_PART_SHAPE,
@@ -38311,6 +42503,16 @@ impl WriteThrough for wordprocessing::PreventReplacementOfStylesPart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVENT_REPLACEMENT_OF_STYLES_PART_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::prevent_replacement_of_styles_part(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVENT_REPLACEMENT_OF_STYLES_PART_SHAPE,
@@ -38386,6 +42588,16 @@ impl WriteThrough for wordprocessing::PreventTextFramesFromOverlapping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVENT_TEXT_FRAMES_FROM_OVERLAPPING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::prevent_text_frames_from_overlapping(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVENT_TEXT_FRAMES_FROM_OVERLAPPING_SHAPE,
@@ -38461,6 +42673,16 @@ impl WriteThrough for wordprocessing::PreviousNumberingFieldProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_NUMBERING_FIELD_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::previous_numbering_field_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_NUMBERING_FIELD_PROPERTIES_SHAPE,
@@ -38582,6 +42804,16 @@ impl WriteThrough for wordprocessing::PreviousParagraphMarkRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_PARAGRAPH_MARK_RUN_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::previous_paragraph_mark_run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_PARAGRAPH_MARK_RUN_PROPERTIES_SHAPE,
@@ -38719,6 +42951,15 @@ impl WriteThrough for wordprocessing::PreviousParagraphProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_PARAGRAPH_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::previous_paragraph_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_PARAGRAPH_PROPERTIES_SHAPE,
@@ -38854,6 +43095,15 @@ impl WriteThrough for wordprocessing::PreviousRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_RUN_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::previous_run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_RUN_PROPERTIES_SHAPE,
@@ -39000,6 +43250,15 @@ impl WriteThrough for wordprocessing::PreviousSectionProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_SECTION_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::previous_section_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_SECTION_PROPERTIES_SHAPE,
@@ -39146,6 +43405,15 @@ impl WriteThrough for wordprocessing::PreviousTableCellProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_TABLE_CELL_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::previous_table_cell_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_TABLE_CELL_PROPERTIES_SHAPE,
@@ -39239,6 +43507,15 @@ impl WriteThrough for wordprocessing::PreviousTableGrid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_TABLE_GRID_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::previous_table_grid(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_TABLE_GRID_SHAPE,
@@ -39346,6 +43623,16 @@ impl WriteThrough for wordprocessing::PreviousTableLevelPropertyExceptions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::previous_table_level_property_exceptions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE,
@@ -39486,6 +43773,15 @@ impl WriteThrough for wordprocessing::PreviousTableProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_TABLE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::previous_table_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_TABLE_PROPERTIES_SHAPE,
@@ -39584,6 +43880,15 @@ impl WriteThrough for wordprocessing::PreviousTableRowProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PREVIOUS_TABLE_ROW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::previous_table_row_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PREVIOUS_TABLE_ROW_PROPERTIES_SHAPE,
@@ -39659,6 +43964,11 @@ impl WriteThrough for wordprocessing::PrimaryStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::PRIMARY_STYLE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::primary_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PRIMARY_STYLE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -39731,6 +44041,15 @@ impl WriteThrough for wordprocessing::PrimaryStyleName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PRIMARY_STYLE_NAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::primary_style_name(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PRIMARY_STYLE_NAME_SHAPE,
@@ -39806,6 +44125,18 @@ impl WriteThrough for wordprocessing::PrintBodyTextBeforeHeaderFooterContents {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PRINT_BODY_TEXT_BEFORE_HEADER_FOOTER_CONTENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::print_body_text_before_header_footer_contents(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PRINT_BODY_TEXT_BEFORE_HEADER_FOOTER_CONTENTS_SHAPE,
@@ -39881,6 +44212,18 @@ impl WriteThrough for wordprocessing::PrintColorsAsBlackAndWhiteWithoutDithering
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PRINT_COLORS_AS_BLACK_AND_WHITE_WITHOUT_DITHERING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::print_colors_as_black_and_white_without_dithering(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PRINT_COLORS_AS_BLACK_AND_WHITE_WITHOUT_DITHERING_SHAPE,
@@ -39956,6 +44299,16 @@ impl WriteThrough for wordprocessing::PrintFractionalCharacterWidths {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PRINT_FRACTIONAL_CHARACTER_WIDTHS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::print_fractional_character_widths(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PRINT_FRACTIONAL_CHARACTER_WIDTHS_SHAPE,
@@ -40031,6 +44384,18 @@ impl WriteThrough for wordprocessing::PrintPostScriptCodesWithDocumentText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PRINT_POST_SCRIPT_CODES_WITH_DOCUMENT_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::print_post_script_codes_with_document_text(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PRINT_POST_SCRIPT_CODES_WITH_DOCUMENT_TEXT_SHAPE,
@@ -40106,6 +44471,15 @@ impl WriteThrough for wordprocessing::PrintTwoPagesPerSheet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PRINT_TWO_PAGES_PER_SHEET_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::print_two_pages_per_sheet(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PRINT_TWO_PAGES_PER_SHEET_SHAPE,
@@ -40181,6 +44555,12 @@ impl WriteThrough for wordprocessing::ProgrammaticTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::PROGRAMMATIC_TAG_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::programmatic_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::PROGRAMMATIC_TAG_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -40253,6 +44633,15 @@ impl WriteThrough for wordprocessing::ProofingErrorAnchor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PROOFING_ERROR_ANCHOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::proofing_error_anchor(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PROOFING_ERROR_ANCHOR_SHAPE,
@@ -40367,6 +44756,15 @@ impl WriteThrough for wordprocessing::PropertiesForASingleFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::PROPERTIES_FOR_A_SINGLE_FONT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::properties_for_a_single_font(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::PROPERTIES_FOR_A_SINGLE_FONT_SHAPE,
@@ -40453,6 +44851,15 @@ impl WriteThrough for wordprocessing::QueryForDataSourceRecords {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::QUERY_FOR_DATA_SOURCE_RECORDS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::query_for_data_source_records(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::QUERY_FOR_DATA_SOURCE_RECORDS_SHAPE,
@@ -40528,6 +44935,16 @@ impl WriteThrough for wordprocessing::RadixPointForFieldCodeEvaluation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RADIX_POINT_FOR_FIELD_CODE_EVALUATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::radix_point_for_field_code_evaluation(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RADIX_POINT_FOR_FIELD_CODE_EVALUATION_SHAPE,
@@ -40706,6 +45123,15 @@ impl WriteThrough for wordprocessing::RangePermissionEnd {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RANGE_PERMISSION_END_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::range_permission_end(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RANGE_PERMISSION_END_SHAPE,
@@ -40782,6 +45208,15 @@ impl WriteThrough for wordprocessing::RangePermissionStart {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RANGE_PERMISSION_START_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::range_permission_start(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RANGE_PERMISSION_START_SHAPE,
@@ -40862,6 +45297,16 @@ impl WriteThrough for wordprocessing::RecalculateFieldsWhenModified {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RECALCULATE_FIELDS_WHEN_MODIFIED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::recalculate_fields_when_modified(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RECALCULATE_FIELDS_WHEN_MODIFIED_SHAPE,
@@ -40937,6 +45382,15 @@ impl WriteThrough for wordprocessing::RecommendWebPageFormat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RECOMMEND_WEB_PAGE_FORMAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::recommend_web_page_format(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RECOMMEND_WEB_PAGE_FORMAT_SHAPE,
@@ -41012,6 +45466,18 @@ impl WriteThrough for wordprocessing::RecordCurrentlyDisplayedInMergedDocument {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RECORD_CURRENTLY_DISPLAYED_IN_MERGED_DOCUMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::record_currently_displayed_in_merged_document(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RECORD_CURRENTLY_DISPLAYED_IN_MERGED_DOCUMENT_SHAPE,
@@ -41087,6 +45553,16 @@ impl WriteThrough for wordprocessing::RecordIsIncludedInMailMerge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RECORD_IS_INCLUDED_IN_MAIL_MERGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::record_is_included_in_mail_merge(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RECORD_IS_INCLUDED_IN_MAIL_MERGE_SHAPE,
@@ -41162,6 +45638,16 @@ impl WriteThrough for wordprocessing::ReferenceToInclusionExclusionData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REFERENCE_TO_INCLUSION_EXCLUSION_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::reference_to_inclusion_exclusion_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REFERENCE_TO_INCLUSION_EXCLUSION_DATA_SHAPE,
@@ -41237,6 +45723,16 @@ impl WriteThrough for wordprocessing::ReferenceToPrinterSettingsData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REFERENCE_TO_PRINTER_SETTINGS_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::reference_to_printer_settings_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REFERENCE_TO_PRINTER_SETTINGS_DATA_SHAPE,
@@ -41312,6 +45808,15 @@ impl WriteThrough for wordprocessing::ReferencedCharacterStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REFERENCED_CHARACTER_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::referenced_character_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REFERENCED_CHARACTER_STYLE_SHAPE,
@@ -41387,6 +45892,15 @@ impl WriteThrough for wordprocessing::ReferencedParagraphStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REFERENCED_PARAGRAPH_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::referenced_paragraph_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REFERENCED_PARAGRAPH_STYLE_SHAPE,
@@ -41462,6 +45976,15 @@ impl WriteThrough for wordprocessing::ReferencedTableStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REFERENCED_TABLE_STYLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::referenced_table_style(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REFERENCED_TABLE_STYLE_SHAPE,
@@ -41537,6 +46060,15 @@ impl WriteThrough for wordprocessing::RegularFontStyleEmbedding {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REGULAR_FONT_STYLE_EMBEDDING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::regular_font_style_embedding(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REGULAR_FONT_STYLE_EMBEDDING_SHAPE,
@@ -41614,6 +46146,16 @@ impl WriteThrough for wordprocessing::RemoveDateAndTimeFromAnnotations {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REMOVE_DATE_AND_TIME_FROM_ANNOTATIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::remove_date_and_time_from_annotations(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REMOVE_DATE_AND_TIME_FROM_ANNOTATIONS_SHAPE,
@@ -41689,6 +46231,15 @@ impl WriteThrough for wordprocessing::RemovePersonalInformation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REMOVE_PERSONAL_INFORMATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::remove_personal_information(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REMOVE_PERSONAL_INFORMATION_SHAPE,
@@ -41764,6 +46315,15 @@ impl WriteThrough for wordprocessing::RemoveSemiHiddenProperty {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REMOVE_SEMI_HIDDEN_PROPERTY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::remove_semi_hidden_property(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REMOVE_SEMI_HIDDEN_PROPERTY_SHAPE,
@@ -41839,6 +46399,15 @@ impl WriteThrough for wordprocessing::RemoveSmartTagsWhenSaving {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REMOVE_SMART_TAGS_WHEN_SAVING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::remove_smart_tags_when_saving(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REMOVE_SMART_TAGS_WHEN_SAVING_SHAPE,
@@ -41914,6 +46483,18 @@ impl WriteThrough for wordprocessing::RemoveStructuredDocumentTagWhenEdited {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REMOVE_STRUCTURED_DOCUMENT_TAG_WHEN_EDITED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::remove_structured_document_tag_when_edited(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REMOVE_STRUCTURED_DOCUMENT_TAG_WHEN_EDITED_SHAPE,
@@ -41989,6 +46570,12 @@ impl WriteThrough for wordprocessing::RepeatTableRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::REPEAT_TABLE_ROW_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::repeat_table_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::REPEAT_TABLE_ROW_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -42061,6 +46648,18 @@ impl WriteThrough for wordprocessing::RequireExactSizeDuringFontSubstitution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REQUIRE_EXACT_SIZE_DURING_FONT_SUBSTITUTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::require_exact_size_during_font_substitution(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REQUIRE_EXACT_SIZE_DURING_FONT_SUBSTITUTION_SHAPE,
@@ -42136,6 +46735,15 @@ impl WriteThrough for wordprocessing::RestartNumberingLevelSymbol {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RESTART_NUMBERING_LEVEL_SYMBOL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::restart_numbering_level_symbol(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RESTART_NUMBERING_LEVEL_SYMBOL_SHAPE,
@@ -42211,6 +46819,15 @@ impl WriteThrough for wordprocessing::ReverseBookFoldPrinting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVERSE_BOOK_FOLD_PRINTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::reverse_book_fold_printing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVERSE_BOOK_FOLD_PRINTING_SHAPE,
@@ -42286,6 +46903,16 @@ impl WriteThrough for wordprocessing::RevisionIdentifierForStyleDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_IDENTIFIER_FOR_STYLE_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::revision_identifier_for_style_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_IDENTIFIER_FOR_STYLE_DEFINITION_SHAPE,
@@ -42366,6 +46993,18 @@ impl WriteThrough for wordprocessing::RevisionInformationForParagraphProperties 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_INFORMATION_FOR_PARAGRAPH_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::revision_information_for_paragraph_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_INFORMATION_FOR_PARAGRAPH_PROPERTIES_SHAPE,
@@ -42450,6 +47089,16 @@ impl WriteThrough for wordprocessing::RevisionInformationForRunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_INFORMATION_FOR_RUN_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::revision_information_for_run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_INFORMATION_FOR_RUN_PROPERTIES_SHAPE,
@@ -42534,6 +47183,18 @@ impl WriteThrough for wordprocessing::RevisionInformationForSectionProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_INFORMATION_FOR_SECTION_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::revision_information_for_section_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_INFORMATION_FOR_SECTION_PROPERTIES_SHAPE,
@@ -42618,6 +47279,18 @@ impl WriteThrough for wordprocessing::RevisionInformationForTableCellProperties 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_INFORMATION_FOR_TABLE_CELL_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::revision_information_for_table_cell_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_INFORMATION_FOR_TABLE_CELL_PROPERTIES_SHAPE,
@@ -42705,6 +47378,19 @@ impl WriteThrough for wordprocessing::RevisionInformationForTableLevelPropertyEx
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_INFORMATION_FOR_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::revision_information_for_table_level_property_exceptions(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_INFORMATION_FOR_TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE,
@@ -42789,6 +47475,16 @@ impl WriteThrough for wordprocessing::RevisionInformationForTableProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_INFORMATION_FOR_TABLE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::revision_information_for_table_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_INFORMATION_FOR_TABLE_PROPERTIES_SHAPE,
@@ -42873,6 +47569,18 @@ impl WriteThrough for wordprocessing::RevisionInformationForTableRowProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_INFORMATION_FOR_TABLE_ROW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::revision_information_for_table_row_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_INFORMATION_FOR_TABLE_ROW_PROPERTIES_SHAPE,
@@ -42963,6 +47671,15 @@ impl WriteThrough for wordprocessing::RevisionSaveIDValues {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::REVISION_SAVE_ID_VALUES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::revision_save_id_values(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::REVISION_SAVE_ID_VALUES_SHAPE,
@@ -43043,6 +47760,15 @@ impl WriteThrough for wordprocessing::RichTextBoxContentContainer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::rich_text_box_content_container(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
@@ -43118,6 +47844,16 @@ impl WriteThrough for wordprocessing::RichTextStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RICH_TEXT_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::rich_text_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::RICH_TEXT_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -43192,6 +47928,11 @@ impl WriteThrough for wordprocessing::RightBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::RIGHT_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::right_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::RIGHT_BORDER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -43273,6 +48014,15 @@ impl WriteThrough for wordprocessing::RightMarginForHTMLDiv {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RIGHT_MARGIN_FOR_HTML_DIV_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::right_margin_for_html_div(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RIGHT_MARGIN_FOR_HTML_DIV_SHAPE,
@@ -43348,6 +48098,15 @@ impl WriteThrough for wordprocessing::RightParagraphBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RIGHT_PARAGRAPH_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::right_paragraph_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RIGHT_PARAGRAPH_BORDER_SHAPE,
@@ -43431,6 +48190,16 @@ impl WriteThrough for wordprocessing::RightParagraphBorderTblWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RIGHT_PARAGRAPH_BORDER_TBL_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::right_paragraph_border_tbl_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RIGHT_PARAGRAPH_BORDER_TBL_WIDTH_SHAPE,
@@ -43507,6 +48276,15 @@ impl WriteThrough for wordprocessing::RightToLeftParagraphLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RIGHT_TO_LEFT_PARAGRAPH_LAYOUT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::right_to_left_paragraph_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RIGHT_TO_LEFT_PARAGRAPH_LAYOUT_SHAPE,
@@ -43582,6 +48360,15 @@ impl WriteThrough for wordprocessing::RightToLeftText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RIGHT_TO_LEFT_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::right_to_left_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RIGHT_TO_LEFT_TEXT_SHAPE,
@@ -43663,6 +48450,15 @@ impl WriteThrough for wordprocessing::RowLevelCustomXMLElement {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ROW_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::row_level_custom_xml_element(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ROW_LEVEL_CUSTOM_XML_ELEMENT_SHAPE,
@@ -43762,6 +48558,16 @@ impl WriteThrough for wordprocessing::RowLevelStructuredDocumentTag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ROW_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::row_level_structured_document_tag(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ROW_LEVEL_STRUCTURED_DOCUMENT_TAG_SHAPE,
@@ -43847,6 +48653,16 @@ impl WriteThrough for wordprocessing::RowLevelStructuredDocumentTagContent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::ROW_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::row_level_structured_document_tag_content(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::ROW_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
@@ -43922,6 +48738,12 @@ impl WriteThrough for wordprocessing::RunContentColor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::RUN_CONTENT_COLOR_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::run_content_color(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::RUN_CONTENT_COLOR_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -43997,6 +48819,11 @@ impl WriteThrough for wordprocessing::RunFonts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::RUN_FONTS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::run_fonts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::RUN_FONTS_SHAPE, &self.unknown);
         through.attribute(0, &self.hint);
         through.attribute(1, &self.ascii);
@@ -44107,6 +48934,11 @@ impl WriteThrough for wordprocessing::RunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::RUN_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::run_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::RUN_PROPERTIES_SHAPE, &self.unknown);
         through.items(&self.content, ctx)?;
@@ -44346,6 +49178,16 @@ impl WriteThrough for wordprocessing::RunPropertiesForTheParagraphMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::RUN_PROPERTIES_FOR_THE_PARAGRAPH_MARK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::run_properties_for_the_paragraph_mark(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::RUN_PROPERTIES_FOR_THE_PARAGRAPH_MARK_SHAPE,
@@ -44439,6 +49281,15 @@ impl WriteThrough for wordprocessing::SaveSmartTagData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SAVE_SMART_TAG_DATA_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::save_smart_tag_data(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SAVE_SMART_TAG_DATA_SHAPE,
@@ -44514,6 +49365,16 @@ impl WriteThrough for wordprocessing::SaveThroughCustomXSLTransform {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SAVE_THROUGH_CUSTOM_XSL_TRANSFORM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::save_through_custom_xsl_transform(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SAVE_THROUGH_CUSTOM_XSL_TRANSFORM_SHAPE,
@@ -44589,6 +49450,15 @@ impl WriteThrough for wordprocessing::ScrollbarDisplayOption {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SCROLLBAR_DISPLAY_OPTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::scrollbar_display_option(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SCROLLBAR_DISPLAY_OPTION_SHAPE,
@@ -44782,6 +49652,11 @@ impl WriteThrough for wordprocessing::SectionType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::SECTION_TYPE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::section_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::SECTION_TYPE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -44875,6 +49750,15 @@ impl WriteThrough for wordprocessing::SectionWideEndnoteProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SECTION_WIDE_ENDNOTE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::section_wide_endnote_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SECTION_WIDE_ENDNOTE_PROPERTIES_SHAPE,
@@ -44975,6 +49859,16 @@ impl WriteThrough for wordprocessing::SectionWideFootnoteProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SECTION_WIDE_FOOTNOTE_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::section_wide_footnote_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SECTION_WIDE_FOOTNOTE_PROPERTIES_SHAPE,
@@ -45053,6 +49947,16 @@ impl WriteThrough for wordprocessing::SelectFldWithFirstOrLastChar {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SELECT_FLD_WITH_FIRST_OR_LAST_CHAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::select_fld_with_first_or_last_char(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SELECT_FLD_WITH_FIRST_OR_LAST_CHAR_SHAPE,
@@ -45148,6 +50052,15 @@ impl WriteThrough for wordprocessing::SetOfBordersForHTMLDiv {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SET_OF_BORDERS_FOR_HTML_DIV_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::set_of_borders_for_html_div(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SET_OF_BORDERS_FOR_HTML_DIV_SHAPE,
@@ -45230,6 +50143,15 @@ impl WriteThrough for wordprocessing::SetOfCustomTabStops {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SET_OF_CUSTOM_TAB_STOPS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::set_of_custom_tab_stops(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SET_OF_CUSTOM_TAB_STOPS_SHAPE,
@@ -45301,6 +50223,11 @@ impl WriteThrough for wordprocessing::Shadow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::SHADOW_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::shadow(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::SHADOW_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -45368,6 +50295,15 @@ impl WriteThrough for wordprocessing::ShowEMailMessageHeader {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SHOW_E_MAIL_MESSAGE_HEADER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::show_e_mail_message_header(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SHOW_E_MAIL_MESSAGE_HEADER_SHAPE,
@@ -45443,6 +50379,11 @@ impl WriteThrough for wordprocessing::ShowXMLTags {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::SHOW_XML_TAGS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::show_xml_tags(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::SHOW_XML_TAGS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -45521,6 +50462,11 @@ impl WriteThrough for wordprocessing::SimpleField {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::SIMPLE_FIELD_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::simple_field(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::SIMPLE_FIELD_SHAPE, &self.unknown);
         through.attribute(0, &self.instr);
@@ -45597,6 +50543,16 @@ impl WriteThrough for wordprocessing::SingleAutomaticCaptioningSetting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SINGLE_AUTOMATIC_CAPTIONING_SETTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::single_automatic_captioning_setting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SINGLE_AUTOMATIC_CAPTIONING_SETTING_SHAPE,
@@ -45673,6 +50629,15 @@ impl WriteThrough for wordprocessing::SingleCaptionTypeDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SINGLE_CAPTION_TYPE_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::single_caption_type_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SINGLE_CAPTION_TYPE_DEFINITION_SHAPE,
@@ -45754,6 +50719,15 @@ impl WriteThrough for wordprocessing::SingleColumnDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SINGLE_COLUMN_DEFINITION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::single_column_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SINGLE_COLUMN_DEFINITION_SHAPE,
@@ -45830,6 +50804,15 @@ impl WriteThrough for wordprocessing::SingleDocumentVariable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SINGLE_DOCUMENT_VARIABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::single_document_variable(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SINGLE_DOCUMENT_VARIABLE_SHAPE,
@@ -45937,6 +50920,15 @@ impl WriteThrough for wordprocessing::SingleFrameProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SINGLE_FRAME_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::single_frame_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SINGLE_FRAME_PROPERTIES_SHAPE,
@@ -46021,6 +51013,15 @@ impl WriteThrough for wordprocessing::SingleStrikethrough {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SINGLE_STRIKETHROUGH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::single_strikethrough(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SINGLE_STRIKETHROUGH_SHAPE,
@@ -46137,6 +51138,15 @@ impl WriteThrough for wordprocessing::SingleTableCellMargins {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SINGLE_TABLE_CELL_MARGINS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::single_table_cell_margins(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SINGLE_TABLE_CELL_MARGINS_SHAPE,
@@ -46223,6 +51233,11 @@ impl WriteThrough for wordprocessing::SmallCaps {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::SMALL_CAPS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::small_caps(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::SMALL_CAPS_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -46300,6 +51315,15 @@ impl WriteThrough for wordprocessing::SmartTagProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SMART_TAG_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::smart_tag_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SMART_TAG_PROPERTIES_SHAPE,
@@ -46375,6 +51399,15 @@ impl WriteThrough for wordprocessing::SourceDocumentType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SOURCE_DOCUMENT_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::source_document_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SOURCE_DOCUMENT_TYPE_SHAPE,
@@ -46450,6 +51483,15 @@ impl WriteThrough for wordprocessing::SourceFileForFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SOURCE_FILE_FOR_FRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::source_file_for_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SOURCE_FILE_FOR_FRAME_SHAPE,
@@ -46525,6 +51567,18 @@ impl WriteThrough for wordprocessing::SpacingBetweenLinesAndAboveBelowParagraph 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SPACING_BETWEEN_LINES_AND_ABOVE_BELOW_PARAGRAPH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::spacing_between_lines_and_above_below_paragraph(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SPACING_BETWEEN_LINES_AND_ABOVE_BELOW_PARAGRAPH_SHAPE,
@@ -46607,6 +51661,15 @@ impl WriteThrough for wordprocessing::SpecialEndnoteList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SPECIAL_ENDNOTE_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::special_endnote_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SPECIAL_ENDNOTE_LIST_SHAPE,
@@ -46682,6 +51745,15 @@ impl WriteThrough for wordprocessing::SpecialFootnoteList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SPECIAL_FOOTNOTE_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::special_footnote_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SPECIAL_FOOTNOTE_LIST_SHAPE,
@@ -46757,6 +51829,16 @@ impl WriteThrough for wordprocessing::SpellingAndGrammaticalCheckingState {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SPELLING_AND_GRAMMATICAL_CHECKING_STATE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::spelling_and_grammatical_checking_state(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SPELLING_AND_GRAMMATICAL_CHECKING_STATE_SHAPE,
@@ -46833,6 +51915,15 @@ impl WriteThrough for wordprocessing::SplitPgBreakAndParaMark {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SPLIT_PG_BREAK_AND_PARA_MARK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::split_pg_break_and_para_mark(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SPLIT_PG_BREAK_AND_PARA_MARK_SHAPE,
@@ -46908,6 +51999,15 @@ impl WriteThrough for wordprocessing::StartParagraphOnNextPage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::START_PARAGRAPH_ON_NEXT_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::start_paragraph_on_next_page(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::START_PARAGRAPH_ON_NEXT_PAGE_SHAPE,
@@ -46983,6 +52083,11 @@ impl WriteThrough for wordprocessing::StartingValue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::STARTING_VALUE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::starting_value(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::STARTING_VALUE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -47055,6 +52160,15 @@ impl WriteThrough for wordprocessing::StrictKinsokuRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STRICT_KINSOKU_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::strict_kinsoku_rules(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STRICT_KINSOKU_RULES_SHAPE,
@@ -47134,6 +52248,18 @@ impl WriteThrough for wordprocessing::StructuredDocumentTagEndCharacterPropertie
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STRUCTURED_DOCUMENT_TAG_END_CHARACTER_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::structured_document_tag_end_character_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STRUCTURED_DOCUMENT_TAG_END_CHARACTER_PROPERTIES_SHAPE,
@@ -47209,6 +52335,15 @@ impl WriteThrough for wordprocessing::StructuredDocumentTagLabel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STRUCTURED_DOCUMENT_TAG_LABEL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::structured_document_tag_label(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STRUCTURED_DOCUMENT_TAG_LABEL_SHAPE,
@@ -47284,6 +52419,18 @@ impl WriteThrough for wordprocessing::StructuredDocumentTagNavigationOrderIndex 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STRUCTURED_DOCUMENT_TAG_NAVIGATION_ORDER_INDEX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::structured_document_tag_navigation_order_index(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STRUCTURED_DOCUMENT_TAG_NAVIGATION_ORDER_INDEX_SHAPE,
@@ -47364,6 +52511,16 @@ impl WriteThrough for wordprocessing::StructuredDocumentTagPlaceholderText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STRUCTURED_DOCUMENT_TAG_PLACEHOLDER_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::structured_document_tag_placeholder_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STRUCTURED_DOCUMENT_TAG_PLACEHOLDER_TEXT_SHAPE,
@@ -47497,6 +52654,16 @@ impl WriteThrough for wordprocessing::StructuredDocumentTagProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STRUCTURED_DOCUMENT_TAG_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::structured_document_tag_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STRUCTURED_DOCUMENT_TAG_PROPERTIES_SHAPE,
@@ -47783,6 +52950,15 @@ impl WriteThrough for wordprocessing::StyleCannotBeApplied {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STYLE_CANNOT_BE_APPLIED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::style_cannot_be_applied(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STYLE_CANNOT_BE_APPLIED_SHAPE,
@@ -47874,6 +53050,18 @@ impl WriteThrough for wordprocessing::StyleConditionalTableFormattingProperties 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STYLE_CONDITIONAL_TABLE_FORMATTING_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::style_conditional_table_formatting_properties(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STYLE_CONDITIONAL_TABLE_FORMATTING_PROPERTIES_SHAPE,
@@ -48025,6 +53213,12 @@ impl WriteThrough for wordprocessing::StyleDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::STYLE_DEFINITION_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::style_definition(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::STYLE_DEFINITION_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -48135,6 +53329,12 @@ impl WriteThrough for wordprocessing::StyleDefinitions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::STYLE_DEFINITIONS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::style_definitions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::STYLE_DEFINITIONS_SHAPE, &self.unknown);
         through.child(&self.document_default_paragraph_and_run_properties, ctx)?;
@@ -48209,6 +53409,15 @@ impl WriteThrough for wordprocessing::StyleForNextParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::STYLE_FOR_NEXT_PARAGRAPH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::style_for_next_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::STYLE_FOR_NEXT_PARAGRAPH_SHAPE,
@@ -48284,6 +53493,15 @@ impl WriteThrough for wordprocessing::SubscriptSuperscriptText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUBSCRIPT_SUPERSCRIPT_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::subscript_superscript_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUBSCRIPT_SUPERSCRIPT_TEXT_SHAPE,
@@ -48359,6 +53577,15 @@ impl WriteThrough for wordprocessing::SubsetFontsWhenEmbedding {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUBSET_FONTS_WHEN_EMBEDDING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::subset_fonts_when_embedding(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUBSET_FONTS_WHEN_EMBEDDING_SHAPE,
@@ -48434,6 +53661,15 @@ impl WriteThrough for wordprocessing::SuggestedFiltering {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUGGESTED_FILTERING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::suggested_filtering(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUGGESTED_FILTERING_SHAPE,
@@ -48524,6 +53760,12 @@ impl WriteThrough for wordprocessing::SuggestedSorting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::SUGGESTED_SORTING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::suggested_sorting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::SUGGESTED_SORTING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -48596,6 +53838,16 @@ impl WriteThrough for wordprocessing::SupplementarySmartTagInformation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUPPLEMENTARY_SMART_TAG_INFORMATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::supplementary_smart_tag_information(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUPPLEMENTARY_SMART_TAG_INFORMATION_SHAPE,
@@ -48673,6 +53925,18 @@ impl WriteThrough for wordprocessing::SupportedUnicodeSubrangesAndCodePages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUPPORTED_UNICODE_SUBRANGES_AND_CODE_PAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::supported_unicode_subranges_and_code_pages(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUPPORTED_UNICODE_SUBRANGES_AND_CODE_PAGES_SHAPE,
@@ -48753,6 +54017,15 @@ impl WriteThrough for wordprocessing::SuppressEndnotesInDocument {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUPPRESS_ENDNOTES_IN_DOCUMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::suppress_endnotes_in_document(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUPPRESS_ENDNOTES_IN_DOCUMENT_SHAPE,
@@ -48828,6 +54101,16 @@ impl WriteThrough for wordprocessing::SuppressHyphenationForParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUPPRESS_HYPHENATION_FOR_PARAGRAPH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::suppress_hyphenation_for_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUPPRESS_HYPHENATION_FOR_PARAGRAPH_SHAPE,
@@ -48903,6 +54186,16 @@ impl WriteThrough for wordprocessing::SuppressLineNumbersForParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUPPRESS_LINE_NUMBERS_FOR_PARAGRAPH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::suppress_line_numbers_for_paragraph(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUPPRESS_LINE_NUMBERS_FOR_PARAGRAPH_SHAPE,
@@ -48978,6 +54271,15 @@ impl WriteThrough for wordprocessing::SuppressSpBfAfterPgBrk {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUPPRESS_SP_BF_AFTER_PG_BRK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::suppress_sp_bf_after_pg_brk(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUPPRESS_SP_BF_AFTER_PG_BRK_SHAPE,
@@ -49053,6 +54355,15 @@ impl WriteThrough for wordprocessing::SuppressTopSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SUPPRESS_TOP_SPACING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::suppress_top_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SUPPRESS_TOP_SPACING_SHAPE,
@@ -49128,6 +54439,18 @@ impl WriteThrough for wordprocessing::SwapParagraphBordersOnOddNumberedPages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::SWAP_PARAGRAPH_BORDERS_ON_ODD_NUMBERED_PAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::swap_paragraph_borders_on_odd_numbered_pages(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::SWAP_PARAGRAPH_BORDERS_ON_ODD_NUMBERED_PAGES_SHAPE,
@@ -49203,6 +54526,12 @@ impl WriteThrough for wordprocessing::SymbolCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::SYMBOL_CHARACTER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::symbol_character(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::SYMBOL_CHARACTER_SHAPE, &self.unknown);
         through.attribute(0, &self.font);
@@ -49276,6 +54605,11 @@ impl WriteThrough for wordprocessing::TabCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TAB_CHARACTER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::tab_character(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(out, &wordprocessing::TAB_CHARACTER_SHAPE, &self.unknown);
         through.finish(ctx)
     }
@@ -49354,6 +54688,11 @@ impl WriteThrough for wordprocessing::Table {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TABLE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::TABLE_SHAPE, &self.unknown);
         through.items(&self.range_markup_content, ctx)?;
         through.child(&self.properties, ctx)?;
@@ -49424,6 +54763,15 @@ impl WriteThrough for wordprocessing::TableAlignmentException {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_ALIGNMENT_EXCEPTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_alignment_exception(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_ALIGNMENT_EXCEPTION_SHAPE,
@@ -49531,6 +54879,11 @@ impl WriteThrough for wordprocessing::TableBorders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TABLE_BORDERS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_borders(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_BORDERS_SHAPE, &self.unknown);
         through.child(&self.paragraph_border_above_identical_paragraphs, ctx)?;
@@ -49610,6 +54963,11 @@ impl WriteThrough for wordprocessing::TableCaption {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TABLE_CAPTION_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_caption(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_CAPTION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -49688,6 +55046,11 @@ impl WriteThrough for wordprocessing::TableCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TABLE_CELL_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_CELL_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -49806,6 +55169,15 @@ impl WriteThrough for wordprocessing::TableCellBorders {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_BORDERS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_borders(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_BORDERS_SHAPE,
@@ -49890,6 +55262,15 @@ impl WriteThrough for wordprocessing::TableCellDeletion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_DELETION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_deletion(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_DELETION_SHAPE,
@@ -49967,6 +55348,15 @@ impl WriteThrough for wordprocessing::TableCellInsertion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_INSERTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_insertion(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_INSERTION_SHAPE,
@@ -50044,6 +55434,15 @@ impl WriteThrough for wordprocessing::TableCellLeadingEdgeBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_LEADING_EDGE_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_leading_edge_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_LEADING_EDGE_BORDER_SHAPE,
@@ -50127,6 +55526,16 @@ impl WriteThrough for wordprocessing::TableCellLeadingEdgeBorderTblWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_LEADING_EDGE_BORDER_TBL_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_cell_leading_edge_border_tbl_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_LEADING_EDGE_BORDER_TBL_WIDTH_SHAPE,
@@ -50244,6 +55653,15 @@ impl WriteThrough for wordprocessing::TableCellMarginExceptions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_MARGIN_EXCEPTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_margin_exceptions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_MARGIN_EXCEPTIONS_SHAPE,
@@ -50381,6 +55799,15 @@ impl WriteThrough for wordprocessing::TableCellProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_PROPERTIES_SHAPE,
@@ -50471,6 +55898,16 @@ impl WriteThrough for wordprocessing::TableCellTrailingMarginException {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_TRAILING_MARGIN_EXCEPTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_cell_trailing_margin_exception(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_TRAILING_MARGIN_EXCEPTION_SHAPE,
@@ -50554,6 +55991,18 @@ impl WriteThrough for wordprocessing::TableCellTrailingMarginExceptionTblWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_TRAILING_MARGIN_EXCEPTION_TBL_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_trailing_margin_exception_tbl_width(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_TRAILING_MARGIN_EXCEPTION_TBL_WIDTH_SHAPE,
@@ -50630,6 +56079,15 @@ impl WriteThrough for wordprocessing::TableCellVerticalAlignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_CELL_VERTICAL_ALIGNMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_cell_vertical_alignment(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_CELL_VERTICAL_ALIGNMENT_SHAPE,
@@ -50705,6 +56163,12 @@ impl WriteThrough for wordprocessing::TableDescription {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::TABLE_DESCRIPTION_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_description(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_DESCRIPTION_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -50784,6 +56248,11 @@ impl WriteThrough for wordprocessing::TableGrid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TABLE_GRID_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_grid(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_GRID_SHAPE, &self.unknown);
         through.child(&self.column_definition, ctx)?;
@@ -50862,6 +56331,16 @@ impl WriteThrough for wordprocessing::TableGridColumnRevisionInformation {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_GRID_COLUMN_REVISION_INFORMATION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_grid_column_revision_information(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_GRID_COLUMN_REVISION_INFORMATION_SHAPE,
@@ -50938,6 +56417,16 @@ impl WriteThrough for wordprocessing::TableIndentFromLeadingMargin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_INDENT_FROM_LEADING_MARGIN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_indent_from_leading_margin(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_INDENT_FROM_LEADING_MARGIN_SHAPE,
@@ -51014,6 +56503,16 @@ impl WriteThrough for wordprocessing::TableInsideHorizontalEdgesBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_INSIDE_HORIZONTAL_EDGES_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_inside_horizontal_edges_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_INSIDE_HORIZONTAL_EDGES_BORDER_SHAPE,
@@ -51097,6 +56596,16 @@ impl WriteThrough for wordprocessing::TableInsideVerticalEdgesBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_INSIDE_VERTICAL_EDGES_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_inside_vertical_edges_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_INSIDE_VERTICAL_EDGES_BORDER_SHAPE,
@@ -51180,6 +56689,11 @@ impl WriteThrough for wordprocessing::TableLayout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TABLE_LAYOUT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_layout(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_LAYOUT_SHAPE, &self.unknown);
         through.attribute(0, &self.r#type);
@@ -51287,6 +56801,15 @@ impl WriteThrough for wordprocessing::TableLevelPropertyExceptions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_level_property_exceptions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_LEVEL_PROPERTY_EXCEPTIONS_SHAPE,
@@ -51431,6 +56954,12 @@ impl WriteThrough for wordprocessing::TableProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::TABLE_PROPERTIES_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_PROPERTIES_SHAPE, &self.unknown);
         through.child(&self.referenced_table_style, ctx)?;
@@ -51532,6 +57061,11 @@ impl WriteThrough for wordprocessing::TableRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TABLE_ROW_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_row(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::TABLE_ROW_SHAPE, &self.unknown);
         through.attribute(0, &self.rsid_r_pr);
         through.attribute(1, &self.rsid_r);
@@ -51611,6 +57145,16 @@ impl WriteThrough for wordprocessing::TableRowCannotBreakAcrossPages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_ROW_CANNOT_BREAK_ACROSS_PAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_row_cannot_break_across_pages(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_ROW_CANNOT_BREAK_ACROSS_PAGES_SHAPE,
@@ -51686,6 +57230,15 @@ impl WriteThrough for wordprocessing::TableRowCellSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_ROW_CELL_SPACING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_row_cell_spacing(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_ROW_CELL_SPACING_SHAPE,
@@ -51762,6 +57315,12 @@ impl WriteThrough for wordprocessing::TableRowHeight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::TABLE_ROW_HEIGHT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::table_row_height(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_ROW_HEIGHT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -51850,6 +57409,15 @@ impl WriteThrough for wordprocessing::TableRowProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_ROW_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::table_row_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_ROW_PROPERTIES_SHAPE,
@@ -52117,6 +57685,19 @@ impl WriteThrough for wordprocessing::TableStyleConditionalFormattingSettingsExc
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TABLE_STYLE_CONDITIONAL_FORMATTING_SETTINGS_EXCEPTION_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::table_style_conditional_formatting_settings_exception(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TABLE_STYLE_CONDITIONAL_FORMATTING_SETTINGS_EXCEPTION_SHAPE,
@@ -52198,6 +57779,15 @@ impl WriteThrough for wordprocessing::TargetScreenSizeForWebPage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TARGET_SCREEN_SIZE_FOR_WEB_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::target_screen_size_for_web_page(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TARGET_SCREEN_SIZE_FOR_WEB_PAGE_SHAPE,
@@ -52269,6 +57859,11 @@ impl WriteThrough for wordprocessing::Text {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::TEXT_SHAPE, &self.unknown);
         through.attribute(0, &self.space);
         through.text(&self.value)?;
@@ -52337,6 +57932,11 @@ impl WriteThrough for wordprocessing::TextBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TEXT_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::text_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TEXT_BORDER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -52417,6 +58017,15 @@ impl WriteThrough for wordprocessing::TextBoxFormFieldFormatting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TEXT_BOX_FORM_FIELD_FORMATTING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::text_box_form_field_formatting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TEXT_BOX_FORM_FIELD_FORMATTING_SHAPE,
@@ -52492,6 +58101,16 @@ impl WriteThrough for wordprocessing::TextBoxFormFieldMaximumLength {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TEXT_BOX_FORM_FIELD_MAXIMUM_LENGTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::text_box_form_field_maximum_length(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TEXT_BOX_FORM_FIELD_MAXIMUM_LENGTH_SHAPE,
@@ -52581,6 +58200,15 @@ impl WriteThrough for wordprocessing::TextBoxFormFieldProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TEXT_BOX_FORM_FIELD_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::text_box_form_field_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TEXT_BOX_FORM_FIELD_PROPERTIES_SHAPE,
@@ -52659,6 +58287,15 @@ impl WriteThrough for wordprocessing::TextBoxFormFieldType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TEXT_BOX_FORM_FIELD_TYPE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::text_box_form_field_type(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TEXT_BOX_FORM_FIELD_TYPE_SHAPE,
@@ -52734,6 +58371,15 @@ impl WriteThrough for wordprocessing::TextFrameProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TEXT_FRAME_PROPERTIES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::text_frame_properties(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TEXT_FRAME_PROPERTIES_SHAPE,
@@ -52823,6 +58469,12 @@ impl WriteThrough for wordprocessing::TextHighlighting {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::TEXT_HIGHLIGHTING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::text_highlighting(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TEXT_HIGHLIGHTING_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -52901,6 +58553,11 @@ impl WriteThrough for wordprocessing::TextRun {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TEXT_RUN_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::text_run(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::TEXT_RUN_SHAPE, &self.unknown);
         through.attribute(0, &self.rsid_r_pr);
         through.attribute(1, &self.rsid_del);
@@ -53083,6 +58740,15 @@ impl WriteThrough for wordprocessing::TextboxTightWrap {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TEXTBOX_TIGHT_WRAP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::textbox_tight_wrap(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TEXTBOX_TIGHT_WRAP_SHAPE,
@@ -53158,6 +58824,15 @@ impl WriteThrough for wordprocessing::ThemeColorMappings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::THEME_COLOR_MAPPINGS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::theme_color_mappings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::THEME_COLOR_MAPPINGS_SHAPE,
@@ -53244,6 +58919,15 @@ impl WriteThrough for wordprocessing::ThemeFontLanguages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::THEME_FONT_LANGUAGES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::theme_font_languages(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::THEME_FONT_LANGUAGES_SHAPE,
@@ -53321,6 +59005,15 @@ impl WriteThrough for wordprocessing::TopAndBottomMarginForFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TOP_AND_BOTTOM_MARGIN_FOR_FRAME_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::top_and_bottom_margin_for_frame(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TOP_AND_BOTTOM_MARGIN_FOR_FRAME_SHAPE,
@@ -53396,6 +59089,11 @@ impl WriteThrough for wordprocessing::TopBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::TOP_BORDER_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::top_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::TOP_BORDER_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -53479,6 +59177,16 @@ impl WriteThrough for wordprocessing::TopLeftBottomRightDiagonalBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TOP_LEFT_BOTTOM_RIGHT_DIAGONAL_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::top_left_bottom_right_diagonal_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TOP_LEFT_BOTTOM_RIGHT_DIAGONAL_BORDER_SHAPE,
@@ -53562,6 +59270,15 @@ impl WriteThrough for wordprocessing::TopMarginForHTMLDiv {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TOP_MARGIN_FOR_HTML_DIV_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::top_margin_for_html_div(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TOP_MARGIN_FOR_HTML_DIV_SHAPE,
@@ -53637,6 +59354,16 @@ impl WriteThrough for wordprocessing::TopRightBottomLeftDiagonalBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TOP_RIGHT_BOTTOM_LEFT_DIAGONAL_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::top_right_bottom_left_diagonal_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TOP_RIGHT_BOTTOM_LEFT_DIAGONAL_BORDER_SHAPE,
@@ -53720,6 +59447,15 @@ impl WriteThrough for wordprocessing::TrackRevisionsToDocument {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TRACK_REVISIONS_TO_DOCUMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::track_revisions_to_document(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TRACK_REVISIONS_TO_DOCUMENT_SHAPE,
@@ -53905,6 +59641,19 @@ impl WriteThrough for wordprocessing::TreatBackslashQuotationDelimiterAsTwoQuota
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TREAT_BACKSLASH_QUOTATION_DELIMITER_AS_TWO_QUOTATION_MARKS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::treat_backslash_quotation_delimiter_as_two_quotation_marks(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TREAT_BACKSLASH_QUOTATION_DELIMITER_AS_TWO_QUOTATION_MARKS_SHAPE,
@@ -53975,6 +59724,15 @@ impl WriteThrough for wordprocessing::TruncateFontHeightsLikeWP6 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::TRUNCATE_FONT_HEIGHTS_LIKE_WP6_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::truncate_font_heights_like_wp6(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::TRUNCATE_FONT_HEIGHTS_LIKE_WP6_SHAPE,
@@ -54050,6 +59808,15 @@ impl WriteThrough for wordprocessing::UDLConnectionString {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::UDL_CONNECTION_STRING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::udl_connection_string(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::UDL_CONNECTION_STRING_SHAPE,
@@ -54125,6 +59892,11 @@ impl WriteThrough for wordprocessing::Underline {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::UNDERLINE_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::underline(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::UNDERLINE_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.attribute(1, &self.color);
@@ -54200,6 +59972,15 @@ impl WriteThrough for wordprocessing::UnderlineAllTrailingSpaces {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::UNDERLINE_ALL_TRAILING_SPACES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::underline_all_trailing_spaces(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::UNDERLINE_ALL_TRAILING_SPACES_SHAPE,
@@ -54275,6 +60056,18 @@ impl WriteThrough for wordprocessing::UnderlineFollowingCharacterFollowingNumber
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::UNDERLINE_FOLLOWING_CHARACTER_FOLLOWING_NUMBERING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::underline_following_character_following_numbering(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::UNDERLINE_FOLLOWING_CHARACTER_FOLLOWING_NUMBERING_SHAPE,
@@ -54350,6 +60143,11 @@ impl WriteThrough for wordprocessing::UniqueID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::UNIQUE_ID_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::unique_id(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(out, &wordprocessing::UNIQUE_ID_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -54421,6 +60219,15 @@ impl WriteThrough for wordprocessing::UniqueValueForRecord {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::UNIQUE_VALUE_FOR_RECORD_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::unique_value_for_record(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::UNIQUE_VALUE_FOR_RECORD_SHAPE,
@@ -54496,6 +60303,15 @@ impl WriteThrough for wordprocessing::UpgradeDocumentOnOpen {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::UPGRADE_DOCUMENT_ON_OPEN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::upgrade_document_on_open(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &wordprocessing::UPGRADE_DOCUMENT_ON_OPEN_SHAPE,
@@ -54570,6 +60386,16 @@ impl WriteThrough for wordprocessing::UseANSIKerningPairsFromFonts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_ANSI_KERNING_PAIRS_FROM_FONTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_ansi_kerning_pairs_from_fonts(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_ANSI_KERNING_PAIRS_FROM_FONTS_SHAPE,
@@ -54645,6 +60471,16 @@ impl WriteThrough for wordprocessing::UseAltKinsokuLineBreakRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_ALT_KINSOKU_LINE_BREAK_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_alt_kinsoku_line_break_rules(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_ALT_KINSOKU_LINE_BREAK_RULES_SHAPE,
@@ -54720,6 +60556,19 @@ impl WriteThrough for wordprocessing::UseCachedParagraphInformationForColumnBala
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_CACHED_PARAGRAPH_INFORMATION_FOR_COLUMN_BALANCING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_cached_paragraph_information_for_column_balancing(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_CACHED_PARAGRAPH_INFORMATION_FOR_COLUMN_BALANCING_SHAPE,
@@ -54795,6 +60644,16 @@ impl WriteThrough for wordprocessing::UseComplexScriptFormattingOnRun {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_COMPLEX_SCRIPT_FORMATTING_ON_RUN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_complex_script_formatting_on_run(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_COMPLEX_SCRIPT_FORMATTING_ON_RUN_SHAPE,
@@ -54870,6 +60729,16 @@ impl WriteThrough for wordprocessing::UseCountryBasedAddressFieldOrdering {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_COUNTRY_BASED_ADDRESS_FIELD_ORDERING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_country_based_address_field_ordering(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_COUNTRY_BASED_ADDRESS_FIELD_ORDERING_SHAPE,
@@ -54945,6 +60814,18 @@ impl WriteThrough for wordprocessing::UseIncorrectInterCharacterSpacingRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_INCORRECT_INTER_CHARACTER_SPACING_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::use_incorrect_inter_character_spacing_rules(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_INCORRECT_INTER_CHARACTER_SPACING_RULES_SHAPE,
@@ -55020,6 +60901,18 @@ impl WriteThrough for wordprocessing::UseLeftRightIndentsAsInsideOutsideIndents 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_LEFT_RIGHT_INDENTS_AS_INSIDE_OUTSIDE_INDENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::use_left_right_indents_as_inside_outside_indents(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_LEFT_RIGHT_INDENTS_AS_INSIDE_OUTSIDE_INDENTS_SHAPE,
@@ -55095,6 +60988,15 @@ impl WriteThrough for wordprocessing::UseNormalStyleForList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_NORMAL_STYLE_FOR_LIST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::use_normal_style_for_list(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_NORMAL_STYLE_FOR_LIST_SHAPE,
@@ -55170,6 +61072,16 @@ impl WriteThrough for wordprocessing::UsePrinterMetricsToDisplayDocuments {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_PRINTER_METRICS_TO_DISPLAY_DOCUMENTS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_printer_metrics_to_display_documents(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_PRINTER_METRICS_TO_DISPLAY_DOCUMENTS_SHAPE,
@@ -55245,6 +61157,16 @@ impl WriteThrough for wordprocessing::UseSingleBorderforContiguousCells {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_SINGLE_BORDERFOR_CONTIGUOUS_CELLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_single_borderfor_contiguous_cells(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_SINGLE_BORDERFOR_CONTIGUOUS_CELLS_SHAPE,
@@ -55320,6 +61242,16 @@ impl WriteThrough for wordprocessing::UseSpecificSmallCapsAlgorithm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_SPECIFIC_SMALL_CAPS_ALGORITHM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::use_specific_small_caps_algorithm(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_SPECIFIC_SMALL_CAPS_ALGORITHM_SHAPE,
@@ -55395,6 +61327,15 @@ impl WriteThrough for wordprocessing::UseSpecificSpaceWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_SPECIFIC_SPACE_WIDTH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::use_specific_space_width(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_SPECIFIC_SPACE_WIDTH_SHAPE,
@@ -55470,6 +61411,15 @@ impl WriteThrough for wordprocessing::UseStaticTextLeading {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_STATIC_TEXT_LEADING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::use_static_text_leading(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_STATIC_TEXT_LEADING_SHAPE,
@@ -55545,6 +61495,15 @@ impl WriteThrough for wordprocessing::UseWord2002TableStyleRules {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::USE_WORD2002TABLE_STYLE_RULES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::use_word2002table_style_rules(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::USE_WORD2002TABLE_STYLE_RULES_SHAPE,
@@ -55620,6 +61579,16 @@ impl WriteThrough for wordprocessing::UtilizeVMLWhenSavingAsWebPage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::UTILIZE_VML_WHEN_SAVING_AS_WEB_PAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::utilize_vml_when_saving_as_web_page(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::UTILIZE_VML_WHEN_SAVING_AS_WEB_PAGE_SHAPE,
@@ -55703,6 +61672,11 @@ impl WriteThrough for wordprocessing::VMLObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::VML_OBJECT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::vml_object(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::VML_OBJECT_SHAPE, &self.unknown);
         through.attribute(0, &self.anchor_id);
@@ -55778,6 +61752,16 @@ impl WriteThrough for wordprocessing::VerticalCharacterAlignmentOnLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::VERTICAL_CHARACTER_ALIGNMENT_ON_LINE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::vertical_character_alignment_on_line(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::VERTICAL_CHARACTER_ALIGNMENT_ON_LINE_SHAPE,
@@ -55853,6 +61837,15 @@ impl WriteThrough for wordprocessing::VerticallyMergedCell {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::VERTICALLY_MERGED_CELL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::vertically_merged_cell(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::VERTICALLY_MERGED_CELL_SHAPE,
@@ -55928,6 +61921,16 @@ impl WriteThrough for wordprocessing::VerticallyMergedSplitTableCells {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::VERTICALLY_MERGED_SPLIT_TABLE_CELLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::vertically_merged_split_table_cells(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::VERTICALLY_MERGED_SPLIT_TABLE_CELLS_SHAPE,
@@ -56008,6 +62011,16 @@ impl WriteThrough for wordprocessing::VerticallyRaisedOrLoweredText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::VERTICALLY_RAISED_OR_LOWERED_TEXT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::vertically_raised_or_lowered_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::VERTICALLY_RAISED_OR_LOWERED_TEXT_SHAPE,
@@ -56083,6 +62096,16 @@ impl WriteThrough for wordprocessing::ViewMergedDataWithinDocument {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::VIEW_MERGED_DATA_WITHIN_DOCUMENT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                wordprocessing::write::view_merged_data_within_document(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::VIEW_MERGED_DATA_WITHIN_DOCUMENT_SHAPE,
@@ -56158,6 +62181,15 @@ impl WriteThrough for wordprocessing::VisibilityOfAnnotationTypes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::VISIBILITY_OF_ANNOTATION_TYPES_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::visibility_of_annotation_types(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::VISIBILITY_OF_ANNOTATION_TYPES_SHAPE,
@@ -56237,6 +62269,15 @@ impl WriteThrough for wordprocessing::VisuallyRightToLeftTable {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &wordprocessing::VISUALLY_RIGHT_TO_LEFT_TABLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = wordprocessing::write::visually_right_to_left_table(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &wordprocessing::VISUALLY_RIGHT_TO_LEFT_TABLE_SHAPE,
@@ -56656,6 +62697,11 @@ impl WriteThrough for wordprocessing::WebHiddenText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::WEB_HIDDEN_TEXT_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::web_hidden_text(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::WEB_HIDDEN_TEXT_SHAPE, &self.unknown);
         through.attribute(0, &self.val);
@@ -56768,6 +62814,12 @@ impl WriteThrough for wordprocessing::WebPageSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::WEB_PAGE_SETTINGS_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::web_page_settings(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::WEB_PAGE_SETTINGS_SHAPE, &self.unknown);
         through.child(&self.nested_frameset_definition, ctx)?;
@@ -56852,6 +62904,12 @@ impl WriteThrough for wordprocessing::WriteProtection {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &wordprocessing::WRITE_PROTECTION_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::write_protection(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::WRITE_PROTECTION_SHAPE, &self.unknown);
         through.attribute(0, &self.recommended);
@@ -56940,6 +62998,11 @@ impl WriteThrough for wordprocessing::XMLMapping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &wordprocessing::XML_MAPPING_SHAPE, &self.unknown);
+        if converted {
+            let element = wordprocessing::write::xml_mapping(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &wordprocessing::XML_MAPPING_SHAPE, &self.unknown);
         through.attribute(0, &self.prefix_mappings);

@@ -5,16 +5,35 @@
 //! calls them with its own root.
 
 use officekit_markup::{Events, Item};
+#[cfg(feature = "strict")]
+use officekit_markup::Tag;
+#[cfg(feature = "strict")]
+use officekit_strict::StrictRules;
+#[cfg(feature = "strict")]
+use officekit_strict::traversal::{Unchanged, WriteThrough};
 use officekit_xml::conformance::ConformanceClass;
-use officekit_xml::element::{Document, Element, XmlError};
+#[cfg(all(feature = "strict", not(feature = "transitional")))]
+use officekit_xml::element::{Attribute, Node};
+use officekit_xml::element::{Document, Element, PartFrame, XmlError};
 use officekit_xml::error::WriteError;
 use officekit_xml::mc::Processed;
+#[cfg(all(feature = "strict", not(feature = "transitional")))]
+use officekit_xml::name::NamespaceId;
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{DECLARATION, OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::parse::utf8_of;
+use officekit_xml::stream::buffer::PartBuffer;
+#[cfg(feature = "strict")]
+use officekit_xml::stream::class::ClassRules;
+#[cfg(all(feature = "strict", not(feature = "transitional")))]
+use officekit_xml::stream::class::Site;
 use officekit_xml::stream::reader::PartReader;
-use officekit_xml::write::WriteOptions;
+use officekit_xml::stream::writer::PartWriter;
+use officekit_xml::write::{Layout, WriteOptions, clean_namespace_bytes};
+
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use crate::transitional::TransitionalRules;
 
 #[cfg(test)]
 mod tests;
@@ -24,8 +43,9 @@ mod tests;
 ///
 /// A root names its tag in [`LOCAL_NAME`](Self::LOCAL_NAME), reads itself from a generic element
 /// with [`from_tree`](Self::from_tree) or from the part's events with
-/// [`from_part`](Self::from_part), and writes itself as one in a class with
-/// [`to_tree`](Self::to_tree).
+/// [`from_part`](Self::from_part), writes itself as one in a class with
+/// [`to_tree`](Self::to_tree), and writes itself into a part writer in a class with
+/// [`write_part`](Self::write_part).
 ///
 /// ```
 /// use officekit_xml::packaging::package::{OpenOptions, Package};
@@ -110,6 +130,99 @@ pub trait PartRoot: Sized {
     /// [`WriteError::NotInClass`] naming the first element `class` has no
     /// form for.
     fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError>;
+
+    /// Write the root into `out` in `class`, as the compact layout writes [`to_tree`](Self::to_tree)'s
+    /// element with every namespace declared in the class's URI. This default writes that
+    /// element; a generated root writes its typed tree straight to `out`, with no tree.
+    ///
+    /// # Errors
+    ///
+    /// [`WriteError::NotInClass`] naming the first content `class` has no form for, and
+    /// [`WriteError::Io`] when the sink fails.
+    fn write_part(
+        &self,
+        class: ConformanceClass,
+        out: &mut PartWriter<'_>,
+    ) -> Result<(), WriteError> {
+        let mut tree = self.to_tree(class)?;
+        tree.set_class(class);
+        out.element(&tree).map_err(WriteError::from)
+    }
+}
+
+/// The rules of a class whose feature is off: the shared writer's nodes, every namespace
+/// declared in the class's URI.
+#[cfg(all(feature = "strict", not(feature = "transitional")))]
+struct SharedRules(ConformanceClass);
+
+#[cfg(all(feature = "strict", not(feature = "transitional")))]
+impl ClassRules for SharedRules {
+    fn convert(&mut self, mut element: Element, _site: &Site<'_>) -> Result<Vec<Node>, WriteError> {
+        element.set_class(self.0);
+        Ok(vec![Node::Element(element)])
+    }
+
+    fn converts(
+        &self,
+        _tag: (Option<NamespaceId>, &str),
+        _declared: &[(Option<NamespaceId>, &'static str)],
+        _unknown: &[Attribute],
+    ) -> bool {
+        false
+    }
+
+    fn open(&mut self, element: &mut Element, _site: &Site<'_>) -> Result<(), WriteError> {
+        element.set_class(self.0);
+        Ok(())
+    }
+}
+
+/// Write a typed root into `out` in `class`, straight from its typed tree.
+///
+/// The class's rules are set on `out` while it is written, then those set before are put back.
+/// `conformance` names the attribute a main part's root says its class in. It is what the generated roots' [`PartRoot::write_part`] calls.
+///
+/// # Errors
+///
+/// [`WriteError::NotInClass`] naming the first content `class` has no form for, and
+/// [`WriteError::Io`] when the sink fails.
+#[cfg(feature = "strict")]
+pub fn write_through<R>(
+    root: &R,
+    class: ConformanceClass,
+    conformance: Option<Tag>,
+    out: &mut PartWriter<'_>,
+) -> Result<(), WriteError>
+where
+    R: WriteThrough,
+{
+    let previous = out.set_rules(Some(class_rules(class, conformance)));
+    let written = root.write_through(&mut Unchanged::default(), out);
+    out.set_rules(previous);
+    written.map_err(WriteError::from)
+}
+
+/// The rules of `class`.
+#[cfg(feature = "strict")]
+fn class_rules(class: ConformanceClass, conformance: Option<Tag>) -> Box<dyn ClassRules> {
+    if class == ConformanceClass::Strict {
+        Box::new(StrictRules::new(conformance))
+    } else {
+        transitional_rules(conformance)
+    }
+}
+
+/// The rules of the Transitional class.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+fn transitional_rules(conformance: Option<Tag>) -> Box<dyn ClassRules> {
+    Box::new(TransitionalRules::new(conformance))
+}
+
+/// The rules of the Transitional class with its feature off: the shared writer's nodes, every
+/// namespace declared in the Transitional URI.
+#[cfg(all(feature = "strict", not(feature = "transitional")))]
+fn transitional_rules(_conformance: Option<Tag>) -> Box<dyn ClassRules> {
+    Box::new(SharedRules(ConformanceClass::Transitional))
 }
 
 /// Any part's typed root by part name; the root's tag must be
@@ -168,12 +281,80 @@ where
 /// class's URI; the part's XML declaration, prolog, and epilog are kept
 /// when it has them.
 ///
+/// The compact layout writes the root through [`PartRoot::write_part`] into a buffer, and
+/// the namespace cleanup runs on its bytes; the pretty layout writes the root's tree.
+///
 /// # Errors
 ///
 /// [`PackageError::Write`] when the root holds content `class` has no
 /// form for, and nothing is written; the errors of [`Package::part_frame`] and
-/// [`Package::store_tree`].
+/// [`Package::set_part_bytes`].
 pub fn store<R>(
+    package: &mut Package,
+    name: &PartName,
+    content_type: &str,
+    root: &R,
+    class: ConformanceClass,
+    options: WriteOptions,
+) -> Result<(), PackageError>
+where
+    R: PartRoot,
+{
+    if options.layout != Layout::Compact {
+        return store_tree(package, name, content_type, root, class, options);
+    }
+    let frame = package.part_frame(name);
+    let mut buffer = PartBuffer::default();
+    let mut out = PartWriter::new(&mut buffer, Layout::Compact);
+    write_part(
+        &mut out,
+        frame.as_ref().ok().and_then(Option::as_ref),
+        root,
+        class,
+    )
+    .map_err(|error| PackageError::Write {
+        error,
+        part: name.clone(),
+    })?;
+    frame?;
+    let mut bytes = buffer.into_bytes();
+    if options.namespace_cleanup {
+        clean_namespace_bytes(&mut bytes);
+    }
+    package.set_part_bytes(name, content_type, &bytes)
+}
+
+/// Write a part into `out`: `frame`'s declaration and prolog, or the declaration Office writes
+/// with no frame, then the root in `class`, then `frame`'s epilog.
+fn write_part<R>(
+    out: &mut PartWriter<'_>,
+    frame: Option<&PartFrame>,
+    root: &R,
+    class: ConformanceClass,
+) -> Result<(), WriteError>
+where
+    R: PartRoot,
+{
+    if let Some(found) = frame {
+        if let Some(declaration) = &found.declaration {
+            out.raw(format!("<?{declaration}?>").as_bytes())?;
+        }
+        for node in &found.prolog {
+            out.node(node)?;
+        }
+    } else {
+        out.raw(format!("<?{DECLARATION}?>").as_bytes())?;
+        out.text("\r\n")?;
+    }
+    root.write_part(class, out)?;
+    for node in frame.map_or(&[][..], |found| found.epilog.as_slice()) {
+        out.node(node)?;
+    }
+    Ok(())
+}
+
+/// Store a typed root through its tree, as [`store`] describes.
+fn store_tree<R>(
     package: &mut Package,
     name: &PartName,
     content_type: &str,

@@ -9,6 +9,7 @@ use std::path::PathBuf;
 use anyhow::{Context as _, Result, bail};
 
 use super::{Definition, Joined, Kind, PARTS_PATH, PartType, RELATIONSHIP_TYPE_PATH, Root};
+use crate::generate_schema::emit::markup::Source;
 use crate::generate_schema::emit::markup::archive::{self, MirrorArm};
 use crate::generate_schema::emit::markup::names;
 use crate::generate_schema::emit::markup::render as markup_render;
@@ -97,8 +98,6 @@ const TO_TREE_BODY: &str = "        #[cfg(feature = \"strict\")]
         let transitional = |root: &Self| Ok(shared_tree(root));
         super::tree_in_class(self, class, strict, transitional)
     }
-}
-
 ";
 
 /// The helper every typed root's `to_tree` calls, the last item of `lib.rs`.
@@ -416,6 +415,8 @@ struct Dispatch<'closure> {
 struct RootText {
     /// Whether `PartModel` holds it boxed.
     boxed: bool,
+    /// The namespace id and the name of the attribute a main part's root says its class in.
+    conformance: Option<(Option<u8>, String)>,
     /// The function that reads and writes it, `document`.
     function: String,
     local: String,
@@ -849,6 +850,41 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
         "Result<Element, WriteError>",
     ));
     out.push_str(TO_TREE_BODY);
+    out.push('\n');
+    out.push_str("    ");
+    out.push_str(STRICT_ONLY);
+    out.push_str(&layout::signature(
+        4,
+        "fn write_part",
+        &[
+            "&self".to_owned(),
+            "class: ConformanceClass".to_owned(),
+            "out: &mut PartWriter<'_>".to_owned(),
+        ],
+        "Result<(), WriteError>",
+    ));
+    let conformance = root.conformance.as_ref().map_or_else(
+        || "None".to_owned(),
+        |(namespace, local)| {
+            let id = namespace.map_or_else(|| "None".to_owned(), |id| format!("Some({id})"));
+            format!("Some(({id}, {}))", layout::string(local))
+        },
+    );
+    layout::line(
+        "        ",
+        &Expr::call(
+            "part_root::write_through",
+            vec![
+                Expr::atom("self"),
+                Expr::atom("class"),
+                Expr::Atom(conformance),
+                Expr::atom("out"),
+            ],
+        ),
+        "",
+        &mut out,
+    );
+    out.push_str("    }\n}\n\n");
     out.push_str(SHARED_WRITER);
     out.push_str(&layout::signature(
         0,
@@ -1425,8 +1461,17 @@ fn root_text(
     let prefix = rows
         .get(usize::from(namespace))
         .map_or("", |row| row.prefix.as_str());
+    let conformance = matches!(node.key.source, Source::Xsd(_))
+        .then(|| {
+            node.attributes
+                .iter()
+                .find(|attribute| attribute.local == "conformance")
+                .map(|attribute| (attribute.namespace, attribute.local.clone()))
+        })
+        .flatten();
     Ok(RootText {
         boxed: boxed.contains(&root.node),
+        conformance,
         function,
         local: node.key.tag.local.clone(),
         module: module.name.clone(),
@@ -1499,7 +1544,7 @@ fn uses(root: Option<&RootText>) -> String {
             known.module
         ),
         Some(known) => format!(
-            "use crate::parts::part_root::{{self, PartRoot}};\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_markup::Item;\nuse officekit_markup::{};\n{STRICT_ONLY}use officekit_strict::Strict as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::{{OpenOptions, Package}};\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::parts::part_root::{{self, PartRoot}};\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_markup::Item;\nuse officekit_markup::{};\n{STRICT_ONLY}use officekit_strict::Strict as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::{{OpenOptions, Package}};\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\n{STRICT_ONLY}use officekit_xml::stream::writer::PartWriter;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
     }

@@ -265,6 +265,16 @@ impl WriteThrough for office_drawing_2017_03_chart::DataDisplayOptions16 {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_03_chart::DATA_DISPLAY_OPTIONS16_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_drawing_2017_03_chart::write::data_display_options16(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_03_chart::DATA_DISPLAY_OPTIONS16_SHAPE,
@@ -340,6 +350,15 @@ impl WriteThrough for office_drawing_2017_03_chart::DispNaAsBlank {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_03_chart::DISP_NA_AS_BLANK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_drawing_2017_03_chart::write::disp_na_as_blank(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_03_chart::DISP_NA_AS_BLANK_SHAPE,

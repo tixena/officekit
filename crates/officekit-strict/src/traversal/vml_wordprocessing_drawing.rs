@@ -261,6 +261,16 @@ impl WriteThrough for vml_wordprocessing_drawing::AnchorLocationIsLocked {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_wordprocessing_drawing::ANCHOR_LOCATION_IS_LOCKED_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                vml_wordprocessing_drawing::write::anchor_location_is_locked(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::ANCHOR_LOCATION_IS_LOCKED_SHAPE,
@@ -335,6 +345,15 @@ impl WriteThrough for vml_wordprocessing_drawing::BottomBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_wordprocessing_drawing::BOTTOM_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_wordprocessing_drawing::write::bottom_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::BOTTOM_BORDER_SHAPE,
@@ -412,6 +431,15 @@ impl WriteThrough for vml_wordprocessing_drawing::LeftBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_wordprocessing_drawing::LEFT_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_wordprocessing_drawing::write::left_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::LEFT_BORDER_SHAPE,
@@ -489,6 +517,15 @@ impl WriteThrough for vml_wordprocessing_drawing::RightBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_wordprocessing_drawing::RIGHT_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_wordprocessing_drawing::write::right_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::RIGHT_BORDER_SHAPE,
@@ -566,6 +603,15 @@ impl WriteThrough for vml_wordprocessing_drawing::TextWrapping {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_wordprocessing_drawing::TEXT_WRAPPING_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_wordprocessing_drawing::write::text_wrapping(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::TEXT_WRAPPING_SHAPE,
@@ -644,6 +690,15 @@ impl WriteThrough for vml_wordprocessing_drawing::TopBorder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &vml_wordprocessing_drawing::TOP_BORDER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = vml_wordprocessing_drawing::write::top_border(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::TOP_BORDER_SHAPE,

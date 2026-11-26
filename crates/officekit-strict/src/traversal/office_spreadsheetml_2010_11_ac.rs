@@ -261,6 +261,15 @@ impl WriteThrough for office_spreadsheetml_2010_11_ac::AbsPath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_spreadsheetml_2010_11_ac::ABS_PATH_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_spreadsheetml_2010_11_ac::write::abs_path(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2010_11_ac::ABS_PATH_SHAPE,

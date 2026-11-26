@@ -265,6 +265,15 @@ impl WriteThrough for office_powerpoint_2022_03_main::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2022_03_main::EXT_LST_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2022_03_main::write::ext_lst(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2022_03_main::EXT_LST_SHAPE,
@@ -344,6 +353,15 @@ impl WriteThrough for office_powerpoint_2022_03_main::Instance {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2022_03_main::INSTANCE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2022_03_main::write::instance(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2022_03_main::INSTANCE_SHAPE,
@@ -425,6 +443,15 @@ impl WriteThrough for office_powerpoint_2022_03_main::Reactions {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2022_03_main::REACTIONS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2022_03_main::write::reactions(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2022_03_main::REACTIONS_SHAPE,
@@ -504,6 +531,15 @@ impl WriteThrough for office_powerpoint_2022_03_main::Rxn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_powerpoint_2022_03_main::RXN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_powerpoint_2022_03_main::write::rxn(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2022_03_main::RXN_SHAPE,

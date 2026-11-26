@@ -265,6 +265,15 @@ impl WriteThrough for office_2009_07_customui::Backstage {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BACKSTAGE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::backstage(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BACKSTAGE_SHAPE,
@@ -721,6 +730,15 @@ impl WriteThrough for office_2009_07_customui::BottomItems {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BOTTOM_ITEMS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::bottom_items(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BOTTOM_ITEMS_SHAPE,
@@ -800,6 +818,12 @@ impl WriteThrough for office_2009_07_customui::BoxBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_2009_07_customui::BOX_BOX_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::box_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::BOX_BOX_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -1084,6 +1108,18 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageFastCommandButton 
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::button_backstage_fast_command_button(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE,
@@ -1179,6 +1215,16 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageGroupButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::button_backstage_group_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE,
@@ -1275,6 +1321,16 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageMenuButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::button_backstage_menu_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE,
@@ -1367,6 +1423,16 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageRegularButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::button_backstage_regular_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE,
@@ -1461,6 +1527,15 @@ impl WriteThrough for office_2009_07_customui::ButtonButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::button_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BUTTON_SHAPE,
@@ -1567,6 +1642,15 @@ impl WriteThrough for office_2009_07_customui::ButtonButtonRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_BUTTON_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::button_button_regular(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BUTTON_REGULAR_SHAPE,
@@ -1675,6 +1759,15 @@ impl WriteThrough for office_2009_07_customui::ButtonGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_GROUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::button_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_GROUP_SHAPE,
@@ -1919,6 +2012,15 @@ impl WriteThrough for office_2009_07_customui::ButtonVisibleButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BUTTON_VISIBLE_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::button_visible_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_VISIBLE_BUTTON_SHAPE,
@@ -2026,6 +2128,18 @@ impl WriteThrough for office_2009_07_customui::CategoryTaskFormGroupCategory {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::category_task_form_group_category(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE,
@@ -2118,6 +2232,16 @@ impl WriteThrough for office_2009_07_customui::CategoryTaskGroupCategory {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CATEGORY_TASK_GROUP_CATEGORY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::category_task_group_category(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CATEGORY_TASK_GROUP_CATEGORY_SHAPE,
@@ -2205,6 +2329,16 @@ impl WriteThrough for office_2009_07_customui::CheckBoxBackstageCheckBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::check_box_backstage_check_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE,
@@ -2299,6 +2433,18 @@ impl WriteThrough for office_2009_07_customui::CheckBoxBackstageMenuCheckBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::check_box_backstage_menu_check_box(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE,
@@ -2388,6 +2534,15 @@ impl WriteThrough for office_2009_07_customui::CheckBoxCheckBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CHECK_BOX_CHECK_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::check_box_check_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CHECK_BOX_CHECK_BOX_SHAPE,
@@ -2491,6 +2646,16 @@ impl WriteThrough for office_2009_07_customui::ComboBoxBackstageComboBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::combo_box_backstage_combo_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE,
@@ -2589,6 +2754,15 @@ impl WriteThrough for office_2009_07_customui::ComboBoxComboBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::COMBO_BOX_COMBO_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::combo_box_combo_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::COMBO_BOX_COMBO_BOX_SHAPE,
@@ -2703,6 +2877,12 @@ impl WriteThrough for office_2009_07_customui::Command {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_2009_07_customui::COMMAND_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::command(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::COMMAND_SHAPE, &self.unknown);
         through.attribute(0, &self.on_action);
@@ -2782,6 +2962,12 @@ impl WriteThrough for office_2009_07_customui::Commands {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_2009_07_customui::COMMANDS_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::commands(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::COMMANDS_SHAPE, &self.unknown);
         through.child(&self.command, ctx)?;
@@ -2858,6 +3044,15 @@ impl WriteThrough for office_2009_07_customui::ContextMenu {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CONTEXT_MENU_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::context_menu(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTEXT_MENU_SHAPE,
@@ -3105,6 +3300,15 @@ impl WriteThrough for office_2009_07_customui::ContextMenus {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CONTEXT_MENUS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::context_menus(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTEXT_MENUS_SHAPE,
@@ -3184,6 +3388,15 @@ impl WriteThrough for office_2009_07_customui::ContextualTabs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CONTEXTUAL_TABS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::contextual_tabs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTEXTUAL_TABS_SHAPE,
@@ -3259,6 +3472,15 @@ impl WriteThrough for office_2009_07_customui::ControlControlClone {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CONTROL_CONTROL_CLONE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::control_control_clone(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_SHAPE,
@@ -3363,6 +3585,16 @@ impl WriteThrough for office_2009_07_customui::ControlControlCloneQat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CONTROL_CONTROL_CLONE_QAT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::control_control_clone_qat(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_QAT_SHAPE,
@@ -3467,6 +3699,16 @@ impl WriteThrough for office_2009_07_customui::ControlControlCloneRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CONTROL_CONTROL_CLONE_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::control_control_clone_regular(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_REGULAR_SHAPE,
@@ -3577,6 +3819,15 @@ impl WriteThrough for office_2009_07_customui::CustomUI {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::CUSTOM_UI_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::custom_ui(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CUSTOM_UI_SHAPE,
@@ -3662,6 +3913,15 @@ impl WriteThrough for office_2009_07_customui::DialogBoxLauncher {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::DIALOG_BOX_LAUNCHER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::dialog_box_launcher(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DIALOG_BOX_LAUNCHER_SHAPE,
@@ -3741,6 +4001,15 @@ impl WriteThrough for office_2009_07_customui::DocumentControls {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::DOCUMENT_CONTROLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::document_controls(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DOCUMENT_CONTROLS_SHAPE,
@@ -3821,6 +4090,16 @@ impl WriteThrough for office_2009_07_customui::DropDownBackstageDropDown {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::drop_down_backstage_drop_down(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE,
@@ -3926,6 +4205,16 @@ impl WriteThrough for office_2009_07_customui::DropDownDropDownRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::drop_down_drop_down_regular(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE,
@@ -4041,6 +4330,16 @@ impl WriteThrough for office_2009_07_customui::DynamicMenuDynamicMenu {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::dynamic_menu_dynamic_menu(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE,
@@ -4148,6 +4447,18 @@ impl WriteThrough for office_2009_07_customui::DynamicMenuDynamicMenuRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::dynamic_menu_dynamic_menu_regular(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE,
@@ -4253,6 +4564,16 @@ impl WriteThrough for office_2009_07_customui::EditBoxBackstageEditBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::edit_box_backstage_edit_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE,
@@ -4344,6 +4665,15 @@ impl WriteThrough for office_2009_07_customui::EditBoxEditBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::EDIT_BOX_EDIT_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::edit_box_edit_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::EDIT_BOX_EDIT_BOX_SHAPE,
@@ -4453,6 +4783,15 @@ impl WriteThrough for office_2009_07_customui::FirstColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::FIRST_COLUMN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::first_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::FIRST_COLUMN_SHAPE,
@@ -4535,6 +4874,15 @@ impl WriteThrough for office_2009_07_customui::GalleryGallery {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::GALLERY_GALLERY_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::gallery_gallery(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GALLERY_GALLERY_SHAPE,
@@ -4669,6 +5017,16 @@ impl WriteThrough for office_2009_07_customui::GalleryGalleryRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::GALLERY_GALLERY_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::gallery_gallery_regular(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GALLERY_GALLERY_REGULAR_SHAPE,
@@ -4802,6 +5160,15 @@ impl WriteThrough for office_2009_07_customui::GroupBackstageGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::GROUP_BACKSTAGE_GROUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::group_backstage_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GROUP_BACKSTAGE_GROUP_SHAPE,
@@ -4901,6 +5268,15 @@ impl WriteThrough for office_2009_07_customui::GroupBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::GROUP_BOX_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::group_box(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GROUP_BOX_SHAPE,
@@ -5379,6 +5755,15 @@ impl WriteThrough for office_2009_07_customui::GroupGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::GROUP_GROUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::group_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GROUP_GROUP_SHAPE,
@@ -5478,6 +5863,15 @@ impl WriteThrough for office_2009_07_customui::Hyperlink {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::HYPERLINK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::hyperlink(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::HYPERLINK_SHAPE,
@@ -5575,6 +5969,15 @@ impl WriteThrough for office_2009_07_customui::ImageControl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::IMAGE_CONTROL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::image_control(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::IMAGE_CONTROL_SHAPE,
@@ -5661,6 +6064,15 @@ impl WriteThrough for office_2009_07_customui::ItemBackstageItem {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::ITEM_BACKSTAGE_ITEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::item_backstage_item(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_2009_07_customui::ITEM_BACKSTAGE_ITEM_SHAPE,
@@ -5735,6 +6147,15 @@ impl WriteThrough for office_2009_07_customui::ItemItem {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::ITEM_ITEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::item_item(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::ITEM_ITEM_SHAPE,
@@ -5815,6 +6236,18 @@ impl WriteThrough for office_2009_07_customui::LabelControlBackstageLabelControl
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::label_control_backstage_label_control(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE,
@@ -5901,6 +6334,16 @@ impl WriteThrough for office_2009_07_customui::LabelControlLabelControl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::LABEL_CONTROL_LABEL_CONTROL_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::label_control_label_control(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::LABEL_CONTROL_LABEL_CONTROL_SHAPE,
@@ -5999,6 +6442,15 @@ impl WriteThrough for office_2009_07_customui::LayoutContainer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::LAYOUT_CONTAINER_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::layout_container(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::LAYOUT_CONTAINER_SHAPE,
@@ -6084,6 +6536,16 @@ impl WriteThrough for office_2009_07_customui::MenuBackstagePrimaryMenu {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::menu_backstage_primary_menu(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE,
@@ -6181,6 +6643,16 @@ impl WriteThrough for office_2009_07_customui::MenuBackstageSubMenu {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_BACKSTAGE_SUB_MENU_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::menu_backstage_sub_menu(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_BACKSTAGE_SUB_MENU_SHAPE,
@@ -6443,6 +6915,15 @@ impl WriteThrough for office_2009_07_customui::MenuGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_GROUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::menu_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_GROUP_SHAPE,
@@ -6528,6 +7009,15 @@ impl WriteThrough for office_2009_07_customui::MenuMenu {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_MENU_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::menu_menu(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_SHAPE,
@@ -6639,6 +7129,15 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_MENU_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::menu_menu_regular(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_REGULAR_SHAPE,
@@ -6748,6 +7247,15 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRoot {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_MENU_ROOT_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::menu_menu_root(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_ROOT_SHAPE,
@@ -6830,6 +7338,15 @@ impl WriteThrough for office_2009_07_customui::MenuMenuWithTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_MENU_WITH_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::menu_menu_with_title(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_WITH_TITLE_SHAPE,
@@ -6935,6 +7452,16 @@ impl WriteThrough for office_2009_07_customui::MenuSeparatorMenuSeparator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::menu_separator_menu_separator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE,
@@ -7018,6 +7545,18 @@ impl WriteThrough for office_2009_07_customui::MenuSeparatorMenuSeparatorNoTitle
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::menu_separator_menu_separator_no_title(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE,
@@ -7270,6 +7809,15 @@ impl WriteThrough for office_2009_07_customui::PrimaryItem {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::PRIMARY_ITEM_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::primary_item(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::PRIMARY_ITEM_SHAPE,
@@ -7448,6 +7996,11 @@ impl WriteThrough for office_2009_07_customui::Qat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_2009_07_customui::QAT_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::qat(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::QAT_SHAPE, &self.unknown);
         through.child(&self.shared_controls, ctx)?;
@@ -7646,6 +8199,15 @@ impl WriteThrough for office_2009_07_customui::RadioButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::RADIO_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::radio_button(self, out.scope());
+            return out.converted(element);
+        }
         let through = super::Through::new(
             out,
             &office_2009_07_customui::RADIO_BUTTON_SHAPE,
@@ -7724,6 +8286,15 @@ impl WriteThrough for office_2009_07_customui::RadioGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::RADIO_GROUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::radio_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::RADIO_GROUP_SHAPE,
@@ -7821,6 +8392,11 @@ impl WriteThrough for office_2009_07_customui::Ribbon {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_2009_07_customui::RIBBON_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::ribbon(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::RIBBON_SHAPE, &self.unknown);
         through.attribute(0, &self.start_from_scratch);
@@ -8023,6 +8599,15 @@ impl WriteThrough for office_2009_07_customui::SecondColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::SECOND_COLUMN_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::second_column(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SECOND_COLUMN_SHAPE,
@@ -8098,6 +8683,15 @@ impl WriteThrough for office_2009_07_customui::Separator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::SEPARATOR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::separator(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SEPARATOR_SHAPE,
@@ -8185,6 +8779,15 @@ impl WriteThrough for office_2009_07_customui::SharedControls {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::SHARED_CONTROLS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::shared_controls(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SHARED_CONTROLS_SHAPE,
@@ -8481,6 +9084,16 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::split_button_split_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE,
@@ -8581,6 +9194,18 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::split_button_split_button_regular(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE,
@@ -8680,6 +9305,18 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonWithTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::split_button_split_button_with_title(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE,
@@ -8778,6 +9415,15 @@ impl WriteThrough for office_2009_07_customui::TabBackstageTab {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TAB_BACKSTAGE_TAB_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::tab_backstage_tab(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TAB_BACKSTAGE_TAB_SHAPE,
@@ -8881,6 +9527,12 @@ impl WriteThrough for office_2009_07_customui::TabSet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_2009_07_customui::TAB_SET_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::tab_set(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::TAB_SET_SHAPE, &self.unknown);
         through.attribute(0, &self.id_mso);
@@ -8960,6 +9612,12 @@ impl WriteThrough for office_2009_07_customui::TabTab {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted =
+            super::converts(out, &office_2009_07_customui::TAB_TAB_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::tab_tab(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::TAB_TAB_SHAPE, &self.unknown);
         through.attribute(0, &self.id);
@@ -9050,6 +9708,11 @@ impl WriteThrough for office_2009_07_customui::Tabs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(out, &office_2009_07_customui::TABS_SHAPE, &self.unknown);
+        if converted {
+            let element = office_2009_07_customui::write::tabs(self, out.scope());
+            return out.converted(element);
+        }
         let mut through =
             super::Through::new(out, &office_2009_07_customui::TABS_SHAPE, &self.unknown);
         through.child(&self.tab_tab, ctx)?;
@@ -9127,6 +9790,15 @@ impl WriteThrough for office_2009_07_customui::TaskFormGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TASK_FORM_GROUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::task_form_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_FORM_GROUP_SHAPE,
@@ -9220,6 +9892,15 @@ impl WriteThrough for office_2009_07_customui::TaskGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TASK_GROUP_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::task_group(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_GROUP_SHAPE,
@@ -9317,6 +9998,16 @@ impl WriteThrough for office_2009_07_customui::TaskTaskFormGroupTask {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TASK_TASK_FORM_GROUP_TASK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::task_task_form_group_task(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_TASK_FORM_GROUP_TASK_SHAPE,
@@ -9413,6 +10104,15 @@ impl WriteThrough for office_2009_07_customui::TaskTaskGroupTask {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TASK_TASK_GROUP_TASK_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::task_task_group_task(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_TASK_GROUP_TASK_SHAPE,
@@ -9510,6 +10210,19 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonBackstageMenuToggleBu
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::toggle_button_backstage_menu_toggle_button(
+                    self,
+                    out.scope(),
+                );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE,
@@ -9602,6 +10315,16 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonToggleButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element =
+                office_2009_07_customui::write::toggle_button_toggle_button(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE,
@@ -9709,6 +10432,18 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonToggleButtonRegular {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::toggle_button_toggle_button_regular(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE,
@@ -9814,6 +10549,18 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonVisibleToggleButton {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::toggle_button_visible_toggle_button(
+                self,
+                out.scope(),
+            );
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE,
@@ -9921,6 +10668,15 @@ impl WriteThrough for office_2009_07_customui::TopItems {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TOP_ITEMS_SHAPE,
+            &self.unknown,
+        );
+        if converted {
+            let element = office_2009_07_customui::write::top_items(self, out.scope());
+            return out.converted(element);
+        }
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOP_ITEMS_SHAPE,
