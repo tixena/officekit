@@ -11,6 +11,7 @@ use super::{
     EnumerationRow, PartRow, Particle, StringKind, Tables, TypeRow, ValueCheck, ValueClass,
     Versions,
 };
+use crate::generate_schema::emit::markup::render::layout;
 use crate::generate_schema::sdk_data::DataChildKind;
 
 /// The name `files` gives the module file, `generated.rs`.
@@ -45,8 +46,8 @@ const MODULE_BODY: &str = "\
 
 use super::schema::types::{
     AnyNamespace, AttributeConstraint, Bounds, Check, ChildKind, ChildPart, CompositeKind,
-    Enumeration, PartRule, Particle, SchemaType, StringKind, TypeId, ValueCheck, ValueClass,
-    Versions,
+    Enumeration, PartRule, Particle, Pattern, SchemaType, StringKind, TypeId, ValueCheck,
+    ValueClass, Versions,
 };
 use super::semantic::constraint::{
     Applications, AttributeName, Constraint, ElementName, Registration,
@@ -107,6 +108,8 @@ struct Lists {
     items: BTreeMap<String, String>,
     particles: BTreeMap<String, String>,
     particles_text: String,
+    patterns: BTreeMap<String, String>,
+    patterns_text: String,
     strict_checks: BTreeMap<String, String>,
     strict_checks_text: String,
 }
@@ -240,6 +243,57 @@ impl Lists {
         Ok(name)
     }
 
+    /// The expression of a check, its pattern's static written on first use.
+    fn check(&mut self, row: &Check) -> Expr {
+        match row {
+            Check::Enum { class } => {
+                Expr::Struct("Check::Enum", vec![("class", value_class(class))])
+            }
+            Check::List { item } => Expr::Struct(
+                "Check::List",
+                vec![("item", Expr::Ref(Box::new(self.check(item))))],
+            ),
+            Check::Number {
+                bounds: limits,
+                class,
+                list,
+            } => Expr::Struct(
+                "Check::Number",
+                vec![
+                    ("bounds", bounds(limits)),
+                    ("class", value_class(class)),
+                    ("list", boolean(*list)),
+                ],
+            ),
+            Check::OfficeVersion => Expr::Atom("Check::OfficeVersion".to_owned()),
+            Check::Required => Expr::Atom("Check::Required".to_owned()),
+            Check::String {
+                class,
+                kind,
+                length,
+                max_length,
+                min_length,
+                pattern,
+            } => Expr::Struct(
+                "Check::String",
+                vec![
+                    ("class", option(class.as_ref().map(value_class))),
+                    (
+                        "kind",
+                        Expr::Atom(format!("StringKind::{}", string_kind(*kind))),
+                    ),
+                    ("length", option(length.map(integer))),
+                    ("max_length", option(max_length.map(integer))),
+                    ("min_length", option(min_length.map(integer))),
+                    (
+                        "pattern",
+                        option(pattern.as_deref().map(|source| self.pattern(source))),
+                    ),
+                ],
+            ),
+        }
+    }
+
     /// The name of a check list, written on first use; `&[]` for none.
     fn checks(&mut self, checks: &[ValueCheck]) -> String {
         if checks.is_empty() {
@@ -250,9 +304,10 @@ impl Lists {
             return name.clone();
         }
         let name = format!("CHECKS_{}", self.checks.len() + 1);
+        let items = checks.iter().map(|row| self.value_check(row)).collect();
         statement(
             &format!("const {name}: &[ValueCheck] = "),
-            &Expr::Slice(checks.iter().map(value_check).collect()),
+            &Expr::Slice(items),
             separated(&mut self.checks_text),
         );
         self.checks.insert(key, name.clone());
@@ -356,6 +411,24 @@ impl Lists {
         Ok(name)
     }
 
+    /// A reference to the static of a pattern facet, written on first use.
+    fn pattern(&mut self, source: &str) -> Expr {
+        let name = if let Some(name) = self.patterns.get(source) {
+            name.clone()
+        } else {
+            let name = format!("PATTERN_{}", self.patterns.len() + 1);
+            let sources = layout::Expr::Slice(vec![layout::Expr::atom(&layout::string(source))]);
+            layout::statement(
+                &format!("static {name}: Pattern = "),
+                &layout::Expr::call("Pattern::new", vec![sources]),
+                &mut self.patterns_text,
+            );
+            self.patterns.insert(source.to_owned(), name.clone());
+            name
+        };
+        Expr::Atom(format!("&{name}"))
+    }
+
     /// The name of a list of Strict checks, written on first use; `&[]` for none.
     fn strict_checks(&mut self, checks: &[ValueCheck]) -> String {
         if checks.is_empty() {
@@ -366,13 +439,29 @@ impl Lists {
             return name.clone();
         }
         let name = format!("STRICT_CHECKS_{}", self.strict_checks.len() + 1);
+        let items = checks.iter().map(|row| self.value_check(row)).collect();
         statement(
             &format!("const {name}: &[ValueCheck] = "),
-            &Expr::Slice(checks.iter().map(value_check).collect()),
+            &Expr::Slice(items),
             separated(&mut self.strict_checks_text),
         );
         self.strict_checks.insert(key, name.clone());
         name
+    }
+
+    /// The expression of a value check.
+    fn value_check(&mut self, row: &ValueCheck) -> Expr {
+        Expr::Struct(
+            "ValueCheck",
+            vec![
+                ("check", self.check(&row.check)),
+                (
+                    "union",
+                    option(row.union.map(|union| integer(u64::from(union)))),
+                ),
+                ("versions", versions_expr(row.versions)),
+            ],
+        )
     }
 }
 
@@ -402,51 +491,6 @@ fn bounds(bounds: &Bounds) -> Expr {
             ("positive", boolean(bounds.positive)),
         ],
     )
-}
-
-fn check(row: &Check) -> Expr {
-    match row {
-        Check::Enum { class } => Expr::Struct("Check::Enum", vec![("class", value_class(class))]),
-        Check::List { item } => Expr::Struct(
-            "Check::List",
-            vec![("item", Expr::Ref(Box::new(check(item))))],
-        ),
-        Check::Number {
-            bounds: limits,
-            class,
-            list,
-        } => Expr::Struct(
-            "Check::Number",
-            vec![
-                ("bounds", bounds(limits)),
-                ("class", value_class(class)),
-                ("list", boolean(*list)),
-            ],
-        ),
-        Check::OfficeVersion => Expr::Atom("Check::OfficeVersion".to_owned()),
-        Check::Required => Expr::Atom("Check::Required".to_owned()),
-        Check::String {
-            class,
-            kind,
-            length,
-            max_length,
-            min_length,
-            pattern,
-        } => Expr::Struct(
-            "Check::String",
-            vec![
-                ("class", option(class.as_ref().map(value_class))),
-                (
-                    "kind",
-                    Expr::Atom(format!("StringKind::{}", string_kind(*kind))),
-                ),
-                ("length", option(length.map(integer))),
-                ("max_length", option(max_length.map(integer))),
-                ("min_length", option(min_length.map(integer))),
-                ("pattern", option(pattern.as_deref().map(string))),
-            ],
-        ),
-    }
 }
 
 fn child(row: &ChildRow, prefixes: &[&str], type_ids: &BTreeMap<&str, usize>) -> Result<Expr> {
@@ -565,9 +609,12 @@ pub(super) fn files(
     if !lists.strict_checks_text.is_empty() {
         lists.strict_checks_text.push('\n');
     }
+    if !lists.patterns_text.is_empty() {
+        lists.patterns_text.push('\n');
+    }
     let attributes_text = format!(
-        "{header}\n{}\n{}{}",
-        lists.checks_text, lists.strict_checks_text, lists.attributes_text
+        "{header}\n{}{}\n{}{}",
+        lists.patterns_text, lists.checks_text, lists.strict_checks_text, lists.attributes_text
     );
     let particles_text = format!("{header}\n{}", lists.particles_text);
 
@@ -917,20 +964,6 @@ fn type_id(type_ids: &BTreeMap<&str, usize>, name: &str) -> Result<Expr> {
         .get(name)
         .with_context(|| format!("no type is {name}"))?;
     Ok(integer(*index as u64))
-}
-
-fn value_check(row: &ValueCheck) -> Expr {
-    Expr::Struct(
-        "ValueCheck",
-        vec![
-            ("check", check(&row.check)),
-            (
-                "union",
-                option(row.union.map(|union| integer(u64::from(union)))),
-            ),
-            ("versions", versions_expr(row.versions)),
-        ],
-    )
 }
 
 fn value_class(class: &ValueClass) -> Expr {

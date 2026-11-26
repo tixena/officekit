@@ -6,7 +6,8 @@ use super::{Failure, check, run};
 use crate::validation::error::ErrorCode;
 use crate::validation::generated::{SCHEMA_TYPES, type_id};
 use crate::validation::schema::types::{
-    AttributeConstraint, Bounds, Check, SchemaType, StringKind, ValueCheck, ValueClass, Versions,
+    AttributeConstraint, Bounds, Check, Pattern, SchemaType, StringKind, ValueCheck, ValueClass,
+    Versions,
 };
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -20,13 +21,15 @@ const TARGETS: [OfficeVersion; 6] = [
     OfficeVersion::Microsoft365,
 ];
 
+static PERCENT_PATTERN: Pattern = Pattern::new(&["[0-9]+%"]);
+
 const PATTERN: Check = Check::String {
     class: None,
     kind: StringKind::Plain,
     length: None,
     max_length: None,
     min_length: None,
-    pattern: Some("[0-9]+%"),
+    pattern: Some(&PERCENT_PATTERN),
 };
 
 const WHOLE: Check = Check::Number {

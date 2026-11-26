@@ -971,3 +971,26 @@ fn the_files_start_with_the_header_and_write_numbers_as_clippy_reads_them() {
             .contains("pub fn type_id(name: &str) -> Option<TypeId> {")
     );
 }
+
+#[test]
+fn a_pattern_is_one_static_that_each_check_of_it_refers_to() {
+    let mut tables = tables();
+    tables
+        .types
+        .retain(|row| row.name == "w:CT_TblWidthDxaNil/w:left");
+    let left = &mut tables.types[0];
+    left.attributes.truncate(2);
+    left.attributes[0].checks = vec![every_target(string(Some("[0-9]+%")))];
+    left.attributes[1].checks = vec![
+        every_target(string(Some("[0-9]+%"))),
+        every_target(Check::Required),
+    ];
+    tables.parts.clear();
+    let files = render::files("// header\n", &tables, &["w"]).unwrap();
+    let attributes = &files[1].1;
+    assert!(attributes.starts_with(
+        "// header\n\nstatic PATTERN_1: Pattern = Pattern::new(&[\"[0-9]+%\"]);\n\nconst CHECKS_1:"
+    ));
+    assert!(!attributes.contains("PATTERN_2"));
+    assert_eq!(attributes.matches("pattern: Some(&PATTERN_1),").count(), 2);
+}

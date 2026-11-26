@@ -4,8 +4,8 @@ use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::values::matches_pattern;
 
 use super::types::{
-    Bounds, Check, CompositeKind, Particle, SchemaType, StringKind, ValueCheck, ValueClass,
-    Versions,
+    Bounds, Check, CompositeKind, Particle, Pattern, SchemaType, StringKind, ValueCheck,
+    ValueClass, Versions,
 };
 use crate::validation::generated::{
     ENUMERATIONS, PART_RULES, SCHEMA_TYPES, TRANSITIONAL_ONLY_NAMESPACES, type_id,
@@ -80,7 +80,7 @@ fn schema_type(name: &str) -> &'static SchemaType {
     &SCHEMA_TYPES[usize::from(type_id(name).unwrap())]
 }
 
-const fn string(pattern: Option<&'static str>) -> Check {
+const fn string(pattern: Option<&'static Pattern>) -> Check {
     Check::String {
         class: None,
         kind: StringKind::Plain,
@@ -139,7 +139,8 @@ fn the_left_and_right_margins_take_a_required_non_negative_int16() {
 
 #[test]
 fn the_top_and_bottom_margins_take_a_union_per_version() {
-    let percent = string(Some("-?[0-9]+(\\.[0-9]+)?%"));
+    static PERCENT: Pattern = Pattern::new(&["-?[0-9]+(\\.[0-9]+)?%"]);
+    let percent = string(Some(&PERCENT));
     let int32 = number(ValueClass::Int32, None);
     let check = |check: Check, union: Option<u8>, versions: u8| ValueCheck {
         check,
@@ -240,7 +241,7 @@ fn every_pattern_of_the_tables_compiles_and_matches_whole() {
                 pattern: Some(pattern),
             } = check.check
             {
-                patterns.insert(pattern);
+                patterns.insert(pattern.source());
             }
         }
     }
@@ -274,7 +275,7 @@ fn every_pattern_of_the_strict_checks_compiles_and_the_opacity_takes_a_percentag
             pattern: Some(pattern),
         } = check.check
         {
-            patterns.insert(pattern);
+            patterns.insert(pattern.source());
         }
     }
     assert!(!patterns.is_empty());
@@ -301,7 +302,7 @@ fn every_pattern_of_the_strict_checks_compiles_and_the_opacity_takes_a_percentag
                     pattern: Some(pattern),
                 } = check.check
                 {
-                    matches_pattern(pattern, value).ok()
+                    Some(pattern.matches(value))
                 } else {
                     None
                 }

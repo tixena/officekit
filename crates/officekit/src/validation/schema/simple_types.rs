@@ -10,10 +10,9 @@ use alloc::vec::Vec;
 use core::iter;
 
 use officekit_xml::name::OfficeVersion;
-use officekit_xml::values::matches_pattern;
 use officekit_xml::values::parse::date_time;
 
-use super::types::{Bounds, Check, Enumeration, StringKind, ValueClass};
+use super::types::{Bounds, Check, Enumeration, Pattern, StringKind, ValueClass};
 use crate::validation::generated::ENUMERATIONS;
 
 #[cfg(test)]
@@ -50,7 +49,7 @@ struct StringFacets {
     length: Option<usize>,
     max_length: Option<usize>,
     min_length: Option<usize>,
-    pattern: Option<&'static str>,
+    pattern: Option<&'static Pattern>,
 }
 
 /// How a text reads as a class.
@@ -577,9 +576,9 @@ fn string(facets: &StringFacets, value: &str) -> Vec<String> {
             found.push("longer than 255 characters".to_owned());
         }
     } else if let Some(pattern) = facets.pattern
-        && matches!(matches_pattern(pattern, value), Ok(false))
+        && !pattern.matches(value)
     {
-        found.push(format!("does not match the pattern {pattern}"));
+        found.push(format!("does not match the pattern {}", pattern.source()));
     } else {
         // The form is right.
     }

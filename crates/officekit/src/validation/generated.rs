@@ -366,8 +366,8 @@
 
 use super::schema::types::{
     AnyNamespace, AttributeConstraint, Bounds, Check, ChildKind, ChildPart, CompositeKind,
-    Enumeration, PartRule, Particle, SchemaType, StringKind, TypeId, ValueCheck, ValueClass,
-    Versions,
+    Enumeration, PartRule, Particle, Pattern, SchemaType, StringKind, TypeId, ValueCheck,
+    ValueClass, Versions,
 };
 use super::semantic::constraint::{
     Applications, AttributeName, Constraint, ElementName, Registration,

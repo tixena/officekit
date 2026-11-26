@@ -1,7 +1,7 @@
 use officekit_xml::name::OfficeVersion;
 
 use super::{failures, has_value};
-use crate::validation::schema::types::{Bounds, Check, StringKind, ValueClass};
+use crate::validation::schema::types::{Bounds, Check, Pattern, StringKind, ValueClass};
 
 const NO_BOUNDS: Bounds = Bounds {
     max_exclusive: None,
@@ -29,7 +29,7 @@ const fn number(class: ValueClass, bounds: Bounds) -> Check {
 const fn string(
     length: Option<usize>,
     max_length: Option<usize>,
-    pattern: Option<&'static str>,
+    pattern: Option<&'static Pattern>,
 ) -> Check {
     Check::String {
         class: None,
@@ -138,7 +138,8 @@ fn a_string_check_with_no_class_counts_bytes_for_a_hexadecimal_attribute() {
 
 #[test]
 fn a_pattern_failure_and_a_length_failure_are_two_failures() {
-    let check = string(None, Some(2), Some("[0-9]+"));
+    static DIGITS: Pattern = Pattern::new(&["[0-9]+"]);
+    let check = string(None, Some(2), Some(&DIGITS));
     assert_eq!(
         found(&check, &ValueClass::String, "abc"),
         [

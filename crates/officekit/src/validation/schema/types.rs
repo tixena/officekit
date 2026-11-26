@@ -2,6 +2,7 @@
 //! value, content model, and part allows, and at which Office versions.
 
 use officekit_xml::name::{NamespaceId, OfficeVersion};
+use officekit_xml::values::Patterns;
 
 /// Index into `PART_RULES`.
 pub type PartRuleId = u8;
@@ -94,7 +95,7 @@ pub enum Check {
         /// The shortest length allowed.
         min_length: Option<usize>,
         /// A pattern the whole text must match.
-        pattern: Option<&'static str>,
+        pattern: Option<&'static Pattern>,
     },
 }
 
@@ -168,6 +169,14 @@ pub struct PartRule {
     pub root: Option<TypeId>,
     /// The targets the part type exists at; at another target its part is not validated.
     pub versions: Versions,
+}
+
+/// A pattern facet as the data writes it, compiled once, the first time a value is matched
+/// against it.
+#[derive(Debug)]
+pub struct Pattern {
+    regex: Patterns,
+    source: &'static str,
 }
 
 /// A content model at one target; `max` 0 is unbounded, as in SDK 3.5.1.
@@ -306,6 +315,36 @@ pub enum ValueClass {
     UInt32,
     /// A whole number of 64 bits, without a sign.
     UInt64,
+}
+
+impl Pattern {
+    /// Whether `value` matches the pattern whole.
+    #[must_use = "this only answers the question"]
+    pub fn matches(&self, value: &str) -> bool {
+        self.regex.matches(value)
+    }
+
+    /// The facet `source`, not compiled yet.
+    #[must_use = "this only builds the value"]
+    pub const fn new(source: &'static [&'static str; 1]) -> Self {
+        Self {
+            regex: Patterns::new(source),
+            source: source[0],
+        }
+    }
+
+    /// The pattern as the data writes it.
+    #[must_use = "this only returns the value"]
+    pub const fn source(&self) -> &'static str {
+        self.source
+    }
+}
+
+/// Two facets are equal when the data writes them alike.
+impl PartialEq for Pattern {
+    fn eq(&self, other: &Self) -> bool {
+        self.source == other.source
+    }
 }
 
 /// The targets a row applies at: bit 0 is Office 2010, bit 5 Microsoft 365.
