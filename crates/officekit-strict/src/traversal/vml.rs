@@ -229,9 +229,9 @@ impl super::Transform for vml::ArcSegment {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -245,7 +245,7 @@ impl super::Visit for vml::ArcSegment {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -257,12 +257,13 @@ impl WriteThrough for vml::ArcSegment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::ARC_SEGMENT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::ARC_SEGMENT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::arc_segment(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::ARC_SEGMENT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::ARC_SEGMENT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -347,9 +348,9 @@ impl super::Transform for vml::BezierCurve {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -363,7 +364,7 @@ impl super::Visit for vml::BezierCurve {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -375,12 +376,13 @@ impl WriteThrough for vml::BezierCurve {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::BEZIER_CURVE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::BEZIER_CURVE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::bezier_curve(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::BEZIER_CURVE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::BEZIER_CURVE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -467,10 +469,10 @@ impl super::Transform for vml::DocumentBackground {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.shape_fill_properties =
             super::transform_child(&self.shape_fill_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -484,7 +486,7 @@ impl super::Visit for vml::DocumentBackground {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.shape_fill_properties, visitor);
         walk.finish(visitor);
     }
@@ -496,12 +498,20 @@ impl WriteThrough for vml::DocumentBackground {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::DOCUMENT_BACKGROUND_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &vml::DOCUMENT_BACKGROUND_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = vml::write::document_background(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::DOCUMENT_BACKGROUND_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &vml::DOCUMENT_BACKGROUND_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.attribute(1, &self.filled);
         through.attribute(2, &self.fillcolor);
@@ -543,7 +553,8 @@ impl super::Transform for vml::ImageData {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -557,7 +568,7 @@ impl super::Visit for vml::ImageData {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -567,12 +578,12 @@ impl WriteThrough for vml::ImageData {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::IMAGE_DATA_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::IMAGE_DATA_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::image_data(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::IMAGE_DATA_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &vml::IMAGE_DATA_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.src);
         through.attribute(2, &self.cropleft);
@@ -625,9 +636,9 @@ impl super::Transform for vml::ImageFile {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -641,7 +652,7 @@ impl super::Visit for vml::ImageFile {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -653,12 +664,12 @@ impl WriteThrough for vml::ImageFile {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::IMAGE_FILE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::IMAGE_FILE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::image_file(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::IMAGE_FILE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &vml::IMAGE_FILE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -751,9 +762,9 @@ impl super::Transform for vml::Line {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -767,7 +778,7 @@ impl super::Visit for vml::Line {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -779,12 +790,12 @@ impl WriteThrough for vml::Line {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::LINE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::LINE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::line(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::LINE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &vml::LINE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -869,7 +880,7 @@ impl super::Transform for vml::LineStrokeSettings {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.text_box_left_stroke =
             super::transform_child(&self.text_box_left_stroke, ctx, &mut rebase);
         node.text_box_top_stroke =
@@ -880,7 +891,7 @@ impl super::Transform for vml::LineStrokeSettings {
             super::transform_child(&self.text_box_bottom_stroke, ctx, &mut rebase);
         node.text_box_interior_stroke =
             super::transform_child(&self.text_box_interior_stroke, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -894,7 +905,7 @@ impl super::Visit for vml::LineStrokeSettings {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.text_box_left_stroke, visitor);
         walk.child(&self.text_box_top_stroke, visitor);
         walk.child(&self.text_box_right_stroke, visitor);
@@ -910,12 +921,20 @@ impl WriteThrough for vml::LineStrokeSettings {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::LINE_STROKE_SETTINGS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &vml::LINE_STROKE_SETTINGS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = vml::write::line_stroke_settings(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::LINE_STROKE_SETTINGS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &vml::LINE_STROKE_SETTINGS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.attribute(1, &self.on);
         through.attribute(2, &self.weight);
@@ -983,9 +1002,9 @@ impl super::Transform for vml::MultiplePathLine {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -999,7 +1018,7 @@ impl super::Visit for vml::MultiplePathLine {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1011,12 +1030,14 @@ impl WriteThrough for vml::MultiplePathLine {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::MULTIPLE_PATH_LINE_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &vml::MULTIPLE_PATH_LINE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::multiple_path_line(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::MULTIPLE_PATH_LINE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::MULTIPLE_PATH_LINE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -1200,9 +1221,9 @@ impl super::Transform for vml::Oval {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1216,7 +1237,7 @@ impl super::Visit for vml::Oval {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1228,12 +1249,12 @@ impl WriteThrough for vml::Oval {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::OVAL_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::OVAL_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::oval(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::OVAL_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &vml::OVAL_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -1316,9 +1337,9 @@ impl super::Transform for vml::Rectangle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1332,7 +1353,7 @@ impl super::Visit for vml::Rectangle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1344,12 +1365,12 @@ impl WriteThrough for vml::Rectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::RECTANGLE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::RECTANGLE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::rectangle(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::RECTANGLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &vml::RECTANGLE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -1432,9 +1453,9 @@ impl super::Transform for vml::RoundedRectangle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1448,7 +1469,7 @@ impl super::Visit for vml::RoundedRectangle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1460,12 +1481,14 @@ impl WriteThrough for vml::RoundedRectangle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::ROUNDED_RECTANGLE_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &vml::ROUNDED_RECTANGLE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::rounded_rectangle(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::ROUNDED_RECTANGLE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::ROUNDED_RECTANGLE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -1550,9 +1573,9 @@ impl super::Transform for vml::SetOfFormulas {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.single_formula = super::transform_child(&self.single_formula, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1566,7 +1589,7 @@ impl super::Visit for vml::SetOfFormulas {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.single_formula, visitor);
         walk.finish(visitor);
     }
@@ -1578,12 +1601,13 @@ impl WriteThrough for vml::SetOfFormulas {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SET_OF_FORMULAS_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SET_OF_FORMULAS_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::set_of_formulas(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SET_OF_FORMULAS_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SET_OF_FORMULAS_SHAPE, self.unknown.as_deref());
         through.child(&self.single_formula, ctx)?;
         through.finish(ctx)
     }
@@ -1613,9 +1637,9 @@ impl super::Transform for vml::SetOfHandles {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.shape_handle = super::transform_child(&self.shape_handle, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1629,7 +1653,7 @@ impl super::Visit for vml::SetOfHandles {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.shape_handle, visitor);
         walk.finish(visitor);
     }
@@ -1641,12 +1665,13 @@ impl WriteThrough for vml::SetOfHandles {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SET_OF_HANDLES_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SET_OF_HANDLES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::set_of_handles(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SET_OF_HANDLES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SET_OF_HANDLES_SHAPE, self.unknown.as_deref());
         through.child(&self.shape_handle, ctx)?;
         through.finish(ctx)
     }
@@ -1676,7 +1701,8 @@ impl super::Transform for vml::ShadowEffect {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1690,7 +1716,7 @@ impl super::Visit for vml::ShadowEffect {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1700,12 +1726,13 @@ impl WriteThrough for vml::ShadowEffect {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SHADOW_EFFECT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SHADOW_EFFECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::shadow_effect(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SHADOW_EFFECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SHADOW_EFFECT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.on);
         through.attribute(2, &self.r#type);
@@ -1745,9 +1772,9 @@ impl super::Transform for vml::ShapeDefinition {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1761,7 +1788,7 @@ impl super::Visit for vml::ShapeDefinition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1773,12 +1800,13 @@ impl WriteThrough for vml::ShapeDefinition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SHAPE_DEFINITION_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SHAPE_DEFINITION_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::shape_definition(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SHAPE_DEFINITION_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SHAPE_DEFINITION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -2047,10 +2075,10 @@ impl super::Transform for vml::ShapeFillProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.shape_fill_extended_properties =
             super::transform_child(&self.shape_fill_extended_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2064,7 +2092,7 @@ impl super::Visit for vml::ShapeFillProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.shape_fill_extended_properties, visitor);
         walk.finish(visitor);
     }
@@ -2076,13 +2104,20 @@ impl WriteThrough for vml::ShapeFillProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SHAPE_FILL_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &vml::SHAPE_FILL_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = vml::write::shape_fill_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &vml::SHAPE_FILL_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &vml::SHAPE_FILL_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.attribute(1, &self.r#type);
         through.attribute(2, &self.on);
@@ -2144,9 +2179,9 @@ impl super::Transform for vml::ShapeGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2160,7 +2195,7 @@ impl super::Visit for vml::ShapeGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -2172,12 +2207,13 @@ impl WriteThrough for vml::ShapeGroup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SHAPE_GROUP_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SHAPE_GROUP_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::shape_group(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SHAPE_GROUP_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SHAPE_GROUP_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -2337,7 +2373,8 @@ impl super::Transform for vml::ShapeHandle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2351,7 +2388,7 @@ impl super::Visit for vml::ShapeHandle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2361,12 +2398,13 @@ impl WriteThrough for vml::ShapeHandle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SHAPE_HANDLE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SHAPE_HANDLE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::shape_handle(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SHAPE_HANDLE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SHAPE_HANDLE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.position);
         through.attribute(1, &self.polar);
         through.attribute(2, &self.map);
@@ -2404,7 +2442,8 @@ impl super::Transform for vml::ShapePath {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2418,7 +2457,7 @@ impl super::Visit for vml::ShapePath {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2428,12 +2467,12 @@ impl WriteThrough for vml::ShapePath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SHAPE_PATH_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SHAPE_PATH_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::shape_path(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SHAPE_PATH_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &vml::SHAPE_PATH_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.v);
         through.attribute(2, &self.limo);
@@ -2477,10 +2516,10 @@ impl super::Transform for vml::ShapeTemplate {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.complex = super::transform_child(&self.complex, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2494,7 +2533,7 @@ impl super::Visit for vml::ShapeTemplate {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.child(&self.complex, visitor);
         walk.finish(visitor);
@@ -2507,12 +2546,13 @@ impl WriteThrough for vml::ShapeTemplate {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SHAPE_TEMPLATE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SHAPE_TEMPLATE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::shape_template(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SHAPE_TEMPLATE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SHAPE_TEMPLATE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.href);
@@ -2599,7 +2639,8 @@ impl super::Transform for vml::SingleFormula {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2613,7 +2654,7 @@ impl super::Visit for vml::SingleFormula {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2623,12 +2664,13 @@ impl WriteThrough for vml::SingleFormula {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::SINGLE_FORMULA_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::SINGLE_FORMULA_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::single_formula(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::SINGLE_FORMULA_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::SINGLE_FORMULA_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.eqn);
         through.finish(ctx)
     }
@@ -2658,9 +2700,9 @@ impl super::Transform for vml::TextBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2674,7 +2716,7 @@ impl super::Visit for vml::TextBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -2686,12 +2728,12 @@ impl WriteThrough for vml::TextBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::TEXT_BOX_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::TEXT_BOX_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::text_box(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::TEXT_BOX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &vml::TEXT_BOX_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.inset);
@@ -2799,7 +2841,8 @@ impl super::Transform for vml::TextLayoutPath {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2813,7 +2856,7 @@ impl super::Visit for vml::TextLayoutPath {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2823,12 +2866,13 @@ impl WriteThrough for vml::TextLayoutPath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &vml::TEXT_LAYOUT_PATH_SHAPE, &self.unknown);
+        let converted = super::converts(out, &vml::TEXT_LAYOUT_PATH_SHAPE, self.unknown.as_deref());
         if converted {
             let element = vml::write::text_layout_path(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &vml::TEXT_LAYOUT_PATH_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &vml::TEXT_LAYOUT_PATH_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.id);
         through.attribute(1, &self.style);
         through.attribute(2, &self.on);

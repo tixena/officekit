@@ -408,8 +408,9 @@ pub struct AnchorWith<X: UserData> {
     pub comment: Option<Box<CommentWith<X>>>,
     /// The child that is `ExtLst`, when there is one.
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksAnchor,
 }
@@ -424,8 +425,9 @@ impl Eq for AnchorWith<()> {}
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct AssignWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksAssign,
 }
@@ -440,8 +442,9 @@ impl Eq for AssignWith<()> {}
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct AttributionWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksAttribution,
 }
@@ -459,8 +462,9 @@ impl Eq for AttributionWith<()> {}
 pub struct CommentWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksComment,
 }
@@ -845,8 +849,9 @@ pub trait Context: crate::Context {
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct CreateWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksCreate,
 }
@@ -861,8 +866,9 @@ impl Eq for CreateWith<()> {}
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct DeleteWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksDelete,
 }
@@ -889,8 +895,9 @@ pub struct EventWith<X: UserData> {
     pub id: Option<String>,
     /// The attribute `time`, when the element has it.
     pub time: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksEvent,
 }
@@ -907,8 +914,9 @@ impl Eq for EventWith<()> {}
 pub struct ExtLstWith<X: UserData> {
     /// The children that are `super::office_2019_extlst::Ext`, in order.
     pub ext: Vec<super::office_2019_extlst::ExtWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksExtLst,
 }
@@ -925,8 +933,9 @@ impl Eq for ExtLstWith<()> {}
 pub struct HistoryWith<X: UserData> {
     /// The children that are `Event`, in order.
     pub event: Vec<EventWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksHistory,
 }
@@ -942,8 +951,9 @@ impl Eq for HistoryWith<()> {}
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct PriorityWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksPriority,
     /// The attribute `value`, when the element has it.
@@ -963,8 +973,9 @@ impl Eq for PriorityWith<()> {}
 pub struct ProgressWith<X: UserData> {
     /// The attribute `percentComplete`, when the element has it.
     pub percent_complete: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksProgress,
 }
@@ -984,8 +995,9 @@ pub struct ScheduleWith<X: UserData> {
     pub due_date: Option<String>,
     /// The attribute `startDate`, when the element has it.
     pub start_date: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksSchedule,
 }
@@ -1003,8 +1015,9 @@ impl Eq for ScheduleWith<()> {}
 pub struct SetTitleWith<X: UserData> {
     /// The attribute `title`, when the element has it.
     pub title: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksSetTitle,
 }
@@ -1028,8 +1041,9 @@ pub struct TaskWith<X: UserData> {
     pub history: Option<Box<HistoryWith<X>>>,
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksTask,
 }
@@ -1088,8 +1102,9 @@ pub struct TasksWith<X: UserData> {
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The children that are `Task`, in order.
     pub task: Vec<TaskWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksTasks,
 }
@@ -1104,8 +1119,9 @@ impl Eq for TasksWith<()> {}
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct UnassignWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksUnassign,
 }
@@ -1121,8 +1137,9 @@ impl Eq for UnassignWith<()> {}
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct UnassignAllWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksUnassignAll,
 }
@@ -1138,8 +1155,9 @@ impl Eq for UnassignAllWith<()> {}
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct UndeleteWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksUndelete,
 }
@@ -1157,8 +1175,9 @@ impl Eq for UndeleteWith<()> {}
 pub struct UndoWith<X: UserData> {
     /// The attribute `id`, when the element has it.
     pub id: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeTasks2019DocumenttasksUndo,
 }
@@ -1303,6 +1322,17 @@ impl<X: UserData> AnchorWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1335,6 +1365,17 @@ impl<X: UserData> AssignWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1371,6 +1412,17 @@ impl<X: UserData> AttributionWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1404,6 +1456,17 @@ impl<X: UserData> CommentWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1443,6 +1506,17 @@ impl<X: UserData> CreateWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1475,6 +1549,17 @@ impl<X: UserData> DeleteWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1529,6 +1614,17 @@ impl<X: UserData> EventWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1571,6 +1667,17 @@ impl<X: UserData> ExtLstWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1609,6 +1716,17 @@ impl<X: UserData> HistoryWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1642,6 +1760,17 @@ impl<X: UserData> PriorityWith<X> {
             user_data: Default::default(),
             value: self.value,
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1680,6 +1809,17 @@ impl<X: UserData> ProgressWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1721,6 +1861,17 @@ impl<X: UserData> ScheduleWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1758,6 +1909,17 @@ impl<X: UserData> SetTitleWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1808,6 +1970,17 @@ impl<X: UserData> TaskWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1920,6 +2093,17 @@ impl<X: UserData> TasksWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1952,6 +2136,17 @@ impl<X: UserData> UnassignWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1988,6 +2183,17 @@ impl<X: UserData> UnassignAllWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -2020,6 +2226,17 @@ impl<X: UserData> UndeleteWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -2055,6 +2272,17 @@ impl<X: UserData> UndoWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.

@@ -366,8 +366,9 @@ pub struct CNvFrPrWith<X: UserData> {
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The child that is `drawing::GraphicFrameLocks`, when there is one.
     pub graphic_frame_locks: Option<Box<drawing::GraphicFrameLocksWith<X>>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupCNvFrPr,
 }
@@ -387,8 +388,9 @@ pub struct CNvGrpSpPrWith<X: UserData> {
     pub extension_list: Option<Box<drawing::ExtensionListWith<X>>>,
     /// The child that is `drawing::GroupShapeLocks`, when there is one.
     pub group_shape_locks: Option<Box<drawing::GroupShapeLocksWith<X>>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupCNvGrpSpPr,
 }
@@ -420,8 +422,9 @@ pub struct CNvPrWith<X: UserData> {
     pub name: Option<String>,
     /// The attribute `title`, when the element has it.
     pub title: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupCNvPr,
 }
@@ -654,8 +657,9 @@ pub trait Context: crate::Context {
 pub struct ExtLstWith<X: UserData> {
     /// The children that are `drawing::Extension`, in order.
     pub extension: Vec<drawing::ExtensionWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupExtLst,
 }
@@ -679,8 +683,9 @@ pub struct GraphicFrameWith<X: UserData> {
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The child that is `drawing::GraphicObject`, which the schema requires.
     pub graphic_object: Box<drawing::GraphicObjectWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupGraphicFrame,
     /// The child that is `Xfrm`, which the schema requires.
@@ -708,8 +713,9 @@ pub struct GrpSpWith<X: UserData> {
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The child that is `GrpSpPr`, which the schema requires.
     pub pr: Box<GrpSpPrWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupGrpSp,
 }
@@ -734,8 +740,9 @@ pub struct GrpSpPrWith<X: UserData> {
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContentWith<X>>>,
     /// The child that is `drawing::Scene3d`, when there is one.
     pub scene3d: Option<Box<drawing::Scene3dWith<X>>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupGrpSpPr,
     /// The child that is `drawing::XfrmGroupTransform2D`, when there is one.
@@ -826,8 +833,9 @@ pub struct WgpWith<X: UserData> {
     pub ext_lst: Option<Box<ExtLstWith<X>>>,
     /// The child that is `GrpSpPr`, which the schema requires.
     pub grp_sp_pr: Box<GrpSpPrWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupWgp,
 }
@@ -880,8 +888,9 @@ pub struct XfrmWith<X: UserData> {
     pub offset: Option<Box<drawing::OffsetWith<X>>>,
     /// The attribute `rot`, when the element has it.
     pub rot: Option<drawing::Angle>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: officekit_markup_base::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::OfficeWord2010WordprocessingGroupXfrm,
 }
@@ -911,6 +920,17 @@ impl<X: UserData> CNvFrPrWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -953,6 +973,17 @@ impl<X: UserData> CNvGrpSpPrWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1006,6 +1037,17 @@ impl<X: UserData> CNvPrWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1049,6 +1091,17 @@ impl<X: UserData> ExtLstWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1105,6 +1158,17 @@ impl<X: UserData> GraphicFrameWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1157,6 +1221,17 @@ impl<X: UserData> GrpSpWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1214,6 +1289,17 @@ impl<X: UserData> GrpSpPrWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -1269,6 +1355,17 @@ impl<X: UserData> WgpWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1366,6 +1463,17 @@ impl<X: UserData> XfrmWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&officekit_markup_base::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut officekit_markup_base::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.

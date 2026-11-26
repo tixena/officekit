@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Appearance)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AppearanceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SdtAppearance>,
 }
@@ -232,7 +232,7 @@ pub struct AppearanceMirror {
 #[rkyv(remote = super::ChartTrackingRefBased)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChartTrackingRefBasedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -241,7 +241,7 @@ pub struct ChartTrackingRefBasedMirror {
 #[rkyv(remote = super::Collapsed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CollapsedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -253,7 +253,7 @@ pub struct ColorMirror {
     pub theme_color: Option<super::super::wordprocessing::ThemeColor>,
     pub theme_shade: Option<super::super::wordprocessing::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::super::wordprocessing::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::super::wordprocessing::ColorValue>,
 }
@@ -265,7 +265,7 @@ pub struct CommentExMirror {
     pub done: Option<common_simple_types::OnOffValue>,
     pub para_id: Option<String>,
     pub para_id_parent: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -274,7 +274,7 @@ pub struct CommentExMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsExMirror {
     pub comment_ex: Vec<super::CommentEx>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -284,7 +284,7 @@ pub struct CommentsExMirror {
 pub struct DataBindingMirror {
     pub prefix_mappings: Option<String>,
     pub store_item_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xpath: Option<String>,
 }
@@ -293,7 +293,7 @@ pub struct DataBindingMirror {
 #[rkyv(remote = super::DoNotAllowInsertDeleteSection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAllowInsertDeleteSectionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -302,7 +302,7 @@ pub struct DoNotAllowInsertDeleteSectionMirror {
 #[rkyv(remote = super::DocId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocIdMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -311,7 +311,7 @@ pub struct DocIdMirror {
 #[rkyv(remote = super::FootnoteColumns)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteColumnsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::super::wordprocessing::DecimalNumberValue>,
 }
@@ -321,7 +321,7 @@ pub struct FootnoteColumnsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PeopleMirror {
     pub person: Vec<super::Person>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -331,7 +331,7 @@ pub struct PeopleMirror {
 pub struct PersonMirror {
     pub author: Option<String>,
     pub presence_info: Option<Box<super::PresenceInfo>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -340,7 +340,7 @@ pub struct PersonMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PresenceInfoMirror {
     pub provider_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub user_id: Option<String>,
 }
@@ -351,7 +351,7 @@ pub struct PresenceInfoMirror {
 pub struct RepeatingSectionMirror {
     pub do_not_allow_insert_delete_section: Option<Box<super::DoNotAllowInsertDeleteSection>>,
     pub title: Option<Box<super::SectionTitle>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -359,7 +359,7 @@ pub struct RepeatingSectionMirror {
 #[rkyv(remote = super::RepeatingSectionItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RepeatingSectionItemMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -367,7 +367,7 @@ pub struct RepeatingSectionItemMirror {
 #[rkyv(remote = super::SectionTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionTitleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -376,7 +376,7 @@ pub struct SectionTitleMirror {
 #[rkyv(remote = super::WebExtensionCreated)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebExtensionCreatedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -385,7 +385,7 @@ pub struct WebExtensionCreatedMirror {
 #[rkyv(remote = super::WebExtensionLinked)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebExtensionLinkedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }

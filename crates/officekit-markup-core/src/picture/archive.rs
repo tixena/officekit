@@ -237,7 +237,7 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub id: Option<super::super::drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -253,7 +253,7 @@ pub struct NonVisualPictureDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub picture_locks: Option<Box<super::super::drawing::PictureLocks>>,
     pub prefer_relative_resize: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -268,7 +268,7 @@ pub struct NonVisualPicturePropertiesMirror {
     pub non_visual_drawing_properties: Box<super::NonVisualDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub non_visual_picture_drawing_properties: Box<super::NonVisualPictureDrawingProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -288,7 +288,7 @@ pub struct PictureMirror {
     #[rkyv(omit_bounds)]
     pub shape_properties: Box<super::ShapeProperties>,
     pub style: Option<Box<super::super::office_drawing_2010_picture::Style>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -305,7 +305,7 @@ pub struct PictureFillMirror {
     pub dpi: Option<String>,
     pub rot_with_shape: Option<String>,
     pub source_rectangle: Option<Box<super::super::drawing::SourceRectangle>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -330,7 +330,7 @@ pub struct ShapePropertiesMirror {
     pub outline: Option<Box<super::super::drawing::Outline>>,
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
 }

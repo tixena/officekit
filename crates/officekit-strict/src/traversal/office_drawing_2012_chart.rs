@@ -233,7 +233,8 @@ impl super::Transform for office_drawing_2012_chart::AutoCat {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_drawing_2012_chart::AutoCat {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_drawing_2012_chart::AutoCat {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::AUTO_CAT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::auto_cat(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_drawing_2012_chart::AutoCat {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::AUTO_CAT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -317,7 +318,8 @@ impl super::Transform for office_drawing_2012_chart::Bubble3D {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -335,7 +337,7 @@ impl super::Visit for office_drawing_2012_chart::Bubble3D {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -348,7 +350,7 @@ impl WriteThrough for office_drawing_2012_chart::Bubble3D {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::BUBBLE3D_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::bubble3d(self, out.scope());
@@ -357,7 +359,7 @@ impl WriteThrough for office_drawing_2012_chart::Bubble3D {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::BUBBLE3D_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -401,9 +403,9 @@ impl super::Transform for office_drawing_2012_chart::Cat {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -421,7 +423,7 @@ impl super::Visit for office_drawing_2012_chart::Cat {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -433,13 +435,20 @@ impl WriteThrough for office_drawing_2012_chart::Cat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2012_chart::CAT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::CAT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::cat(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::CAT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::CAT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -482,7 +491,7 @@ impl super::Transform for office_drawing_2012_chart::CategoryFilterException {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.explosion = super::transform_child(&self.explosion, ctx, &mut rebase);
@@ -491,7 +500,7 @@ impl super::Transform for office_drawing_2012_chart::CategoryFilterException {
         node.bubble3d = super::transform_child(&self.bubble3d, ctx, &mut rebase);
         node.marker = super::transform_child(&self.marker, ctx, &mut rebase);
         node.d_lbl = super::transform_child(&self.d_lbl, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -509,7 +518,7 @@ impl super::Visit for office_drawing_2012_chart::CategoryFilterException {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sqref, visitor);
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.explosion, visitor);
@@ -530,7 +539,7 @@ impl WriteThrough for office_drawing_2012_chart::CategoryFilterException {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::CATEGORY_FILTER_EXCEPTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -540,7 +549,7 @@ impl WriteThrough for office_drawing_2012_chart::CategoryFilterException {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::CATEGORY_FILTER_EXCEPTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sqref, ctx)?;
         through.child(&self.sp_pr, ctx)?;
@@ -590,10 +599,10 @@ impl super::Transform for office_drawing_2012_chart::CategoryFilterExceptions {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.category_filter_exception =
             super::transform_child(&self.category_filter_exception, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -611,7 +620,7 @@ impl super::Visit for office_drawing_2012_chart::CategoryFilterExceptions {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.category_filter_exception, visitor);
         walk.finish(visitor);
     }
@@ -626,7 +635,7 @@ impl WriteThrough for office_drawing_2012_chart::CategoryFilterExceptions {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::CATEGORY_FILTER_EXCEPTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -636,7 +645,7 @@ impl WriteThrough for office_drawing_2012_chart::CategoryFilterExceptions {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::CATEGORY_FILTER_EXCEPTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.category_filter_exception, ctx)?;
         through.finish(ctx)
@@ -680,12 +689,12 @@ impl super::Transform for office_drawing_2012_chart::DLbl {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -703,7 +712,7 @@ impl super::Visit for office_drawing_2012_chart::DLbl {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.chart_extensibility, visitor);
@@ -717,14 +726,20 @@ impl WriteThrough for office_drawing_2012_chart::DLbl {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2012_chart::D_LBL_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::D_LBL_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::d_lbl(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::D_LBL_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::D_LBL_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.index, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.chart_extensibility, ctx)?;
@@ -769,10 +784,10 @@ impl super::Transform for office_drawing_2012_chart::DatalabelsRange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
         node.dlbl_range_cache = super::transform_child(&self.dlbl_range_cache, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -790,7 +805,7 @@ impl super::Visit for office_drawing_2012_chart::DatalabelsRange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.f, visitor);
         walk.child(&self.dlbl_range_cache, visitor);
         walk.finish(visitor);
@@ -806,7 +821,7 @@ impl WriteThrough for office_drawing_2012_chart::DatalabelsRange {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::DATALABELS_RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::datalabels_range(self, out.scope());
@@ -815,7 +830,7 @@ impl WriteThrough for office_drawing_2012_chart::DatalabelsRange {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::DATALABELS_RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.f, ctx)?;
         through.child(&self.dlbl_range_cache, ctx)?;
@@ -860,12 +875,12 @@ impl super::Transform for office_drawing_2012_chart::DlblFTEntry {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.txfld_guid = super::transform_child(&self.txfld_guid, ctx, &mut rebase);
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
         node.dlbl_field_table_cache =
             super::transform_child(&self.dlbl_field_table_cache, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -883,7 +898,7 @@ impl super::Visit for office_drawing_2012_chart::DlblFTEntry {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.txfld_guid, visitor);
         walk.child(&self.f, visitor);
         walk.child(&self.dlbl_field_table_cache, visitor);
@@ -900,7 +915,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblFTEntry {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::DLBL_FT_ENTRY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::dlbl_ft_entry(self, out.scope());
@@ -909,7 +924,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblFTEntry {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::DLBL_FT_ENTRY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.txfld_guid, ctx)?;
         through.child(&self.f, ctx)?;
@@ -955,9 +970,9 @@ impl super::Transform for office_drawing_2012_chart::DlblFieldTable {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.dlbl_ft_entry = super::transform_child(&self.dlbl_ft_entry, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -975,7 +990,7 @@ impl super::Visit for office_drawing_2012_chart::DlblFieldTable {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.dlbl_ft_entry, visitor);
         walk.finish(visitor);
     }
@@ -990,7 +1005,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblFieldTable {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::DLBL_FIELD_TABLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::dlbl_field_table(self, out.scope());
@@ -999,7 +1014,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblFieldTable {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::DLBL_FIELD_TABLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.dlbl_ft_entry, ctx)?;
         through.finish(ctx)
@@ -1043,12 +1058,12 @@ impl super::Transform for office_drawing_2012_chart::DlblFieldTableCache {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.point_count = super::transform_child(&self.point_count, ctx, &mut rebase);
         node.string_point = super::transform_child(&self.string_point, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1066,7 +1081,7 @@ impl super::Visit for office_drawing_2012_chart::DlblFieldTableCache {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.point_count, visitor);
         walk.child(&self.string_point, visitor);
         walk.child(&self.chart_extensibility, visitor);
@@ -1083,7 +1098,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblFieldTableCache {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::DLBL_FIELD_TABLE_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1093,7 +1108,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblFieldTableCache {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::DLBL_FIELD_TABLE_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.point_count, ctx)?;
         through.child(&self.string_point, ctx)?;
@@ -1139,12 +1154,12 @@ impl super::Transform for office_drawing_2012_chart::DlblRangeCache {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.point_count = super::transform_child(&self.point_count, ctx, &mut rebase);
         node.string_point = super::transform_child(&self.string_point, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1162,7 +1177,7 @@ impl super::Visit for office_drawing_2012_chart::DlblRangeCache {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.point_count, visitor);
         walk.child(&self.string_point, visitor);
         walk.child(&self.chart_extensibility, visitor);
@@ -1179,7 +1194,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblRangeCache {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::DLBL_RANGE_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::dlbl_range_cache(self, out.scope());
@@ -1188,7 +1203,7 @@ impl WriteThrough for office_drawing_2012_chart::DlblRangeCache {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::DLBL_RANGE_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.point_count, ctx)?;
         through.child(&self.string_point, ctx)?;
@@ -1234,7 +1249,8 @@ impl super::Transform for office_drawing_2012_chart::Explosion {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1252,7 +1268,7 @@ impl super::Visit for office_drawing_2012_chart::Explosion {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1265,7 +1281,7 @@ impl WriteThrough for office_drawing_2012_chart::Explosion {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::EXPLOSION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::explosion(self, out.scope());
@@ -1274,7 +1290,7 @@ impl WriteThrough for office_drawing_2012_chart::Explosion {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::EXPLOSION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1318,7 +1334,8 @@ impl super::Transform for office_drawing_2012_chart::F {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1336,7 +1353,7 @@ impl super::Visit for office_drawing_2012_chart::F {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1346,13 +1363,20 @@ impl WriteThrough for office_drawing_2012_chart::F {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2012_chart::F_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::F_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::f(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::F_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::F_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -1395,9 +1419,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredAreaSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_area_ser = super::transform_child(&self.ser_area_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1415,7 +1439,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredAreaSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_area_ser, visitor);
         walk.finish(visitor);
     }
@@ -1430,7 +1454,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredAreaSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_AREA_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::filtered_area_series(self, out.scope());
@@ -1439,7 +1463,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredAreaSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_AREA_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_area_ser, ctx)?;
         through.finish(ctx)
@@ -1483,9 +1507,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredBarSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_bar_ser = super::transform_child(&self.ser_bar_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1503,7 +1527,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredBarSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_bar_ser, visitor);
         walk.finish(visitor);
     }
@@ -1518,7 +1542,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredBarSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_BAR_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::filtered_bar_series(self, out.scope());
@@ -1527,7 +1551,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredBarSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_BAR_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_bar_ser, ctx)?;
         through.finish(ctx)
@@ -1571,9 +1595,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredBubbleSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_bubble_ser = super::transform_child(&self.ser_bubble_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1591,7 +1615,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredBubbleSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_bubble_ser, visitor);
         walk.finish(visitor);
     }
@@ -1606,7 +1630,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredBubbleSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_BUBBLE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1616,7 +1640,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredBubbleSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_BUBBLE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_bubble_ser, ctx)?;
         through.finish(ctx)
@@ -1660,9 +1684,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredCategoryTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cat = super::transform_child(&self.cat, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1680,7 +1704,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredCategoryTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cat, visitor);
         walk.finish(visitor);
     }
@@ -1695,7 +1719,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredCategoryTitle {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_CATEGORY_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1705,7 +1729,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredCategoryTitle {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_CATEGORY_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.cat, ctx)?;
         through.finish(ctx)
@@ -1749,9 +1773,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredLineSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_line_ser = super::transform_child(&self.ser_line_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1769,7 +1793,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredLineSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_line_ser, visitor);
         walk.finish(visitor);
     }
@@ -1784,7 +1808,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredLineSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_LINE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::filtered_line_series(self, out.scope());
@@ -1793,7 +1817,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredLineSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_LINE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_line_ser, ctx)?;
         through.finish(ctx)
@@ -1837,9 +1861,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredPieSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_pie_ser = super::transform_child(&self.ser_pie_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1857,7 +1881,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredPieSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_pie_ser, visitor);
         walk.finish(visitor);
     }
@@ -1872,7 +1896,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredPieSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_PIE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::filtered_pie_series(self, out.scope());
@@ -1881,7 +1905,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredPieSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_PIE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_pie_ser, ctx)?;
         through.finish(ctx)
@@ -1925,9 +1949,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredRadarSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_radar_ser = super::transform_child(&self.ser_radar_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1945,7 +1969,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredRadarSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_radar_ser, visitor);
         walk.finish(visitor);
     }
@@ -1960,7 +1984,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredRadarSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_RADAR_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1970,7 +1994,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredRadarSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_RADAR_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_radar_ser, ctx)?;
         through.finish(ctx)
@@ -2014,9 +2038,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredScatterSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_scatter_ser = super::transform_child(&self.ser_scatter_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2034,7 +2058,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredScatterSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_scatter_ser, visitor);
         walk.finish(visitor);
     }
@@ -2049,7 +2073,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredScatterSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_SCATTER_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2059,7 +2083,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredScatterSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_SCATTER_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_scatter_ser, ctx)?;
         through.finish(ctx)
@@ -2103,9 +2127,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredSeriesTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tx = super::transform_child(&self.tx, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2123,7 +2147,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredSeriesTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tx, visitor);
         walk.finish(visitor);
     }
@@ -2138,7 +2162,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredSeriesTitle {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_SERIES_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2148,7 +2172,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredSeriesTitle {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_SERIES_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.tx, ctx)?;
         through.finish(ctx)
@@ -2192,9 +2216,9 @@ impl super::Transform for office_drawing_2012_chart::FilteredSurfaceSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ser_surface_ser = super::transform_child(&self.ser_surface_ser, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2212,7 +2236,7 @@ impl super::Visit for office_drawing_2012_chart::FilteredSurfaceSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ser_surface_ser, visitor);
         walk.finish(visitor);
     }
@@ -2227,7 +2251,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredSurfaceSeries {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FILTERED_SURFACE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2237,7 +2261,7 @@ impl WriteThrough for office_drawing_2012_chart::FilteredSurfaceSeries {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FILTERED_SURFACE_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ser_surface_ser, ctx)?;
         through.finish(ctx)
@@ -2281,9 +2305,9 @@ impl super::Transform for office_drawing_2012_chart::FormulaRef {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2301,7 +2325,7 @@ impl super::Visit for office_drawing_2012_chart::FormulaRef {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sqref, visitor);
         walk.finish(visitor);
     }
@@ -2316,7 +2340,7 @@ impl WriteThrough for office_drawing_2012_chart::FormulaRef {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FORMULA_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::formula_ref(self, out.scope());
@@ -2325,7 +2349,7 @@ impl WriteThrough for office_drawing_2012_chart::FormulaRef {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FORMULA_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sqref, ctx)?;
         through.finish(ctx)
@@ -2369,9 +2393,9 @@ impl super::Transform for office_drawing_2012_chart::FullRef {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2389,7 +2413,7 @@ impl super::Visit for office_drawing_2012_chart::FullRef {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sqref, visitor);
         walk.finish(visitor);
     }
@@ -2404,7 +2428,7 @@ impl WriteThrough for office_drawing_2012_chart::FullRef {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::FULL_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::full_ref(self, out.scope());
@@ -2413,7 +2437,7 @@ impl WriteThrough for office_drawing_2012_chart::FullRef {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::FULL_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sqref, ctx)?;
         through.finish(ctx)
@@ -2457,7 +2481,8 @@ impl super::Transform for office_drawing_2012_chart::InvertIfNegative {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2475,7 +2500,7 @@ impl super::Visit for office_drawing_2012_chart::InvertIfNegative {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2488,7 +2513,7 @@ impl WriteThrough for office_drawing_2012_chart::InvertIfNegative {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::INVERT_IF_NEGATIVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::invert_if_negative(self, out.scope());
@@ -2497,7 +2522,7 @@ impl WriteThrough for office_drawing_2012_chart::InvertIfNegative {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::INVERT_IF_NEGATIVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2541,11 +2566,11 @@ impl super::Transform for office_drawing_2012_chart::Layout {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.manual = super::transform_child(&self.manual, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2563,7 +2588,7 @@ impl super::Visit for office_drawing_2012_chart::Layout {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.manual, visitor);
         walk.child(&self.chart_extensibility, visitor);
         walk.finish(visitor);
@@ -2576,14 +2601,20 @@ impl WriteThrough for office_drawing_2012_chart::Layout {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2012_chart::LAYOUT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::LAYOUT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::layout(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::LAYOUT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::LAYOUT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.manual, ctx)?;
         through.child(&self.chart_extensibility, ctx)?;
         through.finish(ctx)
@@ -2627,9 +2658,9 @@ impl super::Transform for office_drawing_2012_chart::LeaderLines {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.shape_properties = super::transform_child(&self.shape_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2647,7 +2678,7 @@ impl super::Visit for office_drawing_2012_chart::LeaderLines {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.shape_properties, visitor);
         walk.finish(visitor);
     }
@@ -2662,7 +2693,7 @@ impl WriteThrough for office_drawing_2012_chart::LeaderLines {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::LEADER_LINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::leader_lines(self, out.scope());
@@ -2671,7 +2702,7 @@ impl WriteThrough for office_drawing_2012_chart::LeaderLines {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::LEADER_LINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.shape_properties, ctx)?;
         through.finish(ctx)
@@ -2715,9 +2746,9 @@ impl super::Transform for office_drawing_2012_chart::LevelRef {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2735,7 +2766,7 @@ impl super::Visit for office_drawing_2012_chart::LevelRef {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sqref, visitor);
         walk.finish(visitor);
     }
@@ -2750,7 +2781,7 @@ impl WriteThrough for office_drawing_2012_chart::LevelRef {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::LEVEL_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::level_ref(self, out.scope());
@@ -2759,7 +2790,7 @@ impl WriteThrough for office_drawing_2012_chart::LevelRef {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::LEVEL_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sqref, ctx)?;
         through.finish(ctx)
@@ -2803,13 +2834,13 @@ impl super::Transform for office_drawing_2012_chart::Marker {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.symbol = super::transform_child(&self.symbol, ctx, &mut rebase);
         node.size = super::transform_child(&self.size, ctx, &mut rebase);
         node.shape_properties = super::transform_child(&self.shape_properties, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2827,7 +2858,7 @@ impl super::Visit for office_drawing_2012_chart::Marker {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.symbol, visitor);
         walk.child(&self.size, visitor);
         walk.child(&self.shape_properties, visitor);
@@ -2842,14 +2873,20 @@ impl WriteThrough for office_drawing_2012_chart::Marker {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2012_chart::MARKER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::MARKER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::marker(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::MARKER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::MARKER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.symbol, ctx)?;
         through.child(&self.size, ctx)?;
         through.child(&self.shape_properties, ctx)?;
@@ -2895,7 +2932,8 @@ impl super::Transform for office_drawing_2012_chart::NumFmt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2913,7 +2951,7 @@ impl super::Visit for office_drawing_2012_chart::NumFmt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2926,7 +2964,7 @@ impl WriteThrough for office_drawing_2012_chart::NumFmt {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::NUM_FMT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::num_fmt(self, out.scope());
@@ -2935,7 +2973,7 @@ impl WriteThrough for office_drawing_2012_chart::NumFmt {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::NUM_FMT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.format_code);
         through.attribute(1, &self.source_linked);
@@ -2980,12 +3018,12 @@ impl super::Transform for office_drawing_2012_chart::PivotSource {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_name = super::transform_child(&self.pivot_name, ctx, &mut rebase);
         node.format_id = super::transform_child(&self.format_id, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3003,7 +3041,7 @@ impl super::Visit for office_drawing_2012_chart::PivotSource {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_name, visitor);
         walk.child(&self.format_id, visitor);
         walk.child(&self.chart_extensibility, visitor);
@@ -3020,7 +3058,7 @@ impl WriteThrough for office_drawing_2012_chart::PivotSource {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::PIVOT_SOURCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::pivot_source(self, out.scope());
@@ -3029,7 +3067,7 @@ impl WriteThrough for office_drawing_2012_chart::PivotSource {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::PIVOT_SOURCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.pivot_name, ctx)?;
         through.child(&self.format_id, ctx)?;
@@ -3075,7 +3113,7 @@ impl super::Transform for office_drawing_2012_chart::SerAreaSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3090,7 +3128,7 @@ impl super::Transform for office_drawing_2012_chart::SerAreaSer {
         node.values = super::transform_child(&self.values, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3108,7 +3146,7 @@ impl super::Visit for office_drawing_2012_chart::SerAreaSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3134,7 +3172,7 @@ impl WriteThrough for office_drawing_2012_chart::SerAreaSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_AREA_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_area_ser(self, out.scope());
@@ -3143,7 +3181,7 @@ impl WriteThrough for office_drawing_2012_chart::SerAreaSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_AREA_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -3198,7 +3236,7 @@ impl super::Transform for office_drawing_2012_chart::SerBarSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3216,7 +3254,7 @@ impl super::Transform for office_drawing_2012_chart::SerBarSer {
         node.shape = super::transform_child(&self.shape, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3234,7 +3272,7 @@ impl super::Visit for office_drawing_2012_chart::SerBarSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3262,7 +3300,7 @@ impl WriteThrough for office_drawing_2012_chart::SerBarSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_BAR_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_bar_ser(self, out.scope());
@@ -3271,7 +3309,7 @@ impl WriteThrough for office_drawing_2012_chart::SerBarSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_BAR_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -3328,7 +3366,7 @@ impl super::Transform for office_drawing_2012_chart::SerBubbleSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3345,7 +3383,7 @@ impl super::Transform for office_drawing_2012_chart::SerBubbleSer {
         node.bubble3d = super::transform_child(&self.bubble3d, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3363,7 +3401,7 @@ impl super::Visit for office_drawing_2012_chart::SerBubbleSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3391,7 +3429,7 @@ impl WriteThrough for office_drawing_2012_chart::SerBubbleSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_BUBBLE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_bubble_ser(self, out.scope());
@@ -3400,7 +3438,7 @@ impl WriteThrough for office_drawing_2012_chart::SerBubbleSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_BUBBLE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -3457,7 +3495,7 @@ impl super::Transform for office_drawing_2012_chart::SerLineSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3473,7 +3511,7 @@ impl super::Transform for office_drawing_2012_chart::SerLineSer {
         node.smoothing = super::transform_child(&self.smoothing, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3491,7 +3529,7 @@ impl super::Visit for office_drawing_2012_chart::SerLineSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3518,7 +3556,7 @@ impl WriteThrough for office_drawing_2012_chart::SerLineSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_LINE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_line_ser(self, out.scope());
@@ -3527,7 +3565,7 @@ impl WriteThrough for office_drawing_2012_chart::SerLineSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_LINE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -3583,7 +3621,7 @@ impl super::Transform for office_drawing_2012_chart::SerPieSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3596,7 +3634,7 @@ impl super::Transform for office_drawing_2012_chart::SerPieSer {
         node.values = super::transform_child(&self.values, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3614,7 +3652,7 @@ impl super::Visit for office_drawing_2012_chart::SerPieSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3638,7 +3676,7 @@ impl WriteThrough for office_drawing_2012_chart::SerPieSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_PIE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_pie_ser(self, out.scope());
@@ -3647,7 +3685,7 @@ impl WriteThrough for office_drawing_2012_chart::SerPieSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_PIE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -3700,7 +3738,7 @@ impl super::Transform for office_drawing_2012_chart::SerRadarSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3713,7 +3751,7 @@ impl super::Transform for office_drawing_2012_chart::SerRadarSer {
         node.values = super::transform_child(&self.values, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3731,7 +3769,7 @@ impl super::Visit for office_drawing_2012_chart::SerRadarSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3755,7 +3793,7 @@ impl WriteThrough for office_drawing_2012_chart::SerRadarSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_RADAR_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_radar_ser(self, out.scope());
@@ -3764,7 +3802,7 @@ impl WriteThrough for office_drawing_2012_chart::SerRadarSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_RADAR_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -3817,7 +3855,7 @@ impl super::Transform for office_drawing_2012_chart::SerScatterSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3832,7 +3870,7 @@ impl super::Transform for office_drawing_2012_chart::SerScatterSer {
         node.smoothing = super::transform_child(&self.smoothing, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3850,7 +3888,7 @@ impl super::Visit for office_drawing_2012_chart::SerScatterSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3877,7 +3915,7 @@ impl WriteThrough for office_drawing_2012_chart::SerScatterSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_SCATTER_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_scatter_ser(self, out.scope());
@@ -3886,7 +3924,7 @@ impl WriteThrough for office_drawing_2012_chart::SerScatterSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_SCATTER_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -3942,7 +3980,7 @@ impl super::Transform for office_drawing_2012_chart::SerSurfaceSer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.index = super::transform_child(&self.index, ctx, &mut rebase);
         node.order = super::transform_child(&self.order, ctx, &mut rebase);
         node.series_text = super::transform_child(&self.series_text, ctx, &mut rebase);
@@ -3952,7 +3990,7 @@ impl super::Transform for office_drawing_2012_chart::SerSurfaceSer {
         node.values = super::transform_child(&self.values, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3970,7 +4008,7 @@ impl super::Visit for office_drawing_2012_chart::SerSurfaceSer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.index, visitor);
         walk.child(&self.order, visitor);
         walk.child(&self.series_text, visitor);
@@ -3991,7 +4029,7 @@ impl WriteThrough for office_drawing_2012_chart::SerSurfaceSer {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SER_SURFACE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::ser_surface_ser(self, out.scope());
@@ -4000,7 +4038,7 @@ impl WriteThrough for office_drawing_2012_chart::SerSurfaceSer {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SER_SURFACE_SER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.index, ctx)?;
         through.child(&self.order, ctx)?;
@@ -4050,7 +4088,8 @@ impl super::Transform for office_drawing_2012_chart::ShowDataLabelsRange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4068,7 +4107,7 @@ impl super::Visit for office_drawing_2012_chart::ShowDataLabelsRange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4081,7 +4120,7 @@ impl WriteThrough for office_drawing_2012_chart::ShowDataLabelsRange {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SHOW_DATA_LABELS_RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4091,7 +4130,7 @@ impl WriteThrough for office_drawing_2012_chart::ShowDataLabelsRange {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SHOW_DATA_LABELS_RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4135,7 +4174,8 @@ impl super::Transform for office_drawing_2012_chart::ShowLeaderLines {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4153,7 +4193,7 @@ impl super::Visit for office_drawing_2012_chart::ShowLeaderLines {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4166,7 +4206,7 @@ impl WriteThrough for office_drawing_2012_chart::ShowLeaderLines {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::SHOW_LEADER_LINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::show_leader_lines(self, out.scope());
@@ -4175,7 +4215,7 @@ impl WriteThrough for office_drawing_2012_chart::ShowLeaderLines {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::SHOW_LEADER_LINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4219,7 +4259,7 @@ impl super::Transform for office_drawing_2012_chart::SpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -4231,7 +4271,7 @@ impl super::Transform for office_drawing_2012_chart::SpPr {
         node.apply_3d_shape_properties =
             super::transform_child(&self.apply_3d_shape_properties, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4249,7 +4289,7 @@ impl super::Visit for office_drawing_2012_chart::SpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -4268,14 +4308,20 @@ impl WriteThrough for office_drawing_2012_chart::SpPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2012_chart::SP_PR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::SP_PR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::sp_pr(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::SP_PR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::SP_PR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
@@ -4326,7 +4372,8 @@ impl super::Transform for office_drawing_2012_chart::Sqref {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4344,7 +4391,7 @@ impl super::Visit for office_drawing_2012_chart::Sqref {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4354,14 +4401,20 @@ impl WriteThrough for office_drawing_2012_chart::Sqref {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2012_chart::SQREF_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::SQREF_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::sqref(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::SQREF_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::SQREF_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4404,9 +4457,9 @@ impl super::Transform for office_drawing_2012_chart::Tx {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4424,7 +4477,7 @@ impl super::Visit for office_drawing_2012_chart::Tx {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -4436,13 +4489,20 @@ impl WriteThrough for office_drawing_2012_chart::Tx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2012_chart::TX_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2012_chart::TX_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2012_chart::write::tx(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2012_chart::TX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2012_chart::TX_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4485,7 +4545,8 @@ impl super::Transform for office_drawing_2012_chart::TxfldGUID {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4503,7 +4564,7 @@ impl super::Visit for office_drawing_2012_chart::TxfldGUID {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4516,7 +4577,7 @@ impl WriteThrough for office_drawing_2012_chart::TxfldGUID {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::TXFLD_GUID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::txfld_guid(self, out.scope());
@@ -4525,7 +4586,7 @@ impl WriteThrough for office_drawing_2012_chart::TxfldGUID {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::TXFLD_GUID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4569,7 +4630,8 @@ impl super::Transform for office_drawing_2012_chart::XForSave {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4587,7 +4649,7 @@ impl super::Visit for office_drawing_2012_chart::XForSave {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4600,7 +4662,7 @@ impl WriteThrough for office_drawing_2012_chart::XForSave {
         let converted = super::converts(
             out,
             &office_drawing_2012_chart::X_FOR_SAVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_chart::write::x_for_save(self, out.scope());
@@ -4609,7 +4671,7 @@ impl WriteThrough for office_drawing_2012_chart::XForSave {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_chart::X_FOR_SAVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)

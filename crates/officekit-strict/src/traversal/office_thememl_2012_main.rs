@@ -233,9 +233,9 @@ impl super::Transform for office_thememl_2012_main::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_thememl_2012_main::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -265,14 +265,20 @@ impl WriteThrough for office_thememl_2012_main::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_thememl_2012_main::EXT_LST_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_thememl_2012_main::EXT_LST_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_thememl_2012_main::write::ext_lst(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_thememl_2012_main::EXT_LST_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_thememl_2012_main::EXT_LST_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
     }
@@ -315,9 +321,9 @@ impl super::Transform for office_thememl_2012_main::ThemeFamily {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -335,7 +341,7 @@ impl super::Visit for office_thememl_2012_main::ThemeFamily {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -350,7 +356,7 @@ impl WriteThrough for office_thememl_2012_main::ThemeFamily {
         let converted = super::converts(
             out,
             &office_thememl_2012_main::THEME_FAMILY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_thememl_2012_main::write::theme_family(self, out.scope());
@@ -359,7 +365,7 @@ impl WriteThrough for office_thememl_2012_main::ThemeFamily {
         let mut through = super::Through::new(
             out,
             &office_thememl_2012_main::THEME_FAMILY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.id);
@@ -406,9 +412,9 @@ impl super::Transform for office_thememl_2012_main::ThemeVariant {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -426,7 +432,7 @@ impl super::Visit for office_thememl_2012_main::ThemeVariant {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -441,7 +447,7 @@ impl WriteThrough for office_thememl_2012_main::ThemeVariant {
         let converted = super::converts(
             out,
             &office_thememl_2012_main::THEME_VARIANT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_thememl_2012_main::write::theme_variant(self, out.scope());
@@ -450,7 +456,7 @@ impl WriteThrough for office_thememl_2012_main::ThemeVariant {
         let mut through = super::Through::new(
             out,
             &office_thememl_2012_main::THEME_VARIANT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.vid);
@@ -499,9 +505,9 @@ impl super::Transform for office_thememl_2012_main::ThemeVariantLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.theme_variant = super::transform_child(&self.theme_variant, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -519,7 +525,7 @@ impl super::Visit for office_thememl_2012_main::ThemeVariantLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.theme_variant, visitor);
         walk.finish(visitor);
     }
@@ -534,7 +540,7 @@ impl WriteThrough for office_thememl_2012_main::ThemeVariantLst {
         let converted = super::converts(
             out,
             &office_thememl_2012_main::THEME_VARIANT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_thememl_2012_main::write::theme_variant_lst(self, out.scope());
@@ -543,7 +549,7 @@ impl WriteThrough for office_thememl_2012_main::ThemeVariantLst {
         let mut through = super::Through::new(
             out,
             &office_thememl_2012_main::THEME_VARIANT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.theme_variant, ctx)?;
         through.finish(ctx)

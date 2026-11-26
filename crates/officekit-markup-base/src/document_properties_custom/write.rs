@@ -223,7 +223,11 @@ use officekit_xml::write::Scope;
 /// Write a `CustomFileProperties` as its element, `op:Properties`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_file_properties(node: &super::CustomFileProperties, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CUSTOM_FILE_PROPERTIES_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::CUSTOM_FILE_PROPERTIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.custom_file_property);
     writer.finish()
 }
@@ -231,7 +235,11 @@ pub fn custom_file_properties(node: &super::CustomFileProperties, scope: &mut Sc
 /// Write a `CustomFileProperty` as its element, `op:property`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_file_property(node: &super::CustomFileProperty, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CUSTOM_FILE_PROPERTY_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::CUSTOM_FILE_PROPERTY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.fmtid);
     writer.attribute(1, &node.pid);
     writer.attribute(2, &node.name);

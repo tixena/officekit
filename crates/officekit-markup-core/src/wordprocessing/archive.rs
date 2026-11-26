@@ -229,7 +229,7 @@ pub struct AbsolutePositionTabCharacterMirror {
     pub alignment: Option<super::AbsolutePositionTabAlignment>,
     pub leader: Option<super::AbsolutePositionTabLeaderCharacter>,
     pub relative_to: Option<super::AbsolutePositionTabPositioningBase>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -245,7 +245,7 @@ pub struct AbstractNumberingDefinitionMirror {
     pub numbering_template_code: Option<Box<super::NumberingTemplateCode>>,
     pub primary_style_name: Option<Box<super::PrimaryStyleName>>,
     pub r#type: Option<Box<super::AbstractNumberingDefinitionType>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -253,7 +253,7 @@ pub struct AbstractNumberingDefinitionMirror {
 #[rkyv(remote = super::AbstractNumberingDefinitionIdentifier)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbstractNumberingDefinitionIdentifierMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
@@ -262,7 +262,7 @@ pub struct AbstractNumberingDefinitionIdentifierMirror {
 #[rkyv(remote = super::AbstractNumberingDefinitionReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbstractNumberingDefinitionReferenceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -271,7 +271,7 @@ pub struct AbstractNumberingDefinitionReferenceMirror {
 #[rkyv(remote = super::AbstractNumberingDefinitionType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbstractNumberingDefinitionTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::NumberingDefinitionType>,
 }
@@ -280,7 +280,7 @@ pub struct AbstractNumberingDefinitionTypeMirror {
 #[rkyv(remote = super::AddDocumentGridLinePitch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AddDocumentGridLinePitchMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -289,7 +289,7 @@ pub struct AddDocumentGridLinePitchMirror {
 #[rkyv(remote = super::AddSpaceBelowUnderlinedText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AddSpaceBelowUnderlinedTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -298,7 +298,7 @@ pub struct AddSpaceBelowUnderlinedTextMirror {
 #[rkyv(remote = super::AdjustSpacingEastAsianTextNumbers)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AdjustSpacingEastAsianTextNumbersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -307,7 +307,7 @@ pub struct AdjustSpacingEastAsianTextNumbersMirror {
 #[rkyv(remote = super::AdjustSpacingLatinEastAsianText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AdjustSpacingLatinEastAsianTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -316,7 +316,7 @@ pub struct AdjustSpacingLatinEastAsianTextMirror {
 #[rkyv(remote = super::AlignParagraphAndTableBorders)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlignParagraphAndTableBordersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -325,7 +325,7 @@ pub struct AlignParagraphAndTableBordersMirror {
 #[rkyv(remote = super::AlignTableRowsIndependently)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlignTableRowsIndependentlyMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -334,7 +334,7 @@ pub struct AlignTableRowsIndependentlyMirror {
 #[rkyv(remote = super::AllowAutomaticFormattingOverride)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowAutomaticFormattingOverrideMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -343,7 +343,7 @@ pub struct AllowAutomaticFormattingOverrideMirror {
 #[rkyv(remote = super::AllowContextualSpacingOfParagraphsInTables)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowContextualSpacingOfParagraphsInTablesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -352,7 +352,7 @@ pub struct AllowContextualSpacingOfParagraphsInTablesMirror {
 #[rkyv(remote = super::AllowFirstLastLineDisplay)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowFirstLastLineDisplayMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -361,7 +361,7 @@ pub struct AllowFirstLastLineDisplayMirror {
 #[rkyv(remote = super::AllowLineBreakingAtCharacterLevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowLineBreakingAtCharacterLevelMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -370,7 +370,7 @@ pub struct AllowLineBreakingAtCharacterLevelMirror {
 #[rkyv(remote = super::AllowPNGAsGraphicFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowPNGAsGraphicFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -379,7 +379,7 @@ pub struct AllowPNGAsGraphicFormatMirror {
 #[rkyv(remote = super::AllowPunctuationExtendPastTextExtents)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowPunctuationExtendPastTextExtentsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -388,7 +388,7 @@ pub struct AllowPunctuationExtendPastTextExtentsMirror {
 #[rkyv(remote = super::AllowSavingDocumentAsXMLFile)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowSavingDocumentAsXMLFileMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -397,7 +397,7 @@ pub struct AllowSavingDocumentAsXMLFileMirror {
 #[rkyv(remote = super::AllowTableRowsToWrapInlineObjectsIndependently)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowTableRowsToWrapInlineObjectsIndependentlyMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -406,7 +406,7 @@ pub struct AllowTableRowsToWrapInlineObjectsIndependentlyMirror {
 #[rkyv(remote = super::AllowTablesToAutoFitIntoPageMargins)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AllowTablesToAutoFitIntoPageMarginsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -415,7 +415,7 @@ pub struct AllowTablesToAutoFitIntoPageMarginsMirror {
 #[rkyv(remote = super::AlternateNamesForFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlternateNamesForFontMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -424,7 +424,7 @@ pub struct AlternateNamesForFontMirror {
 #[rkyv(remote = super::AlternateStyleNames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlternateStyleNamesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -433,7 +433,7 @@ pub struct AlternateStyleNamesMirror {
 #[rkyv(remote = super::AlwaysMergeEmptyNamespace)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlwaysMergeEmptyNamespaceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -442,7 +442,7 @@ pub struct AlwaysMergeEmptyNamespaceMirror {
 #[rkyv(remote = super::AlwaysShowPlaceholderText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlwaysShowPlaceholderTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -451,7 +451,7 @@ pub struct AlwaysShowPlaceholderTextMirror {
 #[rkyv(remote = super::AlwaysUseFixedWidthForHangulCharacters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlwaysUseFixedWidthForHangulCharactersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -462,7 +462,7 @@ pub struct AlwaysUseFixedWidthForHangulCharactersMirror {
 pub struct AnchorForImportedExternalContentMirror {
     pub id: Option<String>,
     pub import_properties: Option<Box<super::ExternalContentImportProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -471,7 +471,7 @@ pub struct AnchorForImportedExternalContentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorForSubdocumentLocationMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -479,7 +479,7 @@ pub struct AnchorForSubdocumentLocationMirror {
 #[rkyv(remote = super::AnimatedTextEffect)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnimatedTextEffectMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::AnimatedTextEffects>,
 }
@@ -488,7 +488,7 @@ pub struct AnimatedTextEffectMirror {
 #[rkyv(remote = super::AssociatedHTMLDivID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedHTMLDivIDMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -498,7 +498,7 @@ pub struct AssociatedHTMLDivIDMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedHelpTextMirror {
     pub r#type: Option<super::HelpOrStatusTextType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::HelpTextValue>,
 }
@@ -507,7 +507,7 @@ pub struct AssociatedHelpTextMirror {
 #[rkyv(remote = super::AssociatedOutlineLevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedOutlineLevelMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -516,7 +516,7 @@ pub struct AssociatedOutlineLevelMirror {
 #[rkyv(remote = super::AssociatedParagraphStyleName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedParagraphStyleNameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -526,7 +526,7 @@ pub struct AssociatedParagraphStyleNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedStatusTextMirror {
     pub r#type: Option<super::HelpOrStatusTextType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StatusTextValue>,
 }
@@ -535,7 +535,7 @@ pub struct AssociatedStatusTextMirror {
 #[rkyv(remote = super::AttachedCustomXMLSchema)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AttachedCustomXMLSchemaMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -545,7 +545,7 @@ pub struct AttachedCustomXMLSchemaMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AttachedDocumentTemplateMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -553,7 +553,7 @@ pub struct AttachedDocumentTemplateMirror {
 #[rkyv(remote = super::AutoSpaceLikeWord95)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoSpaceLikeWord95Mirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -562,7 +562,7 @@ pub struct AutoSpaceLikeWord95Mirror {
 #[rkyv(remote = super::AutofitToFirstFixedWidthCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutofitToFirstFixedWidthCellMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -572,7 +572,7 @@ pub struct AutofitToFirstFixedWidthCellMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticCaptioningSettingsMirror {
     pub single_automatic_captioning_setting: Vec<super::SingleAutomaticCaptioningSetting>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -580,7 +580,7 @@ pub struct AutomaticCaptioningSettingsMirror {
 #[rkyv(remote = super::AutomaticallyAdjustRightIndent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyAdjustRightIndentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -589,7 +589,7 @@ pub struct AutomaticallyAdjustRightIndentMirror {
 #[rkyv(remote = super::AutomaticallyHyphenateDocumentContentsWhenDisplayed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyHyphenateDocumentContentsWhenDisplayedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -598,7 +598,7 @@ pub struct AutomaticallyHyphenateDocumentContentsWhenDisplayedMirror {
 #[rkyv(remote = super::AutomaticallyMergeUserFormatting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyMergeUserFormattingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -607,7 +607,7 @@ pub struct AutomaticallyMergeUserFormattingMirror {
 #[rkyv(remote = super::AutomaticallyRecalculateFieldsOnOpen)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyRecalculateFieldsOnOpenMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -616,7 +616,7 @@ pub struct AutomaticallyRecalculateFieldsOnOpenMirror {
 #[rkyv(remote = super::AutomaticallySizeFormField)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallySizeFormFieldMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -625,7 +625,7 @@ pub struct AutomaticallySizeFormFieldMirror {
 #[rkyv(remote = super::AutomaticallyUpdateStylesFromDocumentTemplate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallyUpdateStylesFromDocumentTemplateMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -634,7 +634,7 @@ pub struct AutomaticallyUpdateStylesFromDocumentTemplateMirror {
 #[rkyv(remote = super::BalanceSingleByteDoubleByteWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BalanceSingleByteDoubleByteWidthMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -643,7 +643,7 @@ pub struct BalanceSingleByteDoubleByteWidthMirror {
 #[rkyv(remote = super::BibliographyStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BibliographyStructuredDocumentTagMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -656,7 +656,7 @@ pub struct BibliographyStructuredDocumentTagMirror {
 pub struct BidirectionalEmbeddingLevelMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BidirectionalDirectionTypes>,
 }
@@ -670,7 +670,7 @@ pub struct BidirectionalEmbeddingLevelMirror {
 pub struct BidirectionalOverrideMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BidirectionalDirectionTypes>,
 }
@@ -686,7 +686,7 @@ pub struct BlockLevelCustomXMLElementMirror {
     pub content: Vec<super::ContentBlockContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -710,7 +710,7 @@ pub struct BlockLevelStructuredDocumentTagMirror {
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -723,7 +723,7 @@ pub struct BlockLevelStructuredDocumentTagMirror {
 pub struct BlockLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentBlockContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -731,7 +731,7 @@ pub struct BlockLevelStructuredDocumentTagContentMirror {
 #[rkyv(remote = super::Bold)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BoldMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -743,7 +743,7 @@ pub struct BoldItalicFontStyleEmbeddingMirror {
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -754,7 +754,7 @@ pub struct BoldStyleFontStyleEmbeddingMirror {
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -762,7 +762,7 @@ pub struct BoldStyleFontStyleEmbeddingMirror {
 #[rkyv(remote = super::BookFoldPrinting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BookFoldPrintingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -773,7 +773,7 @@ pub struct BookFoldPrintingMirror {
 pub struct BookmarkEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -786,7 +786,7 @@ pub struct BookmarkStartMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -805,7 +805,7 @@ pub struct BottomBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -814,7 +814,7 @@ pub struct BottomBorderMirror {
 #[rkyv(remote = super::BottomMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BottomMarginForHTMLDivMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
@@ -825,7 +825,7 @@ pub struct BottomMarginForHTMLDivMirror {
 pub struct BreakMirror {
     pub clear: Option<super::LineBreakTextWrappingRestartLocation>,
     pub r#type: Option<super::BreakTypes>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -833,7 +833,7 @@ pub struct BreakMirror {
 #[rkyv(remote = super::BuiltInDocumentPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BuiltInDocumentPartMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -845,7 +845,7 @@ pub struct BuiltInDocumentPartStructuredDocumentTagMirror {
     pub built_in_document_part: Option<Box<super::BuiltInDocumentPart>>,
     pub document_part_category_filter: Option<Box<super::DocumentPartCategoryFilter>>,
     pub document_part_gallery_filter: Option<Box<super::DocumentPartGalleryFilter>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -855,7 +855,7 @@ pub struct BuiltInDocumentPartStructuredDocumentTagMirror {
 pub struct CaptionSettingsMirror {
     pub automatic_captioning_settings: Option<Box<super::AutomaticCaptioningSettings>>,
     pub single_caption_type_definition: Vec<super::SingleCaptionTypeDefinition>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -863,7 +863,7 @@ pub struct CaptionSettingsMirror {
 #[rkyv(remote = super::CarriageReturn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CarriageReturnMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -878,7 +878,7 @@ pub struct CellLevelCustomXMLElementMirror {
     pub content: Vec<super::ContentCellContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -902,7 +902,7 @@ pub struct CellLevelStructuredDocumentTagMirror {
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -915,7 +915,7 @@ pub struct CellLevelStructuredDocumentTagMirror {
 pub struct CellLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentCellContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -923,7 +923,7 @@ pub struct CellLevelStructuredDocumentTagContentMirror {
 #[rkyv(remote = super::CharacterLevelWhitespaceCompression)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterLevelWhitespaceCompressionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::CharacterLevelWhitespaceCompressionSettings>,
 }
@@ -933,7 +933,7 @@ pub struct CharacterLevelWhitespaceCompressionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterSetSupportedByFontMirror {
     pub character_set: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::TwoDigitHexadecimalValue>,
 }
@@ -942,7 +942,7 @@ pub struct CharacterSetSupportedByFontMirror {
 #[rkyv(remote = super::CharacterSpacingAdjustment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharacterSpacingAdjustmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
@@ -952,7 +952,7 @@ pub struct CharacterSpacingAdjustmentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CharactersWhichCannotBeginALineMirror {
     pub lang: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -962,7 +962,7 @@ pub struct CharactersWhichCannotBeginALineMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CharactersWhichCannotEndALineMirror {
     pub lang: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -974,7 +974,7 @@ pub struct CheckboxFormFieldPropertiesMirror {
     pub checkbox_form_field_state: Option<Box<super::CheckboxFormFieldState>>,
     pub content: Box<super::CheckboxFormFieldPropertiesContent>,
     pub default_checkbox_form_field_state: Option<Box<super::DefaultCheckboxFormFieldState>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -982,7 +982,7 @@ pub struct CheckboxFormFieldPropertiesMirror {
 #[rkyv(remote = super::CheckboxFormFieldSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckboxFormFieldSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
@@ -991,7 +991,7 @@ pub struct CheckboxFormFieldSizeMirror {
 #[rkyv(remote = super::CheckboxFormFieldState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckboxFormFieldStateMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1005,7 +1005,7 @@ pub struct CheckboxFormFieldStateMirror {
 pub struct ChildDivElementsMirror {
     #[rkyv(omit_bounds)]
     pub information_about_single_html_div_element: Vec<super::InformationAboutSingleHTMLDivElement>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1013,7 +1013,7 @@ pub struct ChildDivElementsMirror {
 #[rkyv(remote = super::CitationStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CitationStructuredDocumentTagMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1021,7 +1021,7 @@ pub struct CitationStructuredDocumentTagMirror {
 #[rkyv(remote = super::ClickAndTypeStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClickAndTypeStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1030,7 +1030,7 @@ pub struct ClickAndTypeStyleMirror {
 #[rkyv(remote = super::ColumnContainingEMailAddress)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnContainingEMailAddressMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1044,7 +1044,7 @@ pub struct ColumnDefinitionsMirror {
     pub sep: Option<common_simple_types::OnOffValue>,
     pub single_column_definition: Vec<super::SingleColumnDefinition>,
     pub space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1052,7 +1052,7 @@ pub struct ColumnDefinitionsMirror {
 #[rkyv(remote = super::ColumnDelimiterForDataSource)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColumnDelimiterForDataSourceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -1062,7 +1062,7 @@ pub struct ColumnDelimiterForDataSourceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComboBoxListItemMirror {
     pub display_text: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: Option<String>,
 }
@@ -1073,7 +1073,7 @@ pub struct ComboBoxListItemMirror {
 pub struct ComboBoxStructuredDocumentTagMirror {
     pub combo_box_list_item: Vec<super::ComboBoxListItem>,
     pub last_value: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1083,7 +1083,7 @@ pub struct ComboBoxStructuredDocumentTagMirror {
 pub struct CommentAnchorRangeEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1093,7 +1093,7 @@ pub struct CommentAnchorRangeEndMirror {
 pub struct CommentAnchorRangeStartMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1111,7 +1111,7 @@ pub struct CommentContentMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub initials: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1120,7 +1120,7 @@ pub struct CommentContentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentContentReferenceMarkMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1128,7 +1128,7 @@ pub struct CommentContentReferenceMarkMirror {
 #[rkyv(remote = super::CommentInformationBlock)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentInformationBlockMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1141,7 +1141,7 @@ pub struct CommentInformationBlockMirror {
 pub struct CommentsCollectionMirror {
     #[rkyv(omit_bounds)]
     pub comment_content: Vec<super::CommentContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1233,7 +1233,7 @@ pub struct CompatibilitySettingsMirror {
     pub underline_all_trailing_spaces: Option<Box<super::UnderlineAllTrailingSpaces>>,
     pub underline_following_character_following_numbering:
         Option<Box<super::UnderlineFollowingCharacterFollowingNumbering>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub use_alt_kinsoku_line_break_rules: Option<Box<super::UseAltKinsokuLineBreakRules>>,
     pub use_ansi_kerning_pairs_from_fonts: Option<Box<super::UseANSIKerningPairsFromFonts>>,
     pub use_cached_paragraph_information_for_column_balancing:
@@ -1260,7 +1260,7 @@ pub struct ComplexFieldCharacterMirror {
     pub dirty: Option<common_simple_types::OnOffValue>,
     pub fld_char_type: Option<super::ComplexFieldCharacterType>,
     pub fld_lock: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1268,7 +1268,7 @@ pub struct ComplexFieldCharacterMirror {
 #[rkyv(remote = super::ComplexScriptBold)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptBoldMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1277,7 +1277,7 @@ pub struct ComplexScriptBoldMirror {
 #[rkyv(remote = super::ComplexScriptFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptFontSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
@@ -1286,7 +1286,7 @@ pub struct ComplexScriptFontSizeMirror {
 #[rkyv(remote = super::ComplexScriptItalics)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexScriptItalicsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1295,7 +1295,7 @@ pub struct ComplexScriptItalicsMirror {
 #[rkyv(remote = super::CompressPunctuationAtStartOfLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CompressPunctuationAtStartOfLineMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1304,7 +1304,7 @@ pub struct CompressPunctuationAtStartOfLineMirror {
 #[rkyv(remote = super::ContentBetweenNumberingSymbolAndText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContentBetweenNumberingSymbolAndTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StLevelSuffix>,
 }
@@ -1314,7 +1314,7 @@ pub struct ContentBetweenNumberingSymbolAndTextMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContentPartMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1328,7 +1328,7 @@ pub struct ContentsOfGlossaryDocumentEntryMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
     pub document_final_section_properties: Option<Box<super::DocumentFinalSectionProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1336,7 +1336,7 @@ pub struct ContentsOfGlossaryDocumentEntryMirror {
 #[rkyv(remote = super::ContinuationSeparatorMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ContinuationSeparatorMarkMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1344,7 +1344,7 @@ pub struct ContinuationSeparatorMarkMirror {
 #[rkyv(remote = super::CurrentContentsArePlaceholderText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CurrentContentsArePlaceholderTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1354,7 +1354,7 @@ pub struct CurrentContentsArePlaceholderTextMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomCompatibilitySettingMirror {
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
     pub val: Option<String>,
@@ -1365,7 +1365,7 @@ pub struct CustomCompatibilitySettingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomFieldDataMirror {
     pub space: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -1376,7 +1376,7 @@ pub struct CustomFieldDataMirror {
 pub struct CustomTabStopMirror {
     pub leader: Option<super::CustomTabStopLeaderCharacter>,
     pub pos: Option<super::SignedMeasurementInTwentiethsOfPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::CustomTabStopType>,
 }
@@ -1386,7 +1386,7 @@ pub struct CustomTabStopMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLAttributeMirror {
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
     pub val: Option<String>,
@@ -1396,7 +1396,7 @@ pub struct CustomXMLAttributeMirror {
 #[rkyv(remote = super::CustomXMLDataDateStorageFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLDataDateStorageFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DateStorageFormatTypes>,
 }
@@ -1405,7 +1405,7 @@ pub struct CustomXMLDataDateStorageFormatMirror {
 #[rkyv(remote = super::CustomXMLElementPlaceholderText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLElementPlaceholderTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1416,7 +1416,7 @@ pub struct CustomXMLElementPlaceholderTextMirror {
 pub struct CustomXMLElementPropertiesMirror {
     pub custom_xml_attribute: Vec<super::CustomXMLAttribute>,
     pub custom_xml_element_placeholder_text: Option<Box<super::CustomXMLElementPlaceholderText>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1425,7 +1425,7 @@ pub struct CustomXMLElementPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLMarkupDeletionEndMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1436,7 +1436,7 @@ pub struct CustomXMLMarkupDeletionStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1445,7 +1445,7 @@ pub struct CustomXMLMarkupDeletionStartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLMarkupInsertionEndMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1456,7 +1456,7 @@ pub struct CustomXMLMarkupInsertionStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1465,7 +1465,7 @@ pub struct CustomXMLMarkupInsertionStartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXMLMarkupMoveSourceEndMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1476,7 +1476,7 @@ pub struct CustomXMLMarkupMoveSourceStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1486,7 +1486,7 @@ pub struct CustomXMLMarkupMoveSourceStartMirror {
 pub struct CustomXSLTransformMirror {
     pub id: Option<String>,
     pub solution_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1495,7 +1495,7 @@ pub struct CustomXSLTransformMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXmlMoveToRangeEndMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1506,7 +1506,7 @@ pub struct CustomXmlMoveToRangeStartMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1517,7 +1517,7 @@ pub struct DataAboutSingleDataSourceRecordMirror {
     pub index_of_column_being_mapped: Box<super::IndexOfColumnBeingMapped>,
     pub is_included_in_mail_merge: Option<Box<super::RecordIsIncludedInMailMerge>>,
     pub unique_value_for_record: Box<super::UniqueValueForRecord>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1525,7 +1525,7 @@ pub struct DataAboutSingleDataSourceRecordMirror {
 #[rkyv(remote = super::DataForHTMLBlockquoteElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataForHTMLBlockquoteElementMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1534,7 +1534,7 @@ pub struct DataForHTMLBlockquoteElementMirror {
 #[rkyv(remote = super::DataForHTMLBodyElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataForHTMLBodyElementMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1543,7 +1543,7 @@ pub struct DataForHTMLBodyElementMirror {
 #[rkyv(remote = super::DataSourceConnectionString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceConnectionStringMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1553,7 +1553,7 @@ pub struct DataSourceConnectionStringMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceFilePathMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1561,7 +1561,7 @@ pub struct DataSourceFilePathMirror {
 #[rkyv(remote = super::DataSourceTableName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceTableNameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1570,7 +1570,7 @@ pub struct DataSourceTableNameMirror {
 #[rkyv(remote = super::DataSourceType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DataSourceTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1579,7 +1579,7 @@ pub struct DataSourceTypeMirror {
 #[rkyv(remote = super::DateBlockLongDayFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockLongDayFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1587,7 +1587,7 @@ pub struct DateBlockLongDayFormatMirror {
 #[rkyv(remote = super::DateBlockLongMonthFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockLongMonthFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1595,7 +1595,7 @@ pub struct DateBlockLongMonthFormatMirror {
 #[rkyv(remote = super::DateBlockLongYearFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockLongYearFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1603,7 +1603,7 @@ pub struct DateBlockLongYearFormatMirror {
 #[rkyv(remote = super::DateBlockShortDayFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockShortDayFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1611,7 +1611,7 @@ pub struct DateBlockShortDayFormatMirror {
 #[rkyv(remote = super::DateBlockShortMonthFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockShortMonthFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1619,7 +1619,7 @@ pub struct DateBlockShortMonthFormatMirror {
 #[rkyv(remote = super::DateBlockShortYearFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateBlockShortYearFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1627,7 +1627,7 @@ pub struct DateBlockShortYearFormatMirror {
 #[rkyv(remote = super::DateDisplayMask)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateDisplayMaskMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1636,7 +1636,7 @@ pub struct DateDisplayMaskMirror {
 #[rkyv(remote = super::DatePickerCalendarType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DatePickerCalendarTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::CalendarTypes>,
 }
@@ -1650,7 +1650,7 @@ pub struct DateStructuredDocumentTagMirror {
     pub date_picker_calendar_type: Option<Box<super::DatePickerCalendarType>>,
     pub full_date: Option<super::StandardDateAndTimeStorageFormat>,
     pub language_id_for_phonetic_guide: Option<Box<super::LanguageIDForPhoneticGuide>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1658,7 +1658,7 @@ pub struct DateStructuredDocumentTagMirror {
 #[rkyv(remote = super::DefaultCheckboxFormFieldState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultCheckboxFormFieldStateMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1667,7 +1667,7 @@ pub struct DefaultCheckboxFormFieldStateMirror {
 #[rkyv(remote = super::DefaultDropDownListItemIndex)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultDropDownListItemIndexMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -1677,7 +1677,7 @@ pub struct DefaultDropDownListItemIndexMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultParagraphPropertiesMirror {
     pub p_pr_general: Option<Box<super::ParagraphPropertiesPPrGeneral>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1690,7 +1690,7 @@ pub struct DefaultParagraphPropertiesMirror {
 pub struct DefaultPropertiesForVMLObjectsInHeaderAndFooterMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::VmlOfficeDrawingElementContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1703,7 +1703,7 @@ pub struct DefaultPropertiesForVMLObjectsInHeaderAndFooterMirror {
 pub struct DefaultPropertiesForVMLObjectsInMainDocumentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::VmlOfficeDrawingElementContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1712,7 +1712,7 @@ pub struct DefaultPropertiesForVMLObjectsInMainDocumentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultRunPropertiesMirror {
     pub run_properties: Option<Box<super::RunProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1720,7 +1720,7 @@ pub struct DefaultRunPropertiesMirror {
 #[rkyv(remote = super::DefaultTableStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultTableStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1729,7 +1729,7 @@ pub struct DefaultTableStyleMirror {
 #[rkyv(remote = super::DefaultTextBoxFormFieldString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultTextBoxFormFieldStringMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1742,7 +1742,7 @@ pub struct DelMirror {
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_run_properties: Box<super::PreviousRunProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1751,7 +1751,7 @@ pub struct DelMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DeletedFieldCodeMirror {
     pub space: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -1765,7 +1765,7 @@ pub struct DeletedMathControlCharacterMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub run_properties: Option<Box<super::RunProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1781,7 +1781,7 @@ pub struct DeletedRunContentMirror {
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1792,7 +1792,7 @@ pub struct DeletedTableRowMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1801,7 +1801,7 @@ pub struct DeletedTableRowMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DeletedTextMirror {
     pub space: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -1810,7 +1810,7 @@ pub struct DeletedTextMirror {
 #[rkyv(remote = super::DescriptionForEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DescriptionForEntryMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -1819,7 +1819,7 @@ pub struct DescriptionForEntryMirror {
 #[rkyv(remote = super::DifferentEvenOddPageHeadersAndFooters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DifferentEvenOddPageHeadersAndFootersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1828,7 +1828,7 @@ pub struct DifferentEvenOddPageHeadersAndFootersMirror {
 #[rkyv(remote = super::DifferentFirstPageHeadersAndFooters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DifferentFirstPageHeadersAndFootersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1838,7 +1838,7 @@ pub struct DifferentFirstPageHeadersAndFootersMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DisableFeaturesNotSupportedMirror {
     pub target: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1847,7 +1847,7 @@ pub struct DisableFeaturesNotSupportedMirror {
 #[rkyv(remote = super::DisplayAllCharactersAsCapitalLetters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayAllCharactersAsCapitalLettersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1856,7 +1856,7 @@ pub struct DisplayAllCharactersAsCapitalLettersMirror {
 #[rkyv(remote = super::DisplayAllLevelsUsingArabicNumerals)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayAllLevelsUsingArabicNumeralsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1865,7 +1865,7 @@ pub struct DisplayAllLevelsUsingArabicNumeralsMirror {
 #[rkyv(remote = super::DisplayBackgroundShape)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayBackgroundShapeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1874,7 +1874,7 @@ pub struct DisplayBackgroundShapeMirror {
 #[rkyv(remote = super::DisplayBackslashAsYenSign)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayBackslashAsYenSignMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1883,7 +1883,7 @@ pub struct DisplayBackslashAsYenSignMirror {
 #[rkyv(remote = super::DisplayCharacterOutline)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayCharacterOutlineMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1892,7 +1892,7 @@ pub struct DisplayCharacterOutlineMirror {
 #[rkyv(remote = super::DisplayPageColumnBreaksPresentInFrames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DisplayPageColumnBreaksPresentInFramesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1901,7 +1901,7 @@ pub struct DisplayPageColumnBreaksPresentInFramesMirror {
 #[rkyv(remote = super::DistanceBetweenAutomaticTabStops)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenAutomaticTabStopsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -1910,7 +1910,7 @@ pub struct DistanceBetweenAutomaticTabStopsMirror {
 #[rkyv(remote = super::DistanceBetweenHorizontalGridlines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenHorizontalGridlinesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -1919,7 +1919,7 @@ pub struct DistanceBetweenHorizontalGridlinesMirror {
 #[rkyv(remote = super::DistanceBetweenPhoneticGuideText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenPhoneticGuideTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
@@ -1928,7 +1928,7 @@ pub struct DistanceBetweenPhoneticGuideTextMirror {
 #[rkyv(remote = super::DistanceBetweenVerticalGridlines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistanceBetweenVerticalGridlinesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -1937,7 +1937,7 @@ pub struct DistanceBetweenVerticalGridlinesMirror {
 #[rkyv(remote = super::DoNotAddLeadingBetweenLinesOfText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAddLeadingBetweenLinesOfTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1946,7 +1946,7 @@ pub struct DoNotAddLeadingBetweenLinesOfTextMirror {
 #[rkyv(remote = super::DoNotAllowFloatingTablesToBreakAcrossPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAllowFloatingTablesToBreakAcrossPagesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1955,7 +1955,7 @@ pub struct DoNotAllowFloatingTablesToBreakAcrossPagesMirror {
 #[rkyv(remote = super::DoNotAutofitConstrainedTables)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAutofitConstrainedTablesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1964,7 +1964,7 @@ pub struct DoNotAutofitConstrainedTablesMirror {
 #[rkyv(remote = super::DoNotAutomaticallyCompressImages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotAutomaticallyCompressImagesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1973,7 +1973,7 @@ pub struct DoNotAutomaticallyCompressImagesMirror {
 #[rkyv(remote = super::DoNotBalanceTextColumnsWithinASection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotBalanceTextColumnsWithinASectionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1982,7 +1982,7 @@ pub struct DoNotBalanceTextColumnsWithinASectionMirror {
 #[rkyv(remote = super::DoNotBreakConstrainedForcedTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotBreakConstrainedForcedTableMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -1991,7 +1991,7 @@ pub struct DoNotBreakConstrainedForcedTableMirror {
 #[rkyv(remote = super::DoNotBypassEastAsianComplexScriptLayoutCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotBypassEastAsianComplexScriptLayoutCodeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2000,7 +2000,7 @@ pub struct DoNotBypassEastAsianComplexScriptLayoutCodeMirror {
 #[rkyv(remote = super::DoNotCenterContentOnLinesWithExactLineHeight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotCenterContentOnLinesWithExactLineHeightMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2009,7 +2009,7 @@ pub struct DoNotCenterContentOnLinesWithExactLineHeightMirror {
 #[rkyv(remote = super::DoNotCheckSpellingOrGrammar)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotCheckSpellingOrGrammarMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2018,7 +2018,7 @@ pub struct DoNotCheckSpellingOrGrammarMirror {
 #[rkyv(remote = super::DoNotCreateCustomTabStopForHangingIndent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotCreateCustomTabStopForHangingIndentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2027,7 +2027,7 @@ pub struct DoNotCreateCustomTabStopForHangingIndentMirror {
 #[rkyv(remote = super::DoNotDisplayFramesetSplitters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplayFramesetSplittersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2036,7 +2036,7 @@ pub struct DoNotDisplayFramesetSplittersMirror {
 #[rkyv(remote = super::DoNotDisplayGrammaticalErrors)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplayGrammaticalErrorsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2045,7 +2045,7 @@ pub struct DoNotDisplayGrammaticalErrorsMirror {
 #[rkyv(remote = super::DoNotDisplayPageBoundaries)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplayPageBoundariesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2054,7 +2054,7 @@ pub struct DoNotDisplayPageBoundariesMirror {
 #[rkyv(remote = super::DoNotDisplaySpellingErrors)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotDisplaySpellingErrorsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2063,7 +2063,7 @@ pub struct DoNotDisplaySpellingErrorsMirror {
 #[rkyv(remote = super::DoNotHyphenateCapitalLetters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotHyphenateCapitalLettersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2072,7 +2072,7 @@ pub struct DoNotHyphenateCapitalLettersMirror {
 #[rkyv(remote = super::DoNotIncludeSubdocsInStats)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotIncludeSubdocsInStatsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2081,7 +2081,7 @@ pub struct DoNotIncludeSubdocsInStatsMirror {
 #[rkyv(remote = super::DoNotIncreaseLineHeightForRaisedLoweredText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotIncreaseLineHeightForRaisedLoweredTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2090,7 +2090,7 @@ pub struct DoNotIncreaseLineHeightForRaisedLoweredTextMirror {
 #[rkyv(remote = super::DoNotPlaceSupportingFiles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotPlaceSupportingFilesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2099,7 +2099,7 @@ pub struct DoNotPlaceSupportingFilesMirror {
 #[rkyv(remote = super::DoNotRelyOnCSS)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotRelyOnCSSMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2108,7 +2108,7 @@ pub struct DoNotRelyOnCSSMirror {
 #[rkyv(remote = super::DoNotShowFormFieldIndicator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotShowFormFieldIndicatorMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2117,7 +2117,7 @@ pub struct DoNotShowFormFieldIndicatorMirror {
 #[rkyv(remote = super::DoNotShowInvalidMarkupIndicator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotShowInvalidMarkupIndicatorMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2126,7 +2126,7 @@ pub struct DoNotShowInvalidMarkupIndicatorMirror {
 #[rkyv(remote = super::DoNotSnapToDocumentGridInTableCellsWithObjects)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSnapToDocumentGridInTableCellsWithObjectsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2135,7 +2135,7 @@ pub struct DoNotSnapToDocumentGridInTableCellsWithObjectsMirror {
 #[rkyv(remote = super::DoNotSuppressBlankLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSuppressBlankLinesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2144,7 +2144,7 @@ pub struct DoNotSuppressBlankLinesMirror {
 #[rkyv(remote = super::DoNotSuppressIndentation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSuppressIndentationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2153,7 +2153,7 @@ pub struct DoNotSuppressIndentationMirror {
 #[rkyv(remote = super::DoNotSuppressParagraphBorders)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotSuppressParagraphBordersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2162,7 +2162,7 @@ pub struct DoNotSuppressParagraphBordersMirror {
 #[rkyv(remote = super::DoNotTrackFormatting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotTrackFormattingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2171,7 +2171,7 @@ pub struct DoNotTrackFormattingMirror {
 #[rkyv(remote = super::DoNotUseEastAsianBreakRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseEastAsianBreakRulesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2180,7 +2180,7 @@ pub struct DoNotUseEastAsianBreakRulesMirror {
 #[rkyv(remote = super::DoNotUseFileNames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseFileNamesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2189,7 +2189,7 @@ pub struct DoNotUseFileNamesMirror {
 #[rkyv(remote = super::DoNotUseHTMLParagraphAutoSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseHTMLParagraphAutoSpacingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2198,7 +2198,7 @@ pub struct DoNotUseHTMLParagraphAutoSpacingMirror {
 #[rkyv(remote = super::DoNotUseIndentAsNumberingTabStop)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseIndentAsNumberingTabStopMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2207,7 +2207,7 @@ pub struct DoNotUseIndentAsNumberingTabStopMirror {
 #[rkyv(remote = super::DoNotUseMarginsForDrawingGridOrigin)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseMarginsForDrawingGridOriginMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2216,7 +2216,7 @@ pub struct DoNotUseMarginsForDrawingGridOriginMirror {
 #[rkyv(remote = super::DoNotUseMoveSyntax)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotUseMoveSyntaxMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2225,7 +2225,7 @@ pub struct DoNotUseMoveSyntaxMirror {
 #[rkyv(remote = super::DoNotValidateAgainstSchema)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotValidateAgainstSchemaMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2234,7 +2234,7 @@ pub struct DoNotValidateAgainstSchemaMirror {
 #[rkyv(remote = super::DoNotVertAlignCellWithSp)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotVertAlignCellWithSpMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2243,7 +2243,7 @@ pub struct DoNotVertAlignCellWithSpMirror {
 #[rkyv(remote = super::DoNotWrapTextWithPunct)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoNotWrapTextWithPunctMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2260,7 +2260,7 @@ pub struct DocumentMirror {
     #[rkyv(omit_bounds)]
     pub body: Option<Box<super::DocumentBody>>,
     pub conformance: Option<common_simple_types::DocumentConformanceClassValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2279,7 +2279,7 @@ pub struct DocumentBackgroundMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2293,7 +2293,7 @@ pub struct DocumentBodyMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
     pub document_final_section_properties: Option<Box<super::DocumentFinalSectionProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2301,7 +2301,7 @@ pub struct DocumentBodyMirror {
 #[rkyv(remote = super::DocumentClassification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentClassificationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -2312,7 +2312,7 @@ pub struct DocumentClassificationMirror {
 pub struct DocumentDefaultParagraphAndRunPropertiesMirror {
     pub default_paragraph_properties: Option<Box<super::DefaultParagraphProperties>>,
     pub default_run_properties: Option<Box<super::DefaultRunProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2339,7 +2339,7 @@ pub struct DocumentEditingRestrictionsMirror {
     pub salt: Option<String>,
     pub salt_value: Option<String>,
     pub spin_count: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2352,7 +2352,7 @@ pub struct DocumentEditingRestrictionsMirror {
 pub struct DocumentEndnotesMirror {
     #[rkyv(omit_bounds)]
     pub endnote_content: Vec<super::EndnoteContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2388,7 +2388,7 @@ pub struct DocumentFinalSectionPropertiesMirror {
     pub section_wide_footnote_properties: Option<Box<super::SectionWideFootnoteProperties>>,
     pub suppress_endnotes_in_document: Option<Box<super::SuppressEndnotesInDocument>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2401,7 +2401,7 @@ pub struct DocumentFinalSectionPropertiesMirror {
 pub struct DocumentFootnotesMirror {
     #[rkyv(omit_bounds)]
     pub footnote_content: Vec<super::FootnoteContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2412,7 +2412,7 @@ pub struct DocumentGridMirror {
     pub char_space: Option<super::DecimalNumberValue>,
     pub line_pitch: Option<super::DecimalNumberValue>,
     pub r#type: Option<super::DocumentGridTypes>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2420,7 +2420,7 @@ pub struct DocumentGridMirror {
 #[rkyv(remote = super::DocumentGridInterLineParagraphSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentGridInterLineParagraphSpacingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2429,7 +2429,7 @@ pub struct DocumentGridInterLineParagraphSpacingMirror {
 #[rkyv(remote = super::DocumentPartCategoryFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentPartCategoryFilterMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -2438,7 +2438,7 @@ pub struct DocumentPartCategoryFilterMirror {
 #[rkyv(remote = super::DocumentPartGalleryFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentPartGalleryFilterMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -2450,7 +2450,7 @@ pub struct DocumentPartGalleryStructuredDocumentTagMirror {
     pub built_in_document_part: Option<Box<super::BuiltInDocumentPart>>,
     pub document_part_category_filter: Option<Box<super::DocumentPartCategoryFilter>>,
     pub document_part_gallery_filter: Option<Box<super::DocumentPartGalleryFilter>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2458,7 +2458,7 @@ pub struct DocumentPartGalleryStructuredDocumentTagMirror {
 #[rkyv(remote = super::DocumentPartReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentPartReferenceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -2589,7 +2589,7 @@ pub struct DocumentSettingsMirror {
     pub theme_color_mappings: Option<Box<super::ThemeColorMappings>>,
     pub theme_font_languages: Option<Box<super::ThemeFontLanguages>>,
     pub track_revisions_to_document: Option<Box<super::TrackRevisionsToDocument>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub upgrade_document_on_open: Option<Box<super::UpgradeDocumentOnOpen>>,
     pub user_data: (),
     pub visibility_of_annotation_types: Option<Box<super::VisibilityOfAnnotationTypes>>,
@@ -2603,7 +2603,7 @@ pub struct DocumentSettingsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentVariablesMirror {
     pub single_document_variable: Vec<super::SingleDocumentVariable>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2611,7 +2611,7 @@ pub struct DocumentVariablesMirror {
 #[rkyv(remote = super::DocumentViewSetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentViewSettingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DocumentViewValues>,
 }
@@ -2627,7 +2627,7 @@ pub struct DocumentWideEndnotePropertiesMirror {
         Option<Box<super::FootnoteAndEndnoteNumberingStartingValue>>,
     pub numbering_format: Option<Box<super::NumberingFormat>>,
     pub special_endnote_list: Vec<super::SpecialEndnoteList>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2642,7 +2642,7 @@ pub struct DocumentWideFootnotePropertiesMirror {
     pub footnote_placement: Option<Box<super::FootnotePlacement>>,
     pub numbering_format: Option<Box<super::NumberingFormat>>,
     pub special_footnote_list: Vec<super::SpecialFootnoteList>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2650,7 +2650,7 @@ pub struct DocumentWideFootnotePropertiesMirror {
 #[rkyv(remote = super::DontJustifySoftLineBreakLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DontJustifySoftLineBreakLinesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2659,7 +2659,7 @@ pub struct DontJustifySoftLineBreakLinesMirror {
 #[rkyv(remote = super::DontWrapCellContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DontWrapCellContentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2668,7 +2668,7 @@ pub struct DontWrapCellContentMirror {
 #[rkyv(remote = super::DoubleStrikethrough)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DoubleStrikethroughMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2677,7 +2677,7 @@ pub struct DoubleStrikethroughMirror {
 #[rkyv(remote = super::DrawingGridHorizontalGridUnitSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridHorizontalGridUnitSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -2686,7 +2686,7 @@ pub struct DrawingGridHorizontalGridUnitSizeMirror {
 #[rkyv(remote = super::DrawingGridHorizontalOriginPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridHorizontalOriginPointMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -2695,7 +2695,7 @@ pub struct DrawingGridHorizontalOriginPointMirror {
 #[rkyv(remote = super::DrawingGridVerticalGridUnitSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridVerticalGridUnitSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -2704,7 +2704,7 @@ pub struct DrawingGridVerticalGridUnitSizeMirror {
 #[rkyv(remote = super::DrawingGridVerticalOriginPoint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingGridVerticalOriginPointMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -2718,7 +2718,7 @@ pub struct DrawingGridVerticalOriginPointMirror {
 pub struct DrawingMLObjectMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::DrawingObjectContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2726,7 +2726,7 @@ pub struct DrawingMLObjectMirror {
 #[rkyv(remote = super::DropDownListEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropDownListEntryMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -2738,7 +2738,7 @@ pub struct DropDownListFormFieldPropertiesMirror {
     pub default_drop_down_list_item_index: Option<Box<super::DefaultDropDownListItemIndex>>,
     pub drop_down_list_entry: Vec<super::DropDownListEntry>,
     pub drop_down_list_selection: Option<Box<super::DropDownListSelection>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2746,7 +2746,7 @@ pub struct DropDownListFormFieldPropertiesMirror {
 #[rkyv(remote = super::DropDownListSelection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropDownListSelectionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -2757,7 +2757,7 @@ pub struct DropDownListSelectionMirror {
 pub struct DropDownListStructuredDocumentTagMirror {
     pub combo_box_list_item: Vec<super::ComboBoxListItem>,
     pub last_value: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2765,7 +2765,7 @@ pub struct DropDownListStructuredDocumentTagMirror {
 #[rkyv(remote = super::EMailMessageCompositionStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EMailMessageCompositionStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2774,7 +2774,7 @@ pub struct EMailMessageCompositionStyleMirror {
 #[rkyv(remote = super::EMailMessageReplyStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EMailMessageReplyStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2783,7 +2783,7 @@ pub struct EMailMessageReplyStyleMirror {
 #[rkyv(remote = super::EMailMessageTextStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EMailMessageTextStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2792,7 +2792,7 @@ pub struct EMailMessageTextStyleMirror {
 #[rkyv(remote = super::EastAsianTypographyRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EastAsianTypographyRulesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2804,7 +2804,7 @@ pub struct EastAsianTypographySettingsMirror {
     pub combine: Option<common_simple_types::OnOffValue>,
     pub combine_brackets: Option<super::TwoLinesEnclosingCharacterType>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vert: Option<common_simple_types::OnOffValue>,
     pub vert_compress: Option<common_simple_types::OnOffValue>,
@@ -2814,7 +2814,7 @@ pub struct EastAsianTypographySettingsMirror {
 #[rkyv(remote = super::EmbedCommonSystemFonts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbedCommonSystemFontsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2823,7 +2823,7 @@ pub struct EmbedCommonSystemFontsMirror {
 #[rkyv(remote = super::EmbedTrueTypeFonts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbedTrueTypeFontsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2835,7 +2835,7 @@ pub struct EmbeddedControlMirror {
     pub id: Option<String>,
     pub name: Option<String>,
     pub shapeid: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2852,7 +2852,7 @@ pub struct EmbeddedObjectMirror {
     pub drawingml_object: Option<Box<super::DrawingMLObject>>,
     pub dxa_orig: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub dya_orig: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     #[rkyv(omit_bounds)]
     pub vml_element_content: Vec<super::VmlElementContent>,
@@ -2867,7 +2867,7 @@ pub struct EmbeddedObjectPropertiesMirror {
     pub id: Option<String>,
     pub prog_id: Option<String>,
     pub shape_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2876,7 +2876,7 @@ pub struct EmbeddedObjectPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedVideoMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2884,7 +2884,7 @@ pub struct EmbeddedVideoMirror {
 #[rkyv(remote = super::Embossing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbossingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -2893,7 +2893,7 @@ pub struct EmbossingMirror {
 #[rkyv(remote = super::EmphasisMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmphasisMarkMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::EmphasisMarkType>,
 }
@@ -2909,7 +2909,7 @@ pub struct EndnoteContentMirror {
     pub content: Vec<super::BlockContent>,
     pub id: Option<super::DecimalNumberValue>,
     pub r#type: Option<super::FootnoteOrEndnoteType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2917,7 +2917,7 @@ pub struct EndnoteContentMirror {
 #[rkyv(remote = super::EndnotePlacement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EndnotePlacementMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::EndnotePositioningLocation>,
 }
@@ -2928,7 +2928,7 @@ pub struct EndnotePlacementMirror {
 pub struct EndnoteReferenceMirror {
     pub custom_mark_follows: Option<common_simple_types::OnOffValue>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2936,7 +2936,7 @@ pub struct EndnoteReferenceMirror {
 #[rkyv(remote = super::EndnoteReferenceMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EndnoteReferenceMarkMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2946,7 +2946,7 @@ pub struct EndnoteReferenceMarkMirror {
 pub struct EntryCategorizationMirror {
     pub gallery_associated_with_entry: Box<super::GalleryAssociatedWithEntry>,
     pub primary_style_name: Box<super::PrimaryStyleName>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2954,7 +2954,7 @@ pub struct EntryCategorizationMirror {
 #[rkyv(remote = super::EntryID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryIDMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::Guid>,
 }
@@ -2963,7 +2963,7 @@ pub struct EntryIDMirror {
 #[rkyv(remote = super::EntryInsertionBehavior)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryInsertionBehaviorMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::InsertionBehaviorTypes>,
 }
@@ -2973,7 +2973,7 @@ pub struct EntryInsertionBehaviorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryInsertionBehaviorsMirror {
     pub entry_insertion_behavior: Vec<super::EntryInsertionBehavior>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2982,7 +2982,7 @@ pub struct EntryInsertionBehaviorsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryNameMirror {
     pub decorated: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -2991,7 +2991,7 @@ pub struct EntryNameMirror {
 #[rkyv(remote = super::EntryType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntryTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StDocPartType>,
 }
@@ -3002,7 +3002,7 @@ pub struct EntryTypeMirror {
 pub struct EntryTypesMirror {
     pub all: Option<common_simple_types::OnOffValue>,
     pub entry_type: Vec<super::EntryType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3010,7 +3010,7 @@ pub struct EntryTypesMirror {
 #[rkyv(remote = super::EquationStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EquationStructuredDocumentTagMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3018,7 +3018,7 @@ pub struct EquationStructuredDocumentTagMirror {
 #[rkyv(remote = super::ExecuteOnFormFieldEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExecuteOnFormFieldEntryMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::ScriptSubroutineNameValue>,
 }
@@ -3027,7 +3027,7 @@ pub struct ExecuteOnFormFieldEntryMirror {
 #[rkyv(remote = super::ExecuteOnFormFieldExit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExecuteOnFormFieldExitMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::ScriptSubroutineNameValue>,
 }
@@ -3036,7 +3036,7 @@ pub struct ExecuteOnFormFieldExitMirror {
 #[rkyv(remote = super::ExpandedCompressedText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExpandedCompressedTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StTextScale>,
 }
@@ -3046,7 +3046,7 @@ pub struct ExpandedCompressedTextMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExternalContentImportPropertiesMirror {
     pub keep_source_formatting_on_import: Option<Box<super::KeepSourceFormattingOnImport>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3059,7 +3059,7 @@ pub struct ExternalDataSourceMergeFieldMappingMirror {
     pub merge_field_mapping: Option<Box<super::MergeFieldMapping>>,
     pub predefined_merge_field_name: Option<Box<super::PredefinedMergeFieldName>>,
     pub primary_style_name: Option<Box<super::PrimaryStyleName>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub use_country_based_address_field_ordering:
         Option<Box<super::UseCountryBasedAddressFieldOrdering>>,
     pub user_data: (),
@@ -3070,7 +3070,7 @@ pub struct ExternalDataSourceMergeFieldMappingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FieldCodeMirror {
     pub space: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -3079,7 +3079,7 @@ pub struct FieldCodeMirror {
 #[rkyv(remote = super::FirstRowContainsColumnNames)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstRowContainsColumnNamesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3088,7 +3088,7 @@ pub struct FirstRowContainsColumnNamesMirror {
 #[rkyv(remote = super::FitTextWithinCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FitTextWithinCellMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3097,7 +3097,7 @@ pub struct FitTextWithinCellMirror {
 #[rkyv(remote = super::FitToExpandedWidthWhenPerformingFullJustification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FitToExpandedWidthWhenPerformingFullJustificationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3106,7 +3106,7 @@ pub struct FitToExpandedWidthWhenPerformingFullJustificationMirror {
 #[rkyv(remote = super::FloatingTableAllowsOverlap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FloatingTableAllowsOverlapMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::TableOverlapSetting>,
 }
@@ -3124,7 +3124,7 @@ pub struct FloatingTablePositioningMirror {
     pub tblp_y: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub tblp_y_spec: Option<common_simple_types::VerticalAlignmentLocation>,
     pub top_from_text: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vert_anchor: Option<super::VerticalAnchorLocation>,
 }
@@ -3133,7 +3133,7 @@ pub struct FloatingTablePositioningMirror {
 #[rkyv(remote = super::FontFamily)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontFamilyMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FontFamilyValue>,
 }
@@ -3142,7 +3142,7 @@ pub struct FontFamilyMirror {
 #[rkyv(remote = super::FontKerning)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontKerningMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
@@ -3151,7 +3151,7 @@ pub struct FontKerningMirror {
 #[rkyv(remote = super::FontPitch)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontPitchMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FontPitchValue>,
 }
@@ -3161,7 +3161,7 @@ pub struct FontPitchMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FontTableRootElementMirror {
     pub properties_for_a_single_font: Vec<super::PropertiesForASingleFont>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3174,7 +3174,7 @@ pub struct FontTableRootElementMirror {
 pub struct FooterMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3184,7 +3184,7 @@ pub struct FooterMirror {
 pub struct FooterReferenceMirror {
     pub id: Option<String>,
     pub r#type: Option<super::HeaderOrFooterType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3192,7 +3192,7 @@ pub struct FooterReferenceMirror {
 #[rkyv(remote = super::FootnoteAndEndnoteNumberingRestartLocation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteAndEndnoteNumberingRestartLocationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FootnoteEndnoteNumberingRestartLocations>,
 }
@@ -3201,7 +3201,7 @@ pub struct FootnoteAndEndnoteNumberingRestartLocationMirror {
 #[rkyv(remote = super::FootnoteAndEndnoteNumberingStartingValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteAndEndnoteNumberingStartingValueMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -3217,7 +3217,7 @@ pub struct FootnoteContentMirror {
     pub content: Vec<super::BlockContent>,
     pub id: Option<super::DecimalNumberValue>,
     pub r#type: Option<super::FootnoteOrEndnoteType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3225,7 +3225,7 @@ pub struct FootnoteContentMirror {
 #[rkyv(remote = super::FootnoteEndnoteSeparatorMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteEndnoteSeparatorMarkMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3233,7 +3233,7 @@ pub struct FootnoteEndnoteSeparatorMarkMirror {
 #[rkyv(remote = super::FootnotePlacement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnotePlacementMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FootnotePositioningLocation>,
 }
@@ -3244,7 +3244,7 @@ pub struct FootnotePlacementMirror {
 pub struct FootnoteReferenceMirror {
     pub custom_mark_follows: Option<common_simple_types::OnOffValue>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3252,7 +3252,7 @@ pub struct FootnoteReferenceMirror {
 #[rkyv(remote = super::FootnoteReferenceMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FootnoteReferenceMarkMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3260,7 +3260,7 @@ pub struct FootnoteReferenceMarkMirror {
 #[rkyv(remote = super::ForgetLastTabAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ForgetLastTabAlignmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3269,7 +3269,7 @@ pub struct ForgetLastTabAlignmentMirror {
 #[rkyv(remote = super::FormFieldEnabled)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FormFieldEnabledMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3278,7 +3278,7 @@ pub struct FormFieldEnabledMirror {
 #[rkyv(remote = super::FormFieldName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FormFieldNameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FormFieldNameValue>,
 }
@@ -3288,7 +3288,7 @@ pub struct FormFieldNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FormFieldPropertiesMirror {
     pub content: Vec<super::FormFieldPropertiesContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3296,7 +3296,7 @@ pub struct FormFieldPropertiesMirror {
 #[rkyv(remote = super::FrameCannotBeResized)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameCannotBeResizedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3306,7 +3306,7 @@ pub struct FrameCannotBeResizedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameLongDescriptionMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3314,7 +3314,7 @@ pub struct FrameLongDescriptionMirror {
 #[rkyv(remote = super::FrameOrFramesetTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameOrFramesetTitleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -3323,7 +3323,7 @@ pub struct FrameOrFramesetTitleMirror {
 #[rkyv(remote = super::FrameSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FrameSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -3332,7 +3332,7 @@ pub struct FrameSizeMirror {
 #[rkyv(remote = super::FramesetLayout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FramesetLayoutMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FramesetLayoutOrder>,
 }
@@ -3341,7 +3341,7 @@ pub struct FramesetLayoutMirror {
 #[rkyv(remote = super::FramesetSplitterBorderStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FramesetSplitterBorderStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3354,7 +3354,7 @@ pub struct FramesetSplitterPropertiesMirror {
     pub frameset_splitter_border_style: Option<Box<super::FramesetSplitterBorderStyle>>,
     pub frameset_splitter_width: Option<Box<super::FramesetSplitterWidth>>,
     pub run_content_color: Option<Box<super::RunContentColor>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3362,7 +3362,7 @@ pub struct FramesetSplitterPropertiesMirror {
 #[rkyv(remote = super::FramesetSplitterWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FramesetSplitterWidthMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -3374,7 +3374,7 @@ pub struct FreezeDocumentLayoutMirror {
     pub actual_pg: Option<common_simple_types::OnOffValue>,
     pub font_sz: Option<super::PercentageMeasurement>,
     pub h: Option<super::MeasurementInPixels>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementInPixels>,
 }
@@ -3383,7 +3383,7 @@ pub struct FreezeDocumentLayoutMirror {
 #[rkyv(remote = super::FriendlyName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FriendlyNameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -3392,7 +3392,7 @@ pub struct FriendlyNameMirror {
 #[rkyv(remote = super::GalleryAssociatedWithEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GalleryAssociatedWithEntryMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::EntryGalleryTypes>,
 }
@@ -3401,7 +3401,7 @@ pub struct GalleryAssociatedWithEntryMirror {
 #[rkyv(remote = super::GenerateThumbnailForDocumentOnSave)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GenerateThumbnailForDocumentOnSaveMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3416,7 +3416,7 @@ pub struct GlossaryDocumentEntryMirror {
     #[rkyv(omit_bounds)]
     pub contents: Option<Box<super::ContentsOfGlossaryDocumentEntry>>,
     pub properties: Option<Box<super::GlossaryDocumentEntryProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3425,7 +3425,7 @@ pub struct GlossaryDocumentEntryMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GlossaryDocumentEntryPropertiesMirror {
     pub content: Vec<super::GlossaryDocumentEntryPropertiesContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3440,7 +3440,7 @@ pub struct GlossaryDocumentRootElementMirror {
     pub document_background: Option<Box<super::DocumentBackground>>,
     #[rkyv(omit_bounds)]
     pub list_of_glossary_document_entries: Option<Box<super::ListOfGlossaryDocumentEntries>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3453,7 +3453,7 @@ pub struct GrammarCheckingSettingsMirror {
     pub dll_version: Option<String>,
     pub lang: Option<String>,
     pub nl_check: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vendor_id: Option<String>,
 }
@@ -3462,7 +3462,7 @@ pub struct GrammarCheckingSettingsMirror {
 #[rkyv(remote = super::GridColumnDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnDefinitionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -3471,7 +3471,7 @@ pub struct GridColumnDefinitionMirror {
 #[rkyv(remote = super::GridColumnsAfterLastCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnsAfterLastCellMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -3480,7 +3480,7 @@ pub struct GridColumnsAfterLastCellMirror {
 #[rkyv(remote = super::GridColumnsBeforeFirstCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnsBeforeFirstCellMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -3489,7 +3489,7 @@ pub struct GridColumnsBeforeFirstCellMirror {
 #[rkyv(remote = super::GridColumnsSpanned)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GridColumnsSpannedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -3498,7 +3498,7 @@ pub struct GridColumnsSpannedMirror {
 #[rkyv(remote = super::GroupStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GroupStructuredDocumentTagMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3506,7 +3506,7 @@ pub struct GroupStructuredDocumentTagMirror {
 #[rkyv(remote = super::GutterOnRightSideOfPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GutterOnRightSideOfPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3520,7 +3520,7 @@ pub struct GutterOnRightSideOfPageMirror {
 pub struct HeaderMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3528,7 +3528,7 @@ pub struct HeaderMirror {
 #[rkyv(remote = super::HeaderCellReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderCellReferenceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -3538,7 +3538,7 @@ pub struct HeaderCellReferenceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderCellsAssociatedWithTableCellMirror {
     pub header_cell_reference: Vec<super::HeaderCellReference>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3547,7 +3547,7 @@ pub struct HeaderCellsAssociatedWithTableCellMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HeaderDefinitionFilePathMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3557,7 +3557,7 @@ pub struct HeaderDefinitionFilePathMirror {
 pub struct HeaderReferenceMirror {
     pub id: Option<String>,
     pub r#type: Option<super::HeaderOrFooterType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3565,7 +3565,7 @@ pub struct HeaderReferenceMirror {
 #[rkyv(remote = super::HiddenTableRowMarker)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HiddenTableRowMarkerMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3574,7 +3574,7 @@ pub struct HiddenTableRowMarkerMirror {
 #[rkyv(remote = super::HiddenText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HiddenTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3583,7 +3583,7 @@ pub struct HiddenTextMirror {
 #[rkyv(remote = super::HideStyleFromMainUserInterface)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HideStyleFromMainUserInterfaceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3592,7 +3592,7 @@ pub struct HideStyleFromMainUserInterfaceMirror {
 #[rkyv(remote = super::HorizontallyMergedCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HorizontallyMergedCellMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MergedCellType>,
 }
@@ -3612,7 +3612,7 @@ pub struct HyperlinkMirror {
     pub id: Option<String>,
     pub tgt_frame: Option<String>,
     pub tooltip: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3620,7 +3620,7 @@ pub struct HyperlinkMirror {
 #[rkyv(remote = super::HyphenationZone)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyphenationZoneMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -3629,7 +3629,7 @@ pub struct HyphenationZoneMirror {
 #[rkyv(remote = super::IgnoreEndOfCellMarker)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreEndOfCellMarkerMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3638,7 +3638,7 @@ pub struct IgnoreEndOfCellMarkerMirror {
 #[rkyv(remote = super::IgnoreExactLineHeightForLastLineOnPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreExactLineHeightForLastLineOnPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3647,7 +3647,7 @@ pub struct IgnoreExactLineHeightForLastLineOnPageMirror {
 #[rkyv(remote = super::IgnoreMinimumLineHeightForFirstLineOnPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreMinimumLineHeightForFirstLineOnPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3656,7 +3656,7 @@ pub struct IgnoreMinimumLineHeightForFirstLineOnPageMirror {
 #[rkyv(remote = super::IgnoreMixedContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreMixedContentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3665,7 +3665,7 @@ pub struct IgnoreMixedContentMirror {
 #[rkyv(remote = super::IgnorePageBreakFromContinuousSectionBreak)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnorePageBreakFromContinuousSectionBreakMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3674,7 +3674,7 @@ pub struct IgnorePageBreakFromContinuousSectionBreakMirror {
 #[rkyv(remote = super::IgnoreSpacingAboveAndBelow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreSpacingAboveAndBelowMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3683,7 +3683,7 @@ pub struct IgnoreSpacingAboveAndBelowMirror {
 #[rkyv(remote = super::IgnoreTextWrappingAroundObjectsAtBottomOfPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreTextWrappingAroundObjectsAtBottomOfPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3692,7 +3692,7 @@ pub struct IgnoreTextWrappingAroundObjectsAtBottomOfPageMirror {
 #[rkyv(remote = super::IgnoreVerticalAlignmentInTextboxes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IgnoreVerticalAlignmentInTextboxesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3701,7 +3701,7 @@ pub struct IgnoreVerticalAlignmentInTextboxesMirror {
 #[rkyv(remote = super::Imprinting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ImprintingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3711,7 +3711,7 @@ pub struct ImprintingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct InclusionExclusionDataForDataSourceMirror {
     pub data_about_single_data_source_record: Vec<super::DataAboutSingleDataSourceRecord>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3719,7 +3719,7 @@ pub struct InclusionExclusionDataForDataSourceMirror {
 #[rkyv(remote = super::IndexOfColumnBeingMapped)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IndexOfColumnBeingMappedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -3729,7 +3729,7 @@ pub struct IndexOfColumnBeingMappedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct InformationAboutHTMLDivElementsMirror {
     pub information_about_single_html_div_element: Vec<super::InformationAboutSingleHTMLDivElement>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3750,7 +3750,7 @@ pub struct InformationAboutSingleHTMLDivElementMirror {
     pub right_margin_for_html_div: Box<super::RightMarginForHTMLDiv>,
     pub set_of_borders_for_html_div: Option<Box<super::SetOfBordersForHTMLDiv>>,
     pub top_margin_for_html_div: Box<super::TopMarginForHTMLDiv>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3765,7 +3765,7 @@ pub struct InlineLevelCustomXMLElementMirror {
     pub content: Vec<super::ParagraphContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -3781,7 +3781,7 @@ pub struct InlineLevelSmartTagMirror {
     pub content: Vec<super::ParagraphContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<super::SmartTagProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -3805,7 +3805,7 @@ pub struct InlineLevelStructuredDocumentTagMirror {
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3818,7 +3818,7 @@ pub struct InlineLevelStructuredDocumentTagMirror {
 pub struct InlineLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ParagraphContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3831,7 +3831,7 @@ pub struct InsertedMathControlCharacterMirror {
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3847,7 +3847,7 @@ pub struct InsertedRunContentMirror {
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3858,7 +3858,7 @@ pub struct InsertedTableRowMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3866,7 +3866,7 @@ pub struct InsertedTableRowMirror {
 #[rkyv(remote = super::InvalidatedFieldCache)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InvalidatedFieldCacheMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3878,7 +3878,7 @@ pub struct ItalicFontStyleEmbeddingMirror {
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3886,7 +3886,7 @@ pub struct ItalicFontStyleEmbeddingMirror {
 #[rkyv(remote = super::Italics)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ItalicsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3895,7 +3895,7 @@ pub struct ItalicsMirror {
 #[rkyv(remote = super::Justification)]
 #[rkyv(attr(non_exhaustive))]
 pub struct JustificationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::HorizontalAlignmentType>,
 }
@@ -3904,7 +3904,7 @@ pub struct JustificationMirror {
 #[rkyv(remote = super::KeepAllLinesOnOnePage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeepAllLinesOnOnePageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3913,7 +3913,7 @@ pub struct KeepAllLinesOnOnePageMirror {
 #[rkyv(remote = super::KeepParagraphWithNextParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeepParagraphWithNextParagraphMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3922,7 +3922,7 @@ pub struct KeepParagraphWithNextParagraphMirror {
 #[rkyv(remote = super::KeepSourceFormattingOnImport)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeepSourceFormattingOnImportMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3931,7 +3931,7 @@ pub struct KeepSourceFormattingOnImportMirror {
 #[rkyv(remote = super::LanguageIDForPhoneticGuide)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LanguageIDForPhoneticGuideMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -3942,7 +3942,7 @@ pub struct LanguageIDForPhoneticGuideMirror {
 pub struct LanguagesForRunContentMirror {
     pub bidi: Option<String>,
     pub east_asia: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -3951,7 +3951,7 @@ pub struct LanguagesForRunContentMirror {
 #[rkyv(remote = super::LastReviewedAbstractNumberingDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastReviewedAbstractNumberingDefinitionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -3966,7 +3966,7 @@ pub struct LatentStyleExceptionMirror {
     pub semi_hidden: Option<common_simple_types::OnOffValue>,
     pub ui_priority: Option<super::DecimalNumberValue>,
     pub unhide_when_used: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3981,7 +3981,7 @@ pub struct LatentStyleInformationMirror {
     pub def_ui_priority: Option<super::DecimalNumberValue>,
     pub def_unhide_when_used: Option<common_simple_types::OnOffValue>,
     pub latent_style_exception: Vec<super::LatentStyleException>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -3989,7 +3989,7 @@ pub struct LatentStyleInformationMirror {
 #[rkyv(remote = super::LayoutRawTableWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LayoutRawTableWidthMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -3998,7 +3998,7 @@ pub struct LayoutRawTableWidthMirror {
 #[rkyv(remote = super::LeftAndRightMarginForFrame)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftAndRightMarginForFrameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInPixels>,
 }
@@ -4016,7 +4016,7 @@ pub struct LeftBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -4025,7 +4025,7 @@ pub struct LeftBorderMirror {
 #[rkyv(remote = super::LeftMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftMarginForHTMLDivMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
@@ -4042,7 +4042,7 @@ pub struct LeftParagraphBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -4052,7 +4052,7 @@ pub struct LeftParagraphBorderMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct LeftParagraphBorderTblWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -4061,7 +4061,7 @@ pub struct LeftParagraphBorderTblWidthMirror {
 #[rkyv(remote = super::LegacyEthiopicAmharicLineBreakingRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LegacyEthiopicAmharicLineBreakingRulesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4073,7 +4073,7 @@ pub struct LegacyNumberingLevelPropertiesMirror {
     pub legacy: Option<common_simple_types::OnOffValue>,
     pub legacy_indent: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub legacy_space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4085,7 +4085,7 @@ pub struct LineNumberingSettingsMirror {
     pub distance: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub restart: Option<super::LineNumberingRestartPosition>,
     pub start: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4093,7 +4093,7 @@ pub struct LineNumberingSettingsMirror {
 #[rkyv(remote = super::LineWrapLikeWord6)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineWrapLikeWord6Mirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4102,7 +4102,7 @@ pub struct LineWrapLikeWord6Mirror {
 #[rkyv(remote = super::LineWrapTrailingSpaces)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineWrapTrailingSpacesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4111,7 +4111,7 @@ pub struct LineWrapTrailingSpacesMirror {
 #[rkyv(remote = super::LinkToExternalQueryFile)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkToExternalQueryFileMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4126,7 +4126,7 @@ pub struct LinkedObjectPropertiesMirror {
     pub locked_field: Option<common_simple_types::OnOffValue>,
     pub prog_id: Option<String>,
     pub shape_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub update_mode: Option<super::EmbeddedObjectUpdateModes>,
     pub user_data: (),
 }
@@ -4135,7 +4135,7 @@ pub struct LinkedObjectPropertiesMirror {
 #[rkyv(remote = super::LinkedStyleReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedStyleReferenceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -4149,7 +4149,7 @@ pub struct LinkedStyleReferenceMirror {
 pub struct ListOfGlossaryDocumentEntriesMirror {
     #[rkyv(omit_bounds)]
     pub glossary_document_entry: Vec<super::GlossaryDocumentEntry>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4157,7 +4157,7 @@ pub struct ListOfGlossaryDocumentEntriesMirror {
 #[rkyv(remote = super::ListSeparatorForFieldCodeEvaluation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListSeparatorForFieldCodeEvaluationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -4166,7 +4166,7 @@ pub struct ListSeparatorForFieldCodeEvaluationMirror {
 #[rkyv(remote = super::LockingSetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LockingSettingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::LockingTypes>,
 }
@@ -4176,7 +4176,7 @@ pub struct LockingSettingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MagnificationSettingMirror {
     pub percent: Option<super::PercentageMeasurement>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MagnificationPresetValues>,
 }
@@ -4185,7 +4185,7 @@ pub struct MagnificationSettingMirror {
 #[rkyv(remote = super::MailMergeErrorReportingSetting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MailMergeErrorReportingSettingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4210,7 +4210,7 @@ pub struct MailMergeSettingsMirror {
     pub record_currently_displayed_in_merged_document:
         Option<Box<super::RecordCurrentlyDisplayedInMergedDocument>>,
     pub source_document_type: Box<super::SourceDocumentType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub view_merged_data_within_document: Option<Box<super::ViewMergedDataWithinDocument>>,
 }
@@ -4219,7 +4219,7 @@ pub struct MailMergeSettingsMirror {
 #[rkyv(remote = super::MaintainLinkToExistingFile)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MaintainLinkToExistingFileMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4229,7 +4229,7 @@ pub struct MaintainLinkToExistingFileMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ManualRunWidthMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -4238,7 +4238,7 @@ pub struct ManualRunWidthMirror {
 #[rkyv(remote = super::MaximumNumberOfConsecutivelyHyphenatedLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MaximumNumberOfConsecutivelyHyphenatedLinesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4247,7 +4247,7 @@ pub struct MaximumNumberOfConsecutivelyHyphenatedLinesMirror {
 #[rkyv(remote = super::MergeFieldMapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergeFieldMappingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MergeFieldMappingTypes>,
 }
@@ -4256,7 +4256,7 @@ pub struct MergeFieldMappingMirror {
 #[rkyv(remote = super::MergedDocumentDestination)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergedDocumentDestinationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MergedDocumentDestinationTypes>,
 }
@@ -4265,7 +4265,7 @@ pub struct MergedDocumentDestinationMirror {
 #[rkyv(remote = super::MergedDocumentToEMailAttachment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergedDocumentToEMailAttachmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4274,7 +4274,7 @@ pub struct MergedDocumentToEMailAttachmentMirror {
 #[rkyv(remote = super::MergedEMailOrFaxSubjectLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MergedEMailOrFaxSubjectLineMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -4283,7 +4283,7 @@ pub struct MergedEMailOrFaxSubjectLineMirror {
 #[rkyv(remote = super::MirrorPageMargins)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MirrorPageMarginsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4294,7 +4294,7 @@ pub struct MirrorPageMarginsMirror {
 pub struct MoveDestinationLocationContainerEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4309,7 +4309,7 @@ pub struct MoveDestinationLocationContainerStartMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4320,7 +4320,7 @@ pub struct MoveDestinationParagraphMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4336,7 +4336,7 @@ pub struct MoveDestinationRunContentMirror {
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4346,7 +4346,7 @@ pub struct MoveDestinationRunContentMirror {
 pub struct MoveSourceLocationContainerEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4361,7 +4361,7 @@ pub struct MoveSourceLocationContainerStartMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<super::DecimalNumberValue>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4372,7 +4372,7 @@ pub struct MoveSourceParagraphMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4388,7 +4388,7 @@ pub struct MoveSourceRunContentMirror {
     pub content: Vec<super::TrackedRunContent>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4405,7 +4405,7 @@ pub struct NestedFramesetDefinitionMirror {
     pub frame_size: Option<Box<super::FrameSize>>,
     pub frameset_layout: Option<Box<super::FramesetLayout>>,
     pub frameset_splitter_properties: Option<Box<super::FramesetSplitterProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4413,7 +4413,7 @@ pub struct NestedFramesetDefinitionMirror {
 #[rkyv(remote = super::NeverKernPunctuationCharacters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NeverKernPunctuationCharactersMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4422,7 +4422,7 @@ pub struct NeverKernPunctuationCharactersMirror {
 #[rkyv(remote = super::NonBreakingHyphenCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonBreakingHyphenCharacterMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4430,7 +4430,7 @@ pub struct NonBreakingHyphenCharacterMirror {
 #[rkyv(remote = super::NonComplexScriptFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonComplexScriptFontSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
@@ -4439,7 +4439,7 @@ pub struct NonComplexScriptFontSizeMirror {
 #[rkyv(remote = super::NotATrueTypeOutlineFont)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NotATrueTypeOutlineFontMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4448,7 +4448,7 @@ pub struct NotATrueTypeOutlineFontMirror {
 #[rkyv(remote = super::NumberOfColumnsInColumnBand)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfColumnsInColumnBandMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4457,7 +4457,7 @@ pub struct NumberOfColumnsInColumnBandMirror {
 #[rkyv(remote = super::NumberOfPagesPerBooklet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfPagesPerBookletMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4466,7 +4466,7 @@ pub struct NumberOfPagesPerBookletMirror {
 #[rkyv(remote = super::NumberOfRowsInRowBand)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfRowsInRowBandMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4478,7 +4478,7 @@ pub struct NumberingDefinitionInstanceMirror {
     pub abstract_numbering_definition_reference: Box<super::AbstractNumberingDefinitionReference>,
     pub num_id: Option<super::DecimalNumberValue>,
     pub numbering_level_definition_override: Vec<super::NumberingLevelDefinitionOverride>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4486,7 +4486,7 @@ pub struct NumberingDefinitionInstanceMirror {
 #[rkyv(remote = super::NumberingDefinitionInstanceReferenceNumId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingDefinitionInstanceReferenceNumIdMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4500,7 +4500,7 @@ pub struct NumberingDefinitionInstanceReferenceNumPrMirror {
         Option<Box<super::NumberingDefinitionInstanceReferenceNumId>>,
     pub numbering_level_reference: Option<Box<super::NumberingLevelReference>>,
     pub previous_numbering_field_properties: Option<Box<super::PreviousNumberingFieldProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4517,7 +4517,7 @@ pub struct NumberingDefinitionsMirror {
     pub numbering_definition_instance: Vec<super::NumberingDefinitionInstance>,
     #[rkyv(omit_bounds)]
     pub picture_numbering_symbol_definition: Vec<super::PictureNumberingSymbolDefinition>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4526,7 +4526,7 @@ pub struct NumberingDefinitionsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingFormatMirror {
     pub format: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StNumberFormat>,
 }
@@ -4539,7 +4539,7 @@ pub struct NumberingLevelDefinitionOverrideMirror {
     pub numbering_level_override_definition: Option<Box<super::NumberingLevelOverrideDefinition>>,
     pub numbering_level_starting_value_override:
         Option<Box<super::NumberingLevelStartingValueOverride>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4565,7 +4565,7 @@ pub struct NumberingLevelOverrideDefinitionMirror {
     pub starting_value: Option<Box<super::StartingValue>>,
     pub tentative: Option<common_simple_types::OnOffValue>,
     pub tplc: Option<super::EightDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4573,7 +4573,7 @@ pub struct NumberingLevelOverrideDefinitionMirror {
 #[rkyv(remote = super::NumberingLevelReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingLevelReferenceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4582,7 +4582,7 @@ pub struct NumberingLevelReferenceMirror {
 #[rkyv(remote = super::NumberingLevelStartingValueOverride)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingLevelStartingValueOverrideMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4592,7 +4592,7 @@ pub struct NumberingLevelStartingValueOverrideMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingLevelTextMirror {
     pub null: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -4601,7 +4601,7 @@ pub struct NumberingLevelTextMirror {
 #[rkyv(remote = super::NumberingStyleDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingStyleDefinitionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -4610,7 +4610,7 @@ pub struct NumberingStyleDefinitionMirror {
 #[rkyv(remote = super::NumberingStyleReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingStyleReferenceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -4619,7 +4619,7 @@ pub struct NumberingStyleReferenceMirror {
 #[rkyv(remote = super::NumberingTemplateCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberingTemplateCodeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
@@ -4629,7 +4629,7 @@ pub struct NumberingTemplateCodeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ODSODataSourceFilePathMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4637,7 +4637,7 @@ pub struct ODSODataSourceFilePathMirror {
 #[rkyv(remote = super::ODSODataSourceType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ODSODataSourceTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MailMergeODSODataSourceTypes>,
 }
@@ -4654,7 +4654,7 @@ pub struct OfficeDataSourceObjectSettingsMirror {
     pub odso_data_source_type: Option<Box<super::ODSODataSourceType>>,
     pub reference_to_inclusion_exclusion_data: Vec<super::ReferenceToInclusionExclusionData>,
     pub udl_connection_string: Option<Box<super::UDLConnectionString>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4662,7 +4662,7 @@ pub struct OfficeDataSourceObjectSettingsMirror {
 #[rkyv(remote = super::OfficeOpenXMLMath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OfficeOpenXMLMathMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4671,7 +4671,7 @@ pub struct OfficeOpenXMLMathMirror {
 #[rkyv(remote = super::OnlyAllowEditingOfFormFields)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlyAllowEditingOfFormFieldsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4680,7 +4680,7 @@ pub struct OnlyAllowEditingOfFormFieldsMirror {
 #[rkyv(remote = super::OnlyExpandCondenseTextByWholePoints)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlyExpandCondenseTextByWholePointsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4689,7 +4689,7 @@ pub struct OnlyExpandCondenseTextByWholePointsMirror {
 #[rkyv(remote = super::OnlyPrintFormFieldContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlyPrintFormFieldContentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4698,7 +4698,7 @@ pub struct OnlyPrintFormFieldContentMirror {
 #[rkyv(remote = super::OnlySaveCustomXMLMarkup)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlySaveCustomXMLMarkupMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4707,7 +4707,7 @@ pub struct OnlySaveCustomXMLMarkupMirror {
 #[rkyv(remote = super::OnlySaveFormFieldContent)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OnlySaveFormFieldContentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4716,7 +4716,7 @@ pub struct OnlySaveFormFieldContentMirror {
 #[rkyv(remote = super::OptionalHyphenCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OptionalHyphenCharacterMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4724,7 +4724,7 @@ pub struct OptionalHyphenCharacterMirror {
 #[rkyv(remote = super::OptionalUserInterfaceSortingOrder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OptionalUserInterfaceSortingOrderMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -4733,7 +4733,7 @@ pub struct OptionalUserInterfaceSortingOrderMirror {
 #[rkyv(remote = super::OriginalDocumentRevisionSaveID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OriginalDocumentRevisionSaveIDMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
@@ -4742,7 +4742,7 @@ pub struct OriginalDocumentRevisionSaveIDMirror {
 #[rkyv(remote = super::OutputEncoding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct OutputEncodingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -4751,7 +4751,7 @@ pub struct OutputEncodingMirror {
 #[rkyv(remote = super::PageBorderExcludesFooter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageBorderExcludesFooterMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4760,7 +4760,7 @@ pub struct PageBorderExcludesFooterMirror {
 #[rkyv(remote = super::PageBorderExcludesHeader)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageBorderExcludesHeaderMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -4775,7 +4775,7 @@ pub struct PageBordersMirror {
     pub offset_from: Option<super::PageBorderPositioningBase>,
     pub right_border: Option<Box<super::RightBorder>>,
     pub top_border: Option<Box<super::TopBorder>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub z_order: Option<super::PageBorderZOrder>,
 }
@@ -4791,7 +4791,7 @@ pub struct PageMarginsMirror {
     pub left: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub right: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub top: Option<super::SignedMeasurementInTwentiethsOfPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4799,7 +4799,7 @@ pub struct PageMarginsMirror {
 #[rkyv(remote = super::PageNumberBlock)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PageNumberBlockMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4811,7 +4811,7 @@ pub struct PageNumberingSettingsMirror {
     pub chap_style: Option<super::DecimalNumberValue>,
     pub fmt: Option<super::StNumberFormat>,
     pub start: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4822,7 +4822,7 @@ pub struct PageSizeMirror {
     pub code: Option<super::DecimalNumberValue>,
     pub h: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub orient: Option<super::PageOrientation>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -4831,7 +4831,7 @@ pub struct PageSizeMirror {
 #[rkyv(remote = super::Panose1TypefaceClassificationNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Panose1TypefaceClassificationNumberMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::Panose1Number>,
 }
@@ -4842,7 +4842,7 @@ pub struct Panose1TypefaceClassificationNumberMirror {
 pub struct PaperSourceInformationMirror {
     pub first: Option<super::DecimalNumberValue>,
     pub other: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4864,7 +4864,7 @@ pub struct ParagraphMirror {
     pub rsid_r_default: Option<super::EightDigitHexadecimalValue>,
     pub rsid_r_pr: Option<super::EightDigitHexadecimalValue>,
     pub text_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4872,7 +4872,7 @@ pub struct ParagraphMirror {
 #[rkyv(remote = super::ParagraphAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphAlignmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::HorizontalAlignmentType>,
 }
@@ -4889,7 +4889,7 @@ pub struct ParagraphBorderAboveIdenticalParagraphsMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -4899,7 +4899,7 @@ pub struct ParagraphBorderAboveIdenticalParagraphsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderAboveIdenticalParagraphsTblWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -4916,7 +4916,7 @@ pub struct ParagraphBorderBelowIdenticalParagraphsMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -4926,7 +4926,7 @@ pub struct ParagraphBorderBelowIdenticalParagraphsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphBorderBelowIdenticalParagraphsTblWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -4943,7 +4943,7 @@ pub struct ParagraphBorderBetweenFacingPagesMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -4960,7 +4960,7 @@ pub struct ParagraphBorderBetweenIdenticalParagraphsMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -4979,7 +4979,7 @@ pub struct ParagraphBordersMirror {
     pub paragraph_border_between_identical_paragraphs:
         Option<Box<super::ParagraphBorderBetweenIdenticalParagraphs>>,
     pub right_paragraph_border: Option<Box<super::RightParagraphBorder>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -4999,7 +4999,7 @@ pub struct ParagraphConditionalFormattingMirror {
     pub last_row_last_column: Option<common_simple_types::OnOffValue>,
     pub odd_h_band: Option<common_simple_types::OnOffValue>,
     pub odd_v_band: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::ConditionalFormattingBitmask>,
 }
@@ -5020,7 +5020,7 @@ pub struct ParagraphIndentationMirror {
     pub right_chars: Option<super::DecimalNumberValue>,
     pub start: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub start_chars: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5028,7 +5028,7 @@ pub struct ParagraphIndentationMirror {
 #[rkyv(remote = super::ParagraphMarkIsAlwaysHidden)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphMarkIsAlwaysHiddenMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5042,7 +5042,7 @@ pub struct ParagraphMarkRunPropertiesRevisionMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_paragraph_mark_run_properties: Box<super::PreviousParagraphMarkRunProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5090,7 +5090,7 @@ pub struct ParagraphPropertiesMirror {
     pub suppress_line_numbers_for_paragraph: Option<Box<super::SuppressLineNumbersForParagraph>>,
     pub text_frame_properties: Option<Box<super::TextFrameProperties>>,
     pub textbox_tight_wrap: Option<Box<super::TextboxTightWrap>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub use_left_right_indents_as_inside_outside_indents:
         Option<Box<super::UseLeftRightIndentsAsInsideOutsideIndents>>,
     pub user_data: (),
@@ -5140,7 +5140,7 @@ pub struct ParagraphPropertiesPPrGeneralMirror {
     pub suppress_line_numbers_for_paragraph: Option<Box<super::SuppressLineNumbersForParagraph>>,
     pub text_frame_properties: Option<Box<super::TextFrameProperties>>,
     pub textbox_tight_wrap: Option<Box<super::TextboxTightWrap>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub use_left_right_indents_as_inside_outside_indents:
         Option<Box<super::UseLeftRightIndentsAsInsideOutsideIndents>>,
     pub user_data: (),
@@ -5159,7 +5159,7 @@ pub struct ParagraphShadingMirror {
     pub theme_fill_tint: Option<super::TwoDigitHexadecimalValue>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::ShadingPatterns>,
 }
@@ -5168,7 +5168,7 @@ pub struct ParagraphShadingMirror {
 #[rkyv(remote = super::ParagraphTextFlowDirection)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParagraphTextFlowDirectionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StTextDirection>,
 }
@@ -5177,7 +5177,7 @@ pub struct ParagraphTextFlowDirectionMirror {
 #[rkyv(remote = super::ParentStyleID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ParentStyleIDMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5186,7 +5186,7 @@ pub struct ParentStyleIDMirror {
 #[rkyv(remote = super::PercentageOfDocumentToUse)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PercentageOfDocumentToUseMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::PercentageMeasurement>,
 }
@@ -5203,7 +5203,7 @@ pub struct PhoneticGuideMirror {
     pub properties: Box<super::PhoneticGuideProperties>,
     #[rkyv(omit_bounds)]
     pub text: Box<super::PhoneticGuideText>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5216,7 +5216,7 @@ pub struct PhoneticGuideMirror {
 pub struct PhoneticGuideBaseTextMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::PhoneticGuideContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5224,7 +5224,7 @@ pub struct PhoneticGuideBaseTextMirror {
 #[rkyv(remote = super::PhoneticGuideBaseTextFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhoneticGuideBaseTextFontSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
@@ -5239,7 +5239,7 @@ pub struct PhoneticGuidePropertiesMirror {
     pub phonetic_guide_base_text_font_size: Box<super::PhoneticGuideBaseTextFontSize>,
     pub phonetic_guide_text_alignment: Box<super::PhoneticGuideTextAlignment>,
     pub phonetic_guide_text_font_size: Box<super::PhoneticGuideTextFontSize>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5252,7 +5252,7 @@ pub struct PhoneticGuidePropertiesMirror {
 pub struct PhoneticGuideTextMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::PhoneticGuideContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5260,7 +5260,7 @@ pub struct PhoneticGuideTextMirror {
 #[rkyv(remote = super::PhoneticGuideTextAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhoneticGuideTextAlignmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StRubyAlign>,
 }
@@ -5269,7 +5269,7 @@ pub struct PhoneticGuideTextAlignmentMirror {
 #[rkyv(remote = super::PhoneticGuideTextFontSize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PhoneticGuideTextFontSizeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInHalfPoints>,
 }
@@ -5284,7 +5284,7 @@ pub struct PictureNumberingSymbolDefinitionMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::PictureNumberingSymbolDefinitionContent>,
     pub num_pic_bullet_id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5292,7 +5292,7 @@ pub struct PictureNumberingSymbolDefinitionMirror {
 #[rkyv(remote = super::PictureNumberingSymbolDefinitionReference)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PictureNumberingSymbolDefinitionReferenceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -5301,7 +5301,7 @@ pub struct PictureNumberingSymbolDefinitionReferenceMirror {
 #[rkyv(remote = super::PictureStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PictureStructuredDocumentTagMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5309,7 +5309,7 @@ pub struct PictureStructuredDocumentTagMirror {
 #[rkyv(remote = super::PixelsPerInchForGraphicsImages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PixelsPerInchForGraphicsImagesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -5318,7 +5318,7 @@ pub struct PixelsPerInchForGraphicsImagesMirror {
 #[rkyv(remote = super::PlaceholderTextShouldBeResaved)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PlaceholderTextShouldBeResavedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5328,7 +5328,7 @@ pub struct PlaceholderTextShouldBeResavedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PlainTextStructuredDocumentTagMirror {
     pub multi_line: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5336,7 +5336,7 @@ pub struct PlainTextStructuredDocumentTagMirror {
 #[rkyv(remote = super::PositionGutterAtTopOfPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PositionGutterAtTopOfPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5345,7 +5345,7 @@ pub struct PositionGutterAtTopOfPageMirror {
 #[rkyv(remote = super::PositionOfLastCalculatedPageBreak)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PositionOfLastCalculatedPageBreakMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5353,7 +5353,7 @@ pub struct PositionOfLastCalculatedPageBreakMirror {
 #[rkyv(remote = super::PredefinedMergeFieldName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PredefinedMergeFieldNameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5363,7 +5363,7 @@ pub struct PredefinedMergeFieldNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredTableCellWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -5373,7 +5373,7 @@ pub struct PreferredTableCellWidthMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredTableWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -5383,7 +5383,7 @@ pub struct PreferredTableWidthMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredWidthAfterTableRowMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -5393,7 +5393,7 @@ pub struct PreferredWidthAfterTableRowMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreferredWidthBeforeTableRowMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -5402,7 +5402,7 @@ pub struct PreferredWidthBeforeTableRowMirror {
 #[rkyv(remote = super::PreventModificationOfThemesPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreventModificationOfThemesPartMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5411,7 +5411,7 @@ pub struct PreventModificationOfThemesPartMirror {
 #[rkyv(remote = super::PreventReplacementOfStylesPart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreventReplacementOfStylesPartMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5420,7 +5420,7 @@ pub struct PreventReplacementOfStylesPartMirror {
 #[rkyv(remote = super::PreventTextFramesFromOverlapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PreventTextFramesFromOverlappingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5434,7 +5434,7 @@ pub struct PreviousNumberingFieldPropertiesMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub original: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5460,7 +5460,7 @@ pub struct PreviousParagraphMarkRunPropertiesMirror {
     pub stylistic_sets: Vec<super::super::office_word_2010_wordml::StylisticSets>,
     pub text_fill: Vec<super::super::office_word_2010_wordml::TextFill>,
     pub text_outline: Vec<super::super::office_word_2010_wordml::TextOutline>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5505,7 +5505,7 @@ pub struct PreviousParagraphPropertiesMirror {
     pub suppress_line_numbers_for_paragraph: Option<Box<super::SuppressLineNumbersForParagraph>>,
     pub text_frame_properties: Option<Box<super::TextFrameProperties>>,
     pub textbox_tight_wrap: Option<Box<super::TextboxTightWrap>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub use_left_right_indents_as_inside_outside_indents:
         Option<Box<super::UseLeftRightIndentsAsInsideOutsideIndents>>,
     pub user_data: (),
@@ -5529,7 +5529,7 @@ pub struct PreviousRunPropertiesMirror {
     pub stylistic_sets: Vec<super::super::office_word_2010_wordml::StylisticSets>,
     pub text_fill: Vec<super::super::office_word_2010_wordml::TextFill>,
     pub text_outline: Vec<super::super::office_word_2010_wordml::TextOutline>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5562,7 +5562,7 @@ pub struct PreviousSectionPropertiesMirror {
     pub section_wide_footnote_properties: Option<Box<super::SectionWideFootnoteProperties>>,
     pub suppress_endnotes_in_document: Option<Box<super::SuppressEndnotesInDocument>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5585,7 +5585,7 @@ pub struct PreviousTableCellPropertiesMirror {
     pub single_table_cell_margins: Option<Box<super::SingleTableCellMargins>>,
     pub table_cell_borders: Option<Box<super::TableCellBorders>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vertically_merged_cell: Option<Box<super::VerticallyMergedCell>>,
 }
@@ -5595,7 +5595,7 @@ pub struct PreviousTableCellPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreviousTableGridMirror {
     pub column_definition: Vec<super::GridColumnDefinition>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5613,7 +5613,7 @@ pub struct PreviousTableLevelPropertyExceptionsMirror {
     pub table_row_cell_spacing: Option<Box<super::TableRowCellSpacing>>,
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5638,7 +5638,7 @@ pub struct PreviousTablePropertiesMirror {
     pub table_row_cell_spacing: Option<Box<super::TableRowCellSpacing>>,
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visually_right_to_left_table: Option<Box<super::VisuallyRightToLeftTable>>,
 }
@@ -5648,7 +5648,7 @@ pub struct PreviousTablePropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PreviousTableRowPropertiesMirror {
     pub content: Vec<super::TableRowPropertiesContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5656,7 +5656,7 @@ pub struct PreviousTableRowPropertiesMirror {
 #[rkyv(remote = super::PrimaryStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5665,7 +5665,7 @@ pub struct PrimaryStyleMirror {
 #[rkyv(remote = super::PrimaryStyleName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryStyleNameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5674,7 +5674,7 @@ pub struct PrimaryStyleNameMirror {
 #[rkyv(remote = super::PrintBodyTextBeforeHeaderFooterContents)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintBodyTextBeforeHeaderFooterContentsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5683,7 +5683,7 @@ pub struct PrintBodyTextBeforeHeaderFooterContentsMirror {
 #[rkyv(remote = super::PrintColorsAsBlackAndWhiteWithoutDithering)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintColorsAsBlackAndWhiteWithoutDitheringMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5692,7 +5692,7 @@ pub struct PrintColorsAsBlackAndWhiteWithoutDitheringMirror {
 #[rkyv(remote = super::PrintFractionalCharacterWidths)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintFractionalCharacterWidthsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5701,7 +5701,7 @@ pub struct PrintFractionalCharacterWidthsMirror {
 #[rkyv(remote = super::PrintPostScriptCodesWithDocumentText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintPostScriptCodesWithDocumentTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5710,7 +5710,7 @@ pub struct PrintPostScriptCodesWithDocumentTextMirror {
 #[rkyv(remote = super::PrintTwoPagesPerSheet)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintTwoPagesPerSheetMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5719,7 +5719,7 @@ pub struct PrintTwoPagesPerSheetMirror {
 #[rkyv(remote = super::ProgrammaticTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProgrammaticTagMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5729,7 +5729,7 @@ pub struct ProgrammaticTagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ProofingErrorAnchorMirror {
     pub r#type: Option<super::ProofingErrorType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5751,7 +5751,7 @@ pub struct PropertiesForASingleFontMirror {
     pub regular_font_style_embedding: Option<Box<super::RegularFontStyleEmbedding>>,
     pub supported_unicode_subranges_and_code_pages:
         Option<Box<super::SupportedUnicodeSubrangesAndCodePages>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5759,7 +5759,7 @@ pub struct PropertiesForASingleFontMirror {
 #[rkyv(remote = super::QueryForDataSourceRecords)]
 #[rkyv(attr(non_exhaustive))]
 pub struct QueryForDataSourceRecordsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5768,7 +5768,7 @@ pub struct QueryForDataSourceRecordsMirror {
 #[rkyv(remote = super::RadixPointForFieldCodeEvaluation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RadixPointForFieldCodeEvaluationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5779,7 +5779,7 @@ pub struct RadixPointForFieldCodeEvaluationMirror {
 pub struct RangePermissionEndMirror {
     pub displaced_by_custom_xml: Option<super::DisplacedByCustomXml>,
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5793,7 +5793,7 @@ pub struct RangePermissionStartMirror {
     pub ed: Option<String>,
     pub ed_grp: Option<super::RangePermisionEditingGroup>,
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5801,7 +5801,7 @@ pub struct RangePermissionStartMirror {
 #[rkyv(remote = super::RecalculateFieldsWhenModified)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecalculateFieldsWhenModifiedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5810,7 +5810,7 @@ pub struct RecalculateFieldsWhenModifiedMirror {
 #[rkyv(remote = super::RecommendWebPageFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecommendWebPageFormatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5819,7 +5819,7 @@ pub struct RecommendWebPageFormatMirror {
 #[rkyv(remote = super::RecordCurrentlyDisplayedInMergedDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecordCurrentlyDisplayedInMergedDocumentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -5828,7 +5828,7 @@ pub struct RecordCurrentlyDisplayedInMergedDocumentMirror {
 #[rkyv(remote = super::RecordIsIncludedInMailMerge)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecordIsIncludedInMailMergeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5838,7 +5838,7 @@ pub struct RecordIsIncludedInMailMergeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToInclusionExclusionDataMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5847,7 +5847,7 @@ pub struct ReferenceToInclusionExclusionDataMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToPrinterSettingsDataMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5855,7 +5855,7 @@ pub struct ReferenceToPrinterSettingsDataMirror {
 #[rkyv(remote = super::ReferencedCharacterStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferencedCharacterStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5864,7 +5864,7 @@ pub struct ReferencedCharacterStyleMirror {
 #[rkyv(remote = super::ReferencedParagraphStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferencedParagraphStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5873,7 +5873,7 @@ pub struct ReferencedParagraphStyleMirror {
 #[rkyv(remote = super::ReferencedTableStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferencedTableStyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -5885,7 +5885,7 @@ pub struct RegularFontStyleEmbeddingMirror {
     pub font_key: Option<common_simple_types::Guid>,
     pub id: Option<String>,
     pub subsetted: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -5893,7 +5893,7 @@ pub struct RegularFontStyleEmbeddingMirror {
 #[rkyv(remote = super::RemoveDateAndTimeFromAnnotations)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveDateAndTimeFromAnnotationsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5902,7 +5902,7 @@ pub struct RemoveDateAndTimeFromAnnotationsMirror {
 #[rkyv(remote = super::RemovePersonalInformation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemovePersonalInformationMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5911,7 +5911,7 @@ pub struct RemovePersonalInformationMirror {
 #[rkyv(remote = super::RemoveSemiHiddenProperty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveSemiHiddenPropertyMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5920,7 +5920,7 @@ pub struct RemoveSemiHiddenPropertyMirror {
 #[rkyv(remote = super::RemoveSmartTagsWhenSaving)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveSmartTagsWhenSavingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5929,7 +5929,7 @@ pub struct RemoveSmartTagsWhenSavingMirror {
 #[rkyv(remote = super::RemoveStructuredDocumentTagWhenEdited)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RemoveStructuredDocumentTagWhenEditedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5938,7 +5938,7 @@ pub struct RemoveStructuredDocumentTagWhenEditedMirror {
 #[rkyv(remote = super::RepeatTableRow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RepeatTableRowMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5947,7 +5947,7 @@ pub struct RepeatTableRowMirror {
 #[rkyv(remote = super::RequireExactSizeDuringFontSubstitution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RequireExactSizeDuringFontSubstitutionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5956,7 +5956,7 @@ pub struct RequireExactSizeDuringFontSubstitutionMirror {
 #[rkyv(remote = super::RestartNumberingLevelSymbol)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RestartNumberingLevelSymbolMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -5965,7 +5965,7 @@ pub struct RestartNumberingLevelSymbolMirror {
 #[rkyv(remote = super::ReverseBookFoldPrinting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReverseBookFoldPrintingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -5974,7 +5974,7 @@ pub struct ReverseBookFoldPrintingMirror {
 #[rkyv(remote = super::RevisionIdentifierForStyleDefinition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RevisionIdentifierForStyleDefinitionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::EightDigitHexadecimalValue>,
 }
@@ -5988,7 +5988,7 @@ pub struct RevisionInformationForParagraphPropertiesMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_paragraph_properties: Box<super::PreviousParagraphProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6001,7 +6001,7 @@ pub struct RevisionInformationForRunPropertiesMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_run_properties: Box<super::PreviousRunProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6014,7 +6014,7 @@ pub struct RevisionInformationForSectionPropertiesMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_section_properties: Option<Box<super::PreviousSectionProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6027,7 +6027,7 @@ pub struct RevisionInformationForTableCellPropertiesMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_cell_properties: Box<super::PreviousTableCellProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6040,7 +6040,7 @@ pub struct RevisionInformationForTableLevelPropertyExceptionsMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_level_property_exceptions: Box<super::PreviousTableLevelPropertyExceptions>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6053,7 +6053,7 @@ pub struct RevisionInformationForTablePropertiesMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_properties: Box<super::PreviousTableProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6066,7 +6066,7 @@ pub struct RevisionInformationForTableRowPropertiesMirror {
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_row_properties: Box<super::PreviousTableRowProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6076,7 +6076,7 @@ pub struct RevisionInformationForTableRowPropertiesMirror {
 pub struct RevisionSaveIDValuesMirror {
     pub original_document_revision_save_id: Option<Box<super::OriginalDocumentRevisionSaveID>>,
     pub revision_identifier_for_style_definition: Vec<super::RevisionIdentifierForStyleDefinition>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6089,7 +6089,7 @@ pub struct RevisionSaveIDValuesMirror {
 pub struct RichTextBoxContentContainerMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::BlockContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6097,7 +6097,7 @@ pub struct RichTextBoxContentContainerMirror {
 #[rkyv(remote = super::RichTextStructuredDocumentTag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RichTextStructuredDocumentTagMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6114,7 +6114,7 @@ pub struct RightBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -6123,7 +6123,7 @@ pub struct RightBorderMirror {
 #[rkyv(remote = super::RightMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightMarginForHTMLDivMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
@@ -6140,7 +6140,7 @@ pub struct RightParagraphBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -6150,7 +6150,7 @@ pub struct RightParagraphBorderMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RightParagraphBorderTblWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -6159,7 +6159,7 @@ pub struct RightParagraphBorderTblWidthMirror {
 #[rkyv(remote = super::RightToLeftParagraphLayout)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightToLeftParagraphLayoutMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6168,7 +6168,7 @@ pub struct RightToLeftParagraphLayoutMirror {
 #[rkyv(remote = super::RightToLeftText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RightToLeftTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6184,7 +6184,7 @@ pub struct RowLevelCustomXMLElementMirror {
     pub content: Vec<super::ContentRowContent>,
     pub element: Option<common_simple_types::XMLName>,
     pub properties: Option<Box<super::CustomXMLElementProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -6208,7 +6208,7 @@ pub struct RowLevelStructuredDocumentTagMirror {
         Vec<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     pub end_character_properties: Option<Box<super::StructuredDocumentTagEndCharacterProperties>>,
     pub properties: Option<Box<super::StructuredDocumentTagProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6221,7 +6221,7 @@ pub struct RowLevelStructuredDocumentTagMirror {
 pub struct RowLevelStructuredDocumentTagContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::ContentRowContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6232,7 +6232,7 @@ pub struct RunContentColorMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::ColorValue>,
 }
@@ -6250,7 +6250,7 @@ pub struct RunFontsMirror {
     pub h_ansi: Option<String>,
     pub h_ansi_theme: Option<super::ThemeFont>,
     pub hint: Option<super::FontTypeHint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6272,7 +6272,7 @@ pub struct RunPropertiesMirror {
     pub stylistic_sets: Option<Box<super::super::office_word_2010_wordml::StylisticSets>>,
     pub text_fill: Option<Box<super::super::office_word_2010_wordml::TextFill>>,
     pub text_outline: Option<Box<super::super::office_word_2010_wordml::TextOutline>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6299,7 +6299,7 @@ pub struct RunPropertiesForTheParagraphMarkMirror {
     pub stylistic_sets: Option<Box<super::super::office_word_2010_wordml::StylisticSets>>,
     pub text_fill: Option<Box<super::super::office_word_2010_wordml::TextFill>>,
     pub text_outline: Option<Box<super::super::office_word_2010_wordml::TextOutline>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6307,7 +6307,7 @@ pub struct RunPropertiesForTheParagraphMarkMirror {
 #[rkyv(remote = super::SaveSmartTagData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaveSmartTagDataMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6316,7 +6316,7 @@ pub struct SaveSmartTagDataMirror {
 #[rkyv(remote = super::SaveThroughCustomXSLTransform)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SaveThroughCustomXSLTransformMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6325,7 +6325,7 @@ pub struct SaveThroughCustomXSLTransformMirror {
 #[rkyv(remote = super::ScrollbarDisplayOption)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollbarDisplayOptionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FrameScrollbarVisibility>,
 }
@@ -6334,7 +6334,7 @@ pub struct ScrollbarDisplayOptionMirror {
 #[rkyv(remote = super::SectionType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SectionTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StSectionMark>,
 }
@@ -6349,7 +6349,7 @@ pub struct SectionWideEndnotePropertiesMirror {
     pub footnote_and_endnote_numbering_starting_value:
         Option<Box<super::FootnoteAndEndnoteNumberingStartingValue>>,
     pub numbering_format: Option<Box<super::NumberingFormat>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6363,7 +6363,7 @@ pub struct SectionWideFootnotePropertiesMirror {
         Option<Box<super::FootnoteAndEndnoteNumberingStartingValue>>,
     pub footnote_placement: Option<Box<super::FootnotePlacement>>,
     pub numbering_format: Option<Box<super::NumberingFormat>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6371,7 +6371,7 @@ pub struct SectionWideFootnotePropertiesMirror {
 #[rkyv(remote = super::SelectFldWithFirstOrLastChar)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SelectFldWithFirstOrLastCharMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6386,7 +6386,7 @@ pub struct SetOfBordersForHTMLDivMirror {
     pub paragraph_border_below_identical_paragraphs:
         Option<Box<super::ParagraphBorderBelowIdenticalParagraphs>>,
     pub right_paragraph_border: Option<Box<super::RightParagraphBorder>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6395,7 +6395,7 @@ pub struct SetOfBordersForHTMLDivMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfCustomTabStopsMirror {
     pub custom_tab_stop: Vec<super::CustomTabStop>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6403,7 +6403,7 @@ pub struct SetOfCustomTabStopsMirror {
 #[rkyv(remote = super::Shadow)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShadowMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6412,7 +6412,7 @@ pub struct ShadowMirror {
 #[rkyv(remote = super::ShowEMailMessageHeader)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowEMailMessageHeaderMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6421,7 +6421,7 @@ pub struct ShowEMailMessageHeaderMirror {
 #[rkyv(remote = super::ShowXMLTags)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowXMLTagsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6439,7 +6439,7 @@ pub struct SimpleFieldMirror {
     pub dirty: Option<common_simple_types::OnOffValue>,
     pub fld_lock: Option<common_simple_types::OnOffValue>,
     pub instr: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6449,7 +6449,7 @@ pub struct SimpleFieldMirror {
 pub struct SingleAutomaticCaptioningSettingMirror {
     pub caption: Option<String>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6464,7 +6464,7 @@ pub struct SingleCaptionTypeDefinitionMirror {
     pub num_fmt: Option<super::StNumberFormat>,
     pub pos: Option<super::AutomaticCaptionPositioningValues>,
     pub sep: Option<super::ChapterSeparatorTypes>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6473,7 +6473,7 @@ pub struct SingleCaptionTypeDefinitionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleColumnDefinitionMirror {
     pub space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -6483,7 +6483,7 @@ pub struct SingleColumnDefinitionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleDocumentVariableMirror {
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -6502,7 +6502,7 @@ pub struct SingleFramePropertiesMirror {
     pub scrollbar_display_option: Option<Box<super::ScrollbarDisplayOption>>,
     pub source_file_for_frame: Option<Box<super::SourceFileForFrame>>,
     pub top_and_bottom_margin_for_frame: Option<Box<super::TopAndBottomMarginForFrame>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6510,7 +6510,7 @@ pub struct SingleFramePropertiesMirror {
 #[rkyv(remote = super::SingleStrikethrough)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleStrikethroughMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6529,7 +6529,7 @@ pub struct SingleTableCellMarginsMirror {
         Option<Box<super::TableCellLeadingEdgeBorderTblWidth>>,
     pub table_cell_trailing_margin_exception_tbl_width:
         Option<Box<super::TableCellTrailingMarginExceptionTblWidth>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6537,7 +6537,7 @@ pub struct SingleTableCellMarginsMirror {
 #[rkyv(remote = super::SmallCaps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SmallCapsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6547,7 +6547,7 @@ pub struct SmallCapsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SmartTagPropertiesMirror {
     pub custom_xml_attribute: Vec<super::CustomXMLAttribute>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6555,7 +6555,7 @@ pub struct SmartTagPropertiesMirror {
 #[rkyv(remote = super::SourceDocumentType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceDocumentTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SourceDocumentTypes>,
 }
@@ -6565,7 +6565,7 @@ pub struct SourceDocumentTypeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceFileForFrameMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6581,7 +6581,7 @@ pub struct SpacingBetweenLinesAndAboveBelowParagraphMirror {
     pub before_lines: Option<super::DecimalNumberValue>,
     pub line: Option<super::SignedMeasurementInTwentiethsOfPoint>,
     pub line_rule: Option<super::LineSpacingRule>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6590,7 +6590,7 @@ pub struct SpacingBetweenLinesAndAboveBelowParagraphMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpecialEndnoteListMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6599,7 +6599,7 @@ pub struct SpecialEndnoteListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpecialFootnoteListMirror {
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6609,7 +6609,7 @@ pub struct SpecialFootnoteListMirror {
 pub struct SpellingAndGrammaticalCheckingStateMirror {
     pub grammar: Option<super::ProofingStateValues>,
     pub spelling: Option<super::ProofingStateValues>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6617,7 +6617,7 @@ pub struct SpellingAndGrammaticalCheckingStateMirror {
 #[rkyv(remote = super::SplitPgBreakAndParaMark)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SplitPgBreakAndParaMarkMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6626,7 +6626,7 @@ pub struct SplitPgBreakAndParaMarkMirror {
 #[rkyv(remote = super::StartParagraphOnNextPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StartParagraphOnNextPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6635,7 +6635,7 @@ pub struct StartParagraphOnNextPageMirror {
 #[rkyv(remote = super::StartingValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StartingValueMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -6644,7 +6644,7 @@ pub struct StartingValueMirror {
 #[rkyv(remote = super::StrictKinsokuRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StrictKinsokuRulesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6654,7 +6654,7 @@ pub struct StrictKinsokuRulesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagEndCharacterPropertiesMirror {
     pub run_properties: Vec<super::RunProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6662,7 +6662,7 @@ pub struct StructuredDocumentTagEndCharacterPropertiesMirror {
 #[rkyv(remote = super::StructuredDocumentTagLabel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagLabelMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -6671,7 +6671,7 @@ pub struct StructuredDocumentTagLabelMirror {
 #[rkyv(remote = super::StructuredDocumentTagNavigationOrderIndex)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagNavigationOrderIndexMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::UnsignedDecimalNumberValue>,
 }
@@ -6681,7 +6681,7 @@ pub struct StructuredDocumentTagNavigationOrderIndexMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StructuredDocumentTagPlaceholderTextMirror {
     pub document_part_reference: Box<super::DocumentPartReference>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6707,7 +6707,7 @@ pub struct StructuredDocumentTagPropertiesMirror {
     pub structured_document_tag_placeholder_text:
         Option<Box<super::StructuredDocumentTagPlaceholderText>>,
     pub unique_id: Option<Box<super::UniqueID>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub web_extension_created:
         Option<Box<super::super::office_word_2012_wordml::WebExtensionCreated>>,
@@ -6720,7 +6720,7 @@ pub struct StructuredDocumentTagPropertiesMirror {
 #[rkyv(remote = super::StyleCannotBeApplied)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleCannotBeAppliedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6735,7 +6735,7 @@ pub struct StyleConditionalTableFormattingPropertiesMirror {
     pub table_cell_properties: Option<Box<super::TableCellProperties>>,
     pub table_row_properties: Option<Box<super::TableRowProperties>>,
     pub r#type: Option<super::ConditionalTableStyleFormattingTypes>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6771,7 +6771,7 @@ pub struct StyleDefinitionMirror {
     pub table_cell_properties: Option<Box<super::TableCellProperties>>,
     pub table_row_properties: Option<Box<super::TableRowProperties>>,
     pub r#type: Option<super::StyleTypes>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6783,7 +6783,7 @@ pub struct StyleDefinitionsMirror {
         Option<Box<super::DocumentDefaultParagraphAndRunProperties>>,
     pub latent_style_information: Option<Box<super::LatentStyleInformation>>,
     pub style_definition: Vec<super::StyleDefinition>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6791,7 +6791,7 @@ pub struct StyleDefinitionsMirror {
 #[rkyv(remote = super::StyleForNextParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleForNextParagraphMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -6800,7 +6800,7 @@ pub struct StyleForNextParagraphMirror {
 #[rkyv(remote = super::SubscriptSuperscriptText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubscriptSuperscriptTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::VerticalPositioningLocation>,
 }
@@ -6809,7 +6809,7 @@ pub struct SubscriptSuperscriptTextMirror {
 #[rkyv(remote = super::SubsetFontsWhenEmbedding)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubsetFontsWhenEmbeddingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6832,7 +6832,7 @@ pub struct SuggestedFilteringMirror {
     pub styles_in_use: Option<common_simple_types::OnOffValue>,
     pub table_styles: Option<common_simple_types::OnOffValue>,
     pub top3_heading_styles: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FourDigitHexadecimalValue>,
     pub visible_styles: Option<common_simple_types::OnOffValue>,
@@ -6842,7 +6842,7 @@ pub struct SuggestedFilteringMirror {
 #[rkyv(remote = super::SuggestedSorting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuggestedSortingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StyleSortSettings>,
 }
@@ -6853,7 +6853,7 @@ pub struct SuggestedSortingMirror {
 pub struct SupplementarySmartTagInformationMirror {
     pub name: Option<String>,
     pub namespaceuri: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub url: Option<String>,
     pub user_data: (),
 }
@@ -6864,7 +6864,7 @@ pub struct SupplementarySmartTagInformationMirror {
 pub struct SupportedUnicodeSubrangesAndCodePagesMirror {
     pub csb0: Option<super::EightDigitHexadecimalValue>,
     pub csb1: Option<super::EightDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub usb0: Option<super::EightDigitHexadecimalValue>,
     pub usb1: Option<super::EightDigitHexadecimalValue>,
     pub usb2: Option<super::EightDigitHexadecimalValue>,
@@ -6876,7 +6876,7 @@ pub struct SupportedUnicodeSubrangesAndCodePagesMirror {
 #[rkyv(remote = super::SuppressEndnotesInDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressEndnotesInDocumentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6885,7 +6885,7 @@ pub struct SuppressEndnotesInDocumentMirror {
 #[rkyv(remote = super::SuppressHyphenationForParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressHyphenationForParagraphMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6894,7 +6894,7 @@ pub struct SuppressHyphenationForParagraphMirror {
 #[rkyv(remote = super::SuppressLineNumbersForParagraph)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressLineNumbersForParagraphMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6903,7 +6903,7 @@ pub struct SuppressLineNumbersForParagraphMirror {
 #[rkyv(remote = super::SuppressSpBfAfterPgBrk)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressSpBfAfterPgBrkMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6912,7 +6912,7 @@ pub struct SuppressSpBfAfterPgBrkMirror {
 #[rkyv(remote = super::SuppressTopSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SuppressTopSpacingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6921,7 +6921,7 @@ pub struct SuppressTopSpacingMirror {
 #[rkyv(remote = super::SwapParagraphBordersOnOddNumberedPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SwapParagraphBordersOnOddNumberedPagesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -6932,7 +6932,7 @@ pub struct SwapParagraphBordersOnOddNumberedPagesMirror {
 pub struct SymbolCharacterMirror {
     pub char: Option<super::FourDigitHexadecimalValue>,
     pub font: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6940,7 +6940,7 @@ pub struct SymbolCharacterMirror {
 #[rkyv(remote = super::TabCharacter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TabCharacterMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6956,7 +6956,7 @@ pub struct TableMirror {
     pub grid: Box<super::TableGrid>,
     pub properties: Box<super::TableProperties>,
     pub range_markup_content: Vec<super::RangeMarkupContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6964,7 +6964,7 @@ pub struct TableMirror {
 #[rkyv(remote = super::TableAlignmentException)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableAlignmentExceptionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::TableAlignmentType>,
 }
@@ -6983,7 +6983,7 @@ pub struct TableBordersMirror {
     pub table_cell_trailing_margin_exception: Option<Box<super::TableCellTrailingMarginException>>,
     pub table_inside_horizontal_edges_border: Option<Box<super::TableInsideHorizontalEdgesBorder>>,
     pub table_inside_vertical_edges_border: Option<Box<super::TableInsideVerticalEdgesBorder>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -6991,7 +6991,7 @@ pub struct TableBordersMirror {
 #[rkyv(remote = super::TableCaption)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCaptionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -7007,7 +7007,7 @@ pub struct TableCellMirror {
     pub content: Vec<super::BlockContent>,
     pub id: Option<String>,
     pub properties: Option<Box<super::TableCellProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7027,7 +7027,7 @@ pub struct TableCellBordersMirror {
     pub table_inside_vertical_edges_border: Option<Box<super::TableInsideVerticalEdgesBorder>>,
     pub top_left_bottom_right_diagonal_border: Option<Box<super::TopLeftBottomRightDiagonalBorder>>,
     pub top_right_bottom_left_diagonal_border: Option<Box<super::TopRightBottomLeftDiagonalBorder>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7038,7 +7038,7 @@ pub struct TableCellDeletionMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7049,7 +7049,7 @@ pub struct TableCellInsertionMirror {
     pub author: Option<String>,
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7065,7 +7065,7 @@ pub struct TableCellLeadingEdgeBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7075,7 +7075,7 @@ pub struct TableCellLeadingEdgeBorderMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellLeadingEdgeBorderTblWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -7094,7 +7094,7 @@ pub struct TableCellMarginExceptionsMirror {
         Option<Box<super::TableCellLeadingEdgeBorderTblWidth>>,
     pub table_cell_trailing_margin_exception_tbl_width:
         Option<Box<super::TableCellTrailingMarginExceptionTblWidth>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7118,7 +7118,7 @@ pub struct TableCellPropertiesMirror {
     pub single_table_cell_margins: Option<Box<super::SingleTableCellMargins>>,
     pub table_cell_borders: Option<Box<super::TableCellBorders>>,
     pub table_cell_vertical_alignment: Option<Box<super::TableCellVerticalAlignment>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vertically_merged_cell: Option<Box<super::VerticallyMergedCell>>,
 }
@@ -7135,7 +7135,7 @@ pub struct TableCellTrailingMarginExceptionMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7145,7 +7145,7 @@ pub struct TableCellTrailingMarginExceptionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellTrailingMarginExceptionTblWidthMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -7154,7 +7154,7 @@ pub struct TableCellTrailingMarginExceptionTblWidthMirror {
 #[rkyv(remote = super::TableCellVerticalAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableCellVerticalAlignmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::VerticalAlignmentType>,
 }
@@ -7163,7 +7163,7 @@ pub struct TableCellVerticalAlignmentMirror {
 #[rkyv(remote = super::TableDescription)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableDescriptionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -7174,7 +7174,7 @@ pub struct TableDescriptionMirror {
 pub struct TableGridMirror {
     pub column_definition: Vec<super::GridColumnDefinition>,
     pub column_revision_information: Option<Box<super::TableGridColumnRevisionInformation>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7184,7 +7184,7 @@ pub struct TableGridMirror {
 pub struct TableGridColumnRevisionInformationMirror {
     pub id: Option<super::DecimalNumberValue>,
     pub previous_table_grid: Box<super::PreviousTableGrid>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7193,7 +7193,7 @@ pub struct TableGridColumnRevisionInformationMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableIndentFromLeadingMarginMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -7210,7 +7210,7 @@ pub struct TableInsideHorizontalEdgesBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7227,7 +7227,7 @@ pub struct TableInsideVerticalEdgesBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7237,7 +7237,7 @@ pub struct TableInsideVerticalEdgesBorderMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableLayoutMirror {
     pub r#type: Option<super::TableLayoutType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7257,7 +7257,7 @@ pub struct TableLevelPropertyExceptionsMirror {
     pub table_row_cell_spacing: Option<Box<super::TableRowCellSpacing>>,
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7283,7 +7283,7 @@ pub struct TablePropertiesMirror {
     pub table_row_cell_spacing: Option<Box<super::TableRowCellSpacing>>,
     pub table_style_conditional_formatting_settings_exception:
         Option<Box<super::TableStyleConditionalFormattingSettingsException>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visually_right_to_left_table: Option<Box<super::VisuallyRightToLeftTable>>,
 }
@@ -7305,7 +7305,7 @@ pub struct TableRowMirror {
     pub rsid_tr: Option<super::EightDigitHexadecimalValue>,
     pub table_level_property_exceptions: Option<Box<super::TableLevelPropertyExceptions>>,
     pub text_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7313,7 +7313,7 @@ pub struct TableRowMirror {
 #[rkyv(remote = super::TableRowCannotBreakAcrossPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TableRowCannotBreakAcrossPagesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7323,7 +7323,7 @@ pub struct TableRowCannotBreakAcrossPagesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableRowCellSpacingMirror {
     pub r#type: Option<super::TableWidthUnits>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<super::MeasurementOrPercentageValue>,
 }
@@ -7333,7 +7333,7 @@ pub struct TableRowCellSpacingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TableRowHeightMirror {
     pub h_rule: Option<super::HeightRule>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
 }
@@ -7347,7 +7347,7 @@ pub struct TableRowPropertiesMirror {
     pub deleted_table_row: Option<Box<super::DeletedTableRow>>,
     pub inserted_table_row: Option<Box<super::InsertedTableRow>>,
     pub revision_information: Option<Box<super::RevisionInformationForTableRowProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7361,7 +7361,7 @@ pub struct TableStyleConditionalFormattingSettingsExceptionMirror {
     pub last_row: Option<common_simple_types::OnOffValue>,
     pub no_h_band: Option<common_simple_types::OnOffValue>,
     pub no_v_band: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::FourDigitHexadecimalValue>,
 }
@@ -7370,7 +7370,7 @@ pub struct TableStyleConditionalFormattingSettingsExceptionMirror {
 #[rkyv(remote = super::TargetScreenSizeForWebPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TargetScreenSizeForWebPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::TargetScreenSizes>,
 }
@@ -7380,7 +7380,7 @@ pub struct TargetScreenSizeForWebPageMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TextMirror {
     pub space: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -7397,7 +7397,7 @@ pub struct TextBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7406,7 +7406,7 @@ pub struct TextBorderMirror {
 #[rkyv(remote = super::TextBoxFormFieldFormatting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxFormFieldFormattingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -7415,7 +7415,7 @@ pub struct TextBoxFormFieldFormattingMirror {
 #[rkyv(remote = super::TextBoxFormFieldMaximumLength)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxFormFieldMaximumLengthMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -7428,7 +7428,7 @@ pub struct TextBoxFormFieldPropertiesMirror {
     pub text_box_form_field_formatting: Option<Box<super::TextBoxFormFieldFormatting>>,
     pub text_box_form_field_maximum_length: Option<Box<super::TextBoxFormFieldMaximumLength>>,
     pub text_box_form_field_type: Option<Box<super::TextBoxFormFieldType>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7436,7 +7436,7 @@ pub struct TextBoxFormFieldPropertiesMirror {
 #[rkyv(remote = super::TextBoxFormFieldType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextBoxFormFieldTypeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::TextBoxFormFieldTypeValues>,
 }
@@ -7452,7 +7452,7 @@ pub struct TextFramePropertiesMirror {
     pub h_rule: Option<super::HeightRule>,
     pub h_space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
     pub lines: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v_anchor: Option<super::VerticalAnchorLocation>,
     pub v_space: Option<common_simple_types::MeasurementInTwentiethsOfAPoint>,
@@ -7468,7 +7468,7 @@ pub struct TextFramePropertiesMirror {
 #[rkyv(remote = super::TextHighlighting)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextHighlightingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::TextHighlightColors>,
 }
@@ -7486,7 +7486,7 @@ pub struct TextRunMirror {
     pub rsid_del: Option<super::EightDigitHexadecimalValue>,
     pub rsid_r: Option<super::EightDigitHexadecimalValue>,
     pub rsid_r_pr: Option<super::EightDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7494,7 +7494,7 @@ pub struct TextRunMirror {
 #[rkyv(remote = super::TextboxTightWrap)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextboxTightWrapMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::TightWrapWithinTextBox>,
 }
@@ -7515,7 +7515,7 @@ pub struct ThemeColorMappingsMirror {
     pub hyperlink: Option<super::ThemeColorReference>,
     pub t1: Option<super::ThemeColorReference>,
     pub t2: Option<super::ThemeColorReference>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7525,7 +7525,7 @@ pub struct ThemeColorMappingsMirror {
 pub struct ThemeFontLanguagesMirror {
     pub bidi: Option<String>,
     pub east_asia: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -7534,7 +7534,7 @@ pub struct ThemeFontLanguagesMirror {
 #[rkyv(remote = super::TopAndBottomMarginForFrame)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TopAndBottomMarginForFrameMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MeasurementInPixels>,
 }
@@ -7554,7 +7554,7 @@ pub struct TopBorderMirror {
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
     pub top_left: Option<String>,
     pub top_right: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7571,7 +7571,7 @@ pub struct TopLeftBottomRightDiagonalBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7580,7 +7580,7 @@ pub struct TopLeftBottomRightDiagonalBorderMirror {
 #[rkyv(remote = super::TopMarginForHTMLDiv)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TopMarginForHTMLDivMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SignedMeasurementInTwentiethsOfPoint>,
 }
@@ -7597,7 +7597,7 @@ pub struct TopRightBottomLeftDiagonalBorderMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::BorderStyles>,
 }
@@ -7606,7 +7606,7 @@ pub struct TopRightBottomLeftDiagonalBorderMirror {
 #[rkyv(remote = super::TrackRevisionsToDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TrackRevisionsToDocumentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7615,7 +7615,7 @@ pub struct TrackRevisionsToDocumentMirror {
 #[rkyv(remote = super::TreatBackslashQuotationDelimiterAsTwoQuotationMarks)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TreatBackslashQuotationDelimiterAsTwoQuotationMarksMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7624,7 +7624,7 @@ pub struct TreatBackslashQuotationDelimiterAsTwoQuotationMarksMirror {
 #[rkyv(remote = super::TruncateFontHeightsLikeWP6)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TruncateFontHeightsLikeWP6Mirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7633,7 +7633,7 @@ pub struct TruncateFontHeightsLikeWP6Mirror {
 #[rkyv(remote = super::UDLConnectionString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UDLConnectionStringMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -7646,7 +7646,7 @@ pub struct UnderlineMirror {
     pub theme_color: Option<super::ThemeColor>,
     pub theme_shade: Option<super::TwoDigitHexadecimalValue>,
     pub theme_tint: Option<super::TwoDigitHexadecimalValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::UnderlinePatterns>,
 }
@@ -7655,7 +7655,7 @@ pub struct UnderlineMirror {
 #[rkyv(remote = super::UnderlineAllTrailingSpaces)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnderlineAllTrailingSpacesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7664,7 +7664,7 @@ pub struct UnderlineAllTrailingSpacesMirror {
 #[rkyv(remote = super::UnderlineFollowingCharacterFollowingNumbering)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnderlineFollowingCharacterFollowingNumberingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7673,7 +7673,7 @@ pub struct UnderlineFollowingCharacterFollowingNumberingMirror {
 #[rkyv(remote = super::UniqueID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueIDMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::DecimalNumberValue>,
 }
@@ -7682,7 +7682,7 @@ pub struct UniqueIDMirror {
 #[rkyv(remote = super::UniqueValueForRecord)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueValueForRecordMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -7691,7 +7691,7 @@ pub struct UniqueValueForRecordMirror {
 #[rkyv(remote = super::UpgradeDocumentOnOpen)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UpgradeDocumentOnOpenMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7699,7 +7699,7 @@ pub struct UpgradeDocumentOnOpenMirror {
 #[rkyv(remote = super::UseANSIKerningPairsFromFonts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseANSIKerningPairsFromFontsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7708,7 +7708,7 @@ pub struct UseANSIKerningPairsFromFontsMirror {
 #[rkyv(remote = super::UseAltKinsokuLineBreakRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseAltKinsokuLineBreakRulesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7717,7 +7717,7 @@ pub struct UseAltKinsokuLineBreakRulesMirror {
 #[rkyv(remote = super::UseCachedParagraphInformationForColumnBalancing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseCachedParagraphInformationForColumnBalancingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7726,7 +7726,7 @@ pub struct UseCachedParagraphInformationForColumnBalancingMirror {
 #[rkyv(remote = super::UseComplexScriptFormattingOnRun)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseComplexScriptFormattingOnRunMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7735,7 +7735,7 @@ pub struct UseComplexScriptFormattingOnRunMirror {
 #[rkyv(remote = super::UseCountryBasedAddressFieldOrdering)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseCountryBasedAddressFieldOrderingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7744,7 +7744,7 @@ pub struct UseCountryBasedAddressFieldOrderingMirror {
 #[rkyv(remote = super::UseIncorrectInterCharacterSpacingRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseIncorrectInterCharacterSpacingRulesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7753,7 +7753,7 @@ pub struct UseIncorrectInterCharacterSpacingRulesMirror {
 #[rkyv(remote = super::UseLeftRightIndentsAsInsideOutsideIndents)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseLeftRightIndentsAsInsideOutsideIndentsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7762,7 +7762,7 @@ pub struct UseLeftRightIndentsAsInsideOutsideIndentsMirror {
 #[rkyv(remote = super::UseNormalStyleForList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseNormalStyleForListMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7771,7 +7771,7 @@ pub struct UseNormalStyleForListMirror {
 #[rkyv(remote = super::UsePrinterMetricsToDisplayDocuments)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UsePrinterMetricsToDisplayDocumentsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7780,7 +7780,7 @@ pub struct UsePrinterMetricsToDisplayDocumentsMirror {
 #[rkyv(remote = super::UseSingleBorderforContiguousCells)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseSingleBorderforContiguousCellsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7789,7 +7789,7 @@ pub struct UseSingleBorderforContiguousCellsMirror {
 #[rkyv(remote = super::UseSpecificSmallCapsAlgorithm)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseSpecificSmallCapsAlgorithmMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7798,7 +7798,7 @@ pub struct UseSpecificSmallCapsAlgorithmMirror {
 #[rkyv(remote = super::UseSpecificSpaceWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseSpecificSpaceWidthMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7807,7 +7807,7 @@ pub struct UseSpecificSpaceWidthMirror {
 #[rkyv(remote = super::UseStaticTextLeading)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseStaticTextLeadingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7816,7 +7816,7 @@ pub struct UseStaticTextLeadingMirror {
 #[rkyv(remote = super::UseWord2002TableStyleRules)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UseWord2002TableStyleRulesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7825,7 +7825,7 @@ pub struct UseWord2002TableStyleRulesMirror {
 #[rkyv(remote = super::UtilizeVMLWhenSavingAsWebPage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UtilizeVMLWhenSavingAsWebPageMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7842,7 +7842,7 @@ pub struct VMLObjectMirror {
     pub content: Vec<super::VmlElementContent>,
     pub embedded_control: Option<Box<super::EmbeddedControl>>,
     pub embedded_video: Option<Box<super::EmbeddedVideo>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7850,7 +7850,7 @@ pub struct VMLObjectMirror {
 #[rkyv(remote = super::VerticalCharacterAlignmentOnLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalCharacterAlignmentOnLineMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::VerticalTextAlignmentTypes>,
 }
@@ -7859,7 +7859,7 @@ pub struct VerticalCharacterAlignmentOnLineMirror {
 #[rkyv(remote = super::VerticallyMergedCell)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticallyMergedCellMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::MergedCellType>,
 }
@@ -7872,7 +7872,7 @@ pub struct VerticallyMergedSplitTableCellsMirror {
     pub date: Option<super::StandardDateAndTimeStorageFormat>,
     pub date_utc: Option<String>,
     pub id: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v_merge: Option<super::TableCellVerticalMergeRevisionType>,
     pub v_merge_orig: Option<super::TableCellVerticalMergeRevisionType>,
@@ -7882,7 +7882,7 @@ pub struct VerticallyMergedSplitTableCellsMirror {
 #[rkyv(remote = super::VerticallyRaisedOrLoweredText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticallyRaisedOrLoweredTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SignedMeasurementInHalfPoints>,
 }
@@ -7891,7 +7891,7 @@ pub struct VerticallyRaisedOrLoweredTextMirror {
 #[rkyv(remote = super::ViewMergedDataWithinDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ViewMergedDataWithinDocumentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7905,7 +7905,7 @@ pub struct VisibilityOfAnnotationTypesMirror {
     pub ink_annotations: Option<common_simple_types::OnOffValue>,
     pub ins_del: Option<common_simple_types::OnOffValue>,
     pub markup: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7913,7 +7913,7 @@ pub struct VisibilityOfAnnotationTypesMirror {
 #[rkyv(remote = super::VisuallyRightToLeftTable)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VisuallyRightToLeftTableMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7922,7 +7922,7 @@ pub struct VisuallyRightToLeftTableMirror {
 #[rkyv(remote = super::WebHiddenText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WebHiddenTextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<common_simple_types::OnOffValue>,
 }
@@ -7943,7 +7943,7 @@ pub struct WebPageSettingsMirror {
     pub recommend_web_page_format: Option<Box<super::RecommendWebPageFormat>>,
     pub save_smart_tag_data: Option<Box<super::SaveSmartTagData>>,
     pub target_screen_size_for_web_page: Option<Box<super::TargetScreenSizeForWebPage>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub utilize_vml_when_saving_as_web_page: Option<Box<super::UtilizeVMLWhenSavingAsWebPage>>,
 }
@@ -7969,7 +7969,7 @@ pub struct WriteProtectionMirror {
     pub salt: Option<String>,
     pub salt_value: Option<String>,
     pub spin_count: Option<super::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -7979,7 +7979,7 @@ pub struct WriteProtectionMirror {
 pub struct XMLMappingMirror {
     pub prefix_mappings: Option<String>,
     pub store_item_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xpath: Option<String>,
 }

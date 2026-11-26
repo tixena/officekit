@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `Classification` as its element, `p184:classification`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn classification(node: &super::Classification, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CLASSIFICATION_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CLASSIFICATION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }

@@ -233,11 +233,11 @@ impl super::Transform for office_spreadsheetml_2022_pivot_version_info::CacheVer
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.required_feature = super::transform_child(&self.required_feature, ctx, &mut rebase);
         node.last_refresh_feature =
             super::transform_child(&self.last_refresh_feature, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -255,7 +255,7 @@ impl super::Visit for office_spreadsheetml_2022_pivot_version_info::CacheVersion
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.required_feature, visitor);
         walk.child(&self.last_refresh_feature, visitor);
         walk.finish(visitor);
@@ -271,7 +271,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::CacheVersion
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_pivot_version_info::CACHE_VERSION_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_pivot_version_info::write::cache_version_info(
@@ -283,7 +283,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::CacheVersion
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::CACHE_VERSION_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.required_feature, ctx)?;
         through.child(&self.last_refresh_feature, ctx)?;
@@ -328,7 +328,8 @@ impl super::Transform for office_spreadsheetml_2022_pivot_version_info::LastRefr
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -346,7 +347,7 @@ impl super::Visit for office_spreadsheetml_2022_pivot_version_info::LastRefreshF
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -359,7 +360,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::LastRefreshF
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_pivot_version_info::LAST_REFRESH_FEATURE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_pivot_version_info::write::last_refresh_feature(
@@ -371,7 +372,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::LastRefreshF
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::LAST_REFRESH_FEATURE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -415,7 +416,8 @@ impl super::Transform for office_spreadsheetml_2022_pivot_version_info::LastUpda
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -433,7 +435,7 @@ impl super::Visit for office_spreadsheetml_2022_pivot_version_info::LastUpdateFe
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -446,7 +448,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::LastUpdateFe
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_pivot_version_info::LAST_UPDATE_FEATURE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_pivot_version_info::write::last_update_feature(
@@ -458,7 +460,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::LastUpdateFe
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::LAST_UPDATE_FEATURE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -502,11 +504,11 @@ impl super::Transform for office_spreadsheetml_2022_pivot_version_info::PivotVer
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.required_feature = super::transform_child(&self.required_feature, ctx, &mut rebase);
         node.last_update_feature =
             super::transform_child(&self.last_update_feature, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -524,7 +526,7 @@ impl super::Visit for office_spreadsheetml_2022_pivot_version_info::PivotVersion
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.required_feature, visitor);
         walk.child(&self.last_update_feature, visitor);
         walk.finish(visitor);
@@ -540,7 +542,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::PivotVersion
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_pivot_version_info::PIVOT_VERSION_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_pivot_version_info::write::pivot_version_info(
@@ -552,7 +554,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::PivotVersion
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::PIVOT_VERSION_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.required_feature, ctx)?;
         through.child(&self.last_update_feature, ctx)?;
@@ -597,7 +599,8 @@ impl super::Transform for office_spreadsheetml_2022_pivot_version_info::Required
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -615,7 +618,7 @@ impl super::Visit for office_spreadsheetml_2022_pivot_version_info::RequiredFeat
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -628,7 +631,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::RequiredFeat
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_pivot_version_info::REQUIRED_FEATURE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_pivot_version_info::write::required_feature(
@@ -640,7 +643,7 @@ impl WriteThrough for office_spreadsheetml_2022_pivot_version_info::RequiredFeat
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_pivot_version_info::REQUIRED_FEATURE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)

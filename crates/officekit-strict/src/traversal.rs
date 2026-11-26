@@ -335,9 +335,9 @@ impl Rebase {
 
     /// The rebase of a node whose unknown content is `unknown`.
     #[must_use = "this only builds the value"]
-    pub fn new(unknown: &Unknown) -> Self {
+    pub fn new(unknown: Option<&Unknown>) -> Self {
         Self {
-            absent: unknown.absent.clone(),
+            absent: unknown.unwrap_or_else(Unknown::empty).absent.clone(),
             ..Self::default()
         }
     }
@@ -449,14 +449,15 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
 
     /// Start writing a node of `shape` with the unknown content it keeps, named as it was read:
     /// its element takes the prefix `out` binds to its namespace, or declares
-    /// the table's.
+    /// the table's. `None` keeps no unknown content.
     #[must_use = "the result is returned and kept nowhere else"]
     pub fn new(
         out: &'out mut PartWriter<'sink>,
         shape: &'static Shape,
-        unknown: &'node Unknown,
+        unknown: Option<&'node Unknown>,
     ) -> Self {
-        let (namespace, local) = unknown.name.as_deref().map_or_else(
+        let kept = unknown.unwrap_or_else(Unknown::empty);
+        let (namespace, local) = kept.name.as_deref().map_or_else(
             || (shape.name.0.map_or("", uri), shape.name.1),
             |name| {
                 (
@@ -467,15 +468,15 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         );
         let element = out
             .scope()
-            .element(namespace, local, &unknown.namespace_declarations);
+            .element(namespace, local, &kept.namespace_declarations);
         Self {
             element,
             opened: false,
             out,
-            place: Place::new(unknown),
+            place: Place::new(kept),
             positions: Positions::default(),
             shape,
-            unknown,
+            unknown: kept,
         }
     }
 
@@ -702,11 +703,11 @@ impl<'node> Walk<'node> {
 
     /// A walk over the children of a node whose unknown content is `unknown`, none visited yet.
     #[must_use = "this only builds the value"]
-    pub fn new(unknown: &'node Unknown) -> Self {
+    pub fn new(unknown: Option<&'node Unknown>) -> Self {
         Self {
             known: 0,
             positions: Positions::default(),
-            unknown,
+            unknown: unknown.unwrap_or_else(Unknown::empty),
         }
     }
 }
@@ -715,13 +716,14 @@ impl<'node> Walk<'node> {
 /// `unknown` as one element, which the node then writes through [`PartWriter::converted`];
 /// `false` when `out` has no rules.
 #[must_use = "this only answers the question"]
-pub fn converts(out: &PartWriter<'_>, shape: &'static Shape, unknown: &Unknown) -> bool {
-    let Some(name) = unknown.name.as_deref() else {
-        return out.converts(shape.name, shape.attributes, &unknown.attributes);
+pub fn converts(out: &PartWriter<'_>, shape: &'static Shape, unknown: Option<&Unknown>) -> bool {
+    let kept = unknown.unwrap_or_else(Unknown::empty);
+    let Some(name) = kept.name.as_deref() else {
+        return out.converts(shape.name, shape.attributes, &kept.attributes);
     };
     tag_of(name).map_or_else(
         || out.has_rules(),
-        |tag| out.converts(tag, shape.attributes, &unknown.attributes),
+        |tag| out.converts(tag, shape.attributes, &kept.attributes),
     )
 }
 
@@ -829,19 +831,24 @@ where
 /// and the name it was read under as they are.
 ///
 /// Each `Extra` is placed, by `rebase`, after what the declared children
-/// before it became.
-pub fn transform_unknown(unknown: &Unknown, ctx: &mut dyn Context, rebase: &Rebase) -> Unknown {
-    let children = unknown
+/// before it became. `None` when the node holds none.
+pub fn transform_unknown(
+    unknown: Option<&Unknown>,
+    ctx: &mut dyn Context,
+    rebase: &Rebase,
+) -> Option<Box<Unknown>> {
+    let kept = unknown?;
+    let children = kept
         .children
         .iter()
         .map(|extra| Extra::new(rebase.place(extra.after), extra.node.transform(ctx)))
         .collect();
     let mut rebuilt = Unknown::new(
-        unknown.absent.clone(),
-        unknown.attributes.clone(),
+        kept.absent.clone(),
+        kept.attributes.clone(),
         children,
-        unknown.namespace_declarations.clone(),
+        kept.namespace_declarations.clone(),
     );
-    rebuilt.name.clone_from(&unknown.name);
-    rebuilt
+    rebuilt.name.clone_from(&kept.name);
+    rebuilt.boxed()
 }

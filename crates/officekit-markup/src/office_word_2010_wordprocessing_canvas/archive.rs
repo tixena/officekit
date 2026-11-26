@@ -228,7 +228,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct BgMirror {
     pub effect_properties_content: Option<Box<drawing::EffectPropertiesContent>>,
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -237,7 +237,7 @@ pub struct BgMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -249,7 +249,7 @@ pub struct GraphicFrameMirror {
     pub c_nv_pr: Box<super::super::office_word_2010_wordprocessing_group::CNvPr>,
     pub ext_lst: Option<Box<super::super::office_word_2010_wordprocessing_group::ExtLst>>,
     pub graphic_object: Box<drawing::GraphicObject>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm: Box<super::super::office_word_2010_wordprocessing_group::Xfrm>,
 }
@@ -260,7 +260,7 @@ pub struct GraphicFrameMirror {
 pub struct WholeMirror {
     pub content: Option<Box<drawing::EffectPropertiesContent>>,
     pub outline: Option<Box<drawing::Outline>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -271,7 +271,7 @@ pub struct WpcMirror {
     pub bg: Option<Box<super::Bg>>,
     pub content: Vec<super::WordprocessingCanvasContent>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub whole: Option<Box<super::Whole>>,
 }

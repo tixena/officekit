@@ -233,10 +233,10 @@ impl super::Transform for document_properties_custom::CustomFileProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.custom_file_property =
             super::transform_child(&self.custom_file_property, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -254,7 +254,7 @@ impl super::Visit for document_properties_custom::CustomFileProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.custom_file_property, visitor);
         walk.finish(visitor);
     }
@@ -269,7 +269,7 @@ impl WriteThrough for document_properties_custom::CustomFileProperties {
         let converted = super::converts(
             out,
             &document_properties_custom::CUSTOM_FILE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -279,7 +279,7 @@ impl WriteThrough for document_properties_custom::CustomFileProperties {
         let mut through = super::Through::new(
             out,
             &document_properties_custom::CUSTOM_FILE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.custom_file_property, ctx)?;
         through.finish(ctx)
@@ -323,9 +323,9 @@ impl super::Transform for document_properties_custom::CustomFileProperty {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -343,7 +343,7 @@ impl super::Visit for document_properties_custom::CustomFileProperty {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -358,7 +358,7 @@ impl WriteThrough for document_properties_custom::CustomFileProperty {
         let converted = super::converts(
             out,
             &document_properties_custom::CUSTOM_FILE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -368,7 +368,7 @@ impl WriteThrough for document_properties_custom::CustomFileProperty {
         let mut through = super::Through::new(
             out,
             &document_properties_custom::CUSTOM_FILE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.fmtid);
         through.attribute(1, &self.pid);

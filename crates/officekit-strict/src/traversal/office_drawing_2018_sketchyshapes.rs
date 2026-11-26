@@ -233,9 +233,9 @@ impl super::Transform for office_drawing_2018_sketchyshapes::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::ExtLst {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2018_sketchyshapes::write::ext_lst(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -321,7 +321,8 @@ impl super::Transform for office_drawing_2018_sketchyshapes::LineSketchCurved {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -339,7 +340,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::LineSketchCurved {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -352,7 +353,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchCurved {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_CURVED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -362,7 +363,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchCurved {
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_CURVED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -405,7 +406,8 @@ impl super::Transform for office_drawing_2018_sketchyshapes::LineSketchFreehand 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -423,7 +425,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::LineSketchFreehand {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -436,7 +438,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchFreehand {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_FREEHAND_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -446,7 +448,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchFreehand {
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_FREEHAND_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -489,7 +491,8 @@ impl super::Transform for office_drawing_2018_sketchyshapes::LineSketchNone {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -507,7 +510,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::LineSketchNone {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -520,7 +523,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchNone {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_NONE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -530,7 +533,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchNone {
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_NONE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -573,7 +576,8 @@ impl super::Transform for office_drawing_2018_sketchyshapes::LineSketchScribble 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -591,7 +595,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::LineSketchScribble {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -604,7 +608,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchScribble {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_SCRIBBLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -614,7 +618,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchScribble {
         let through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_SCRIBBLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -657,12 +661,12 @@ impl super::Transform for office_drawing_2018_sketchyshapes::LineSketchStyleProp
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.r#type = super::transform_child(&self.r#type, ctx, &mut rebase);
         node.seed = super::transform_child(&self.seed, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -680,7 +684,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::LineSketchStyleProps {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.child(&self.r#type, visitor);
         walk.child(&self.seed, visitor);
@@ -698,7 +702,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchStyleProps {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_STYLE_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2018_sketchyshapes::write::line_sketch_style_props(
@@ -710,7 +714,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchStyleProps {
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::LINE_SKETCH_STYLE_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.sd);
         through.choice(&self.content, ctx)?;
@@ -869,7 +873,8 @@ impl super::Transform for office_drawing_2018_sketchyshapes::Seed {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -887,7 +892,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::Seed {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -900,7 +905,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::Seed {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::SEED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2018_sketchyshapes::write::seed(self, out.scope());
@@ -909,7 +914,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::Seed {
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::SEED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -953,9 +958,9 @@ impl super::Transform for office_drawing_2018_sketchyshapes::Type {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -973,7 +978,7 @@ impl super::Visit for office_drawing_2018_sketchyshapes::Type {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -988,7 +993,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::Type {
         let converted = super::converts(
             out,
             &office_drawing_2018_sketchyshapes::TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2018_sketchyshapes::write::r#type(self, out.scope());
@@ -997,7 +1002,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::Type {
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_sketchyshapes::TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)

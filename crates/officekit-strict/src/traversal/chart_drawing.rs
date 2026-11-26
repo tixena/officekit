@@ -233,12 +233,12 @@ impl super::Transform for chart_drawing::AbsoluteAnchorShapeSize {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.starting_anchor_point =
             super::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
         node.shape_extent = super::transform_child(&self.shape_extent, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -256,7 +256,7 @@ impl super::Visit for chart_drawing::AbsoluteAnchorShapeSize {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.starting_anchor_point, visitor);
         walk.child(&self.shape_extent, visitor);
         walk.choice(&self.content, visitor);
@@ -273,7 +273,7 @@ impl WriteThrough for chart_drawing::AbsoluteAnchorShapeSize {
         let converted = super::converts(
             out,
             &chart_drawing::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::absolute_anchor_shape_size(self, out.scope());
@@ -282,7 +282,7 @@ impl WriteThrough for chart_drawing::AbsoluteAnchorShapeSize {
         let mut through = super::Through::new(
             out,
             &chart_drawing::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.starting_anchor_point, ctx)?;
         through.child(&self.shape_extent, ctx)?;
@@ -328,12 +328,12 @@ impl super::Transform for chart_drawing::ConnectionShape {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.connector_non_visual_properties =
             super::transform_child(&self.connector_non_visual_properties, ctx, &mut rebase);
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.style = super::transform_child(&self.style, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -351,7 +351,7 @@ impl super::Visit for chart_drawing::ConnectionShape {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.connector_non_visual_properties, visitor);
         walk.child(&self.properties, visitor);
         walk.child(&self.style, visitor);
@@ -365,13 +365,20 @@ impl WriteThrough for chart_drawing::ConnectionShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::CONNECTION_SHAPE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::CONNECTION_SHAPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::connection_shape(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::CONNECTION_SHAPE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::CONNECTION_SHAPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.r#macro);
         through.attribute(1, &self.f_published);
         through.child(&self.connector_non_visual_properties, ctx)?;
@@ -418,7 +425,7 @@ impl super::Transform for chart_drawing::ConnectorNonVisualProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_connection_shape_drawing_properties = super::transform_child(
@@ -426,7 +433,7 @@ impl super::Transform for chart_drawing::ConnectorNonVisualProperties {
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -444,7 +451,7 @@ impl super::Visit for chart_drawing::ConnectorNonVisualProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(
             &self.non_visual_connection_shape_drawing_properties,
@@ -463,7 +470,7 @@ impl WriteThrough for chart_drawing::ConnectorNonVisualProperties {
         let converted = super::converts(
             out,
             &chart_drawing::CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::connector_non_visual_properties(self, out.scope());
@@ -472,7 +479,7 @@ impl WriteThrough for chart_drawing::ConnectorNonVisualProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::CONNECTOR_NON_VISUAL_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_connection_shape_drawing_properties, ctx)?;
@@ -517,12 +524,12 @@ impl super::Transform for chart_drawing::EndingAnchorPoint {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.relative_x_coordinate =
             super::transform_child(&self.relative_x_coordinate, ctx, &mut rebase);
         node.relative_y_coordinate =
             super::transform_child(&self.relative_y_coordinate, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -540,7 +547,7 @@ impl super::Visit for chart_drawing::EndingAnchorPoint {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.relative_x_coordinate, visitor);
         walk.child(&self.relative_y_coordinate, visitor);
         walk.finish(visitor);
@@ -556,7 +563,7 @@ impl WriteThrough for chart_drawing::EndingAnchorPoint {
         let converted = super::converts(
             out,
             &chart_drawing::ENDING_ANCHOR_POINT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::ending_anchor_point(self, out.scope());
@@ -565,7 +572,7 @@ impl WriteThrough for chart_drawing::EndingAnchorPoint {
         let mut through = super::Through::new(
             out,
             &chart_drawing::ENDING_ANCHOR_POINT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.relative_x_coordinate, ctx)?;
         through.child(&self.relative_y_coordinate, ctx)?;
@@ -610,12 +617,12 @@ impl super::Transform for chart_drawing::GraphicFrame {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_graphic_frame_properties =
             super::transform_child(&self.non_visual_graphic_frame_properties, ctx, &mut rebase);
         node.transform = super::transform_child(&self.transform, ctx, &mut rebase);
         node.graphic_object = super::transform_child(&self.graphic_object, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -633,7 +640,7 @@ impl super::Visit for chart_drawing::GraphicFrame {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_graphic_frame_properties, visitor);
         walk.child(&self.transform, visitor);
         walk.child(&self.graphic_object, visitor);
@@ -647,13 +654,20 @@ impl WriteThrough for chart_drawing::GraphicFrame {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::GRAPHIC_FRAME_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::GRAPHIC_FRAME_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::graphic_frame(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::GRAPHIC_FRAME_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::GRAPHIC_FRAME_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.r#macro);
         through.attribute(1, &self.f_published);
         through.child(&self.non_visual_graphic_frame_properties, ctx)?;
@@ -700,10 +714,10 @@ impl super::Transform for chart_drawing::GraphicFrameTransform {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = super::transform_child(&self.extents, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -721,7 +735,7 @@ impl super::Visit for chart_drawing::GraphicFrameTransform {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.offset, visitor);
         walk.child(&self.extents, visitor);
         walk.finish(visitor);
@@ -737,7 +751,7 @@ impl WriteThrough for chart_drawing::GraphicFrameTransform {
         let converted = super::converts(
             out,
             &chart_drawing::GRAPHIC_FRAME_TRANSFORM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::graphic_frame_transform(self, out.scope());
@@ -746,7 +760,7 @@ impl WriteThrough for chart_drawing::GraphicFrameTransform {
         let mut through = super::Through::new(
             out,
             &chart_drawing::GRAPHIC_FRAME_TRANSFORM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rot);
         through.attribute(1, &self.flip_h);
@@ -794,12 +808,12 @@ impl super::Transform for chart_drawing::GroupShape {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_group_shape_properties =
             super::transform_child(&self.non_visual_group_shape_properties, ctx, &mut rebase);
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -817,7 +831,7 @@ impl super::Visit for chart_drawing::GroupShape {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_group_shape_properties, visitor);
         walk.child(&self.properties, visitor);
         walk.items(&self.content, visitor);
@@ -831,13 +845,20 @@ impl WriteThrough for chart_drawing::GroupShape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::GROUP_SHAPE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::GROUP_SHAPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::group_shape(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::GROUP_SHAPE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::GROUP_SHAPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.non_visual_group_shape_properties, ctx)?;
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -882,7 +903,7 @@ impl super::Transform for chart_drawing::GroupShapeProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_group_transform2d =
             super::transform_child(&self.xfrm_group_transform2d, ctx, &mut rebase);
         node.fill_properties_content =
@@ -891,7 +912,7 @@ impl super::Transform for chart_drawing::GroupShapeProperties {
             super::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
         node.scene3d = super::transform_child(&self.scene3d, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -909,7 +930,7 @@ impl super::Visit for chart_drawing::GroupShapeProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_group_transform2d, visitor);
         walk.choice(&self.fill_properties_content, visitor);
         walk.choice(&self.effect_properties_content, visitor);
@@ -928,7 +949,7 @@ impl WriteThrough for chart_drawing::GroupShapeProperties {
         let converted = super::converts(
             out,
             &chart_drawing::GROUP_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::group_shape_properties(self, out.scope());
@@ -937,7 +958,7 @@ impl WriteThrough for chart_drawing::GroupShapeProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::GROUP_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_group_transform2d, ctx)?;
@@ -986,13 +1007,13 @@ impl super::Transform for chart_drawing::NonVisualConnectionShapeDrawingProperti
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.connection_shape_locks =
             super::transform_child(&self.connection_shape_locks, ctx, &mut rebase);
         node.connection_start = super::transform_child(&self.connection_start, ctx, &mut rebase);
         node.connection_end = super::transform_child(&self.connection_end, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1010,7 +1031,7 @@ impl super::Visit for chart_drawing::NonVisualConnectionShapeDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.connection_shape_locks, visitor);
         walk.child(&self.connection_start, visitor);
         walk.child(&self.connection_end, visitor);
@@ -1028,7 +1049,7 @@ impl WriteThrough for chart_drawing::NonVisualConnectionShapeDrawingProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::non_visual_connection_shape_drawing_properties(
@@ -1040,7 +1061,7 @@ impl WriteThrough for chart_drawing::NonVisualConnectionShapeDrawingProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_CONNECTION_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.connection_shape_locks, ctx)?;
         through.child(&self.connection_start, ctx)?;
@@ -1087,12 +1108,12 @@ impl super::Transform for chart_drawing::NonVisualDrawingProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.click_hyperlink = super::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             super::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1110,7 +1131,7 @@ impl super::Visit for chart_drawing::NonVisualDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.click_hyperlink, visitor);
         walk.child(&self.hyperlink_for_hover, visitor);
         walk.child(&self.extension_list, visitor);
@@ -1127,7 +1148,7 @@ impl WriteThrough for chart_drawing::NonVisualDrawingProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::non_visual_drawing_properties(self, out.scope());
@@ -1136,7 +1157,7 @@ impl WriteThrough for chart_drawing::NonVisualDrawingProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.name);
@@ -1187,11 +1208,11 @@ impl super::Transform for chart_drawing::NonVisualGraphicFrameDrawingProperties 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.graphic_frame_locks =
             super::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1209,7 +1230,7 @@ impl super::Visit for chart_drawing::NonVisualGraphicFrameDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.graphic_frame_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -1225,7 +1246,7 @@ impl WriteThrough for chart_drawing::NonVisualGraphicFrameDrawingProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::non_visual_graphic_frame_drawing_properties(
@@ -1237,7 +1258,7 @@ impl WriteThrough for chart_drawing::NonVisualGraphicFrameDrawingProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.graphic_frame_locks, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -1282,7 +1303,7 @@ impl super::Transform for chart_drawing::NonVisualGraphicFrameProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_graphic_frame_drawing_properties = super::transform_child(
@@ -1290,7 +1311,7 @@ impl super::Transform for chart_drawing::NonVisualGraphicFrameProperties {
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1308,7 +1329,7 @@ impl super::Visit for chart_drawing::NonVisualGraphicFrameProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_graphic_frame_drawing_properties, visitor);
         walk.finish(visitor);
@@ -1324,7 +1345,7 @@ impl WriteThrough for chart_drawing::NonVisualGraphicFrameProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1334,7 +1355,7 @@ impl WriteThrough for chart_drawing::NonVisualGraphicFrameProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GRAPHIC_FRAME_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_graphic_frame_drawing_properties, ctx)?;
@@ -1379,10 +1400,10 @@ impl super::Transform for chart_drawing::NonVisualGroupShapeDrawingProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group_shape_locks = super::transform_child(&self.group_shape_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1400,7 +1421,7 @@ impl super::Visit for chart_drawing::NonVisualGroupShapeDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group_shape_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -1416,7 +1437,7 @@ impl WriteThrough for chart_drawing::NonVisualGroupShapeDrawingProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1426,7 +1447,7 @@ impl WriteThrough for chart_drawing::NonVisualGroupShapeDrawingProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.group_shape_locks, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -1471,7 +1492,7 @@ impl super::Transform for chart_drawing::NonVisualGroupShapeProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_group_shape_drawing_properties = super::transform_child(
@@ -1479,7 +1500,7 @@ impl super::Transform for chart_drawing::NonVisualGroupShapeProperties {
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1497,7 +1518,7 @@ impl super::Visit for chart_drawing::NonVisualGroupShapeProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_group_shape_drawing_properties, visitor);
         walk.finish(visitor);
@@ -1513,7 +1534,7 @@ impl WriteThrough for chart_drawing::NonVisualGroupShapeProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1523,7 +1544,7 @@ impl WriteThrough for chart_drawing::NonVisualGroupShapeProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_GROUP_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_group_shape_drawing_properties, ctx)?;
@@ -1568,10 +1589,10 @@ impl super::Transform for chart_drawing::NonVisualPictureDrawingProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.picture_locks = super::transform_child(&self.picture_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1589,7 +1610,7 @@ impl super::Visit for chart_drawing::NonVisualPictureDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.picture_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -1605,7 +1626,7 @@ impl WriteThrough for chart_drawing::NonVisualPictureDrawingProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1615,7 +1636,7 @@ impl WriteThrough for chart_drawing::NonVisualPictureDrawingProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.prefer_relative_resize);
         through.child(&self.picture_locks, ctx)?;
@@ -1661,7 +1682,7 @@ impl super::Transform for chart_drawing::NonVisualPictureProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_picture_drawing_properties = super::transform_child(
@@ -1669,7 +1690,7 @@ impl super::Transform for chart_drawing::NonVisualPictureProperties {
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1687,7 +1708,7 @@ impl super::Visit for chart_drawing::NonVisualPictureProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_picture_drawing_properties, visitor);
         walk.finish(visitor);
@@ -1703,7 +1724,7 @@ impl WriteThrough for chart_drawing::NonVisualPictureProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::non_visual_picture_properties(self, out.scope());
@@ -1712,7 +1733,7 @@ impl WriteThrough for chart_drawing::NonVisualPictureProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_picture_drawing_properties, ctx)?;
@@ -1757,10 +1778,10 @@ impl super::Transform for chart_drawing::NonVisualShapeDrawingProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.shape_locks = super::transform_child(&self.shape_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1778,7 +1799,7 @@ impl super::Visit for chart_drawing::NonVisualShapeDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.shape_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -1794,7 +1815,7 @@ impl WriteThrough for chart_drawing::NonVisualShapeDrawingProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1804,7 +1825,7 @@ impl WriteThrough for chart_drawing::NonVisualShapeDrawingProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.tx_box);
         through.child(&self.shape_locks, ctx)?;
@@ -1850,12 +1871,12 @@ impl super::Transform for chart_drawing::NonVisualShapeProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_shape_drawing_properties =
             super::transform_child(&self.non_visual_shape_drawing_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1873,7 +1894,7 @@ impl super::Visit for chart_drawing::NonVisualShapeProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_shape_drawing_properties, visitor);
         walk.finish(visitor);
@@ -1889,7 +1910,7 @@ impl WriteThrough for chart_drawing::NonVisualShapeProperties {
         let converted = super::converts(
             out,
             &chart_drawing::NON_VISUAL_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::non_visual_shape_properties(self, out.scope());
@@ -1898,7 +1919,7 @@ impl WriteThrough for chart_drawing::NonVisualShapeProperties {
         let mut through = super::Through::new(
             out,
             &chart_drawing::NON_VISUAL_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_shape_drawing_properties, ctx)?;
@@ -2077,13 +2098,13 @@ impl super::Transform for chart_drawing::Picture {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_picture_properties =
             super::transform_child(&self.non_visual_picture_properties, ctx, &mut rebase);
         node.fill = super::transform_child(&self.fill, ctx, &mut rebase);
         node.shape_properties = super::transform_child(&self.shape_properties, ctx, &mut rebase);
         node.shape_style = super::transform_child(&self.shape_style, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2101,7 +2122,7 @@ impl super::Visit for chart_drawing::Picture {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_picture_properties, visitor);
         walk.child(&self.fill, visitor);
         walk.child(&self.shape_properties, visitor);
@@ -2116,12 +2137,14 @@ impl WriteThrough for chart_drawing::Picture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::PICTURE_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &chart_drawing::PICTURE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = chart_drawing::write::picture(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &chart_drawing::PICTURE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &chart_drawing::PICTURE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.r#macro);
         through.attribute(1, &self.f_published);
         through.child(&self.non_visual_picture_properties, ctx)?;
@@ -2165,11 +2188,11 @@ impl super::Transform for chart_drawing::PictureFill {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.blip = super::transform_child(&self.blip, ctx, &mut rebase);
         node.source_rectangle = super::transform_child(&self.source_rectangle, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2187,7 +2210,7 @@ impl super::Visit for chart_drawing::PictureFill {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.blip, visitor);
         walk.child(&self.source_rectangle, visitor);
         walk.choice(&self.content, visitor);
@@ -2201,13 +2224,20 @@ impl WriteThrough for chart_drawing::PictureFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::PICTURE_FILL_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::PICTURE_FILL_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::picture_fill(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::PICTURE_FILL_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::PICTURE_FILL_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
         through.child(&self.blip, ctx)?;
@@ -2254,13 +2284,13 @@ impl super::Transform for chart_drawing::RelativeAnchorShapeSize {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.starting_anchor_point =
             super::transform_child(&self.starting_anchor_point, ctx, &mut rebase);
         node.ending_anchor_point =
             super::transform_child(&self.ending_anchor_point, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2278,7 +2308,7 @@ impl super::Visit for chart_drawing::RelativeAnchorShapeSize {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.starting_anchor_point, visitor);
         walk.child(&self.ending_anchor_point, visitor);
         walk.choice(&self.content, visitor);
@@ -2295,7 +2325,7 @@ impl WriteThrough for chart_drawing::RelativeAnchorShapeSize {
         let converted = super::converts(
             out,
             &chart_drawing::RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::relative_anchor_shape_size(self, out.scope());
@@ -2304,7 +2334,7 @@ impl WriteThrough for chart_drawing::RelativeAnchorShapeSize {
         let mut through = super::Through::new(
             out,
             &chart_drawing::RELATIVE_ANCHOR_SHAPE_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.starting_anchor_point, ctx)?;
         through.child(&self.ending_anchor_point, ctx)?;
@@ -2350,7 +2380,8 @@ impl super::Transform for chart_drawing::RelativeXCoordinate {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2368,7 +2399,7 @@ impl super::Visit for chart_drawing::RelativeXCoordinate {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2381,7 +2412,7 @@ impl WriteThrough for chart_drawing::RelativeXCoordinate {
         let converted = super::converts(
             out,
             &chart_drawing::RELATIVE_X_COORDINATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::relative_x_coordinate(self, out.scope());
@@ -2390,7 +2421,7 @@ impl WriteThrough for chart_drawing::RelativeXCoordinate {
         let mut through = super::Through::new(
             out,
             &chart_drawing::RELATIVE_X_COORDINATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2434,7 +2465,8 @@ impl super::Transform for chart_drawing::RelativeYCoordinate {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2452,7 +2484,7 @@ impl super::Visit for chart_drawing::RelativeYCoordinate {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2465,7 +2497,7 @@ impl WriteThrough for chart_drawing::RelativeYCoordinate {
         let converted = super::converts(
             out,
             &chart_drawing::RELATIVE_Y_COORDINATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::relative_y_coordinate(self, out.scope());
@@ -2474,7 +2506,7 @@ impl WriteThrough for chart_drawing::RelativeYCoordinate {
         let mut through = super::Through::new(
             out,
             &chart_drawing::RELATIVE_Y_COORDINATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2514,13 +2546,13 @@ impl super::Transform for chart_drawing::Shape {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_shape_properties =
             super::transform_child(&self.non_visual_shape_properties, ctx, &mut rebase);
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.style = super::transform_child(&self.style, ctx, &mut rebase);
         node.text_body = super::transform_child(&self.text_body, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2534,7 +2566,7 @@ impl super::Visit for chart_drawing::Shape {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_shape_properties, visitor);
         walk.child(&self.properties, visitor);
         walk.child(&self.style, visitor);
@@ -2549,12 +2581,13 @@ impl WriteThrough for chart_drawing::Shape {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::SHAPE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &chart_drawing::SHAPE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = chart_drawing::write::shape(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &chart_drawing::SHAPE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &chart_drawing::SHAPE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.r#macro);
         through.attribute(1, &self.textlink);
         through.attribute(2, &self.f_locks_text);
@@ -2600,7 +2633,8 @@ impl super::Transform for chart_drawing::ShapeExtent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2618,7 +2652,7 @@ impl super::Visit for chart_drawing::ShapeExtent {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2628,13 +2662,20 @@ impl WriteThrough for chart_drawing::ShapeExtent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::SHAPE_EXTENT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::SHAPE_EXTENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::shape_extent(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::SHAPE_EXTENT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::SHAPE_EXTENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.cx);
         through.attribute(1, &self.cy);
         through.finish(ctx)
@@ -2678,7 +2719,7 @@ impl super::Transform for chart_drawing::ShapeProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -2689,7 +2730,7 @@ impl super::Transform for chart_drawing::ShapeProperties {
         node.scene3d = super::transform_child(&self.scene3d, ctx, &mut rebase);
         node.apply_3d = super::transform_child(&self.apply_3d, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2707,7 +2748,7 @@ impl super::Visit for chart_drawing::ShapeProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -2726,13 +2767,20 @@ impl WriteThrough for chart_drawing::ShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::SHAPE_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::shape_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::SHAPE_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
@@ -2783,12 +2831,12 @@ impl super::Transform for chart_drawing::ShapeStyle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.line_reference = super::transform_child(&self.line_reference, ctx, &mut rebase);
         node.fill_reference = super::transform_child(&self.fill_reference, ctx, &mut rebase);
         node.effect_reference = super::transform_child(&self.effect_reference, ctx, &mut rebase);
         node.font_reference = super::transform_child(&self.font_reference, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2806,7 +2854,7 @@ impl super::Visit for chart_drawing::ShapeStyle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.line_reference, visitor);
         walk.child(&self.fill_reference, visitor);
         walk.child(&self.effect_reference, visitor);
@@ -2821,13 +2869,20 @@ impl WriteThrough for chart_drawing::ShapeStyle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::SHAPE_STYLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::SHAPE_STYLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::shape_style(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::SHAPE_STYLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::SHAPE_STYLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.line_reference, ctx)?;
         through.child(&self.fill_reference, ctx)?;
         through.child(&self.effect_reference, ctx)?;
@@ -2873,11 +2928,11 @@ impl super::Transform for chart_drawing::ShapeTextBody {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.text_list_styles = super::transform_child(&self.text_list_styles, ctx, &mut rebase);
         node.text_paragraphs = super::transform_child(&self.text_paragraphs, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2895,7 +2950,7 @@ impl super::Visit for chart_drawing::ShapeTextBody {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.properties, visitor);
         walk.child(&self.text_list_styles, visitor);
         walk.child(&self.text_paragraphs, visitor);
@@ -2909,13 +2964,20 @@ impl WriteThrough for chart_drawing::ShapeTextBody {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &chart_drawing::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &chart_drawing::SHAPE_TEXT_BODY_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = chart_drawing::write::shape_text_body(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &chart_drawing::SHAPE_TEXT_BODY_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &chart_drawing::SHAPE_TEXT_BODY_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.properties, ctx)?;
         through.child(&self.text_list_styles, ctx)?;
         through.child(&self.text_paragraphs, ctx)?;
@@ -2960,12 +3022,12 @@ impl super::Transform for chart_drawing::StartingAnchorPoint {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.relative_x_coordinate =
             super::transform_child(&self.relative_x_coordinate, ctx, &mut rebase);
         node.relative_y_coordinate =
             super::transform_child(&self.relative_y_coordinate, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2983,7 +3045,7 @@ impl super::Visit for chart_drawing::StartingAnchorPoint {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.relative_x_coordinate, visitor);
         walk.child(&self.relative_y_coordinate, visitor);
         walk.finish(visitor);
@@ -2999,7 +3061,7 @@ impl WriteThrough for chart_drawing::StartingAnchorPoint {
         let converted = super::converts(
             out,
             &chart_drawing::STARTING_ANCHOR_POINT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = chart_drawing::write::starting_anchor_point(self, out.scope());
@@ -3008,7 +3070,7 @@ impl WriteThrough for chart_drawing::StartingAnchorPoint {
         let mut through = super::Through::new(
             out,
             &chart_drawing::STARTING_ANCHOR_POINT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.relative_x_coordinate, ctx)?;
         through.child(&self.relative_y_coordinate, ctx)?;

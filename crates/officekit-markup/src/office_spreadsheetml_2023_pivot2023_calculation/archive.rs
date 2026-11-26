@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AggregationInfoMirror {
     pub aggregation_type: Option<super::AggregationType>,
     pub source_field: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -233,7 +233,7 @@ pub struct AggregationInfoMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FeatureSupportInfoMirror {
     pub feature_name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -242,7 +242,7 @@ pub struct FeatureSupportInfoMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotAreaReferenceSubtotalsMirror {
     pub subtotal_pivot_subtotal_type: Vec<super::SubtotalPivotSubtotalType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -251,7 +251,7 @@ pub struct PivotAreaReferenceSubtotalsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotFieldSubtotalLineItemsMirror {
     pub subtotal_line_item: Vec<super::SubtotalLineItem>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -260,7 +260,7 @@ pub struct PivotFieldSubtotalLineItemsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotFieldSubtotalsMirror {
     pub subtotal_pivot_item_subtotal: Vec<super::SubtotalPivotItemSubtotal>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -268,7 +268,7 @@ pub struct PivotFieldSubtotalsMirror {
 #[rkyv(remote = super::SubtotalLineItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubtotalLineItemMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -276,7 +276,7 @@ pub struct SubtotalLineItemMirror {
 #[rkyv(remote = super::SubtotalPivotItemSubtotal)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SubtotalPivotItemSubtotalMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -285,7 +285,7 @@ pub struct SubtotalPivotItemSubtotalMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SubtotalPivotSubtotalTypeMirror {
     pub subtotal_type: Option<super::AggregationType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

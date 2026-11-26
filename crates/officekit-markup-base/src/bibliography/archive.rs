@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AbbreviatedCaseNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbbreviatedCaseNumberMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -232,7 +232,7 @@ pub struct AbbreviatedCaseNumberMirror {
 #[rkyv(remote = super::AlbumTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlbumTitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -242,7 +242,7 @@ pub struct AlbumTitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ArtistMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -251,7 +251,7 @@ pub struct ArtistMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AuthorMirror {
     pub content: Option<Box<super::NameOrCorporateContent>>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -260,7 +260,7 @@ pub struct AuthorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BookAuthorMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -268,7 +268,7 @@ pub struct BookAuthorMirror {
 #[rkyv(remote = super::BookTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BookTitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -277,7 +277,7 @@ pub struct BookTitleMirror {
 #[rkyv(remote = super::BroadcastTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BroadcastTitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -286,7 +286,7 @@ pub struct BroadcastTitleMirror {
 #[rkyv(remote = super::Broadcaster)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BroadcasterMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -295,7 +295,7 @@ pub struct BroadcasterMirror {
 #[rkyv(remote = super::CaseNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CaseNumberMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -304,7 +304,7 @@ pub struct CaseNumberMirror {
 #[rkyv(remote = super::ChapterNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChapterNumberMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -313,7 +313,7 @@ pub struct ChapterNumberMirror {
 #[rkyv(remote = super::City)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CityMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -322,7 +322,7 @@ pub struct CityMirror {
 #[rkyv(remote = super::Comments)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -332,7 +332,7 @@ pub struct CommentsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CompilerMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -341,7 +341,7 @@ pub struct CompilerMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComposerMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -350,7 +350,7 @@ pub struct ComposerMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ConductorMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -358,7 +358,7 @@ pub struct ConductorMirror {
 #[rkyv(remote = super::ConferenceOrProceedingsName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConferenceOrProceedingsNameMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -368,7 +368,7 @@ pub struct ConferenceOrProceedingsNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContributorsListMirror {
     pub content: Vec<super::ContributorsListContent>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -376,7 +376,7 @@ pub struct ContributorsListMirror {
 #[rkyv(remote = super::CorporateAuthor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CorporateAuthorMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -386,7 +386,7 @@ pub struct CorporateAuthorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CounselMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -394,7 +394,7 @@ pub struct CounselMirror {
 #[rkyv(remote = super::CountryOrRegion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CountryOrRegionMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -403,7 +403,7 @@ pub struct CountryOrRegionMirror {
 #[rkyv(remote = super::Court)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CourtMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -412,7 +412,7 @@ pub struct CourtMirror {
 #[rkyv(remote = super::Day)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DayMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -421,7 +421,7 @@ pub struct DayMirror {
 #[rkyv(remote = super::DayAccessed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DayAccessedMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -430,7 +430,7 @@ pub struct DayAccessedMirror {
 #[rkyv(remote = super::Department)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DepartmentMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -440,7 +440,7 @@ pub struct DepartmentMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DirectorMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -448,7 +448,7 @@ pub struct DirectorMirror {
 #[rkyv(remote = super::Distributor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DistributorMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -458,7 +458,7 @@ pub struct DistributorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EditorMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -466,7 +466,7 @@ pub struct EditorMirror {
 #[rkyv(remote = super::EditorEdition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EditorEditionMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -475,7 +475,7 @@ pub struct EditorEditionMirror {
 #[rkyv(remote = super::Guid)]
 #[rkyv(attr(non_exhaustive))]
 pub struct GuidMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -484,7 +484,7 @@ pub struct GuidMirror {
 #[rkyv(remote = super::Institution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InstitutionMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -493,7 +493,7 @@ pub struct InstitutionMirror {
 #[rkyv(remote = super::InternetSiteTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InternetSiteTitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -503,7 +503,7 @@ pub struct InternetSiteTitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct IntervieweeMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -512,7 +512,7 @@ pub struct IntervieweeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct InterviewerMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -521,7 +521,7 @@ pub struct InterviewerMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct InventorMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -529,7 +529,7 @@ pub struct InventorMirror {
 #[rkyv(remote = super::Issue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IssueMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -538,7 +538,7 @@ pub struct IssueMirror {
 #[rkyv(remote = super::JournalName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct JournalNameMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -547,7 +547,7 @@ pub struct JournalNameMirror {
 #[rkyv(remote = super::LocaleID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LocaleIDMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -556,7 +556,7 @@ pub struct LocaleIDMirror {
 #[rkyv(remote = super::Medium)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MediumMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -565,7 +565,7 @@ pub struct MediumMirror {
 #[rkyv(remote = super::Month)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MonthMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -574,7 +574,7 @@ pub struct MonthMirror {
 #[rkyv(remote = super::MonthAccessed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MonthAccessedMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -584,7 +584,7 @@ pub struct MonthAccessedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NameListMirror {
     pub person: Vec<super::Person>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -592,7 +592,7 @@ pub struct NameListMirror {
 #[rkyv(remote = super::NumberOfVolumes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfVolumesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -601,7 +601,7 @@ pub struct NumberOfVolumesMirror {
 #[rkyv(remote = super::Pages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PagesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -610,7 +610,7 @@ pub struct PagesMirror {
 #[rkyv(remote = super::PatentNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PatentNumberMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -619,7 +619,7 @@ pub struct PatentNumberMirror {
 #[rkyv(remote = super::PatentType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PatentTypeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -629,7 +629,7 @@ pub struct PatentTypeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PerformerMirror {
     pub content: Option<Box<super::NameOrCorporateContent>>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -637,7 +637,7 @@ pub struct PerformerMirror {
 #[rkyv(remote = super::PeriodicalTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PeriodicalTitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -649,7 +649,7 @@ pub struct PersonMirror {
     pub persons_first_or_given_name: Vec<super::PersonsFirstOrGivenName>,
     pub persons_last_or_family_name: Vec<super::PersonsLastOrFamilyName>,
     pub persons_middle_or_other_name: Vec<super::PersonsMiddleOrOtherName>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -657,7 +657,7 @@ pub struct PersonMirror {
 #[rkyv(remote = super::PersonsFirstOrGivenName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonsFirstOrGivenNameMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -666,7 +666,7 @@ pub struct PersonsFirstOrGivenNameMirror {
 #[rkyv(remote = super::PersonsLastOrFamilyName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonsLastOrFamilyNameMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -675,7 +675,7 @@ pub struct PersonsLastOrFamilyNameMirror {
 #[rkyv(remote = super::PersonsMiddleOrOtherName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PersonsMiddleOrOtherNameMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -685,7 +685,7 @@ pub struct PersonsMiddleOrOtherNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ProducerNameMirror {
     pub list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -693,7 +693,7 @@ pub struct ProducerNameMirror {
 #[rkyv(remote = super::ProductionCompany)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ProductionCompanyMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -702,7 +702,7 @@ pub struct ProductionCompanyMirror {
 #[rkyv(remote = super::PublicationTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PublicationTitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -711,7 +711,7 @@ pub struct PublicationTitleMirror {
 #[rkyv(remote = super::Publisher)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PublisherMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -720,7 +720,7 @@ pub struct PublisherMirror {
 #[rkyv(remote = super::RecordingNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecordingNumberMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -729,7 +729,7 @@ pub struct RecordingNumberMirror {
 #[rkyv(remote = super::ReferenceOrder)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceOrderMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -738,7 +738,7 @@ pub struct ReferenceOrderMirror {
 #[rkyv(remote = super::Reporter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReporterMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -747,7 +747,7 @@ pub struct ReporterMirror {
 #[rkyv(remote = super::ShortTitle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShortTitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -757,7 +757,7 @@ pub struct ShortTitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceMirror {
     pub content: Vec<super::SourceContent>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -765,7 +765,7 @@ pub struct SourceMirror {
 #[rkyv(remote = super::SourceType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SourceTypeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::BibliographicDataSourceTypes,
 }
@@ -777,7 +777,7 @@ pub struct SourcesMirror {
     pub selected_style: Option<String>,
     pub source: Vec<super::Source>,
     pub style_name: Option<String>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -786,7 +786,7 @@ pub struct SourcesMirror {
 #[rkyv(remote = super::StandardNumber)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StandardNumberMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -795,7 +795,7 @@ pub struct StandardNumberMirror {
 #[rkyv(remote = super::StateOrProvince)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StateOrProvinceMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -804,7 +804,7 @@ pub struct StateOrProvinceMirror {
 #[rkyv(remote = super::Station)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StationMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -813,7 +813,7 @@ pub struct StationMirror {
 #[rkyv(remote = super::Tag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TagMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -822,7 +822,7 @@ pub struct TagMirror {
 #[rkyv(remote = super::Theater)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TheaterMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -831,7 +831,7 @@ pub struct TheaterMirror {
 #[rkyv(remote = super::ThesisType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThesisTypeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -840,7 +840,7 @@ pub struct ThesisTypeMirror {
 #[rkyv(remote = super::Title)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TitleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -850,7 +850,7 @@ pub struct TitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TranslatorMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -858,7 +858,7 @@ pub struct TranslatorMirror {
 #[rkyv(remote = super::Url)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UrlMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -867,7 +867,7 @@ pub struct UrlMirror {
 #[rkyv(remote = super::Version)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VersionMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -876,7 +876,7 @@ pub struct VersionMirror {
 #[rkyv(remote = super::Volume)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VolumeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -886,7 +886,7 @@ pub struct VolumeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct WriterMirror {
     pub name_list: Box<super::NameList>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -894,7 +894,7 @@ pub struct WriterMirror {
 #[rkyv(remote = super::Year)]
 #[rkyv(attr(non_exhaustive))]
 pub struct YearMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -903,7 +903,7 @@ pub struct YearMirror {
 #[rkyv(remote = super::YearAccessed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct YearAccessedMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -232,7 +232,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ms_form(node: &super::MsForm, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MS_FORM_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::MS_FORM_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.is_form_connected);
     writer.attribute(2, &node.max_response_id);
@@ -246,7 +246,7 @@ pub fn ms_form(node: &super::MsForm, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn question(node: &super::Question, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::QUESTION_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::QUESTION_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -255,8 +255,11 @@ pub fn question(node: &super::Question, scope: &mut Scope) -> Element {
 /// Write a `SyncedQuestionId` as its element, `xlmsforms:syncedQuestionId`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn synced_question_id(node: &super::SyncedQuestionId, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SYNCED_QUESTION_ID_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SYNCED_QUESTION_ID_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }

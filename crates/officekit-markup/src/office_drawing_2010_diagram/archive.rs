@@ -231,7 +231,7 @@ pub struct CNvPrMirror {
     pub id: Option<drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -239,7 +239,7 @@ pub struct CNvPrMirror {
 #[rkyv(remote = super::RecolorImg)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecolorImgMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }

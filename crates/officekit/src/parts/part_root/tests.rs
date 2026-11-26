@@ -420,8 +420,17 @@ fn unknown_elements_and_attributes_are_kept_as_the_tree_keeps_them() {
     )
     .unwrap();
     assert_eq!(read, from_tree(&package, OpenOptions::default()).unwrap());
-    assert_eq!(read.unknown.children.len(), 2);
-    assert_eq!(read.body.as_deref().unwrap().unknown.attributes.len(), 1);
+    assert_eq!(read.unknown().unwrap().children.len(), 2);
+    assert_eq!(
+        read.body
+            .as_deref()
+            .unwrap()
+            .unknown()
+            .unwrap()
+            .attributes
+            .len(),
+        1
+    );
 }
 
 #[test]

@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2014_11_main::CalculatedTimeColum
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2014_11_main::CalculatedTimeColumn {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::CalculatedTimeColumn {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2014_11_main::CALCULATED_TIME_COLUMN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::CalculatedTimeColumn {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2014_11_main::CALCULATED_TIME_COLUMN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.column_name);
         through.attribute(1, &self.column_id);
@@ -321,10 +322,10 @@ impl super::Transform for office_spreadsheetml_2014_11_main::ModelTimeGrouping {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.calculated_time_column =
             super::transform_child(&self.calculated_time_column, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -342,7 +343,7 @@ impl super::Visit for office_spreadsheetml_2014_11_main::ModelTimeGrouping {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.calculated_time_column, visitor);
         walk.finish(visitor);
     }
@@ -357,7 +358,7 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::ModelTimeGrouping {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -367,7 +368,7 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::ModelTimeGrouping {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.table_name);
         through.attribute(1, &self.column_name);
@@ -414,10 +415,10 @@ impl super::Transform for office_spreadsheetml_2014_11_main::ModelTimeGroupings 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.model_time_grouping =
             super::transform_child(&self.model_time_grouping, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -435,7 +436,7 @@ impl super::Visit for office_spreadsheetml_2014_11_main::ModelTimeGroupings {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.model_time_grouping, visitor);
         walk.finish(visitor);
     }
@@ -450,7 +451,7 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::ModelTimeGroupings {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -460,7 +461,7 @@ impl WriteThrough for office_spreadsheetml_2014_11_main::ModelTimeGroupings {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2014_11_main::MODEL_TIME_GROUPINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.model_time_grouping, ctx)?;
         through.finish(ctx)

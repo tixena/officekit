@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
     writer.attribute(2, &node.descr);
@@ -238,8 +238,11 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
 /// Write a `RecolorImg` as its element, `dgm14:recolorImg`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn recolor_img(node: &super::RecolorImg, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::RECOLOR_IMG_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::RECOLOR_IMG_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }

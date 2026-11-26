@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bubble3d(node: &super::Bubble3D, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BUBBLE3D_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::BUBBLE3D_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -237,7 +237,7 @@ pub fn category_filter_exception(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CATEGORY_FILTER_EXCEPTION_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.unique_id);
     writer.child(&node.sp_pr);
@@ -258,7 +258,7 @@ pub fn category_filter_exceptions(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CATEGORY_FILTER_EXCEPTIONS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.category_filter_exception);
     writer.finish()
@@ -267,7 +267,8 @@ pub fn category_filter_exceptions(
 /// Write a `DLbl` as its element, `c16:dLbl`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn d_lbl(node: &super::DLbl, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::D_LBL_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::D_LBL_SHAPE, node.unknown.as_deref());
     writer.child(&node.index);
     writer.child(&node.content);
     writer.child(&node.chart_extensibility);
@@ -280,7 +281,7 @@ pub fn datapointuniqueidmap(node: &super::Datapointuniqueidmap, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DATAPOINTUNIQUEIDMAP_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.ptentry);
     writer.finish()
@@ -290,7 +291,7 @@ pub fn datapointuniqueidmap(node: &super::Datapointuniqueidmap, scope: &mut Scop
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn explosion(node: &super::Explosion, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXPLOSION_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXPLOSION_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -305,7 +306,7 @@ pub fn filtered_lit_cache_multi_lvl_str_filtered_literal_cache(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::FILTERED_LIT_CACHE_MULTI_LVL_STR_FILTERED_LITERAL_CACHE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.multi_lvl_str_cache);
     writer.finish()
@@ -320,7 +321,7 @@ pub fn filtered_lit_cache_num_filtered_literal_cache(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::FILTERED_LIT_CACHE_NUM_FILTERED_LITERAL_CACHE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.num_cache);
     writer.finish()
@@ -335,7 +336,7 @@ pub fn filtered_lit_cache_str_filtered_literal_cache(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::FILTERED_LIT_CACHE_STR_FILTERED_LITERAL_CACHE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.str_cache);
     writer.finish()
@@ -344,8 +345,11 @@ pub fn filtered_lit_cache_str_filtered_literal_cache(
 /// Write a `InvertIfNegative` as its element, `c16:invertIfNegative`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn invert_if_negative(node: &super::InvertIfNegative, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::INVERT_IF_NEGATIVE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::INVERT_IF_NEGATIVE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -353,8 +357,11 @@ pub fn invert_if_negative(node: &super::InvertIfNegative, scope: &mut Scope) -> 
 /// Write a `LiteralDataChart` as its element, `c16:literalDataChart`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn literal_data_chart(node: &super::LiteralDataChart, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LITERAL_DATA_CHART_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LITERAL_DATA_CHART_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -362,7 +369,8 @@ pub fn literal_data_chart(node: &super::LiteralDataChart, scope: &mut Scope) -> 
 /// Write a `Marker` as its element, `c16:marker`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn marker(node: &super::Marker, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::MARKER_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::MARKER_SHAPE, node.unknown.as_deref());
     writer.child(&node.symbol);
     writer.child(&node.size);
     writer.child(&node.shape_properties);
@@ -373,8 +381,11 @@ pub fn marker(node: &super::Marker, scope: &mut Scope) -> Element {
 /// Write a `MultiLvlStrCache` as its element, `c16:multiLvlStrCache`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn multi_lvl_str_cache(node: &super::MultiLvlStrCache, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MULTI_LVL_STR_CACHE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::MULTI_LVL_STR_CACHE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.point_count);
     writer.child(&node.level);
     writer.child(&node.chart_extensibility);
@@ -385,7 +396,7 @@ pub fn multi_lvl_str_cache(node: &super::MultiLvlStrCache, scope: &mut Scope) ->
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn num_cache(node: &super::NumCache, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NUM_CACHE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::NUM_CACHE_SHAPE, node.unknown.as_deref());
     writer.child(&node.format_code);
     writer.child(&node.point_count);
     writer.child(&node.numeric_point);
@@ -396,8 +407,11 @@ pub fn num_cache(node: &super::NumCache, scope: &mut Scope) -> Element {
 /// Write a `PivotOptions16` as its element, `c16:pivotOptions16`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pivot_options16(node: &super::PivotOptions16, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PIVOT_OPTIONS16_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PIVOT_OPTIONS16_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.show_expand_collapse_field_buttons);
     writer.finish()
 }
@@ -406,7 +420,7 @@ pub fn pivot_options16(node: &super::PivotOptions16, scope: &mut Scope) -> Eleme
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ptentry(node: &super::Ptentry, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PTENTRY_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PTENTRY_SHAPE, node.unknown.as_deref());
     writer.child(&node.ptidx);
     writer.child(&node.unique_id);
     writer.finish()
@@ -415,7 +429,8 @@ pub fn ptentry(node: &super::Ptentry, scope: &mut Scope) -> Element {
 /// Write a `Ptidx` as its element, `c16:ptidx`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ptidx(node: &super::Ptidx, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::PTIDX_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::PTIDX_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -429,7 +444,7 @@ pub fn show_expand_collapse_field_buttons(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SHOW_EXPAND_COLLAPSE_FIELD_BUTTONS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.val);
     writer.finish()
@@ -438,7 +453,8 @@ pub fn show_expand_collapse_field_buttons(
 /// Write a `SpPr` as its element, `c16:spPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
     writer.child(&node.geometry_content);
@@ -455,7 +471,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn str_cache(node: &super::StrCache, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::STR_CACHE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::STR_CACHE_SHAPE, node.unknown.as_deref());
     writer.child(&node.point_count);
     writer.child(&node.string_point);
     writer.child(&node.chart_extensibility);
@@ -465,11 +481,18 @@ pub fn str_cache(node: &super::StrCache, scope: &mut Scope) -> Element {
 /// Write a `UniqueID` as its element, `c16:uniqueID`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unique_id(node: &super::UniqueID, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::UNIQUE_ID_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::UNIQUE_ID_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `UniqueId` as its element, `c16:uniqueId`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unique_id_2(node: &super::UniqueId, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::UNIQUE_ID_2_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::UNIQUE_ID_2_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }

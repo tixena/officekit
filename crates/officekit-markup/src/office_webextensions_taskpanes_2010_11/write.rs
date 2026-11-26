@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -232,7 +232,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn taskpane(node: &super::Taskpane, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TASKPANE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TASKPANE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.dockstate);
     writer.attribute(1, &node.visibility);
     writer.attribute(2, &node.width);
@@ -247,7 +247,7 @@ pub fn taskpane(node: &super::Taskpane, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn taskpanes(node: &super::Taskpanes, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TASKPANES_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TASKPANES_SHAPE, node.unknown.as_deref());
     writer.child(&node.taskpane);
     writer.finish()
 }
@@ -255,8 +255,11 @@ pub fn taskpanes(node: &super::Taskpanes, scope: &mut Scope) -> Element {
 /// Write a `Webextensionref` as its element, `wetp:webextensionref`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn webextensionref(node: &super::Webextensionref, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::WEBEXTENSIONREF_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::WEBEXTENSIONREF_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.finish()
 }

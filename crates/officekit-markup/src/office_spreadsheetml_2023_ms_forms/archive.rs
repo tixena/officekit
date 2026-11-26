@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -238,7 +238,7 @@ pub struct MsFormMirror {
     pub latest_event_marker: Option<String>,
     pub max_response_id: Option<String>,
     pub synced_question_id: Vec<super::SyncedQuestionId>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -248,7 +248,7 @@ pub struct MsFormMirror {
 pub struct QuestionMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -256,7 +256,7 @@ pub struct QuestionMirror {
 #[rkyv(remote = super::SyncedQuestionId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SyncedQuestionIdMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

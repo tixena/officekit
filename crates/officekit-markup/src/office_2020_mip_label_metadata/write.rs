@@ -222,7 +222,8 @@ use officekit_xml::write::Scope;
 /// Write a `Ext` as its element, `clbl:ext`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::EXT_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::EXT_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.uri);
     writer.child(&node.content);
     writer.finish()
@@ -232,7 +233,7 @@ pub fn ext(node: &super::Ext, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.ext);
     writer.finish()
 }
@@ -240,7 +241,8 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `Label` as its element, `clbl:label`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn label(node: &super::Label, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::LABEL_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::LABEL_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.enabled);
     writer.attribute(2, &node.set_date);
@@ -256,8 +258,11 @@ pub fn label(node: &super::Label, scope: &mut Scope) -> Element {
 /// Write a `LabelList` as its element, `clbl:labelList`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn label_list(node: &super::LabelList, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LABEL_LIST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LABEL_LIST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.label);
     writer.child(&node.ext_lst);
     writer.finish()

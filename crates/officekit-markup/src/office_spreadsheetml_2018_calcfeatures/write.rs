@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `CalcFeatures` as its element, `xcalcf:calcFeatures`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn calc_features(node: &super::CalcFeatures, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CALC_FEATURES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CALC_FEATURES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.feature);
     writer.finish()
 }
@@ -232,7 +235,7 @@ pub fn calc_features(node: &super::CalcFeatures, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn feature(node: &super::Feature, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::FEATURE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::FEATURE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.name);
     writer.finish()
 }

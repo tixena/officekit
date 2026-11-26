@@ -233,9 +233,9 @@ impl super::Transform for office_2019_extlst::Ext {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_2019_extlst::Ext {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -265,12 +265,14 @@ impl WriteThrough for office_2019_extlst::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_2019_extlst::EXT_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &office_2019_extlst::EXT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = office_2019_extlst::write::ext(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &office_2019_extlst::EXT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &office_2019_extlst::EXT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.uri);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)

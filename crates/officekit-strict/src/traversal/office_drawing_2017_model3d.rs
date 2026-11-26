@@ -233,12 +233,12 @@ impl super::Transform for office_drawing_2017_model3d::AmbientLight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.clr = super::transform_child(&self.clr, ctx, &mut rebase);
         node.illuminance = super::transform_child(&self.illuminance, ctx, &mut rebase);
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -256,7 +256,7 @@ impl super::Visit for office_drawing_2017_model3d::AmbientLight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.clr, visitor);
         walk.child(&self.illuminance, visitor);
         walk.child(&self.ext_lst_office_art_extension_list, visitor);
@@ -273,7 +273,7 @@ impl WriteThrough for office_drawing_2017_model3d::AmbientLight {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::AMBIENT_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::ambient_light(self, out.scope());
@@ -282,7 +282,7 @@ impl WriteThrough for office_drawing_2017_model3d::AmbientLight {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::AMBIENT_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.enabled);
         through.child(&self.clr, ctx)?;
@@ -329,7 +329,8 @@ impl super::Transform for office_drawing_2017_model3d::AttrSrcUrl {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -347,7 +348,7 @@ impl super::Visit for office_drawing_2017_model3d::AttrSrcUrl {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -360,7 +361,7 @@ impl WriteThrough for office_drawing_2017_model3d::AttrSrcUrl {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::ATTR_SRC_URL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::attr_src_url(self, out.scope());
@@ -369,7 +370,7 @@ impl WriteThrough for office_drawing_2017_model3d::AttrSrcUrl {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::ATTR_SRC_URL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -413,10 +414,10 @@ impl super::Transform for office_drawing_2017_model3d::Blip {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -434,7 +435,7 @@ impl super::Visit for office_drawing_2017_model3d::Blip {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -447,14 +448,20 @@ impl WriteThrough for office_drawing_2017_model3d::Blip {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2017_model3d::BLIP_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::BLIP_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::blip(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::BLIP_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::BLIP_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
         through.attribute(2, &self.cstate);
@@ -501,14 +508,14 @@ impl super::Transform for office_drawing_2017_model3d::Camera {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pos = super::transform_child(&self.pos, ctx, &mut rebase);
         node.up = super::transform_child(&self.up, ctx, &mut rebase);
         node.look_at = super::transform_child(&self.look_at, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -526,7 +533,7 @@ impl super::Visit for office_drawing_2017_model3d::Camera {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pos, visitor);
         walk.child(&self.up, visitor);
         walk.child(&self.look_at, visitor);
@@ -545,7 +552,7 @@ impl WriteThrough for office_drawing_2017_model3d::Camera {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::CAMERA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::camera(self, out.scope());
@@ -554,7 +561,7 @@ impl WriteThrough for office_drawing_2017_model3d::Camera {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::CAMERA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.pos, ctx)?;
         through.child(&self.up, ctx)?;
@@ -602,9 +609,9 @@ impl super::Transform for office_drawing_2017_model3d::Clr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -622,7 +629,7 @@ impl super::Visit for office_drawing_2017_model3d::Clr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -634,14 +641,20 @@ impl WriteThrough for office_drawing_2017_model3d::Clr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2017_model3d::CLR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::CLR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::clr(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::CLR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::CLR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -684,14 +697,14 @@ impl super::Transform for office_drawing_2017_model3d::DirLight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.clr = super::transform_child(&self.clr, ctx, &mut rebase);
         node.illuminance = super::transform_child(&self.illuminance, ctx, &mut rebase);
         node.pos = super::transform_child(&self.pos, ctx, &mut rebase);
         node.look_at = super::transform_child(&self.look_at, ctx, &mut rebase);
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -709,7 +722,7 @@ impl super::Visit for office_drawing_2017_model3d::DirLight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.clr, visitor);
         walk.child(&self.illuminance, visitor);
         walk.child(&self.pos, visitor);
@@ -728,7 +741,7 @@ impl WriteThrough for office_drawing_2017_model3d::DirLight {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::DIR_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::dir_light(self, out.scope());
@@ -737,7 +750,7 @@ impl WriteThrough for office_drawing_2017_model3d::DirLight {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::DIR_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.enabled);
         through.attribute(1, &self.angular_rad);
@@ -787,9 +800,9 @@ impl super::Transform for office_drawing_2017_model3d::Ext {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -807,7 +820,7 @@ impl super::Visit for office_drawing_2017_model3d::Ext {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -819,14 +832,20 @@ impl WriteThrough for office_drawing_2017_model3d::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2017_model3d::EXT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::EXT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::ext(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::EXT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::EXT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.uri);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -870,9 +889,9 @@ impl super::Transform for office_drawing_2017_model3d::ExtLstModel3DExtensionLis
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext = super::transform_child(&self.ext, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -890,7 +909,7 @@ impl super::Visit for office_drawing_2017_model3d::ExtLstModel3DExtensionList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext, visitor);
         walk.finish(visitor);
     }
@@ -905,7 +924,7 @@ impl WriteThrough for office_drawing_2017_model3d::ExtLstModel3DExtensionList {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::ext_lst_model3d_extension_list(
@@ -917,7 +936,7 @@ impl WriteThrough for office_drawing_2017_model3d::ExtLstModel3DExtensionList {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::EXT_LST_MODEL3D_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext, ctx)?;
         through.finish(ctx)
@@ -961,9 +980,9 @@ impl super::Transform for office_drawing_2017_model3d::ExtLstOfficeArtExtensionL
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -981,7 +1000,7 @@ impl super::Visit for office_drawing_2017_model3d::ExtLstOfficeArtExtensionList 
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -996,7 +1015,7 @@ impl WriteThrough for office_drawing_2017_model3d::ExtLstOfficeArtExtensionList 
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::ext_lst_office_art_extension_list(
@@ -1008,7 +1027,7 @@ impl WriteThrough for office_drawing_2017_model3d::ExtLstOfficeArtExtensionList 
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::EXT_LST_OFFICE_ART_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -1052,7 +1071,8 @@ impl super::Transform for office_drawing_2017_model3d::Illuminance {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1070,7 +1090,7 @@ impl super::Visit for office_drawing_2017_model3d::Illuminance {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1083,7 +1103,7 @@ impl WriteThrough for office_drawing_2017_model3d::Illuminance {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::ILLUMINANCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::illuminance(self, out.scope());
@@ -1092,7 +1112,7 @@ impl WriteThrough for office_drawing_2017_model3d::Illuminance {
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::ILLUMINANCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1135,7 +1155,8 @@ impl super::Transform for office_drawing_2017_model3d::Intensity {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1153,7 +1174,7 @@ impl super::Visit for office_drawing_2017_model3d::Intensity {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1166,7 +1187,7 @@ impl WriteThrough for office_drawing_2017_model3d::Intensity {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::INTENSITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::intensity(self, out.scope());
@@ -1175,7 +1196,7 @@ impl WriteThrough for office_drawing_2017_model3d::Intensity {
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::INTENSITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1218,7 +1239,8 @@ impl super::Transform for office_drawing_2017_model3d::LookAt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1236,7 +1258,7 @@ impl super::Visit for office_drawing_2017_model3d::LookAt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1249,7 +1271,7 @@ impl WriteThrough for office_drawing_2017_model3d::LookAt {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::LOOK_AT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::look_at(self, out.scope());
@@ -1258,7 +1280,7 @@ impl WriteThrough for office_drawing_2017_model3d::LookAt {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::LOOK_AT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -1304,7 +1326,8 @@ impl super::Transform for office_drawing_2017_model3d::MeterPerModelUnit {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1322,7 +1345,7 @@ impl super::Visit for office_drawing_2017_model3d::MeterPerModelUnit {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1335,7 +1358,7 @@ impl WriteThrough for office_drawing_2017_model3d::MeterPerModelUnit {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::METER_PER_MODEL_UNIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1345,7 +1368,7 @@ impl WriteThrough for office_drawing_2017_model3d::MeterPerModelUnit {
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::METER_PER_MODEL_UNIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1823,7 +1846,7 @@ impl super::Transform for office_drawing_2017_model3d::Model3d {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.camera = super::transform_child(&self.camera, ctx, &mut rebase);
         node.trans = super::transform_child(&self.trans, ctx, &mut rebase);
@@ -1834,7 +1857,7 @@ impl super::Transform for office_drawing_2017_model3d::Model3d {
         node.viewport_content = super::transform_choice(&self.viewport_content, ctx, &mut rebase);
         node.ambient_light = super::transform_child(&self.ambient_light, ctx, &mut rebase);
         node.light_content = super::transform_items(&self.light_content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1852,7 +1875,7 @@ impl super::Visit for office_drawing_2017_model3d::Model3d {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.camera, visitor);
         walk.child(&self.trans, visitor);
@@ -1875,7 +1898,7 @@ impl WriteThrough for office_drawing_2017_model3d::Model3d {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::MODEL3D_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::model3d(self, out.scope());
@@ -1884,7 +1907,7 @@ impl WriteThrough for office_drawing_2017_model3d::Model3d {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::MODEL3D_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
@@ -1938,10 +1961,10 @@ impl super::Transform for office_drawing_2017_model3d::ObjViewport {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1959,7 +1982,7 @@ impl super::Visit for office_drawing_2017_model3d::ObjViewport {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst_office_art_extension_list, visitor);
         walk.finish(visitor);
     }
@@ -1974,7 +1997,7 @@ impl WriteThrough for office_drawing_2017_model3d::ObjViewport {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::OBJ_VIEWPORT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::obj_viewport(self, out.scope());
@@ -1983,7 +2006,7 @@ impl WriteThrough for office_drawing_2017_model3d::ObjViewport {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::OBJ_VIEWPORT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.viewport_sz);
         through.child(&self.ext_lst_office_art_extension_list, ctx)?;
@@ -2028,11 +2051,11 @@ impl super::Transform for office_drawing_2017_model3d::Orthographic {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sz_positive_ratio = super::transform_child(&self.sz_positive_ratio, ctx, &mut rebase);
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2050,7 +2073,7 @@ impl super::Visit for office_drawing_2017_model3d::Orthographic {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sz_positive_ratio, visitor);
         walk.child(&self.ext_lst_office_art_extension_list, visitor);
         walk.finish(visitor);
@@ -2066,7 +2089,7 @@ impl WriteThrough for office_drawing_2017_model3d::Orthographic {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::ORTHOGRAPHIC_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::orthographic(self, out.scope());
@@ -2075,7 +2098,7 @@ impl WriteThrough for office_drawing_2017_model3d::Orthographic {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::ORTHOGRAPHIC_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sz_positive_ratio, ctx)?;
         through.child(&self.ext_lst_office_art_extension_list, ctx)?;
@@ -2120,10 +2143,10 @@ impl super::Transform for office_drawing_2017_model3d::Perspective {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2141,7 +2164,7 @@ impl super::Visit for office_drawing_2017_model3d::Perspective {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst_office_art_extension_list, visitor);
         walk.finish(visitor);
     }
@@ -2156,7 +2179,7 @@ impl WriteThrough for office_drawing_2017_model3d::Perspective {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::PERSPECTIVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::perspective(self, out.scope());
@@ -2165,7 +2188,7 @@ impl WriteThrough for office_drawing_2017_model3d::Perspective {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::PERSPECTIVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.fov);
         through.child(&self.ext_lst_office_art_extension_list, ctx)?;
@@ -2210,7 +2233,8 @@ impl super::Transform for office_drawing_2017_model3d::Pos {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2228,7 +2252,7 @@ impl super::Visit for office_drawing_2017_model3d::Pos {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2238,14 +2262,20 @@ impl WriteThrough for office_drawing_2017_model3d::Pos {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2017_model3d::POS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::POS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::pos(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::POS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::POS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
         through.attribute(2, &self.z);
@@ -2290,7 +2320,8 @@ impl super::Transform for office_drawing_2017_model3d::PostTrans {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2308,7 +2339,7 @@ impl super::Visit for office_drawing_2017_model3d::PostTrans {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2321,7 +2352,7 @@ impl WriteThrough for office_drawing_2017_model3d::PostTrans {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::POST_TRANS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::post_trans(self, out.scope());
@@ -2330,7 +2361,7 @@ impl WriteThrough for office_drawing_2017_model3d::PostTrans {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::POST_TRANS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.dx);
         through.attribute(1, &self.dy);
@@ -2376,7 +2407,8 @@ impl super::Transform for office_drawing_2017_model3d::PreTrans {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2394,7 +2426,7 @@ impl super::Visit for office_drawing_2017_model3d::PreTrans {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2407,7 +2439,7 @@ impl WriteThrough for office_drawing_2017_model3d::PreTrans {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::PRE_TRANS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::pre_trans(self, out.scope());
@@ -2416,7 +2448,7 @@ impl WriteThrough for office_drawing_2017_model3d::PreTrans {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::PRE_TRANS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.dx);
         through.attribute(1, &self.dy);
@@ -2462,13 +2494,13 @@ impl super::Transform for office_drawing_2017_model3d::PtLight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.clr = super::transform_child(&self.clr, ctx, &mut rebase);
         node.intensity = super::transform_child(&self.intensity, ctx, &mut rebase);
         node.pos = super::transform_child(&self.pos, ctx, &mut rebase);
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2486,7 +2518,7 @@ impl super::Visit for office_drawing_2017_model3d::PtLight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.clr, visitor);
         walk.child(&self.intensity, visitor);
         walk.child(&self.pos, visitor);
@@ -2504,7 +2536,7 @@ impl WriteThrough for office_drawing_2017_model3d::PtLight {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::PT_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::pt_light(self, out.scope());
@@ -2513,7 +2545,7 @@ impl WriteThrough for office_drawing_2017_model3d::PtLight {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::PT_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.enabled);
         through.attribute(1, &self.rad);
@@ -2562,9 +2594,9 @@ impl super::Transform for office_drawing_2017_model3d::Raster {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.blip = super::transform_child(&self.blip, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2582,7 +2614,7 @@ impl super::Visit for office_drawing_2017_model3d::Raster {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.blip, visitor);
         walk.finish(visitor);
     }
@@ -2597,7 +2629,7 @@ impl WriteThrough for office_drawing_2017_model3d::Raster {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::RASTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::raster(self, out.scope());
@@ -2606,7 +2638,7 @@ impl WriteThrough for office_drawing_2017_model3d::Raster {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::RASTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r_name);
         through.attribute(1, &self.r_ver);
@@ -2652,7 +2684,8 @@ impl super::Transform for office_drawing_2017_model3d::Rot {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2670,7 +2703,7 @@ impl super::Visit for office_drawing_2017_model3d::Rot {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2680,14 +2713,20 @@ impl WriteThrough for office_drawing_2017_model3d::Rot {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2017_model3d::ROT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::ROT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::rot(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::ROT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::ROT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.ax);
         through.attribute(1, &self.ay);
         through.attribute(2, &self.az);
@@ -2732,11 +2771,11 @@ impl super::Transform for office_drawing_2017_model3d::Scale {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sx = super::transform_child(&self.sx, ctx, &mut rebase);
         node.sy = super::transform_child(&self.sy, ctx, &mut rebase);
         node.sz_ratio = super::transform_child(&self.sz_ratio, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2754,7 +2793,7 @@ impl super::Visit for office_drawing_2017_model3d::Scale {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sx, visitor);
         walk.child(&self.sy, visitor);
         walk.child(&self.sz_ratio, visitor);
@@ -2771,7 +2810,7 @@ impl WriteThrough for office_drawing_2017_model3d::Scale {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::SCALE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::scale(self, out.scope());
@@ -2780,7 +2819,7 @@ impl WriteThrough for office_drawing_2017_model3d::Scale {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SCALE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sx, ctx)?;
         through.child(&self.sy, ctx)?;
@@ -2826,7 +2865,7 @@ impl super::Transform for office_drawing_2017_model3d::SpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -2838,7 +2877,7 @@ impl super::Transform for office_drawing_2017_model3d::SpPr {
         node.apply_3d_shape_properties =
             super::transform_child(&self.apply_3d_shape_properties, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2856,7 +2895,7 @@ impl super::Visit for office_drawing_2017_model3d::SpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -2878,7 +2917,7 @@ impl WriteThrough for office_drawing_2017_model3d::SpPr {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::sp_pr(self, out.scope());
@@ -2887,7 +2926,7 @@ impl WriteThrough for office_drawing_2017_model3d::SpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
@@ -2939,14 +2978,14 @@ impl super::Transform for office_drawing_2017_model3d::SpotLight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.clr = super::transform_child(&self.clr, ctx, &mut rebase);
         node.intensity = super::transform_child(&self.intensity, ctx, &mut rebase);
         node.pos = super::transform_child(&self.pos, ctx, &mut rebase);
         node.look_at = super::transform_child(&self.look_at, ctx, &mut rebase);
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2964,7 +3003,7 @@ impl super::Visit for office_drawing_2017_model3d::SpotLight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.clr, visitor);
         walk.child(&self.intensity, visitor);
         walk.child(&self.pos, visitor);
@@ -2983,7 +3022,7 @@ impl WriteThrough for office_drawing_2017_model3d::SpotLight {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::SPOT_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::spot_light(self, out.scope());
@@ -2992,7 +3031,7 @@ impl WriteThrough for office_drawing_2017_model3d::SpotLight {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SPOT_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.enabled);
         through.attribute(1, &self.rad);
@@ -3043,7 +3082,8 @@ impl super::Transform for office_drawing_2017_model3d::Sx {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3061,7 +3101,7 @@ impl super::Visit for office_drawing_2017_model3d::Sx {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3071,13 +3111,20 @@ impl WriteThrough for office_drawing_2017_model3d::Sx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2017_model3d::SX_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::SX_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::sx(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::SX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::SX_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.n);
         through.attribute(1, &self.d);
         through.finish(ctx)
@@ -3121,7 +3168,8 @@ impl super::Transform for office_drawing_2017_model3d::Sy {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3139,7 +3187,7 @@ impl super::Visit for office_drawing_2017_model3d::Sy {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3149,13 +3197,20 @@ impl WriteThrough for office_drawing_2017_model3d::Sy {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2017_model3d::SY_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::SY_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::sy(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::SY_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::SY_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.n);
         through.attribute(1, &self.d);
         through.finish(ctx)
@@ -3199,7 +3254,8 @@ impl super::Transform for office_drawing_2017_model3d::SzPositiveRatio {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3217,7 +3273,7 @@ impl super::Visit for office_drawing_2017_model3d::SzPositiveRatio {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3230,7 +3286,7 @@ impl WriteThrough for office_drawing_2017_model3d::SzPositiveRatio {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::SZ_POSITIVE_RATIO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::sz_positive_ratio(self, out.scope());
@@ -3239,7 +3295,7 @@ impl WriteThrough for office_drawing_2017_model3d::SzPositiveRatio {
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SZ_POSITIVE_RATIO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -3282,7 +3338,8 @@ impl super::Transform for office_drawing_2017_model3d::SzRatio {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3300,7 +3357,7 @@ impl super::Visit for office_drawing_2017_model3d::SzRatio {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3313,7 +3370,7 @@ impl WriteThrough for office_drawing_2017_model3d::SzRatio {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::SZ_RATIO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::sz_ratio(self, out.scope());
@@ -3322,7 +3379,7 @@ impl WriteThrough for office_drawing_2017_model3d::SzRatio {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::SZ_RATIO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.n);
         through.attribute(1, &self.d);
@@ -3367,7 +3424,7 @@ impl super::Transform for office_drawing_2017_model3d::Trans {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.meter_per_model_unit =
             super::transform_child(&self.meter_per_model_unit, ctx, &mut rebase);
         node.pre = super::transform_child(&self.pre, ctx, &mut rebase);
@@ -3376,7 +3433,7 @@ impl super::Transform for office_drawing_2017_model3d::Trans {
         node.post = super::transform_child(&self.post, ctx, &mut rebase);
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3394,7 +3451,7 @@ impl super::Visit for office_drawing_2017_model3d::Trans {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.meter_per_model_unit, visitor);
         walk.child(&self.pre, visitor);
         walk.child(&self.scale, visitor);
@@ -3414,7 +3471,7 @@ impl WriteThrough for office_drawing_2017_model3d::Trans {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::TRANS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::trans(self, out.scope());
@@ -3423,7 +3480,7 @@ impl WriteThrough for office_drawing_2017_model3d::Trans {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::TRANS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.meter_per_model_unit, ctx)?;
         through.child(&self.pre, ctx)?;
@@ -3472,7 +3529,8 @@ impl super::Transform for office_drawing_2017_model3d::UnkLight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3490,7 +3548,7 @@ impl super::Visit for office_drawing_2017_model3d::UnkLight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3503,7 +3561,7 @@ impl WriteThrough for office_drawing_2017_model3d::UnkLight {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::UNK_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::unk_light(self, out.scope());
@@ -3512,7 +3570,7 @@ impl WriteThrough for office_drawing_2017_model3d::UnkLight {
         let through = super::Through::new(
             out,
             &office_drawing_2017_model3d::UNK_LIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -3555,7 +3613,8 @@ impl super::Transform for office_drawing_2017_model3d::Up {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3573,7 +3632,7 @@ impl super::Visit for office_drawing_2017_model3d::Up {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3583,13 +3642,20 @@ impl WriteThrough for office_drawing_2017_model3d::Up {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2017_model3d::UP_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2017_model3d::UP_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2017_model3d::write::up(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2017_model3d::UP_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2017_model3d::UP_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.dx);
         through.attribute(1, &self.dy);
         through.attribute(2, &self.dz);
@@ -3634,10 +3700,10 @@ impl super::Transform for office_drawing_2017_model3d::WinViewport {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst_office_art_extension_list =
             super::transform_child(&self.ext_lst_office_art_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3655,7 +3721,7 @@ impl super::Visit for office_drawing_2017_model3d::WinViewport {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst_office_art_extension_list, visitor);
         walk.finish(visitor);
     }
@@ -3670,7 +3736,7 @@ impl WriteThrough for office_drawing_2017_model3d::WinViewport {
         let converted = super::converts(
             out,
             &office_drawing_2017_model3d::WIN_VIEWPORT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2017_model3d::write::win_viewport(self, out.scope());
@@ -3679,7 +3745,7 @@ impl WriteThrough for office_drawing_2017_model3d::WinViewport {
         let mut through = super::Through::new(
             out,
             &office_drawing_2017_model3d::WIN_VIEWPORT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst_office_art_extension_list, ctx)?;
         through.finish(ctx)

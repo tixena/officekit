@@ -231,7 +231,7 @@ pub struct CNvContentPartPrMirror {
     #[rkyv(omit_bounds)]
     pub ext_lst: Option<Box<super::super::office_drawing_2010_main::ExtLst>>,
     pub is_comment: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -253,7 +253,7 @@ pub struct CNvPrMirror {
     pub id: Option<super::super::drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -271,7 +271,7 @@ pub struct ContentPartMirror {
     #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
     pub nv_pr: Option<Box<super::NvPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm: Option<Box<super::Xfrm>>,
 }
@@ -285,7 +285,7 @@ pub struct ContentPartMirror {
 pub struct ExtLstMirror {
     #[rkyv(omit_bounds)]
     pub extension: Vec<super::super::drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -300,7 +300,7 @@ pub struct NvContentPartPrMirror {
     pub c: Option<Box<super::CNvContentPartPr>>,
     #[rkyv(omit_bounds)]
     pub c_nv_pr: Box<super::CNvPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -310,7 +310,7 @@ pub struct NvContentPartPrMirror {
 pub struct NvPrMirror {
     pub f_published: Option<String>,
     pub r#macro: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -323,7 +323,7 @@ pub struct XfrmMirror {
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

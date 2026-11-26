@@ -233,7 +233,8 @@ impl super::Transform for office_word_2015_wordml_symex::SymEx {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_word_2015_wordml_symex::SymEx {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_word_2015_wordml_symex::SymEx {
         let converted = super::converts(
             out,
             &office_word_2015_wordml_symex::SYM_EX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2015_wordml_symex::write::sym_ex(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_word_2015_wordml_symex::SymEx {
         let mut through = super::Through::new(
             out,
             &office_word_2015_wordml_symex::SYM_EX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.font);
         through.attribute(1, &self.char);

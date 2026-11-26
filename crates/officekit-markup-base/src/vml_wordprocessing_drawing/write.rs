@@ -228,7 +228,7 @@ pub fn anchor_location_is_locked(
     let writer = crate::Writer::new(
         scope,
         &super::ANCHOR_LOCATION_IS_LOCKED_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -236,7 +236,8 @@ pub fn anchor_location_is_locked(
 /// Write a `BottomBorder` as its element, `w10:borderbottom`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bottom_border(node: &super::BottomBorder, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::BOTTOM_BORDER_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::BOTTOM_BORDER_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);
     writer.attribute(2, &node.shadow);
@@ -246,7 +247,7 @@ pub fn bottom_border(node: &super::BottomBorder, scope: &mut Scope) -> Element {
 /// Write a `LeftBorder` as its element, `w10:borderleft`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn left_border(node: &super::LeftBorder, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::LEFT_BORDER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::LEFT_BORDER_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);
     writer.attribute(2, &node.shadow);
@@ -256,7 +257,7 @@ pub fn left_border(node: &super::LeftBorder, scope: &mut Scope) -> Element {
 /// Write a `RightBorder` as its element, `w10:borderright`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn right_border(node: &super::RightBorder, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::RIGHT_BORDER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::RIGHT_BORDER_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);
     writer.attribute(2, &node.shadow);
@@ -266,7 +267,8 @@ pub fn right_border(node: &super::RightBorder, scope: &mut Scope) -> Element {
 /// Write a `TextWrapping` as its element, `w10:wrap`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text_wrapping(node: &super::TextWrapping, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::TEXT_WRAPPING_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::TEXT_WRAPPING_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.side);
     writer.attribute(2, &node.anchorx);
@@ -277,7 +279,7 @@ pub fn text_wrapping(node: &super::TextWrapping, scope: &mut Scope) -> Element {
 /// Write a `TopBorder` as its element, `w10:bordertop`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_border(node: &super::TopBorder, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::TOP_BORDER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::TOP_BORDER_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#type);
     writer.attribute(1, &node.width);
     writer.attribute(2, &node.shadow);

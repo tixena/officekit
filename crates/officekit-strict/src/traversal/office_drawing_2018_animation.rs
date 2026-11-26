@@ -233,9 +233,9 @@ impl super::Transform for office_drawing_2018_animation::AnimPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_drawing_2018_animation::AnimPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_drawing_2018_animation::AnimPr {
         let converted = super::converts(
             out,
             &office_drawing_2018_animation::ANIM_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2018_animation::write::anim_pr(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_drawing_2018_animation::AnimPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation::ANIM_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.length);
@@ -328,9 +328,9 @@ impl super::Transform for office_drawing_2018_animation::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -348,7 +348,7 @@ impl super::Visit for office_drawing_2018_animation::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -363,7 +363,7 @@ impl WriteThrough for office_drawing_2018_animation::ExtLst {
         let converted = super::converts(
             out,
             &office_drawing_2018_animation::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2018_animation::write::ext_lst(self, out.scope());
@@ -372,7 +372,7 @@ impl WriteThrough for office_drawing_2018_animation::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_drawing_2018_animation::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)

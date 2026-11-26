@@ -238,8 +238,9 @@ pub static ABS_PATH_SHAPE: crate::Shape = crate::Shape {
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct AbsPathWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// The attribute `url`, when the element has it.
     pub url: Option<String>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
@@ -265,6 +266,17 @@ impl<X: UserData> AbsPathWith<X> {
             url: self.url,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.

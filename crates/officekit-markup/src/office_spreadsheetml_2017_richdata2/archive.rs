@@ -227,7 +227,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AArrayMirror {
     pub c: Option<String>,
     pub r: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v_array_value: Vec<super::VArrayValue>,
 }
@@ -237,7 +237,7 @@ pub struct AArrayMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ASupportingPropertyBagArrayMirror {
     pub count: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v_supporting_property_bag_array_value: Vec<super::VSupportingPropertyBagArrayValue>,
 }
@@ -249,7 +249,7 @@ pub struct ArrayDataMirror {
     pub a_array: Vec<super::AArray>,
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -259,7 +259,7 @@ pub struct ArrayDataMirror {
 pub struct CustomFilterMirror {
     pub key: Option<String>,
     pub operator: Option<spreadsheet::FilterOperator>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -270,7 +270,7 @@ pub struct CustomFilterMirror {
 pub struct CustomFiltersMirror {
     pub and: Option<String>,
     pub content: Vec<super::CustomRichFiltersContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -285,7 +285,7 @@ pub struct DateGroupItemMirror {
     pub minute: Option<String>,
     pub month: Option<String>,
     pub second: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub year: Option<String>,
 }
@@ -296,7 +296,7 @@ pub struct DateGroupItemMirror {
 pub struct DxfsMirror {
     pub count: Option<String>,
     pub formatting: Vec<spreadsheet::Formatting>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -308,7 +308,7 @@ pub struct DynamicFilterMirror {
     pub max_val: Option<String>,
     pub max_val_iso: Option<String>,
     pub r#type: Option<spreadsheet::StDynamicFilterType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
     pub val_iso: Option<String>,
@@ -319,7 +319,7 @@ pub struct DynamicFilterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -330,7 +330,7 @@ pub struct FilterMirror {
     pub blank: Option<String>,
     pub key: Option<String>,
     pub nodata: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -340,7 +340,7 @@ pub struct FilterMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FilterColumnMirror {
     pub content: Option<Box<super::RichFilterColumnContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -351,7 +351,7 @@ pub struct FiltersMirror {
     pub date_group_item: Vec<super::DateGroupItem>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub filter: Vec<super::Filter>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -360,7 +360,7 @@ pub struct FiltersMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FlagMirror {
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: Option<String>,
 }
@@ -371,7 +371,7 @@ pub struct FlagMirror {
 pub struct GlobalMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub key_flags: Option<Box<super::KeyFlags>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -381,7 +381,7 @@ pub struct GlobalMirror {
 pub struct KMirror {
     pub n: Option<String>,
     pub t: Option<super::SupportingPropertyBagValueType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -391,7 +391,7 @@ pub struct KMirror {
 pub struct KeyMirror {
     pub flag: Vec<super::Flag>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -400,7 +400,7 @@ pub struct KeyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct KeyFlagsMirror {
     pub key: Vec<super::Key>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -410,7 +410,7 @@ pub struct KeyFlagsMirror {
 pub struct RPrMirror {
     pub n: Option<String>,
     pub t: Option<super::RichFormatPropertyType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -420,7 +420,7 @@ pub struct RPrMirror {
 pub struct RStyMirror {
     pub dxfid: Option<String>,
     pub rpv: Vec<super::Rpv>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -429,7 +429,7 @@ pub struct RStyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RichPropertiesMirror {
     pub r_pr: Vec<super::RPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -445,7 +445,7 @@ pub struct RichSortConditionMirror {
     pub r#ref: Option<String>,
     pub rich_sort_key: Option<String>,
     pub sort_by: Option<spreadsheet::SortBy>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -457,7 +457,7 @@ pub struct RichStyleSheetMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub rich_properties: Option<Box<super::RichProperties>>,
     pub rich_styles: Option<Box<super::RichStyles>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -466,7 +466,7 @@ pub struct RichStyleSheetMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RichStylesMirror {
     pub r_sty: Vec<super::RSty>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -475,7 +475,7 @@ pub struct RichStylesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RpvMirror {
     pub i: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -487,7 +487,7 @@ pub struct RvTypesInfoMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub global: Option<Box<super::Global>>,
     pub types: Option<Box<super::Types>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -496,7 +496,7 @@ pub struct RvTypesInfoMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SMirror {
     pub k: Vec<super::K>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -505,7 +505,7 @@ pub struct SMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SpbMirror {
     pub s: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v_supporting_property_bag_value: Vec<super::VSupportingPropertyBagValue>,
 }
@@ -517,7 +517,7 @@ pub struct SpbArraysMirror {
     pub a_supporting_property_bag_array: Vec<super::ASupportingPropertyBagArray>,
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -528,7 +528,7 @@ pub struct SpbDataMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub spb: Vec<super::Spb>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -539,7 +539,7 @@ pub struct SpbStructuresMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub s: Vec<super::S>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -549,7 +549,7 @@ pub struct SpbStructuresMirror {
 pub struct SupportingPropertyBagsMirror {
     pub spb_arrays: Option<Box<super::SpbArrays>>,
     pub spb_data: Box<super::SpbData>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -561,7 +561,7 @@ pub struct Top10Mirror {
     pub key: Option<String>,
     pub percent: Option<String>,
     pub top: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -573,7 +573,7 @@ pub struct TypeMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub key_flags: Option<Box<super::KeyFlags>>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -582,7 +582,7 @@ pub struct TypeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TypesMirror {
     pub r#type: Vec<super::Type>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -591,7 +591,7 @@ pub struct TypesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct VArrayValueMirror {
     pub t: Option<super::ArrayValueType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -601,7 +601,7 @@ pub struct VArrayValueMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct VSupportingPropertyBagArrayValueMirror {
     pub t: Option<super::SupportingPropertyBagArrayValueType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -610,7 +610,7 @@ pub struct VSupportingPropertyBagArrayValueMirror {
 #[rkyv(remote = super::VSupportingPropertyBagValue)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VSupportingPropertyBagValueMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

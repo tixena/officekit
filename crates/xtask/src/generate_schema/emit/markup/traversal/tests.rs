@@ -95,12 +95,12 @@ fn a_struct_rebuilds_its_children_in_schema_order_then_places_its_unknown_conten
     assert_eq!(
         out,
         "        let mut node = self.without_children();\n        \
-         let mut rebase = super::Rebase::new(&self.unknown);\n        \
+         let mut rebase = super::Rebase::new(self.unknown.as_deref());\n        \
          node.properties = super::transform_child(&self.properties, ctx, &mut rebase);\n        \
          node.sup = super::transform_choice(&self.sup, ctx, &mut rebase);\n        \
          node.content = super::transform_items(&self.content, ctx, &mut rebase);\n        \
          node.sub = super::transform_child(&self.sub, ctx, &mut rebase);\n        \
-         node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);\n        \
+         node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);\n        \
          node\n"
     );
     assert_eq!(helpers, "");
@@ -112,7 +112,8 @@ fn a_struct_without_children_places_its_unknown_content_as_read() {
     assert_eq!(
         out,
         "        let mut node = self.without_children();\n        \
-         node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());\n        \
+         node.unknown =\n            \
+         super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());\n        \
          node\n"
     );
 }
@@ -133,10 +134,10 @@ fn a_struct_too_large_for_one_function_sets_its_fields_in_the_same_order_through
     assert_eq!(
         out,
         "        let mut node = self.without_children();\n        \
-         let mut rebase = super::Rebase::new(&self.unknown);\n        \
+         let mut rebase = super::Rebase::new(self.unknown.as_deref());\n        \
          transform_sample_1(self, &mut node, ctx, &mut rebase);\n        \
          transform_sample_2(self, &mut node, ctx, &mut rebase);\n        \
-         node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);\n        \
+         node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);\n        \
          node\n"
     );
     let mut first = String::from(

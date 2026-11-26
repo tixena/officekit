@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AbsoluteUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbsoluteUrlMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -234,7 +234,7 @@ pub struct AlternateUrlsMirror {
     pub drive_id: Option<String>,
     pub item_id: Option<String>,
     pub relative_url: Option<Box<super::RelativeUrl>>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -242,7 +242,7 @@ pub struct AlternateUrlsMirror {
 #[rkyv(remote = super::RelativeUrl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelativeUrlMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 

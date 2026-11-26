@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `BackgroundPr` as its element, `a15:backgroundPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn background_pr(node: &super::BackgroundPr, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BACKGROUND_PR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::BACKGROUND_PR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.bw_mode);
     writer.attribute(1, &node.bw_pure);
     writer.attribute(2, &node.bw_normal);
@@ -237,7 +240,7 @@ pub fn non_visual_group_props(node: &super::NonVisualGroupProps, scope: &mut Sco
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_GROUP_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.is_legacy_group);
     writer.finish()
@@ -247,7 +250,7 @@ pub fn non_visual_group_props(node: &super::NonVisualGroupProps, scope: &mut Sco
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn object_pr(node: &super::ObjectPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::OBJECT_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::OBJECT_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.object_id);
     writer.attribute(1, &node.is_active_x);
     writer.attribute(2, &node.link_type);
@@ -257,8 +260,11 @@ pub fn object_pr(node: &super::ObjectPr, scope: &mut Scope) -> Element {
 /// Write a `SignatureLine` as its element, `a15:signatureLine`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn signature_line(node: &super::SignatureLine, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SIGNATURE_LINE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SIGNATURE_LINE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.is_signature_line);
     writer.attribute(1, &node.id);
     writer.attribute(2, &node.prov_id);

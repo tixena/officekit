@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::DropZoneCategories)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneCategoriesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -230,7 +230,7 @@ pub struct DropZoneCategoriesMirror {
 #[rkyv(remote = super::DropZoneData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneDataMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -238,7 +238,7 @@ pub struct DropZoneDataMirror {
 #[rkyv(remote = super::DropZoneFilter)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneFilterMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -246,7 +246,7 @@ pub struct DropZoneFilterMirror {
 #[rkyv(remote = super::DropZoneSeries)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZoneSeriesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -254,7 +254,7 @@ pub struct DropZoneSeriesMirror {
 #[rkyv(remote = super::DropZonesVisible)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropZonesVisibleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -262,7 +262,7 @@ pub struct DropZonesVisibleMirror {
 #[rkyv(remote = super::InSketchMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InSketchModeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -271,7 +271,7 @@ pub struct InSketchModeMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct InvertSolidFillFmtMirror {
     pub sp_pr: Box<super::SpPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -284,7 +284,7 @@ pub struct PivotOptionsMirror {
     pub drop_zone_filter: Option<Box<super::DropZoneFilter>>,
     pub drop_zone_series: Option<Box<super::DropZoneSeries>>,
     pub drop_zones_visible: Option<Box<super::DropZonesVisible>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -292,7 +292,7 @@ pub struct PivotOptionsMirror {
 #[rkyv(remote = super::ShowSketchBtn)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowSketchBtnMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -303,7 +303,7 @@ pub struct ShowSketchBtnMirror {
 pub struct SketchOptionsMirror {
     pub in_sketch_mode: Option<Box<super::InSketchMode>>,
     pub show_sketch_btn: Option<Box<super::ShowSketchBtn>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -319,7 +319,7 @@ pub struct SpPrMirror {
     pub geometry_content: Option<Box<super::super::drawing::GeometryContent>>,
     pub outline: Option<Box<super::super::drawing::Outline>>,
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
 }
@@ -328,7 +328,7 @@ pub struct SpPrMirror {
 #[rkyv(remote = super::Style)]
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }

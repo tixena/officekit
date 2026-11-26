@@ -478,7 +478,11 @@ fn a_style_keep_properties_follow_the_default_spacing_in_their_typed_fields() {
             .map(|value| value.0.as_str()),
         Some("160")
     );
-    assert_eq!(properties.unknown.children.len(), 0);
+    assert!(
+        properties
+            .unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 #[test]
@@ -496,7 +500,11 @@ fn the_own_style_reference_follows_a_style_alignment_in_its_typed_field() {
         Some("Centered")
     );
     assert_eq!(justification(&properties), Some("center"));
-    assert_eq!(properties.unknown.children.len(), 0);
+    assert!(
+        properties
+            .unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 #[test]
@@ -515,7 +523,11 @@ fn borders_of_two_levels_keep_their_typed_fields() {
             .paragraph_border_above_identical_paragraphs
             .is_some()
     );
-    assert_eq!(borders.unknown.children.len(), 0);
+    assert!(
+        borders
+            .unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 #[test]
@@ -534,7 +546,11 @@ fn numbering_of_two_levels_keeps_its_typed_fields() {
             .numbering_definition_instance_reference_num_id
             .is_some()
     );
-    assert_eq!(numbering.unknown.children.len(), 0);
+    assert!(
+        numbering
+            .unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 #[test]
@@ -547,7 +563,10 @@ fn a_run_property_added_after_a_style_revision_keeps_its_typed_field() {
     let run = styles.run(&paragraph, Some(&own_run(r#"<w:color w:val="FF0000"/>"#)));
     assert_eq!(size(&run), Some("20"));
     assert_eq!(color(&run), Some("FF0000"));
-    assert_eq!(run.unknown.children.len(), 0);
+    assert!(
+        run.unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 #[test]
@@ -560,7 +579,10 @@ fn a_toggle_pushed_after_a_style_revision_keeps_its_typed_field() {
     let paragraph = styles.paragraph(Some(&named));
     let run = styles.run(&paragraph, Some(&own_run(r#"<w:rStyle w:val="Strong"/>"#)));
     assert_eq!(bold(&run), Some(true));
-    assert_eq!(run.unknown.children.len(), 0);
+    assert!(
+        run.unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 fn font_size(half_points: &str) -> RunPropertiesContent {
@@ -687,7 +709,11 @@ fn the_mark_revision_marks_are_left_out() {
 
     let effective = effective_mark(&styles, tracked);
     assert_eq!(size(&effective), Some("48"));
-    assert_eq!(effective.unknown.children.len(), 0);
+    assert!(
+        effective
+            .unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
     assert_eq!(effective.revision_information, None);
     assert_eq!(
         effective,

@@ -230,7 +230,7 @@ pub struct ColumnFilterMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub filter: Vec<super::Filter>,
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -245,7 +245,7 @@ pub struct DxfMirror {
     pub future_feature_data_storage_area: Option<Box<spreadsheet::FutureFeatureDataStorageArea>>,
     pub number_format: Option<Box<spreadsheet::NumberFormat>>,
     pub protection_properties: Option<Box<spreadsheet::ProtectionProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -254,7 +254,7 @@ pub struct DxfMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -266,7 +266,7 @@ pub struct FilterMirror {
     pub content: Option<Box<spreadsheet::AutoFilterColumnContent>>,
     pub hidden_button: Option<String>,
     pub show_button: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -278,7 +278,7 @@ pub struct NamedSheetViewMirror {
     pub id: Option<String>,
     pub name: Option<String>,
     pub nsv_filter: Vec<super::NsvFilter>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -288,7 +288,7 @@ pub struct NamedSheetViewMirror {
 pub struct NamedSheetViewsMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub named_sheet_view: Vec<super::NamedSheetView>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -302,7 +302,7 @@ pub struct NsvFilterMirror {
     pub r#ref: Option<String>,
     pub sort_rules: Option<Box<super::SortRules>>,
     pub table_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -318,7 +318,7 @@ pub struct RichSortConditionMirror {
     pub r#ref: Option<String>,
     pub rich_sort_key: Option<String>,
     pub sort_by: Option<spreadsheet::SortBy>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -333,7 +333,7 @@ pub struct SortConditionMirror {
     pub icon_set: Option<office_spreadsheetml_2009_9_main::IconSetType>,
     pub r#ref: Option<String>,
     pub sort_by: Option<spreadsheet::SortBy>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -345,7 +345,7 @@ pub struct SortRuleMirror {
     pub content: Option<Box<super::SortRuleContent>>,
     pub dxf: Option<Box<super::Dxf>>,
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -357,7 +357,7 @@ pub struct SortRulesMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub sort_method: Option<spreadsheet::SortMethod>,
     pub sort_rule: Vec<super::SortRule>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

@@ -223,7 +223,8 @@ use officekit_xml::write::Scope;
 /// Write a `Anchor` as its element, `t:Anchor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anchor(node: &super::Anchor, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::ANCHOR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::ANCHOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.comment);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -232,20 +233,27 @@ pub fn anchor(node: &super::Anchor, scope: &mut Scope) -> Element {
 /// Write a `Assign` as its element, `t:Assign`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn assign(node: &super::Assign, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::ASSIGN_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::ASSIGN_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `Attribution` as its element, `t:Attribution`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn attribution(node: &super::Attribution, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::ATTRIBUTION_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ATTRIBUTION_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `Comment` as its element, `t:Comment`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment(node: &super::Comment, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COMMENT_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::COMMENT_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.finish()
 }
@@ -253,19 +261,24 @@ pub fn comment(node: &super::Comment, scope: &mut Scope) -> Element {
 /// Write a `Create` as its element, `t:Create`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn create(node: &super::Create, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::CREATE_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::CREATE_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `Delete` as its element, `t:Delete`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn delete(node: &super::Delete, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::DELETE_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::DELETE_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `Event` as its element, `t:Event`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn event(node: &super::Event, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::EVENT_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::EVENT_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.time);
     writer.attribute(1, &node.id);
     writer.child(&node.attribution);
@@ -279,7 +292,7 @@ pub fn event(node: &super::Event, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.ext);
     writer.finish()
 }
@@ -288,7 +301,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn history(node: &super::History, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::HISTORY_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::HISTORY_SHAPE, node.unknown.as_deref());
     writer.child(&node.event);
     writer.finish()
 }
@@ -297,7 +310,7 @@ pub fn history(node: &super::History, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn priority(node: &super::Priority, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PRIORITY_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PRIORITY_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.value);
     writer.finish()
 }
@@ -306,7 +319,7 @@ pub fn priority(node: &super::Priority, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn progress(node: &super::Progress, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PROGRESS_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PROGRESS_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.percent_complete);
     writer.finish()
 }
@@ -315,7 +328,7 @@ pub fn progress(node: &super::Progress, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn schedule(node: &super::Schedule, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SCHEDULE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::SCHEDULE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.start_date);
     writer.attribute(1, &node.due_date);
     writer.finish()
@@ -325,7 +338,7 @@ pub fn schedule(node: &super::Schedule, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn set_title(node: &super::SetTitle, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SET_TITLE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::SET_TITLE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.title);
     writer.finish()
 }
@@ -333,7 +346,8 @@ pub fn set_title(node: &super::SetTitle, scope: &mut Scope) -> Element {
 /// Write a `Task` as its element, `t:Task`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn task(node: &super::Task, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::TASK_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::TASK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.child(&node.anchor);
     writer.child(&node.history);
@@ -352,7 +366,8 @@ pub fn task_history_event(
 /// Write a `Tasks` as its element, `t:Tasks`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tasks(node: &super::Tasks, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::TASKS_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::TASKS_SHAPE, node.unknown.as_deref());
     writer.child(&node.task);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -361,25 +376,35 @@ pub fn tasks(node: &super::Tasks, scope: &mut Scope) -> Element {
 /// Write a `Unassign` as its element, `t:Unassign`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unassign(node: &super::Unassign, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::UNASSIGN_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::UNASSIGN_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `UnassignAll` as its element, `t:UnassignAll`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unassign_all(node: &super::UnassignAll, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::UNASSIGN_ALL_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::UNASSIGN_ALL_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `Undelete` as its element, `t:Undelete`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn undelete(node: &super::Undelete, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::UNDELETE_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::UNDELETE_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `Undo` as its element, `t:Undo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn undo(node: &super::Undo, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::UNDO_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::UNDO_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.finish()
 }

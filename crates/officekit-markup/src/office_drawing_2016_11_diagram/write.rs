@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `AutoBuNodeInfo` as its element, `dgm1611:autoBuNodeInfo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn auto_bu_node_info(node: &super::AutoBuNodeInfo, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::AUTO_BU_NODE_INFO_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::AUTO_BU_NODE_INFO_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.lvl);
     writer.attribute(1, &node.pt_type);
     writer.child(&node.bu_pr);
@@ -236,7 +239,7 @@ pub fn auto_bu_node_info_lst(node: &super::AutoBuNodeInfoLst, scope: &mut Scope)
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::AUTO_BU_NODE_INFO_LST_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.auto_bu_node_info);
     writer.finish()
@@ -245,7 +248,8 @@ pub fn auto_bu_node_info_lst(node: &super::AutoBuNodeInfoLst, scope: &mut Scope)
 /// Write a `BuPr` as its element, `dgm1611:buPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bu_pr(node: &super::BuPr, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::BU_PR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::BU_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.prefix);
     writer.attribute(1, &node.lead_zeros);
     writer.child(&node.content);

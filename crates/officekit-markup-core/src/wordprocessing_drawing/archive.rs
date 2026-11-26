@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AbsolutePositionOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AbsolutePositionOffsetMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: super::AbsolutePositionOffsetValue,
 }
@@ -263,7 +263,7 @@ pub struct AnchorForFloatingDrawingMLObjectMirror {
     pub simple_positioning_coordinates: Box<super::SimplePositioningCoordinates>,
     pub size_rel_h: Option<Box<super::super::office_word_2010_wordprocessing_drawing::SizeRelH>>,
     pub size_rel_v: Option<Box<super::super::office_word_2010_wordprocessing_drawing::SizeRelV>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vertical_positioning: Box<super::VerticalPositioning>,
 }
@@ -279,7 +279,7 @@ pub struct BackgroundFormattingMirror {
     pub effect_properties_content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -313,7 +313,7 @@ pub struct BodyPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub text3d_content: Option<Box<super::super::drawing::Text3DContent>>,
     pub text_autofit_content: Option<Box<super::super::drawing::TextAutofitContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub upright: Option<String>,
     pub user_data: (),
     pub vert: Option<super::super::drawing::VerticalTextTypes>,
@@ -332,7 +332,7 @@ pub struct CommonDrawingMLNonVisualPropertiesMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub graphic_frame_locks: Option<Box<super::super::drawing::GraphicFrameLocks>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -349,7 +349,7 @@ pub struct ContentPartMirror {
     pub id: Option<String>,
     #[rkyv(omit_bounds)]
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm: Option<Box<super::Xfrm>>,
 }
@@ -372,7 +372,7 @@ pub struct DrawingObjectNonVisualPropertiesMirror {
     pub id: Option<super::super::drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -382,7 +382,7 @@ pub struct DrawingObjectNonVisualPropertiesMirror {
 pub struct DrawingObjectSizeMirror {
     pub cx: Option<super::super::drawing::PositiveCoordinate>,
     pub cy: Option<super::super::drawing::PositiveCoordinate>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -395,7 +395,7 @@ pub struct DrawingObjectSizeMirror {
 pub struct ExtensionListMirror {
     #[rkyv(omit_bounds)]
     pub extension: Vec<super::super::drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -415,7 +415,7 @@ pub struct GraphicalObjectContainerMirror {
     #[rkyv(omit_bounds)]
     pub non_visual_graphic_frame_drawing_properties:
         Box<super::NonVisualGraphicFrameDrawingProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm: Box<super::Xfrm>,
 }
@@ -437,7 +437,7 @@ pub struct GroupShapeMirror {
     pub non_visual_group_shape_drawing_properties: Box<super::NonVisualGroupShapeDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub properties: Box<super::GroupShapeProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -457,7 +457,7 @@ pub struct GroupShapePropertiesMirror {
     pub fill_properties_content: Option<Box<super::super::drawing::FillPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_group_transform2d: Option<Box<super::super::drawing::XfrmGroupTransform2D>>,
 }
@@ -468,7 +468,7 @@ pub struct GroupShapePropertiesMirror {
 pub struct HorizontalPositioningMirror {
     pub content: Box<super::HorizontalPositioningContent>,
     pub relative_from: Option<super::HorizontalRelativePositioning>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -494,7 +494,7 @@ pub struct InlineDrawingMLObjectMirror {
     pub extents_including_effects: Option<Box<super::ObjectExtentsIncludingEffects>>,
     #[rkyv(omit_bounds)]
     pub graphic_object: Box<super::super::drawing::GraphicObject>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -502,7 +502,7 @@ pub struct InlineDrawingMLObjectMirror {
 #[rkyv(remote = super::NoTextWrapping)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NoTextWrappingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -519,7 +519,7 @@ pub struct NonVisualConnectorShapeDrawingPropertiesMirror {
     pub connection_start: Option<Box<super::super::drawing::ConnectionStart>>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -535,7 +535,7 @@ pub struct NonVisualContentPartDrawingPropertiesMirror {
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     pub is_comment: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -557,7 +557,7 @@ pub struct NonVisualDrawingPropertiesMirror {
     pub id: Option<super::super::drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -573,7 +573,7 @@ pub struct NonVisualDrawingPropertiesForAShapeMirror {
     #[rkyv(omit_bounds)]
     pub locks: Option<Box<super::super::drawing::ShapeLocks>>,
     pub tx_box: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -588,7 +588,7 @@ pub struct NonVisualGraphicFrameDrawingPropertiesMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub graphic_frame_locks: Option<Box<super::super::drawing::GraphicFrameLocks>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -603,7 +603,7 @@ pub struct NonVisualGroupShapeDrawingPropertiesMirror {
     pub extension_list: Option<Box<super::super::drawing::ExtensionList>>,
     #[rkyv(omit_bounds)]
     pub group_shape_locks: Option<Box<super::super::drawing::GroupShapeLocks>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -619,7 +619,7 @@ pub struct NvContentPartPrMirror {
         Option<Box<super::NonVisualContentPartDrawingProperties>>,
     #[rkyv(omit_bounds)]
     pub non_visual_drawing_properties: Option<Box<super::NonVisualDrawingProperties>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -631,7 +631,7 @@ pub struct ObjectExtentsIncludingEffectsMirror {
     pub l: Option<super::super::drawing::Coordinate>,
     pub r: Option<super::super::drawing::Coordinate>,
     pub t: Option<super::super::drawing::Coordinate>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -639,7 +639,7 @@ pub struct ObjectExtentsIncludingEffectsMirror {
 #[rkyv(remote = super::RelativeHorizontalAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelativeHorizontalAlignmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: super::RelativeHorizontalAlignmentPositions,
 }
@@ -648,7 +648,7 @@ pub struct RelativeHorizontalAlignmentMirror {
 #[rkyv(remote = super::RelativeVerticalAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelativeVerticalAlignmentMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: super::VerticalAlignmentDefinition,
 }
@@ -662,7 +662,7 @@ pub struct RelativeVerticalAlignmentMirror {
 pub struct RichTextBoxContentContainerMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::super::wordprocessing::BlockContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -687,7 +687,7 @@ pub struct ShapePropertiesMirror {
     pub outline: Option<Box<super::super::drawing::Outline>>,
     #[rkyv(omit_bounds)]
     pub scene3d: Option<Box<super::super::drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<super::super::drawing::XfrmTransform2D>>,
 }
@@ -700,7 +700,7 @@ pub struct ShapeStyleMirror {
     pub fill_reference: Box<super::super::drawing::FillReference>,
     pub font_reference: Box<super::super::drawing::FontReference>,
     pub line_reference: Box<super::super::drawing::LineReference>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -708,7 +708,7 @@ pub struct ShapeStyleMirror {
 #[rkyv(remote = super::SimplePositioningCoordinates)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SimplePositioningCoordinatesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub x: Option<super::super::drawing::Coordinate>,
     pub y: Option<super::super::drawing::Coordinate>,
@@ -723,7 +723,7 @@ pub struct SquareWrappingMirror {
     pub dist_r: Option<super::DistanceFromText>,
     pub dist_t: Option<super::DistanceFromText>,
     pub object_extents_including_effects: Option<Box<super::ObjectExtentsIncludingEffects>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub wrap_text: Option<super::TextWrappingLocation>,
 }
@@ -739,7 +739,7 @@ pub struct TextualContentsOfShapeLinkedTxbxMirror {
     pub extension_list: Option<Box<super::ExtensionList>>,
     pub id: Option<String>,
     pub seq: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -755,7 +755,7 @@ pub struct TextualContentsOfShapeTxbxMirror {
     pub id: Option<String>,
     #[rkyv(omit_bounds)]
     pub rich_text_box_content_container: Box<super::RichTextBoxContentContainer>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -766,7 +766,7 @@ pub struct ThroughWrappingMirror {
     pub dist_l: Option<super::DistanceFromText>,
     pub dist_r: Option<super::DistanceFromText>,
     pub polygon: Box<super::WrappingPolygon>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub wrap_text: Option<super::TextWrappingLocation>,
 }
@@ -778,7 +778,7 @@ pub struct TightWrappingMirror {
     pub dist_l: Option<super::DistanceFromText>,
     pub dist_r: Option<super::DistanceFromText>,
     pub polygon: Box<super::WrappingPolygon>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub wrap_text: Option<super::TextWrappingLocation>,
 }
@@ -790,7 +790,7 @@ pub struct TopAndBottomWrappingMirror {
     pub dist_b: Option<super::DistanceFromText>,
     pub dist_t: Option<super::DistanceFromText>,
     pub object_extents_including_effects: Option<Box<super::ObjectExtentsIncludingEffects>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -800,7 +800,7 @@ pub struct TopAndBottomWrappingMirror {
 pub struct VerticalPositioningMirror {
     pub content: Box<super::VerticalPositioningContent>,
     pub relative_from: Option<super::VerticalRelativePositioning>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -815,7 +815,7 @@ pub struct WholeE2OFormattingMirror {
     pub content: Option<Box<super::super::drawing::EffectPropertiesContent>>,
     #[rkyv(omit_bounds)]
     pub outline: Option<Box<super::super::drawing::Outline>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -832,7 +832,7 @@ pub struct WordprocessingMLDrawingCanvasMirror {
     pub content: Vec<super::DrawingCanvasContent>,
     #[rkyv(omit_bounds)]
     pub extension_list: Option<Box<super::ExtensionList>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     #[rkyv(omit_bounds)]
     pub whole_e2o_formatting: Option<Box<super::WholeE2OFormatting>>,
@@ -859,7 +859,7 @@ pub struct WordprocessingMLShapeMirror {
     pub style: Option<Box<super::ShapeStyle>>,
     #[rkyv(omit_bounds)]
     pub text_content: Option<Box<super::ShapeTextContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -880,7 +880,7 @@ pub struct WordprocessingMLShapeGroupMirror {
     pub non_visual_group_shape_drawing_properties: Box<super::NonVisualGroupShapeDrawingProperties>,
     #[rkyv(omit_bounds)]
     pub shape_properties: Box<super::GroupShapeProperties>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -891,7 +891,7 @@ pub struct WrappingPolygonMirror {
     pub edited: Option<String>,
     pub line_end_position: Vec<super::WrappingPolygonLineEndPosition>,
     pub start: Box<super::WrappingPolygonStart>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -899,7 +899,7 @@ pub struct WrappingPolygonMirror {
 #[rkyv(remote = super::WrappingPolygonLineEndPosition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WrappingPolygonLineEndPositionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub x: Option<super::super::drawing::Coordinate>,
     pub y: Option<super::super::drawing::Coordinate>,
@@ -909,7 +909,7 @@ pub struct WrappingPolygonLineEndPositionMirror {
 #[rkyv(remote = super::WrappingPolygonStart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WrappingPolygonStartMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub x: Option<super::super::drawing::Coordinate>,
     pub y: Option<super::super::drawing::Coordinate>,
@@ -924,7 +924,7 @@ pub struct XfrmMirror {
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

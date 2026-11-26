@@ -232,7 +232,7 @@ pub struct AxisTitleMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -260,7 +260,7 @@ pub struct BodyPrMirror {
     pub t_ins: Option<drawing::StCoordinate32>,
     pub text3d_content: Option<Box<drawing::Text3DContent>>,
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub upright: Option<String>,
     pub user_data: (),
     pub vert: Option<drawing::VerticalTextTypes>,
@@ -272,7 +272,7 @@ pub struct BodyPrMirror {
 #[rkyv(remote = super::CategoryAxisAxisProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CategoryAxisAxisPropsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -289,7 +289,7 @@ pub struct CategoryAxisStyleEntryMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -306,7 +306,7 @@ pub struct ChartAreaMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -344,7 +344,7 @@ pub struct ChartStyleMirror {
     pub title_style_entry: Box<super::TitleStyleEntry>,
     pub trendline_label: Box<super::TrendlineLabel>,
     pub trendline_style_entry: Box<super::TrendlineStyleEntry>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub up_bar: Box<super::UpBar>,
     pub user_data: (),
     pub value_axis_style_entry: Box<super::ValueAxisStyleEntry>,
@@ -359,7 +359,7 @@ pub struct ColorStyleMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub meth: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub variation: Vec<super::Variation>,
 }
@@ -377,7 +377,7 @@ pub struct DataLabelMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -394,7 +394,7 @@ pub struct DataLabelCalloutMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -407,7 +407,7 @@ pub struct DataLabelsMirror {
     pub percentage: Option<super::Boolean>,
     pub position: Option<super::DataLabelsPosition>,
     pub series_name: Option<super::Boolean>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: Option<super::Boolean>,
 }
@@ -425,7 +425,7 @@ pub struct DataPointMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -442,7 +442,7 @@ pub struct DataPoint3DMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -458,7 +458,7 @@ pub struct DataPointLineMirror {
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
@@ -476,7 +476,7 @@ pub struct DataPointMarkerMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -486,7 +486,7 @@ pub struct DataPointMarkerMirror {
 pub struct DataPointMarkerLayoutMirror {
     pub size: Option<String>,
     pub symbol: Option<super::MarkerStyle>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -503,7 +503,7 @@ pub struct DataPointWireframeMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -519,7 +519,7 @@ pub struct DataSeriesMirror {
     pub marker_visible: Option<super::Boolean>,
     pub overlap: Option<String>,
     pub series_lines: Option<super::Boolean>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -530,7 +530,7 @@ pub struct DataTableDataTablePropsMirror {
     pub horizontal_border: Option<super::Boolean>,
     pub legend_keys: Option<super::Boolean>,
     pub outline_border: Option<super::Boolean>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vertical_border: Option<super::Boolean>,
 }
@@ -548,7 +548,7 @@ pub struct DataTableStyleEntryMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -589,7 +589,7 @@ pub struct DefRPrMirror {
     pub text_underline_fill_content: Option<Box<drawing::TextUnderlineFillContent>>,
     pub text_underline_line_content: Option<Box<drawing::TextUnderlineLineContent>>,
     pub u: Option<drawing::TextUnderlineTypes>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -606,7 +606,7 @@ pub struct DownBarMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -622,7 +622,7 @@ pub struct DropLineMirror {
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
@@ -633,7 +633,7 @@ pub struct DropLineMirror {
 pub struct EffectRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
     pub style_clr: Option<Box<super::StyleClr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -650,7 +650,7 @@ pub struct ErrorBarMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -659,7 +659,7 @@ pub struct ErrorBarMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -669,7 +669,7 @@ pub struct ExtLstMirror {
 pub struct FillRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
     pub style_clr: Option<Box<super::StyleClr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -686,7 +686,7 @@ pub struct FloorMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -698,7 +698,7 @@ pub struct FontRefMirror {
     pub idx: Option<drawing::FontCollectionIndex>,
     pub mods: Option<String>,
     pub style_clr: Option<Box<super::StyleClr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -715,7 +715,7 @@ pub struct GridlineMajorMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -732,7 +732,7 @@ pub struct GridlineMinorMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -748,7 +748,7 @@ pub struct HiLoLineMirror {
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
@@ -765,7 +765,7 @@ pub struct LeaderLineMirror {
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
@@ -776,7 +776,7 @@ pub struct LeaderLineMirror {
 pub struct LegendLegendPropsMirror {
     pub include_in_layout: Option<super::Boolean>,
     pub position: Option<super::LegendPosition>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<super::Boolean>,
 }
@@ -794,7 +794,7 @@ pub struct LegendStyleEntryMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -802,7 +802,7 @@ pub struct LegendStyleEntryMirror {
 #[rkyv(remote = super::LineWidthScale)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineWidthScaleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -813,7 +813,7 @@ pub struct LineWidthScaleMirror {
 pub struct LnRefMirror {
     pub content: Option<Box<drawing::ColorContent>>,
     pub style_clr: Option<Box<super::StyleClr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -830,7 +830,7 @@ pub struct PlotAreaMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -847,7 +847,7 @@ pub struct PlotArea3DMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -855,7 +855,7 @@ pub struct PlotArea3DMirror {
 #[rkyv(remote = super::SeriesAxisAxisProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SeriesAxisAxisPropsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -872,7 +872,7 @@ pub struct SeriesAxisStyleEntryMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -888,7 +888,7 @@ pub struct SeriesLineMirror {
     pub font_ref: Box<super::FontRef>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub width_scale: Option<Box<super::LineWidthScale>>,
 }
@@ -905,7 +905,7 @@ pub struct SpPrMirror {
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
@@ -915,7 +915,7 @@ pub struct SpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleClrMirror {
     pub content: Vec<drawing::ColorTransformContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -933,7 +933,7 @@ pub struct TitleStyleEntryMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -942,7 +942,7 @@ pub struct TitleStyleEntryMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TitleTitlePropsMirror {
     pub position: Option<super::TitlePosition>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -959,7 +959,7 @@ pub struct TrendlineLabelMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -976,7 +976,7 @@ pub struct TrendlineStyleEntryMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -987,7 +987,7 @@ pub struct TrendlineTrendlinePropsMirror {
     pub add: Option<super::Boolean>,
     pub equation: Option<super::Boolean>,
     pub rsquared: Option<super::Boolean>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1004,7 +1004,7 @@ pub struct UpBarMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1012,7 +1012,7 @@ pub struct UpBarMirror {
 #[rkyv(remote = super::ValueAxisAxisProps)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValueAxisAxisPropsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1029,7 +1029,7 @@ pub struct ValueAxisStyleEntryMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1038,7 +1038,7 @@ pub struct ValueAxisStyleEntryMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct VariationMirror {
     pub content: Vec<drawing::ColorTransformContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1052,7 +1052,7 @@ pub struct View3DMirror {
     pub r_ang_ax: Option<super::Boolean>,
     pub rot_x: Option<String>,
     pub rot_y: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1069,7 +1069,7 @@ pub struct WallMirror {
     pub line_width_scale: Option<Box<super::LineWidthScale>>,
     pub ln_ref: Box<super::LnRef>,
     pub sp_pr: Option<Box<super::SpPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

@@ -225,7 +225,7 @@ pub struct OembedMirror {
     pub media_type: Option<String>,
     pub o_embed_url: Option<String>,
     pub pic_locks_auto_for_o_embed: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

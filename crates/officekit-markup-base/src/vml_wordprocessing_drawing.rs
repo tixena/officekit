@@ -279,8 +279,9 @@ pub static TEXT_WRAPPING_SHAPE: crate::Shape = crate::Shape {
 #[derive(Clone, Debug, Default, PartialEq)]
 #[non_exhaustive]
 pub struct AnchorLocationIsLockedWith<X: UserData> {
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingAnchorLocationIsLocked,
 }
@@ -402,8 +403,9 @@ pub struct BottomBorderWith<X: UserData> {
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingBottomBorder,
     /// The attribute `width`, when the element has it.
@@ -453,8 +455,9 @@ pub struct LeftBorderWith<X: UserData> {
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingLeftBorder,
     /// The attribute `width`, when the element has it.
@@ -476,8 +479,9 @@ pub struct RightBorderWith<X: UserData> {
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingRightBorder,
     /// The attribute `width`, when the element has it.
@@ -503,8 +507,9 @@ pub struct TextWrappingWith<X: UserData> {
     pub side: Option<TextWrappingSide>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<TextWrappingType>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingTextWrapping,
 }
@@ -582,8 +587,9 @@ pub struct TopBorderWith<X: UserData> {
     pub shadow: Option<BorderShadowType>,
     /// The attribute `type`, when the element has it.
     pub r#type: Option<BorderType>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::VmlWordprocessingDrawingTopBorder,
     /// The attribute `width`, when the element has it.
@@ -636,6 +642,17 @@ impl<X: UserData> AnchorLocationIsLockedWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -800,6 +817,17 @@ impl<X: UserData> BottomBorderWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -897,6 +925,17 @@ impl<X: UserData> LeftBorderWith<X> {
         }
     }
 
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
+    }
+
     /// This node's attributes, copied, with no declared child and no unknown content.
     #[must_use = "this returns a copy; the node is unchanged"]
     pub fn without_children(&self) -> Self {
@@ -937,6 +976,17 @@ impl<X: UserData> RightBorderWith<X> {
             user_data: Default::default(),
             width: self.width,
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -980,6 +1030,17 @@ impl<X: UserData> TextWrappingWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -1126,6 +1187,17 @@ impl<X: UserData> TopBorderWith<X> {
             user_data: Default::default(),
             width: self.width,
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.

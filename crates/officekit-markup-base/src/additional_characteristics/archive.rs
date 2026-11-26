@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfAdditionalCharacteristicsMirror {
     pub single_characteristic: Vec<super::SingleCharacteristic>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -233,7 +233,7 @@ pub struct SetOfAdditionalCharacteristicsMirror {
 pub struct SingleCharacteristicMirror {
     pub name: Option<String>,
     pub relation: Option<super::CharacteristicRelationshipTypes>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
     pub vocabulary: Option<String>,

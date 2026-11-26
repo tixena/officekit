@@ -222,7 +222,7 @@ use officekit_xml::write::Scope;
 /// Write a `AbsPath` as its element, `x15ac:absPath`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn abs_path(node: &super::AbsPath, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::ABS_PATH_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::ABS_PATH_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.url);
     writer.finish()
 }

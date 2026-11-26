@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `MultiLvlStrLit` as its element, `c16ac:multiLvlStrLit`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn multi_lvl_str_lit(node: &super::MultiLvlStrLit, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MULTI_LVL_STR_LIT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::MULTI_LVL_STR_LIT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.point_count);
     writer.child(&node.level);
     writer.child(&node.chart_extensibility);

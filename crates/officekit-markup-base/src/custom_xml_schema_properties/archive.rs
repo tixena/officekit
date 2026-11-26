@@ -225,7 +225,7 @@ pub struct CustomXMLSchemaReferenceMirror {
     pub manifest_location: Option<String>,
     pub schema_language: Option<String>,
     pub schema_location: Option<String>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -235,7 +235,7 @@ pub struct CustomXMLSchemaReferenceMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedCustomXMLSchemaSupplementaryDataMirror {
     pub custom_xml_schema_reference: Vec<super::CustomXMLSchemaReference>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 

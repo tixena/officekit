@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2023_pivot2023_calculation::Aggre
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::Aggregati
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::Aggregati
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::AGGREGATION_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_pivot2023_calculation::write::aggregation_info(
@@ -276,7 +277,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::Aggregati
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::AGGREGATION_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.aggregation_type);
         through.attribute(1, &self.source_field);
@@ -321,7 +322,8 @@ impl super::Transform for office_spreadsheetml_2023_pivot2023_calculation::Featu
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -339,7 +341,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::FeatureSu
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -352,7 +354,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::FeatureSu
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::FEATURE_SUPPORT_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -365,7 +367,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::FeatureSu
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::FEATURE_SUPPORT_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.feature_name);
         through.finish(ctx)
@@ -407,10 +409,10 @@ impl super::Transform
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.subtotal_pivot_subtotal_type =
             super::transform_child(&self.subtotal_pivot_subtotal_type, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -424,7 +426,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::PivotArea
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.subtotal_pivot_subtotal_type, visitor);
         walk.finish(visitor);
     }
@@ -439,7 +441,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotArea
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_pivot2023_calculation::write::pivot_area_reference_subtotals(self, out.scope());
@@ -448,7 +450,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotArea
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.subtotal_pivot_subtotal_type, ctx)?;
         through.finish(ctx)
@@ -481,10 +483,10 @@ impl super::Transform
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.subtotal_line_item =
             super::transform_child(&self.subtotal_line_item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -498,7 +500,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.subtotal_line_item, visitor);
         walk.finish(visitor);
     }
@@ -513,7 +515,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_pivot2023_calculation::write::pivot_field_subtotal_line_items(self, out.scope());
@@ -522,7 +524,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.subtotal_line_item, ctx)?;
         through.finish(ctx)
@@ -557,10 +559,10 @@ impl super::Transform for office_spreadsheetml_2023_pivot2023_calculation::Pivot
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.subtotal_pivot_item_subtotal =
             super::transform_child(&self.subtotal_pivot_item_subtotal, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -578,7 +580,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.subtotal_pivot_item_subtotal, visitor);
         walk.finish(visitor);
     }
@@ -593,7 +595,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -606,7 +608,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::PivotFiel
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::PIVOT_FIELD_SUBTOTALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.subtotal_pivot_item_subtotal, ctx)?;
         through.finish(ctx)
@@ -650,7 +652,8 @@ impl super::Transform for office_spreadsheetml_2023_pivot2023_calculation::Subto
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -668,7 +671,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::SubtotalL
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -681,7 +684,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalL
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_LINE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -694,7 +697,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalL
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_LINE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -739,7 +742,8 @@ impl super::Transform
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -757,7 +761,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -770,7 +774,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_pivot2023_calculation::write::subtotal_pivot_item_subtotal(self, out.scope());
@@ -779,7 +783,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -819,7 +823,8 @@ impl super::Transform
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -837,7 +842,7 @@ impl super::Visit for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -850,7 +855,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_pivot2023_calculation::write::subtotal_pivot_subtotal_type(self, out.scope());
@@ -859,7 +864,7 @@ impl WriteThrough for office_spreadsheetml_2023_pivot2023_calculation::SubtotalP
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_pivot2023_calculation::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.subtotal_type);
         through.finish(ctx)

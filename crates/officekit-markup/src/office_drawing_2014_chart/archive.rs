@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Bubble3D)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Bubble3DMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -240,7 +240,7 @@ pub struct CategoryFilterExceptionMirror {
     pub marker: Option<Box<super::Marker>>,
     pub sp_pr: Option<Box<super::SpPr>>,
     pub unique_id: Box<super::UniqueId>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -249,7 +249,7 @@ pub struct CategoryFilterExceptionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CategoryFilterExceptionsMirror {
     pub category_filter_exception: Vec<super::CategoryFilterException>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -260,7 +260,7 @@ pub struct DLblMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
     pub content: Vec<chart::DataLabelContent>,
     pub index: Box<chart::Index>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -269,7 +269,7 @@ pub struct DLblMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DatapointuniqueidmapMirror {
     pub ptentry: Vec<super::Ptentry>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -277,7 +277,7 @@ pub struct DatapointuniqueidmapMirror {
 #[rkyv(remote = super::Explosion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ExplosionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -287,7 +287,7 @@ pub struct ExplosionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FilteredLitCacheMultiLvlStrFilteredLiteralCacheMirror {
     pub multi_lvl_str_cache: Box<super::MultiLvlStrCache>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -296,7 +296,7 @@ pub struct FilteredLitCacheMultiLvlStrFilteredLiteralCacheMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FilteredLitCacheNumFilteredLiteralCacheMirror {
     pub num_cache: Box<super::NumCache>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -305,7 +305,7 @@ pub struct FilteredLitCacheNumFilteredLiteralCacheMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FilteredLitCacheStrFilteredLiteralCacheMirror {
     pub str_cache: Box<super::StrCache>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -313,7 +313,7 @@ pub struct FilteredLitCacheStrFilteredLiteralCacheMirror {
 #[rkyv(remote = super::InvertIfNegative)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InvertIfNegativeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -322,7 +322,7 @@ pub struct InvertIfNegativeMirror {
 #[rkyv(remote = super::LiteralDataChart)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LiteralDataChartMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -335,7 +335,7 @@ pub struct MarkerMirror {
     pub shape_properties: Option<Box<chart::ShapeProperties>>,
     pub size: Option<Box<chart::Size>>,
     pub symbol: Option<Box<chart::Symbol>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -346,7 +346,7 @@ pub struct MultiLvlStrCacheMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
     pub level: Vec<chart::Level>,
     pub point_count: Option<Box<chart::PointCount>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -358,7 +358,7 @@ pub struct NumCacheMirror {
     pub format_code: Option<Box<chart::FormatCode>>,
     pub numeric_point: Vec<chart::NumericPoint>,
     pub point_count: Option<Box<chart::PointCount>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -367,7 +367,7 @@ pub struct NumCacheMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PivotOptions16Mirror {
     pub show_expand_collapse_field_buttons: Option<Box<super::ShowExpandCollapseFieldButtons>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -377,7 +377,7 @@ pub struct PivotOptions16Mirror {
 pub struct PtentryMirror {
     pub ptidx: Box<super::Ptidx>,
     pub unique_id: Box<super::UniqueID>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -385,7 +385,7 @@ pub struct PtentryMirror {
 #[rkyv(remote = super::Ptidx)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PtidxMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -394,7 +394,7 @@ pub struct PtidxMirror {
 #[rkyv(remote = super::ShowExpandCollapseFieldButtons)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShowExpandCollapseFieldButtonsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -411,7 +411,7 @@ pub struct SpPrMirror {
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
@@ -423,7 +423,7 @@ pub struct StrCacheMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
     pub point_count: Option<Box<chart::PointCount>>,
     pub string_point: Vec<chart::StringPoint>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -431,7 +431,7 @@ pub struct StrCacheMirror {
 #[rkyv(remote = super::UniqueID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueIDMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -439,7 +439,7 @@ pub struct UniqueIDMirror {
 #[rkyv(remote = super::UniqueId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UniqueIdMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

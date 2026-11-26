@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2020_richvaluerefresh::RefreshInt
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2020_richvaluerefresh::RefreshInterva
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2020_richvaluerefresh::RefreshInterva
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_richvaluerefresh::REFRESH_INTERVAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2020_richvaluerefresh::write::refresh_interval(
@@ -276,7 +277,7 @@ impl WriteThrough for office_spreadsheetml_2020_richvaluerefresh::RefreshInterva
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richvaluerefresh::REFRESH_INTERVAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.resource_id_int);
         through.attribute(1, &self.resource_id_str);
@@ -322,9 +323,9 @@ impl super::Transform for office_spreadsheetml_2020_richvaluerefresh::RefreshInt
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.refresh_interval = super::transform_child(&self.refresh_interval, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -342,7 +343,7 @@ impl super::Visit for office_spreadsheetml_2020_richvaluerefresh::RefreshInterva
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.refresh_interval, visitor);
         walk.finish(visitor);
     }
@@ -357,7 +358,7 @@ impl WriteThrough for office_spreadsheetml_2020_richvaluerefresh::RefreshInterva
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_richvaluerefresh::REFRESH_INTERVALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2020_richvaluerefresh::write::refresh_intervals(
@@ -369,7 +370,7 @@ impl WriteThrough for office_spreadsheetml_2020_richvaluerefresh::RefreshInterva
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_richvaluerefresh::REFRESH_INTERVALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.refresh_interval, ctx)?;
         through.finish(ctx)

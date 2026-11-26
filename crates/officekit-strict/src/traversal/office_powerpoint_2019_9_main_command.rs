@@ -233,7 +233,8 @@ impl super::Transform for office_powerpoint_2019_9_main_command::CmMK {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_powerpoint_2019_9_main_command::CmMK {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmMK {
         let converted = super::converts(
             out,
             &office_powerpoint_2019_9_main_command::CM_MK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2019_9_main_command::write::cm_mk(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmMK {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_MK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -317,10 +318,10 @@ impl super::Transform for office_powerpoint_2019_9_main_command::CmMkLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sld_mk_lst = super::transform_child(&self.sld_mk_lst, ctx, &mut rebase);
         node.cm_mk = super::transform_child(&self.cm_mk, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -338,7 +339,7 @@ impl super::Visit for office_powerpoint_2019_9_main_command::CmMkLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sld_mk_lst, visitor);
         walk.child(&self.cm_mk, visitor);
         walk.finish(visitor);
@@ -354,7 +355,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmMkLst {
         let converted = super::converts(
             out,
             &office_powerpoint_2019_9_main_command::CM_MK_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -364,7 +365,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmMkLst {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_MK_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sld_mk_lst, ctx)?;
         through.child(&self.cm_mk, ctx)?;
@@ -409,7 +410,8 @@ impl super::Transform for office_powerpoint_2019_9_main_command::CmRplyMk {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -427,7 +429,7 @@ impl super::Visit for office_powerpoint_2019_9_main_command::CmRplyMk {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -440,7 +442,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmRplyMk {
         let converted = super::converts(
             out,
             &office_powerpoint_2019_9_main_command::CM_RPLY_MK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -450,7 +452,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmRplyMk {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_RPLY_MK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -494,10 +496,10 @@ impl super::Transform for office_powerpoint_2019_9_main_command::CmRplyMkLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cm_mk_lst = super::transform_child(&self.cm_mk_lst, ctx, &mut rebase);
         node.cm_rply_mk = super::transform_child(&self.cm_rply_mk, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -515,7 +517,7 @@ impl super::Visit for office_powerpoint_2019_9_main_command::CmRplyMkLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cm_mk_lst, visitor);
         walk.child(&self.cm_rply_mk, visitor);
         walk.finish(visitor);
@@ -531,7 +533,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmRplyMkLst {
         let converted = super::converts(
             out,
             &office_powerpoint_2019_9_main_command::CM_RPLY_MK_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -541,7 +543,7 @@ impl WriteThrough for office_powerpoint_2019_9_main_command::CmRplyMkLst {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2019_9_main_command::CM_RPLY_MK_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.cm_mk_lst, ctx)?;
         through.child(&self.cm_rply_mk, ctx)?;

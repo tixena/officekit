@@ -227,7 +227,7 @@ pub struct BackstageMirror {
     pub content: Vec<super::BackstageContent>,
     pub on_hide: Option<String>,
     pub on_show: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -236,7 +236,7 @@ pub struct BackstageMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BottomItemsMirror {
     pub content: Vec<super::GroupControlsContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -258,7 +258,7 @@ pub struct BoxBoxMirror {
     pub insert_before_mso: Option<String>,
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -287,7 +287,7 @@ pub struct ButtonBackstageFastCommandButtonMirror {
     pub label: Option<String>,
     pub on_action: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -317,7 +317,7 @@ pub struct ButtonBackstageGroupButtonMirror {
     pub style: Option<super::Style2>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -343,7 +343,7 @@ pub struct ButtonBackstageMenuButtonMirror {
     pub label: Option<String>,
     pub on_action: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -371,7 +371,7 @@ pub struct ButtonBackstageRegularButtonMirror {
     pub screentip: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -411,7 +411,7 @@ pub struct ButtonButtonMirror {
     pub size: Option<super::Size>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -449,7 +449,7 @@ pub struct ButtonButtonRegularMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -467,7 +467,7 @@ pub struct ButtonGroupMirror {
     pub insert_before_mso: Option<String>,
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -504,7 +504,7 @@ pub struct ButtonVisibleButtonMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -524,7 +524,7 @@ pub struct CategoryTaskFormGroupCategoryMirror {
     pub label: Option<String>,
     pub tag: Option<String>,
     pub task_task_form_group_task: Vec<super::TaskTaskFormGroupTask>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -545,7 +545,7 @@ pub struct CategoryTaskGroupCategoryMirror {
     pub label: Option<String>,
     pub tag: Option<String>,
     pub task_task_group_task: Vec<super::TaskTaskGroupTask>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -573,7 +573,7 @@ pub struct CheckBoxBackstageCheckBoxMirror {
     pub screentip: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -596,7 +596,7 @@ pub struct CheckBoxBackstageMenuCheckBoxMirror {
     pub label: Option<String>,
     pub on_action: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -628,7 +628,7 @@ pub struct CheckBoxCheckBoxMirror {
     pub screentip: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -656,7 +656,7 @@ pub struct ComboBoxBackstageComboBoxMirror {
     pub on_change: Option<String>,
     pub size_string: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -704,7 +704,7 @@ pub struct ComboBoxComboBoxMirror {
     pub size_string: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -717,7 +717,7 @@ pub struct CommandMirror {
     pub get_enabled: Option<String>,
     pub id_mso: Option<String>,
     pub on_action: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -726,7 +726,7 @@ pub struct CommandMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommandsMirror {
     pub command: Vec<super::Command>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -736,7 +736,7 @@ pub struct CommandsMirror {
 pub struct ContextMenuMirror {
     pub content: Vec<super::ContextMenuContent>,
     pub id_mso: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -745,7 +745,7 @@ pub struct ContextMenuMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContextMenusMirror {
     pub context_menu: Vec<super::ContextMenu>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -754,7 +754,7 @@ pub struct ContextMenusMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContextualTabsMirror {
     pub tab_set: Vec<super::TabSet>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -791,7 +791,7 @@ pub struct ControlControlCloneMirror {
     pub size: Option<super::Size>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -829,7 +829,7 @@ pub struct ControlControlCloneQatMirror {
     pub show_label: Option<String>,
     pub size: Option<super::Size>,
     pub supertip: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -863,7 +863,7 @@ pub struct ControlControlCloneRegularMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -878,7 +878,7 @@ pub struct CustomUIMirror {
     pub load_image: Option<String>,
     pub on_load: Option<String>,
     pub ribbon: Option<Box<super::Ribbon>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -887,7 +887,7 @@ pub struct CustomUIMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DialogBoxLauncherMirror {
     pub button_button_regular: Box<super::ButtonButtonRegular>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -896,7 +896,7 @@ pub struct DialogBoxLauncherMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentControlsMirror {
     pub content: Vec<super::QuickAccessToolbarItemsContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -927,7 +927,7 @@ pub struct DropDownBackstageDropDownMirror {
     pub size_string: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -976,7 +976,7 @@ pub struct DropDownDropDownRegularMirror {
     pub size_string: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1017,7 +1017,7 @@ pub struct DynamicMenuDynamicMenuMirror {
     pub size: Option<super::Size>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1056,7 +1056,7 @@ pub struct DynamicMenuDynamicMenuRegularMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1081,7 +1081,7 @@ pub struct EditBoxBackstageEditBoxMirror {
     pub on_change: Option<String>,
     pub size_string: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1120,7 +1120,7 @@ pub struct EditBoxEditBoxMirror {
     pub size_string: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1130,7 +1130,7 @@ pub struct EditBoxEditBoxMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstColumnMirror {
     pub content: Vec<super::BackstageGroupsContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1190,7 +1190,7 @@ pub struct GalleryGalleryMirror {
     pub size_string: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1249,7 +1249,7 @@ pub struct GalleryGalleryRegularMirror {
     pub size_string: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1278,7 +1278,7 @@ pub struct GroupBackstageGroupMirror {
     pub style: Option<super::Style>,
     pub tag: Option<String>,
     pub top_items: Option<Box<super::TopItems>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1298,7 +1298,7 @@ pub struct GroupBoxMirror {
     pub id_q: Option<String>,
     pub label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1330,7 +1330,7 @@ pub struct GroupGroupMirror {
     pub screentip: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1361,7 +1361,7 @@ pub struct HyperlinkMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub target: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1381,7 +1381,7 @@ pub struct ImageControlMirror {
     pub image: Option<String>,
     pub image_mso: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1390,7 +1390,7 @@ pub struct ImageControlMirror {
 #[rkyv(remote = super::ItemBackstageItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ItemBackstageItemMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1404,7 +1404,7 @@ pub struct ItemItemMirror {
     pub label: Option<String>,
     pub screentip: Option<String>,
     pub supertip: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1423,7 +1423,7 @@ pub struct LabelControlBackstageLabelControlMirror {
     pub label: Option<String>,
     pub no_wrap: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1451,7 +1451,7 @@ pub struct LabelControlLabelControlMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1471,7 +1471,7 @@ pub struct LayoutContainerMirror {
     pub id_q: Option<String>,
     pub layout_children: Option<super::LayoutChildren>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1497,7 +1497,7 @@ pub struct MenuBackstagePrimaryMenuMirror {
     pub screentip: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1526,7 +1526,7 @@ pub struct MenuBackstageSubMenuMirror {
     pub keytip: Option<String>,
     pub label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1546,7 +1546,7 @@ pub struct MenuGroupMirror {
     pub item_size: Option<super::ItemSize>,
     pub label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1586,7 +1586,7 @@ pub struct MenuMenuMirror {
     pub size: Option<super::Size>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1629,7 +1629,7 @@ pub struct MenuMenuRegularMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1642,7 +1642,7 @@ pub struct MenuMenuRootMirror {
     pub get_title: Option<String>,
     pub item_size: Option<super::ItemSize>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1684,7 +1684,7 @@ pub struct MenuMenuWithTitleMirror {
     pub supertip: Option<String>,
     pub tag: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1702,7 +1702,7 @@ pub struct MenuSeparatorMenuSeparatorMirror {
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1717,7 +1717,7 @@ pub struct MenuSeparatorMenuSeparatorNoTitleMirror {
     pub insert_before_mso: Option<String>,
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1726,7 +1726,7 @@ pub struct MenuSeparatorMenuSeparatorNoTitleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryItemMirror {
     pub content: Box<super::PrimaryItemContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1736,7 +1736,7 @@ pub struct PrimaryItemMirror {
 pub struct QatMirror {
     pub document_controls: Option<Box<super::DocumentControls>>,
     pub shared_controls: Option<Box<super::SharedControls>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1744,7 +1744,7 @@ pub struct QatMirror {
 #[rkyv(remote = super::RadioButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RadioButtonMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1770,7 +1770,7 @@ pub struct RadioGroupMirror {
     pub on_action: Option<String>,
     pub radio_button: Vec<super::RadioButton>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1781,7 +1781,7 @@ pub struct RadioGroupMirror {
 pub struct RibbonMirror {
     pub content: Vec<super::RibbonContent>,
     pub start_from_scratch: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1790,7 +1790,7 @@ pub struct RibbonMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SecondColumnMirror {
     pub content: Vec<super::SimpleGroupsContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1806,7 +1806,7 @@ pub struct SeparatorMirror {
     pub insert_before_mso: Option<String>,
     pub insert_before_q: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1816,7 +1816,7 @@ pub struct SeparatorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SharedControlsMirror {
     pub content: Vec<super::QuickAccessToolbarItemsContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1843,7 +1843,7 @@ pub struct SplitButtonSplitButtonMirror {
     pub show_label: Option<String>,
     pub size: Option<super::Size>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1873,7 +1873,7 @@ pub struct SplitButtonSplitButtonRegularMirror {
     pub menu_menu_regular: Option<Box<super::MenuMenuRegular>>,
     pub show_label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1903,7 +1903,7 @@ pub struct SplitButtonSplitButtonWithTitleMirror {
     pub menu_menu_with_title: Option<Box<super::MenuMenuWithTitle>>,
     pub show_label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1936,7 +1936,7 @@ pub struct TabBackstageTabMirror {
     pub second_column_min_width: Option<String>,
     pub tag: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1948,7 +1948,7 @@ pub struct TabSetMirror {
     pub get_visible: Option<String>,
     pub id_mso: Option<String>,
     pub tab_tab: Vec<super::TabTab>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1971,7 +1971,7 @@ pub struct TabTabMirror {
     pub keytip: Option<String>,
     pub label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -1981,7 +1981,7 @@ pub struct TabTabMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TabsMirror {
     pub tab_tab: Vec<super::TabTab>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2002,7 +2002,7 @@ pub struct TaskFormGroupMirror {
     pub label: Option<String>,
     pub show_label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -2028,7 +2028,7 @@ pub struct TaskGroupMirror {
     pub label: Option<String>,
     pub show_label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -2058,7 +2058,7 @@ pub struct TaskTaskFormGroupTaskMirror {
     pub keytip: Option<String>,
     pub label: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -2089,7 +2089,7 @@ pub struct TaskTaskGroupTaskMirror {
     pub label: Option<String>,
     pub on_action: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -2115,7 +2115,7 @@ pub struct ToggleButtonBackstageMenuToggleButtonMirror {
     pub label: Option<String>,
     pub on_action: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -2156,7 +2156,7 @@ pub struct ToggleButtonToggleButtonMirror {
     pub size: Option<super::Size>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -2195,7 +2195,7 @@ pub struct ToggleButtonToggleButtonRegularMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visible: Option<String>,
 }
@@ -2233,7 +2233,7 @@ pub struct ToggleButtonVisibleToggleButtonMirror {
     pub show_label: Option<String>,
     pub supertip: Option<String>,
     pub tag: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -2242,7 +2242,7 @@ pub struct ToggleButtonVisibleToggleButtonMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TopItemsMirror {
     pub content: Vec<super::GroupControlsContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

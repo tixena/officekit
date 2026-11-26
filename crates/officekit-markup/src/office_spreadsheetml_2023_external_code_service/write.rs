@@ -225,7 +225,7 @@ pub fn external_code_service(node: &super::ExternalCodeService, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::EXTERNAL_CODE_SERVICE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.auto_show);
     writer.attribute(1, &node.timeout);

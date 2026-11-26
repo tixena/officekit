@@ -245,7 +245,7 @@ pub struct BodyPrMirror {
     pub t_ins: Option<drawing::StCoordinate32>,
     pub text3d_content: Option<Box<drawing::Text3DContent>>,
     pub text_autofit_content: Option<Box<drawing::TextAutofitContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub upright: Option<String>,
     pub user_data: (),
     pub vert: Option<drawing::VerticalTextTypes>,
@@ -261,7 +261,7 @@ pub struct CNvCnPrMirror {
     pub connection_shape_locks: Option<Box<drawing::ConnectionShapeLocks>>,
     pub connection_start: Option<Box<drawing::ConnectionStart>>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -277,7 +277,7 @@ pub struct CNvPrMirror {
     pub id: Option<drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -288,7 +288,7 @@ pub struct CNvSpPrMirror {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub shape_locks: Option<Box<drawing::ShapeLocks>>,
     pub tx_box: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -297,7 +297,7 @@ pub struct CNvSpPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -308,7 +308,7 @@ pub struct LinkedTxbxMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub seq: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -324,7 +324,7 @@ pub struct SpPrMirror {
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
@@ -337,7 +337,7 @@ pub struct StyleMirror {
     pub fill_reference: Box<drawing::FillReference>,
     pub font_reference: Box<drawing::FontReference>,
     pub line_reference: Box<drawing::LineReference>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -348,7 +348,7 @@ pub struct TxbxMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub rich_text_box_content_container: Option<Box<wordprocessing::RichTextBoxContentContainer>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -364,7 +364,7 @@ pub struct WspMirror {
     pub shape_text_content: Option<Box<super::ShapeTextContent>>,
     pub sp_pr: Box<super::SpPr>,
     pub style: Option<Box<super::Style>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

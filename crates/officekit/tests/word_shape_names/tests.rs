@@ -18,7 +18,7 @@ mod whole_file {
     use officekit_xml::name::QName;
     use officekit_xml::packaging::package::OpenOptions;
 
-    use super::{W, WPS, word_shape};
+    use super::{Unknown, W, WPS, word_shape};
 
     /// A main document whose one paragraph shows `shape` in the line of text.
     fn document_with(shape: WordprocessingMLShape) -> Document {
@@ -88,21 +88,22 @@ mod whole_file {
         let document = docx.main_document().unwrap();
         let shape = shape_in(&document).unwrap();
         assert_eq!(
-            shape.unknown.name,
+            shape.unknown().unwrap_or_else(Unknown::empty).name,
             Some(Box::new(QName::prefixed("wps", "wsp", WPS)))
         );
         assert_eq!(
             super::text_box(shape)
                 .unwrap()
                 .rich_text_box_content_container
-                .unknown
+                .unknown()
+                .unwrap_or_else(Unknown::empty)
                 .name,
             Some(Box::new(QName::prefixed("w", "txbxContent", W)))
         );
         let mut built = word_shape();
         let mut read = shape.clone();
-        built.unknown.namespace_declarations.clear();
-        read.unknown.namespace_declarations.clear();
+        built.unknown_mut().namespace_declarations.clear();
+        read.unknown_mut().namespace_declarations.clear();
         assert_eq!(read, built);
         let part = docx
             .package()
@@ -136,7 +137,11 @@ mod whole_file {
         let restored = back.main_document().unwrap();
         assert_eq!(restored, document);
         assert_eq!(
-            shape_in(&restored).unwrap().unknown.name,
+            shape_in(&restored)
+                .unwrap()
+                .unknown()
+                .unwrap_or_else(Unknown::empty)
+                .name,
             Some(Box::new(QName::prefixed("wps", "wsp", WPS)))
         );
 
@@ -148,6 +153,7 @@ mod whole_file {
 }
 
 use officekit_markup::Read as _;
+use officekit_markup::Unknown;
 use officekit_markup::drawing::{AnyElementContent, GeometryContent, GraphicObjectData};
 use officekit_markup::vml::{self, TextBox, TextBoxContent};
 use officekit_markup::wordprocessing::{BlockContent, Paragraph, RichTextBoxContentContainer};
@@ -313,21 +319,29 @@ fn preset(shape: &WordprocessingMLShape) -> Option<&str> {
 
 /// `shape` with every name it was read with taken off.
 fn without_names(mut shape: WordprocessingMLShape) -> WordprocessingMLShape {
-    shape.unknown.name = None;
-    shape.properties.unknown.name = None;
-    shape.body_properties.unknown.name = None;
+    shape.unknown = unnamed(shape.unknown.take());
+    shape.properties.unknown = unnamed(shape.properties.unknown.take());
+    shape.body_properties.unknown = unnamed(shape.body_properties.unknown.take());
     if let ShapeNonVisualPropertiesContent::NonVisualDrawingPropertiesForAShape(properties) =
         &mut *shape.non_visual_properties_content
     {
-        properties.unknown.name = None;
+        properties.unknown = unnamed(properties.unknown.take());
     }
     if let Some(ShapeTextContent::TextualContentsOfShapeTxbx(found)) =
         shape.text_content.as_deref_mut()
     {
-        found.unknown.name = None;
-        found.rich_text_box_content_container.unknown.name = None;
+        found.unknown = unnamed(found.unknown.take());
+        found.rich_text_box_content_container.unknown =
+            unnamed(found.rich_text_box_content_container.unknown.take());
     }
     shape
+}
+
+/// `unknown` without the name it was read with; `None` when nothing else is left.
+fn unnamed(unknown: Option<Box<Unknown>>) -> Option<Box<Unknown>> {
+    let mut found = unknown?;
+    found.name = None;
+    (!found.is_empty()).then_some(found)
 }
 
 /// A shape built in code with a text box holding one paragraph, under the standard's names.
@@ -351,23 +365,24 @@ fn standard_shape() -> WordprocessingMLShape {
 /// names declared on the shape.
 fn word_shape() -> WordprocessingMLShape {
     let mut shape = standard_shape();
-    shape.unknown.name = Some(Box::new(QName::prefixed("wps", "wsp", WPS)));
-    shape.unknown.namespace_declarations = vec![
+    shape.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "wsp", WPS)));
+    shape.unknown_mut().namespace_declarations = vec![
         NamespaceDeclaration::new("wps".to_owned(), WPS.to_owned()),
         NamespaceDeclaration::new("w".to_owned(), W.to_owned()),
     ];
-    shape.properties.unknown.name = Some(Box::new(QName::prefixed("wps", "spPr", WPS)));
-    shape.body_properties.unknown.name = Some(Box::new(QName::prefixed("wps", "bodyPr", WPS)));
+    shape.properties.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "spPr", WPS)));
+    shape.body_properties.unknown_mut().name =
+        Some(Box::new(QName::prefixed("wps", "bodyPr", WPS)));
     if let ShapeNonVisualPropertiesContent::NonVisualDrawingPropertiesForAShape(properties) =
         &mut *shape.non_visual_properties_content
     {
-        properties.unknown.name = Some(Box::new(QName::prefixed("wps", "cNvSpPr", WPS)));
+        properties.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "cNvSpPr", WPS)));
     }
     if let Some(ShapeTextContent::TextualContentsOfShapeTxbx(found)) =
         shape.text_content.as_deref_mut()
     {
-        found.unknown.name = Some(Box::new(QName::prefixed("wps", "txbx", WPS)));
-        found.rich_text_box_content_container.unknown.name =
+        found.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "txbx", WPS)));
+        found.rich_text_box_content_container.unknown_mut().name =
             Some(Box::new(QName::prefixed("w", "txbxContent", W)));
     }
     shape
@@ -390,16 +405,33 @@ fn a_word_shape_reads_as_the_typed_shape_with_its_geometry_and_text_box() {
         content.content.as_slice(),
         [BlockContent::Paragraph(_)]
     ));
-    assert_eq!(shape.unknown.children, []);
-    assert_eq!(shape.unknown.absent, Vec::<usize>::new());
-    assert_eq!(shape.properties.unknown.children, []);
-    assert_eq!(text_box(&shape).unwrap().unknown.children, []);
+    assert_eq!(shape.unknown().unwrap_or_else(Unknown::empty).children, []);
     assert_eq!(
-        shape.unknown.name,
+        shape.unknown().unwrap_or_else(Unknown::empty).absent,
+        Vec::<usize>::new()
+    );
+    assert_eq!(
+        shape
+            .properties
+            .unknown()
+            .unwrap_or_else(Unknown::empty)
+            .children,
+        []
+    );
+    assert_eq!(
+        text_box(&shape)
+            .unwrap()
+            .unknown()
+            .unwrap_or_else(Unknown::empty)
+            .children,
+        []
+    );
+    assert_eq!(
+        shape.unknown().unwrap_or_else(Unknown::empty).name,
         Some(Box::new(QName::prefixed("wps", "wsp", WPS)))
     );
     assert_eq!(
-        content.unknown.name,
+        content.unknown().unwrap_or_else(Unknown::empty).name,
         Some(Box::new(QName::prefixed("w", "txbxContent", W)))
     );
 }
@@ -452,15 +484,18 @@ fn a_word_group_reads_its_shape_and_inner_group_typed_and_writes_their_names_bac
         ],
     );
     let group = group_of(read_payload(WPG, tree.clone())).unwrap();
-    assert_eq!(group.unknown.children, []);
-    assert_eq!(group.unknown.absent, Vec::<usize>::new());
+    assert_eq!(group.unknown().unwrap_or_else(Unknown::empty).children, []);
+    assert_eq!(
+        group.unknown().unwrap_or_else(Unknown::empty).absent,
+        Vec::<usize>::new()
+    );
     let inner_group = inner_group_of(&group).unwrap();
     assert!(matches!(
         inner_group.content.as_slice(),
         [GroupShapeContent::WordprocessingMLShape(_)]
     ));
     assert_eq!(
-        inner_group.unknown.name,
+        inner_group.unknown().unwrap_or_else(Unknown::empty).name,
         Some(Box::new(QName::prefixed("wpg", "grpSp", WPG)))
     );
     let back =
@@ -477,7 +512,7 @@ fn a_word_canvas_reads_its_shape_typed_and_writes_their_names_back() {
         [DrawingCanvasContent::WordprocessingMLShape(_)]
     ));
     assert_eq!(
-        canvas.unknown.name,
+        canvas.unknown().unwrap_or_else(Unknown::empty).name,
         Some(Box::new(QName::prefixed("wpc", "wpc", WPC)))
     );
     let back = wordprocessing_drawing::write::wordprocessing_ml_drawing_canvas(
@@ -492,12 +527,13 @@ fn the_standards_names_read_as_the_same_typed_shape_with_no_name_kept() {
     let tree = shape_tree(STANDARD, STANDARD);
     let standard = shape_of(read_payload(WPS, tree.clone())).unwrap();
     let word = shape_of(read_payload(WPS, shape_tree(WORD, ("w", W)))).unwrap();
-    assert_eq!(standard.unknown.name, None);
+    assert_eq!(standard.unknown().unwrap_or_else(Unknown::empty).name, None);
     assert_eq!(
         text_box(&standard)
             .unwrap()
             .rich_text_box_content_container
-            .unknown
+            .unknown()
+            .unwrap_or_else(Unknown::empty)
             .name,
         None
     );
@@ -515,7 +551,7 @@ fn a_text_boxs_content_in_wne_reads_as_its_content_and_is_written_back_in_wne() 
         [BlockContent::Paragraph(_)]
     ));
     assert_eq!(
-        content.unknown.name,
+        content.unknown().unwrap_or_else(Unknown::empty).name,
         Some(Box::new(QName::prefixed("wne", "txbxContent", WNE)))
     );
     assert_eq!(names(&written(&shape)), names(&tree));
@@ -576,7 +612,7 @@ fn a_text_boxs_content_in_a_vml_text_box_reads_as_it_did() {
         content.content.as_slice(),
         [BlockContent::Paragraph(_)]
     ));
-    assert_eq!(content.unknown.name, None);
+    assert_eq!(content.unknown().unwrap_or_else(Unknown::empty).name, None);
     let back = vml::write::text_box(&read, &mut Scope::default());
     assert_eq!(names(&back), names(&tree));
 }

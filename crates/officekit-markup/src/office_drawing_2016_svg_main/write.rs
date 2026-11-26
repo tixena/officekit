@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn svg_blip(node: &super::SvgBlip, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SVG_BLIP_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::SVG_BLIP_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.embed);
     writer.attribute(1, &node.link);
     writer.finish()

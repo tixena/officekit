@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Alpha)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AlphaMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -232,7 +232,7 @@ pub struct AlphaMirror {
 #[rkyv(remote = super::Bevel)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BevelMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -240,7 +240,7 @@ pub struct BevelMirror {
 #[rkyv(remote = super::BevelB)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BevelBMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -248,7 +248,7 @@ pub struct BevelBMirror {
 #[rkyv(remote = super::BevelT)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BevelTMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -259,7 +259,7 @@ pub struct CNvContentPartPrMirror {
     pub cp_locks: Option<Box<super::super::office_drawing_2010_main::CpLocks>>,
     pub ext_lst: Option<Box<super::super::office_drawing_2010_main::ExtLst>>,
     pub is_comment: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -275,7 +275,7 @@ pub struct CNvPrMirror {
     pub id: Option<super::super::drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -284,7 +284,7 @@ pub struct CNvPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraMirror {
     pub prst: Option<super::PresetCameraType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -295,7 +295,7 @@ pub struct CheckboxMirror {
     pub checked: Option<Box<super::Checked>>,
     pub checked_state: Option<Box<super::CheckedState>>,
     pub unchecked_state: Option<Box<super::UncheckedState>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -303,7 +303,7 @@ pub struct CheckboxMirror {
 #[rkyv(remote = super::Checked)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -311,7 +311,7 @@ pub struct CheckedMirror {
 #[rkyv(remote = super::CheckedState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckedStateMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -319,7 +319,7 @@ pub struct CheckedStateMirror {
 #[rkyv(remote = super::CntxtAlts)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CntxtAltsMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -335,7 +335,7 @@ pub struct ConflictDelRunTrackChangeMirror {
     pub content: Vec<super::super::wordprocessing::TrackedRunContent>,
     pub date: Option<super::super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -346,7 +346,7 @@ pub struct ConflictDelTrackChangeMirror {
     pub author: Option<String>,
     pub date: Option<super::super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -362,7 +362,7 @@ pub struct ConflictInsRunTrackChangeMirror {
     pub content: Vec<super::super::wordprocessing::TrackedRunContent>,
     pub date: Option<super::super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -373,7 +373,7 @@ pub struct ConflictInsTrackChangeMirror {
     pub author: Option<String>,
     pub date: Option<super::super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -381,7 +381,7 @@ pub struct ConflictInsTrackChangeMirror {
 #[rkyv(remote = super::ConflictMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ConflictModeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -393,7 +393,7 @@ pub struct ContentPartMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub nv_content_part_pr: Option<Box<super::NvContentPartPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm: Option<Box<super::Xfrm>>,
 }
@@ -403,7 +403,7 @@ pub struct ContentPartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ContourClrMirror {
     pub content: Box<super::ColorContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -412,7 +412,7 @@ pub struct ContourClrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXmlConflictDelRangeEndMirror {
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -423,7 +423,7 @@ pub struct CustomXmlConflictDelRangeStartMirror {
     pub author: Option<String>,
     pub date: Option<super::super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -432,7 +432,7 @@ pub struct CustomXmlConflictDelRangeStartMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomXmlConflictInsRangeEndMirror {
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -443,7 +443,7 @@ pub struct CustomXmlConflictInsRangeStartMirror {
     pub author: Option<String>,
     pub date: Option<super::super::wordprocessing::StandardDateAndTimeStorageFormat>,
     pub id: Option<super::super::wordprocessing::DecimalNumberValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -451,7 +451,7 @@ pub struct CustomXmlConflictInsRangeStartMirror {
 #[rkyv(remote = super::DefaultImageDpi)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultImageDpiMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -460,7 +460,7 @@ pub struct DefaultImageDpiMirror {
 #[rkyv(remote = super::DiscardImageEditingData)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DiscardImageEditingDataMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -468,7 +468,7 @@ pub struct DiscardImageEditingDataMirror {
 #[rkyv(remote = super::DocId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocIdMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -477,7 +477,7 @@ pub struct DocIdMirror {
 #[rkyv(remote = super::EntityPicker)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EntityPickerMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -486,7 +486,7 @@ pub struct EntityPickerMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<super::super::drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -495,7 +495,7 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtrusionClrMirror {
     pub content: Box<super::ColorContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -507,7 +507,7 @@ pub struct FillToRectMirror {
     pub l: Option<String>,
     pub r: Option<String>,
     pub t: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -517,7 +517,7 @@ pub struct FillToRectMirror {
 pub struct GlowMirror {
     pub content: Box<super::ColorContent>,
     pub rad: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -527,7 +527,7 @@ pub struct GlowMirror {
 pub struct GradFillMirror {
     pub content: Option<Box<super::GradientFillPropertiesContent>>,
     pub gs_lst: Option<Box<super::GsLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -537,7 +537,7 @@ pub struct GradFillMirror {
 pub struct GsMirror {
     pub content: Box<super::ColorContent>,
     pub pos: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -546,7 +546,7 @@ pub struct GsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct GsLstMirror {
     pub gs: Vec<super::Gs>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -554,7 +554,7 @@ pub struct GsLstMirror {
 #[rkyv(remote = super::HueMod)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HueModMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -563,7 +563,7 @@ pub struct HueModMirror {
 #[rkyv(remote = super::Ligatures)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LigaturesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StLigatures>,
 }
@@ -575,7 +575,7 @@ pub struct LightRigMirror {
     pub dir: Option<super::LightRigDirection>,
     pub rig: Option<super::LightRigType>,
     pub rot: Option<Box<super::Rot>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -585,7 +585,7 @@ pub struct LightRigMirror {
 pub struct LinMirror {
     pub ang: Option<String>,
     pub scaled: Option<super::OnOff>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -593,7 +593,7 @@ pub struct LinMirror {
 #[rkyv(remote = super::Lum)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LumMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -601,7 +601,7 @@ pub struct LumMirror {
 #[rkyv(remote = super::LumMod)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LumModMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -609,7 +609,7 @@ pub struct LumModMirror {
 #[rkyv(remote = super::LumOff)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LumOffMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -618,7 +618,7 @@ pub struct LumOffMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MiterMirror {
     pub lim: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -626,7 +626,7 @@ pub struct MiterMirror {
 #[rkyv(remote = super::NoFill)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NoFillMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -634,7 +634,7 @@ pub struct NoFillMirror {
 #[rkyv(remote = super::NumForm)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumFormMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StNumForm>,
 }
@@ -643,7 +643,7 @@ pub struct NumFormMirror {
 #[rkyv(remote = super::NumSpacing)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumSpacingMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::StNumSpacing>,
 }
@@ -654,7 +654,7 @@ pub struct NumSpacingMirror {
 pub struct NvContentPartPrMirror {
     pub c: Option<Box<super::CNvContentPartPr>>,
     pub c_nv_pr: Option<Box<super::CNvPr>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -664,7 +664,7 @@ pub struct NvContentPartPrMirror {
 pub struct PathMirror {
     pub fill_to_rect: Option<Box<super::FillToRect>>,
     pub path: Option<super::PathShadeType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -679,7 +679,7 @@ pub struct Props3dMirror {
     pub extrusion_clr: Option<Box<super::ExtrusionClr>>,
     pub extrusion_h: Option<String>,
     pub prst_material: Option<super::PresetMaterialType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -687,7 +687,7 @@ pub struct Props3dMirror {
 #[rkyv(remote = super::PrstDash)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrstDashMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::PresetLineDashVal>,
 }
@@ -709,7 +709,7 @@ pub struct ReflectionMirror {
     pub st_pos: Option<String>,
     pub sx: Option<String>,
     pub sy: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -720,7 +720,7 @@ pub struct RotMirror {
     pub lat: Option<String>,
     pub lon: Option<String>,
     pub rev: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -728,7 +728,7 @@ pub struct RotMirror {
 #[rkyv(remote = super::Round)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RoundMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -736,7 +736,7 @@ pub struct RoundMirror {
 #[rkyv(remote = super::Sat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SatMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -744,7 +744,7 @@ pub struct SatMirror {
 #[rkyv(remote = super::SatMod)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SatModMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -752,7 +752,7 @@ pub struct SatModMirror {
 #[rkyv(remote = super::SatOff)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SatOffMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -762,7 +762,7 @@ pub struct SatOffMirror {
 pub struct Scene3dMirror {
     pub camera: Box<super::Camera>,
     pub light_rig: Box<super::LightRig>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -771,7 +771,7 @@ pub struct Scene3dMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SchemeClrMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::SchemeColorVal>,
 }
@@ -780,7 +780,7 @@ pub struct SchemeClrMirror {
 #[rkyv(remote = super::Shade)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShadeMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -797,7 +797,7 @@ pub struct ShadowMirror {
     pub ky: Option<String>,
     pub sx: Option<String>,
     pub sy: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -806,7 +806,7 @@ pub struct ShadowMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SolidFillMirror {
     pub content: Option<Box<super::ColorContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -815,7 +815,7 @@ pub struct SolidFillMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SrgbClrMirror {
     pub content: Vec<super::ColorTransformContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -825,7 +825,7 @@ pub struct SrgbClrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StyleSetMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<super::OnOff>,
 }
@@ -835,7 +835,7 @@ pub struct StyleSetMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct StylisticSetsMirror {
     pub style_set: Vec<super::StyleSet>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -844,7 +844,7 @@ pub struct StylisticSetsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TextFillMirror {
     pub content: Option<Box<super::FillPropertiesContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -858,7 +858,7 @@ pub struct TextOutlineMirror {
     pub fill_properties_content: Option<Box<super::FillPropertiesContent>>,
     pub line_join_content: Option<Box<super::LineJoinContent>>,
     pub prst_dash: Option<Box<super::PrstDash>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub w: Option<String>,
 }
@@ -867,7 +867,7 @@ pub struct TextOutlineMirror {
 #[rkyv(remote = super::Tint)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TintMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -875,7 +875,7 @@ pub struct TintMirror {
 #[rkyv(remote = super::UncheckedState)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UncheckedStateMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -888,7 +888,7 @@ pub struct XfrmMirror {
     pub flip_v: Option<String>,
     pub offset: Option<Box<super::super::drawing::Offset>>,
     pub rot: Option<super::super::drawing::Angle>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

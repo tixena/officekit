@@ -239,7 +239,7 @@ pub struct CalloutMirror {
     pub on: Option<common_simple_types::BooleanValue>,
     pub textborder: Option<common_simple_types::BooleanValue>,
     pub r#type: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -248,7 +248,7 @@ pub struct CalloutMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ComplexMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -260,7 +260,7 @@ pub struct DiagramRelationshipMirror {
     pub idcntr: Option<String>,
     pub iddest: Option<String>,
     pub idsrc: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -270,7 +270,7 @@ pub struct DiagramRelationshipMirror {
 pub struct DiagramRelationshipTableMirror {
     pub diagram_relationship: Vec<super::DiagramRelationship>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -291,7 +291,7 @@ pub struct DigitalSignatureLineMirror {
     pub suggestedsigner: Option<String>,
     pub suggestedsigner2: Option<String>,
     pub suggestedsigneremail: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -308,7 +308,7 @@ pub struct EmbeddedOLEObjectMirror {
     pub prog_id: Option<String>,
     pub shape_id: Option<String>,
     pub r#type: Option<super::OLEType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub update_mode: Option<super::OLEUpdateMode>,
     pub user_data: (),
     pub wordprocessingml_field_switches: Option<Box<super::WordprocessingMLFieldSwitches>>,
@@ -318,7 +318,7 @@ pub struct EmbeddedOLEObjectMirror {
 #[rkyv(remote = super::EmbeddedObjectAlternateImageRequest)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedObjectAlternateImageRequestMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -327,7 +327,7 @@ pub struct EmbeddedObjectAlternateImageRequestMirror {
 #[rkyv(remote = super::EmbeddedObjectCannotBeRefreshed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedObjectCannotBeRefreshedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -367,7 +367,7 @@ pub struct ExtrusionMirror {
     pub skewangle: Option<String>,
     pub specularity: Option<String>,
     pub r#type: Option<super::ExtrusionType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub viewpoint: Option<String>,
     pub viewpointorigin: Option<String>,
@@ -380,7 +380,7 @@ pub struct InkMirror {
     pub annotation: Option<common_simple_types::BooleanValue>,
     pub content_type: Option<String>,
     pub i: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -390,7 +390,7 @@ pub struct InkMirror {
 pub struct MostRecentlyUsedColorsMirror {
     pub colors: Option<String>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -411,7 +411,7 @@ pub struct NewShapeDefaultsMirror {
     pub stroke: Option<common_simple_types::BooleanValue>,
     pub strokecolor: Option<String>,
     pub style: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -421,7 +421,7 @@ pub struct NewShapeDefaultsMirror {
 pub struct RegroupEntryMirror {
     pub new: Option<String>,
     pub old: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -434,7 +434,7 @@ pub struct RuleMirror {
     pub idref: Option<String>,
     pub shape_reference: Vec<super::ShapeReference>,
     pub r#type: Option<super::RuleType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -444,7 +444,7 @@ pub struct RuleMirror {
 pub struct RuleSetMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub rule: Vec<super::Rule>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -452,7 +452,7 @@ pub struct RuleSetMirror {
 #[rkyv(remote = super::ShapeClippingPath)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ShapeClippingPathMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v: Option<String>,
 }
@@ -463,7 +463,7 @@ pub struct ShapeClippingPathMirror {
 pub struct ShapeFillExtendedPropertiesMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub r#type: Option<super::ShapeFillType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -473,7 +473,7 @@ pub struct ShapeFillExtendedPropertiesMirror {
 pub struct ShapeGroupingHistoryMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub regroup_entry: Vec<super::RegroupEntry>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -483,7 +483,7 @@ pub struct ShapeGroupingHistoryMirror {
 pub struct ShapeIDMapMirror {
     pub data: Option<String>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -493,7 +493,7 @@ pub struct ShapeIDMapMirror {
 pub struct ShapeLayoutPropertiesMirror {
     pub content: Vec<super::ShapeLayoutPropertiesContent>,
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -512,7 +512,7 @@ pub struct ShapeProtectionsMirror {
     pub shapetype: Option<common_simple_types::BooleanValue>,
     pub text: Option<common_simple_types::BooleanValue>,
     pub ungrouping: Option<common_simple_types::BooleanValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub verticies: Option<common_simple_types::BooleanValue>,
 }
@@ -525,7 +525,7 @@ pub struct ShapeReferenceMirror {
     pub end: Option<common_simple_types::BooleanValueWithBlankFalseState>,
     pub idref: Option<String>,
     pub start: Option<common_simple_types::BooleanValueWithBlankFalseState>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -539,7 +539,7 @@ pub struct SkewTransformMirror {
     pub offset: Option<String>,
     pub on: Option<common_simple_types::BooleanValue>,
     pub origin: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -553,7 +553,7 @@ pub struct StorageForAlternateMathContentMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::super::drawing::AnyElementContent>,
     pub content_type: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -587,7 +587,7 @@ pub struct TextBoxBottomStrokeMirror {
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub weight: Option<String>,
 }
@@ -622,7 +622,7 @@ pub struct TextBoxInteriorStrokeMirror {
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub weight: Option<String>,
 }
@@ -657,7 +657,7 @@ pub struct TextBoxLeftStrokeMirror {
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub weight: Option<String>,
 }
@@ -692,7 +692,7 @@ pub struct TextBoxRightStrokeMirror {
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub weight: Option<String>,
 }
@@ -727,7 +727,7 @@ pub struct TextBoxTopStrokeMirror {
     pub startarrowlength: Option<super::super::vml::StrokeArrowheadLength>,
     pub startarrowwidth: Option<super::super::vml::StrokeArrowheadWidth>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub weight: Option<String>,
 }
@@ -741,7 +741,7 @@ pub struct UIDefaultColorsMirror {
     pub fillcolor: Option<String>,
     pub shadowcolor: Option<String>,
     pub strokecolor: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -760,7 +760,7 @@ pub struct VMLDiagramMirror {
     pub ext: Option<super::super::vml::VMLExtensionHandlingBehaviors>,
     pub relationship_table: Option<Box<super::DiagramRelationshipTable>>,
     pub reverse: Option<common_simple_types::BooleanValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -768,7 +768,7 @@ pub struct VMLDiagramMirror {
 #[rkyv(remote = super::WordprocessingMLFieldSwitches)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WordprocessingMLFieldSwitchesMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

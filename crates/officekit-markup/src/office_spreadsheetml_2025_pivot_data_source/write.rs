@@ -225,7 +225,7 @@ pub fn pivot_cache_data_source(node: &super::PivotCacheDataSource, scope: &mut S
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::PIVOT_CACHE_DATA_SOURCE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.r#ref);
     writer.child(&node.f);

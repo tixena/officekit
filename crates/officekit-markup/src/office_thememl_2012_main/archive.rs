@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -235,7 +235,7 @@ pub struct ThemeFamilyMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vid: Option<String>,
 }
@@ -249,7 +249,7 @@ pub struct ThemeVariantMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub vid: Option<String>,
 }
@@ -259,7 +259,7 @@ pub struct ThemeVariantMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ThemeVariantLstMirror {
     pub theme_variant: Vec<super::ThemeVariant>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

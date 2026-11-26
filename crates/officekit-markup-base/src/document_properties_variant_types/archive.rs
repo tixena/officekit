@@ -232,7 +232,7 @@ pub struct ArrayMirror {
     pub content: Vec<super::ArrayContent>,
     pub l_bounds: Option<String>,
     pub u_bounds: Option<String>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -240,7 +240,7 @@ pub struct ArrayMirror {
 #[rkyv(remote = super::BasicString)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BasicStringMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -249,7 +249,7 @@ pub struct BasicStringMirror {
 #[rkyv(remote = super::BinaryBlob)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryBlobMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -258,7 +258,7 @@ pub struct BinaryBlobMirror {
 #[rkyv(remote = super::BinaryBlobObject)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryBlobObjectMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -267,7 +267,7 @@ pub struct BinaryBlobObjectMirror {
 #[rkyv(remote = super::BinaryStorage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStorageMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -276,7 +276,7 @@ pub struct BinaryStorageMirror {
 #[rkyv(remote = super::BinaryStorageObject)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStorageObjectMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -285,7 +285,7 @@ pub struct BinaryStorageObjectMirror {
 #[rkyv(remote = super::BinaryStream)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStreamMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -294,7 +294,7 @@ pub struct BinaryStreamMirror {
 #[rkyv(remote = super::BinaryStreamObject)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryStreamObjectMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -303,7 +303,7 @@ pub struct BinaryStreamObjectMirror {
 #[rkyv(remote = super::BinaryVersionedStream)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BinaryVersionedStreamMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
     pub version: Option<super::super::common_simple_types::Guid>,
@@ -313,7 +313,7 @@ pub struct BinaryVersionedStreamMirror {
 #[rkyv(remote = super::Boolean)]
 #[rkyv(attr(non_exhaustive))]
 pub struct BooleanMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -322,7 +322,7 @@ pub struct BooleanMirror {
 #[rkyv(remote = super::ClassID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClassIDMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::Guid,
 }
@@ -331,7 +331,7 @@ pub struct ClassIDMirror {
 #[rkyv(remote = super::Currency)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CurrencyMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::CurrencySimpleType,
 }
@@ -340,7 +340,7 @@ pub struct CurrencyMirror {
 #[rkyv(remote = super::DateAndTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DateAndTimeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -349,7 +349,7 @@ pub struct DateAndTimeMirror {
 #[rkyv(remote = super::Decimal)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DecimalMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -358,7 +358,7 @@ pub struct DecimalMirror {
 #[rkyv(remote = super::Empty)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmptyMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -366,7 +366,7 @@ pub struct EmptyMirror {
 #[rkyv(remote = super::ErrorStatusCode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ErrorStatusCodeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::ErrorStatusCodeSimpleType,
 }
@@ -375,7 +375,7 @@ pub struct ErrorStatusCodeMirror {
 #[rkyv(remote = super::FileTime)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FileTimeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -384,7 +384,7 @@ pub struct FileTimeMirror {
 #[rkyv(remote = super::I1)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I1Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -393,7 +393,7 @@ pub struct I1Mirror {
 #[rkyv(remote = super::I2)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I2Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -402,7 +402,7 @@ pub struct I2Mirror {
 #[rkyv(remote = super::I4)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I4Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -411,7 +411,7 @@ pub struct I4Mirror {
 #[rkyv(remote = super::I8)]
 #[rkyv(attr(non_exhaustive))]
 pub struct I8Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -420,7 +420,7 @@ pub struct I8Mirror {
 #[rkyv(remote = super::Integer)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntegerMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -429,7 +429,7 @@ pub struct IntegerMirror {
 #[rkyv(remote = super::Lpstr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LpstrMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -438,7 +438,7 @@ pub struct LpstrMirror {
 #[rkyv(remote = super::Lpwstr)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LpwstrMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -447,7 +447,7 @@ pub struct LpwstrMirror {
 #[rkyv(remote = super::Null)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NullMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -455,7 +455,7 @@ pub struct NullMirror {
 #[rkyv(remote = super::R4)]
 #[rkyv(attr(non_exhaustive))]
 pub struct R4Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -464,7 +464,7 @@ pub struct R4Mirror {
 #[rkyv(remote = super::R8)]
 #[rkyv(attr(non_exhaustive))]
 pub struct R8Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -473,7 +473,7 @@ pub struct R8Mirror {
 #[rkyv(remote = super::Ui1)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui1Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -482,7 +482,7 @@ pub struct Ui1Mirror {
 #[rkyv(remote = super::Ui2)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui2Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -491,7 +491,7 @@ pub struct Ui2Mirror {
 #[rkyv(remote = super::Ui4)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui4Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -500,7 +500,7 @@ pub struct Ui4Mirror {
 #[rkyv(remote = super::Ui8)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Ui8Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -509,7 +509,7 @@ pub struct Ui8Mirror {
 #[rkyv(remote = super::UnsignedInteger)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnsignedIntegerMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -523,7 +523,7 @@ pub struct UnsignedIntegerMirror {
 pub struct VariantMirror {
     #[rkyv(omit_bounds)]
     pub content: Box<super::VariantContent>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -538,7 +538,7 @@ pub struct VectorMirror {
     #[rkyv(omit_bounds)]
     pub content: Vec<super::VectorContent>,
     pub size: Option<String>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 

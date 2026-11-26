@@ -233,7 +233,8 @@ impl super::Transform for office_drawing_2014_chartex::Address {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_drawing_2014_chartex::Address {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_drawing_2014_chartex::Address {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::ADDRESS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::address(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_drawing_2014_chartex::Address {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ADDRESS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.address1);
         through.attribute(1, &self.country_region);
@@ -323,7 +324,8 @@ impl super::Transform for office_drawing_2014_chartex::Aggregation {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -341,7 +343,7 @@ impl super::Visit for office_drawing_2014_chartex::Aggregation {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -354,7 +356,7 @@ impl WriteThrough for office_drawing_2014_chartex::Aggregation {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::AGGREGATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::aggregation(self, out.scope());
@@ -363,7 +365,7 @@ impl WriteThrough for office_drawing_2014_chartex::Aggregation {
         let through = super::Through::new(
             out,
             &office_drawing_2014_chartex::AGGREGATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -406,7 +408,7 @@ impl super::Transform for office_drawing_2014_chartex::Axis {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.title_axis_title = super::transform_child(&self.title_axis_title, ctx, &mut rebase);
         node.units = super::transform_child(&self.units, ctx, &mut rebase);
@@ -419,7 +421,7 @@ impl super::Transform for office_drawing_2014_chartex::Axis {
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.tx_pr = super::transform_child(&self.tx_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -437,7 +439,7 @@ impl super::Visit for office_drawing_2014_chartex::Axis {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.child(&self.title_axis_title, visitor);
         walk.child(&self.units, visitor);
@@ -460,14 +462,20 @@ impl WriteThrough for office_drawing_2014_chartex::Axis {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::AXIS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::AXIS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::axis(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::AXIS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::AXIS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.attribute(1, &self.hidden);
         through.choice(&self.content, ctx)?;
@@ -620,7 +628,8 @@ impl super::Transform for office_drawing_2014_chartex::AxisId {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -638,7 +647,7 @@ impl super::Visit for office_drawing_2014_chartex::AxisId {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -651,7 +660,7 @@ impl WriteThrough for office_drawing_2014_chartex::AxisId {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::AXIS_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::axis_id(self, out.scope());
@@ -660,7 +669,7 @@ impl WriteThrough for office_drawing_2014_chartex::AxisId {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::AXIS_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -704,7 +713,8 @@ impl super::Transform for office_drawing_2014_chartex::BinCount {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -722,7 +732,7 @@ impl super::Visit for office_drawing_2014_chartex::BinCount {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -735,7 +745,7 @@ impl WriteThrough for office_drawing_2014_chartex::BinCount {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::BIN_COUNT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::bin_count(self, out.scope());
@@ -744,7 +754,7 @@ impl WriteThrough for office_drawing_2014_chartex::BinCount {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BIN_COUNT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -788,7 +798,8 @@ impl super::Transform for office_drawing_2014_chartex::BinSize {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -806,7 +817,7 @@ impl super::Visit for office_drawing_2014_chartex::BinSize {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -819,7 +830,7 @@ impl WriteThrough for office_drawing_2014_chartex::BinSize {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::BIN_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::bin_size(self, out.scope());
@@ -828,7 +839,7 @@ impl WriteThrough for office_drawing_2014_chartex::BinSize {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BIN_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -872,7 +883,8 @@ impl super::Transform for office_drawing_2014_chartex::Binary {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -890,7 +902,7 @@ impl super::Visit for office_drawing_2014_chartex::Binary {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -903,7 +915,7 @@ impl WriteThrough for office_drawing_2014_chartex::Binary {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::BINARY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::binary(self, out.scope());
@@ -912,7 +924,7 @@ impl WriteThrough for office_drawing_2014_chartex::Binary {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BINARY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -956,9 +968,9 @@ impl super::Transform for office_drawing_2014_chartex::Binning {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -976,7 +988,7 @@ impl super::Visit for office_drawing_2014_chartex::Binning {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -991,7 +1003,7 @@ impl WriteThrough for office_drawing_2014_chartex::Binning {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::BINNING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::binning(self, out.scope());
@@ -1000,7 +1012,7 @@ impl WriteThrough for office_drawing_2014_chartex::Binning {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::BINNING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.interval_closed);
         through.attribute(1, &self.underflow);
@@ -1144,7 +1156,8 @@ impl super::Transform for office_drawing_2014_chartex::CatScaling {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1162,7 +1175,7 @@ impl super::Visit for office_drawing_2014_chartex::CatScaling {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1175,7 +1188,7 @@ impl WriteThrough for office_drawing_2014_chartex::CatScaling {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::CAT_SCALING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::cat_scaling(self, out.scope());
@@ -1184,7 +1197,7 @@ impl WriteThrough for office_drawing_2014_chartex::CatScaling {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CAT_SCALING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.gap_width);
         through.finish(ctx)
@@ -1228,12 +1241,12 @@ impl super::Transform for office_drawing_2014_chartex::ChartChart {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.title_chart_title = super::transform_child(&self.title_chart_title, ctx, &mut rebase);
         node.plot_area = super::transform_child(&self.plot_area, ctx, &mut rebase);
         node.legend = super::transform_child(&self.legend, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1251,7 +1264,7 @@ impl super::Visit for office_drawing_2014_chartex::ChartChart {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.title_chart_title, visitor);
         walk.child(&self.plot_area, visitor);
         walk.child(&self.legend, visitor);
@@ -1269,7 +1282,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartChart {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::CHART_CHART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::chart_chart(self, out.scope());
@@ -1278,7 +1291,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartChart {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_CHART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.title_chart_title, ctx)?;
         through.child(&self.plot_area, ctx)?;
@@ -1325,11 +1338,11 @@ impl super::Transform for office_drawing_2014_chartex::ChartData {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.external_data = super::transform_child(&self.external_data, ctx, &mut rebase);
         node.data = super::transform_child(&self.data, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1347,7 +1360,7 @@ impl super::Visit for office_drawing_2014_chartex::ChartData {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.external_data, visitor);
         walk.child(&self.data, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -1364,7 +1377,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartData {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::CHART_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::chart_data(self, out.scope());
@@ -1373,7 +1386,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartData {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.external_data, ctx)?;
         through.child(&self.data, ctx)?;
@@ -1419,7 +1432,8 @@ impl super::Transform for office_drawing_2014_chartex::ChartRelId {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1437,7 +1451,7 @@ impl super::Visit for office_drawing_2014_chartex::ChartRelId {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1450,7 +1464,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartRelId {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::CHART_REL_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::chart_rel_id(self, out.scope());
@@ -1459,7 +1473,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartRelId {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_REL_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -1503,7 +1517,7 @@ impl super::Transform for office_drawing_2014_chartex::ChartSpace {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.chart_data = super::transform_child(&self.chart_data, ctx, &mut rebase);
         node.chart_chart = super::transform_child(&self.chart_chart, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
@@ -1512,7 +1526,7 @@ impl super::Transform for office_drawing_2014_chartex::ChartSpace {
         node.fmt_ovrs = super::transform_child(&self.fmt_ovrs, ctx, &mut rebase);
         node.print_settings = super::transform_child(&self.print_settings, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1530,7 +1544,7 @@ impl super::Visit for office_drawing_2014_chartex::ChartSpace {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.chart_data, visitor);
         walk.child(&self.chart_chart, visitor);
         walk.child(&self.sp_pr, visitor);
@@ -1552,7 +1566,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartSpace {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::CHART_SPACE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::chart_space(self, out.scope());
@@ -1561,7 +1575,7 @@ impl WriteThrough for office_drawing_2014_chartex::ChartSpace {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CHART_SPACE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.version);
         through.attribute(1, &self.feature_list);
@@ -1615,7 +1629,7 @@ impl super::Transform for office_drawing_2014_chartex::Clear {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_location_query_results =
             super::transform_child(&self.geo_location_query_results, ctx, &mut rebase);
         node.geo_data_entity_query_results =
@@ -1629,7 +1643,7 @@ impl super::Transform for office_drawing_2014_chartex::Clear {
             super::transform_child(&self.geo_child_entities_query_results, ctx, &mut rebase);
         node.geo_parent_entities_query_results =
             super::transform_child(&self.geo_parent_entities_query_results, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1647,7 +1661,7 @@ impl super::Visit for office_drawing_2014_chartex::Clear {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_location_query_results, visitor);
         walk.child(&self.geo_data_entity_query_results, visitor);
         walk.child(&self.geo_data_point_to_entity_query_results, visitor);
@@ -1666,7 +1680,7 @@ impl WriteThrough for office_drawing_2014_chartex::Clear {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::CLEAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::clear(self, out.scope());
@@ -1675,7 +1689,7 @@ impl WriteThrough for office_drawing_2014_chartex::Clear {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CLEAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_location_query_results, ctx)?;
         through.child(&self.geo_data_entity_query_results, ctx)?;
@@ -1723,9 +1737,9 @@ impl super::Transform for office_drawing_2014_chartex::ClrMapOvr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1743,7 +1757,7 @@ impl super::Visit for office_drawing_2014_chartex::ClrMapOvr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
     }
@@ -1758,7 +1772,7 @@ impl WriteThrough for office_drawing_2014_chartex::ClrMapOvr {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::CLR_MAP_OVR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::clr_map_ovr(self, out.scope());
@@ -1767,7 +1781,7 @@ impl WriteThrough for office_drawing_2014_chartex::ClrMapOvr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::CLR_MAP_OVR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bg1);
         through.attribute(1, &self.tx1);
@@ -1823,7 +1837,8 @@ impl super::Transform for office_drawing_2014_chartex::Copyright {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1841,7 +1856,7 @@ impl super::Visit for office_drawing_2014_chartex::Copyright {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1854,7 +1869,7 @@ impl WriteThrough for office_drawing_2014_chartex::Copyright {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::COPYRIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::copyright(self, out.scope());
@@ -1863,7 +1878,7 @@ impl WriteThrough for office_drawing_2014_chartex::Copyright {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::COPYRIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1907,9 +1922,9 @@ impl super::Transform for office_drawing_2014_chartex::Copyrights {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.copyright = super::transform_child(&self.copyright, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1927,7 +1942,7 @@ impl super::Visit for office_drawing_2014_chartex::Copyrights {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.copyright, visitor);
         walk.finish(visitor);
     }
@@ -1942,7 +1957,7 @@ impl WriteThrough for office_drawing_2014_chartex::Copyrights {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::COPYRIGHTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::copyrights(self, out.scope());
@@ -1951,7 +1966,7 @@ impl WriteThrough for office_drawing_2014_chartex::Copyrights {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::COPYRIGHTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.copyright, ctx)?;
         through.finish(ctx)
@@ -1995,10 +2010,10 @@ impl super::Transform for office_drawing_2014_chartex::Data {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2016,7 +2031,7 @@ impl super::Visit for office_drawing_2014_chartex::Data {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -2029,14 +2044,20 @@ impl WriteThrough for office_drawing_2014_chartex::Data {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::DATA_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::DATA_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::data(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::DATA_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::DATA_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.items(&self.content, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -2199,7 +2220,8 @@ impl super::Transform for office_drawing_2014_chartex::DataId {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2217,7 +2239,7 @@ impl super::Visit for office_drawing_2014_chartex::DataId {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2230,7 +2252,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataId {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::DATA_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::data_id(self, out.scope());
@@ -2239,7 +2261,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataId {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2283,7 +2305,7 @@ impl super::Transform for office_drawing_2014_chartex::DataLabel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.num_fmt = super::transform_child(&self.num_fmt, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.tx_pr = super::transform_child(&self.tx_pr, ctx, &mut rebase);
@@ -2291,7 +2313,7 @@ impl super::Transform for office_drawing_2014_chartex::DataLabel {
             super::transform_child(&self.visibility_data_label_visibilities, ctx, &mut rebase);
         node.separator = super::transform_child(&self.separator, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2309,7 +2331,7 @@ impl super::Visit for office_drawing_2014_chartex::DataLabel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.num_fmt, visitor);
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.tx_pr, visitor);
@@ -2329,7 +2351,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabel {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::DATA_LABEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::data_label(self, out.scope());
@@ -2338,7 +2360,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabel {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_LABEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
         through.attribute(1, &self.pos);
@@ -2389,7 +2411,8 @@ impl super::Transform for office_drawing_2014_chartex::DataLabelHidden {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2407,7 +2430,7 @@ impl super::Visit for office_drawing_2014_chartex::DataLabelHidden {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2420,7 +2443,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabelHidden {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::DATA_LABEL_HIDDEN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::data_label_hidden(self, out.scope());
@@ -2429,7 +2452,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabelHidden {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_LABEL_HIDDEN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
         through.finish(ctx)
@@ -2473,7 +2496,7 @@ impl super::Transform for office_drawing_2014_chartex::DataLabels {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.num_fmt = super::transform_child(&self.num_fmt, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.tx_pr = super::transform_child(&self.tx_pr, ctx, &mut rebase);
@@ -2483,7 +2506,7 @@ impl super::Transform for office_drawing_2014_chartex::DataLabels {
         node.data_label = super::transform_child(&self.data_label, ctx, &mut rebase);
         node.data_label_hidden = super::transform_child(&self.data_label_hidden, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2501,7 +2524,7 @@ impl super::Visit for office_drawing_2014_chartex::DataLabels {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.num_fmt, visitor);
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.tx_pr, visitor);
@@ -2523,7 +2546,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabels {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::DATA_LABELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::data_labels(self, out.scope());
@@ -2532,7 +2555,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataLabels {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_LABELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pos);
         through.child(&self.num_fmt, ctx)?;
@@ -2584,10 +2607,10 @@ impl super::Transform for office_drawing_2014_chartex::DataPt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2605,7 +2628,7 @@ impl super::Visit for office_drawing_2014_chartex::DataPt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -2621,7 +2644,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataPt {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::DATA_PT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::data_pt(self, out.scope());
@@ -2630,7 +2653,7 @@ impl WriteThrough for office_drawing_2014_chartex::DataPt {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::DATA_PT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
         through.child(&self.sp_pr, ctx)?;
@@ -2676,7 +2699,8 @@ impl super::Transform for office_drawing_2014_chartex::EntityType {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2694,7 +2718,7 @@ impl super::Visit for office_drawing_2014_chartex::EntityType {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2707,7 +2731,7 @@ impl WriteThrough for office_drawing_2014_chartex::EntityType {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::ENTITY_TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::entity_type(self, out.scope());
@@ -2716,7 +2740,7 @@ impl WriteThrough for office_drawing_2014_chartex::EntityType {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ENTITY_TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2760,7 +2784,8 @@ impl super::Transform for office_drawing_2014_chartex::EvenFooter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2778,7 +2803,7 @@ impl super::Visit for office_drawing_2014_chartex::EvenFooter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2791,7 +2816,7 @@ impl WriteThrough for office_drawing_2014_chartex::EvenFooter {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::EVEN_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::even_footer(self, out.scope());
@@ -2800,7 +2825,7 @@ impl WriteThrough for office_drawing_2014_chartex::EvenFooter {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EVEN_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2844,7 +2869,8 @@ impl super::Transform for office_drawing_2014_chartex::EvenHeader {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2862,7 +2888,7 @@ impl super::Visit for office_drawing_2014_chartex::EvenHeader {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2875,7 +2901,7 @@ impl WriteThrough for office_drawing_2014_chartex::EvenHeader {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::EVEN_HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::even_header(self, out.scope());
@@ -2884,7 +2910,7 @@ impl WriteThrough for office_drawing_2014_chartex::EvenHeader {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EVEN_HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2928,9 +2954,9 @@ impl super::Transform for office_drawing_2014_chartex::Ext {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2948,7 +2974,7 @@ impl super::Visit for office_drawing_2014_chartex::Ext {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -2960,14 +2986,20 @@ impl WriteThrough for office_drawing_2014_chartex::Ext {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::EXT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::EXT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::ext(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::EXT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::EXT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.uri);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3011,9 +3043,9 @@ impl super::Transform for office_drawing_2014_chartex::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext = super::transform_child(&self.ext, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3031,7 +3063,7 @@ impl super::Visit for office_drawing_2014_chartex::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext, visitor);
         walk.finish(visitor);
     }
@@ -3046,7 +3078,7 @@ impl WriteThrough for office_drawing_2014_chartex::ExtLst {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::ext_lst(self, out.scope());
@@ -3055,7 +3087,7 @@ impl WriteThrough for office_drawing_2014_chartex::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext, ctx)?;
         through.finish(ctx)
@@ -3099,7 +3131,8 @@ impl super::Transform for office_drawing_2014_chartex::ExternalData {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3117,7 +3150,7 @@ impl super::Visit for office_drawing_2014_chartex::ExternalData {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3130,7 +3163,7 @@ impl WriteThrough for office_drawing_2014_chartex::ExternalData {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::EXTERNAL_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::external_data(self, out.scope());
@@ -3139,7 +3172,7 @@ impl WriteThrough for office_drawing_2014_chartex::ExternalData {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EXTERNAL_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.auto_update);
@@ -3184,7 +3217,8 @@ impl super::Transform for office_drawing_2014_chartex::ExtremeValue {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3202,7 +3236,7 @@ impl super::Visit for office_drawing_2014_chartex::ExtremeValue {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3215,7 +3249,7 @@ impl WriteThrough for office_drawing_2014_chartex::ExtremeValue {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::EXTREME_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::extreme_value(self, out.scope());
@@ -3224,7 +3258,7 @@ impl WriteThrough for office_drawing_2014_chartex::ExtremeValue {
         let through = super::Through::new(
             out,
             &office_drawing_2014_chartex::EXTREME_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -3267,7 +3301,8 @@ impl super::Transform for office_drawing_2014_chartex::F {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3285,7 +3320,7 @@ impl super::Visit for office_drawing_2014_chartex::F {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3295,13 +3330,20 @@ impl WriteThrough for office_drawing_2014_chartex::F {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2014_chartex::F_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::F_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::f(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::F_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::F_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3344,7 +3386,8 @@ impl super::Transform for office_drawing_2014_chartex::FirstFooter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3362,7 +3405,7 @@ impl super::Visit for office_drawing_2014_chartex::FirstFooter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3375,7 +3418,7 @@ impl WriteThrough for office_drawing_2014_chartex::FirstFooter {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::FIRST_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::first_footer(self, out.scope());
@@ -3384,7 +3427,7 @@ impl WriteThrough for office_drawing_2014_chartex::FirstFooter {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FIRST_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3428,7 +3471,8 @@ impl super::Transform for office_drawing_2014_chartex::FirstHeader {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3446,7 +3490,7 @@ impl super::Visit for office_drawing_2014_chartex::FirstHeader {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3459,7 +3503,7 @@ impl WriteThrough for office_drawing_2014_chartex::FirstHeader {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::FIRST_HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::first_header(self, out.scope());
@@ -3468,7 +3512,7 @@ impl WriteThrough for office_drawing_2014_chartex::FirstHeader {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FIRST_HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3512,10 +3556,10 @@ impl super::Transform for office_drawing_2014_chartex::FmtOvr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3533,7 +3577,7 @@ impl super::Visit for office_drawing_2014_chartex::FmtOvr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -3549,7 +3593,7 @@ impl WriteThrough for office_drawing_2014_chartex::FmtOvr {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::FMT_OVR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::fmt_ovr(self, out.scope());
@@ -3558,7 +3602,7 @@ impl WriteThrough for office_drawing_2014_chartex::FmtOvr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FMT_OVR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
         through.child(&self.sp_pr, ctx)?;
@@ -3604,9 +3648,9 @@ impl super::Transform for office_drawing_2014_chartex::FmtOvrs {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fmt_ovr = super::transform_child(&self.fmt_ovr, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3624,7 +3668,7 @@ impl super::Visit for office_drawing_2014_chartex::FmtOvrs {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fmt_ovr, visitor);
         walk.finish(visitor);
     }
@@ -3639,7 +3683,7 @@ impl WriteThrough for office_drawing_2014_chartex::FmtOvrs {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::FMT_OVRS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::fmt_ovrs(self, out.scope());
@@ -3648,7 +3692,7 @@ impl WriteThrough for office_drawing_2014_chartex::FmtOvrs {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::FMT_OVRS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fmt_ovr, ctx)?;
         through.finish(ctx)
@@ -3692,9 +3736,9 @@ impl super::Transform for office_drawing_2014_chartex::GeoCache {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3712,7 +3756,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoCache {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3727,7 +3771,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoCache {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_cache(self, out.scope());
@@ -3736,7 +3780,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoCache {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.provider);
         through.items(&self.content, ctx)?;
@@ -3781,10 +3825,10 @@ impl super::Transform for office_drawing_2014_chartex::GeoChildEntities {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_hierarchy_entity =
             super::transform_child(&self.geo_hierarchy_entity, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3802,7 +3846,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoChildEntities {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_hierarchy_entity, visitor);
         walk.finish(visitor);
     }
@@ -3817,7 +3861,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntities {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_child_entities(self, out.scope());
@@ -3826,7 +3870,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntities {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_hierarchy_entity, ctx)?;
         through.finish(ctx)
@@ -3870,9 +3914,9 @@ impl super::Transform for office_drawing_2014_chartex::GeoChildEntitiesQuery {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_child_types = super::transform_child(&self.geo_child_types, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3890,7 +3934,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoChildEntitiesQuery {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_child_types, visitor);
         walk.finish(visitor);
     }
@@ -3905,7 +3949,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQuery {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3915,7 +3959,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQuery {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_id);
         through.child(&self.geo_child_types, ctx)?;
@@ -3960,12 +4004,12 @@ impl super::Transform for office_drawing_2014_chartex::GeoChildEntitiesQueryResu
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_child_entities_query =
             super::transform_child(&self.geo_child_entities_query, ctx, &mut rebase);
         node.geo_child_entities =
             super::transform_child(&self.geo_child_entities, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3983,7 +4027,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoChildEntitiesQueryResult {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_child_entities_query, visitor);
         walk.child(&self.geo_child_entities, visitor);
         walk.finish(visitor);
@@ -3999,7 +4043,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQueryResult {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_child_entities_query_result(
@@ -4011,7 +4055,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQueryResult {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_child_entities_query, ctx)?;
         through.child(&self.geo_child_entities, ctx)?;
@@ -4056,10 +4100,10 @@ impl super::Transform for office_drawing_2014_chartex::GeoChildEntitiesQueryResu
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_child_entities_query_result =
             super::transform_child(&self.geo_child_entities_query_result, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4077,7 +4121,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoChildEntitiesQueryResults 
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_child_entities_query_result, visitor);
         walk.finish(visitor);
     }
@@ -4092,7 +4136,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQueryResults 
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_child_entities_query_results(
@@ -4104,7 +4148,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildEntitiesQueryResults 
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_ENTITIES_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_child_entities_query_result, ctx)?;
         through.finish(ctx)
@@ -4148,9 +4192,9 @@ impl super::Transform for office_drawing_2014_chartex::GeoChildTypes {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.entity_type = super::transform_child(&self.entity_type, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4168,7 +4212,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoChildTypes {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.entity_type, visitor);
         walk.finish(visitor);
     }
@@ -4183,7 +4227,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildTypes {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_TYPES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_child_types(self, out.scope());
@@ -4192,7 +4236,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoChildTypes {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_CHILD_TYPES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.entity_type, ctx)?;
         through.finish(ctx)
@@ -4236,10 +4280,10 @@ impl super::Transform for office_drawing_2014_chartex::GeoData {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_polygons = super::transform_child(&self.geo_polygons, ctx, &mut rebase);
         node.copyrights = super::transform_child(&self.copyrights, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4257,7 +4301,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoData {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_polygons, visitor);
         walk.child(&self.copyrights, visitor);
         walk.finish(visitor);
@@ -4273,7 +4317,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoData {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_data(self, out.scope());
@@ -4282,7 +4326,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoData {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_name);
         through.attribute(1, &self.entity_id);
@@ -4333,7 +4377,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoDataEntityQuery {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4351,7 +4396,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoDataEntityQuery {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4364,7 +4409,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQuery {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4374,7 +4419,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQuery {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_type);
         through.attribute(1, &self.entity_id);
@@ -4419,11 +4464,11 @@ impl super::Transform for office_drawing_2014_chartex::GeoDataEntityQueryResult 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_data_entity_query =
             super::transform_child(&self.geo_data_entity_query, ctx, &mut rebase);
         node.geo_data = super::transform_child(&self.geo_data, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4441,7 +4486,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoDataEntityQueryResult {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_data_entity_query, visitor);
         walk.child(&self.geo_data, visitor);
         walk.finish(visitor);
@@ -4457,7 +4502,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQueryResult {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4467,7 +4512,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQueryResult {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_data_entity_query, ctx)?;
         through.child(&self.geo_data, ctx)?;
@@ -4512,10 +4557,10 @@ impl super::Transform for office_drawing_2014_chartex::GeoDataEntityQueryResults
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_data_entity_query_result =
             super::transform_child(&self.geo_data_entity_query_result, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4533,7 +4578,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoDataEntityQueryResults {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_data_entity_query_result, visitor);
         walk.finish(visitor);
     }
@@ -4548,7 +4593,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQueryResults {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_data_entity_query_results(
@@ -4560,7 +4605,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataEntityQueryResults {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_ENTITY_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_data_entity_query_result, ctx)?;
         through.finish(ctx)
@@ -4604,7 +4649,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoDataPointQuery {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4622,7 +4668,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoDataPointQuery {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4635,7 +4681,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointQuery {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4645,7 +4691,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointQuery {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_type);
         through.attribute(1, &self.latitude);
@@ -4691,7 +4737,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoDataPointToEntityQuery
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4709,7 +4756,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoDataPointToEntityQuery {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4722,7 +4769,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQuery {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_data_point_to_entity_query(
@@ -4734,7 +4781,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQuery {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_type);
         through.attribute(1, &self.entity_id);
@@ -4779,12 +4826,12 @@ impl super::Transform for office_drawing_2014_chartex::GeoDataPointToEntityQuery
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_data_point_query =
             super::transform_child(&self.geo_data_point_query, ctx, &mut rebase);
         node.geo_data_point_to_entity_query =
             super::transform_child(&self.geo_data_point_to_entity_query, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4802,7 +4849,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_data_point_query, visitor);
         walk.child(&self.geo_data_point_to_entity_query, visitor);
         walk.finish(visitor);
@@ -4818,7 +4865,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_data_point_to_entity_query_result(
@@ -4830,7 +4877,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_data_point_query, ctx)?;
         through.child(&self.geo_data_point_to_entity_query, ctx)?;
@@ -4875,13 +4922,13 @@ impl super::Transform for office_drawing_2014_chartex::GeoDataPointToEntityQuery
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_data_point_to_entity_query_result = super::transform_child(
             &self.geo_data_point_to_entity_query_result,
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4899,7 +4946,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_data_point_to_entity_query_result, visitor);
         walk.finish(visitor);
     }
@@ -4914,7 +4961,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4927,7 +4974,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoDataPointToEntityQueryResu
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_DATA_POINT_TO_ENTITY_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_data_point_to_entity_query_result, ctx)?;
         through.finish(ctx)
@@ -4971,7 +5018,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoEntity {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4989,7 +5037,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoEntity {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5002,7 +5050,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoEntity {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_ENTITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_entity(self, out.scope());
@@ -5011,7 +5059,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoEntity {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_ENTITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_name);
         through.attribute(1, &self.entity_type);
@@ -5056,7 +5104,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoHierarchyEntity {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5074,7 +5123,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoHierarchyEntity {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5087,7 +5136,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoHierarchyEntity {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_HIERARCHY_ENTITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5097,7 +5146,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoHierarchyEntity {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_HIERARCHY_ENTITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_name);
         through.attribute(1, &self.entity_id);
@@ -5143,9 +5192,9 @@ impl super::Transform for office_drawing_2014_chartex::GeoLocation {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.address = super::transform_child(&self.address, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5163,7 +5212,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoLocation {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.address, visitor);
         walk.finish(visitor);
     }
@@ -5178,7 +5227,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocation {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_location(self, out.scope());
@@ -5187,7 +5236,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocation {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.latitude);
         through.attribute(1, &self.longitude);
@@ -5235,7 +5284,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoLocationQuery {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5253,7 +5303,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoLocationQuery {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5266,7 +5316,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQuery {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_location_query(self, out.scope());
@@ -5275,7 +5325,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQuery {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.country_region);
         through.attribute(1, &self.admin_district1);
@@ -5323,11 +5373,11 @@ impl super::Transform for office_drawing_2014_chartex::GeoLocationQueryResult {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_location_query =
             super::transform_child(&self.geo_location_query, ctx, &mut rebase);
         node.geo_locations = super::transform_child(&self.geo_locations, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5345,7 +5395,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoLocationQueryResult {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_location_query, visitor);
         walk.child(&self.geo_locations, visitor);
         walk.finish(visitor);
@@ -5361,7 +5411,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQueryResult {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5371,7 +5421,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQueryResult {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_location_query, ctx)?;
         through.child(&self.geo_locations, ctx)?;
@@ -5416,10 +5466,10 @@ impl super::Transform for office_drawing_2014_chartex::GeoLocationQueryResults {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_location_query_result =
             super::transform_child(&self.geo_location_query_result, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5437,7 +5487,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoLocationQueryResults {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_location_query_result, visitor);
         walk.finish(visitor);
     }
@@ -5452,7 +5502,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQueryResults {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5462,7 +5512,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocationQueryResults {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATION_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_location_query_result, ctx)?;
         through.finish(ctx)
@@ -5506,9 +5556,9 @@ impl super::Transform for office_drawing_2014_chartex::GeoLocations {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_location = super::transform_child(&self.geo_location, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5526,7 +5576,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoLocations {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_location, visitor);
         walk.finish(visitor);
     }
@@ -5541,7 +5591,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocations {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_LOCATIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_locations(self, out.scope());
@@ -5550,7 +5600,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoLocations {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_LOCATIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_location, ctx)?;
         through.finish(ctx)
@@ -5594,7 +5644,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoParentEntitiesQuery {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5612,7 +5663,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoParentEntitiesQuery {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5625,7 +5676,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQuery {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5635,7 +5686,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQuery {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_id);
         through.finish(ctx)
@@ -5679,12 +5730,12 @@ impl super::Transform for office_drawing_2014_chartex::GeoParentEntitiesQueryRes
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_parent_entities_query =
             super::transform_child(&self.geo_parent_entities_query, ctx, &mut rebase);
         node.geo_entity = super::transform_child(&self.geo_entity, ctx, &mut rebase);
         node.geo_parent_entity = super::transform_child(&self.geo_parent_entity, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5702,7 +5753,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoParentEntitiesQueryResult 
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_parent_entities_query, visitor);
         walk.child(&self.geo_entity, visitor);
         walk.child(&self.geo_parent_entity, visitor);
@@ -5719,7 +5770,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQueryResult 
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_parent_entities_query_result(
@@ -5731,7 +5782,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQueryResult 
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_parent_entities_query, ctx)?;
         through.child(&self.geo_entity, ctx)?;
@@ -5777,10 +5828,10 @@ impl super::Transform for office_drawing_2014_chartex::GeoParentEntitiesQueryRes
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_parent_entities_query_result =
             super::transform_child(&self.geo_parent_entities_query_result, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5798,7 +5849,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoParentEntitiesQueryResults
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_parent_entities_query_result, visitor);
         walk.finish(visitor);
     }
@@ -5813,7 +5864,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQueryResults
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_parent_entities_query_results(
@@ -5825,7 +5876,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntitiesQueryResults
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITIES_QUERY_RESULTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_parent_entities_query_result, ctx)?;
         through.finish(ctx)
@@ -5869,7 +5920,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoParentEntity {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5887,7 +5939,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoParentEntity {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5900,7 +5952,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntity {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_parent_entity(self, out.scope());
@@ -5909,7 +5961,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoParentEntity {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_PARENT_ENTITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.entity_id);
         through.finish(ctx)
@@ -5953,7 +6005,8 @@ impl super::Transform for office_drawing_2014_chartex::GeoPolygon {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5971,7 +6024,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoPolygon {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5984,7 +6037,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoPolygon {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_POLYGON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_polygon(self, out.scope());
@@ -5993,7 +6046,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoPolygon {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_POLYGON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.polygon_id);
         through.attribute(1, &self.num_points);
@@ -6039,9 +6092,9 @@ impl super::Transform for office_drawing_2014_chartex::GeoPolygons {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_polygon = super::transform_child(&self.geo_polygon, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6059,7 +6112,7 @@ impl super::Visit for office_drawing_2014_chartex::GeoPolygons {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_polygon, visitor);
         walk.finish(visitor);
     }
@@ -6074,7 +6127,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoPolygons {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEO_POLYGONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geo_polygons(self, out.scope());
@@ -6083,7 +6136,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoPolygons {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEO_POLYGONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.geo_polygon, ctx)?;
         through.finish(ctx)
@@ -6127,9 +6180,9 @@ impl super::Transform for office_drawing_2014_chartex::Geography {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.geo_cache = super::transform_child(&self.geo_cache, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6147,7 +6200,7 @@ impl super::Visit for office_drawing_2014_chartex::Geography {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.geo_cache, visitor);
         walk.finish(visitor);
     }
@@ -6162,7 +6215,7 @@ impl WriteThrough for office_drawing_2014_chartex::Geography {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::GEOGRAPHY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::geography(self, out.scope());
@@ -6171,7 +6224,7 @@ impl WriteThrough for office_drawing_2014_chartex::Geography {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::GEOGRAPHY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.projection_type);
         through.attribute(1, &self.viewed_region_type);
@@ -6338,14 +6391,14 @@ impl super::Transform for office_drawing_2014_chartex::HeaderFooter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.odd_header = super::transform_child(&self.odd_header, ctx, &mut rebase);
         node.odd_footer = super::transform_child(&self.odd_footer, ctx, &mut rebase);
         node.even_header = super::transform_child(&self.even_header, ctx, &mut rebase);
         node.even_footer = super::transform_child(&self.even_footer, ctx, &mut rebase);
         node.first_header = super::transform_child(&self.first_header, ctx, &mut rebase);
         node.first_footer = super::transform_child(&self.first_footer, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6363,7 +6416,7 @@ impl super::Visit for office_drawing_2014_chartex::HeaderFooter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.odd_header, visitor);
         walk.child(&self.odd_footer, visitor);
         walk.child(&self.even_header, visitor);
@@ -6383,7 +6436,7 @@ impl WriteThrough for office_drawing_2014_chartex::HeaderFooter {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::HEADER_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::header_footer(self, out.scope());
@@ -6392,7 +6445,7 @@ impl WriteThrough for office_drawing_2014_chartex::HeaderFooter {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::HEADER_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.align_with_margins);
         through.attribute(1, &self.different_odd_even);
@@ -6444,7 +6497,8 @@ impl super::Transform for office_drawing_2014_chartex::Idx {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6462,7 +6516,7 @@ impl super::Visit for office_drawing_2014_chartex::Idx {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6472,14 +6526,20 @@ impl WriteThrough for office_drawing_2014_chartex::Idx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::IDX_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::IDX_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::idx(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::IDX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::IDX_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6522,7 +6582,7 @@ impl super::Transform for office_drawing_2014_chartex::LayoutPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.parent_label_layout =
             super::transform_child(&self.parent_label_layout, ctx, &mut rebase);
         node.region_label_layout =
@@ -6537,7 +6597,7 @@ impl super::Transform for office_drawing_2014_chartex::LayoutPr {
         node.statistics = super::transform_child(&self.statistics, ctx, &mut rebase);
         node.subtotals = super::transform_child(&self.subtotals, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6555,7 +6615,7 @@ impl super::Visit for office_drawing_2014_chartex::LayoutPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.parent_label_layout, visitor);
         walk.child(&self.region_label_layout, visitor);
         walk.child(&self.visibility_series_element_visibilities, visitor);
@@ -6577,7 +6637,7 @@ impl WriteThrough for office_drawing_2014_chartex::LayoutPr {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::LAYOUT_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::layout_pr(self, out.scope());
@@ -6586,7 +6646,7 @@ impl WriteThrough for office_drawing_2014_chartex::LayoutPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LAYOUT_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.parent_label_layout, ctx)?;
         through.child(&self.region_label_layout, ctx)?;
@@ -6637,12 +6697,12 @@ impl super::Transform for office_drawing_2014_chartex::Legend {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.tx_pr = super::transform_child(&self.tx_pr, ctx, &mut rebase);
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6660,7 +6720,7 @@ impl super::Visit for office_drawing_2014_chartex::Legend {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.tx_pr, visitor);
         walk.child(&self.offset, visitor);
@@ -6678,7 +6738,7 @@ impl WriteThrough for office_drawing_2014_chartex::Legend {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::LEGEND_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::legend(self, out.scope());
@@ -6687,7 +6747,7 @@ impl WriteThrough for office_drawing_2014_chartex::Legend {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LEGEND_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pos);
         through.attribute(1, &self.align);
@@ -6737,9 +6797,9 @@ impl super::Transform for office_drawing_2014_chartex::LvlNumericLevel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pt_numeric_value = super::transform_child(&self.pt_numeric_value, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6757,7 +6817,7 @@ impl super::Visit for office_drawing_2014_chartex::LvlNumericLevel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pt_numeric_value, visitor);
         walk.finish(visitor);
     }
@@ -6772,7 +6832,7 @@ impl WriteThrough for office_drawing_2014_chartex::LvlNumericLevel {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::LVL_NUMERIC_LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::lvl_numeric_level(self, out.scope());
@@ -6781,7 +6841,7 @@ impl WriteThrough for office_drawing_2014_chartex::LvlNumericLevel {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LVL_NUMERIC_LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pt_count);
         through.attribute(1, &self.format_code);
@@ -6828,9 +6888,9 @@ impl super::Transform for office_drawing_2014_chartex::LvlStringLevel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pt_string_value = super::transform_child(&self.pt_string_value, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6848,7 +6908,7 @@ impl super::Visit for office_drawing_2014_chartex::LvlStringLevel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pt_string_value, visitor);
         walk.finish(visitor);
     }
@@ -6863,7 +6923,7 @@ impl WriteThrough for office_drawing_2014_chartex::LvlStringLevel {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::LVL_STRING_LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::lvl_string_level(self, out.scope());
@@ -6872,7 +6932,7 @@ impl WriteThrough for office_drawing_2014_chartex::LvlStringLevel {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::LVL_STRING_LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pt_count);
         through.attribute(1, &self.name);
@@ -6918,10 +6978,10 @@ impl super::Transform for office_drawing_2014_chartex::MajorGridlines {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6939,7 +6999,7 @@ impl super::Visit for office_drawing_2014_chartex::MajorGridlines {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -6955,7 +7015,7 @@ impl WriteThrough for office_drawing_2014_chartex::MajorGridlines {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::MAJOR_GRIDLINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::major_gridlines(self, out.scope());
@@ -6964,7 +7024,7 @@ impl WriteThrough for office_drawing_2014_chartex::MajorGridlines {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MAJOR_GRIDLINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sp_pr, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -7009,9 +7069,9 @@ impl super::Transform for office_drawing_2014_chartex::MajorTickMarks {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7029,7 +7089,7 @@ impl super::Visit for office_drawing_2014_chartex::MajorTickMarks {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -7044,7 +7104,7 @@ impl WriteThrough for office_drawing_2014_chartex::MajorTickMarks {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::MAJOR_TICK_MARKS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::major_tick_marks(self, out.scope());
@@ -7053,7 +7113,7 @@ impl WriteThrough for office_drawing_2014_chartex::MajorTickMarks {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MAJOR_TICK_MARKS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -7097,9 +7157,9 @@ impl super::Transform for office_drawing_2014_chartex::Max {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7117,7 +7177,7 @@ impl super::Visit for office_drawing_2014_chartex::Max {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7129,14 +7189,20 @@ impl WriteThrough for office_drawing_2014_chartex::Max {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::MAX_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MAX_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::max(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::MAX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::MAX_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7179,9 +7245,9 @@ impl super::Transform for office_drawing_2014_chartex::MaxColor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7199,7 +7265,7 @@ impl super::Visit for office_drawing_2014_chartex::MaxColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7214,7 +7280,7 @@ impl WriteThrough for office_drawing_2014_chartex::MaxColor {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::MAX_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::max_color(self, out.scope());
@@ -7223,7 +7289,7 @@ impl WriteThrough for office_drawing_2014_chartex::MaxColor {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MAX_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -7267,9 +7333,9 @@ impl super::Transform for office_drawing_2014_chartex::Mid {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7287,7 +7353,7 @@ impl super::Visit for office_drawing_2014_chartex::Mid {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7299,14 +7365,20 @@ impl WriteThrough for office_drawing_2014_chartex::Mid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::MID_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MID_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::mid(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::MID_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::MID_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7349,9 +7421,9 @@ impl super::Transform for office_drawing_2014_chartex::MidColor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7369,7 +7441,7 @@ impl super::Visit for office_drawing_2014_chartex::MidColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7384,7 +7456,7 @@ impl WriteThrough for office_drawing_2014_chartex::MidColor {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::MID_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::mid_color(self, out.scope());
@@ -7393,7 +7465,7 @@ impl WriteThrough for office_drawing_2014_chartex::MidColor {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MID_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -7437,9 +7509,9 @@ impl super::Transform for office_drawing_2014_chartex::Min {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7457,7 +7529,7 @@ impl super::Visit for office_drawing_2014_chartex::Min {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7469,14 +7541,20 @@ impl WriteThrough for office_drawing_2014_chartex::Min {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::MIN_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::MIN_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::min(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::MIN_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::MIN_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7519,9 +7597,9 @@ impl super::Transform for office_drawing_2014_chartex::MinColor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7539,7 +7617,7 @@ impl super::Visit for office_drawing_2014_chartex::MinColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7554,7 +7632,7 @@ impl WriteThrough for office_drawing_2014_chartex::MinColor {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::MIN_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::min_color(self, out.scope());
@@ -7563,7 +7641,7 @@ impl WriteThrough for office_drawing_2014_chartex::MinColor {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MIN_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -7607,10 +7685,10 @@ impl super::Transform for office_drawing_2014_chartex::MinorGridlines {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7628,7 +7706,7 @@ impl super::Visit for office_drawing_2014_chartex::MinorGridlines {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -7644,7 +7722,7 @@ impl WriteThrough for office_drawing_2014_chartex::MinorGridlines {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::MINOR_GRIDLINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::minor_gridlines(self, out.scope());
@@ -7653,7 +7731,7 @@ impl WriteThrough for office_drawing_2014_chartex::MinorGridlines {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MINOR_GRIDLINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sp_pr, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -7698,9 +7776,9 @@ impl super::Transform for office_drawing_2014_chartex::MinorTickMarks {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7718,7 +7796,7 @@ impl super::Visit for office_drawing_2014_chartex::MinorTickMarks {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -7733,7 +7811,7 @@ impl WriteThrough for office_drawing_2014_chartex::MinorTickMarks {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::MINOR_TICK_MARKS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::minor_tick_marks(self, out.scope());
@@ -7742,7 +7820,7 @@ impl WriteThrough for office_drawing_2014_chartex::MinorTickMarks {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::MINOR_TICK_MARKS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -7786,7 +7864,8 @@ impl super::Transform for office_drawing_2014_chartex::Nf {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7804,7 +7883,7 @@ impl super::Visit for office_drawing_2014_chartex::Nf {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7814,13 +7893,20 @@ impl WriteThrough for office_drawing_2014_chartex::Nf {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2014_chartex::NF_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::NF_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::nf(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::NF_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::NF_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -7863,9 +7949,9 @@ impl super::Transform for office_drawing_2014_chartex::NumDim {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7883,7 +7969,7 @@ impl super::Visit for office_drawing_2014_chartex::NumDim {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7898,7 +7984,7 @@ impl WriteThrough for office_drawing_2014_chartex::NumDim {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::NUM_DIM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::num_dim(self, out.scope());
@@ -7907,7 +7993,7 @@ impl WriteThrough for office_drawing_2014_chartex::NumDim {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::NUM_DIM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.items(&self.content, ctx)?;
@@ -7952,7 +8038,8 @@ impl super::Transform for office_drawing_2014_chartex::NumFmt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7970,7 +8057,7 @@ impl super::Visit for office_drawing_2014_chartex::NumFmt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7983,7 +8070,7 @@ impl WriteThrough for office_drawing_2014_chartex::NumFmt {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::NUM_FMT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::num_fmt(self, out.scope());
@@ -7992,7 +8079,7 @@ impl WriteThrough for office_drawing_2014_chartex::NumFmt {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::NUM_FMT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.format_code);
         through.attribute(1, &self.source_linked);
@@ -8037,7 +8124,8 @@ impl super::Transform for office_drawing_2014_chartex::Number {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8055,7 +8143,7 @@ impl super::Visit for office_drawing_2014_chartex::Number {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8068,7 +8156,7 @@ impl WriteThrough for office_drawing_2014_chartex::Number {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::NUMBER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::number(self, out.scope());
@@ -8077,7 +8165,7 @@ impl WriteThrough for office_drawing_2014_chartex::Number {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::NUMBER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -8246,7 +8334,8 @@ impl super::Transform for office_drawing_2014_chartex::OddFooter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8264,7 +8353,7 @@ impl super::Visit for office_drawing_2014_chartex::OddFooter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8277,7 +8366,7 @@ impl WriteThrough for office_drawing_2014_chartex::OddFooter {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::ODD_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::odd_footer(self, out.scope());
@@ -8286,7 +8375,7 @@ impl WriteThrough for office_drawing_2014_chartex::OddFooter {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ODD_FOOTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -8330,7 +8419,8 @@ impl super::Transform for office_drawing_2014_chartex::OddHeader {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8348,7 +8438,7 @@ impl super::Visit for office_drawing_2014_chartex::OddHeader {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8361,7 +8451,7 @@ impl WriteThrough for office_drawing_2014_chartex::OddHeader {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::ODD_HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::odd_header(self, out.scope());
@@ -8370,7 +8460,7 @@ impl WriteThrough for office_drawing_2014_chartex::OddHeader {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::ODD_HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -8414,7 +8504,8 @@ impl super::Transform for office_drawing_2014_chartex::Offset {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8432,7 +8523,7 @@ impl super::Visit for office_drawing_2014_chartex::Offset {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8445,7 +8536,7 @@ impl WriteThrough for office_drawing_2014_chartex::Offset {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::offset(self, out.scope());
@@ -8454,7 +8545,7 @@ impl WriteThrough for office_drawing_2014_chartex::Offset {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.top);
         through.attribute(1, &self.left);
@@ -8499,7 +8590,8 @@ impl super::Transform for office_drawing_2014_chartex::Openxmlsdk49BECFFA3B034D1
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8517,7 +8609,7 @@ impl super::Visit for office_drawing_2014_chartex::Openxmlsdk49BECFFA3B034D13827
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8530,7 +8622,7 @@ impl WriteThrough for office_drawing_2014_chartex::Openxmlsdk49BECFFA3B034D13827
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::OPENXMLSDK49BECFFA3B034D138272D6CCB22579E3_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -8543,7 +8635,7 @@ impl WriteThrough for office_drawing_2014_chartex::Openxmlsdk49BECFFA3B034D13827
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::OPENXMLSDK49BECFFA3B034D138272D6CCB22579E3_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -8587,7 +8679,8 @@ impl super::Transform for office_drawing_2014_chartex::PageMargins {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8605,7 +8698,7 @@ impl super::Visit for office_drawing_2014_chartex::PageMargins {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8618,7 +8711,7 @@ impl WriteThrough for office_drawing_2014_chartex::PageMargins {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PAGE_MARGINS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::page_margins(self, out.scope());
@@ -8627,7 +8720,7 @@ impl WriteThrough for office_drawing_2014_chartex::PageMargins {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PAGE_MARGINS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.l);
         through.attribute(1, &self.r);
@@ -8676,7 +8769,8 @@ impl super::Transform for office_drawing_2014_chartex::PageSetup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8694,7 +8788,7 @@ impl super::Visit for office_drawing_2014_chartex::PageSetup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8707,7 +8801,7 @@ impl WriteThrough for office_drawing_2014_chartex::PageSetup {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PAGE_SETUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::page_setup(self, out.scope());
@@ -8716,7 +8810,7 @@ impl WriteThrough for office_drawing_2014_chartex::PageSetup {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PAGE_SETUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.paper_size);
         through.attribute(1, &self.first_page_number);
@@ -8768,7 +8862,8 @@ impl super::Transform for office_drawing_2014_chartex::ParentLabelLayout {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8786,7 +8881,7 @@ impl super::Visit for office_drawing_2014_chartex::ParentLabelLayout {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8799,7 +8894,7 @@ impl WriteThrough for office_drawing_2014_chartex::ParentLabelLayout {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PARENT_LABEL_LAYOUT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -8809,7 +8904,7 @@ impl WriteThrough for office_drawing_2014_chartex::ParentLabelLayout {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PARENT_LABEL_LAYOUT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -8853,7 +8948,8 @@ impl super::Transform for office_drawing_2014_chartex::Percent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8871,7 +8967,7 @@ impl super::Visit for office_drawing_2014_chartex::Percent {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8884,7 +8980,7 @@ impl WriteThrough for office_drawing_2014_chartex::Percent {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PERCENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::percent(self, out.scope());
@@ -8893,7 +8989,7 @@ impl WriteThrough for office_drawing_2014_chartex::Percent {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PERCENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -8937,12 +9033,12 @@ impl super::Transform for office_drawing_2014_chartex::PlotArea {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.region = super::transform_child(&self.region, ctx, &mut rebase);
         node.axis = super::transform_child(&self.axis, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8960,7 +9056,7 @@ impl super::Visit for office_drawing_2014_chartex::PlotArea {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.region, visitor);
         walk.child(&self.axis, visitor);
         walk.child(&self.sp_pr, visitor);
@@ -8978,7 +9074,7 @@ impl WriteThrough for office_drawing_2014_chartex::PlotArea {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PLOT_AREA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::plot_area(self, out.scope());
@@ -8987,7 +9083,7 @@ impl WriteThrough for office_drawing_2014_chartex::PlotArea {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PLOT_AREA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.region, ctx)?;
         through.child(&self.axis, ctx)?;
@@ -9034,11 +9130,11 @@ impl super::Transform for office_drawing_2014_chartex::PlotAreaRegion {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.plot_surface = super::transform_child(&self.plot_surface, ctx, &mut rebase);
         node.series = super::transform_child(&self.series, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9056,7 +9152,7 @@ impl super::Visit for office_drawing_2014_chartex::PlotAreaRegion {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.plot_surface, visitor);
         walk.child(&self.series, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -9073,7 +9169,7 @@ impl WriteThrough for office_drawing_2014_chartex::PlotAreaRegion {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PLOT_AREA_REGION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::plot_area_region(self, out.scope());
@@ -9082,7 +9178,7 @@ impl WriteThrough for office_drawing_2014_chartex::PlotAreaRegion {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PLOT_AREA_REGION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.plot_surface, ctx)?;
         through.child(&self.series, ctx)?;
@@ -9128,10 +9224,10 @@ impl super::Transform for office_drawing_2014_chartex::PlotSurface {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9149,7 +9245,7 @@ impl super::Visit for office_drawing_2014_chartex::PlotSurface {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -9165,7 +9261,7 @@ impl WriteThrough for office_drawing_2014_chartex::PlotSurface {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PLOT_SURFACE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::plot_surface(self, out.scope());
@@ -9174,7 +9270,7 @@ impl WriteThrough for office_drawing_2014_chartex::PlotSurface {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PLOT_SURFACE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sp_pr, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -9219,11 +9315,11 @@ impl super::Transform for office_drawing_2014_chartex::PrintSettings {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.header_footer = super::transform_child(&self.header_footer, ctx, &mut rebase);
         node.page_margins = super::transform_child(&self.page_margins, ctx, &mut rebase);
         node.page_setup = super::transform_child(&self.page_setup, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9241,7 +9337,7 @@ impl super::Visit for office_drawing_2014_chartex::PrintSettings {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.header_footer, visitor);
         walk.child(&self.page_margins, visitor);
         walk.child(&self.page_setup, visitor);
@@ -9258,7 +9354,7 @@ impl WriteThrough for office_drawing_2014_chartex::PrintSettings {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PRINT_SETTINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::print_settings(self, out.scope());
@@ -9267,7 +9363,7 @@ impl WriteThrough for office_drawing_2014_chartex::PrintSettings {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PRINT_SETTINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.header_footer, ctx)?;
         through.child(&self.page_margins, ctx)?;
@@ -9313,7 +9409,8 @@ impl super::Transform for office_drawing_2014_chartex::PtNumericValue {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9331,7 +9428,7 @@ impl super::Visit for office_drawing_2014_chartex::PtNumericValue {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9344,7 +9441,7 @@ impl WriteThrough for office_drawing_2014_chartex::PtNumericValue {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PT_NUMERIC_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::pt_numeric_value(self, out.scope());
@@ -9353,7 +9450,7 @@ impl WriteThrough for office_drawing_2014_chartex::PtNumericValue {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PT_NUMERIC_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
         through.text(&self.value)?;
@@ -9398,7 +9495,8 @@ impl super::Transform for office_drawing_2014_chartex::PtStringValue {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9416,7 +9514,7 @@ impl super::Visit for office_drawing_2014_chartex::PtStringValue {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9429,7 +9527,7 @@ impl WriteThrough for office_drawing_2014_chartex::PtStringValue {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::PT_STRING_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::pt_string_value(self, out.scope());
@@ -9438,7 +9536,7 @@ impl WriteThrough for office_drawing_2014_chartex::PtStringValue {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::PT_STRING_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
         through.text(&self.value)?;
@@ -9483,7 +9581,8 @@ impl super::Transform for office_drawing_2014_chartex::RegionLabelLayout {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9501,7 +9600,7 @@ impl super::Visit for office_drawing_2014_chartex::RegionLabelLayout {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9514,7 +9613,7 @@ impl WriteThrough for office_drawing_2014_chartex::RegionLabelLayout {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::REGION_LABEL_LAYOUT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9524,7 +9623,7 @@ impl WriteThrough for office_drawing_2014_chartex::RegionLabelLayout {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::REGION_LABEL_LAYOUT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -9568,11 +9667,11 @@ impl super::Transform for office_drawing_2014_chartex::Rich {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.body_properties = super::transform_child(&self.body_properties, ctx, &mut rebase);
         node.text_list_styles = super::transform_child(&self.text_list_styles, ctx, &mut rebase);
         node.text_paragraphs = super::transform_child(&self.text_paragraphs, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9590,7 +9689,7 @@ impl super::Visit for office_drawing_2014_chartex::Rich {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.body_properties, visitor);
         walk.child(&self.text_list_styles, visitor);
         walk.child(&self.text_paragraphs, visitor);
@@ -9604,14 +9703,20 @@ impl WriteThrough for office_drawing_2014_chartex::Rich {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_drawing_2014_chartex::RICH_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::RICH_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::rich(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::RICH_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::RICH_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.body_properties, ctx)?;
         through.child(&self.text_list_styles, ctx)?;
         through.child(&self.text_paragraphs, ctx)?;
@@ -9656,7 +9761,8 @@ impl super::Transform for office_drawing_2014_chartex::Separator {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9674,7 +9780,7 @@ impl super::Visit for office_drawing_2014_chartex::Separator {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9687,7 +9793,7 @@ impl WriteThrough for office_drawing_2014_chartex::Separator {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::SEPARATOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::separator(self, out.scope());
@@ -9696,7 +9802,7 @@ impl WriteThrough for office_drawing_2014_chartex::Separator {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SEPARATOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -9740,7 +9846,7 @@ impl super::Transform for office_drawing_2014_chartex::Series {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tx = super::transform_child(&self.tx, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.value_colors = super::transform_child(&self.value_colors, ctx, &mut rebase);
@@ -9752,7 +9858,7 @@ impl super::Transform for office_drawing_2014_chartex::Series {
         node.layout_pr = super::transform_child(&self.layout_pr, ctx, &mut rebase);
         node.axis_id = super::transform_child(&self.axis_id, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9770,7 +9876,7 @@ impl super::Visit for office_drawing_2014_chartex::Series {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tx, visitor);
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.value_colors, visitor);
@@ -9794,7 +9900,7 @@ impl WriteThrough for office_drawing_2014_chartex::Series {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::series(self, out.scope());
@@ -9803,7 +9909,7 @@ impl WriteThrough for office_drawing_2014_chartex::Series {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.layout_id);
         through.attribute(1, &self.hidden);
@@ -9958,7 +10064,7 @@ impl super::Transform for office_drawing_2014_chartex::SpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -9970,7 +10076,7 @@ impl super::Transform for office_drawing_2014_chartex::SpPr {
         node.apply_3d_shape_properties =
             super::transform_child(&self.apply_3d_shape_properties, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9988,7 +10094,7 @@ impl super::Visit for office_drawing_2014_chartex::SpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -10010,7 +10116,7 @@ impl WriteThrough for office_drawing_2014_chartex::SpPr {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::sp_pr(self, out.scope());
@@ -10019,7 +10125,7 @@ impl WriteThrough for office_drawing_2014_chartex::SpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
@@ -10071,7 +10177,8 @@ impl super::Transform for office_drawing_2014_chartex::Statistics {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10089,7 +10196,7 @@ impl super::Visit for office_drawing_2014_chartex::Statistics {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10102,7 +10209,7 @@ impl WriteThrough for office_drawing_2014_chartex::Statistics {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::STATISTICS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::statistics(self, out.scope());
@@ -10111,7 +10218,7 @@ impl WriteThrough for office_drawing_2014_chartex::Statistics {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::STATISTICS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.quartile_method);
         through.finish(ctx)
@@ -10155,9 +10262,9 @@ impl super::Transform for office_drawing_2014_chartex::StrDim {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10175,7 +10282,7 @@ impl super::Visit for office_drawing_2014_chartex::StrDim {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -10190,7 +10297,7 @@ impl WriteThrough for office_drawing_2014_chartex::StrDim {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::STR_DIM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::str_dim(self, out.scope());
@@ -10199,7 +10306,7 @@ impl WriteThrough for office_drawing_2014_chartex::StrDim {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::STR_DIM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.items(&self.content, ctx)?;
@@ -10369,9 +10476,9 @@ impl super::Transform for office_drawing_2014_chartex::Subtotals {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.idx = super::transform_child(&self.idx, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10389,7 +10496,7 @@ impl super::Visit for office_drawing_2014_chartex::Subtotals {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.idx, visitor);
         walk.finish(visitor);
     }
@@ -10404,7 +10511,7 @@ impl WriteThrough for office_drawing_2014_chartex::Subtotals {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::SUBTOTALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::subtotals(self, out.scope());
@@ -10413,7 +10520,7 @@ impl WriteThrough for office_drawing_2014_chartex::Subtotals {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::SUBTOTALS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.idx, ctx)?;
         through.finish(ctx)
@@ -10651,9 +10758,9 @@ impl super::Transform for office_drawing_2014_chartex::TickLabels {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10671,7 +10778,7 @@ impl super::Visit for office_drawing_2014_chartex::TickLabels {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -10686,7 +10793,7 @@ impl WriteThrough for office_drawing_2014_chartex::TickLabels {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::TICK_LABELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::tick_labels(self, out.scope());
@@ -10695,7 +10802,7 @@ impl WriteThrough for office_drawing_2014_chartex::TickLabels {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TICK_LABELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -10739,13 +10846,13 @@ impl super::Transform for office_drawing_2014_chartex::TitleAxisTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tx = super::transform_child(&self.tx, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.tx_pr = super::transform_child(&self.tx_pr, ctx, &mut rebase);
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10763,7 +10870,7 @@ impl super::Visit for office_drawing_2014_chartex::TitleAxisTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tx, visitor);
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.tx_pr, visitor);
@@ -10782,7 +10889,7 @@ impl WriteThrough for office_drawing_2014_chartex::TitleAxisTitle {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::TITLE_AXIS_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::title_axis_title(self, out.scope());
@@ -10791,7 +10898,7 @@ impl WriteThrough for office_drawing_2014_chartex::TitleAxisTitle {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TITLE_AXIS_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.tx, ctx)?;
         through.child(&self.sp_pr, ctx)?;
@@ -10839,13 +10946,13 @@ impl super::Transform for office_drawing_2014_chartex::TitleChartTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tx = super::transform_child(&self.tx, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.tx_pr = super::transform_child(&self.tx_pr, ctx, &mut rebase);
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10863,7 +10970,7 @@ impl super::Visit for office_drawing_2014_chartex::TitleChartTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tx, visitor);
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.tx_pr, visitor);
@@ -10882,7 +10989,7 @@ impl WriteThrough for office_drawing_2014_chartex::TitleChartTitle {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::TITLE_CHART_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::title_chart_title(self, out.scope());
@@ -10891,7 +10998,7 @@ impl WriteThrough for office_drawing_2014_chartex::TitleChartTitle {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TITLE_CHART_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pos);
         through.attribute(1, &self.align);
@@ -10942,9 +11049,9 @@ impl super::Transform for office_drawing_2014_chartex::Tx {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10962,7 +11069,7 @@ impl super::Visit for office_drawing_2014_chartex::Tx {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -10974,13 +11081,20 @@ impl WriteThrough for office_drawing_2014_chartex::Tx {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2014_chartex::TX_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::TX_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::tx(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::TX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::TX_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -11023,9 +11137,9 @@ impl super::Transform for office_drawing_2014_chartex::TxData {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -11043,7 +11157,7 @@ impl super::Visit for office_drawing_2014_chartex::TxData {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -11058,7 +11172,7 @@ impl WriteThrough for office_drawing_2014_chartex::TxData {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::TX_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::tx_data(self, out.scope());
@@ -11067,7 +11181,7 @@ impl WriteThrough for office_drawing_2014_chartex::TxData {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TX_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -11111,11 +11225,11 @@ impl super::Transform for office_drawing_2014_chartex::TxPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.body_properties = super::transform_child(&self.body_properties, ctx, &mut rebase);
         node.text_list_styles = super::transform_child(&self.text_list_styles, ctx, &mut rebase);
         node.text_paragraphs = super::transform_child(&self.text_paragraphs, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -11133,7 +11247,7 @@ impl super::Visit for office_drawing_2014_chartex::TxPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.body_properties, visitor);
         walk.child(&self.text_list_styles, visitor);
         walk.child(&self.text_paragraphs, visitor);
@@ -11150,7 +11264,7 @@ impl WriteThrough for office_drawing_2014_chartex::TxPr {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::TX_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::tx_pr(self, out.scope());
@@ -11159,7 +11273,7 @@ impl WriteThrough for office_drawing_2014_chartex::TxPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::TX_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.body_properties, ctx)?;
         through.child(&self.text_list_styles, ctx)?;
@@ -11205,10 +11319,10 @@ impl super::Transform for office_drawing_2014_chartex::Units {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.label = super::transform_child(&self.label, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -11226,7 +11340,7 @@ impl super::Visit for office_drawing_2014_chartex::Units {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.label, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -11242,7 +11356,7 @@ impl WriteThrough for office_drawing_2014_chartex::Units {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::UNITS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::units(self, out.scope());
@@ -11251,7 +11365,7 @@ impl WriteThrough for office_drawing_2014_chartex::Units {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::UNITS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.unit);
         through.child(&self.label, ctx)?;
@@ -11297,12 +11411,12 @@ impl super::Transform for office_drawing_2014_chartex::UnitsLabel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tx = super::transform_child(&self.tx, ctx, &mut rebase);
         node.sp_pr = super::transform_child(&self.sp_pr, ctx, &mut rebase);
         node.tx_pr = super::transform_child(&self.tx_pr, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -11320,7 +11434,7 @@ impl super::Visit for office_drawing_2014_chartex::UnitsLabel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tx, visitor);
         walk.child(&self.sp_pr, visitor);
         walk.child(&self.tx_pr, visitor);
@@ -11338,7 +11452,7 @@ impl WriteThrough for office_drawing_2014_chartex::UnitsLabel {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::UNITS_LABEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::units_label(self, out.scope());
@@ -11347,7 +11461,7 @@ impl WriteThrough for office_drawing_2014_chartex::UnitsLabel {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::UNITS_LABEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.tx, ctx)?;
         through.child(&self.sp_pr, ctx)?;
@@ -11394,7 +11508,8 @@ impl super::Transform for office_drawing_2014_chartex::V {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -11412,7 +11527,7 @@ impl super::Visit for office_drawing_2014_chartex::V {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -11422,13 +11537,20 @@ impl WriteThrough for office_drawing_2014_chartex::V {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2014_chartex::V_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2014_chartex::V_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2014_chartex::write::v(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2014_chartex::V_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2014_chartex::V_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -11471,7 +11593,8 @@ impl super::Transform for office_drawing_2014_chartex::ValScaling {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -11489,7 +11612,7 @@ impl super::Visit for office_drawing_2014_chartex::ValScaling {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -11502,7 +11625,7 @@ impl WriteThrough for office_drawing_2014_chartex::ValScaling {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::VAL_SCALING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::val_scaling(self, out.scope());
@@ -11511,7 +11634,7 @@ impl WriteThrough for office_drawing_2014_chartex::ValScaling {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VAL_SCALING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.max);
         through.attribute(1, &self.min);
@@ -11759,11 +11882,11 @@ impl super::Transform for office_drawing_2014_chartex::ValueColorPositions {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.min = super::transform_child(&self.min, ctx, &mut rebase);
         node.mid = super::transform_child(&self.mid, ctx, &mut rebase);
         node.max = super::transform_child(&self.max, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -11781,7 +11904,7 @@ impl super::Visit for office_drawing_2014_chartex::ValueColorPositions {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.min, visitor);
         walk.child(&self.mid, visitor);
         walk.child(&self.max, visitor);
@@ -11798,7 +11921,7 @@ impl WriteThrough for office_drawing_2014_chartex::ValueColorPositions {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::VALUE_COLOR_POSITIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -11808,7 +11931,7 @@ impl WriteThrough for office_drawing_2014_chartex::ValueColorPositions {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VALUE_COLOR_POSITIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.min, ctx)?;
@@ -11855,11 +11978,11 @@ impl super::Transform for office_drawing_2014_chartex::ValueColors {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.min_color = super::transform_child(&self.min_color, ctx, &mut rebase);
         node.mid_color = super::transform_child(&self.mid_color, ctx, &mut rebase);
         node.max_color = super::transform_child(&self.max_color, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -11877,7 +12000,7 @@ impl super::Visit for office_drawing_2014_chartex::ValueColors {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.min_color, visitor);
         walk.child(&self.mid_color, visitor);
         walk.child(&self.max_color, visitor);
@@ -11894,7 +12017,7 @@ impl WriteThrough for office_drawing_2014_chartex::ValueColors {
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::VALUE_COLORS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::value_colors(self, out.scope());
@@ -11903,7 +12026,7 @@ impl WriteThrough for office_drawing_2014_chartex::ValueColors {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VALUE_COLORS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.min_color, ctx)?;
         through.child(&self.mid_color, ctx)?;
@@ -11949,7 +12072,8 @@ impl super::Transform for office_drawing_2014_chartex::VisibilityDataLabelVisibi
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -11967,7 +12091,7 @@ impl super::Visit for office_drawing_2014_chartex::VisibilityDataLabelVisibiliti
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -11980,7 +12104,7 @@ impl WriteThrough for office_drawing_2014_chartex::VisibilityDataLabelVisibiliti
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::VISIBILITY_DATA_LABEL_VISIBILITIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chartex::write::visibility_data_label_visibilities(
@@ -11992,7 +12116,7 @@ impl WriteThrough for office_drawing_2014_chartex::VisibilityDataLabelVisibiliti
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VISIBILITY_DATA_LABEL_VISIBILITIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.series_name);
         through.attribute(1, &self.category_name);
@@ -12038,7 +12162,8 @@ impl super::Transform for office_drawing_2014_chartex::VisibilitySeriesElementVi
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -12056,7 +12181,7 @@ impl super::Visit for office_drawing_2014_chartex::VisibilitySeriesElementVisibi
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -12069,7 +12194,7 @@ impl WriteThrough for office_drawing_2014_chartex::VisibilitySeriesElementVisibi
         let converted = super::converts(
             out,
             &office_drawing_2014_chartex::VISIBILITY_SERIES_ELEMENT_VISIBILITIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -12082,7 +12207,7 @@ impl WriteThrough for office_drawing_2014_chartex::VisibilitySeriesElementVisibi
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chartex::VISIBILITY_SERIES_ELEMENT_VISIBILITIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.connector_lines);
         through.attribute(1, &self.mean_line);

@@ -233,9 +233,9 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ExtLst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -278,7 +278,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -322,7 +322,8 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::Mention {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -340,7 +341,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::Mention {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -353,7 +354,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Mention {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::MENTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -363,7 +364,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Mention {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::MENTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.mentionperson_id);
         through.attribute(1, &self.mention_id);
@@ -410,9 +411,9 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::Mentions {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.mention = super::transform_child(&self.mention, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -430,7 +431,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::Mentions {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.mention, visitor);
         walk.finish(visitor);
     }
@@ -445,7 +446,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Mentions {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::MENTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -455,7 +456,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Mentions {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::MENTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.mention, ctx)?;
         through.finish(ctx)
@@ -499,9 +500,9 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::Person {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -519,7 +520,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::Person {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -534,7 +535,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Person {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::PERSON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -544,7 +545,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Person {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::PERSON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.display_name);
         through.attribute(1, &self.id);
@@ -592,10 +593,10 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::PersonList
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.person = super::transform_child(&self.person, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -613,7 +614,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::PersonList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.person, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -629,7 +630,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::PersonList {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::PERSON_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -639,7 +640,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::PersonList {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::PERSON_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.person, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -684,7 +685,8 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::Text {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -702,7 +704,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::Text {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -715,7 +717,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Text {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::TEXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -725,7 +727,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::Text {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::TEXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -769,11 +771,11 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::ThreadedCo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.text = super::transform_child(&self.text, ctx, &mut rebase);
         node.mentions = super::transform_child(&self.mentions, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -791,7 +793,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.text, visitor);
         walk.child(&self.mentions, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -808,7 +810,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2018_threadedcomments::write::threaded_comment(
@@ -820,7 +822,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#ref);
         through.attribute(1, &self.d_t);
@@ -872,10 +874,10 @@ impl super::Transform for office_spreadsheetml_2018_threadedcomments::ThreadedCo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.threaded_comment = super::transform_child(&self.threaded_comment, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -893,7 +895,7 @@ impl super::Visit for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.threaded_comment, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -909,7 +911,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
         let converted = super::converts(
             out,
             &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2018_threadedcomments::write::threaded_comments(
@@ -921,7 +923,7 @@ impl WriteThrough for office_spreadsheetml_2018_threadedcomments::ThreadedCommen
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2018_threadedcomments::THREADED_COMMENTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.threaded_comment, ctx)?;
         through.child(&self.ext_lst, ctx)?;

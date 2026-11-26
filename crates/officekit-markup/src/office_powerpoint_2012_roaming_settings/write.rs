@@ -222,7 +222,8 @@ use officekit_xml::write::Scope;
 /// Write a `Key` as its element, `pRoam:key`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn key(node: &super::Key, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::KEY_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::KEY_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -230,7 +231,8 @@ pub fn key(node: &super::Key, scope: &mut Scope) -> Element {
 /// Write a `Props` as its element, `pRoam:props`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn props(node: &super::Props, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::PROPS_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::PROPS_SHAPE, node.unknown.as_deref());
     writer.child(&node.key);
     writer.child(&node.value);
     writer.finish()
@@ -239,7 +241,8 @@ pub fn props(node: &super::Props, scope: &mut Scope) -> Element {
 /// Write a `Value` as its element, `pRoam:value`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn value(node: &super::Value, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::VALUE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::VALUE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }

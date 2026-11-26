@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2020_pivot_nov2020::DataFieldFutu
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2020_pivot_nov2020::DataFieldFutureDa
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::DataFieldFutureDa
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::DATA_FIELD_FUTURE_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2020_pivot_nov2020::write::data_field_future_data(
@@ -276,7 +277,7 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::DataFieldFutureDa
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::DATA_FIELD_FUTURE_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.version);
         through.attribute(1, &self.source_field);
@@ -321,7 +322,8 @@ impl super::Transform for office_spreadsheetml_2020_pivot_nov2020::IgnorableAfte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -339,7 +341,7 @@ impl super::Visit for office_spreadsheetml_2020_pivot_nov2020::IgnorableAfterVer
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -352,7 +354,7 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::IgnorableAfterVer
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::IGNORABLE_AFTER_VERSION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2020_pivot_nov2020::write::ignorable_after_version(
@@ -364,7 +366,7 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::IgnorableAfterVer
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::IGNORABLE_AFTER_VERSION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.version);
         through.finish(ctx)
@@ -408,7 +410,8 @@ impl super::Transform for office_spreadsheetml_2020_pivot_nov2020::ImplicitMeasu
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -426,7 +429,7 @@ impl super::Visit for office_spreadsheetml_2020_pivot_nov2020::ImplicitMeasureSu
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -439,7 +442,7 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::ImplicitMeasureSu
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::IMPLICIT_MEASURE_SUPPORT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2020_pivot_nov2020::write::implicit_measure_support(
@@ -451,7 +454,7 @@ impl WriteThrough for office_spreadsheetml_2020_pivot_nov2020::ImplicitMeasureSu
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_pivot_nov2020::IMPLICIT_MEASURE_SUPPORT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)

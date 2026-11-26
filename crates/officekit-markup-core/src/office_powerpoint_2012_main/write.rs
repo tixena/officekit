@@ -225,7 +225,7 @@ pub fn chart_tracking_ref_based(node: &super::ChartTrackingRefBased, scope: &mut
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CHART_TRACKING_REF_BASED_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.val);
     writer.finish()
@@ -234,7 +234,8 @@ pub fn chart_tracking_ref_based(node: &super::ChartTrackingRefBased, scope: &mut
 /// Write a `Clr` as its element, `p15:clr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn clr(node: &super::Clr, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::CLR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::CLR_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -243,7 +244,7 @@ pub fn clr(node: &super::Clr, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -251,7 +252,8 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `Guide` as its element, `p15:guide`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn guide(node: &super::Guide, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::GUIDE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::GUIDE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
     writer.attribute(2, &node.orient);
@@ -265,8 +267,11 @@ pub fn guide(node: &super::Guide, scope: &mut Scope) -> Element {
 /// Write a `NotesGuideLst` as its element, `p15:notesGuideLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn notes_guide_lst(node: &super::NotesGuideLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NOTES_GUIDE_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NOTES_GUIDE_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.guide);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -276,7 +281,7 @@ pub fn notes_guide_lst(node: &super::NotesGuideLst, scope: &mut Scope) -> Elemen
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn parent_cm(node: &super::ParentCm, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PARENT_CM_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PARENT_CM_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.author_id);
     writer.attribute(1, &node.idx);
     writer.finish()
@@ -285,8 +290,11 @@ pub fn parent_cm(node: &super::ParentCm, scope: &mut Scope) -> Element {
 /// Write a `PresenceInfo` as its element, `p15:presenceInfo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn presence_info(node: &super::PresenceInfo, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PRESENCE_INFO_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PRESENCE_INFO_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.user_id);
     writer.attribute(1, &node.provider_id);
     writer.finish()
@@ -295,8 +303,11 @@ pub fn presence_info(node: &super::PresenceInfo, scope: &mut Scope) -> Element {
 /// Write a `PrstTrans` as its element, `p15:prstTrans`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn prst_trans(node: &super::PrstTrans, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PRST_TRANS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PRST_TRANS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.prst);
     writer.attribute(1, &node.inv_x);
     writer.attribute(2, &node.inv_y);
@@ -306,8 +317,11 @@ pub fn prst_trans(node: &super::PrstTrans, scope: &mut Scope) -> Element {
 /// Write a `SldGuideLst` as its element, `p15:sldGuideLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_guide_lst(node: &super::SldGuideLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SLD_GUIDE_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SLD_GUIDE_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.guide);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -316,8 +330,11 @@ pub fn sld_guide_lst(node: &super::SldGuideLst, scope: &mut Scope) -> Element {
 /// Write a `ThreadingInfo` as its element, `p15:threadingInfo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn threading_info(node: &super::ThreadingInfo, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::THREADING_INFO_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::THREADING_INFO_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.time_zone_bias);
     writer.child(&node.parent_cm);
     writer.finish()

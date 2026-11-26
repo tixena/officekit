@@ -225,7 +225,7 @@ pub fn readonly_recommended(node: &super::ReadonlyRecommended, scope: &mut Scope
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::READONLY_RECOMMENDED_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.val);
     writer.finish()

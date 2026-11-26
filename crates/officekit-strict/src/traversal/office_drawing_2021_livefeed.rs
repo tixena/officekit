@@ -233,10 +233,10 @@ impl super::Transform for office_drawing_2021_livefeed::BackgroundProps {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -254,7 +254,7 @@ impl super::Visit for office_drawing_2021_livefeed::BackgroundProps {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -270,7 +270,7 @@ impl WriteThrough for office_drawing_2021_livefeed::BackgroundProps {
         let converted = super::converts(
             out,
             &office_drawing_2021_livefeed::BACKGROUND_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2021_livefeed::write::background_props(self, out.scope());
@@ -279,7 +279,7 @@ impl WriteThrough for office_drawing_2021_livefeed::BackgroundProps {
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::BACKGROUND_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -324,9 +324,9 @@ impl super::Transform for office_drawing_2021_livefeed::Blur {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -344,7 +344,7 @@ impl super::Visit for office_drawing_2021_livefeed::Blur {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -359,7 +359,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Blur {
         let converted = super::converts(
             out,
             &office_drawing_2021_livefeed::BLUR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2021_livefeed::write::blur(self, out.scope());
@@ -368,7 +368,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Blur {
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::BLUR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -412,9 +412,9 @@ impl super::Transform for office_drawing_2021_livefeed::Custom {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -432,7 +432,7 @@ impl super::Visit for office_drawing_2021_livefeed::Custom {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -447,7 +447,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Custom {
         let converted = super::converts(
             out,
             &office_drawing_2021_livefeed::CUSTOM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2021_livefeed::write::custom(self, out.scope());
@@ -456,7 +456,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Custom {
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::CUSTOM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -500,9 +500,9 @@ impl super::Transform for office_drawing_2021_livefeed::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -520,7 +520,7 @@ impl super::Visit for office_drawing_2021_livefeed::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -535,7 +535,7 @@ impl WriteThrough for office_drawing_2021_livefeed::ExtLst {
         let converted = super::converts(
             out,
             &office_drawing_2021_livefeed::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2021_livefeed::write::ext_lst(self, out.scope());
@@ -544,7 +544,7 @@ impl WriteThrough for office_drawing_2021_livefeed::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -699,10 +699,10 @@ impl super::Transform for office_drawing_2021_livefeed::LiveFeedProps {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.background_props = super::transform_child(&self.background_props, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -720,7 +720,7 @@ impl super::Visit for office_drawing_2021_livefeed::LiveFeedProps {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.background_props, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -736,7 +736,7 @@ impl WriteThrough for office_drawing_2021_livefeed::LiveFeedProps {
         let converted = super::converts(
             out,
             &office_drawing_2021_livefeed::LIVE_FEED_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2021_livefeed::write::live_feed_props(self, out.scope());
@@ -745,7 +745,7 @@ impl WriteThrough for office_drawing_2021_livefeed::LiveFeedProps {
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::LIVE_FEED_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.background_props, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -790,9 +790,9 @@ impl super::Transform for office_drawing_2021_livefeed::Normal {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -810,7 +810,7 @@ impl super::Visit for office_drawing_2021_livefeed::Normal {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -825,7 +825,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Normal {
         let converted = super::converts(
             out,
             &office_drawing_2021_livefeed::NORMAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2021_livefeed::write::normal(self, out.scope());
@@ -834,7 +834,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Normal {
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::NORMAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -878,9 +878,9 @@ impl super::Transform for office_drawing_2021_livefeed::Removed {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -898,7 +898,7 @@ impl super::Visit for office_drawing_2021_livefeed::Removed {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -913,7 +913,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Removed {
         let converted = super::converts(
             out,
             &office_drawing_2021_livefeed::REMOVED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2021_livefeed::write::removed(self, out.scope());
@@ -922,7 +922,7 @@ impl WriteThrough for office_drawing_2021_livefeed::Removed {
         let mut through = super::Through::new(
             out,
             &office_drawing_2021_livefeed::REMOVED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)

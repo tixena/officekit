@@ -285,7 +285,7 @@ pub struct ArcSegmentMirror {
     pub style: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -355,7 +355,7 @@ pub struct BezierCurveMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub to: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -374,7 +374,7 @@ pub struct DocumentBackgroundMirror {
     pub id: Option<String>,
     pub shape_fill_properties: Option<Box<super::ShapeFillProperties>>,
     pub targetscreensize: Option<super::super::vml_office_drawing::ScreenSizesType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -406,7 +406,7 @@ pub struct ImageDataMirror {
     pub relid: Option<String>,
     pub src: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -479,7 +479,7 @@ pub struct ImageFileMirror {
     pub style: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -547,7 +547,7 @@ pub struct LineMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub to: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -592,7 +592,7 @@ pub struct LineStrokeSettingsMirror {
     pub text_box_right_stroke: Option<Box<super::super::vml_office_drawing::TextBoxRightStroke>>,
     pub text_box_top_stroke: Option<Box<super::super::vml_office_drawing::TextBoxTopStroke>>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub weight: Option<String>,
 }
@@ -657,7 +657,7 @@ pub struct MultiplePathLineMirror {
     pub style: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -723,7 +723,7 @@ pub struct OvalMirror {
     pub style: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -789,7 +789,7 @@ pub struct RectangleMirror {
     pub style: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -856,7 +856,7 @@ pub struct RoundedRectangleMirror {
     pub style: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -868,7 +868,7 @@ pub struct RoundedRectangleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfFormulasMirror {
     pub single_formula: Vec<super::SingleFormula>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -877,7 +877,7 @@ pub struct SetOfFormulasMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfHandlesMirror {
     pub shape_handle: Vec<super::ShapeHandle>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -896,7 +896,7 @@ pub struct ShadowEffectMirror {
     pub opacity: Option<String>,
     pub origin: Option<String>,
     pub r#type: Option<super::ShadowType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -964,7 +964,7 @@ pub struct ShapeDefinitionMirror {
     pub target: Option<String>,
     pub title: Option<String>,
     pub r#type: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -1004,7 +1004,7 @@ pub struct ShapeFillPropertiesMirror {
     pub src: Option<String>,
     pub title: Option<String>,
     pub r#type: Option<super::ShapeFillType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1053,7 +1053,7 @@ pub struct ShapeGroupMirror {
     pub tableproperties: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -1071,7 +1071,7 @@ pub struct ShapeHandleMirror {
     pub position: Option<String>,
     pub radiusrange: Option<String>,
     pub switch: Option<common_simple_types::BooleanValueWithBlankFalseState>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xrange: Option<String>,
     pub yrange: Option<String>,
@@ -1095,7 +1095,7 @@ pub struct ShapePathMirror {
     pub strokeok: Option<common_simple_types::BooleanValue>,
     pub textboxrect: Option<String>,
     pub textpathok: Option<common_simple_types::BooleanValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v: Option<String>,
 }
@@ -1163,7 +1163,7 @@ pub struct ShapeTemplateMirror {
     pub style: Option<String>,
     pub target: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub userdrawn: Option<common_simple_types::BooleanValue>,
     pub userhidden: Option<common_simple_types::BooleanValue>,
@@ -1175,7 +1175,7 @@ pub struct ShapeTemplateMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SingleFormulaMirror {
     pub eqn: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1193,7 +1193,7 @@ pub struct TextBoxMirror {
     pub insetmode: Option<super::super::vml_office_drawing::InsetMarginType>,
     pub singleclick: Option<common_simple_types::BooleanValue>,
     pub style: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -1208,7 +1208,7 @@ pub struct TextLayoutPathMirror {
     pub string: Option<String>,
     pub style: Option<String>,
     pub trim: Option<common_simple_types::BooleanValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xscale: Option<common_simple_types::BooleanValue>,
 }

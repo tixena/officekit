@@ -19,9 +19,9 @@ use officekit_markup::presentation::{
     NotesTextStyle, PresentationDefaultTextStyle, SlideMasterBodyTextStyle,
     SlideMasterOtherTextStyle, SlideMasterTitleTextStyle,
 };
-use officekit_markup::{Read, Shape, Tag};
+use officekit_markup::{Read, Shape, Tag, Unknown};
 use officekit_xml::element::{Element, NamespaceDeclaration, Node};
-use officekit_xml::name::Namespace;
+use officekit_xml::name::{Namespace, QName};
 use officekit_xml::write::Scope;
 
 /// Implements [`ParagraphLevel`] for each `CT_TextParagraphProperties` node given with the
@@ -32,7 +32,7 @@ macro_rules! paragraph_level {
             fn paragraph_properties(&self) -> TextParagraphProperties {
                 let mut properties =
                     TextParagraphProperties::read(&write::$write(self, &mut scope()));
-                properties.unknown.name = None;
+                properties.unknown = with_name(properties.unknown.take(), None);
                 properties
             }
         }
@@ -46,7 +46,7 @@ macro_rules! run_level {
         impl RunLevel for $node {
             fn run_properties(&self) -> TextRunProperties {
                 let mut properties = TextRunProperties::read(&write::$write(self, &mut scope()));
-                properties.unknown.name = None;
+                properties.unknown = with_name(properties.unknown.take(), None);
                 properties
             }
         }
@@ -313,11 +313,8 @@ pub fn paragraph_over(
         &TEXT_PARAGRAPH_PROPERTIES_SHAPE,
         Some(&DEFAULT_TEXT_RUN_PROPERTIES_SHAPE),
     );
-    properties.unknown.name = over
-        .unknown
-        .name
-        .clone()
-        .or_else(|| base.unknown.name.clone());
+    let name = name_of(over.unknown()).or_else(|| name_of(base.unknown()));
+    properties.unknown = with_name(properties.unknown.take(), name);
     properties
 }
 
@@ -334,12 +331,21 @@ pub fn run_over(over: &TextRunProperties, base: &TextRunProperties) -> TextRunPr
         &TEXT_RUN_PROPERTIES_SHAPE,
         None,
     );
-    properties.unknown.name = over
-        .unknown
-        .name
-        .clone()
-        .or_else(|| base.unknown.name.clone());
+    let name = name_of(over.unknown()).or_else(|| name_of(base.unknown()));
+    properties.unknown = with_name(properties.unknown.take(), name);
     properties
+}
+
+/// The name `unknown` keeps the element it was read from under; `None` without a record.
+fn name_of(unknown: Option<&Unknown>) -> Option<Box<QName>> {
+    unknown?.name.clone()
+}
+
+/// `held` named `name`; `None` when that leaves it empty.
+fn with_name(held: Option<Box<Unknown>>, name: Option<Box<QName>>) -> Option<Box<Unknown>> {
+    let mut unknown = held.unwrap_or_default();
+    unknown.name = name;
+    (!unknown.is_empty()).then_some(unknown)
 }
 
 /// A scope that binds [`NAMESPACES`], so that an element written in it carries only its node's own

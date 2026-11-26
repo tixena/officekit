@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `AutoRefresh` as its element, `xlpar:autoRefresh`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn auto_refresh(node: &super::AutoRefresh, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::AUTO_REFRESH_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::AUTO_REFRESH_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }

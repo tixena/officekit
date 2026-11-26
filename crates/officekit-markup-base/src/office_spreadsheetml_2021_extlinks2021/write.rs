@@ -222,13 +222,14 @@ use officekit_xml::write::Scope;
 /// Write a `AbsoluteUrl` as its element, `xxl21:absoluteUrl`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn absolute_url(node: &super::AbsoluteUrl, scope: &mut Scope) -> Element {
-    crate::Writer::new(scope, &super::ABSOLUTE_URL_SHAPE, &node.unknown).finish()
+    crate::Writer::new(scope, &super::ABSOLUTE_URL_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `AlternateUrls` as its element, `xxl21:alternateUrls`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn alternate_urls(node: &super::AlternateUrls, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::ALTERNATE_URLS_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::ALTERNATE_URLS_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.drive_id);
     writer.attribute(1, &node.item_id);
     writer.child(&node.absolute_url);
@@ -239,5 +240,5 @@ pub fn alternate_urls(node: &super::AlternateUrls, scope: &mut Scope) -> Element
 /// Write a `RelativeUrl` as its element, `xxl21:relativeUrl`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn relative_url(node: &super::RelativeUrl, scope: &mut Scope) -> Element {
-    crate::Writer::new(scope, &super::RELATIVE_URL_SHAPE, &node.unknown).finish()
+    crate::Writer::new(scope, &super::RELATIVE_URL_SHAPE, node.unknown.as_deref()).finish()
 }

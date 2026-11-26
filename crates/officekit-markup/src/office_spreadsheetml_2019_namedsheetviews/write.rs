@@ -223,8 +223,11 @@ use officekit_xml::write::Scope;
 /// Write a `ColumnFilter` as its element, `xnsv:columnFilter`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_filter(node: &super::ColumnFilter, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COLUMN_FILTER_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::COLUMN_FILTER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.col_id);
     writer.attribute(1, &node.id);
     writer.child(&node.dxf);
@@ -236,7 +239,8 @@ pub fn column_filter(node: &super::ColumnFilter, scope: &mut Scope) -> Element {
 /// Write a `Dxf` as its element, `xnsv:dxf`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dxf(node: &super::Dxf, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::DXF_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::DXF_SHAPE, node.unknown.as_deref());
     writer.child(&node.font);
     writer.child(&node.number_format);
     writer.child(&node.fill);
@@ -251,7 +255,7 @@ pub fn dxf(node: &super::Dxf, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -259,7 +263,8 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `Filter` as its element, `xnsv:filter`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn filter(node: &super::Filter, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::FILTER_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::FILTER_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.col_id);
     writer.attribute(1, &node.hidden_button);
     writer.attribute(2, &node.show_button);
@@ -270,8 +275,11 @@ pub fn filter(node: &super::Filter, scope: &mut Scope) -> Element {
 /// Write a `NamedSheetView` as its element, `xnsv:namedSheetView`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn named_sheet_view(node: &super::NamedSheetView, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NAMED_SHEET_VIEW_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NAMED_SHEET_VIEW_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.id);
     writer.child(&node.nsv_filter);
@@ -282,8 +290,11 @@ pub fn named_sheet_view(node: &super::NamedSheetView, scope: &mut Scope) -> Elem
 /// Write a `NamedSheetViews` as its element, `xnsv:namedSheetViews`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn named_sheet_views(node: &super::NamedSheetViews, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NAMED_SHEET_VIEWS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NAMED_SHEET_VIEWS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.named_sheet_view);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -292,8 +303,11 @@ pub fn named_sheet_views(node: &super::NamedSheetViews, scope: &mut Scope) -> El
 /// Write a `NsvFilter` as its element, `xnsv:nsvFilter`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nsv_filter(node: &super::NsvFilter, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NSV_FILTER_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NSV_FILTER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.filter_id);
     writer.attribute(1, &node.r#ref);
     writer.attribute(2, &node.table_id);
@@ -306,8 +320,11 @@ pub fn nsv_filter(node: &super::NsvFilter, scope: &mut Scope) -> Element {
 /// Write a `RichSortCondition` as its element, `xnsv:richSortCondition`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rich_sort_condition(node: &super::RichSortCondition, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::RICH_SORT_CONDITION_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::RICH_SORT_CONDITION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.rich_sort_key);
     writer.attribute(1, &node.descending);
     writer.attribute(2, &node.sort_by);
@@ -322,8 +339,11 @@ pub fn rich_sort_condition(node: &super::RichSortCondition, scope: &mut Scope) -
 /// Write a `SortCondition` as its element, `xnsv:sortCondition`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sort_condition(node: &super::SortCondition, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SORT_CONDITION_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SORT_CONDITION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.descending);
     writer.attribute(1, &node.sort_by);
     writer.attribute(2, &node.r#ref);
@@ -338,7 +358,7 @@ pub fn sort_condition(node: &super::SortCondition, scope: &mut Scope) -> Element
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sort_rule(node: &super::SortRule, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SORT_RULE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::SORT_RULE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.col_id);
     writer.attribute(1, &node.id);
     writer.child(&node.dxf);
@@ -357,8 +377,11 @@ pub fn sort_rule_content(
 /// Write a `SortRules` as its element, `xnsv:sortRules`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sort_rules(node: &super::SortRules, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SORT_RULES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SORT_RULES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.sort_method);
     writer.attribute(1, &node.case_sensitive);
     writer.child(&node.sort_rule);

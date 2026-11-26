@@ -233,7 +233,8 @@ impl super::Transform for office_powerpoint_2017_3_main::Track {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_powerpoint_2017_3_main::Track {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_powerpoint_2017_3_main::Track {
         let converted = super::converts(
             out,
             &office_powerpoint_2017_3_main::TRACK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2017_3_main::write::track(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_powerpoint_2017_3_main::Track {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2017_3_main::TRACK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.label);
@@ -321,9 +322,9 @@ impl super::Transform for office_powerpoint_2017_3_main::TrackLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.track = super::transform_child(&self.track, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -341,7 +342,7 @@ impl super::Visit for office_powerpoint_2017_3_main::TrackLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.track, visitor);
         walk.finish(visitor);
     }
@@ -356,7 +357,7 @@ impl WriteThrough for office_powerpoint_2017_3_main::TrackLst {
         let converted = super::converts(
             out,
             &office_powerpoint_2017_3_main::TRACK_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2017_3_main::write::track_lst(self, out.scope());
@@ -365,7 +366,7 @@ impl WriteThrough for office_powerpoint_2017_3_main::TrackLst {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2017_3_main::TRACK_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.track, ctx)?;
         through.finish(ctx)
@@ -409,9 +410,9 @@ impl super::Transform for office_powerpoint_2017_3_main::TracksInfo {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.track_lst = super::transform_child(&self.track_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -429,7 +430,7 @@ impl super::Visit for office_powerpoint_2017_3_main::TracksInfo {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.track_lst, visitor);
         walk.finish(visitor);
     }
@@ -444,7 +445,7 @@ impl WriteThrough for office_powerpoint_2017_3_main::TracksInfo {
         let converted = super::converts(
             out,
             &office_powerpoint_2017_3_main::TRACKS_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2017_3_main::write::tracks_info(self, out.scope());
@@ -453,7 +454,7 @@ impl WriteThrough for office_powerpoint_2017_3_main::TracksInfo {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2017_3_main::TRACKS_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.display_loc);
         through.child(&self.track_lst, ctx)?;

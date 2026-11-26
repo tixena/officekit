@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -236,7 +236,7 @@ pub struct MentionMirror {
     pub mention_id: Option<String>,
     pub mentionperson_id: Option<String>,
     pub start_index: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -245,7 +245,7 @@ pub struct MentionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct MentionsMirror {
     pub mention: Vec<super::Mention>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -257,7 +257,7 @@ pub struct PersonMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub provider_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub user_id: Option<String>,
 }
@@ -268,7 +268,7 @@ pub struct PersonMirror {
 pub struct PersonListMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub person: Vec<super::Person>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -276,7 +276,7 @@ pub struct PersonListMirror {
 #[rkyv(remote = super::Text)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -294,7 +294,7 @@ pub struct ThreadedCommentMirror {
     pub person_id: Option<String>,
     pub r#ref: Option<String>,
     pub text: Option<Box<super::Text>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -304,7 +304,7 @@ pub struct ThreadedCommentMirror {
 pub struct ThreadedCommentsMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub threaded_comment: Vec<super::ThreadedComment>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

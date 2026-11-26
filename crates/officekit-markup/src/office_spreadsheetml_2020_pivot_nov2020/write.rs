@@ -225,7 +225,7 @@ pub fn data_field_future_data(node: &super::DataFieldFutureData, scope: &mut Sco
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DATA_FIELD_FUTURE_DATA_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.version);
     writer.attribute(1, &node.source_field);
@@ -238,7 +238,7 @@ pub fn ignorable_after_version(node: &super::IgnorableAfterVersion, scope: &mut 
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::IGNORABLE_AFTER_VERSION_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.version);
     writer.finish()
@@ -253,7 +253,7 @@ pub fn implicit_measure_support(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::IMPLICIT_MEASURE_SUPPORT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()

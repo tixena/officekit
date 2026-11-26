@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn checksum(node: &super::Checksum, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CHECKSUM_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::CHECKSUM_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -232,7 +232,7 @@ pub fn checksum(node: &super::Checksum, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -241,7 +241,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::HYPERLINK_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::HYPERLINK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.start_index);
     writer.attribute(1, &node.length);
     writer.attribute(2, &node.url);

@@ -225,7 +225,7 @@ pub fn calculated_time_column(node: &super::CalculatedTimeColumn, scope: &mut Sc
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CALCULATED_TIME_COLUMN_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.column_name);
     writer.attribute(1, &node.column_id);
@@ -237,8 +237,11 @@ pub fn calculated_time_column(node: &super::CalculatedTimeColumn, scope: &mut Sc
 /// Write a `ModelTimeGrouping` as its element, `x16:modelTimeGrouping`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn model_time_grouping(node: &super::ModelTimeGrouping, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MODEL_TIME_GROUPING_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::MODEL_TIME_GROUPING_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.table_name);
     writer.attribute(1, &node.column_name);
     writer.attribute(2, &node.column_id);
@@ -252,7 +255,7 @@ pub fn model_time_groupings(node: &super::ModelTimeGroupings, scope: &mut Scope)
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::MODEL_TIME_GROUPINGS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.model_time_grouping);
     writer.finish()

@@ -233,7 +233,8 @@ impl super::Transform for office_excel_2006_main::F {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_excel_2006_main::F {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -261,12 +262,20 @@ impl WriteThrough for office_excel_2006_main::F {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_excel_2006_main::F_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_excel_2006_main::F_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_excel_2006_main::write::f(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &office_excel_2006_main::F_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_excel_2006_main::F_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -309,7 +318,8 @@ impl super::Transform for office_excel_2006_main::Sqref {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -327,7 +337,7 @@ impl super::Visit for office_excel_2006_main::Sqref {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -337,13 +347,20 @@ impl WriteThrough for office_excel_2006_main::Sqref {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_excel_2006_main::SQREF_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_excel_2006_main::SQREF_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_excel_2006_main::write::sqref(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_excel_2006_main::SQREF_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_excel_2006_main::SQREF_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }

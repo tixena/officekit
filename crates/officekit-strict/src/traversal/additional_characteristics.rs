@@ -233,10 +233,10 @@ impl super::Transform for additional_characteristics::SetOfAdditionalCharacteris
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.single_characteristic =
             super::transform_child(&self.single_characteristic, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -254,7 +254,7 @@ impl super::Visit for additional_characteristics::SetOfAdditionalCharacteristics
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.single_characteristic, visitor);
         walk.finish(visitor);
     }
@@ -269,7 +269,7 @@ impl WriteThrough for additional_characteristics::SetOfAdditionalCharacteristics
         let converted = super::converts(
             out,
             &additional_characteristics::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = additional_characteristics::write::set_of_additional_characteristics(
@@ -281,7 +281,7 @@ impl WriteThrough for additional_characteristics::SetOfAdditionalCharacteristics
         let mut through = super::Through::new(
             out,
             &additional_characteristics::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.single_characteristic, ctx)?;
         through.finish(ctx)
@@ -325,7 +325,8 @@ impl super::Transform for additional_characteristics::SingleCharacteristic {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -343,7 +344,7 @@ impl super::Visit for additional_characteristics::SingleCharacteristic {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -356,7 +357,7 @@ impl WriteThrough for additional_characteristics::SingleCharacteristic {
         let converted = super::converts(
             out,
             &additional_characteristics::SINGLE_CHARACTERISTIC_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -366,7 +367,7 @@ impl WriteThrough for additional_characteristics::SingleCharacteristic {
         let mut through = super::Through::new(
             out,
             &additional_characteristics::SINGLE_CHARACTERISTIC_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.relation);

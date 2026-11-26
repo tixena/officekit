@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AnchorLocationIsLocked)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorLocationIsLockedMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -232,7 +232,7 @@ pub struct AnchorLocationIsLockedMirror {
 pub struct BottomBorderMirror {
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub width: Option<String>,
 }
@@ -243,7 +243,7 @@ pub struct BottomBorderMirror {
 pub struct LeftBorderMirror {
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub width: Option<String>,
 }
@@ -254,7 +254,7 @@ pub struct LeftBorderMirror {
 pub struct RightBorderMirror {
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub width: Option<String>,
 }
@@ -267,7 +267,7 @@ pub struct TextWrappingMirror {
     pub anchory: Option<super::VerticalAnchorType>,
     pub side: Option<super::TextWrappingSide>,
     pub r#type: Option<super::TextWrappingType>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -277,7 +277,7 @@ pub struct TextWrappingMirror {
 pub struct TopBorderMirror {
     pub shadow: Option<super::BorderShadowType>,
     pub r#type: Option<super::BorderType>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub width: Option<String>,
 }

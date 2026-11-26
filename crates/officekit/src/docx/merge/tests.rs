@@ -307,7 +307,7 @@ fn document_of(
     body.content = blocks;
     body.document_final_section_properties = section.map(Box::new);
     let mut document = Document::default();
-    declare(&mut document.unknown, source, ignorable);
+    declare(document.unknown_mut(), source, ignorable);
     document.body = Some(Box::new(body));
     document
 }
@@ -464,7 +464,7 @@ fn footnotes_of(first: i64, notes: Vec<FootnoteContent>, source: bool) -> Vec<u8
     };
     let mut part = DocumentFootnotes::default();
     declare(
-        &mut part.unknown,
+        part.unknown_mut(),
         source,
         if source { "w14 wp14 w15" } else { "" },
     );
@@ -498,7 +498,7 @@ fn endnotes_of(first: i64, notes: Vec<EndnoteContent>, source: bool) -> Vec<u8> 
     };
     let mut part = DocumentEndnotes::default();
     declare(
-        &mut part.unknown,
+        part.unknown_mut(),
         source,
         if source { "w14 wp14 w15" } else { "" },
     );
@@ -562,7 +562,7 @@ fn linked(mut definition: StyleDefinition, linked_style: &str) -> StyleDefinitio
 fn styles_of(definitions: Vec<StyleDefinition>, source: bool) -> Vec<u8> {
     let mut styles = StyleDefinitions::default();
     declare(
-        &mut styles.unknown,
+        styles.unknown_mut(),
         source,
         if source { "w14 wp14 w15" } else { "" },
     );
@@ -601,7 +601,7 @@ fn list(id: &str, abstract_id: &str) -> NumberingDefinitionInstance {
 
 /// A numbering part of `definitions`.
 fn numbering_bytes(mut definitions: NumberingDefinitions) -> Vec<u8> {
-    declare(&mut definitions.unknown, false, "");
+    declare(definitions.unknown_mut(), false, "");
     bytes(wordprocessing::write::numbering_definitions(
         &definitions,
         &mut Scope::default(),
@@ -836,7 +836,7 @@ fn source_comments() -> Vec<u8> {
     ))];
     comment.id = Some(number("0"));
     let mut comments = CommentsCollection::default();
-    declare(&mut comments.unknown, true, "w14 wp14 w15");
+    declare(comments.unknown_mut(), true, "w14 wp14 w15");
     comments.comment_content = vec![comment];
     bytes(wordprocessing::write::comments_collection(
         &comments,
@@ -1001,7 +1001,7 @@ fn empty_document() -> Document {
 /// A header part of one empty paragraph.
 fn empty_header() -> Vec<u8> {
     let mut header = Header::default();
-    declare(&mut header.unknown, false, "");
+    declare(header.unknown_mut(), false, "");
     header.content = vec![BlockContent::Paragraph(Paragraph::default())];
     bytes(wordprocessing::write::header(
         &header,
@@ -1182,13 +1182,14 @@ fn notes_come_in_after_the_separators_and_a_comment_into_a_new_part() {
     assert_eq!(entries, [(Some("0"), Some("Reviewer"))]);
     assert!(
         comments
-            .unknown
+            .unknown()
+            .unwrap()
             .namespace_declarations
             .iter()
             .any(|declaration| declaration.prefix == "w15"
                 && declaration.uri == "http://schemas.microsoft.com/office/word/2012/wordml")
     );
-    assert_eq!(ignorable(&comments.unknown), Some("w14 wp14 w15"));
+    assert_eq!(ignorable(comments.unknown().unwrap()), Some("w14 wp14 w15"));
 }
 
 #[test]
@@ -1275,11 +1276,12 @@ fn missing_styles_come_with_the_styles_they_name_and_defined_ones_stay() {
 #[test]
 fn the_root_gains_the_source_root_declarations_and_other_attributes_stay() {
     let (_, document, blocks) = notes_import();
-    assert_eq!(ignorable(&document.unknown), Some("w14 wp14 w15"));
+    assert_eq!(ignorable(document.unknown().unwrap()), Some("w14 wp14 w15"));
     for prefix in ["wp14", "w15"] {
         assert!(
             document
-                .unknown
+                .unknown()
+                .unwrap()
                 .namespace_declarations
                 .iter()
                 .any(|declaration| declaration.prefix == prefix),
@@ -1364,7 +1366,7 @@ fn range_ids_start_above_the_notes_parts_and_map_each_value_once() {
     ))];
     comment.id = Some(number("0"));
     let mut comments = CommentsCollection::default();
-    declare(&mut comments.unknown, false, "");
+    declare(comments.unknown_mut(), false, "");
     comments.comment_content = vec![comment];
     add(
         &mut target,
@@ -1605,7 +1607,7 @@ fn a_prefix_bound_to_another_namespace_is_a_read_error_and_changes_nothing() {
     let bound = |uris: &[(&str, &str)]| {
         let mut document = empty_document();
         document
-            .unknown
+            .unknown_mut()
             .namespace_declarations
             .extend(uris.iter().map(|(prefix, uri)| {
                 NamespaceDeclaration::new((*prefix).to_owned(), (*uri).to_owned())
@@ -1618,21 +1620,24 @@ fn a_prefix_bound_to_another_namespace_is_a_read_error_and_changes_nothing() {
         ("y", "urn:example:three"),
     ]));
     let mut document = target.main_document().unwrap();
-    let declarations = document.unknown.namespace_declarations.clone();
+    let declarations = document.unknown().unwrap().namespace_declarations.clone();
     let error = target.import_body(&mut document, &source).unwrap_err();
     assert!(
         matches!(&error, PackageError::Read { part, reason } if part.as_str() == "/word/document.xml" && reason.contains("urn:example:two")),
         "{error:?}"
     );
-    assert_eq!(document.unknown.namespace_declarations, declarations);
+    assert_eq!(
+        document.unknown().unwrap().namespace_declarations,
+        declarations
+    );
 }
 
 #[test]
 fn a_styles_part_whose_root_binds_a_prefix_otherwise_is_a_read_error() {
     let styles = |uri: &str, definitions: Vec<StyleDefinition>| {
         let mut held = StyleDefinitions::default();
-        declare(&mut held.unknown, false, "");
-        held.unknown
+        declare(held.unknown_mut(), false, "");
+        held.unknown_mut()
             .namespace_declarations
             .push(NamespaceDeclaration::new("x".to_owned(), uri.to_owned()));
         held.style_definition = definitions;

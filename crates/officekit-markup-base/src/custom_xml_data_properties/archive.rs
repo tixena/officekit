@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::AssociatedXMLSchema)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssociatedXMLSchemaMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -233,7 +233,7 @@ pub struct AssociatedXMLSchemaMirror {
 pub struct CustomXMLDataPropertiesMirror {
     pub item_id: Option<super::super::common_simple_types::Guid>,
     pub set_of_associated_xml_schemas: Option<Box<super::SetOfAssociatedXMLSchemas>>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -242,7 +242,7 @@ pub struct CustomXMLDataPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SetOfAssociatedXMLSchemasMirror {
     pub associated_xml_schema: Vec<super::AssociatedXMLSchema>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 

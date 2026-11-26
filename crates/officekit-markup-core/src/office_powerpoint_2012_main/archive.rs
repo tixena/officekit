@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ChartTrackingRefBased)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ChartTrackingRefBasedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -232,7 +232,7 @@ pub struct ChartTrackingRefBasedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ClrMirror {
     pub content: Box<super::super::drawing::ColorContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -241,7 +241,7 @@ pub struct ClrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<super::super::presentation::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -255,7 +255,7 @@ pub struct GuideMirror {
     pub name: Option<String>,
     pub orient: Option<super::super::presentation::Direction>,
     pub pos: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub user_drawn: Option<String>,
 }
@@ -266,7 +266,7 @@ pub struct GuideMirror {
 pub struct NotesGuideLstMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub guide: Vec<super::Guide>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -276,7 +276,7 @@ pub struct NotesGuideLstMirror {
 pub struct ParentCmMirror {
     pub author_id: Option<String>,
     pub idx: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -285,7 +285,7 @@ pub struct ParentCmMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PresenceInfoMirror {
     pub provider_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub user_id: Option<String>,
 }
@@ -297,7 +297,7 @@ pub struct PrstTransMirror {
     pub inv_x: Option<String>,
     pub inv_y: Option<String>,
     pub prst: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -307,7 +307,7 @@ pub struct PrstTransMirror {
 pub struct SldGuideLstMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub guide: Vec<super::Guide>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -317,7 +317,7 @@ pub struct SldGuideLstMirror {
 pub struct ThreadingInfoMirror {
     pub parent_cm: Option<Box<super::ParentCm>>,
     pub time_zone_bias: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

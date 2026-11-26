@@ -225,7 +225,7 @@ pub fn drop_zone_categories(node: &super::DropZoneCategories, scope: &mut Scope)
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::DROP_ZONE_CATEGORIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -233,37 +233,56 @@ pub fn drop_zone_categories(node: &super::DropZoneCategories, scope: &mut Scope)
 /// Write a `DropZoneData` as its element, `c14:dropZoneData`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_zone_data(node: &super::DropZoneData, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::DROP_ZONE_DATA_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DROP_ZONE_DATA_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `DropZoneFilter` as its element, `c14:dropZoneFilter`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_zone_filter(node: &super::DropZoneFilter, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::DROP_ZONE_FILTER_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DROP_ZONE_FILTER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
 /// Write a `DropZoneSeries` as its element, `c14:dropZoneSeries`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_zone_series(node: &super::DropZoneSeries, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::DROP_ZONE_SERIES_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DROP_ZONE_SERIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
 /// Write a `DropZonesVisible` as its element, `c14:dropZonesVisible`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_zones_visible(node: &super::DropZonesVisible, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::DROP_ZONES_VISIBLE_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DROP_ZONES_VISIBLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
 /// Write a `InSketchMode` as its element, `c14:inSketchMode`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn in_sketch_mode(node: &super::InSketchMode, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::IN_SKETCH_MODE_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::IN_SKETCH_MODE_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `InvertSolidFillFmt` as its element, `c14:invertSolidFillFmt`.
@@ -272,7 +291,7 @@ pub fn invert_solid_fill_fmt(node: &super::InvertSolidFillFmt, scope: &mut Scope
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::INVERT_SOLID_FILL_FMT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.sp_pr);
     writer.finish()
@@ -281,8 +300,11 @@ pub fn invert_solid_fill_fmt(node: &super::InvertSolidFillFmt, scope: &mut Scope
 /// Write a `PivotOptions` as its element, `c14:pivotOptions`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pivot_options(node: &super::PivotOptions, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PIVOT_OPTIONS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PIVOT_OPTIONS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.drop_zone_filter);
     writer.child(&node.drop_zone_categories);
     writer.child(&node.drop_zone_data);
@@ -294,8 +316,11 @@ pub fn pivot_options(node: &super::PivotOptions, scope: &mut Scope) -> Element {
 /// Write a `ShowSketchBtn` as its element, `c14:showSketchBtn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn show_sketch_btn(node: &super::ShowSketchBtn, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHOW_SKETCH_BTN_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHOW_SKETCH_BTN_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -303,8 +328,11 @@ pub fn show_sketch_btn(node: &super::ShowSketchBtn, scope: &mut Scope) -> Elemen
 /// Write a `SketchOptions` as its element, `c14:sketchOptions`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sketch_options(node: &super::SketchOptions, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SKETCH_OPTIONS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SKETCH_OPTIONS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.in_sketch_mode);
     writer.child(&node.show_sketch_btn);
     writer.finish()
@@ -313,7 +341,8 @@ pub fn sketch_options(node: &super::SketchOptions, scope: &mut Scope) -> Element
 /// Write a `SpPr` as its element, `c14:spPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
     writer.child(&node.geometry_content);
@@ -329,7 +358,8 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
 /// Write a `Style` as its element, `c14:style`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::STYLE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.val);
     writer.finish()
 }

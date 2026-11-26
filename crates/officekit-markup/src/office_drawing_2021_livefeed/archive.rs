@@ -226,7 +226,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct BackgroundPropsMirror {
     pub content: Option<Box<super::LiveFeedBackgroundPropertiesContent>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -235,7 +235,7 @@ pub struct BackgroundPropsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BlurMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -244,7 +244,7 @@ pub struct BlurMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -253,7 +253,7 @@ pub struct CustomMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -263,7 +263,7 @@ pub struct ExtLstMirror {
 pub struct LiveFeedPropsMirror {
     pub background_props: Option<Box<super::BackgroundProps>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -272,7 +272,7 @@ pub struct LiveFeedPropsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NormalMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -281,7 +281,7 @@ pub struct NormalMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RemovedMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

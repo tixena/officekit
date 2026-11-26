@@ -237,7 +237,7 @@ fn marked(value: &str, marks: Vec<RunPropertiesContent>) -> TextRun {
 }
 
 /// Paragraph borders of one bottom line, the horizontal rule Word writes.
-fn bottom_border() -> Box<ParagraphBorders> {
+fn bottom_border() -> ParagraphBorders {
     let mut bottom = ParagraphBorderBelowIdenticalParagraphs::default();
     bottom.color = Some(ColorValue::from("auto".to_owned()));
     bottom.space = Some(MeasurementInPoints::from("1".to_owned()));
@@ -245,7 +245,7 @@ fn bottom_border() -> Box<ParagraphBorders> {
     bottom.val = Some(BorderStyles::from("single".to_owned()));
     let mut borders = ParagraphBorders::default();
     borders.paragraph_border_below_identical_paragraphs = Some(Box::new(bottom));
-    Box::new(borders)
+    borders
 }
 
 /// Paragraph properties of the style `style`, when given, indenting a paragraph to `left`.
@@ -1057,7 +1057,7 @@ fn tabs_and_text_wrapping_breaks_stay_and_a_page_break_goes() {
 #[test]
 fn an_empty_paragraph_gives_nothing_and_one_with_a_bottom_border_alone_a_thematic_break() {
     let mut bordered = ParagraphProperties::default();
-    bordered.paragraph_borders = Some(bottom_border());
+    bordered.paragraph_borders = Some(Box::new(bottom_border()));
     let docx = word(alloc::vec![
         plain(Vec::new()),
         plain(alloc::vec![run("a")]),
@@ -1530,7 +1530,7 @@ fn a_code_block_a_block_quote_and_a_rule_inside_a_list_item_come_back_inside_it(
     let under =
         |style: &str, value: &str| styled_by(indented(Some(style), "720"), alloc::vec![run(value)]);
     let mut ruled = indented(None, "720");
-    ruled.paragraph_borders = Some(bottom_border());
+    ruled.paragraph_borders = Some(Box::new(bottom_border()));
     let mut fixture = Fixture::new();
     fixture.numbering();
     let docx = fixture.body(alloc::vec![

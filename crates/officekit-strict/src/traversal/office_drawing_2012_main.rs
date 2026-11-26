@@ -233,7 +233,8 @@ impl super::Transform for office_drawing_2012_main::BackgroundPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_drawing_2012_main::BackgroundPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_drawing_2012_main::BackgroundPr {
         let converted = super::converts(
             out,
             &office_drawing_2012_main::BACKGROUND_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_main::write::background_pr(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_drawing_2012_main::BackgroundPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::BACKGROUND_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.attribute(1, &self.bw_pure);
@@ -320,7 +321,8 @@ impl super::Transform for office_drawing_2012_main::NonVisualGroupProps {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -338,7 +340,7 @@ impl super::Visit for office_drawing_2012_main::NonVisualGroupProps {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -351,7 +353,7 @@ impl WriteThrough for office_drawing_2012_main::NonVisualGroupProps {
         let converted = super::converts(
             out,
             &office_drawing_2012_main::NON_VISUAL_GROUP_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -361,7 +363,7 @@ impl WriteThrough for office_drawing_2012_main::NonVisualGroupProps {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::NON_VISUAL_GROUP_PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.is_legacy_group);
         through.finish(ctx)
@@ -405,7 +407,8 @@ impl super::Transform for office_drawing_2012_main::ObjectPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -423,7 +426,7 @@ impl super::Visit for office_drawing_2012_main::ObjectPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -436,7 +439,7 @@ impl WriteThrough for office_drawing_2012_main::ObjectPr {
         let converted = super::converts(
             out,
             &office_drawing_2012_main::OBJECT_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_main::write::object_pr(self, out.scope());
@@ -445,7 +448,7 @@ impl WriteThrough for office_drawing_2012_main::ObjectPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::OBJECT_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.object_id);
         through.attribute(1, &self.is_active_x);
@@ -491,7 +494,8 @@ impl super::Transform for office_drawing_2012_main::SignatureLine {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -509,7 +513,7 @@ impl super::Visit for office_drawing_2012_main::SignatureLine {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -522,7 +526,7 @@ impl WriteThrough for office_drawing_2012_main::SignatureLine {
         let converted = super::converts(
             out,
             &office_drawing_2012_main::SIGNATURE_LINE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2012_main::write::signature_line(self, out.scope());
@@ -531,7 +535,7 @@ impl WriteThrough for office_drawing_2012_main::SignatureLine {
         let mut through = super::Through::new(
             out,
             &office_drawing_2012_main::SIGNATURE_LINE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.is_signature_line);
         through.attribute(1, &self.id);

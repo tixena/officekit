@@ -229,7 +229,7 @@ pub fn external_code_service_image_as_input(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::EXTERNAL_CODE_SERVICE_IMAGE_AS_INPUT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.max_width);
     writer.attribute(1, &node.max_height);

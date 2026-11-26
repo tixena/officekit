@@ -38,9 +38,11 @@
 //! version, vendor extensions, comments, or attributes of another namespace. A read keeps all
 //! of it in place, so a write gives it back.
 //!
-//! - Every struct has a field `unknown` of type [`Unknown`]. It holds the attributes the
-//!   shape does not declare, the namespace declarations of the element, and unknown children
-//!   at positions no list covers, each as an [`Extra`] that names the declared child it follows.
+//! - Every struct has a field `unknown` of type `Option<Box<Unknown>>`, `None` when the read
+//!   found nothing to keep. An [`Unknown`] holds the attributes the shape does not declare, the
+//!   namespace declarations of the element, and unknown children at positions no list covers,
+//!   each as an [`Extra`] that names the declared child it follows. A node's `unknown()` reads it
+//!   and `unknown_mut()` puts an empty record in place to change.
 //! - Every enum that models a list of alternative children has an `Other(Node)` arm. An
 //!   unknown node between list items joins the list there, in order.
 //! - Whitespace-only text between children is dropped.
@@ -80,8 +82,9 @@
 //! let root = parse(xml.as_bytes()).expect("well-formed XML").root;
 //! let mut properties = custom_file_properties(&root);
 //! assert_eq!(properties.custom_file_property.len(), 2);
-//! assert_eq!(properties.unknown.children.len(), 1);
-//! assert_eq!(properties.unknown.children[0].after, 1);
+//! let unknown = properties.unknown().expect("the note is kept");
+//! assert_eq!(unknown.children.len(), 1);
+//! assert_eq!(unknown.children[0].after, 1);
 //!
 //! properties.custom_file_property[1].name = Some("Signed".to_owned());
 //! let element = write::custom_file_properties(&properties, &mut Scope::default());
@@ -895,7 +898,7 @@ impl<'element> Reader<'element> {
     /// at positions no list covers, the node's own namespace declarations,
     /// and the required single positions the element left empty.
     #[must_use = "the value moves into the one returned"]
-    pub fn finish(mut self) -> Unknown {
+    pub fn finish(mut self) -> Option<Box<Unknown>> {
         for (_, field) in self.by_ref() {
             if let Field::Start(start, events) = field {
                 drop(events.element(start));
@@ -910,7 +913,7 @@ impl<'element> Reader<'element> {
             .filter(|(_, (slot, filled))| slot.occurs == SlotOccurs::Required && !**filled)
             .map(|(position, _)| position)
             .collect();
-        self.unknown
+        self.unknown.boxed()
     }
 
     /// What `element`'s reader is given, by `shape`.
@@ -1368,6 +1371,35 @@ impl Slot {
 }
 
 impl Unknown {
+    /// This record boxed, as a node holds it; `None` when it holds nothing.
+    #[must_use = "the value moves into the one returned"]
+    pub fn boxed(self) -> Option<Box<Self>> {
+        (!self.is_empty()).then(|| Box::new(self))
+    }
+
+    /// The record `None` stands for: no unknown content.
+    #[must_use = "this only returns the value"]
+    pub fn empty<'any>() -> &'any Self {
+        static EMPTY: Unknown = Unknown {
+            absent: Vec::new(),
+            attributes: Vec::new(),
+            children: Vec::new(),
+            name: None,
+            namespace_declarations: Vec::new(),
+        };
+        &EMPTY
+    }
+
+    /// Whether this record holds no unknown content.
+    #[must_use = "this only returns the value"]
+    pub const fn is_empty(&self) -> bool {
+        self.absent.is_empty()
+            && self.attributes.is_empty()
+            && self.children.is_empty()
+            && self.name.is_none()
+            && self.namespace_declarations.is_empty()
+    }
+
     /// Unknown content with these absent positions, attributes, children, and declarations.
     #[must_use = "this only builds the value"]
     pub const fn new(
@@ -1442,10 +1474,15 @@ impl<'scope, 'node> Writer<'scope, 'node> {
     }
 
     /// Start writing a node of `shape`, with its own namespace declarations
-    /// and the unknown content it keeps, named as it was read.
+    /// and the unknown content it keeps, named as it was read; `None` keeps none.
     #[must_use = "the result is returned and kept nowhere else"]
-    pub fn new(scope: &'scope mut Scope, shape: &'static Shape, unknown: &'node Unknown) -> Self {
-        let (namespace, local) = unknown.name.as_deref().map_or_else(
+    pub fn new(
+        scope: &'scope mut Scope,
+        shape: &'static Shape,
+        unknown: Option<&'node Unknown>,
+    ) -> Self {
+        let kept = unknown.unwrap_or_else(Unknown::empty);
+        let (namespace, local) = kept.name.as_deref().map_or_else(
             || (shape.name.0.map_or("", uri), shape.name.1),
             |name| {
                 (
@@ -1454,15 +1491,15 @@ impl<'scope, 'node> Writer<'scope, 'node> {
                 )
             },
         );
-        let element = scope.element(namespace, local, &unknown.namespace_declarations);
+        let element = scope.element(namespace, local, &kept.namespace_declarations);
         Self {
-            children: Children::new(&unknown.children),
+            children: Children::new(&kept.children),
             element,
             positions: Positions::default(),
             scope,
             shape,
             single: false,
-            unknown,
+            unknown: kept,
         }
     }
 
@@ -1761,8 +1798,7 @@ where
         text: false,
     };
     let mut scope = Scope::default();
-    let unknown = Unknown::default();
-    let mut writer = Writer::new(&mut scope, &BARE, &unknown);
+    let mut writer = Writer::new(&mut scope, &BARE, None);
     item.write_into(&mut writer);
     let mut bare = writer.finish();
     if bare.children.len() == 1

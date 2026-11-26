@@ -228,7 +228,7 @@ pub fn custom_xml_schema_reference(
     let mut writer = crate::Writer::new(
         scope,
         &super::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.uri);
     writer.attribute(1, &node.manifest_location);
@@ -246,7 +246,7 @@ pub fn embedded_custom_xml_schema_supplementary_data(
     let mut writer = crate::Writer::new(
         scope,
         &super::EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.custom_xml_schema_reference);
     writer.finish()

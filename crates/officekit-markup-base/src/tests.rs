@@ -10,7 +10,7 @@ use super::{
     Children, Events, Extra, Field, Item, Pending, Placement, Read, Reader, Scope, Shape, Slot,
     Unknown, Writer,
 };
-use crate::document_properties_custom::CustomFileProperties;
+use crate::document_properties_custom::{CustomFileProperties, write};
 use crate::document_properties_extended::ApplicationSpecificFileProperties;
 
 const CUSTOM_PROPERTIES: &str =
@@ -463,7 +463,7 @@ fn a_node_read_under_another_name_keeps_it_and_is_written_with_it() {
             read.push((index, child.name.clone()));
         }
     }
-    let unknown = reader.finish();
+    let unknown = reader.finish().unwrap();
     let names: Vec<(usize, &str)> = read
         .iter()
         .map(|(index, name)| (*index, name.local.as_str()))
@@ -477,20 +477,22 @@ fn a_node_read_under_another_name_keeps_it_and_is_written_with_it() {
     assert_eq!(unknown.name, Some(Box::new(element.name.clone())));
 
     let mut scope = Scope::default();
-    let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, &unknown).finish();
+    let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, Some(&unknown)).finish();
     assert_eq!(written.name, element.name);
 }
 
 #[test]
 fn a_node_read_under_its_own_name_or_built_in_code_is_written_with_its_shapes_name() {
     let element = element_of("wp", "wsp", WP, Vec::new());
-    let unknown = Reader::new(&element, &SHAPE_WITH_OTHER_NAMES).finish();
+    let unknown = Reader::new(&element, &SHAPE_WITH_OTHER_NAMES)
+        .finish()
+        .unwrap();
     assert_eq!(unknown.name, None);
     assert_eq!(unknown.absent, [1]);
 
-    for kept in [unknown, Unknown::default()] {
+    for kept in [Some(&*unknown), None] {
         let mut scope = Scope::default();
-        let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, &kept).finish();
+        let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, kept).finish();
         assert_eq!(written.name, QName::prefixed("wp", "wsp", WP));
     }
 }
@@ -502,12 +504,55 @@ fn a_name_set_in_code_names_the_element_written() {
         ..Unknown::default()
     };
     let mut scope = Scope::default();
-    let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, &unknown).finish();
+    let written = Writer::new(&mut scope, &SHAPE_WITH_OTHER_NAMES, Some(&unknown)).finish();
     assert_eq!(written.name, QName::prefixed("wps", "wsp", WPS));
     assert_eq!(
         written.namespace_declarations,
         [NamespaceDeclaration::new("wps".to_owned(), WPS.to_owned())]
     );
+}
+
+#[test]
+fn a_read_that_finds_nothing_unknown_boxes_no_record() {
+    let element = element_of("w", "pPr", W, Vec::new());
+    assert_eq!(Reader::new(&element, &KEEP_SHAPE).finish(), None);
+    assert!(Unknown::default().is_empty());
+    assert_eq!(Unknown::default().boxed(), None);
+
+    let xml = format!(
+        "<op:Properties xmlns:op=\"{CUSTOM_PROPERTIES}\" xmlns:vt=\"{VARIANT_TYPES}\">\
+         <op:property name=\"Draft\"><vt:bool>true</vt:bool></op:property></op:Properties>"
+    );
+    let properties = forward_is_tree::<CustomFileProperties>(&xml);
+    assert_eq!(properties.custom_file_property[0].unknown, None);
+}
+
+#[test]
+fn a_read_keeps_unknown_attributes_children_and_declarations_and_writes_them_back() {
+    let xml = format!(
+        "<op:Properties xmlns:op=\"{CUSTOM_PROPERTIES}\" {DECLARE_X} x:a=\"1\"><x:note/>\
+         <op:property name=\"Draft\" x:b=\"2\"><x:in/></op:property></op:Properties>"
+    );
+    let properties = forward_is_tree::<CustomFileProperties>(&xml);
+    let unknown = properties.unknown().unwrap();
+    assert_eq!(unknown.attributes.len(), 1);
+    assert_eq!(unknown.children.len(), 1);
+    assert_eq!(unknown.namespace_declarations.len(), 2);
+    let property = properties.custom_file_property[0].unknown().unwrap();
+    assert_eq!(property.attributes.len(), 1);
+    assert_eq!(property.children.len(), 1);
+
+    let written = write::custom_file_properties(&properties, &mut Scope::default());
+    assert_eq!(to_xml(written), xml);
+}
+
+#[test]
+fn unknown_mut_puts_an_empty_record_in_place_once() {
+    let mut properties = CustomFileProperties::default();
+    assert_eq!(properties.unknown(), None);
+    properties.unknown_mut().absent.push(0);
+    properties.unknown_mut().absent.push(1);
+    assert_eq!(properties.unknown().unwrap().absent, [0, 1]);
 }
 
 /// `T` read from `xml` forward through `Events`, and what `Events::finish` returns.
@@ -544,8 +589,11 @@ fn a_node_read_forward_is_the_node_read_from_its_tree() {
     );
     let properties = forward_is_tree::<CustomFileProperties>(&custom);
     assert_eq!(properties.custom_file_property.len(), 4);
-    assert_eq!(properties.unknown.children.len(), 2);
-    assert_eq!(properties.custom_file_property[2].unknown.absent, [0]);
+    assert_eq!(properties.unknown().unwrap().children.len(), 2);
+    assert_eq!(
+        properties.custom_file_property[2].unknown().unwrap().absent,
+        [0]
+    );
 
     let extended = format!(
         "<ap:Properties xmlns:ap=\"{EXTENDED_PROPERTIES}\" xmlns:vt=\"{VARIANT_TYPES}\" {DECLARE_X}>\

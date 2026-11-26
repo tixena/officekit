@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ApplicationName)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ApplicationNameMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -233,7 +233,7 @@ pub struct ApplicationNameMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ApplicationSpecificFilePropertiesMirror {
     pub content: Vec<super::ApplicationSpecificFilePropertiesContent>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -241,7 +241,7 @@ pub struct ApplicationSpecificFilePropertiesMirror {
 #[rkyv(remote = super::ApplicationVersion)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ApplicationVersionMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -250,7 +250,7 @@ pub struct ApplicationVersionMirror {
 #[rkyv(remote = super::CharactersWithSpaces)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CharactersWithSpacesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -260,7 +260,7 @@ pub struct CharactersWithSpacesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DigitalSignatureMirror {
     pub binary_blob: Box<super::super::document_properties_variant_types::BinaryBlob>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -268,7 +268,7 @@ pub struct DigitalSignatureMirror {
 #[rkyv(remote = super::DocumentSecurity)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DocumentSecurityMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -277,7 +277,7 @@ pub struct DocumentSecurityMirror {
 #[rkyv(remote = super::HeadingPairs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HeadingPairsMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub vector: Box<super::super::document_properties_variant_types::Vector>,
 }
@@ -286,7 +286,7 @@ pub struct HeadingPairsMirror {
 #[rkyv(remote = super::HyperlinkList)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinkListMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub vector: Box<super::super::document_properties_variant_types::Vector>,
 }
@@ -295,7 +295,7 @@ pub struct HyperlinkListMirror {
 #[rkyv(remote = super::HyperlinksChanged)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HyperlinksChangedMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -304,7 +304,7 @@ pub struct HyperlinksChangedMirror {
 #[rkyv(remote = super::IntendedFormatOfPresentation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntendedFormatOfPresentationMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -313,7 +313,7 @@ pub struct IntendedFormatOfPresentationMirror {
 #[rkyv(remote = super::LinksUpToDate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinksUpToDateMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -322,7 +322,7 @@ pub struct LinksUpToDateMirror {
 #[rkyv(remote = super::NameOfCompany)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NameOfCompanyMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -331,7 +331,7 @@ pub struct NameOfCompanyMirror {
 #[rkyv(remote = super::NameOfDocumentTemplate)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NameOfDocumentTemplateMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -340,7 +340,7 @@ pub struct NameOfDocumentTemplateMirror {
 #[rkyv(remote = super::NameOfManager)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NameOfManagerMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -349,7 +349,7 @@ pub struct NameOfManagerMirror {
 #[rkyv(remote = super::NumberOfHiddenSlides)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfHiddenSlidesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -358,7 +358,7 @@ pub struct NumberOfHiddenSlidesMirror {
 #[rkyv(remote = super::NumberOfLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfLinesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -367,7 +367,7 @@ pub struct NumberOfLinesMirror {
 #[rkyv(remote = super::NumberOfSlidesContainingNotes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NumberOfSlidesContainingNotesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -376,7 +376,7 @@ pub struct NumberOfSlidesContainingNotesMirror {
 #[rkyv(remote = super::PartTitles)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PartTitlesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub vector: Box<super::super::document_properties_variant_types::Vector>,
 }
@@ -385,7 +385,7 @@ pub struct PartTitlesMirror {
 #[rkyv(remote = super::RelativeHyperlinkBase)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RelativeHyperlinkBaseMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -394,7 +394,7 @@ pub struct RelativeHyperlinkBaseMirror {
 #[rkyv(remote = super::SharedDocument)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SharedDocumentMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -403,7 +403,7 @@ pub struct SharedDocumentMirror {
 #[rkyv(remote = super::SlidesMetadataElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SlidesMetadataElementMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -412,7 +412,7 @@ pub struct SlidesMetadataElementMirror {
 #[rkyv(remote = super::ThumbnailDisplayMode)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ThumbnailDisplayModeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -421,7 +421,7 @@ pub struct ThumbnailDisplayModeMirror {
 #[rkyv(remote = super::TotalEditTimeMetadataElement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalEditTimeMetadataElementMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -430,7 +430,7 @@ pub struct TotalEditTimeMetadataElementMirror {
 #[rkyv(remote = super::TotalNumberOfCharacters)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfCharactersMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -439,7 +439,7 @@ pub struct TotalNumberOfCharactersMirror {
 #[rkyv(remote = super::TotalNumberOfMultimediaClips)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfMultimediaClipsMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -448,7 +448,7 @@ pub struct TotalNumberOfMultimediaClipsMirror {
 #[rkyv(remote = super::TotalNumberOfPages)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfPagesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -457,7 +457,7 @@ pub struct TotalNumberOfPagesMirror {
 #[rkyv(remote = super::TotalNumberOfParagraphs)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TotalNumberOfParagraphsMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -466,7 +466,7 @@ pub struct TotalNumberOfParagraphsMirror {
 #[rkyv(remote = super::WordCount)]
 #[rkyv(attr(non_exhaustive))]
 pub struct WordCountMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

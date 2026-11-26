@@ -226,7 +226,7 @@ pub struct CalculatedTimeColumnMirror {
     pub column_name: Option<String>,
     pub content_type: Option<super::ModelTimeGroupingContentType>,
     pub is_selected: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -238,7 +238,7 @@ pub struct ModelTimeGroupingMirror {
     pub column_id: Option<String>,
     pub column_name: Option<String>,
     pub table_name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -247,7 +247,7 @@ pub struct ModelTimeGroupingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ModelTimeGroupingsMirror {
     pub model_time_grouping: Vec<super::ModelTimeGrouping>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

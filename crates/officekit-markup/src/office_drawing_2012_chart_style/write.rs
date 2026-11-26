@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `AxisTitle` as its element, `cs:axisTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn axis_title(node: &super::AxisTitle, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::AXIS_TITLE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::AXIS_TITLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -240,7 +243,7 @@ pub fn axis_title(node: &super::AxisTitle, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BODY_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::BODY_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.spc_first_last_para);
     writer.attribute(2, &node.vert_overflow);
@@ -274,7 +277,7 @@ pub fn category_axis_axis_props(node: &super::CategoryAxisAxisProps, scope: &mut
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::CATEGORY_AXIS_AXIS_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -288,7 +291,7 @@ pub fn category_axis_style_entry(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CATEGORY_AXIS_STYLE_ENTRY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -305,8 +308,11 @@ pub fn category_axis_style_entry(
 /// Write a `ChartArea` as its element, `cs:chartArea`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn chart_area(node: &super::ChartArea, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CHART_AREA_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CHART_AREA_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -322,8 +328,11 @@ pub fn chart_area(node: &super::ChartArea, scope: &mut Scope) -> Element {
 /// Write a `ChartStyle` as its element, `cs:chartStyle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn chart_style(node: &super::ChartStyle, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CHART_STYLE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CHART_STYLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.child(&node.axis_title);
     writer.child(&node.category_axis_style_entry);
@@ -363,8 +372,11 @@ pub fn chart_style(node: &super::ChartStyle, scope: &mut Scope) -> Element {
 /// Write a `ColorStyle` as its element, `cs:colorStyle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color_style(node: &super::ColorStyle, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COLOR_STYLE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::COLOR_STYLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.meth);
     writer.attribute(1, &node.id);
     writer.child(&node.content);
@@ -376,8 +388,11 @@ pub fn color_style(node: &super::ColorStyle, scope: &mut Scope) -> Element {
 /// Write a `DataLabel` as its element, `cs:dataLabel`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_label(node: &super::DataLabel, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_LABEL_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_LABEL_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -393,8 +408,11 @@ pub fn data_label(node: &super::DataLabel, scope: &mut Scope) -> Element {
 /// Write a `DataLabelCallout` as its element, `cs:dataLabelCallout`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_label_callout(node: &super::DataLabelCallout, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_LABEL_CALLOUT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_LABEL_CALLOUT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -410,8 +428,11 @@ pub fn data_label_callout(node: &super::DataLabelCallout, scope: &mut Scope) -> 
 /// Write a `DataLabels` as its element, `cs:dataLabels`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_labels(node: &super::DataLabels, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_LABELS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_LABELS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.position);
     writer.attribute(1, &node.value);
     writer.attribute(2, &node.series_name);
@@ -424,8 +445,11 @@ pub fn data_labels(node: &super::DataLabels, scope: &mut Scope) -> Element {
 /// Write a `DataPoint` as its element, `cs:dataPoint`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_point(node: &super::DataPoint, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_POINT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_POINT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -441,8 +465,11 @@ pub fn data_point(node: &super::DataPoint, scope: &mut Scope) -> Element {
 /// Write a `DataPoint3D` as its element, `cs:dataPoint3D`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_point3d(node: &super::DataPoint3D, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_POINT3D_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_POINT3D_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -458,8 +485,11 @@ pub fn data_point3d(node: &super::DataPoint3D, scope: &mut Scope) -> Element {
 /// Write a `DataPointLine` as its element, `cs:dataPointLine`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_point_line(node: &super::DataPointLine, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_POINT_LINE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_POINT_LINE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
     writer.child(&node.fill_ref);
@@ -475,8 +505,11 @@ pub fn data_point_line(node: &super::DataPointLine, scope: &mut Scope) -> Elemen
 /// Write a `DataPointMarker` as its element, `cs:dataPointMarker`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_point_marker(node: &super::DataPointMarker, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_POINT_MARKER_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_POINT_MARKER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -495,7 +528,7 @@ pub fn data_point_marker_layout(node: &super::DataPointMarkerLayout, scope: &mut
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DATA_POINT_MARKER_LAYOUT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.symbol);
     writer.attribute(1, &node.size);
@@ -508,7 +541,7 @@ pub fn data_point_wireframe(node: &super::DataPointWireframe, scope: &mut Scope)
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DATA_POINT_WIREFRAME_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -525,8 +558,11 @@ pub fn data_point_wireframe(node: &super::DataPointWireframe, scope: &mut Scope)
 /// Write a `DataSeries` as its element, `cs:dataSeries`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_series(node: &super::DataSeries, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_SERIES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_SERIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.overlap);
     writer.attribute(1, &node.gap_width);
     writer.attribute(2, &node.gap_depth);
@@ -547,7 +583,7 @@ pub fn data_table_data_table_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DATA_TABLE_DATA_TABLE_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.legend_keys);
     writer.attribute(1, &node.horizontal_border);
@@ -562,7 +598,7 @@ pub fn data_table_style_entry(node: &super::DataTableStyleEntry, scope: &mut Sco
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DATA_TABLE_STYLE_ENTRY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -580,7 +616,7 @@ pub fn data_table_style_entry(node: &super::DataTableStyleEntry, scope: &mut Sco
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn def_r_pr(node: &super::DefRPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DEF_R_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::DEF_R_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.kumimoji);
     writer.attribute(1, &node.lang);
     writer.attribute(2, &node.alt_lang);
@@ -621,7 +657,7 @@ pub fn def_r_pr(node: &super::DefRPr, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn down_bar(node: &super::DownBar, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DOWN_BAR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::DOWN_BAR_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -638,7 +674,7 @@ pub fn down_bar(node: &super::DownBar, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drop_line(node: &super::DropLine, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DROP_LINE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::DROP_LINE_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
     writer.child(&node.fill_ref);
@@ -654,8 +690,11 @@ pub fn drop_line(node: &super::DropLine, scope: &mut Scope) -> Element {
 /// Write a `EffectRef` as its element, `cs:effectRef`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn effect_ref(node: &super::EffectRef, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EFFECT_REF_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::EFFECT_REF_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.child(&node.style_clr);
     writer.finish()
@@ -665,7 +704,7 @@ pub fn effect_ref(node: &super::EffectRef, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn error_bar(node: &super::ErrorBar, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ERROR_BAR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::ERROR_BAR_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -682,7 +721,7 @@ pub fn error_bar(node: &super::ErrorBar, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -691,7 +730,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fill_ref(node: &super::FillRef, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::FILL_REF_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::FILL_REF_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.child(&node.style_clr);
     writer.finish()
@@ -700,7 +739,8 @@ pub fn fill_ref(node: &super::FillRef, scope: &mut Scope) -> Element {
 /// Write a `Floor` as its element, `cs:floor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn floor(node: &super::Floor, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::FLOOR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::FLOOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -717,7 +757,7 @@ pub fn floor(node: &super::Floor, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn font_ref(node: &super::FontRef, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::FONT_REF_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::FONT_REF_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.idx);
     writer.attribute(1, &node.mods);
     writer.child(&node.content);
@@ -728,8 +768,11 @@ pub fn font_ref(node: &super::FontRef, scope: &mut Scope) -> Element {
 /// Write a `GridlineMajor` as its element, `cs:gridlineMajor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn gridline_major(node: &super::GridlineMajor, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRIDLINE_MAJOR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRIDLINE_MAJOR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -745,8 +788,11 @@ pub fn gridline_major(node: &super::GridlineMajor, scope: &mut Scope) -> Element
 /// Write a `GridlineMinor` as its element, `cs:gridlineMinor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn gridline_minor(node: &super::GridlineMinor, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRIDLINE_MINOR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRIDLINE_MINOR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -762,8 +808,11 @@ pub fn gridline_minor(node: &super::GridlineMinor, scope: &mut Scope) -> Element
 /// Write a `HiLoLine` as its element, `cs:hiLoLine`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hi_lo_line(node: &super::HiLoLine, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::HI_LO_LINE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::HI_LO_LINE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
     writer.child(&node.fill_ref);
@@ -779,8 +828,11 @@ pub fn hi_lo_line(node: &super::HiLoLine, scope: &mut Scope) -> Element {
 /// Write a `LeaderLine` as its element, `cs:leaderLine`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn leader_line(node: &super::LeaderLine, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LEADER_LINE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LEADER_LINE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
     writer.child(&node.fill_ref);
@@ -796,8 +848,11 @@ pub fn leader_line(node: &super::LeaderLine, scope: &mut Scope) -> Element {
 /// Write a `LegendLegendProps` as its element, `cs:legend`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn legend_legend_props(node: &super::LegendLegendProps, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LEGEND_LEGEND_PROPS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LEGEND_LEGEND_PROPS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.visible);
     writer.attribute(1, &node.include_in_layout);
     writer.attribute(2, &node.position);
@@ -807,8 +862,11 @@ pub fn legend_legend_props(node: &super::LegendLegendProps, scope: &mut Scope) -
 /// Write a `LegendStyleEntry` as its element, `cs:legend`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn legend_style_entry(node: &super::LegendStyleEntry, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LEGEND_STYLE_ENTRY_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LEGEND_STYLE_ENTRY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -824,8 +882,11 @@ pub fn legend_style_entry(node: &super::LegendStyleEntry, scope: &mut Scope) -> 
 /// Write a `LineWidthScale` as its element, `cs:lineWidthScale`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_width_scale(node: &super::LineWidthScale, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LINE_WIDTH_SCALE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LINE_WIDTH_SCALE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -833,7 +894,8 @@ pub fn line_width_scale(node: &super::LineWidthScale, scope: &mut Scope) -> Elem
 /// Write a `LnRef` as its element, `cs:lnRef`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ln_ref(node: &super::LnRef, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::LN_REF_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::LN_REF_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.child(&node.style_clr);
     writer.finish()
@@ -843,7 +905,7 @@ pub fn ln_ref(node: &super::LnRef, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn plot_area(node: &super::PlotArea, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PLOT_AREA_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PLOT_AREA_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -859,8 +921,11 @@ pub fn plot_area(node: &super::PlotArea, scope: &mut Scope) -> Element {
 /// Write a `PlotArea3D` as its element, `cs:plotArea3D`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn plot_area3d(node: &super::PlotArea3D, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PLOT_AREA3D_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PLOT_AREA3D_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -879,7 +944,7 @@ pub fn series_axis_axis_props(node: &super::SeriesAxisAxisProps, scope: &mut Sco
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::SERIES_AXIS_AXIS_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -890,7 +955,7 @@ pub fn series_axis_style_entry(node: &super::SeriesAxisStyleEntry, scope: &mut S
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SERIES_AXIS_STYLE_ENTRY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -907,8 +972,11 @@ pub fn series_axis_style_entry(node: &super::SeriesAxisStyleEntry, scope: &mut S
 /// Write a `SeriesLine` as its element, `cs:seriesLine`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn series_line(node: &super::SeriesLine, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SERIES_LINE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SERIES_LINE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.width_scale);
     writer.child(&node.fill_ref);
@@ -924,7 +992,8 @@ pub fn series_line(node: &super::SeriesLine, scope: &mut Scope) -> Element {
 /// Write a `SpPr` as its element, `cs:spPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
     writer.child(&node.geometry_content);
@@ -941,7 +1010,7 @@ pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style_clr(node: &super::StyleClr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::STYLE_CLR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::STYLE_CLR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.val);
     writer.child(&node.content);
     writer.finish()
@@ -950,8 +1019,11 @@ pub fn style_clr(node: &super::StyleClr, scope: &mut Scope) -> Element {
 /// Write a `TitleStyleEntry` as its element, `cs:title`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn title_style_entry(node: &super::TitleStyleEntry, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TITLE_STYLE_ENTRY_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TITLE_STYLE_ENTRY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -967,8 +1039,11 @@ pub fn title_style_entry(node: &super::TitleStyleEntry, scope: &mut Scope) -> El
 /// Write a `TitleTitleProps` as its element, `cs:title`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn title_title_props(node: &super::TitleTitleProps, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TITLE_TITLE_PROPS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TITLE_TITLE_PROPS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.position);
     writer.finish()
 }
@@ -976,8 +1051,11 @@ pub fn title_title_props(node: &super::TitleTitleProps, scope: &mut Scope) -> El
 /// Write a `TrendlineLabel` as its element, `cs:trendlineLabel`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn trendline_label(node: &super::TrendlineLabel, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TRENDLINE_LABEL_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TRENDLINE_LABEL_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -996,7 +1074,7 @@ pub fn trendline_style_entry(node: &super::TrendlineStyleEntry, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TRENDLINE_STYLE_ENTRY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -1019,7 +1097,7 @@ pub fn trendline_trendline_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TRENDLINE_TRENDLINE_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.add);
     writer.attribute(1, &node.equation);
@@ -1030,7 +1108,8 @@ pub fn trendline_trendline_props(
 /// Write a `UpBar` as its element, `cs:upBar`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn up_bar(node: &super::UpBar, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::UP_BAR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::UP_BAR_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);
@@ -1049,7 +1128,7 @@ pub fn value_axis_axis_props(node: &super::ValueAxisAxisProps, scope: &mut Scope
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::VALUE_AXIS_AXIS_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -1060,7 +1139,7 @@ pub fn value_axis_style_entry(node: &super::ValueAxisStyleEntry, scope: &mut Sco
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::VALUE_AXIS_STYLE_ENTRY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
@@ -1078,7 +1157,7 @@ pub fn value_axis_style_entry(node: &super::ValueAxisStyleEntry, scope: &mut Sco
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn variation(node: &super::Variation, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::VARIATION_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::VARIATION_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -1086,7 +1165,8 @@ pub fn variation(node: &super::Variation, scope: &mut Scope) -> Element {
 /// Write a `View3D` as its element, `cs:view3D`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn view3d(node: &super::View3D, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::VIEW3D_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::VIEW3D_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.rot_x);
     writer.attribute(1, &node.rot_y);
     writer.attribute(2, &node.r_ang_ax);
@@ -1099,7 +1179,8 @@ pub fn view3d(node: &super::View3D, scope: &mut Scope) -> Element {
 /// Write a `Wall` as its element, `cs:wall`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wall(node: &super::Wall, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::WALL_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::WALL_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.line_width_scale);
     writer.child(&node.fill_ref);

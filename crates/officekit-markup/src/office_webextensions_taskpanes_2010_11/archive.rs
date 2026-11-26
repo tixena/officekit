@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -236,7 +236,7 @@ pub struct TaskpaneMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub locked: Option<String>,
     pub row: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub visibility: Option<String>,
     pub webextensionref: Box<super::Webextensionref>,
@@ -248,7 +248,7 @@ pub struct TaskpaneMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TaskpanesMirror {
     pub taskpane: Vec<super::Taskpane>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -257,7 +257,7 @@ pub struct TaskpanesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct WebextensionrefMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

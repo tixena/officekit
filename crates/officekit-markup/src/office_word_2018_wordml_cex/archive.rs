@@ -227,7 +227,7 @@ pub struct CommentExtensibleMirror {
     pub durable_id: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub intelligent_placeholder: Option<common_simple_types::OnOffValue>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -237,7 +237,7 @@ pub struct CommentExtensibleMirror {
 pub struct CommentsExtensibleMirror {
     pub comment_extensible: Vec<super::CommentExtensible>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -246,7 +246,7 @@ pub struct CommentsExtensibleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub ext: Vec<super::super::office_word_2018_wordml::Ext>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

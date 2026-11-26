@@ -228,7 +228,7 @@ pub fn set_of_additional_characteristics(
     let mut writer = crate::Writer::new(
         scope,
         &super::SET_OF_ADDITIONAL_CHARACTERISTICS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.single_characteristic);
     writer.finish()
@@ -237,7 +237,11 @@ pub fn set_of_additional_characteristics(
 /// Write a `SingleCharacteristic` as its element, `ac:characteristic`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn single_characteristic(node: &super::SingleCharacteristic, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::SINGLE_CHARACTERISTIC_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::SINGLE_CHARACTERISTIC_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.relation);
     writer.attribute(2, &node.val);

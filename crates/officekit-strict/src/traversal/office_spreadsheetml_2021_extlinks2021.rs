@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2021_extlinks2021::AbsoluteUrl {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2021_extlinks2021::AbsoluteUrl {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::AbsoluteUrl {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2021_extlinks2021::ABSOLUTE_URL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::AbsoluteUrl {
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2021_extlinks2021::ABSOLUTE_URL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -317,10 +318,10 @@ impl super::Transform for office_spreadsheetml_2021_extlinks2021::AlternateUrls 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.absolute_url = super::transform_child(&self.absolute_url, ctx, &mut rebase);
         node.relative_url = super::transform_child(&self.relative_url, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -338,7 +339,7 @@ impl super::Visit for office_spreadsheetml_2021_extlinks2021::AlternateUrls {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.absolute_url, visitor);
         walk.child(&self.relative_url, visitor);
         walk.finish(visitor);
@@ -354,7 +355,7 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::AlternateUrls {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2021_extlinks2021::ALTERNATE_URLS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -364,7 +365,7 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::AlternateUrls {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2021_extlinks2021::ALTERNATE_URLS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.drive_id);
         through.attribute(1, &self.item_id);
@@ -411,7 +412,8 @@ impl super::Transform for office_spreadsheetml_2021_extlinks2021::RelativeUrl {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -429,7 +431,7 @@ impl super::Visit for office_spreadsheetml_2021_extlinks2021::RelativeUrl {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -442,7 +444,7 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::RelativeUrl {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2021_extlinks2021::RELATIVE_URL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -452,7 +454,7 @@ impl WriteThrough for office_spreadsheetml_2021_extlinks2021::RelativeUrl {
         let through = super::Through::new(
             out,
             &office_spreadsheetml_2021_extlinks2021::RELATIVE_URL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }

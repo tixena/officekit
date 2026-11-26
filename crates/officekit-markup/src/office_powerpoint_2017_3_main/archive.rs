@@ -227,7 +227,7 @@ pub struct TrackMirror {
     pub label: Option<String>,
     pub lang: Option<String>,
     pub link: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -236,7 +236,7 @@ pub struct TrackMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TrackLstMirror {
     pub track: Vec<super::Track>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -246,7 +246,7 @@ pub struct TrackLstMirror {
 pub struct TracksInfoMirror {
     pub display_loc: Option<super::DisplayLocation>,
     pub track_lst: Option<Box<super::TrackLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

@@ -233,7 +233,8 @@ impl super::Transform for office_word_2020_oembed::Oembed {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_word_2020_oembed::Oembed {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -261,13 +262,20 @@ impl WriteThrough for office_word_2020_oembed::Oembed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2020_oembed::OEMBED_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2020_oembed::OEMBED_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2020_oembed::write::oembed(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2020_oembed::OEMBED_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2020_oembed::OEMBED_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.o_embed_url);
         through.attribute(1, &self.media_type);
         through.attribute(2, &self.pic_locks_auto_for_o_embed);

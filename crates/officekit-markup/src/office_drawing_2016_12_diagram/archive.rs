@@ -234,7 +234,7 @@ pub struct LstStyleMirror {
     pub list_level_7_text_style: Option<Box<drawing::ListLevel7TextStyle>>,
     pub list_level_8_text_style: Option<Box<drawing::ListLevel8TextStyle>>,
     pub list_level_9_text_style: Option<Box<drawing::ListLevel9TextStyle>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -250,7 +250,7 @@ pub struct SpPrMirror {
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }

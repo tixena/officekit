@@ -225,7 +225,7 @@ pub fn alternate_references(node: &super::AlternateReferences, scope: &mut Scope
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::ALTERNATE_REFERENCES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.reference);
     writer.finish()
@@ -235,7 +235,7 @@ pub fn alternate_references(node: &super::AlternateReferences, scope: &mut Scope
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn binding(node: &super::Binding, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BINDING_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::BINDING_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.r#type);
     writer.attribute(2, &node.appref);
@@ -247,7 +247,7 @@ pub fn binding(node: &super::Binding, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bindings(node: &super::Bindings, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BINDINGS_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::BINDINGS_SHAPE, node.unknown.as_deref());
     writer.child(&node.binding);
     writer.finish()
 }
@@ -256,7 +256,7 @@ pub fn bindings(node: &super::Bindings, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -264,8 +264,11 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `Properties` as its element, `we:properties`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn properties(node: &super::Properties, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PROPERTIES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PROPERTIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.property);
     writer.finish()
 }
@@ -274,7 +277,7 @@ pub fn properties(node: &super::Properties, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn property(node: &super::Property, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PROPERTY_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PROPERTY_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.value);
     writer.finish()
@@ -284,7 +287,7 @@ pub fn property(node: &super::Property, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reference(node: &super::Reference, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::REFERENCE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::REFERENCE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.version);
     writer.attribute(2, &node.store);
@@ -297,7 +300,7 @@ pub fn reference(node: &super::Reference, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn snapshot(node: &super::Snapshot, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SNAPSHOT_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::SNAPSHOT_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.embed);
     writer.attribute(1, &node.link);
     writer.attribute(2, &node.cstate);
@@ -309,8 +312,11 @@ pub fn snapshot(node: &super::Snapshot, scope: &mut Scope) -> Element {
 /// Write a `Webextension` as its element, `we:webextension`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn webextension(node: &super::Webextension, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::WEBEXTENSION_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::WEBEXTENSION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.frozen);
     writer.child(&node.reference);
@@ -325,8 +331,11 @@ pub fn webextension(node: &super::Webextension, scope: &mut Scope) -> Element {
 /// Write a `Webextensionref` as its element, `we:webextensionref`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn webextensionref(node: &super::Webextensionref, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::WEBEXTENSIONREF_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::WEBEXTENSIONREF_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.finish()
 }

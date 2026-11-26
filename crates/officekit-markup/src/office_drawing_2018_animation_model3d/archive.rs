@@ -231,7 +231,7 @@ pub struct AnimPrMirror {
     pub name: Option<String>,
     pub offset: Option<String>,
     pub st: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -242,7 +242,7 @@ pub struct EmbedAnimMirror {
     pub anim_id: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub pr: Box<super::AnimPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -251,7 +251,7 @@ pub struct EmbedAnimMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -261,7 +261,7 @@ pub struct ExtLstMirror {
 pub struct PosterFrameMirror {
     pub anim_id: Option<String>,
     pub frame: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

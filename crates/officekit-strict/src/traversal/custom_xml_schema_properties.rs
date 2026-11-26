@@ -233,7 +233,8 @@ impl super::Transform for custom_xml_schema_properties::CustomXMLSchemaReference
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for custom_xml_schema_properties::CustomXMLSchemaReference {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for custom_xml_schema_properties::CustomXMLSchemaReference {
         let converted = super::converts(
             out,
             &custom_xml_schema_properties::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for custom_xml_schema_properties::CustomXMLSchemaReference {
         let mut through = super::Through::new(
             out,
             &custom_xml_schema_properties::CUSTOM_XML_SCHEMA_REFERENCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.uri);
         through.attribute(1, &self.manifest_location);
@@ -321,10 +322,10 @@ impl super::Transform for custom_xml_schema_properties::EmbeddedCustomXMLSchemaS
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.custom_xml_schema_reference =
             super::transform_child(&self.custom_xml_schema_reference, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -342,7 +343,7 @@ impl super::Visit for custom_xml_schema_properties::EmbeddedCustomXMLSchemaSuppl
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.custom_xml_schema_reference, visitor);
         walk.finish(visitor);
     }
@@ -357,7 +358,7 @@ impl WriteThrough for custom_xml_schema_properties::EmbeddedCustomXMLSchemaSuppl
         let converted = super::converts(
             out,
             &custom_xml_schema_properties::EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -370,7 +371,7 @@ impl WriteThrough for custom_xml_schema_properties::EmbeddedCustomXMLSchemaSuppl
         let mut through = super::Through::new(
             out,
             &custom_xml_schema_properties::EMBEDDED_CUSTOM_XML_SCHEMA_SUPPLEMENTARY_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.custom_xml_schema_reference, ctx)?;
         through.finish(ctx)

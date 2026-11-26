@@ -222,7 +222,8 @@ use officekit_xml::write::Scope;
 /// Write a `Track` as its element, `p173:track`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn track(node: &super::Track, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::TRACK_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::TRACK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.label);
     writer.attribute(2, &node.lang);
@@ -235,7 +236,7 @@ pub fn track(node: &super::Track, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn track_lst(node: &super::TrackLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TRACK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TRACK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.track);
     writer.finish()
 }
@@ -243,8 +244,11 @@ pub fn track_lst(node: &super::TrackLst, scope: &mut Scope) -> Element {
 /// Write a `TracksInfo` as its element, `p173:tracksInfo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tracks_info(node: &super::TracksInfo, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TRACKS_INFO_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TRACKS_INFO_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.display_loc);
     writer.child(&node.track_lst);
     writer.finish()

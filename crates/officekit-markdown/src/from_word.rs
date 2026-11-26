@@ -1611,7 +1611,11 @@ impl Walk<'_> {
         }
         if self.shown() {
             let link = self.link();
-            for extra in &run.unknown.children {
+            for extra in run
+                .unknown()
+                .into_iter()
+                .flat_map(|unknown| &unknown.children)
+            {
                 self.embedded(&extra.node, link, runs)?;
             }
         }

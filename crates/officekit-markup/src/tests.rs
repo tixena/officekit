@@ -52,9 +52,15 @@ fn the_plain_tree_is_eq() {
 
 #[test]
 fn the_slot_adds_nothing_to_the_size() {
-    assert_eq!(size_of::<Paragraph>(), 328);
-    assert_eq!(size_of::<Document>(), 144);
-    assert_eq!(size_of::<TextRun>(), 208);
+    assert_eq!(size_of::<Paragraph>(), 232);
+    assert_eq!(size_of::<Document>(), 48);
+    assert_eq!(size_of::<TextRun>(), 112);
+}
+
+#[test]
+fn a_node_holds_its_unknown_content_behind_one_pointer() {
+    assert_eq!(size_of::<wordprocessing::NonComplexScriptFontSize>(), 32);
+    assert_eq!(size_of::<wordprocessing::RunFonts>(), 224);
 }
 
 #[test]

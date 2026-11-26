@@ -229,7 +229,7 @@ pub fn absolute_anchor_shape_size(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.position);
     writer.child(&node.shape_extent);
@@ -241,8 +241,11 @@ pub fn absolute_anchor_shape_size(
 /// Write a `ClientData` as its element, `xdr:clientData`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn client_data(node: &super::ClientData, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CLIENT_DATA_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CLIENT_DATA_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.f_locks_with_sheet);
     writer.attribute(1, &node.f_prints_with_sheet);
     writer.finish()
@@ -251,7 +254,8 @@ pub fn client_data(node: &super::ClientData, scope: &mut Scope) -> Element {
 /// Write a `Col` as its element, `xdr:col`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn col(node: &super::Col, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::COL_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::COL_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -259,8 +263,11 @@ pub fn col(node: &super::Col, scope: &mut Scope) -> Element {
 /// Write a `ColumnOffset` as its element, `xdr:colOff`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn column_offset(node: &super::ColumnOffset, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COLUMN_OFFSET_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::COLUMN_OFFSET_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -274,7 +281,7 @@ pub fn connection_non_visual_shape_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CONNECTION_NON_VISUAL_SHAPE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.tx_box);
     writer.child(&node.shape_locks);
@@ -285,8 +292,11 @@ pub fn connection_non_visual_shape_properties(
 /// Write a `ConnectionShape` as its element, `xdr:cxnSp`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn connection_shape(node: &super::ConnectionShape, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CONNECTION_SHAPE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CONNECTION_SHAPE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
     writer.child(&node.non_visual_properties);
@@ -298,8 +308,11 @@ pub fn connection_shape(node: &super::ConnectionShape, scope: &mut Scope) -> Ele
 /// Write a `ContentPart` as its element, `xdr:contentPart`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CONTENT_PART_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.finish()
 }
@@ -307,8 +320,11 @@ pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
 /// Write a `EndingAnchorPoint` as its element, `xdr:to`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ending_anchor_point(node: &super::EndingAnchorPoint, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ENDING_ANCHOR_POINT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ENDING_ANCHOR_POINT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.col);
     writer.child(&node.column_offset);
     writer.child(&node.row);
@@ -319,8 +335,11 @@ pub fn ending_anchor_point(node: &super::EndingAnchorPoint, scope: &mut Scope) -
 /// Write a `GraphicFrame` as its element, `xdr:graphicFrame`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRAPHIC_FRAME_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
     writer.child(&node.non_visual_properties);
@@ -332,8 +351,11 @@ pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
 /// Write a `GroupShape` as its element, `xdr:grpSp`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GROUP_SHAPE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GROUP_SHAPE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.non_visual_properties);
     writer.child(&node.properties);
     writer.child(&node.content);
@@ -354,7 +376,7 @@ pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Sc
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GROUP_SHAPE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_group_transform2d);
@@ -374,7 +396,7 @@ pub fn non_visual_connector_shape_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.connection_shape_locks);
     writer.child(&node.connection_start);
@@ -392,7 +414,7 @@ pub fn non_visual_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -414,7 +436,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.graphic_frame_locks);
     writer.child(&node.extension_list);
@@ -430,7 +452,7 @@ pub fn non_visual_group_shape_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.group_shape_locks);
     writer.child(&node.extension_list);
@@ -446,7 +468,7 @@ pub fn non_visual_picture_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.prefer_relative_resize);
     writer.child(&node.picture_locks);
@@ -463,7 +485,7 @@ pub fn non_visual_properties_for_a_connection_shape(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_CONNECTION_SHAPE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_connector_shape_drawing_properties);
@@ -479,7 +501,7 @@ pub fn non_visual_properties_for_a_graphic_frame(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_GRAPHIC_FRAME_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_graphic_frame_drawing_properties);
@@ -495,7 +517,7 @@ pub fn non_visual_properties_for_a_group_shape(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_GROUP_SHAPE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_group_shape_drawing_properties);
@@ -511,7 +533,7 @@ pub fn non_visual_properties_for_a_picture(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_PICTURE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_picture_drawing_properties);
@@ -527,7 +549,7 @@ pub fn non_visual_properties_for_a_shape(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PROPERTIES_FOR_A_SHAPE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.connection_non_visual_shape_properties);
@@ -548,7 +570,7 @@ pub fn one_cell_anchor_shape_size(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::ONE_CELL_ANCHOR_SHAPE_SIZE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.starting_anchor_point);
     writer.child(&node.shape_extent);
@@ -561,7 +583,7 @@ pub fn one_cell_anchor_shape_size(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PICTURE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PICTURE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.f_published);
     writer.child(&node.non_visual_properties);
@@ -574,8 +596,11 @@ pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
 /// Write a `PictureFill` as its element, `xdr:blipFill`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PICTURE_FILL_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PICTURE_FILL_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.dpi);
     writer.attribute(1, &node.rot_with_shape);
     writer.child(&node.blip);
@@ -588,7 +613,7 @@ pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn position(node: &super::Position, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::POSITION_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::POSITION_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
     writer.finish()
@@ -597,7 +622,8 @@ pub fn position(node: &super::Position, scope: &mut Scope) -> Element {
 /// Write a `Row` as its element, `xdr:row`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn row(node: &super::Row, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::ROW_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::ROW_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -605,8 +631,11 @@ pub fn row(node: &super::Row, scope: &mut Scope) -> Element {
 /// Write a `RowOffset` as its element, `xdr:rowOff`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn row_offset(node: &super::RowOffset, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ROW_OFFSET_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ROW_OFFSET_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -614,7 +643,8 @@ pub fn row_offset(node: &super::RowOffset, scope: &mut Scope) -> Element {
 /// Write a `Shape` as its element, `xdr:sp`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SHAPE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SHAPE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#macro);
     writer.attribute(1, &node.textlink);
     writer.attribute(2, &node.f_locks_text);
@@ -629,8 +659,11 @@ pub fn shape(node: &super::Shape, scope: &mut Scope) -> Element {
 /// Write a `ShapeExtent` as its element, `xdr:ext`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_extent(node: &super::ShapeExtent, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHAPE_EXTENT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHAPE_EXTENT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.cx);
     writer.attribute(1, &node.cy);
     writer.finish()
@@ -639,8 +672,11 @@ pub fn shape_extent(node: &super::ShapeExtent, scope: &mut Scope) -> Element {
 /// Write a `ShapeProperties` as its element, `xdr:spPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHAPE_PROPERTIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
     writer.child(&node.geometry_content);
@@ -656,8 +692,11 @@ pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Ele
 /// Write a `ShapeStyle` as its element, `xdr:style`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHAPE_STYLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.line_reference);
     writer.child(&node.fill_reference);
     writer.child(&node.effect_reference);
@@ -668,8 +707,11 @@ pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
 /// Write a `ShapeTextBody` as its element, `xdr:txBody`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_text_body(node: &super::ShapeTextBody, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHAPE_TEXT_BODY_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHAPE_TEXT_BODY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.properties);
     writer.child(&node.text_list_styles);
     writer.child(&node.text_paragraphs);
@@ -682,7 +724,7 @@ pub fn starting_anchor_point(node: &super::StartingAnchorPoint, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::STARTING_ANCHOR_POINT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.col);
     writer.child(&node.column_offset);
@@ -700,7 +742,7 @@ pub fn two_cell_anchor_shape_size(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TWO_CELL_ANCHOR_SHAPE_SIZE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.edit_as);
     writer.child(&node.starting_anchor_point);
@@ -713,8 +755,11 @@ pub fn two_cell_anchor_shape_size(
 /// Write a `WorksheetDrawing` as its element, `xdr:wsDr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn worksheet_drawing(node: &super::WorksheetDrawing, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::WORKSHEET_DRAWING_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::WORKSHEET_DRAWING_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -730,7 +775,8 @@ pub fn worksheet_drawing_content(
 /// Write a `Xfrm` as its element, `xdr:xfrm`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);
     writer.attribute(2, &node.flip_v);

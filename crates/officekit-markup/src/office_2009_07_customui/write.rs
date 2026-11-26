@@ -224,7 +224,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn backstage(node: &super::Backstage, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BACKSTAGE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::BACKSTAGE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.on_show);
     writer.attribute(1, &node.on_hide);
     writer.child(&node.content);
@@ -259,8 +259,11 @@ pub fn backstage_menu_group(
 /// Write a `BottomItems` as its element, `mso14:bottomItems`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bottom_items(node: &super::BottomItems, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BOTTOM_ITEMS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::BOTTOM_ITEMS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -274,7 +277,7 @@ pub fn r#box(node: &super::BoxContent, writer: &mut officekit_markup_base::Write
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn box_box(node: &super::BoxBox, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BOX_BOX_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::BOX_BOX_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -298,7 +301,7 @@ pub fn button_backstage_fast_command_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id_mso);
     writer.attribute(1, &node.insert_after_mso);
@@ -333,7 +336,7 @@ pub fn button_backstage_group_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.expand);
     writer.attribute(1, &node.style);
@@ -369,7 +372,7 @@ pub fn button_backstage_menu_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.description);
     writer.attribute(1, &node.get_description);
@@ -401,7 +404,7 @@ pub fn button_backstage_regular_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.screentip);
     writer.attribute(1, &node.get_screentip);
@@ -429,8 +432,11 @@ pub fn button_backstage_regular_button(
 /// Write a `ButtonButton` as its element, `mso14:button`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn button_button(node: &super::ButtonButton, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BUTTON_BUTTON_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::BUTTON_BUTTON_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
     writer.attribute(2, &node.on_action);
@@ -472,7 +478,7 @@ pub fn button_button_regular(node: &super::ButtonButtonRegular, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BUTTON_BUTTON_REGULAR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.on_action);
     writer.attribute(1, &node.enabled);
@@ -510,8 +516,11 @@ pub fn button_button_regular(node: &super::ButtonButtonRegular, scope: &mut Scop
 /// Write a `ButtonGroup` as its element, `mso14:buttonGroup`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn button_group(node: &super::ButtonGroup, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BUTTON_GROUP_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::BUTTON_GROUP_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -539,7 +548,7 @@ pub fn button_visible_button(node: &super::ButtonVisibleButton, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BUTTON_VISIBLE_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.on_action);
     writer.attribute(1, &node.enabled);
@@ -581,7 +590,7 @@ pub fn category_task_form_group_category(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -608,7 +617,7 @@ pub fn category_task_group_category(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CATEGORY_TASK_GROUP_CATEGORY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -635,7 +644,7 @@ pub fn check_box_backstage_check_box(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.expand);
     writer.attribute(1, &node.description);
@@ -669,7 +678,7 @@ pub fn check_box_backstage_menu_check_box(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.description);
     writer.attribute(1, &node.get_description);
@@ -692,8 +701,11 @@ pub fn check_box_backstage_menu_check_box(
 /// Write a `CheckBoxCheckBox` as its element, `mso14:checkBox`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn check_box_check_box(node: &super::CheckBoxCheckBox, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CHECK_BOX_CHECK_BOX_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CHECK_BOX_CHECK_BOX_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.get_pressed);
     writer.attribute(1, &node.on_action);
     writer.attribute(2, &node.enabled);
@@ -730,7 +742,7 @@ pub fn combo_box_backstage_combo_box(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -758,8 +770,11 @@ pub fn combo_box_backstage_combo_box(
 /// Write a `ComboBoxComboBox` as its element, `mso14:comboBox`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn combo_box_combo_box(node: &super::ComboBoxComboBox, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COMBO_BOX_COMBO_BOX_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::COMBO_BOX_COMBO_BOX_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.show_item_image);
     writer.attribute(1, &node.get_item_count);
     writer.attribute(2, &node.get_item_label);
@@ -807,7 +822,7 @@ pub fn combo_box_combo_box(node: &super::ComboBoxComboBox, scope: &mut Scope) ->
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn command(node: &super::Command, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COMMAND_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::COMMAND_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.on_action);
     writer.attribute(1, &node.enabled);
     writer.attribute(2, &node.get_enabled);
@@ -819,7 +834,7 @@ pub fn command(node: &super::Command, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn commands(node: &super::Commands, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COMMANDS_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::COMMANDS_SHAPE, node.unknown.as_deref());
     writer.child(&node.command);
     writer.finish()
 }
@@ -827,8 +842,11 @@ pub fn commands(node: &super::Commands, scope: &mut Scope) -> Element {
 /// Write a `ContextMenu` as its element, `mso14:contextMenu`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn context_menu(node: &super::ContextMenu, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CONTEXT_MENU_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CONTEXT_MENU_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id_mso);
     writer.child(&node.content);
     writer.finish()
@@ -845,8 +863,11 @@ pub fn context_menu_content(
 /// Write a `ContextMenus` as its element, `mso14:contextMenus`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn context_menus(node: &super::ContextMenus, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CONTEXT_MENUS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CONTEXT_MENUS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.context_menu);
     writer.finish()
 }
@@ -854,8 +875,11 @@ pub fn context_menus(node: &super::ContextMenus, scope: &mut Scope) -> Element {
 /// Write a `ContextualTabs` as its element, `mso14:contextualTabs`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn contextual_tabs(node: &super::ContextualTabs, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CONTEXTUAL_TABS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CONTEXTUAL_TABS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.tab_set);
     writer.finish()
 }
@@ -866,7 +890,7 @@ pub fn control_control_clone(node: &super::ControlControlClone, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CONTROL_CONTROL_CLONE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -910,7 +934,7 @@ pub fn control_control_clone_qat(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CONTROL_CONTROL_CLONE_QAT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -954,7 +978,7 @@ pub fn control_control_clone_regular(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CONTROL_CONTROL_CLONE_REGULAR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id_q);
     writer.attribute(1, &node.tag);
@@ -989,7 +1013,7 @@ pub fn control_control_clone_regular(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn custom_ui(node: &super::CustomUI, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CUSTOM_UI_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::CUSTOM_UI_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.on_load);
     writer.attribute(1, &node.load_image);
     writer.child(&node.commands);
@@ -1002,8 +1026,11 @@ pub fn custom_ui(node: &super::CustomUI, scope: &mut Scope) -> Element {
 /// Write a `DialogBoxLauncher` as its element, `mso14:dialogBoxLauncher`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dialog_box_launcher(node: &super::DialogBoxLauncher, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DIALOG_BOX_LAUNCHER_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DIALOG_BOX_LAUNCHER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.button_button_regular);
     writer.finish()
 }
@@ -1011,8 +1038,11 @@ pub fn dialog_box_launcher(node: &super::DialogBoxLauncher, scope: &mut Scope) -
 /// Write a `DocumentControls` as its element, `mso14:documentControls`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn document_controls(node: &super::DocumentControls, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DOCUMENT_CONTROLS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DOCUMENT_CONTROLS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1026,7 +1056,7 @@ pub fn drop_down_backstage_drop_down(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1064,7 +1094,7 @@ pub fn drop_down_drop_down_regular(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.on_action);
     writer.attribute(1, &node.enabled);
@@ -1119,7 +1149,7 @@ pub fn dynamic_menu_dynamic_menu(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -1166,7 +1196,7 @@ pub fn dynamic_menu_dynamic_menu_regular(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.description);
     writer.attribute(1, &node.get_description);
@@ -1211,7 +1241,7 @@ pub fn edit_box_backstage_edit_box(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1236,8 +1266,11 @@ pub fn edit_box_backstage_edit_box(
 /// Write a `EditBoxEditBox` as its element, `mso14:editBox`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn edit_box_edit_box(node: &super::EditBoxEditBox, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EDIT_BOX_EDIT_BOX_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::EDIT_BOX_EDIT_BOX_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.enabled);
     writer.attribute(1, &node.get_enabled);
     writer.attribute(2, &node.image);
@@ -1275,8 +1308,11 @@ pub fn edit_box_edit_box(node: &super::EditBoxEditBox, scope: &mut Scope) -> Ele
 /// Write a `FirstColumn` as its element, `mso14:firstColumn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn first_column(node: &super::FirstColumn, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::FIRST_COLUMN_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::FIRST_COLUMN_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1284,8 +1320,11 @@ pub fn first_column(node: &super::FirstColumn, scope: &mut Scope) -> Element {
 /// Write a `GalleryGallery` as its element, `mso14:gallery`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn gallery_gallery(node: &super::GalleryGallery, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GALLERY_GALLERY_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GALLERY_GALLERY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
     writer.attribute(2, &node.description);
@@ -1348,7 +1387,7 @@ pub fn gallery_gallery_regular(node: &super::GalleryGalleryRegular, scope: &mut 
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GALLERY_GALLERY_REGULAR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.description);
     writer.attribute(1, &node.get_description);
@@ -1415,7 +1454,7 @@ pub fn group_backstage_group(node: &super::GroupBackstageGroup, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GROUP_BACKSTAGE_GROUP_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1445,7 +1484,7 @@ pub fn group_backstage_group(node: &super::GroupBackstageGroup, scope: &mut Scop
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_box(node: &super::GroupBox, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GROUP_BOX_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::GROUP_BOX_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -1467,8 +1506,11 @@ pub fn group_controls(
 /// Write a `GroupGroup` as its element, `mso14:group`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_group(node: &super::GroupGroup, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GROUP_GROUP_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GROUP_GROUP_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -1501,7 +1543,7 @@ pub fn group_group(node: &super::GroupGroup, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::HYPERLINK_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::HYPERLINK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -1531,8 +1573,11 @@ pub fn hyperlink(node: &super::Hyperlink, scope: &mut Scope) -> Element {
 /// Write a `ImageControl` as its element, `mso14:imageControl`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn image_control(node: &super::ImageControl, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::IMAGE_CONTROL_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::IMAGE_CONTROL_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -1551,8 +1596,11 @@ pub fn image_control(node: &super::ImageControl, scope: &mut Scope) -> Element {
 /// Write a `ItemBackstageItem` as its element, `mso14:item`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn item_backstage_item(node: &super::ItemBackstageItem, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::ITEM_BACKSTAGE_ITEM_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ITEM_BACKSTAGE_ITEM_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
@@ -1560,7 +1608,7 @@ pub fn item_backstage_item(node: &super::ItemBackstageItem, scope: &mut Scope) -
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn item_item(node: &super::ItemItem, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ITEM_ITEM_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::ITEM_ITEM_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.label);
     writer.attribute(2, &node.image);
@@ -1579,7 +1627,7 @@ pub fn label_control_backstage_label_control(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1605,7 +1653,7 @@ pub fn label_control_label_control(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::LABEL_CONTROL_LABEL_CONTROL_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1633,8 +1681,11 @@ pub fn label_control_label_control(
 /// Write a `LayoutContainer` as its element, `mso14:layoutContainer`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn layout_container(node: &super::LayoutContainer, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LAYOUT_CONTAINER_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LAYOUT_CONTAINER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -1659,7 +1710,7 @@ pub fn menu_backstage_primary_menu(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.screentip);
     writer.attribute(1, &node.get_screentip);
@@ -1689,7 +1740,7 @@ pub fn menu_backstage_sub_menu(node: &super::MenuBackstageSubMenu, scope: &mut S
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::MENU_BACKSTAGE_SUB_MENU_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.description);
     writer.attribute(1, &node.get_description);
@@ -1714,8 +1765,11 @@ pub fn menu_backstage_sub_menu(node: &super::MenuBackstageSubMenu, scope: &mut S
 /// Write a `MenuGroup` as its element, `mso14:menuGroup`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn menu_group(node: &super::MenuGroup, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MENU_GROUP_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::MENU_GROUP_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -1730,7 +1784,7 @@ pub fn menu_group(node: &super::MenuGroup, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn menu_menu(node: &super::MenuMenu, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MENU_MENU_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::MENU_MENU_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
     writer.attribute(2, &node.item_size);
@@ -1770,8 +1824,11 @@ pub fn menu_menu(node: &super::MenuMenu, scope: &mut Scope) -> Element {
 /// Write a `MenuMenuRegular` as its element, `mso14:menu`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn menu_menu_regular(node: &super::MenuMenuRegular, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MENU_MENU_REGULAR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::MENU_MENU_REGULAR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.item_size);
     writer.attribute(1, &node.description);
     writer.attribute(2, &node.get_description);
@@ -1809,8 +1866,11 @@ pub fn menu_menu_regular(node: &super::MenuMenuRegular, scope: &mut Scope) -> El
 /// Write a `MenuMenuRoot` as its element, `mso14:menu`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn menu_menu_root(node: &super::MenuMenuRoot, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MENU_MENU_ROOT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::MENU_MENU_ROOT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.title);
     writer.attribute(1, &node.get_title);
     writer.attribute(2, &node.item_size);
@@ -1824,7 +1884,7 @@ pub fn menu_menu_with_title(node: &super::MenuMenuWithTitle, scope: &mut Scope) 
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::MENU_MENU_WITH_TITLE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1869,7 +1929,7 @@ pub fn menu_separator_menu_separator(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1892,7 +1952,7 @@ pub fn menu_separator_menu_separator_no_title(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -1915,8 +1975,11 @@ pub fn menu_with_title(
 /// Write a `PrimaryItem` as its element, `mso14:primaryItem`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn primary_item(node: &super::PrimaryItem, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PRIMARY_ITEM_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PRIMARY_ITEM_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1932,7 +1995,8 @@ pub fn primary_item_content(
 /// Write a `Qat` as its element, `mso14:qat`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn qat(node: &super::Qat, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::QAT_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::QAT_SHAPE, node.unknown.as_deref());
     writer.child(&node.shared_controls);
     writer.child(&node.document_controls);
     writer.finish()
@@ -1950,14 +2014,22 @@ pub fn quick_access_toolbar_items(
 /// Write a `RadioButton` as its element, `mso14:radioButton`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn radio_button(node: &super::RadioButton, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::RADIO_BUTTON_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::RADIO_BUTTON_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `RadioGroup` as its element, `mso14:radioGroup`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn radio_group(node: &super::RadioGroup, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::RADIO_GROUP_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::RADIO_GROUP_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -1983,7 +2055,8 @@ pub fn radio_group(node: &super::RadioGroup, scope: &mut Scope) -> Element {
 /// Write a `Ribbon` as its element, `mso14:ribbon`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ribbon(node: &super::Ribbon, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::RIBBON_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::RIBBON_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.start_from_scratch);
     writer.child(&node.content);
     writer.finish()
@@ -2000,8 +2073,11 @@ pub fn ribbon_content(
 /// Write a `SecondColumn` as its element, `mso14:secondColumn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn second_column(node: &super::SecondColumn, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SECOND_COLUMN_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SECOND_COLUMN_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -2010,7 +2086,7 @@ pub fn second_column(node: &super::SecondColumn, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn separator(node: &super::Separator, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SEPARATOR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::SEPARATOR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -2026,8 +2102,11 @@ pub fn separator(node: &super::Separator, scope: &mut Scope) -> Element {
 /// Write a `SharedControls` as its element, `mso14:sharedControls`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shared_controls(node: &super::SharedControls, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHARED_CONTROLS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHARED_CONTROLS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -2057,7 +2136,7 @@ pub fn split_button_split_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -2091,7 +2170,7 @@ pub fn split_button_split_button_regular(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.enabled);
     writer.attribute(1, &node.get_enabled);
@@ -2123,7 +2202,7 @@ pub fn split_button_split_button_with_title(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.enabled);
     writer.attribute(1, &node.get_enabled);
@@ -2149,8 +2228,11 @@ pub fn split_button_split_button_with_title(
 /// Write a `TabBackstageTab` as its element, `mso14:tab`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tab_backstage_tab(node: &super::TabBackstageTab, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TAB_BACKSTAGE_TAB_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TAB_BACKSTAGE_TAB_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -2183,7 +2265,7 @@ pub fn tab_backstage_tab(node: &super::TabBackstageTab, scope: &mut Scope) -> El
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tab_set(node: &super::TabSet, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TAB_SET_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TAB_SET_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id_mso);
     writer.attribute(1, &node.visible);
     writer.attribute(2, &node.get_visible);
@@ -2195,7 +2277,7 @@ pub fn tab_set(node: &super::TabSet, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tab_tab(node: &super::TabTab, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TAB_TAB_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TAB_TAB_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -2217,7 +2299,8 @@ pub fn tab_tab(node: &super::TabTab, scope: &mut Scope) -> Element {
 /// Write a `Tabs` as its element, `mso14:tabs`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tabs(node: &super::Tabs, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::TABS_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::TABS_SHAPE, node.unknown.as_deref());
     writer.child(&node.tab_tab);
     writer.finish()
 }
@@ -2225,8 +2308,11 @@ pub fn tabs(node: &super::Tabs, scope: &mut Scope) -> Element {
 /// Write a `TaskFormGroup` as its element, `mso14:taskFormGroup`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn task_form_group(node: &super::TaskFormGroup, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TASK_FORM_GROUP_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TASK_FORM_GROUP_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -2247,8 +2333,11 @@ pub fn task_form_group(node: &super::TaskFormGroup, scope: &mut Scope) -> Elemen
 /// Write a `TaskGroup` as its element, `mso14:taskGroup`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn task_group(node: &super::TaskGroup, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TASK_GROUP_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TASK_GROUP_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
     writer.attribute(2, &node.tag);
@@ -2279,7 +2368,7 @@ pub fn task_task_form_group_task(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TASK_TASK_FORM_GROUP_TASK_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2312,7 +2401,7 @@ pub fn task_task_group_task(node: &super::TaskTaskGroupTask, scope: &mut Scope) 
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TASK_TASK_GROUP_TASK_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.id_q);
@@ -2349,7 +2438,7 @@ pub fn toggle_button_backstage_menu_toggle_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.image);
     writer.attribute(1, &node.image_mso);
@@ -2381,7 +2470,7 @@ pub fn toggle_button_toggle_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.size);
     writer.attribute(1, &node.get_size);
@@ -2428,7 +2517,7 @@ pub fn toggle_button_toggle_button_regular(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.get_pressed);
     writer.attribute(1, &node.on_action);
@@ -2473,7 +2562,7 @@ pub fn toggle_button_visible_toggle_button(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.get_pressed);
     writer.attribute(1, &node.on_action);
@@ -2511,7 +2600,7 @@ pub fn toggle_button_visible_toggle_button(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn top_items(node: &super::TopItems, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TOP_ITEMS_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TOP_ITEMS_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }

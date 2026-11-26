@@ -233,7 +233,8 @@ impl super::Transform for vml_presentation_drawing::InkAnnotationFlag {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for vml_presentation_drawing::InkAnnotationFlag {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for vml_presentation_drawing::InkAnnotationFlag {
         let converted = super::converts(
             out,
             &vml_presentation_drawing::INK_ANNOTATION_FLAG_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = vml_presentation_drawing::write::ink_annotation_flag(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for vml_presentation_drawing::InkAnnotationFlag {
         let through = super::Through::new(
             out,
             &vml_presentation_drawing::INK_ANNOTATION_FLAG_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -316,7 +317,8 @@ impl super::Transform for vml_presentation_drawing::VMLDiagramText {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -334,7 +336,7 @@ impl super::Visit for vml_presentation_drawing::VMLDiagramText {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -347,7 +349,7 @@ impl WriteThrough for vml_presentation_drawing::VMLDiagramText {
         let converted = super::converts(
             out,
             &vml_presentation_drawing::VML_DIAGRAM_TEXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = vml_presentation_drawing::write::vml_diagram_text(self, out.scope());
@@ -356,7 +358,7 @@ impl WriteThrough for vml_presentation_drawing::VMLDiagramText {
         let mut through = super::Through::new(
             out,
             &vml_presentation_drawing::VML_DIAGRAM_TEXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)

@@ -233,7 +233,8 @@ impl super::Transform for office_word_2010_wordml::Alpha {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_word_2010_wordml::Alpha {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -261,13 +262,20 @@ impl WriteThrough for office_word_2010_wordml::Alpha {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::ALPHA_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::ALPHA_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::alpha(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::ALPHA_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::ALPHA_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -309,7 +317,8 @@ impl super::Transform for office_word_2010_wordml::Bevel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -327,7 +336,7 @@ impl super::Visit for office_word_2010_wordml::Bevel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -337,13 +346,20 @@ impl WriteThrough for office_word_2010_wordml::Bevel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::BEVEL_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::BEVEL_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::bevel(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::BEVEL_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::BEVEL_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -385,7 +401,8 @@ impl super::Transform for office_word_2010_wordml::BevelB {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -403,7 +420,7 @@ impl super::Visit for office_word_2010_wordml::BevelB {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -413,14 +430,20 @@ impl WriteThrough for office_word_2010_wordml::BevelB {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::BEVEL_B_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::BEVEL_B_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::bevel_b(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::BEVEL_B_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::BEVEL_B_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -462,7 +485,8 @@ impl super::Transform for office_word_2010_wordml::BevelT {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -480,7 +504,7 @@ impl super::Visit for office_word_2010_wordml::BevelT {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -490,14 +514,20 @@ impl WriteThrough for office_word_2010_wordml::BevelT {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::BEVEL_T_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::BEVEL_T_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::bevel_t(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::BEVEL_T_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::BEVEL_T_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -539,10 +569,10 @@ impl super::Transform for office_word_2010_wordml::CNvContentPartPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cp_locks = super::transform_child(&self.cp_locks, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -560,7 +590,7 @@ impl super::Visit for office_word_2010_wordml::CNvContentPartPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cp_locks, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -576,7 +606,7 @@ impl WriteThrough for office_word_2010_wordml::CNvContentPartPr {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::C_NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::c_nv_content_part_pr(self, out.scope());
@@ -585,7 +615,7 @@ impl WriteThrough for office_word_2010_wordml::CNvContentPartPr {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::C_NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.is_comment);
         through.child(&self.cp_locks, ctx)?;
@@ -631,12 +661,12 @@ impl super::Transform for office_word_2010_wordml::CNvPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.click_hyperlink = super::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             super::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -654,7 +684,7 @@ impl super::Visit for office_word_2010_wordml::CNvPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.click_hyperlink, visitor);
         walk.child(&self.hyperlink_for_hover, visitor);
         walk.child(&self.extension_list, visitor);
@@ -668,14 +698,20 @@ impl WriteThrough for office_word_2010_wordml::CNvPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::C_NV_PR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::C_NV_PR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::c_nv_pr(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::C_NV_PR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::C_NV_PR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.attribute(1, &self.name);
         through.attribute(2, &self.descr);
@@ -725,7 +761,8 @@ impl super::Transform for office_word_2010_wordml::Camera {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -743,7 +780,7 @@ impl super::Visit for office_word_2010_wordml::Camera {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -753,13 +790,20 @@ impl WriteThrough for office_word_2010_wordml::Camera {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::CAMERA_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CAMERA_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::camera(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::CAMERA_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::CAMERA_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.prst);
         through.finish(ctx)
     }
@@ -802,11 +846,11 @@ impl super::Transform for office_word_2010_wordml::Checkbox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.checked = super::transform_child(&self.checked, ctx, &mut rebase);
         node.checked_state = super::transform_child(&self.checked_state, ctx, &mut rebase);
         node.unchecked_state = super::transform_child(&self.unchecked_state, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -824,7 +868,7 @@ impl super::Visit for office_word_2010_wordml::Checkbox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.checked, visitor);
         walk.child(&self.checked_state, visitor);
         walk.child(&self.unchecked_state, visitor);
@@ -838,14 +882,20 @@ impl WriteThrough for office_word_2010_wordml::Checkbox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::CHECKBOX_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CHECKBOX_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::checkbox(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::CHECKBOX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::CHECKBOX_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.checked, ctx)?;
         through.child(&self.checked_state, ctx)?;
         through.child(&self.unchecked_state, ctx)?;
@@ -890,7 +940,8 @@ impl super::Transform for office_word_2010_wordml::Checked {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -908,7 +959,7 @@ impl super::Visit for office_word_2010_wordml::Checked {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -918,14 +969,20 @@ impl WriteThrough for office_word_2010_wordml::Checked {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::CHECKED_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::CHECKED_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::checked(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::CHECKED_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::CHECKED_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -967,7 +1024,8 @@ impl super::Transform for office_word_2010_wordml::CheckedState {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -985,7 +1043,7 @@ impl super::Visit for office_word_2010_wordml::CheckedState {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -998,7 +1056,7 @@ impl WriteThrough for office_word_2010_wordml::CheckedState {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CHECKED_STATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::checked_state(self, out.scope());
@@ -1007,7 +1065,7 @@ impl WriteThrough for office_word_2010_wordml::CheckedState {
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::CHECKED_STATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1050,7 +1108,8 @@ impl super::Transform for office_word_2010_wordml::CntxtAlts {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1068,7 +1127,7 @@ impl super::Visit for office_word_2010_wordml::CntxtAlts {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1081,7 +1140,7 @@ impl WriteThrough for office_word_2010_wordml::CntxtAlts {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CNTXT_ALTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::cntxt_alts(self, out.scope());
@@ -1090,7 +1149,7 @@ impl WriteThrough for office_word_2010_wordml::CntxtAlts {
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::CNTXT_ALTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1404,9 +1463,9 @@ impl super::Transform for office_word_2010_wordml::ConflictDelRunTrackChange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1424,7 +1483,7 @@ impl super::Visit for office_word_2010_wordml::ConflictDelRunTrackChange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1439,7 +1498,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictDelRunTrackChange {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1449,7 +1508,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictDelRunTrackChange {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_DEL_RUN_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
@@ -1496,7 +1555,8 @@ impl super::Transform for office_word_2010_wordml::ConflictDelTrackChange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1514,7 +1574,7 @@ impl super::Visit for office_word_2010_wordml::ConflictDelTrackChange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1527,7 +1587,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictDelTrackChange {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CONFLICT_DEL_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1537,7 +1597,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictDelTrackChange {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_DEL_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
@@ -1583,9 +1643,9 @@ impl super::Transform for office_word_2010_wordml::ConflictInsRunTrackChange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1603,7 +1663,7 @@ impl super::Visit for office_word_2010_wordml::ConflictInsRunTrackChange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1618,7 +1678,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictInsRunTrackChange {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1628,7 +1688,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictInsRunTrackChange {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_INS_RUN_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
@@ -1675,7 +1735,8 @@ impl super::Transform for office_word_2010_wordml::ConflictInsTrackChange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1693,7 +1754,7 @@ impl super::Visit for office_word_2010_wordml::ConflictInsTrackChange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1706,7 +1767,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictInsTrackChange {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CONFLICT_INS_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1716,7 +1777,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictInsTrackChange {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_INS_TRACK_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
@@ -1762,7 +1823,8 @@ impl super::Transform for office_word_2010_wordml::ConflictMode {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1780,7 +1842,7 @@ impl super::Visit for office_word_2010_wordml::ConflictMode {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1793,7 +1855,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictMode {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CONFLICT_MODE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::conflict_mode(self, out.scope());
@@ -1802,7 +1864,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictMode {
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::CONFLICT_MODE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1845,12 +1907,12 @@ impl super::Transform for office_word_2010_wordml::ContentPart {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.nv_content_part_pr =
             super::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
         node.xfrm = super::transform_child(&self.xfrm, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1868,7 +1930,7 @@ impl super::Visit for office_word_2010_wordml::ContentPart {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.nv_content_part_pr, visitor);
         walk.child(&self.xfrm, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -1885,7 +1947,7 @@ impl WriteThrough for office_word_2010_wordml::ContentPart {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CONTENT_PART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::content_part(self, out.scope());
@@ -1894,7 +1956,7 @@ impl WriteThrough for office_word_2010_wordml::ContentPart {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONTENT_PART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.attribute(1, &self.id);
@@ -1942,9 +2004,9 @@ impl super::Transform for office_word_2010_wordml::ContourClr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1962,7 +2024,7 @@ impl super::Visit for office_word_2010_wordml::ContourClr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1977,7 +2039,7 @@ impl WriteThrough for office_word_2010_wordml::ContourClr {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CONTOUR_CLR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::contour_clr(self, out.scope());
@@ -1986,7 +2048,7 @@ impl WriteThrough for office_word_2010_wordml::ContourClr {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CONTOUR_CLR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -2030,7 +2092,8 @@ impl super::Transform for office_word_2010_wordml::CustomXmlConflictDelRangeEnd 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2048,7 +2111,7 @@ impl super::Visit for office_word_2010_wordml::CustomXmlConflictDelRangeEnd {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2061,7 +2124,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictDelRangeEnd {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_END_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::custom_xml_conflict_del_range_end(
@@ -2073,7 +2136,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictDelRangeEnd {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_END_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -2117,7 +2180,8 @@ impl super::Transform for office_word_2010_wordml::CustomXmlConflictDelRangeStar
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2135,7 +2199,7 @@ impl super::Visit for office_word_2010_wordml::CustomXmlConflictDelRangeStart {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2148,7 +2212,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictDelRangeStart {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_START_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::custom_xml_conflict_del_range_start(
@@ -2160,7 +2224,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictDelRangeStart {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_DEL_RANGE_START_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
@@ -2206,7 +2270,8 @@ impl super::Transform for office_word_2010_wordml::CustomXmlConflictInsRangeEnd 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2224,7 +2289,7 @@ impl super::Visit for office_word_2010_wordml::CustomXmlConflictInsRangeEnd {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2237,7 +2302,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictInsRangeEnd {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_END_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::custom_xml_conflict_ins_range_end(
@@ -2249,7 +2314,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictInsRangeEnd {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_END_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -2293,7 +2358,8 @@ impl super::Transform for office_word_2010_wordml::CustomXmlConflictInsRangeStar
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2311,7 +2377,7 @@ impl super::Visit for office_word_2010_wordml::CustomXmlConflictInsRangeStart {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2324,7 +2390,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictInsRangeStart {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_START_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::custom_xml_conflict_ins_range_start(
@@ -2336,7 +2402,7 @@ impl WriteThrough for office_word_2010_wordml::CustomXmlConflictInsRangeStart {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::CUSTOM_XML_CONFLICT_INS_RANGE_START_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
@@ -2382,7 +2448,8 @@ impl super::Transform for office_word_2010_wordml::DefaultImageDpi {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2400,7 +2467,7 @@ impl super::Visit for office_word_2010_wordml::DefaultImageDpi {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2413,7 +2480,7 @@ impl WriteThrough for office_word_2010_wordml::DefaultImageDpi {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::DEFAULT_IMAGE_DPI_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::default_image_dpi(self, out.scope());
@@ -2422,7 +2489,7 @@ impl WriteThrough for office_word_2010_wordml::DefaultImageDpi {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::DEFAULT_IMAGE_DPI_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2466,7 +2533,8 @@ impl super::Transform for office_word_2010_wordml::DiscardImageEditingData {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2484,7 +2552,7 @@ impl super::Visit for office_word_2010_wordml::DiscardImageEditingData {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2497,7 +2565,7 @@ impl WriteThrough for office_word_2010_wordml::DiscardImageEditingData {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::DISCARD_IMAGE_EDITING_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2507,7 +2575,7 @@ impl WriteThrough for office_word_2010_wordml::DiscardImageEditingData {
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::DISCARD_IMAGE_EDITING_DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -2550,7 +2618,8 @@ impl super::Transform for office_word_2010_wordml::DocId {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2568,7 +2637,7 @@ impl super::Visit for office_word_2010_wordml::DocId {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2578,13 +2647,20 @@ impl WriteThrough for office_word_2010_wordml::DocId {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::DOC_ID_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::DOC_ID_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::doc_id(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::DOC_ID_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::DOC_ID_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -2627,7 +2703,8 @@ impl super::Transform for office_word_2010_wordml::EntityPicker {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2645,7 +2722,7 @@ impl super::Visit for office_word_2010_wordml::EntityPicker {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2658,7 +2735,7 @@ impl WriteThrough for office_word_2010_wordml::EntityPicker {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::ENTITY_PICKER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::entity_picker(self, out.scope());
@@ -2667,7 +2744,7 @@ impl WriteThrough for office_word_2010_wordml::EntityPicker {
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::ENTITY_PICKER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -2710,9 +2787,9 @@ impl super::Transform for office_word_2010_wordml::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2730,7 +2807,7 @@ impl super::Visit for office_word_2010_wordml::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -2742,14 +2819,20 @@ impl WriteThrough for office_word_2010_wordml::ExtLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::EXT_LST_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::EXT_LST_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::ext_lst(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::EXT_LST_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::EXT_LST_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
     }
@@ -2792,9 +2875,9 @@ impl super::Transform for office_word_2010_wordml::ExtrusionClr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2812,7 +2895,7 @@ impl super::Visit for office_word_2010_wordml::ExtrusionClr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -2827,7 +2910,7 @@ impl WriteThrough for office_word_2010_wordml::ExtrusionClr {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::EXTRUSION_CLR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::extrusion_clr(self, out.scope());
@@ -2836,7 +2919,7 @@ impl WriteThrough for office_word_2010_wordml::ExtrusionClr {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::EXTRUSION_CLR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -2984,7 +3067,8 @@ impl super::Transform for office_word_2010_wordml::FillToRect {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3002,7 +3086,7 @@ impl super::Visit for office_word_2010_wordml::FillToRect {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3015,7 +3099,7 @@ impl WriteThrough for office_word_2010_wordml::FillToRect {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::FILL_TO_RECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::fill_to_rect(self, out.scope());
@@ -3024,7 +3108,7 @@ impl WriteThrough for office_word_2010_wordml::FillToRect {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::FILL_TO_RECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.l);
         through.attribute(1, &self.t);
@@ -3071,9 +3155,9 @@ impl super::Transform for office_word_2010_wordml::Glow {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3091,7 +3175,7 @@ impl super::Visit for office_word_2010_wordml::Glow {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3103,13 +3187,20 @@ impl WriteThrough for office_word_2010_wordml::Glow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::GLOW_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::GLOW_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::glow(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::GLOW_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::GLOW_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.rad);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3153,10 +3244,10 @@ impl super::Transform for office_word_2010_wordml::GradFill {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.gs_lst = super::transform_child(&self.gs_lst, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3174,7 +3265,7 @@ impl super::Visit for office_word_2010_wordml::GradFill {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.gs_lst, visitor);
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
@@ -3190,7 +3281,7 @@ impl WriteThrough for office_word_2010_wordml::GradFill {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::GRAD_FILL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::grad_fill(self, out.scope());
@@ -3199,7 +3290,7 @@ impl WriteThrough for office_word_2010_wordml::GradFill {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::GRAD_FILL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.gs_lst, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -3341,9 +3432,9 @@ impl super::Transform for office_word_2010_wordml::Gs {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3361,7 +3452,7 @@ impl super::Visit for office_word_2010_wordml::Gs {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3373,13 +3464,20 @@ impl WriteThrough for office_word_2010_wordml::Gs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::GS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::GS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::gs(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::GS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::GS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.pos);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3423,9 +3521,9 @@ impl super::Transform for office_word_2010_wordml::GsLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.gs = super::transform_child(&self.gs, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3443,7 +3541,7 @@ impl super::Visit for office_word_2010_wordml::GsLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.gs, visitor);
         walk.finish(visitor);
     }
@@ -3455,13 +3553,20 @@ impl WriteThrough for office_word_2010_wordml::GsLst {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::GS_LST_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::GS_LST_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::gs_lst(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::GS_LST_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::GS_LST_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.gs, ctx)?;
         through.finish(ctx)
     }
@@ -3504,7 +3609,8 @@ impl super::Transform for office_word_2010_wordml::HueMod {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3522,7 +3628,7 @@ impl super::Visit for office_word_2010_wordml::HueMod {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3532,14 +3638,20 @@ impl WriteThrough for office_word_2010_wordml::HueMod {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::HUE_MOD_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::HUE_MOD_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::hue_mod(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::HUE_MOD_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::HUE_MOD_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3582,7 +3694,8 @@ impl super::Transform for office_word_2010_wordml::Ligatures {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3600,7 +3713,7 @@ impl super::Visit for office_word_2010_wordml::Ligatures {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3613,7 +3726,7 @@ impl WriteThrough for office_word_2010_wordml::Ligatures {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::LIGATURES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::ligatures(self, out.scope());
@@ -3622,7 +3735,7 @@ impl WriteThrough for office_word_2010_wordml::Ligatures {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::LIGATURES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -3666,9 +3779,9 @@ impl super::Transform for office_word_2010_wordml::LightRig {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.rot = super::transform_child(&self.rot, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3686,7 +3799,7 @@ impl super::Visit for office_word_2010_wordml::LightRig {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.rot, visitor);
         walk.finish(visitor);
     }
@@ -3701,7 +3814,7 @@ impl WriteThrough for office_word_2010_wordml::LightRig {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::LIGHT_RIG_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::light_rig(self, out.scope());
@@ -3710,7 +3823,7 @@ impl WriteThrough for office_word_2010_wordml::LightRig {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::LIGHT_RIG_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rig);
         through.attribute(1, &self.dir);
@@ -3756,7 +3869,8 @@ impl super::Transform for office_word_2010_wordml::Lin {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3774,7 +3888,7 @@ impl super::Visit for office_word_2010_wordml::Lin {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3784,13 +3898,20 @@ impl WriteThrough for office_word_2010_wordml::Lin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::LIN_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::LIN_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::lin(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::LIN_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::LIN_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.ang);
         through.attribute(1, &self.scaled);
         through.finish(ctx)
@@ -3938,7 +4059,8 @@ impl super::Transform for office_word_2010_wordml::Lum {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3956,7 +4078,7 @@ impl super::Visit for office_word_2010_wordml::Lum {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3966,12 +4088,20 @@ impl WriteThrough for office_word_2010_wordml::Lum {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::LUM_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::LUM_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::lum(self, out.scope());
             return out.converted(element);
         }
-        let through = super::Through::new(out, &office_word_2010_wordml::LUM_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::LUM_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -4013,7 +4143,8 @@ impl super::Transform for office_word_2010_wordml::LumMod {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4031,7 +4162,7 @@ impl super::Visit for office_word_2010_wordml::LumMod {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4041,14 +4172,20 @@ impl WriteThrough for office_word_2010_wordml::LumMod {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::LUM_MOD_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::LUM_MOD_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::lum_mod(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::LUM_MOD_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::LUM_MOD_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -4090,7 +4227,8 @@ impl super::Transform for office_word_2010_wordml::LumOff {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4108,7 +4246,7 @@ impl super::Visit for office_word_2010_wordml::LumOff {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4118,14 +4256,20 @@ impl WriteThrough for office_word_2010_wordml::LumOff {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::LUM_OFF_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::LUM_OFF_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::lum_off(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::LUM_OFF_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::LUM_OFF_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -4167,7 +4311,8 @@ impl super::Transform for office_word_2010_wordml::Miter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4185,7 +4330,7 @@ impl super::Visit for office_word_2010_wordml::Miter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4195,13 +4340,20 @@ impl WriteThrough for office_word_2010_wordml::Miter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::MITER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::MITER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::miter(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::MITER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::MITER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.lim);
         through.finish(ctx)
     }
@@ -4244,7 +4396,8 @@ impl super::Transform for office_word_2010_wordml::NoFill {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4262,7 +4415,7 @@ impl super::Visit for office_word_2010_wordml::NoFill {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4272,14 +4425,20 @@ impl WriteThrough for office_word_2010_wordml::NoFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::NO_FILL_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::NO_FILL_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::no_fill(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::NO_FILL_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::NO_FILL_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -4321,7 +4480,8 @@ impl super::Transform for office_word_2010_wordml::NumForm {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4339,7 +4499,7 @@ impl super::Visit for office_word_2010_wordml::NumForm {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4349,14 +4509,20 @@ impl WriteThrough for office_word_2010_wordml::NumForm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::NUM_FORM_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::NUM_FORM_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::num_form(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::NUM_FORM_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::NUM_FORM_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4399,7 +4565,8 @@ impl super::Transform for office_word_2010_wordml::NumSpacing {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4417,7 +4584,7 @@ impl super::Visit for office_word_2010_wordml::NumSpacing {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4430,7 +4597,7 @@ impl WriteThrough for office_word_2010_wordml::NumSpacing {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::NUM_SPACING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::num_spacing(self, out.scope());
@@ -4439,7 +4606,7 @@ impl WriteThrough for office_word_2010_wordml::NumSpacing {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::NUM_SPACING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4483,10 +4650,10 @@ impl super::Transform for office_word_2010_wordml::NvContentPartPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.c_nv_pr = super::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         node.c = super::transform_child(&self.c, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4504,7 +4671,7 @@ impl super::Visit for office_word_2010_wordml::NvContentPartPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.c_nv_pr, visitor);
         walk.child(&self.c, visitor);
         walk.finish(visitor);
@@ -4520,7 +4687,7 @@ impl WriteThrough for office_word_2010_wordml::NvContentPartPr {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::nv_content_part_pr(self, out.scope());
@@ -4529,7 +4696,7 @@ impl WriteThrough for office_word_2010_wordml::NvContentPartPr {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.c_nv_pr, ctx)?;
         through.child(&self.c, ctx)?;
@@ -4574,9 +4741,9 @@ impl super::Transform for office_word_2010_wordml::Path {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fill_to_rect = super::transform_child(&self.fill_to_rect, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4594,7 +4761,7 @@ impl super::Visit for office_word_2010_wordml::Path {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fill_to_rect, visitor);
         walk.finish(visitor);
     }
@@ -4606,13 +4773,20 @@ impl WriteThrough for office_word_2010_wordml::Path {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::PATH_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::PATH_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::path(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::PATH_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::PATH_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.path);
         through.child(&self.fill_to_rect, ctx)?;
         through.finish(ctx)
@@ -4656,12 +4830,12 @@ impl super::Transform for office_word_2010_wordml::Props3d {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.bevel_t = super::transform_child(&self.bevel_t, ctx, &mut rebase);
         node.bevel_b = super::transform_child(&self.bevel_b, ctx, &mut rebase);
         node.extrusion_clr = super::transform_child(&self.extrusion_clr, ctx, &mut rebase);
         node.contour_clr = super::transform_child(&self.contour_clr, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4679,7 +4853,7 @@ impl super::Visit for office_word_2010_wordml::Props3d {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.bevel_t, visitor);
         walk.child(&self.bevel_b, visitor);
         walk.child(&self.extrusion_clr, visitor);
@@ -4694,14 +4868,20 @@ impl WriteThrough for office_word_2010_wordml::Props3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::PROPS3D_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::PROPS3D_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::props3d(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::PROPS3D_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::PROPS3D_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.extrusion_h);
         through.attribute(1, &self.contour_w);
         through.attribute(2, &self.prst_material);
@@ -4750,7 +4930,8 @@ impl super::Transform for office_word_2010_wordml::PrstDash {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4768,7 +4949,7 @@ impl super::Visit for office_word_2010_wordml::PrstDash {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4781,7 +4962,7 @@ impl WriteThrough for office_word_2010_wordml::PrstDash {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::PRST_DASH_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::prst_dash(self, out.scope());
@@ -4790,7 +4971,7 @@ impl WriteThrough for office_word_2010_wordml::PrstDash {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::PRST_DASH_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4834,7 +5015,8 @@ impl super::Transform for office_word_2010_wordml::Reflection {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4852,7 +5034,7 @@ impl super::Visit for office_word_2010_wordml::Reflection {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4865,7 +5047,7 @@ impl WriteThrough for office_word_2010_wordml::Reflection {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::REFLECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::reflection(self, out.scope());
@@ -4874,7 +5056,7 @@ impl WriteThrough for office_word_2010_wordml::Reflection {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::REFLECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.blur_rad);
         through.attribute(1, &self.st_a);
@@ -4930,7 +5112,8 @@ impl super::Transform for office_word_2010_wordml::Rot {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4948,7 +5131,7 @@ impl super::Visit for office_word_2010_wordml::Rot {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4958,13 +5141,20 @@ impl WriteThrough for office_word_2010_wordml::Rot {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::ROT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::ROT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::rot(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::ROT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::ROT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.lat);
         through.attribute(1, &self.lon);
         through.attribute(2, &self.rev);
@@ -5009,7 +5199,8 @@ impl super::Transform for office_word_2010_wordml::Round {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5027,7 +5218,7 @@ impl super::Visit for office_word_2010_wordml::Round {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5037,13 +5228,20 @@ impl WriteThrough for office_word_2010_wordml::Round {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::ROUND_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::ROUND_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::round(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::ROUND_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::ROUND_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -5085,7 +5283,8 @@ impl super::Transform for office_word_2010_wordml::Sat {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5103,7 +5302,7 @@ impl super::Visit for office_word_2010_wordml::Sat {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5113,12 +5312,20 @@ impl WriteThrough for office_word_2010_wordml::Sat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::SAT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SAT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::sat(self, out.scope());
             return out.converted(element);
         }
-        let through = super::Through::new(out, &office_word_2010_wordml::SAT_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::SAT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -5160,7 +5367,8 @@ impl super::Transform for office_word_2010_wordml::SatMod {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5178,7 +5386,7 @@ impl super::Visit for office_word_2010_wordml::SatMod {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5188,14 +5396,20 @@ impl WriteThrough for office_word_2010_wordml::SatMod {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::SAT_MOD_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SAT_MOD_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::sat_mod(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::SAT_MOD_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::SAT_MOD_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -5237,7 +5451,8 @@ impl super::Transform for office_word_2010_wordml::SatOff {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5255,7 +5470,7 @@ impl super::Visit for office_word_2010_wordml::SatOff {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5265,14 +5480,20 @@ impl WriteThrough for office_word_2010_wordml::SatOff {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::SAT_OFF_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SAT_OFF_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::sat_off(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::SAT_OFF_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::SAT_OFF_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -5314,10 +5535,10 @@ impl super::Transform for office_word_2010_wordml::Scene3d {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.camera = super::transform_child(&self.camera, ctx, &mut rebase);
         node.light_rig = super::transform_child(&self.light_rig, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5335,7 +5556,7 @@ impl super::Visit for office_word_2010_wordml::Scene3d {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.camera, visitor);
         walk.child(&self.light_rig, visitor);
         walk.finish(visitor);
@@ -5348,14 +5569,20 @@ impl WriteThrough for office_word_2010_wordml::Scene3d {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::SCENE3D_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SCENE3D_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::scene3d(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::SCENE3D_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::SCENE3D_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.camera, ctx)?;
         through.child(&self.light_rig, ctx)?;
         through.finish(ctx)
@@ -5399,9 +5626,9 @@ impl super::Transform for office_word_2010_wordml::SchemeClr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5419,7 +5646,7 @@ impl super::Visit for office_word_2010_wordml::SchemeClr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -5434,7 +5661,7 @@ impl WriteThrough for office_word_2010_wordml::SchemeClr {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::SCHEME_CLR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::scheme_clr(self, out.scope());
@@ -5443,7 +5670,7 @@ impl WriteThrough for office_word_2010_wordml::SchemeClr {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::SCHEME_CLR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.items(&self.content, ctx)?;
@@ -5488,7 +5715,8 @@ impl super::Transform for office_word_2010_wordml::Shade {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5506,7 +5734,7 @@ impl super::Visit for office_word_2010_wordml::Shade {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5516,13 +5744,20 @@ impl WriteThrough for office_word_2010_wordml::Shade {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::SHADE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SHADE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::shade(self, out.scope());
             return out.converted(element);
         }
-        let through =
-            super::Through::new(out, &office_word_2010_wordml::SHADE_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::SHADE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -5564,9 +5799,9 @@ impl super::Transform for office_word_2010_wordml::Shadow {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5584,7 +5819,7 @@ impl super::Visit for office_word_2010_wordml::Shadow {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -5596,13 +5831,20 @@ impl WriteThrough for office_word_2010_wordml::Shadow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::SHADOW_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SHADOW_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::shadow(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::SHADOW_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::SHADOW_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.blur_rad);
         through.attribute(1, &self.dist);
         through.attribute(2, &self.dir);
@@ -5653,9 +5895,9 @@ impl super::Transform for office_word_2010_wordml::SolidFill {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5673,7 +5915,7 @@ impl super::Visit for office_word_2010_wordml::SolidFill {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -5688,7 +5930,7 @@ impl WriteThrough for office_word_2010_wordml::SolidFill {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::SOLID_FILL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::solid_fill(self, out.scope());
@@ -5697,7 +5939,7 @@ impl WriteThrough for office_word_2010_wordml::SolidFill {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::SOLID_FILL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -5741,9 +5983,9 @@ impl super::Transform for office_word_2010_wordml::SrgbClr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5761,7 +6003,7 @@ impl super::Visit for office_word_2010_wordml::SrgbClr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -5773,14 +6015,20 @@ impl WriteThrough for office_word_2010_wordml::SrgbClr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_word_2010_wordml::SRGB_CLR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::SRGB_CLR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::srgb_clr(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::SRGB_CLR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::SRGB_CLR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -5824,7 +6072,8 @@ impl super::Transform for office_word_2010_wordml::StyleSet {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5842,7 +6091,7 @@ impl super::Visit for office_word_2010_wordml::StyleSet {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5855,7 +6104,7 @@ impl WriteThrough for office_word_2010_wordml::StyleSet {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::STYLE_SET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::style_set(self, out.scope());
@@ -5864,7 +6113,7 @@ impl WriteThrough for office_word_2010_wordml::StyleSet {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::STYLE_SET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.val);
@@ -5909,9 +6158,9 @@ impl super::Transform for office_word_2010_wordml::StylisticSets {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.style_set = super::transform_child(&self.style_set, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5929,7 +6178,7 @@ impl super::Visit for office_word_2010_wordml::StylisticSets {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.style_set, visitor);
         walk.finish(visitor);
     }
@@ -5944,7 +6193,7 @@ impl WriteThrough for office_word_2010_wordml::StylisticSets {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::STYLISTIC_SETS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::stylistic_sets(self, out.scope());
@@ -5953,7 +6202,7 @@ impl WriteThrough for office_word_2010_wordml::StylisticSets {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::STYLISTIC_SETS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.style_set, ctx)?;
         through.finish(ctx)
@@ -5997,9 +6246,9 @@ impl super::Transform for office_word_2010_wordml::TextFill {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6017,7 +6266,7 @@ impl super::Visit for office_word_2010_wordml::TextFill {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -6032,7 +6281,7 @@ impl WriteThrough for office_word_2010_wordml::TextFill {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::TEXT_FILL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::text_fill(self, out.scope());
@@ -6041,7 +6290,7 @@ impl WriteThrough for office_word_2010_wordml::TextFill {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::TEXT_FILL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -6085,12 +6334,12 @@ impl super::Transform for office_word_2010_wordml::TextOutline {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fill_properties_content =
             super::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
         node.prst_dash = super::transform_child(&self.prst_dash, ctx, &mut rebase);
         node.line_join_content = super::transform_choice(&self.line_join_content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6108,7 +6357,7 @@ impl super::Visit for office_word_2010_wordml::TextOutline {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.fill_properties_content, visitor);
         walk.child(&self.prst_dash, visitor);
         walk.choice(&self.line_join_content, visitor);
@@ -6125,7 +6374,7 @@ impl WriteThrough for office_word_2010_wordml::TextOutline {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::TEXT_OUTLINE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::text_outline(self, out.scope());
@@ -6134,7 +6383,7 @@ impl WriteThrough for office_word_2010_wordml::TextOutline {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordml::TEXT_OUTLINE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.w);
         through.attribute(1, &self.cap);
@@ -6184,7 +6433,8 @@ impl super::Transform for office_word_2010_wordml::Tint {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6202,7 +6452,7 @@ impl super::Visit for office_word_2010_wordml::Tint {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6212,12 +6462,20 @@ impl WriteThrough for office_word_2010_wordml::Tint {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::TINT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::TINT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::tint(self, out.scope());
             return out.converted(element);
         }
-        let through = super::Through::new(out, &office_word_2010_wordml::TINT_SHAPE, &self.unknown);
+        let through = super::Through::new(
+            out,
+            &office_word_2010_wordml::TINT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.finish(ctx)
     }
 
@@ -6259,7 +6517,8 @@ impl super::Transform for office_word_2010_wordml::UncheckedState {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6277,7 +6536,7 @@ impl super::Visit for office_word_2010_wordml::UncheckedState {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6290,7 +6549,7 @@ impl WriteThrough for office_word_2010_wordml::UncheckedState {
         let converted = super::converts(
             out,
             &office_word_2010_wordml::UNCHECKED_STATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2010_wordml::write::unchecked_state(self, out.scope());
@@ -6299,7 +6558,7 @@ impl WriteThrough for office_word_2010_wordml::UncheckedState {
         let through = super::Through::new(
             out,
             &office_word_2010_wordml::UNCHECKED_STATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -6342,10 +6601,10 @@ impl super::Transform for office_word_2010_wordml::Xfrm {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = super::transform_child(&self.extents, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6363,7 +6622,7 @@ impl super::Visit for office_word_2010_wordml::Xfrm {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.offset, visitor);
         walk.child(&self.extents, visitor);
         walk.finish(visitor);
@@ -6376,13 +6635,20 @@ impl WriteThrough for office_word_2010_wordml::Xfrm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_word_2010_wordml::XFRM_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_word_2010_wordml::XFRM_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_word_2010_wordml::write::xfrm(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_word_2010_wordml::XFRM_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_word_2010_wordml::XFRM_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.rot);
         through.attribute(1, &self.flip_h);
         through.attribute(2, &self.flip_v);

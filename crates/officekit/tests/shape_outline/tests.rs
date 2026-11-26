@@ -27,11 +27,11 @@ fn outline_of(
 }
 
 /// An `a:pt` at `x` and `y`.
-fn point(x: &str, y: &str) -> Box<ShapePathPoint> {
+fn point(x: &str, y: &str) -> ShapePathPoint {
     let mut point = ShapePathPoint::default();
     point.x = Some(AdjustableCoordinateMethods::from(x.to_owned()));
     point.y = Some(AdjustableCoordinateMethods::from(y.to_owned()));
-    Box::new(point)
+    point
 }
 
 /// The points the moves and lines of the first path go to.
@@ -92,9 +92,9 @@ fn a_preset_geometry_gives_its_paths_and_text_rectangle() {
 #[test]
 fn a_custom_geometry_gives_its_paths() {
     let mut moved = MovePathTo::default();
-    moved.shape_path_point = point("l", "b");
+    moved.shape_path_point = Box::new(point("l", "b"));
     let mut line = DrawLineTo::default();
-    line.shape_path_point = point("hc", "t");
+    line.shape_path_point = Box::new(point("hc", "t"));
     let mut path = ShapePath::default();
     path.content = vec![
         ShapePathContent::MovePathTo(moved),

@@ -233,7 +233,7 @@ impl super::Transform for locked_canvas::LockedCanvasContainer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_properties_for_a_group_shape = super::transform_child(
             &self.non_visual_properties_for_a_group_shape,
             ctx,
@@ -243,7 +243,7 @@ impl super::Transform for locked_canvas::LockedCanvasContainer {
             super::transform_child(&self.visual_group_shape_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -261,7 +261,7 @@ impl super::Visit for locked_canvas::LockedCanvasContainer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_properties_for_a_group_shape, visitor);
         walk.child(&self.visual_group_shape_properties, visitor);
         walk.items(&self.content, visitor);
@@ -279,7 +279,7 @@ impl WriteThrough for locked_canvas::LockedCanvasContainer {
         let converted = super::converts(
             out,
             &locked_canvas::LOCKED_CANVAS_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = locked_canvas::write::locked_canvas_container(self, out.scope());
@@ -288,7 +288,7 @@ impl WriteThrough for locked_canvas::LockedCanvasContainer {
         let mut through = super::Through::new(
             out,
             &locked_canvas::LOCKED_CANVAS_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_properties_for_a_group_shape, ctx)?;
         through.child(&self.visual_group_shape_properties, ctx)?;

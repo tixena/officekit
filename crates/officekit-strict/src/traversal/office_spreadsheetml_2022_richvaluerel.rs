@@ -233,9 +233,9 @@ impl super::Transform for office_spreadsheetml_2022_richvaluerel::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_spreadsheetml_2022_richvaluerel::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::ExtLst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_richvaluerel::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_richvaluerel::write::ext_lst(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_richvaluerel::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -321,7 +321,8 @@ impl super::Transform for office_spreadsheetml_2022_richvaluerel::Rel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -339,7 +340,7 @@ impl super::Visit for office_spreadsheetml_2022_richvaluerel::Rel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -352,7 +353,7 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::Rel {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_richvaluerel::REL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_richvaluerel::write::rel(self, out.scope());
@@ -361,7 +362,7 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::Rel {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_richvaluerel::REL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -405,10 +406,10 @@ impl super::Transform for office_spreadsheetml_2022_richvaluerel::RichValueRels 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.rel = super::transform_child(&self.rel, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -426,7 +427,7 @@ impl super::Visit for office_spreadsheetml_2022_richvaluerel::RichValueRels {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.rel, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -442,7 +443,7 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::RichValueRels {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_richvaluerel::RICH_VALUE_RELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -452,7 +453,7 @@ impl WriteThrough for office_spreadsheetml_2022_richvaluerel::RichValueRels {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_richvaluerel::RICH_VALUE_RELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.rel, ctx)?;
         through.child(&self.ext_lst, ctx)?;

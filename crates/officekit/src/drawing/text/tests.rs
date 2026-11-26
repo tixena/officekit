@@ -276,7 +276,11 @@ fn every_paragraph_type_gives_its_properties_as_an_a_ppr() {
 #[test]
 fn an_a_ppr_from_an_a_lvl1ppr_writes_as_an_a_ppr() {
     let properties = paragraph_node!(ListLevel1TextStyle).paragraph_properties();
-    assert_eq!(properties.unknown.name, None);
+    assert!(
+        properties
+            .unknown()
+            .is_none_or(|unknown| unknown.name.is_none())
+    );
     let element = write::text_paragraph_properties(&properties, &mut Scope::default());
     assert_eq!(element.name.local, "pPr");
     assert_eq!(element.name.prefix, "a");
@@ -298,7 +302,11 @@ fn every_run_type_gives_its_properties_as_an_a_rpr() {
 #[test]
 fn an_a_rpr_from_an_a_endpararpr_writes_as_an_a_rpr() {
     let properties = run_node!(EndParagraphRunProperties).run_properties();
-    assert_eq!(properties.unknown.name, None);
+    assert!(
+        properties
+            .unknown()
+            .is_none_or(|unknown| unknown.name.is_none())
+    );
     let element = write::text_run_properties(&properties, &mut Scope::default());
     assert_eq!(element.name.local, "rPr");
 }

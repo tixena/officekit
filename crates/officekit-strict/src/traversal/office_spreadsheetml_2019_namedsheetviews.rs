@@ -233,11 +233,11 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::ColumnFilte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
         node.filter = super::transform_child(&self.filter, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -255,7 +255,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::ColumnFilter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.dxf, visitor);
         walk.child(&self.filter, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -272,7 +272,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::ColumnFilter {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::COLUMN_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -282,7 +282,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::ColumnFilter {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::COLUMN_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.col_id);
         through.attribute(1, &self.id);
@@ -330,7 +330,7 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::Dxf {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.font = super::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = super::transform_child(&self.number_format, ctx, &mut rebase);
         node.fill = super::transform_child(&self.fill, ctx, &mut rebase);
@@ -340,7 +340,7 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::Dxf {
             super::transform_child(&self.protection_properties, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             super::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -358,7 +358,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::Dxf {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.font, visitor);
         walk.child(&self.number_format, visitor);
         walk.child(&self.fill, visitor);
@@ -379,7 +379,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::Dxf {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2019_namedsheetviews::write::dxf(self, out.scope());
@@ -388,7 +388,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::Dxf {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.font, ctx)?;
         through.child(&self.number_format, ctx)?;
@@ -438,9 +438,9 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -458,7 +458,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -473,7 +473,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::ExtLst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -483,7 +483,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -527,9 +527,9 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::Filter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -547,7 +547,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::Filter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -562,7 +562,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::Filter {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -572,7 +572,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::Filter {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.col_id);
         through.attribute(1, &self.hidden_button);
@@ -619,10 +619,10 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::NamedSheetV
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.nsv_filter = super::transform_child(&self.nsv_filter, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -640,7 +640,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::NamedSheetView 
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.nsv_filter, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -656,7 +656,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NamedSheetView 
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEW_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2019_namedsheetviews::write::named_sheet_view(
@@ -668,7 +668,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NamedSheetView 
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEW_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.id);
@@ -715,10 +715,10 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::NamedSheetV
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.named_sheet_view = super::transform_child(&self.named_sheet_view, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -736,7 +736,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::NamedSheetViews
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.named_sheet_view, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -752,7 +752,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NamedSheetViews
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEWS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2019_namedsheetviews::write::named_sheet_views(
@@ -764,7 +764,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NamedSheetViews
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NAMED_SHEET_VIEWS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.named_sheet_view, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -809,11 +809,11 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::NsvFilter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.column_filter = super::transform_child(&self.column_filter, ctx, &mut rebase);
         node.sort_rules = super::transform_child(&self.sort_rules, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -831,7 +831,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::NsvFilter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.column_filter, visitor);
         walk.child(&self.sort_rules, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -848,7 +848,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NsvFilter {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NSV_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -858,7 +858,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::NsvFilter {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::NSV_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.filter_id);
         through.attribute(1, &self.r#ref);
@@ -907,7 +907,8 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::RichSortCon
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -925,7 +926,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::RichSortConditi
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -938,7 +939,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::RichSortConditi
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::RICH_SORT_CONDITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2019_namedsheetviews::write::rich_sort_condition(
@@ -950,7 +951,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::RichSortConditi
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::RICH_SORT_CONDITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rich_sort_key);
         through.attribute(1, &self.descending);
@@ -1001,7 +1002,8 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::SortConditi
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1019,7 +1021,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::SortCondition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1032,7 +1034,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortCondition {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_CONDITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1042,7 +1044,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortCondition {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_CONDITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.descending);
         through.attribute(1, &self.sort_by);
@@ -1092,10 +1094,10 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::SortRule {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1113,7 +1115,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::SortRule {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.dxf, visitor);
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
@@ -1129,7 +1131,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRule {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_RULE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1139,7 +1141,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRule {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_RULE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.col_id);
         through.attribute(1, &self.id);
@@ -1283,10 +1285,10 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::SortRules {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sort_rule = super::transform_child(&self.sort_rule, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1304,7 +1306,7 @@ impl super::Visit for office_spreadsheetml_2019_namedsheetviews::SortRules {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sort_rule, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -1320,7 +1322,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRules {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_RULES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1330,7 +1332,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRules {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2019_namedsheetviews::SORT_RULES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.sort_method);
         through.attribute(1, &self.case_sensitive);

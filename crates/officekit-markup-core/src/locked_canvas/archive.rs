@@ -233,7 +233,7 @@ pub struct LockedCanvasContainerMirror {
     #[rkyv(omit_bounds)]
     pub non_visual_properties_for_a_group_shape:
         Box<super::super::drawing::NonVisualPropertiesForAGroupShape>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     #[rkyv(omit_bounds)]
     pub visual_group_shape_properties: Box<super::super::drawing::VisualGroupShapeProperties>,

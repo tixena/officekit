@@ -51,7 +51,10 @@ fn settings(docx: &Docx) -> DocumentSettings {
 #[cfg(feature = "transitional")]
 fn protection(docx: &Docx) -> Vec<(&'static str, String)> {
     let read = settings(docx);
-    assert_eq!(read.unknown.children, Vec::new());
+    assert!(
+        read.unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
     let entry = read.document_editing_restrictions.unwrap_or_default();
     [
         ("edit", entry.edit.map(|value| value.0)),

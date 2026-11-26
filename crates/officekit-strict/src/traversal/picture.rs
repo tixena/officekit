@@ -233,12 +233,12 @@ impl super::Transform for picture::NonVisualDrawingProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.click_hyperlink = super::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             super::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -256,7 +256,7 @@ impl super::Visit for picture::NonVisualDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.click_hyperlink, visitor);
         walk.child(&self.hyperlink_for_hover, visitor);
         walk.child(&self.extension_list, visitor);
@@ -273,7 +273,7 @@ impl WriteThrough for picture::NonVisualDrawingProperties {
         let converted = super::converts(
             out,
             &picture::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = picture::write::non_visual_drawing_properties(self, out.scope());
@@ -282,7 +282,7 @@ impl WriteThrough for picture::NonVisualDrawingProperties {
         let mut through = super::Through::new(
             out,
             &picture::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.name);
@@ -333,10 +333,10 @@ impl super::Transform for picture::NonVisualPictureDrawingProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.picture_locks = super::transform_child(&self.picture_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -354,7 +354,7 @@ impl super::Visit for picture::NonVisualPictureDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.picture_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -370,7 +370,7 @@ impl WriteThrough for picture::NonVisualPictureDrawingProperties {
         let converted = super::converts(
             out,
             &picture::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = picture::write::non_visual_picture_drawing_properties(self, out.scope());
@@ -379,7 +379,7 @@ impl WriteThrough for picture::NonVisualPictureDrawingProperties {
         let mut through = super::Through::new(
             out,
             &picture::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.prefer_relative_resize);
         through.child(&self.picture_locks, ctx)?;
@@ -425,7 +425,7 @@ impl super::Transform for picture::NonVisualPictureProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_picture_drawing_properties = super::transform_child(
@@ -433,7 +433,7 @@ impl super::Transform for picture::NonVisualPictureProperties {
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -451,7 +451,7 @@ impl super::Visit for picture::NonVisualPictureProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_picture_drawing_properties, visitor);
         walk.finish(visitor);
@@ -467,7 +467,7 @@ impl WriteThrough for picture::NonVisualPictureProperties {
         let converted = super::converts(
             out,
             &picture::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = picture::write::non_visual_picture_properties(self, out.scope());
@@ -476,7 +476,7 @@ impl WriteThrough for picture::NonVisualPictureProperties {
         let mut through = super::Through::new(
             out,
             &picture::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_picture_drawing_properties, ctx)?;
@@ -517,14 +517,14 @@ impl super::Transform for picture::Picture {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_picture_properties =
             super::transform_child(&self.non_visual_picture_properties, ctx, &mut rebase);
         node.fill = super::transform_child(&self.fill, ctx, &mut rebase);
         node.shape_properties = super::transform_child(&self.shape_properties, ctx, &mut rebase);
         node.style = super::transform_child(&self.style, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -538,7 +538,7 @@ impl super::Visit for picture::Picture {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_picture_properties, visitor);
         walk.child(&self.fill, visitor);
         walk.child(&self.shape_properties, visitor);
@@ -554,12 +554,13 @@ impl WriteThrough for picture::Picture {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &picture::PICTURE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &picture::PICTURE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = picture::write::picture(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &picture::PICTURE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &picture::PICTURE_SHAPE, self.unknown.as_deref());
         through.child(&self.non_visual_picture_properties, ctx)?;
         through.child(&self.fill, ctx)?;
         through.child(&self.shape_properties, ctx)?;
@@ -593,11 +594,11 @@ impl super::Transform for picture::PictureFill {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.blip = super::transform_child(&self.blip, ctx, &mut rebase);
         node.source_rectangle = super::transform_child(&self.source_rectangle, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -611,7 +612,7 @@ impl super::Visit for picture::PictureFill {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.blip, visitor);
         walk.child(&self.source_rectangle, visitor);
         walk.choice(&self.content, visitor);
@@ -625,12 +626,13 @@ impl WriteThrough for picture::PictureFill {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &picture::PICTURE_FILL_SHAPE, &self.unknown);
+        let converted = super::converts(out, &picture::PICTURE_FILL_SHAPE, self.unknown.as_deref());
         if converted {
             let element = picture::write::picture_fill(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &picture::PICTURE_FILL_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &picture::PICTURE_FILL_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
         through.child(&self.blip, ctx)?;
@@ -669,7 +671,7 @@ impl super::Transform for picture::ShapeProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -680,7 +682,7 @@ impl super::Transform for picture::ShapeProperties {
         node.scene3d = super::transform_child(&self.scene3d, ctx, &mut rebase);
         node.apply_3d = super::transform_child(&self.apply_3d, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -694,7 +696,7 @@ impl super::Visit for picture::ShapeProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -713,12 +715,20 @@ impl WriteThrough for picture::ShapeProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &picture::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &picture::SHAPE_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = picture::write::shape_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &picture::SHAPE_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &picture::SHAPE_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;

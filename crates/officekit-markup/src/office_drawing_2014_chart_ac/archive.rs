@@ -226,7 +226,7 @@ pub struct MultiLvlStrLitMirror {
     pub chart_extensibility: Option<Box<chart::ChartExtensibility>>,
     pub level: Vec<chart::Level>,
     pub point_count: Option<Box<chart::PointCount>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

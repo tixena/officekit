@@ -233,7 +233,8 @@ impl super::Transform for vml_wordprocessing_drawing::AnchorLocationIsLocked {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for vml_wordprocessing_drawing::AnchorLocationIsLocked {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for vml_wordprocessing_drawing::AnchorLocationIsLocked {
         let converted = super::converts(
             out,
             &vml_wordprocessing_drawing::ANCHOR_LOCATION_IS_LOCKED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for vml_wordprocessing_drawing::AnchorLocationIsLocked {
         let through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::ANCHOR_LOCATION_IS_LOCKED_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -317,7 +318,8 @@ impl super::Transform for vml_wordprocessing_drawing::BottomBorder {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -335,7 +337,7 @@ impl super::Visit for vml_wordprocessing_drawing::BottomBorder {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -348,7 +350,7 @@ impl WriteThrough for vml_wordprocessing_drawing::BottomBorder {
         let converted = super::converts(
             out,
             &vml_wordprocessing_drawing::BOTTOM_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = vml_wordprocessing_drawing::write::bottom_border(self, out.scope());
@@ -357,7 +359,7 @@ impl WriteThrough for vml_wordprocessing_drawing::BottomBorder {
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::BOTTOM_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.width);
@@ -403,7 +405,8 @@ impl super::Transform for vml_wordprocessing_drawing::LeftBorder {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -421,7 +424,7 @@ impl super::Visit for vml_wordprocessing_drawing::LeftBorder {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -434,7 +437,7 @@ impl WriteThrough for vml_wordprocessing_drawing::LeftBorder {
         let converted = super::converts(
             out,
             &vml_wordprocessing_drawing::LEFT_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = vml_wordprocessing_drawing::write::left_border(self, out.scope());
@@ -443,7 +446,7 @@ impl WriteThrough for vml_wordprocessing_drawing::LeftBorder {
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::LEFT_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.width);
@@ -489,7 +492,8 @@ impl super::Transform for vml_wordprocessing_drawing::RightBorder {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -507,7 +511,7 @@ impl super::Visit for vml_wordprocessing_drawing::RightBorder {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -520,7 +524,7 @@ impl WriteThrough for vml_wordprocessing_drawing::RightBorder {
         let converted = super::converts(
             out,
             &vml_wordprocessing_drawing::RIGHT_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = vml_wordprocessing_drawing::write::right_border(self, out.scope());
@@ -529,7 +533,7 @@ impl WriteThrough for vml_wordprocessing_drawing::RightBorder {
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::RIGHT_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.width);
@@ -575,7 +579,8 @@ impl super::Transform for vml_wordprocessing_drawing::TextWrapping {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -593,7 +598,7 @@ impl super::Visit for vml_wordprocessing_drawing::TextWrapping {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -606,7 +611,7 @@ impl WriteThrough for vml_wordprocessing_drawing::TextWrapping {
         let converted = super::converts(
             out,
             &vml_wordprocessing_drawing::TEXT_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = vml_wordprocessing_drawing::write::text_wrapping(self, out.scope());
@@ -615,7 +620,7 @@ impl WriteThrough for vml_wordprocessing_drawing::TextWrapping {
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::TEXT_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.side);
@@ -662,7 +667,8 @@ impl super::Transform for vml_wordprocessing_drawing::TopBorder {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -680,7 +686,7 @@ impl super::Visit for vml_wordprocessing_drawing::TopBorder {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -693,7 +699,7 @@ impl WriteThrough for vml_wordprocessing_drawing::TopBorder {
         let converted = super::converts(
             out,
             &vml_wordprocessing_drawing::TOP_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = vml_wordprocessing_drawing::write::top_border(self, out.scope());
@@ -702,7 +708,7 @@ impl WriteThrough for vml_wordprocessing_drawing::TopBorder {
         let mut through = super::Through::new(
             out,
             &vml_wordprocessing_drawing::TOP_BORDER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.width);

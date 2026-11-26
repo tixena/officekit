@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::PctHeight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctHeightMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: super::super::drawing::PositivePercentageValueWithSign,
 }
@@ -231,7 +231,7 @@ pub struct PctHeightMirror {
 #[rkyv(remote = super::PctPosHOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctPosHOffsetMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: super::super::drawing::Percentage,
 }
@@ -240,7 +240,7 @@ pub struct PctPosHOffsetMirror {
 #[rkyv(remote = super::PctPosVOffset)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctPosVOffsetMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: super::super::drawing::Percentage,
 }
@@ -249,7 +249,7 @@ pub struct PctPosVOffsetMirror {
 #[rkyv(remote = super::PctWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PctWidthMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: super::super::drawing::PositivePercentageValueWithSign,
 }
@@ -260,7 +260,7 @@ pub struct PctWidthMirror {
 pub struct SizeRelHMirror {
     pub pct_width: Box<super::PctWidth>,
     pub relative_from: Option<super::SizeRelFromH>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -270,7 +270,7 @@ pub struct SizeRelHMirror {
 pub struct SizeRelVMirror {
     pub pct_height: Box<super::PctHeight>,
     pub relative_from: Option<super::SizeRelFromV>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

@@ -572,7 +572,7 @@ fn body_with_comment(blocks: Vec<BlockContent>, after: usize) -> DocumentBody {
     let mut body = DocumentBody::default();
     body.content = blocks;
     body.document_final_section_properties = Some(Box::default());
-    body.unknown
+    body.unknown_mut()
         .children
         .push(Extra::new(after, Node::Comment("c".to_owned())));
     body
@@ -1055,10 +1055,10 @@ fn unknown_content_goes_through_the_root_hooks_at_its_place() {
         ParagraphContent::Other(generic("c")),
     ];
     source.properties = Some(Box::default());
-    source.unknown.children = vec![Extra::new(0, generic("a"))];
+    source.unknown_mut().children = vec![Extra::new(0, generic("a"))];
     let renamed = source.transform(&mut Rename);
     assert_eq!(renamed.content[0], ParagraphContent::Other(generic("b")));
-    assert_eq!(renamed.unknown.children[0].node, generic("b"));
+    assert_eq!(renamed.unknown().unwrap().children[0].node, generic("b"));
     assert_eq!(
         written(&source, &mut Rename),
         format!(
@@ -1131,7 +1131,7 @@ fn an_extra_after_a_list_a_hook_lengthens_stays_after_its_neighbours() {
     let as_read = format!("<w:body xmlns:w=\"{W}\"><w:p/><w:p/><w:sectPr/><!--c--></w:body>");
     let source = read::document_body(&parsed(&as_read));
     // Two blocks and `w:sectPr` come before the comment.
-    assert_eq!(source.unknown.children[0].after, 3);
+    assert_eq!(source.unknown().unwrap().children[0].after, 3);
     assert_eq!(tree_xml(&source.transform(&mut Unchanged)), as_read);
     let transformed = source.transform(&mut copies(&[3, 1]));
     assert_eq!(
@@ -1192,7 +1192,7 @@ fn an_extra_after_the_blocks_stays_after_a_paragraph_a_hook_gives_for_an_unknown
         "<w:body xmlns:w=\"{W}\"><x:u xmlns:x=\"urn:x\"/><w:p/><w:sectPr/><!--c--></w:body>"
     )));
     assert!(matches!(source.content[0], BlockContent::Other(_)));
-    assert_eq!(source.unknown.children[0].after, 2);
+    assert_eq!(source.unknown().unwrap().children[0].after, 2);
     let through = written(&source, &mut ParagraphForOther);
     assert_eq!(
         through,
@@ -1206,7 +1206,7 @@ fn an_extra_before_a_child_a_hook_turns_unknown_stays_before_it() {
     let source = read::embedded_object(&parsed(&format!(
         "<w:object xmlns:w=\"{W}\"><w:drawing/><!--c--><w:control/></w:object>"
     )));
-    assert_eq!(source.unknown.children[0].after, 1);
+    assert_eq!(source.unknown().unwrap().children[0].after, 1);
     let through = written(&source, &mut CommentForControl);
     assert_eq!(
         through,
@@ -1223,7 +1223,7 @@ fn an_extra_after_a_child_a_hook_turns_unknown_stays_after_it() {
     let source = read::embedded_object(&parsed(&format!(
         "<w:object xmlns:w=\"{W}\"><w:drawing/><w:control/><!--c--></w:object>"
     )));
-    assert_eq!(source.unknown.children[0].after, 2);
+    assert_eq!(source.unknown().unwrap().children[0].after, 2);
     let through = written(&source, &mut CommentForControl);
     assert_eq!(
         through,

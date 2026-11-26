@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ArgumentDescription 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ArgumentDescription {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ArgumentDescription {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ARGUMENT_DESCRIPTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ArgumentDescription {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ARGUMENT_DESCRIPTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.index);
         through.text(&self.value)?;
@@ -319,10 +320,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ArgumentDescriptions
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_description =
             super::transform_child(&self.argument_description, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -340,7 +341,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ArgumentDescriptions {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_description, visitor);
         walk.finish(visitor);
     }
@@ -355,7 +356,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ArgumentDescriptions {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ARGUMENT_DESCRIPTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -365,7 +366,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ArgumentDescriptions {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ARGUMENT_DESCRIPTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.argument_description, ctx)?;
@@ -410,7 +411,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::AxisColor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -428,7 +430,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::AxisColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -441,7 +443,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::AxisColor {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::AXIS_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::axis_color(self, out.scope());
@@ -450,7 +452,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::AxisColor {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::AXIS_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -498,7 +500,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::BorderColor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -516,7 +519,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::BorderColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -529,7 +532,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::BorderColor {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::BORDER_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::border_color(self, out.scope());
@@ -538,7 +541,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::BorderColor {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::BORDER_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -586,7 +589,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CacheField {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -604,7 +608,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CacheField {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -617,7 +621,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CacheField {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CACHE_FIELD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::cache_field(self, out.scope());
@@ -626,7 +630,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CacheField {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CACHE_FIELD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.ignore);
         through.finish(ctx)
@@ -670,9 +674,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CacheHierarchy {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.set_levels = super::transform_child(&self.set_levels, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -690,7 +694,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CacheHierarchy {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.set_levels, visitor);
         walk.finish(visitor);
     }
@@ -705,7 +709,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CacheHierarchy {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CACHE_HIERARCHY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -715,7 +719,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CacheHierarchy {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CACHE_HIERARCHY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.flatten_hierarchies);
         through.attribute(1, &self.measures_set);
@@ -763,9 +767,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CalculatedMember {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tuple_set = super::transform_child(&self.tuple_set, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -783,7 +787,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CalculatedMember {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tuple_set, visitor);
         walk.finish(visitor);
     }
@@ -798,7 +802,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CalculatedMember {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CALCULATED_MEMBER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -808,7 +812,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CalculatedMember {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CALCULATED_MEMBER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.display_folder);
         through.attribute(1, &self.flatten_hierarchies);
@@ -857,9 +861,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CalculatedMembers {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.calculated_member = super::transform_child(&self.calculated_member, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -877,7 +881,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CalculatedMembers {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.calculated_member, visitor);
         walk.finish(visitor);
     }
@@ -892,7 +896,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CalculatedMembers {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CALCULATED_MEMBERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -902,7 +906,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CalculatedMembers {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CALCULATED_MEMBERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.calculated_member, ctx)?;
@@ -947,7 +951,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CfIcon {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -965,7 +970,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CfIcon {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -978,7 +983,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CfIcon {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CF_ICON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::cf_icon(self, out.scope());
@@ -987,7 +992,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CfIcon {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CF_ICON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.icon_set);
         through.attribute(1, &self.icon_id);
@@ -1032,7 +1037,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CfRule {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
         node.color_scale = super::transform_child(&self.color_scale, ctx, &mut rebase);
         node.data_bar = super::transform_child(&self.data_bar, ctx, &mut rebase);
@@ -1040,7 +1045,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CfRule {
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1058,7 +1063,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CfRule {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.f, visitor);
         walk.child(&self.color_scale, visitor);
         walk.child(&self.data_bar, visitor);
@@ -1078,7 +1083,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CfRule {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CF_RULE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::cf_rule(self, out.scope());
@@ -1087,7 +1092,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CfRule {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CF_RULE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.priority);
@@ -1150,11 +1155,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Cfvo {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1172,7 +1177,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Cfvo {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.f, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
@@ -1188,7 +1193,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Cfvo {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CFVO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::cfvo(self, out.scope());
@@ -1197,7 +1202,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Cfvo {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CFVO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.gte);
@@ -1244,7 +1249,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Color {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1262,7 +1268,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Color {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1275,7 +1281,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Color {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color(self, out.scope());
@@ -1284,7 +1290,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Color {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1332,7 +1338,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorAxis {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1350,7 +1357,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorAxis {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1363,7 +1370,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorAxis {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_AXIS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_axis(self, out.scope());
@@ -1372,7 +1379,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorAxis {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_AXIS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1420,7 +1427,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorFirst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1438,7 +1446,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorFirst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1451,7 +1459,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorFirst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_FIRST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_first(self, out.scope());
@@ -1460,7 +1468,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorFirst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_FIRST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1508,7 +1516,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorHigh {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1526,7 +1535,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorHigh {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1539,7 +1548,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorHigh {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_HIGH_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_high(self, out.scope());
@@ -1548,7 +1557,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorHigh {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_HIGH_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1596,7 +1605,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorLast {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1614,7 +1624,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorLast {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1627,7 +1637,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorLast {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_LAST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_last(self, out.scope());
@@ -1636,7 +1646,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorLast {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_LAST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1684,7 +1694,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorLow {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1702,7 +1713,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorLow {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1715,7 +1726,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorLow {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_LOW_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_low(self, out.scope());
@@ -1724,7 +1735,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorLow {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_LOW_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1772,7 +1783,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorMarkers {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1790,7 +1802,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorMarkers {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1803,7 +1815,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorMarkers {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_MARKERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_markers(self, out.scope());
@@ -1812,7 +1824,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorMarkers {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_MARKERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1860,7 +1872,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorNegative {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1878,7 +1891,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorNegative {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1891,7 +1904,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorNegative {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_NEGATIVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1901,7 +1914,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorNegative {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_NEGATIVE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -1949,10 +1962,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorScale {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cfvo = super::transform_child(&self.cfvo, ctx, &mut rebase);
         node.color = super::transform_child(&self.color, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1970,7 +1983,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorScale {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cfvo, visitor);
         walk.child(&self.color, visitor);
         walk.finish(visitor);
@@ -1986,7 +1999,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorScale {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_SCALE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_scale(self, out.scope());
@@ -1995,7 +2008,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorScale {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_SCALE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.cfvo, ctx)?;
         through.child(&self.color, ctx)?;
@@ -2040,7 +2053,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ColorSeries {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2058,7 +2072,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ColorSeries {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2071,7 +2085,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorSeries {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::color_series(self, out.scope());
@@ -2080,7 +2094,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ColorSeries {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::COLOR_SERIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -2128,11 +2142,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ConditionalFormat {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_areas = super::transform_child(&self.pivot_areas, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2150,7 +2164,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ConditionalFormat {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_areas, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
@@ -2166,7 +2180,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormat {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMAT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2176,7 +2190,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormat {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMAT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.scope);
         through.attribute(1, &self.r#type);
@@ -2225,10 +2239,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ConditionalFormats {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.conditional_format =
             super::transform_child(&self.conditional_format, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2246,7 +2260,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ConditionalFormats {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.conditional_format, visitor);
         walk.finish(visitor);
     }
@@ -2261,7 +2275,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormats {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMATS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2271,7 +2285,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormats {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMATS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.conditional_format, ctx)?;
@@ -2316,12 +2330,12 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ConditionalFormattin
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cf_rule = super::transform_child(&self.cf_rule, ctx, &mut rebase);
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2339,7 +2353,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ConditionalFormatting {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cf_rule, visitor);
         walk.child(&self.sqref, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
@@ -2356,7 +2370,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormatting {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMATTING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2366,7 +2380,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormatting {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMATTING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pivot);
         through.child(&self.cf_rule, ctx)?;
@@ -2413,10 +2427,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ConditionalFormattin
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.conditional_formatting =
             super::transform_child(&self.conditional_formatting, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2434,7 +2448,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ConditionalFormattings {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.conditional_formatting, visitor);
         walk.finish(visitor);
     }
@@ -2449,7 +2463,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormattings {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMATTINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2459,7 +2473,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ConditionalFormattings {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CONDITIONAL_FORMATTINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.conditional_formatting, ctx)?;
         through.finish(ctx)
@@ -2503,10 +2517,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Connection {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.calculated_members =
             super::transform_child(&self.calculated_members, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2524,7 +2538,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Connection {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.calculated_members, visitor);
         walk.finish(visitor);
     }
@@ -2539,7 +2553,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Connection {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CONNECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::connection(self, out.scope());
@@ -2548,7 +2562,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Connection {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CONNECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.culture);
         through.attribute(1, &self.embedded_data_id);
@@ -2594,7 +2608,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CustomFilter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2612,7 +2627,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CustomFilter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2625,7 +2640,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CustomFilter {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CUSTOM_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::custom_filter(self, out.scope());
@@ -2634,7 +2649,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CustomFilter {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CUSTOM_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.operator);
         through.attribute(1, &self.val);
@@ -2679,9 +2694,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::CustomFilters {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.custom_filter = super::transform_child(&self.custom_filter, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2699,7 +2714,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::CustomFilters {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.custom_filter, visitor);
         walk.finish(visitor);
     }
@@ -2714,7 +2729,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CustomFilters {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::CUSTOM_FILTERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2724,7 +2739,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::CustomFilters {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::CUSTOM_FILTERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.and);
         through.child(&self.custom_filter, ctx)?;
@@ -2769,9 +2784,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Data {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2789,7 +2804,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Data {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -2804,7 +2819,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Data {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::data(self, out.scope());
@@ -2813,7 +2828,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Data {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DATA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -2857,7 +2872,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DataBar {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cfvo = super::transform_child(&self.cfvo, ctx, &mut rebase);
         node.fill_color = super::transform_child(&self.fill_color, ctx, &mut rebase);
         node.border_color = super::transform_child(&self.border_color, ctx, &mut rebase);
@@ -2866,7 +2881,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DataBar {
         node.negative_border_color =
             super::transform_child(&self.negative_border_color, ctx, &mut rebase);
         node.axis_color = super::transform_child(&self.axis_color, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2884,7 +2899,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::DataBar {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cfvo, visitor);
         walk.child(&self.fill_color, visitor);
         walk.child(&self.border_color, visitor);
@@ -2904,7 +2919,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataBar {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DATA_BAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::data_bar(self, out.scope());
@@ -2913,7 +2928,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataBar {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DATA_BAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.min_length);
         through.attribute(1, &self.max_length);
@@ -2971,7 +2986,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DataField {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2989,7 +3005,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::DataField {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3002,7 +3018,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataField {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DATA_FIELD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::data_field(self, out.scope());
@@ -3011,7 +3027,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataField {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DATA_FIELD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pivot_show_as);
         through.attribute(1, &self.source_field);
@@ -3057,11 +3073,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DataValidation {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.formula1 = super::transform_child(&self.formula1, ctx, &mut rebase);
         node.formula2 = super::transform_child(&self.formula2, ctx, &mut rebase);
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3079,7 +3095,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::DataValidation {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.formula1, visitor);
         walk.child(&self.formula2, visitor);
         walk.child(&self.sqref, visitor);
@@ -3096,7 +3112,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataValidation {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DATA_VALIDATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3106,7 +3122,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataValidation {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DATA_VALIDATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.error_style);
@@ -3164,9 +3180,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DataValidations {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.data_validation = super::transform_child(&self.data_validation, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3184,7 +3200,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::DataValidations {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.data_validation, visitor);
         walk.finish(visitor);
     }
@@ -3199,7 +3215,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataValidations {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DATA_VALIDATIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3209,7 +3225,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DataValidations {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DATA_VALIDATIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.disable_prompts);
         through.attribute(1, &self.x_window);
@@ -3257,10 +3273,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DatastoreItem {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3278,7 +3294,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::DatastoreItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
     }
@@ -3293,7 +3309,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DatastoreItem {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DATASTORE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3303,7 +3319,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DatastoreItem {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DATASTORE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.child(&self.ext_lst_extension_list, ctx)?;
@@ -3348,10 +3364,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DefinedName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_descriptions =
             super::transform_child(&self.argument_descriptions, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3369,7 +3385,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::DefinedName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_descriptions, visitor);
         walk.finish(visitor);
     }
@@ -3384,7 +3400,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DefinedName {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DEFINED_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::defined_name(self, out.scope());
@@ -3393,7 +3409,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DefinedName {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DEFINED_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.child(&self.argument_descriptions, ctx)?;
@@ -3438,9 +3454,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::DefinedNames {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.defined_name = super::transform_child(&self.defined_name, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3458,7 +3474,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::DefinedNames {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.defined_name, visitor);
         walk.finish(visitor);
     }
@@ -3473,7 +3489,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DefinedNames {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DEFINED_NAMES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::defined_names(self, out.scope());
@@ -3482,7 +3498,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::DefinedNames {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DEFINED_NAMES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.defined_name, ctx)?;
         through.finish(ctx)
@@ -3526,7 +3542,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Dxf {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.font = super::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = super::transform_child(&self.number_format, ctx, &mut rebase);
         node.fill = super::transform_child(&self.fill, ctx, &mut rebase);
@@ -3536,7 +3552,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Dxf {
             super::transform_child(&self.protection_properties, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             super::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3554,7 +3570,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Dxf {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.font, visitor);
         walk.child(&self.number_format, visitor);
         walk.child(&self.fill, visitor);
@@ -3575,7 +3591,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Dxf {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::dxf(self, out.scope());
@@ -3584,7 +3600,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Dxf {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.font, ctx)?;
         through.child(&self.number_format, ctx)?;
@@ -3634,9 +3650,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Dxfs {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.formatting = super::transform_child(&self.formatting, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3654,7 +3670,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Dxfs {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.formatting, visitor);
         walk.finish(visitor);
     }
@@ -3669,7 +3685,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Dxfs {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::DXFS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::dxfs(self, out.scope());
@@ -3678,7 +3694,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Dxfs {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::DXFS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.formatting, ctx)?;
@@ -3723,7 +3739,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::EditValue {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3741,7 +3758,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::EditValue {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3754,7 +3771,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::EditValue {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::EDIT_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::edit_value(self, out.scope());
@@ -3763,7 +3780,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::EditValue {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::EDIT_VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.value_type);
         through.text(&self.value)?;
@@ -3808,9 +3825,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ExtLstExtensionList 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3828,7 +3845,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ExtLstExtensionList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -3843,7 +3860,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ExtLstExtensionList {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::EXT_LST_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3853,7 +3870,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ExtLstExtensionList {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::EXT_LST_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -3895,9 +3912,9 @@ impl super::Transform
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3911,7 +3928,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ExtLstSlicerCacheDefinit
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -3926,7 +3943,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ExtLstSlicerCacheDefinit
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::EXT_LST_SLICER_CACHE_DEFINITION_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::ext_lst_slicer_cache_definition_extension_list(self, out.scope());
@@ -3935,7 +3952,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ExtLstSlicerCacheDefinit
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::EXT_LST_SLICER_CACHE_DEFINITION_EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -3970,7 +3987,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::FillColor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3988,7 +4006,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::FillColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4001,7 +4019,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::FillColor {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::FILL_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::fill_color(self, out.scope());
@@ -4010,7 +4028,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::FillColor {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::FILL_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -4058,7 +4076,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Filter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4076,7 +4095,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Filter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4089,7 +4108,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Filter {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::filter(self, out.scope());
@@ -4098,7 +4117,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Filter {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -4142,11 +4161,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::FormControlPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item_lst = super::transform_child(&self.item_lst, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4164,7 +4183,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::FormControlPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item_lst, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
@@ -4180,7 +4199,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::FormControlPr {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::FORM_CONTROL_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4190,7 +4209,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::FormControlPr {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::FORM_CONTROL_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.object_type);
         through.attribute(1, &self.checked);
@@ -4266,9 +4285,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Formula1 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4286,7 +4305,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Formula1 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.f, visitor);
         walk.finish(visitor);
     }
@@ -4301,7 +4320,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Formula1 {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::FORMULA1_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::formula1(self, out.scope());
@@ -4310,7 +4329,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Formula1 {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::FORMULA1_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.f, ctx)?;
         through.finish(ctx)
@@ -4354,9 +4373,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Formula2 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4374,7 +4393,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Formula2 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.f, visitor);
         walk.finish(visitor);
     }
@@ -4389,7 +4408,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Formula2 {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::FORMULA2_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::formula2(self, out.scope());
@@ -4398,7 +4417,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Formula2 {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::FORMULA2_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.f, ctx)?;
         through.finish(ctx)
@@ -4442,7 +4461,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Header {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4460,7 +4480,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Header {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4473,7 +4493,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Header {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::header(self, out.scope());
@@ -4482,7 +4502,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Header {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::HEADER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.unique_name);
         through.attribute(1, &self.hierarchy_name);
@@ -4527,9 +4547,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Headers {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.header = super::transform_child(&self.header, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4547,7 +4567,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Headers {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.header, visitor);
         walk.finish(visitor);
     }
@@ -4562,7 +4582,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Headers {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::HEADERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::headers(self, out.scope());
@@ -4571,7 +4591,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Headers {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::HEADERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.header, ctx)?;
         through.finish(ctx)
@@ -4615,9 +4635,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::IOlapSlicerCacheItem
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.p = super::transform_child(&self.p, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4635,7 +4655,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::IOlapSlicerCacheItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.p, visitor);
         walk.finish(visitor);
     }
@@ -4650,7 +4670,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IOlapSlicerCacheItem {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::I_OLAP_SLICER_CACHE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::i_olap_slicer_cache_item(
@@ -4662,7 +4682,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IOlapSlicerCacheItem {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::I_OLAP_SLICER_CACHE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.n);
         through.attribute(1, &self.c);
@@ -4709,7 +4729,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ITabularSlicerCacheI
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4727,7 +4748,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ITabularSlicerCacheItem 
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4740,7 +4761,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ITabularSlicerCacheItem 
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::I_TABULAR_SLICER_CACHE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::i_tabular_slicer_cache_item(
@@ -4752,7 +4773,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ITabularSlicerCacheItem 
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::I_TABULAR_SLICER_CACHE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.x);
         through.attribute(1, &self.s);
@@ -4798,7 +4819,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::IconFilter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4816,7 +4838,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::IconFilter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4829,7 +4851,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IconFilter {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ICON_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::icon_filter(self, out.scope());
@@ -4838,7 +4860,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IconFilter {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ICON_FILTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.icon_set);
         through.attribute(1, &self.icon_id);
@@ -4883,10 +4905,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::IconSet {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cfvo = super::transform_child(&self.cfvo, ctx, &mut rebase);
         node.cf_icon = super::transform_child(&self.cf_icon, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4904,7 +4926,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::IconSet {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cfvo, visitor);
         walk.child(&self.cf_icon, visitor);
         walk.finish(visitor);
@@ -4920,7 +4942,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IconSet {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ICON_SET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::icon_set(self, out.scope());
@@ -4929,7 +4951,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IconSet {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ICON_SET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.icon_set);
         through.attribute(1, &self.show_value);
@@ -4979,7 +5001,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Id {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4997,7 +5020,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Id {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5010,7 +5033,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Id {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::id(self, out.scope());
@@ -5019,7 +5042,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Id {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -5063,9 +5086,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::IgnoredError {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5083,7 +5106,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::IgnoredError {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sqref, visitor);
         walk.finish(visitor);
     }
@@ -5098,7 +5121,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IgnoredError {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::IGNORED_ERROR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::ignored_error(self, out.scope());
@@ -5107,7 +5130,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IgnoredError {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::IGNORED_ERROR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.eval_error);
         through.attribute(1, &self.two_digit_text_year);
@@ -5160,11 +5183,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::IgnoredErrors {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ignored_error = super::transform_child(&self.ignored_error, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5182,7 +5205,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::IgnoredErrors {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ignored_error, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
@@ -5198,7 +5221,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IgnoredErrors {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::IGNORED_ERRORS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5208,7 +5231,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::IgnoredErrors {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::IGNORED_ERRORS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ignored_error, ctx)?;
         through.child(&self.ext_lst_extension_list, ctx)?;
@@ -5253,7 +5276,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Item {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5271,7 +5295,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Item {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5284,7 +5308,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Item {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::item(self, out.scope());
@@ -5293,7 +5317,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Item {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -5337,11 +5361,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ItemLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item = super::transform_child(&self.item, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5359,7 +5383,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ItemLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
@@ -5375,7 +5399,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ItemLst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ITEM_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::item_lst(self, out.scope());
@@ -5384,7 +5408,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ItemLst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ITEM_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.item, ctx)?;
         through.child(&self.ext_lst_extension_list, ctx)?;
@@ -5429,10 +5453,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Items {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.i_tabular_slicer_cache_item =
             super::transform_child(&self.i_tabular_slicer_cache_item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5450,7 +5474,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Items {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.i_tabular_slicer_cache_item, visitor);
         walk.finish(visitor);
     }
@@ -5465,7 +5489,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Items {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::items(self, out.scope());
@@ -5474,7 +5498,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Items {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.i_tabular_slicer_cache_item, ctx)?;
@@ -5519,9 +5543,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Level {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ranges = super::transform_child(&self.ranges, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5539,7 +5563,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Level {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ranges, visitor);
         walk.finish(visitor);
     }
@@ -5554,7 +5578,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Level {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::level(self, out.scope());
@@ -5563,7 +5587,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Level {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.unique_name);
         through.attribute(1, &self.source_caption);
@@ -5612,9 +5636,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Levels {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.level = super::transform_child(&self.level, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5632,7 +5656,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Levels {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.level, visitor);
         walk.finish(visitor);
     }
@@ -5647,7 +5671,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Levels {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::LEVELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::levels(self, out.scope());
@@ -5656,7 +5680,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Levels {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::LEVELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.level, ctx)?;
@@ -5701,7 +5725,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::NegativeBorderColor 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5719,7 +5744,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::NegativeBorderColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5732,7 +5757,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::NegativeBorderColor {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::NEGATIVE_BORDER_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5742,7 +5767,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::NegativeBorderColor {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::NEGATIVE_BORDER_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -5790,7 +5815,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::NegativeFillColor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5808,7 +5834,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::NegativeFillColor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5821,7 +5847,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::NegativeFillColor {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::NEGATIVE_FILL_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5831,7 +5857,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::NegativeFillColor {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::NEGATIVE_FILL_COLOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.auto);
         through.attribute(1, &self.indexed);
@@ -5879,12 +5905,12 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Olap {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.levels = super::transform_child(&self.levels, ctx, &mut rebase);
         node.selections = super::transform_child(&self.selections, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5902,7 +5928,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Olap {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.levels, visitor);
         walk.child(&self.selections, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
@@ -5919,7 +5945,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Olap {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::OLAP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::olap(self, out.scope());
@@ -5928,7 +5954,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Olap {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::OLAP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pivot_cache_id);
         through.child(&self.levels, ctx)?;
@@ -5975,9 +6001,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::OleItem {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.values = super::transform_child(&self.values, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5995,7 +6021,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::OleItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.values, visitor);
         walk.finish(visitor);
     }
@@ -6010,7 +6036,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::OleItem {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::OLE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::ole_item(self, out.scope());
@@ -6019,7 +6045,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::OleItem {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::OLE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.icon);
@@ -6067,7 +6093,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::P {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6085,7 +6112,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::P {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6098,7 +6125,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::P {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::P_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::p(self, out.scope());
@@ -6107,7 +6134,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::P {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::P_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.n);
         through.finish(ctx)
@@ -6151,11 +6178,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotArea {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.references = super::transform_child(&self.references, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             super::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6173,7 +6200,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotArea {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.references, visitor);
         walk.child(&self.future_feature_data_storage_area, visitor);
         walk.finish(visitor);
@@ -6189,7 +6216,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotArea {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_AREA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_area(self, out.scope());
@@ -6198,7 +6225,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotArea {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_AREA_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.field);
         through.attribute(1, &self.r#type);
@@ -6255,9 +6282,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotAreas {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_area = super::transform_child(&self.pivot_area, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6275,7 +6302,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotAreas {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_area, visitor);
         walk.finish(visitor);
     }
@@ -6290,7 +6317,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotAreas {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_AREAS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_areas(self, out.scope());
@@ -6299,7 +6326,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotAreas {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_AREAS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.pivot_area, ctx)?;
@@ -6344,7 +6371,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotCacheDefinition
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6362,7 +6390,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotCacheDefinition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6375,7 +6403,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotCacheDefinition {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CACHE_DEFINITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -6385,7 +6413,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotCacheDefinition {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CACHE_DEFINITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.slicer_data);
         through.attribute(1, &self.pivot_cache_id);
@@ -6433,9 +6461,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotCaches {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivotcache = super::transform_child(&self.pivotcache, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6453,7 +6481,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotCaches {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivotcache, visitor);
         walk.finish(visitor);
     }
@@ -6468,7 +6496,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotCaches {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CACHES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_caches(self, out.scope());
@@ -6477,7 +6505,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotCaches {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CACHES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.pivotcache, ctx)?;
         through.finish(ctx)
@@ -6521,12 +6549,12 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotChange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.edit_value = super::transform_child(&self.edit_value, ctx, &mut rebase);
         node.tuple_items = super::transform_child(&self.tuple_items, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6544,7 +6572,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotChange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.edit_value, visitor);
         walk.child(&self.tuple_items, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
@@ -6561,7 +6589,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotChange {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_change(self, out.scope());
@@ -6570,7 +6598,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotChange {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CHANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.allocation_method);
         through.attribute(1, &self.weight_expression);
@@ -6618,9 +6646,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotChanges {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_change = super::transform_child(&self.pivot_change, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6638,7 +6666,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotChanges {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_change, visitor);
         walk.finish(visitor);
     }
@@ -6653,7 +6681,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotChanges {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CHANGES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_changes(self, out.scope());
@@ -6662,7 +6690,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotChanges {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_CHANGES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.pivot_change, ctx)?;
         through.finish(ctx)
@@ -6706,13 +6734,13 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotEdit {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.user_edit = super::transform_child(&self.user_edit, ctx, &mut rebase);
         node.tuple_items = super::transform_child(&self.tuple_items, ctx, &mut rebase);
         node.pivot_area = super::transform_child(&self.pivot_area, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6730,7 +6758,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotEdit {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.user_edit, visitor);
         walk.child(&self.tuple_items, visitor);
         walk.child(&self.pivot_area, visitor);
@@ -6748,7 +6776,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotEdit {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_EDIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_edit(self, out.scope());
@@ -6757,7 +6785,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotEdit {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_EDIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.user_edit, ctx)?;
         through.child(&self.tuple_items, ctx)?;
@@ -6804,9 +6832,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotEdits {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_edit = super::transform_child(&self.pivot_edit, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6824,7 +6852,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotEdits {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_edit, visitor);
         walk.finish(visitor);
     }
@@ -6839,7 +6867,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotEdits {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_EDITS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_edits(self, out.scope());
@@ -6848,7 +6876,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotEdits {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_EDITS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.pivot_edit, ctx)?;
         through.finish(ctx)
@@ -6892,7 +6920,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotField {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6910,7 +6939,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotField {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6923,7 +6952,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotField {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_FIELD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_field(self, out.scope());
@@ -6932,7 +6961,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotField {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_FIELD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.fill_down_labels);
         through.attribute(1, &self.ignore);
@@ -6977,7 +7006,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotHierarchy {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6995,7 +7025,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotHierarchy {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7008,7 +7038,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotHierarchy {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_HIERARCHY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -7018,7 +7048,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotHierarchy {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_HIERARCHY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.ignore);
         through.finish(ctx)
@@ -7062,7 +7092,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotTable {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7080,7 +7111,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotTable {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7093,7 +7124,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotTable {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_TABLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_table(self, out.scope());
@@ -7102,7 +7133,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotTable {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_TABLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.tab_id);
         through.attribute(1, &self.name);
@@ -7147,12 +7178,12 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotTableDefinition
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_edits = super::transform_child(&self.pivot_edits, ctx, &mut rebase);
         node.pivot_changes = super::transform_child(&self.pivot_changes, ctx, &mut rebase);
         node.conditional_formats =
             super::transform_child(&self.conditional_formats, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7170,7 +7201,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotTableDefinition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_edits, visitor);
         walk.child(&self.pivot_changes, visitor);
         walk.child(&self.conditional_formats, visitor);
@@ -7187,7 +7218,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotTableDefinition {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_TABLE_DEFINITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -7197,7 +7228,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotTableDefinition {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_TABLE_DEFINITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.fill_down_labels_default);
         through.attribute(1, &self.visual_totals_for_sets);
@@ -7253,9 +7284,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotTables {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_table = super::transform_child(&self.pivot_table, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7273,7 +7304,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::PivotTables {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_table, visitor);
         walk.finish(visitor);
     }
@@ -7288,7 +7319,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotTables {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_TABLES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::pivot_tables(self, out.scope());
@@ -7297,7 +7328,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotTables {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PIVOT_TABLES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.pivot_table, ctx)?;
         through.finish(ctx)
@@ -7438,9 +7469,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ProtectedRange {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7458,7 +7489,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ProtectedRange {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sqref, visitor);
         walk.finish(visitor);
     }
@@ -7473,7 +7504,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ProtectedRange {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PROTECTED_RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -7483,7 +7514,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ProtectedRange {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PROTECTED_RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.password);
         through.attribute(1, &self.algorithm_name);
@@ -7534,9 +7565,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::ProtectedRanges {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.protected_range = super::transform_child(&self.protected_range, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7554,7 +7585,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::ProtectedRanges {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.protected_range, visitor);
         walk.finish(visitor);
     }
@@ -7569,7 +7600,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ProtectedRanges {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::PROTECTED_RANGES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -7579,7 +7610,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::ProtectedRanges {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::PROTECTED_RANGES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.protected_range, ctx)?;
         through.finish(ctx)
@@ -7623,10 +7654,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Range {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.i_olap_slicer_cache_item =
             super::transform_child(&self.i_olap_slicer_cache_item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7644,7 +7675,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Range {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.i_olap_slicer_cache_item, visitor);
         walk.finish(visitor);
     }
@@ -7659,7 +7690,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Range {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::range(self, out.scope());
@@ -7668,7 +7699,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Range {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::RANGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.start_item);
         through.child(&self.i_olap_slicer_cache_item, ctx)?;
@@ -7713,9 +7744,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Ranges {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.range = super::transform_child(&self.range, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7733,7 +7764,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Ranges {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.range, visitor);
         walk.finish(visitor);
     }
@@ -7748,7 +7779,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Ranges {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::RANGES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::ranges(self, out.scope());
@@ -7757,7 +7788,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Ranges {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::RANGES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.range, ctx)?;
         through.finish(ctx)
@@ -7801,9 +7832,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Row {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item = super::transform_child(&self.item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7821,7 +7852,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Row {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item, visitor);
         walk.finish(visitor);
     }
@@ -7836,7 +7867,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Row {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ROW_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::row(self, out.scope());
@@ -7845,7 +7876,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Row {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ROW_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.item, ctx)?;
         through.finish(ctx)
@@ -7889,7 +7920,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::RowItem {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7907,7 +7939,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::RowItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7920,7 +7952,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::RowItem {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ROW_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::row_item(self, out.scope());
@@ -7929,7 +7961,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::RowItem {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ROW_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.u);
         through.attribute(1, &self.d);
@@ -7974,9 +8006,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Rows {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.row = super::transform_child(&self.row, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7994,7 +8026,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Rows {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.row, visitor);
         walk.finish(visitor);
     }
@@ -8009,7 +8041,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Rows {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::ROWS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::rows(self, out.scope());
@@ -8018,7 +8050,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Rows {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::ROWS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.row, ctx)?;
         through.finish(ctx)
@@ -8062,9 +8094,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Selection {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.p = super::transform_child(&self.p, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8082,7 +8114,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Selection {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.p, visitor);
         walk.finish(visitor);
     }
@@ -8097,7 +8129,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Selection {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SELECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::selection(self, out.scope());
@@ -8106,7 +8138,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Selection {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SELECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.n);
         through.child(&self.p, ctx)?;
@@ -8151,9 +8183,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Selections {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.selection = super::transform_child(&self.selection, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8171,7 +8203,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Selections {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.selection, visitor);
         walk.finish(visitor);
     }
@@ -8186,7 +8218,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Selections {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SELECTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::selections(self, out.scope());
@@ -8195,7 +8227,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Selections {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SELECTIONS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.selection, ctx)?;
@@ -8240,7 +8272,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SetLevel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8258,7 +8291,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SetLevel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8271,7 +8304,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SetLevel {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SET_LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::set_level(self, out.scope());
@@ -8280,7 +8313,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SetLevel {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SET_LEVEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.hierarchy);
         through.finish(ctx)
@@ -8324,9 +8357,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SetLevels {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.set_level = super::transform_child(&self.set_level, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8344,7 +8377,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SetLevels {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.set_level, visitor);
         walk.finish(visitor);
     }
@@ -8359,7 +8392,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SetLevels {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SET_LEVELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::set_levels(self, out.scope());
@@ -8368,7 +8401,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SetLevels {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SET_LEVELS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.set_level, ctx)?;
@@ -8413,7 +8446,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerCache {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8431,7 +8465,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerCache {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8444,7 +8478,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerCache {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::slicer_cache(self, out.scope());
@@ -8453,7 +8487,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerCache {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_CACHE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -8594,7 +8628,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerCacheDefinitio
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pivot_tables = super::transform_child(&self.pivot_tables, ctx, &mut rebase);
         node.data = super::transform_child(&self.data, ctx, &mut rebase);
         node.ext_lst_slicer_cache_definition_extension_list = super::transform_child(
@@ -8602,7 +8636,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerCacheDefinitio
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8620,7 +8654,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerCacheDefinition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pivot_tables, visitor);
         walk.child(&self.data, visitor);
         walk.child(
@@ -8640,7 +8674,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerCacheDefinition {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_CACHE_DEFINITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -8650,7 +8684,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerCacheDefinition {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_CACHE_DEFINITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.source_name);
@@ -8698,9 +8732,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerCaches {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.slicer_cache = super::transform_child(&self.slicer_cache, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8718,7 +8752,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerCaches {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.slicer_cache, visitor);
         walk.finish(visitor);
     }
@@ -8733,7 +8767,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerCaches {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_CACHES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::slicer_caches(self, out.scope());
@@ -8742,7 +8776,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerCaches {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_CACHES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.slicer_cache, ctx)?;
         through.finish(ctx)
@@ -8786,9 +8820,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerList {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.slicer_slicer_ref = super::transform_child(&self.slicer_slicer_ref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8806,7 +8840,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.slicer_slicer_ref, visitor);
         walk.finish(visitor);
     }
@@ -8821,7 +8855,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerList {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::slicer_list(self, out.scope());
@@ -8830,7 +8864,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerList {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.slicer_slicer_ref, ctx)?;
         through.finish(ctx)
@@ -8874,10 +8908,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerSlicer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8895,7 +8929,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerSlicer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
     }
@@ -8910,7 +8944,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerSlicer {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_SLICER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::slicer_slicer(self, out.scope());
@@ -8919,7 +8953,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerSlicer {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_SLICER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.cache);
@@ -8973,7 +9007,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerSlicerRef {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8991,7 +9026,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerSlicerRef {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9004,7 +9039,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerSlicerRef {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_SLICER_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9014,7 +9049,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerSlicerRef {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_SLICER_REF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -9058,9 +9093,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerStyle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.elements = super::transform_child(&self.elements, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9078,7 +9113,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerStyle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.elements, visitor);
         walk.finish(visitor);
     }
@@ -9093,7 +9128,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyle {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::slicer_style(self, out.scope());
@@ -9102,7 +9137,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyle {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.child(&self.elements, ctx)?;
@@ -9147,7 +9182,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerStyleElement {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9165,7 +9201,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerStyleElement {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9178,7 +9214,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyleElement {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLE_ELEMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9188,7 +9224,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyleElement {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLE_ELEMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.dxf_id);
@@ -9233,10 +9269,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerStyleElements 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.slicer_style_element =
             super::transform_child(&self.slicer_style_element, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9254,7 +9290,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerStyleElements {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.slicer_style_element, visitor);
         walk.finish(visitor);
     }
@@ -9269,7 +9305,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyleElements {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLE_ELEMENTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9279,7 +9315,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyleElements {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLE_ELEMENTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.slicer_style_element, ctx)?;
         through.finish(ctx)
@@ -9323,9 +9359,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerStyles {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.slicer_style = super::transform_child(&self.slicer_style, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9343,7 +9379,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SlicerStyles {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.slicer_style, visitor);
         walk.finish(visitor);
     }
@@ -9358,7 +9394,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyles {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::slicer_styles(self, out.scope());
@@ -9367,7 +9403,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerStyles {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICER_STYLES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.default_slicer_style);
         through.child(&self.slicer_style, ctx)?;
@@ -9412,9 +9448,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Slicers {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.slicer_slicer = super::transform_child(&self.slicer_slicer, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9432,7 +9468,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Slicers {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.slicer_slicer, visitor);
         walk.finish(visitor);
     }
@@ -9447,7 +9483,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Slicers {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SLICERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::slicers(self, out.scope());
@@ -9456,7 +9492,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Slicers {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SLICERS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.slicer_slicer, ctx)?;
         through.finish(ctx)
@@ -9500,7 +9536,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SortCondition {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9518,7 +9555,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SortCondition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9531,7 +9568,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SortCondition {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SORT_CONDITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9541,7 +9578,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SortCondition {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SORT_CONDITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.descending);
         through.attribute(1, &self.sort_by);
@@ -9591,7 +9628,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SourceConnection {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9609,7 +9647,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SourceConnection {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9622,7 +9660,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SourceConnection {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SOURCE_CONNECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9632,7 +9670,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SourceConnection {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SOURCE_CONNECTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.finish(ctx)
@@ -9676,10 +9714,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Sparkline {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
         node.sqref = super::transform_child(&self.sqref, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9697,7 +9735,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Sparkline {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.f, visitor);
         walk.child(&self.sqref, visitor);
         walk.finish(visitor);
@@ -9713,7 +9751,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Sparkline {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::sparkline(self, out.scope());
@@ -9722,7 +9760,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Sparkline {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.f, ctx)?;
         through.child(&self.sqref, ctx)?;
@@ -9767,7 +9805,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SparklineGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.color_series = super::transform_child(&self.color_series, ctx, &mut rebase);
         node.color_negative = super::transform_child(&self.color_negative, ctx, &mut rebase);
         node.color_axis = super::transform_child(&self.color_axis, ctx, &mut rebase);
@@ -9778,7 +9816,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SparklineGroup {
         node.color_low = super::transform_child(&self.color_low, ctx, &mut rebase);
         node.f = super::transform_child(&self.f, ctx, &mut rebase);
         node.sparklines = super::transform_child(&self.sparklines, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9796,7 +9834,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SparklineGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.color_series, visitor);
         walk.child(&self.color_negative, visitor);
         walk.child(&self.color_axis, visitor);
@@ -9820,7 +9858,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SparklineGroup {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINE_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9830,7 +9868,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SparklineGroup {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINE_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.manual_max);
         through.attribute(1, &self.manual_min);
@@ -9900,9 +9938,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SparklineGroups {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sparkline_group = super::transform_child(&self.sparkline_group, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9920,7 +9958,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::SparklineGroups {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sparkline_group, visitor);
         walk.finish(visitor);
     }
@@ -9935,7 +9973,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SparklineGroups {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINE_GROUPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9945,7 +9983,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SparklineGroups {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINE_GROUPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sparkline_group, ctx)?;
         through.finish(ctx)
@@ -9989,9 +10027,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Sparklines {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sparkline = super::transform_child(&self.sparkline, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10009,7 +10047,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Sparklines {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sparkline, visitor);
         walk.finish(visitor);
     }
@@ -10024,7 +10062,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Sparklines {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::sparklines(self, out.scope());
@@ -10033,7 +10071,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Sparklines {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::SPARKLINES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sparkline, ctx)?;
         through.finish(ctx)
@@ -10077,7 +10115,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Table {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10095,7 +10134,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Table {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10108,7 +10147,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Table {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::TABLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::table(self, out.scope());
@@ -10117,7 +10156,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Table {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::TABLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.alt_text);
         through.attribute(1, &self.alt_text_summary);
@@ -10162,11 +10201,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Tabular {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.items = super::transform_child(&self.items, ctx, &mut rebase);
         node.ext_lst_extension_list =
             super::transform_child(&self.ext_lst_extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10184,7 +10223,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Tabular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.items, visitor);
         walk.child(&self.ext_lst_extension_list, visitor);
         walk.finish(visitor);
@@ -10200,7 +10239,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Tabular {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::TABULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::tabular(self, out.scope());
@@ -10209,7 +10248,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Tabular {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::TABULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.pivot_cache_id);
         through.attribute(1, &self.sort_order);
@@ -10259,7 +10298,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::TupleItem {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10277,7 +10317,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::TupleItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10290,7 +10330,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::TupleItem {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::TUPLE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::tuple_item(self, out.scope());
@@ -10299,7 +10339,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::TupleItem {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::TUPLE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -10343,9 +10383,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::TupleItems {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tuple_item = super::transform_child(&self.tuple_item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10363,7 +10403,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::TupleItems {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tuple_item, visitor);
         walk.finish(visitor);
     }
@@ -10378,7 +10418,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::TupleItems {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::TUPLE_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::tuple_items(self, out.scope());
@@ -10387,7 +10427,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::TupleItems {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::TUPLE_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.tuple_item, ctx)?;
         through.finish(ctx)
@@ -10431,10 +10471,10 @@ impl super::Transform for office_spreadsheetml_2009_9_main::TupleSet {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.headers = super::transform_child(&self.headers, ctx, &mut rebase);
         node.rows = super::transform_child(&self.rows, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10452,7 +10492,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::TupleSet {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.headers, visitor);
         walk.child(&self.rows, visitor);
         walk.finish(visitor);
@@ -10468,7 +10508,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::TupleSet {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::TUPLE_SET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::tuple_set(self, out.scope());
@@ -10477,7 +10517,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::TupleSet {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::TUPLE_SET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.row_count);
         through.attribute(1, &self.column_count);
@@ -10524,9 +10564,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::UserEdit {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10544,7 +10584,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::UserEdit {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -10559,7 +10599,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::UserEdit {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::USER_EDIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::user_edit(self, out.scope());
@@ -10568,7 +10608,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::UserEdit {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::USER_EDIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -10612,9 +10652,9 @@ impl super::Transform for office_spreadsheetml_2009_9_main::Values {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.value = super::transform_child(&self.value, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10632,7 +10672,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::Values {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.value, visitor);
         walk.finish(visitor);
     }
@@ -10647,7 +10687,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Values {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::VALUES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::values(self, out.scope());
@@ -10656,7 +10696,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Values {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::VALUES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rows);
         through.attribute(1, &self.cols);
@@ -10702,7 +10742,8 @@ impl super::Transform for office_spreadsheetml_2009_9_main::WorkbookPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10720,7 +10761,7 @@ impl super::Visit for office_spreadsheetml_2009_9_main::WorkbookPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10733,7 +10774,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::WorkbookPr {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2009_9_main::WORKBOOK_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2009_9_main::write::workbook_pr(self, out.scope());
@@ -10742,7 +10783,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::WorkbookPr {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2009_9_main::WORKBOOK_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.default_image_dpi);
         through.attribute(1, &self.discard_image_edit_data);

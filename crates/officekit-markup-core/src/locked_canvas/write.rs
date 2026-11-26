@@ -225,7 +225,7 @@ pub fn locked_canvas_container(node: &super::LockedCanvasContainer, scope: &mut 
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::LOCKED_CANVAS_CONTAINER_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_properties_for_a_group_shape);
     writer.child(&node.visual_group_shape_properties);

@@ -750,7 +750,11 @@ fn rebuilt_children(node: &Node, from: &str, rebase: &str) -> Vec<(String, Expr)
 fn rebuilt_unknown(rebase: Expr) -> Expr {
     Expr::call(
         "super::transform_unknown",
-        vec![Expr::atom("&self.unknown"), Expr::atom("ctx"), rebase],
+        vec![
+            Expr::atom("self.unknown.as_deref()"),
+            Expr::atom("ctx"),
+            rebase,
+        ],
     )
 }
 
@@ -775,7 +779,7 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
     let unknown = rebuilt_unknown(rebase);
     let mut body = String::from("        let mut node = self.without_children();\n");
     if !children.is_empty() {
-        body.push_str("        let mut rebase = super::Rebase::new(&self.unknown);\n");
+        body.push_str("        let mut rebase = super::Rebase::new(self.unknown.as_deref());\n");
     }
     for (name, value) in &children {
         assigned_field("        ", name, value, &mut body);
@@ -798,7 +802,7 @@ fn rebuild(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &
     }
     chunks.push(chunk);
     out.push_str("        let mut node = self.without_children();\n");
-    out.push_str("        let mut rebase = super::Rebase::new(&self.unknown);\n");
+    out.push_str("        let mut rebase = super::Rebase::new(self.unknown.as_deref());\n");
     let parameters = [
         format!("from: &{target}"),
         format!("node: &mut {target}"),
@@ -845,7 +849,7 @@ fn steps(node: &Node) -> Vec<(&str, Step)> {
 fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut String) {
     let steps = steps(node);
     if steps.is_empty() {
-        out.push_str("        super::Walk::new(&self.unknown).finish(visitor);\n");
+        out.push_str("        super::Walk::new(self.unknown.as_deref()).finish(visitor);\n");
         return;
     }
     let statement = |from: &str, indent: &str, field: &str, step: Step, text: &mut String| {
@@ -861,7 +865,7 @@ fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut
             text,
         );
     };
-    out.push_str("        let mut walk = super::Walk::new(&self.unknown);\n");
+    out.push_str("        let mut walk = super::Walk::new(self.unknown.as_deref());\n");
     let mut body = String::new();
     for (field, step) in &steps {
         statement("self", "        ", field, *step, &mut body);
@@ -975,7 +979,7 @@ fn through(
             vec![
                 Expr::atom("out"),
                 Expr::Atom(format!("&{module}::{shape}")),
-                Expr::atom("&self.unknown"),
+                Expr::atom("self.unknown.as_deref()"),
             ],
         ),
         out,
@@ -1018,7 +1022,7 @@ fn in_class(names: &Names<'_>, index: usize, module: &str, shape: &str, out: &mu
             vec![
                 Expr::atom("out"),
                 Expr::Atom(format!("&{module}::{shape}")),
-                Expr::atom("&self.unknown"),
+                Expr::atom("self.unknown.as_deref()"),
             ],
         ),
         out,

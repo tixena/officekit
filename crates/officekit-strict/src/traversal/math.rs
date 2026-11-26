@@ -229,10 +229,10 @@ impl super::Transform for math::Accent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -246,7 +246,7 @@ impl super::Visit for math::Accent {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -259,12 +259,12 @@ impl WriteThrough for math::Accent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ACCENT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::ACCENT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::accent(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ACCENT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::ACCENT_SHAPE, self.unknown.as_deref());
         through.child(&self.properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -295,11 +295,11 @@ impl super::Transform for math::AccentProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.character = super::transform_child(&self.character, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -313,7 +313,7 @@ impl super::Visit for math::AccentProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.character, visitor);
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
@@ -326,12 +326,14 @@ impl WriteThrough for math::AccentProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ACCENT_PROPERTIES_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::ACCENT_PROPERTIES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::accent_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ACCENT_PROPERTIES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::ACCENT_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.child(&self.character, ctx)?;
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
@@ -367,7 +369,8 @@ impl super::Transform for math::AlignScripts {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -381,7 +384,7 @@ impl super::Visit for math::AlignScripts {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -391,12 +394,13 @@ impl WriteThrough for math::AlignScripts {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ALIGN_SCRIPTS_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::ALIGN_SCRIPTS_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::align_scripts(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ALIGN_SCRIPTS_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::ALIGN_SCRIPTS_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -426,7 +430,8 @@ impl super::Transform for math::Alignment {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -440,7 +445,7 @@ impl super::Visit for math::Alignment {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -450,12 +455,12 @@ impl WriteThrough for math::Alignment {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ALIGNMENT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::ALIGNMENT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::alignment(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ALIGNMENT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::ALIGNMENT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -485,9 +490,9 @@ impl super::Transform for math::ArgumentProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_size = super::transform_child(&self.argument_size, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -501,7 +506,7 @@ impl super::Visit for math::ArgumentProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_size, visitor);
         walk.finish(visitor);
     }
@@ -513,12 +518,20 @@ impl WriteThrough for math::ArgumentProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ARGUMENT_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::ARGUMENT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::argument_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ARGUMENT_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::ARGUMENT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.argument_size, ctx)?;
         through.finish(ctx)
     }
@@ -553,7 +566,8 @@ impl super::Transform for math::ArgumentSize {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -567,7 +581,7 @@ impl super::Visit for math::ArgumentSize {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -577,12 +591,13 @@ impl WriteThrough for math::ArgumentSize {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ARGUMENT_SIZE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::ARGUMENT_SIZE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::argument_size(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ARGUMENT_SIZE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::ARGUMENT_SIZE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -612,10 +627,10 @@ impl super::Transform for math::ArrayObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.array_properties = super::transform_child(&self.array_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -629,7 +644,7 @@ impl super::Visit for math::ArrayObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.array_properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -642,12 +657,13 @@ impl WriteThrough for math::ArrayObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ARRAY_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::ARRAY_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::array_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ARRAY_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::ARRAY_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.array_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -678,7 +694,7 @@ impl super::Transform for math::ArrayProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.matrix_base_justification =
             super::transform_child(&self.matrix_base_justification, ctx, &mut rebase);
         node.maximum_distribution =
@@ -689,7 +705,7 @@ impl super::Transform for math::ArrayProperties {
         node.r_sp = super::transform_child(&self.r_sp, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -703,7 +719,7 @@ impl super::Visit for math::ArrayProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.matrix_base_justification, visitor);
         walk.child(&self.maximum_distribution, visitor);
         walk.child(&self.object_distribution, visitor);
@@ -720,12 +736,14 @@ impl WriteThrough for math::ArrayProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ARRAY_PROPERTIES_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::ARRAY_PROPERTIES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::array_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ARRAY_PROPERTIES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::ARRAY_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.child(&self.matrix_base_justification, ctx)?;
         through.child(&self.maximum_distribution, ctx)?;
         through.child(&self.object_distribution, ctx)?;
@@ -761,10 +779,10 @@ impl super::Transform for math::Bar {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -778,7 +796,7 @@ impl super::Visit for math::Bar {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -791,12 +809,12 @@ impl WriteThrough for math::Bar {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BAR_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::BAR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::bar(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::BAR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::BAR_SHAPE, self.unknown.as_deref());
         through.child(&self.properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -827,11 +845,11 @@ impl super::Transform for math::BarProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.position = super::transform_child(&self.position, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -845,7 +863,7 @@ impl super::Visit for math::BarProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.position, visitor);
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
@@ -858,12 +876,13 @@ impl WriteThrough for math::BarProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BAR_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::BAR_PROPERTIES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::bar_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::BAR_PROPERTIES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::BAR_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.child(&self.position, ctx)?;
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
@@ -894,11 +913,11 @@ impl super::Transform for math::BorderBoxObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.border_box_properties =
             super::transform_child(&self.border_box_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -912,7 +931,7 @@ impl super::Visit for math::BorderBoxObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.border_box_properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -925,12 +944,14 @@ impl WriteThrough for math::BorderBoxObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BORDER_BOX_OBJECT_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::BORDER_BOX_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::border_box_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::BORDER_BOX_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::BORDER_BOX_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.border_box_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -966,7 +987,7 @@ impl super::Transform for math::BorderBoxProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.hide_top_edge = super::transform_child(&self.hide_top_edge, ctx, &mut rebase);
         node.hide_bottom_edge = super::transform_child(&self.hide_bottom_edge, ctx, &mut rebase);
         node.hide_left_edge = super::transform_child(&self.hide_left_edge, ctx, &mut rebase);
@@ -987,7 +1008,7 @@ impl super::Transform for math::BorderBoxProperties {
         );
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1001,7 +1022,7 @@ impl super::Visit for math::BorderBoxProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.hide_top_edge, visitor);
         walk.child(&self.hide_bottom_edge, visitor);
         walk.child(&self.hide_left_edge, visitor);
@@ -1027,13 +1048,20 @@ impl WriteThrough for math::BorderBoxProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BORDER_BOX_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::BORDER_BOX_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::border_box_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::BORDER_BOX_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::BORDER_BOX_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.hide_top_edge, ctx)?;
         through.child(&self.hide_bottom_edge, ctx)?;
         through.child(&self.hide_left_edge, ctx)?;
@@ -1080,7 +1108,8 @@ impl super::Transform for math::BorderBoxStrikethroughBottomLeftToTopRight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1098,7 +1127,7 @@ impl super::Visit for math::BorderBoxStrikethroughBottomLeftToTopRight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1111,7 +1140,7 @@ impl WriteThrough for math::BorderBoxStrikethroughBottomLeftToTopRight {
         let converted = super::converts(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_BOTTOM_LEFT_TO_TOP_RIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1121,7 +1150,7 @@ impl WriteThrough for math::BorderBoxStrikethroughBottomLeftToTopRight {
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_BOTTOM_LEFT_TO_TOP_RIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1165,7 +1194,8 @@ impl super::Transform for math::BorderBoxStrikethroughHorizontal {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1183,7 +1213,7 @@ impl super::Visit for math::BorderBoxStrikethroughHorizontal {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1196,7 +1226,7 @@ impl WriteThrough for math::BorderBoxStrikethroughHorizontal {
         let converted = super::converts(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_HORIZONTAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = math::write::border_box_strikethrough_horizontal(self, out.scope());
@@ -1205,7 +1235,7 @@ impl WriteThrough for math::BorderBoxStrikethroughHorizontal {
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_HORIZONTAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1249,7 +1279,8 @@ impl super::Transform for math::BorderBoxStrikethroughTopLeftToBottomRight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1267,7 +1298,7 @@ impl super::Visit for math::BorderBoxStrikethroughTopLeftToBottomRight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1280,7 +1311,7 @@ impl WriteThrough for math::BorderBoxStrikethroughTopLeftToBottomRight {
         let converted = super::converts(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_TOP_LEFT_TO_BOTTOM_RIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1290,7 +1321,7 @@ impl WriteThrough for math::BorderBoxStrikethroughTopLeftToBottomRight {
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_TOP_LEFT_TO_BOTTOM_RIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1334,7 +1365,8 @@ impl super::Transform for math::BorderBoxStrikethroughVertical {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1352,7 +1384,7 @@ impl super::Visit for math::BorderBoxStrikethroughVertical {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1365,7 +1397,7 @@ impl WriteThrough for math::BorderBoxStrikethroughVertical {
         let converted = super::converts(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_VERTICAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = math::write::border_box_strikethrough_vertical(self, out.scope());
@@ -1374,7 +1406,7 @@ impl WriteThrough for math::BorderBoxStrikethroughVertical {
         let mut through = super::Through::new(
             out,
             &math::BORDER_BOX_STRIKETHROUGH_VERTICAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1414,10 +1446,10 @@ impl super::Transform for math::BoxObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.box_properties = super::transform_child(&self.box_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1431,7 +1463,7 @@ impl super::Visit for math::BoxObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.box_properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -1444,12 +1476,13 @@ impl WriteThrough for math::BoxObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BOX_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::BOX_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::box_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::BOX_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::BOX_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.box_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -1480,7 +1513,7 @@ impl super::Transform for math::BoxProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.operator_emulator = super::transform_child(&self.operator_emulator, ctx, &mut rebase);
         node.no_break = super::transform_child(&self.no_break, ctx, &mut rebase);
         node.differential = super::transform_child(&self.differential, ctx, &mut rebase);
@@ -1488,7 +1521,7 @@ impl super::Transform for math::BoxProperties {
         node.alignment = super::transform_child(&self.alignment, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1502,7 +1535,7 @@ impl super::Visit for math::BoxProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.operator_emulator, visitor);
         walk.child(&self.no_break, visitor);
         walk.child(&self.differential, visitor);
@@ -1519,12 +1552,13 @@ impl WriteThrough for math::BoxProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BOX_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::BOX_PROPERTIES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::box_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::BOX_PROPERTIES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::BOX_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.child(&self.operator_emulator, ctx)?;
         through.child(&self.no_break, ctx)?;
         through.child(&self.differential, ctx)?;
@@ -1559,7 +1593,8 @@ impl super::Transform for math::Break {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1573,7 +1608,7 @@ impl super::Visit for math::Break {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1583,12 +1618,12 @@ impl WriteThrough for math::Break {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BREAK_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::BREAK_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::r#break(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::BREAK_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::BREAK_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.aln_at);
         through.finish(ctx)
     }
@@ -1618,7 +1653,8 @@ impl super::Transform for math::BreakOnBinaryOperators {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1636,7 +1672,7 @@ impl super::Visit for math::BreakOnBinaryOperators {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1646,13 +1682,20 @@ impl WriteThrough for math::BreakOnBinaryOperators {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::BREAK_ON_BINARY_OPERATORS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::BREAK_ON_BINARY_OPERATORS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::break_on_binary_operators(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::BREAK_ON_BINARY_OPERATORS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::BREAK_ON_BINARY_OPERATORS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -1687,7 +1730,8 @@ impl super::Transform for math::BreakOnBinarySubtraction {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1705,7 +1749,7 @@ impl super::Visit for math::BreakOnBinarySubtraction {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1715,14 +1759,20 @@ impl WriteThrough for math::BreakOnBinarySubtraction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &math::BREAK_ON_BINARY_SUBTRACTION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::BREAK_ON_BINARY_SUBTRACTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::break_on_binary_subtraction(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::BREAK_ON_BINARY_SUBTRACTION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::BREAK_ON_BINARY_SUBTRACTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -1757,7 +1807,8 @@ impl super::Transform for math::Character {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1771,7 +1822,7 @@ impl super::Visit for math::Character {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1781,12 +1832,12 @@ impl WriteThrough for math::Character {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::CHARACTER_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::CHARACTER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::character(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::CHARACTER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::CHARACTER_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -1816,9 +1867,9 @@ impl super::Transform for math::ControlProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1832,7 +1883,7 @@ impl super::Visit for math::ControlProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1844,12 +1895,20 @@ impl WriteThrough for math::ControlProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::CONTROL_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::CONTROL_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::control_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::CONTROL_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::CONTROL_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1980,7 +2039,8 @@ impl super::Transform for math::DefaultJustification {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1994,7 +2054,7 @@ impl super::Visit for math::DefaultJustification {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2004,13 +2064,20 @@ impl WriteThrough for math::DefaultJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::DEFAULT_JUSTIFICATION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::DEFAULT_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::default_justification(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::DEFAULT_JUSTIFICATION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::DEFAULT_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -2045,13 +2112,13 @@ impl super::Transform for math::Degree {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2065,7 +2132,7 @@ impl super::Visit for math::Degree {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -2079,12 +2146,12 @@ impl WriteThrough for math::Degree {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::DEGREE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::DEGREE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::degree(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::DEGREE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::DEGREE_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -2120,7 +2187,8 @@ impl super::Transform for math::DelimiterBeginningCharacter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2138,7 +2206,7 @@ impl super::Visit for math::DelimiterBeginningCharacter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2151,7 +2219,7 @@ impl WriteThrough for math::DelimiterBeginningCharacter {
         let converted = super::converts(
             out,
             &math::DELIMITER_BEGINNING_CHARACTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = math::write::delimiter_beginning_character(self, out.scope());
@@ -2160,7 +2228,7 @@ impl WriteThrough for math::DelimiterBeginningCharacter {
         let mut through = super::Through::new(
             out,
             &math::DELIMITER_BEGINNING_CHARACTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2200,7 +2268,8 @@ impl super::Transform for math::DelimiterEndingCharacter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2218,7 +2287,7 @@ impl super::Visit for math::DelimiterEndingCharacter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2228,14 +2297,20 @@ impl WriteThrough for math::DelimiterEndingCharacter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &math::DELIMITER_ENDING_CHARACTER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::DELIMITER_ENDING_CHARACTER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::delimiter_ending_character(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::DELIMITER_ENDING_CHARACTER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::DELIMITER_ENDING_CHARACTER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -2270,11 +2345,11 @@ impl super::Transform for math::DelimiterObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.delimiter_properties =
             super::transform_child(&self.delimiter_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2288,7 +2363,7 @@ impl super::Visit for math::DelimiterObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.delimiter_properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -2301,12 +2376,14 @@ impl WriteThrough for math::DelimiterObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::DELIMITER_OBJECT_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::DELIMITER_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::delimiter_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::DELIMITER_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::DELIMITER_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.delimiter_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -2338,7 +2415,7 @@ impl super::Transform for math::DelimiterProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.delimiter_beginning_character =
             super::transform_child(&self.delimiter_beginning_character, ctx, &mut rebase);
         node.delimiter_separator_character =
@@ -2349,7 +2426,7 @@ impl super::Transform for math::DelimiterProperties {
         node.shp = super::transform_child(&self.shp, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2363,7 +2440,7 @@ impl super::Visit for math::DelimiterProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.delimiter_beginning_character, visitor);
         walk.child(&self.delimiter_separator_character, visitor);
         walk.child(&self.delimiter_ending_character, visitor);
@@ -2380,13 +2457,20 @@ impl WriteThrough for math::DelimiterProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::DELIMITER_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::DELIMITER_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::delimiter_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::DELIMITER_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::DELIMITER_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.delimiter_beginning_character, ctx)?;
         through.child(&self.delimiter_separator_character, ctx)?;
         through.child(&self.delimiter_ending_character, ctx)?;
@@ -2430,7 +2514,8 @@ impl super::Transform for math::DelimiterSeparatorCharacter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2448,7 +2533,7 @@ impl super::Visit for math::DelimiterSeparatorCharacter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2461,7 +2546,7 @@ impl WriteThrough for math::DelimiterSeparatorCharacter {
         let converted = super::converts(
             out,
             &math::DELIMITER_SEPARATOR_CHARACTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = math::write::delimiter_separator_character(self, out.scope());
@@ -2470,7 +2555,7 @@ impl WriteThrough for math::DelimiterSeparatorCharacter {
         let mut through = super::Through::new(
             out,
             &math::DELIMITER_SEPARATOR_CHARACTER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -2510,13 +2595,13 @@ impl super::Transform for math::Denominator {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2530,7 +2615,7 @@ impl super::Visit for math::Denominator {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -2544,12 +2629,13 @@ impl WriteThrough for math::Denominator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::DENOMINATOR_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::DENOMINATOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::denominator(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::DENOMINATOR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::DENOMINATOR_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -2581,7 +2667,8 @@ impl super::Transform for math::Differential {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2595,7 +2682,7 @@ impl super::Visit for math::Differential {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2605,12 +2692,13 @@ impl WriteThrough for math::Differential {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::DIFFERENTIAL_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::DIFFERENTIAL_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::differential(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::DIFFERENTIAL_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::DIFFERENTIAL_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -2640,13 +2728,13 @@ impl super::Transform for math::E {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2660,7 +2748,7 @@ impl super::Visit for math::E {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -2674,12 +2762,12 @@ impl WriteThrough for math::E {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::E_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::E_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::e(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::E_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::E_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -2711,12 +2799,12 @@ impl super::Transform for math::FractionObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fraction_properties =
             super::transform_child(&self.fraction_properties, ctx, &mut rebase);
         node.numerator = super::transform_child(&self.numerator, ctx, &mut rebase);
         node.denominator = super::transform_child(&self.denominator, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2730,7 +2818,7 @@ impl super::Visit for math::FractionObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fraction_properties, visitor);
         walk.child(&self.numerator, visitor);
         walk.child(&self.denominator, visitor);
@@ -2744,12 +2832,13 @@ impl WriteThrough for math::FractionObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::FRACTION_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::FRACTION_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::fraction_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::FRACTION_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::FRACTION_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.fraction_properties, ctx)?;
         through.child(&self.numerator, ctx)?;
         through.child(&self.denominator, ctx)?;
@@ -2782,11 +2871,11 @@ impl super::Transform for math::FractionProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fraction_type = super::transform_child(&self.fraction_type, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2800,7 +2889,7 @@ impl super::Visit for math::FractionProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fraction_type, visitor);
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
@@ -2813,12 +2902,20 @@ impl WriteThrough for math::FractionProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::FRACTION_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::FRACTION_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::fraction_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::FRACTION_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::FRACTION_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.fraction_type, ctx)?;
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
@@ -2854,7 +2951,8 @@ impl super::Transform for math::FractionType {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2868,7 +2966,7 @@ impl super::Visit for math::FractionType {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2878,12 +2976,13 @@ impl WriteThrough for math::FractionType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::FRACTION_TYPE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::FRACTION_TYPE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::fraction_type(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::FRACTION_TYPE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::FRACTION_TYPE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -2913,12 +3012,12 @@ impl super::Transform for math::FunctionApplyObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.function_properties =
             super::transform_child(&self.function_properties, ctx, &mut rebase);
         node.function_name = super::transform_child(&self.function_name, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2932,7 +3031,7 @@ impl super::Visit for math::FunctionApplyObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.function_properties, visitor);
         walk.child(&self.function_name, visitor);
         walk.child(&self.e, visitor);
@@ -2946,13 +3045,20 @@ impl WriteThrough for math::FunctionApplyObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::FUNCTION_APPLY_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::FUNCTION_APPLY_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::function_apply_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::FUNCTION_APPLY_OBJECT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::FUNCTION_APPLY_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.function_properties, ctx)?;
         through.child(&self.function_name, ctx)?;
         through.child(&self.e, ctx)?;
@@ -2989,13 +3095,13 @@ impl super::Transform for math::FunctionName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3009,7 +3115,7 @@ impl super::Visit for math::FunctionName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -3023,12 +3129,13 @@ impl WriteThrough for math::FunctionName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::FUNCTION_NAME_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::FUNCTION_NAME_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::function_name(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::FUNCTION_NAME_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::FUNCTION_NAME_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -3060,10 +3167,10 @@ impl super::Transform for math::FunctionProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3077,7 +3184,7 @@ impl super::Visit for math::FunctionProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
     }
@@ -3089,12 +3196,20 @@ impl WriteThrough for math::FunctionProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::FUNCTION_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::FUNCTION_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::function_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::FUNCTION_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::FUNCTION_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
     }
@@ -3129,11 +3244,11 @@ impl super::Transform for math::GroupCharacterObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group_character_properties =
             super::transform_child(&self.group_character_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3147,7 +3262,7 @@ impl super::Visit for math::GroupCharacterObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group_character_properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -3160,13 +3275,20 @@ impl WriteThrough for math::GroupCharacterObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::GROUP_CHARACTER_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::GROUP_CHARACTER_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::group_character_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::GROUP_CHARACTER_OBJECT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::GROUP_CHARACTER_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.group_character_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -3202,14 +3324,14 @@ impl super::Transform for math::GroupCharacterProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.character = super::transform_child(&self.character, ctx, &mut rebase);
         node.position = super::transform_child(&self.position, ctx, &mut rebase);
         node.vertical_justification =
             super::transform_child(&self.vertical_justification, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3227,7 +3349,7 @@ impl super::Visit for math::GroupCharacterProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.character, visitor);
         walk.child(&self.position, visitor);
         walk.child(&self.vertical_justification, visitor);
@@ -3242,14 +3364,20 @@ impl WriteThrough for math::GroupCharacterProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &math::GROUP_CHARACTER_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::GROUP_CHARACTER_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::group_character_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::GROUP_CHARACTER_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::GROUP_CHARACTER_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.character, ctx)?;
         through.child(&self.position, ctx)?;
         through.child(&self.vertical_justification, ctx)?;
@@ -3287,7 +3415,8 @@ impl super::Transform for math::Grow {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3301,7 +3430,7 @@ impl super::Visit for math::Grow {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3311,12 +3440,12 @@ impl WriteThrough for math::Grow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::GROW_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::GROW_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::grow(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::GROW_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::GROW_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3346,7 +3475,8 @@ impl super::Transform for math::HideBottomEdge {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3360,7 +3490,7 @@ impl super::Visit for math::HideBottomEdge {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3370,12 +3500,14 @@ impl WriteThrough for math::HideBottomEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::HIDE_BOTTOM_EDGE_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::HIDE_BOTTOM_EDGE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::hide_bottom_edge(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::HIDE_BOTTOM_EDGE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::HIDE_BOTTOM_EDGE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3406,7 +3538,8 @@ impl super::Transform for math::HideDegree {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3420,7 +3553,7 @@ impl super::Visit for math::HideDegree {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3430,12 +3563,13 @@ impl WriteThrough for math::HideDegree {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::HIDE_DEGREE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::HIDE_DEGREE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::hide_degree(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::HIDE_DEGREE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::HIDE_DEGREE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3465,7 +3599,8 @@ impl super::Transform for math::HideLeftEdge {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3479,7 +3614,7 @@ impl super::Visit for math::HideLeftEdge {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3489,12 +3624,13 @@ impl WriteThrough for math::HideLeftEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::HIDE_LEFT_EDGE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::HIDE_LEFT_EDGE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::hide_left_edge(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::HIDE_LEFT_EDGE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::HIDE_LEFT_EDGE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3524,7 +3660,8 @@ impl super::Transform for math::HideRightEdge {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3538,7 +3675,7 @@ impl super::Visit for math::HideRightEdge {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3548,12 +3685,13 @@ impl WriteThrough for math::HideRightEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::HIDE_RIGHT_EDGE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::HIDE_RIGHT_EDGE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::hide_right_edge(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::HIDE_RIGHT_EDGE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::HIDE_RIGHT_EDGE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3584,7 +3722,8 @@ impl super::Transform for math::HideTopEdge {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3598,7 +3737,7 @@ impl super::Visit for math::HideTopEdge {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3608,12 +3747,13 @@ impl WriteThrough for math::HideTopEdge {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::HIDE_TOP_EDGE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::HIDE_TOP_EDGE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::hide_top_edge(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::HIDE_TOP_EDGE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::HIDE_TOP_EDGE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3643,7 +3783,8 @@ impl super::Transform for math::IntegralLimitLocations {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3661,7 +3802,7 @@ impl super::Visit for math::IntegralLimitLocations {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3671,13 +3812,20 @@ impl WriteThrough for math::IntegralLimitLocations {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::INTEGRAL_LIMIT_LOCATIONS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::INTEGRAL_LIMIT_LOCATIONS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::integral_limit_locations(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::INTEGRAL_LIMIT_LOCATIONS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::INTEGRAL_LIMIT_LOCATIONS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3712,7 +3860,8 @@ impl super::Transform for math::InterEquationSpacing {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3726,7 +3875,7 @@ impl super::Visit for math::InterEquationSpacing {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3736,13 +3885,20 @@ impl WriteThrough for math::InterEquationSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::INTER_EQUATION_SPACING_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::INTER_EQUATION_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::inter_equation_spacing(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::INTER_EQUATION_SPACING_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::INTER_EQUATION_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3777,7 +3933,8 @@ impl super::Transform for math::IntraEquationSpacing {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3791,7 +3948,7 @@ impl super::Visit for math::IntraEquationSpacing {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3801,13 +3958,20 @@ impl WriteThrough for math::IntraEquationSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::INTRA_EQUATION_SPACING_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::INTRA_EQUATION_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::intra_equation_spacing(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::INTRA_EQUATION_SPACING_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::INTRA_EQUATION_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3842,7 +4006,8 @@ impl super::Transform for math::Justification {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3856,7 +4021,7 @@ impl super::Visit for math::Justification {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3866,12 +4031,13 @@ impl WriteThrough for math::Justification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::JUSTIFICATION_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::JUSTIFICATION_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::justification(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::JUSTIFICATION_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::JUSTIFICATION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3901,7 +4067,8 @@ impl super::Transform for math::LeftMargin {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3915,7 +4082,7 @@ impl super::Visit for math::LeftMargin {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3925,12 +4092,13 @@ impl WriteThrough for math::LeftMargin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::LEFT_MARGIN_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::LEFT_MARGIN_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::left_margin(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::LEFT_MARGIN_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::LEFT_MARGIN_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -3960,7 +4128,8 @@ impl super::Transform for math::LimLoc {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3974,7 +4143,7 @@ impl super::Visit for math::LimLoc {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3984,12 +4153,12 @@ impl WriteThrough for math::LimLoc {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::LIM_LOC_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::LIM_LOC_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::lim_loc(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::LIM_LOC_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::LIM_LOC_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4019,13 +4188,13 @@ impl super::Transform for math::Limit {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4039,7 +4208,7 @@ impl super::Visit for math::Limit {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -4053,12 +4222,12 @@ impl WriteThrough for math::Limit {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::LIMIT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::LIMIT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::limit(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::LIMIT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::LIMIT_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -4090,7 +4259,8 @@ impl super::Transform for math::Literal {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4104,7 +4274,7 @@ impl super::Visit for math::Literal {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4114,12 +4284,12 @@ impl WriteThrough for math::Literal {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::LITERAL_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::LITERAL_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::literal(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::LITERAL_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::LITERAL_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4149,12 +4319,12 @@ impl super::Transform for math::LowerLimitObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.lower_limit_properties =
             super::transform_child(&self.lower_limit_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
         node.limit = super::transform_child(&self.limit, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4168,7 +4338,7 @@ impl super::Visit for math::LowerLimitObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.lower_limit_properties, visitor);
         walk.child(&self.e, visitor);
         walk.child(&self.limit, visitor);
@@ -4182,12 +4352,20 @@ impl WriteThrough for math::LowerLimitObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::LOWER_LIMIT_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::LOWER_LIMIT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::lower_limit_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::LOWER_LIMIT_OBJECT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::LOWER_LIMIT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.lower_limit_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.child(&self.limit, ctx)?;
@@ -4224,10 +4402,10 @@ impl super::Transform for math::LowerLimitProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4241,7 +4419,7 @@ impl super::Visit for math::LowerLimitProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
     }
@@ -4253,13 +4431,20 @@ impl WriteThrough for math::LowerLimitProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::LOWER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::LOWER_LIMIT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::lower_limit_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::LOWER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::LOWER_LIMIT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
     }
@@ -4294,7 +4479,8 @@ impl super::Transform for math::MathFont {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4308,7 +4494,7 @@ impl super::Visit for math::MathFont {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4318,12 +4504,12 @@ impl WriteThrough for math::MathFont {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATH_FONT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::MATH_FONT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::math_font(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATH_FONT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::MATH_FONT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4353,7 +4539,7 @@ impl super::Transform for math::MathProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.math_font = super::transform_child(&self.math_font, ctx, &mut rebase);
         node.break_on_binary_operators =
             super::transform_child(&self.break_on_binary_operators, ctx, &mut rebase);
@@ -4378,7 +4564,7 @@ impl super::Transform for math::MathProperties {
         node.integral_limit_locations =
             super::transform_child(&self.integral_limit_locations, ctx, &mut rebase);
         node.nary_lim = super::transform_child(&self.nary_lim, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4392,7 +4578,7 @@ impl super::Visit for math::MathProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.math_font, visitor);
         walk.child(&self.break_on_binary_operators, visitor);
         walk.child(&self.break_on_binary_subtraction, visitor);
@@ -4418,12 +4604,13 @@ impl WriteThrough for math::MathProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATH_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::MATH_PROPERTIES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::math_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATH_PROPERTIES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::MATH_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.child(&self.math_font, ctx)?;
         through.child(&self.break_on_binary_operators, ctx)?;
         through.child(&self.break_on_binary_subtraction, ctx)?;
@@ -4553,7 +4740,8 @@ impl super::Transform for math::MatrixBaseJustification {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4571,7 +4759,7 @@ impl super::Visit for math::MatrixBaseJustification {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4581,13 +4769,20 @@ impl WriteThrough for math::MatrixBaseJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_BASE_JUSTIFICATION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::MATRIX_BASE_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::matrix_base_justification(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::MATRIX_BASE_JUSTIFICATION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::MATRIX_BASE_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4622,9 +4817,9 @@ impl super::Transform for math::MatrixColumn {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4638,7 +4833,7 @@ impl super::Visit for math::MatrixColumn {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.properties, visitor);
         walk.finish(visitor);
     }
@@ -4650,12 +4845,13 @@ impl WriteThrough for math::MatrixColumn {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_COLUMN_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::MATRIX_COLUMN_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::matrix_column(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATRIX_COLUMN_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::MATRIX_COLUMN_SHAPE, self.unknown.as_deref());
         through.child(&self.properties, ctx)?;
         through.finish(ctx)
     }
@@ -4685,7 +4881,8 @@ impl super::Transform for math::MatrixColumnCount {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4699,7 +4896,7 @@ impl super::Visit for math::MatrixColumnCount {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4709,12 +4906,20 @@ impl WriteThrough for math::MatrixColumnCount {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_COLUMN_COUNT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::MATRIX_COLUMN_COUNT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::matrix_column_count(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATRIX_COLUMN_COUNT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::MATRIX_COLUMN_COUNT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4749,7 +4954,8 @@ impl super::Transform for math::MatrixColumnGap {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4763,7 +4969,7 @@ impl super::Visit for math::MatrixColumnGap {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4773,12 +4979,14 @@ impl WriteThrough for math::MatrixColumnGap {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_COLUMN_GAP_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::MATRIX_COLUMN_GAP_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::matrix_column_gap(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATRIX_COLUMN_GAP_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::MATRIX_COLUMN_GAP_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4813,7 +5021,8 @@ impl super::Transform for math::MatrixColumnGapRule {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4827,7 +5036,7 @@ impl super::Visit for math::MatrixColumnGapRule {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4837,13 +5046,20 @@ impl WriteThrough for math::MatrixColumnGapRule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_COLUMN_GAP_RULE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::MATRIX_COLUMN_GAP_RULE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::matrix_column_gap_rule(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::MATRIX_COLUMN_GAP_RULE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::MATRIX_COLUMN_GAP_RULE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4878,7 +5094,8 @@ impl super::Transform for math::MatrixColumnJustification {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4896,7 +5113,7 @@ impl super::Visit for math::MatrixColumnJustification {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4906,14 +5123,20 @@ impl WriteThrough for math::MatrixColumnJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &math::MATRIX_COLUMN_JUSTIFICATION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::MATRIX_COLUMN_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::matrix_column_justification(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::MATRIX_COLUMN_JUSTIFICATION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::MATRIX_COLUMN_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -4948,12 +5171,12 @@ impl super::Transform for math::MatrixColumnProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.matrix_column_count =
             super::transform_child(&self.matrix_column_count, ctx, &mut rebase);
         node.matrix_column_justification =
             super::transform_child(&self.matrix_column_justification, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4971,7 +5194,7 @@ impl super::Visit for math::MatrixColumnProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.matrix_column_count, visitor);
         walk.child(&self.matrix_column_justification, visitor);
         walk.finish(visitor);
@@ -4984,13 +5207,20 @@ impl WriteThrough for math::MatrixColumnProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_COLUMN_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::MATRIX_COLUMN_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::matrix_column_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::MATRIX_COLUMN_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::MATRIX_COLUMN_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.matrix_column_count, ctx)?;
         through.child(&self.matrix_column_justification, ctx)?;
         through.finish(ctx)
@@ -5026,9 +5256,9 @@ impl super::Transform for math::MatrixColumns {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.matrix_column = super::transform_child(&self.matrix_column, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5042,7 +5272,7 @@ impl super::Visit for math::MatrixColumns {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.matrix_column, visitor);
         walk.finish(visitor);
     }
@@ -5054,12 +5284,13 @@ impl WriteThrough for math::MatrixColumns {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_COLUMNS_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::MATRIX_COLUMNS_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::matrix_columns(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATRIX_COLUMNS_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::MATRIX_COLUMNS_SHAPE, self.unknown.as_deref());
         through.child(&self.matrix_column, ctx)?;
         through.finish(ctx)
     }
@@ -5089,10 +5320,10 @@ impl super::Transform for math::MatrixObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.matrix_properties = super::transform_child(&self.matrix_properties, ctx, &mut rebase);
         node.matrix_row = super::transform_child(&self.matrix_row, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5106,7 +5337,7 @@ impl super::Visit for math::MatrixObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.matrix_properties, visitor);
         walk.child(&self.matrix_row, visitor);
         walk.finish(visitor);
@@ -5119,12 +5350,13 @@ impl WriteThrough for math::MatrixObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::MATRIX_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::matrix_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATRIX_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::MATRIX_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.matrix_properties, ctx)?;
         through.child(&self.matrix_row, ctx)?;
         through.finish(ctx)
@@ -5155,7 +5387,7 @@ impl super::Transform for math::MatrixProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.matrix_base_justification =
             super::transform_child(&self.matrix_base_justification, ctx, &mut rebase);
         node.plc_hide = super::transform_child(&self.plc_hide, ctx, &mut rebase);
@@ -5169,7 +5401,7 @@ impl super::Transform for math::MatrixProperties {
         node.matrix_columns = super::transform_child(&self.matrix_columns, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5183,7 +5415,7 @@ impl super::Visit for math::MatrixProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.matrix_base_justification, visitor);
         walk.child(&self.plc_hide, visitor);
         walk.child(&self.row_spacing_rule, visitor);
@@ -5203,12 +5435,14 @@ impl WriteThrough for math::MatrixProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_PROPERTIES_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::MATRIX_PROPERTIES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::matrix_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATRIX_PROPERTIES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::MATRIX_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.child(&self.matrix_base_justification, ctx)?;
         through.child(&self.plc_hide, ctx)?;
         through.child(&self.row_spacing_rule, ctx)?;
@@ -5251,9 +5485,9 @@ impl super::Transform for math::MatrixRow {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5267,7 +5501,7 @@ impl super::Visit for math::MatrixRow {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.e, visitor);
         walk.finish(visitor);
     }
@@ -5279,12 +5513,13 @@ impl WriteThrough for math::MatrixRow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MATRIX_ROW_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::MATRIX_ROW_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::matrix_row(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::MATRIX_ROW_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::MATRIX_ROW_SHAPE, self.unknown.as_deref());
         through.child(&self.e, ctx)?;
         through.finish(ctx)
     }
@@ -5314,7 +5549,8 @@ impl super::Transform for math::MaximumDistribution {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5328,7 +5564,7 @@ impl super::Visit for math::MaximumDistribution {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5338,13 +5574,20 @@ impl WriteThrough for math::MaximumDistribution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::MAXIMUM_DISTRIBUTION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::MAXIMUM_DISTRIBUTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::maximum_distribution(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::MAXIMUM_DISTRIBUTION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::MAXIMUM_DISTRIBUTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -5379,7 +5622,8 @@ impl super::Transform for math::MinimumMatrixColumnWidth {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5397,7 +5641,7 @@ impl super::Visit for math::MinimumMatrixColumnWidth {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5407,14 +5651,20 @@ impl WriteThrough for math::MinimumMatrixColumnWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &math::MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::minimum_matrix_column_width(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::MINIMUM_MATRIX_COLUMN_WIDTH_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -5449,12 +5699,12 @@ impl super::Transform for math::Nary {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pr = super::transform_child(&self.pr, ctx, &mut rebase);
         node.sub = super::transform_child(&self.sub, ctx, &mut rebase);
         node.sup = super::transform_child(&self.sup, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5468,7 +5718,7 @@ impl super::Visit for math::Nary {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pr, visitor);
         walk.child(&self.sub, visitor);
         walk.child(&self.sup, visitor);
@@ -5483,12 +5733,12 @@ impl WriteThrough for math::Nary {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::NARY_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::NARY_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::nary(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::NARY_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::NARY_SHAPE, self.unknown.as_deref());
         through.child(&self.pr, ctx)?;
         through.child(&self.sub, ctx)?;
         through.child(&self.sup, ctx)?;
@@ -5521,7 +5771,8 @@ impl super::Transform for math::NaryLim {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5535,7 +5786,7 @@ impl super::Visit for math::NaryLim {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5545,12 +5796,12 @@ impl WriteThrough for math::NaryLim {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::NARY_LIM_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::NARY_LIM_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::nary_lim(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::NARY_LIM_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::NARY_LIM_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -5580,7 +5831,7 @@ impl super::Transform for math::NaryPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.character = super::transform_child(&self.character, ctx, &mut rebase);
         node.lim_loc = super::transform_child(&self.lim_loc, ctx, &mut rebase);
         node.grow = super::transform_child(&self.grow, ctx, &mut rebase);
@@ -5588,7 +5839,7 @@ impl super::Transform for math::NaryPr {
         node.sup_hide = super::transform_child(&self.sup_hide, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5602,7 +5853,7 @@ impl super::Visit for math::NaryPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.character, visitor);
         walk.child(&self.lim_loc, visitor);
         walk.child(&self.grow, visitor);
@@ -5619,12 +5870,12 @@ impl WriteThrough for math::NaryPr {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::NARY_PR_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::NARY_PR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::nary_pr(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::NARY_PR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::NARY_PR_SHAPE, self.unknown.as_deref());
         through.child(&self.character, ctx)?;
         through.child(&self.lim_loc, ctx)?;
         through.child(&self.grow, ctx)?;
@@ -5659,7 +5910,8 @@ impl super::Transform for math::NoBreak {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5673,7 +5925,7 @@ impl super::Visit for math::NoBreak {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5683,12 +5935,12 @@ impl WriteThrough for math::NoBreak {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::NO_BREAK_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::NO_BREAK_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::no_break(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::NO_BREAK_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::NO_BREAK_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -5718,7 +5970,8 @@ impl super::Transform for math::NormalText {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5732,7 +5985,7 @@ impl super::Visit for math::NormalText {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5742,12 +5995,13 @@ impl WriteThrough for math::NormalText {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::NORMAL_TEXT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::NORMAL_TEXT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::normal_text(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::NORMAL_TEXT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::NORMAL_TEXT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -5777,13 +6031,13 @@ impl super::Transform for math::Numerator {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5797,7 +6051,7 @@ impl super::Visit for math::Numerator {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -5811,12 +6065,12 @@ impl WriteThrough for math::Numerator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::NUMERATOR_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::NUMERATOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::numerator(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::NUMERATOR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::NUMERATOR_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -5848,7 +6102,8 @@ impl super::Transform for math::ObjectDistribution {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5862,7 +6117,7 @@ impl super::Visit for math::ObjectDistribution {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5872,12 +6127,20 @@ impl WriteThrough for math::ObjectDistribution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::OBJECT_DISTRIBUTION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::OBJECT_DISTRIBUTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::object_distribution(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::OBJECT_DISTRIBUTION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::OBJECT_DISTRIBUTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -5912,9 +6175,9 @@ impl super::Transform for math::OfficeMath {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5928,7 +6191,7 @@ impl super::Visit for math::OfficeMath {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -5940,12 +6203,13 @@ impl WriteThrough for math::OfficeMath {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::OFFICE_MATH_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::OFFICE_MATH_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::office_math(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::OFFICE_MATH_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::OFFICE_MATH_SHAPE, self.unknown.as_deref());
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6069,7 +6333,7 @@ impl super::Transform for math::OfficeMathParagraph {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.custom_xml_conflict_ins_range_start =
             super::transform_child(&self.custom_xml_conflict_ins_range_start, ctx, &mut rebase);
         node.custom_xml_conflict_ins_range_end =
@@ -6084,7 +6348,7 @@ impl super::Transform for math::OfficeMathParagraph {
             super::transform_child(&self.conflict_del_run_track_change, ctx, &mut rebase);
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.office_math = super::transform_child(&self.office_math, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6098,7 +6362,7 @@ impl super::Visit for math::OfficeMathParagraph {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.custom_xml_conflict_ins_range_start, visitor);
         walk.child(&self.custom_xml_conflict_ins_range_end, visitor);
         walk.child(&self.custom_xml_conflict_del_range_start, visitor);
@@ -6117,13 +6381,20 @@ impl WriteThrough for math::OfficeMathParagraph {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::OFFICE_MATH_PARAGRAPH_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::OFFICE_MATH_PARAGRAPH_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::office_math_paragraph(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::OFFICE_MATH_PARAGRAPH_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::OFFICE_MATH_PARAGRAPH_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.custom_xml_conflict_ins_range_start, ctx)?;
         through.child(&self.custom_xml_conflict_ins_range_end, ctx)?;
         through.child(&self.custom_xml_conflict_del_range_start, ctx)?;
@@ -6169,9 +6440,9 @@ impl super::Transform for math::OfficeMathParagraphProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.justification = super::transform_child(&self.justification, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6189,7 +6460,7 @@ impl super::Visit for math::OfficeMathParagraphProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.justification, visitor);
         walk.finish(visitor);
     }
@@ -6204,7 +6475,7 @@ impl WriteThrough for math::OfficeMathParagraphProperties {
         let converted = super::converts(
             out,
             &math::OFFICE_MATH_PARAGRAPH_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = math::write::office_math_paragraph_properties(self, out.scope());
@@ -6213,7 +6484,7 @@ impl WriteThrough for math::OfficeMathParagraphProperties {
         let mut through = super::Through::new(
             out,
             &math::OFFICE_MATH_PARAGRAPH_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.justification, ctx)?;
         through.finish(ctx)
@@ -6253,7 +6524,8 @@ impl super::Transform for math::OperatorEmulator {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6267,7 +6539,7 @@ impl super::Visit for math::OperatorEmulator {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6277,12 +6549,14 @@ impl WriteThrough for math::OperatorEmulator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::OPERATOR_EMULATOR_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::OPERATOR_EMULATOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::operator_emulator(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::OPERATOR_EMULATOR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::OPERATOR_EMULATOR_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6317,11 +6591,11 @@ impl super::Transform for math::PhantomObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.phantom_properties =
             super::transform_child(&self.phantom_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6335,7 +6609,7 @@ impl super::Visit for math::PhantomObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.phantom_properties, visitor);
         walk.child(&self.e, visitor);
         walk.finish(visitor);
@@ -6348,12 +6622,13 @@ impl WriteThrough for math::PhantomObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PHANTOM_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::PHANTOM_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::phantom_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::PHANTOM_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::PHANTOM_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.phantom_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.finish(ctx)
@@ -6384,7 +6659,7 @@ impl super::Transform for math::PhantomProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.phantom_show = super::transform_child(&self.phantom_show, ctx, &mut rebase);
         node.phantom_zero_width =
             super::transform_child(&self.phantom_zero_width, ctx, &mut rebase);
@@ -6395,7 +6670,7 @@ impl super::Transform for math::PhantomProperties {
         node.transp = super::transform_child(&self.transp, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6409,7 +6684,7 @@ impl super::Visit for math::PhantomProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.phantom_show, visitor);
         walk.child(&self.phantom_zero_width, visitor);
         walk.child(&self.phantom_zero_ascent, visitor);
@@ -6426,12 +6701,20 @@ impl WriteThrough for math::PhantomProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PHANTOM_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::PHANTOM_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::phantom_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::PHANTOM_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::PHANTOM_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.phantom_show, ctx)?;
         through.child(&self.phantom_zero_width, ctx)?;
         through.child(&self.phantom_zero_ascent, ctx)?;
@@ -6471,7 +6754,8 @@ impl super::Transform for math::PhantomShow {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6485,7 +6769,7 @@ impl super::Visit for math::PhantomShow {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6495,12 +6779,13 @@ impl WriteThrough for math::PhantomShow {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PHANTOM_SHOW_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::PHANTOM_SHOW_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::phantom_show(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::PHANTOM_SHOW_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::PHANTOM_SHOW_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6530,7 +6815,8 @@ impl super::Transform for math::PhantomZeroAscent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6544,7 +6830,7 @@ impl super::Visit for math::PhantomZeroAscent {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6554,12 +6840,20 @@ impl WriteThrough for math::PhantomZeroAscent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PHANTOM_ZERO_ASCENT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::PHANTOM_ZERO_ASCENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::phantom_zero_ascent(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::PHANTOM_ZERO_ASCENT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::PHANTOM_ZERO_ASCENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6594,7 +6888,8 @@ impl super::Transform for math::PhantomZeroDescent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6608,7 +6903,7 @@ impl super::Visit for math::PhantomZeroDescent {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6618,13 +6913,20 @@ impl WriteThrough for math::PhantomZeroDescent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PHANTOM_ZERO_DESCENT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::PHANTOM_ZERO_DESCENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::phantom_zero_descent(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::PHANTOM_ZERO_DESCENT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::PHANTOM_ZERO_DESCENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6659,7 +6961,8 @@ impl super::Transform for math::PhantomZeroWidth {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6673,7 +6976,7 @@ impl super::Visit for math::PhantomZeroWidth {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6683,12 +6986,20 @@ impl WriteThrough for math::PhantomZeroWidth {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PHANTOM_ZERO_WIDTH_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::PHANTOM_ZERO_WIDTH_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::phantom_zero_width(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::PHANTOM_ZERO_WIDTH_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::PHANTOM_ZERO_WIDTH_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6723,7 +7034,8 @@ impl super::Transform for math::PlcHide {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6737,7 +7049,7 @@ impl super::Visit for math::PlcHide {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6747,12 +7059,12 @@ impl WriteThrough for math::PlcHide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PLC_HIDE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::PLC_HIDE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::plc_hide(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::PLC_HIDE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::PLC_HIDE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6782,7 +7094,8 @@ impl super::Transform for math::Position {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6796,7 +7109,7 @@ impl super::Visit for math::Position {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6806,12 +7119,12 @@ impl WriteThrough for math::Position {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::POSITION_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::POSITION_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::position(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::POSITION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::POSITION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6841,7 +7154,8 @@ impl super::Transform for math::PostParagraphSpacing {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6855,7 +7169,7 @@ impl super::Visit for math::PostParagraphSpacing {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6865,13 +7179,20 @@ impl WriteThrough for math::PostParagraphSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::POST_PARAGRAPH_SPACING_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::POST_PARAGRAPH_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::post_paragraph_spacing(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::POST_PARAGRAPH_SPACING_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::POST_PARAGRAPH_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6906,7 +7227,8 @@ impl super::Transform for math::PreParagraphSpacing {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6920,7 +7242,7 @@ impl super::Visit for math::PreParagraphSpacing {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6930,13 +7252,20 @@ impl WriteThrough for math::PreParagraphSpacing {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::PRE_PARAGRAPH_SPACING_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::PRE_PARAGRAPH_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::pre_paragraph_spacing(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::PRE_PARAGRAPH_SPACING_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::PRE_PARAGRAPH_SPACING_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -6971,13 +7300,13 @@ impl super::Transform for math::PreSubSuperscriptObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pre_sub_superscript_properties =
             super::transform_child(&self.pre_sub_superscript_properties, ctx, &mut rebase);
         node.sub = super::transform_child(&self.sub, ctx, &mut rebase);
         node.sup = super::transform_child(&self.sup, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6995,7 +7324,7 @@ impl super::Visit for math::PreSubSuperscriptObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pre_sub_superscript_properties, visitor);
         walk.child(&self.sub, visitor);
         walk.child(&self.sup, visitor);
@@ -7010,14 +7339,20 @@ impl WriteThrough for math::PreSubSuperscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &math::PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::pre_sub_superscript_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::PRE_SUB_SUPERSCRIPT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.pre_sub_superscript_properties, ctx)?;
         through.child(&self.sub, ctx)?;
         through.child(&self.sup, ctx)?;
@@ -7059,10 +7394,10 @@ impl super::Transform for math::PreSubSuperscriptProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7080,7 +7415,7 @@ impl super::Visit for math::PreSubSuperscriptProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
     }
@@ -7095,7 +7430,7 @@ impl WriteThrough for math::PreSubSuperscriptProperties {
         let converted = super::converts(
             out,
             &math::PRE_SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = math::write::pre_sub_superscript_properties(self, out.scope());
@@ -7104,7 +7439,7 @@ impl WriteThrough for math::PreSubSuperscriptProperties {
         let mut through = super::Through::new(
             out,
             &math::PRE_SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
@@ -7144,7 +7479,8 @@ impl super::Transform for math::RSp {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7158,7 +7494,7 @@ impl super::Visit for math::RSp {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7168,12 +7504,12 @@ impl WriteThrough for math::RSp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::R_SP_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::R_SP_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::r_sp(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::R_SP_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::R_SP_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -7203,12 +7539,12 @@ impl super::Transform for math::RadicalObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.radical_properties =
             super::transform_child(&self.radical_properties, ctx, &mut rebase);
         node.degree = super::transform_child(&self.degree, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7222,7 +7558,7 @@ impl super::Visit for math::RadicalObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.radical_properties, visitor);
         walk.child(&self.degree, visitor);
         walk.child(&self.e, visitor);
@@ -7236,12 +7572,13 @@ impl WriteThrough for math::RadicalObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::RADICAL_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::RADICAL_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::radical_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::RADICAL_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::RADICAL_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.radical_properties, ctx)?;
         through.child(&self.degree, ctx)?;
         through.child(&self.e, ctx)?;
@@ -7273,11 +7610,11 @@ impl super::Transform for math::RadicalProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.hide_degree = super::transform_child(&self.hide_degree, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7291,7 +7628,7 @@ impl super::Visit for math::RadicalProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.hide_degree, visitor);
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
@@ -7304,12 +7641,20 @@ impl WriteThrough for math::RadicalProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::RADICAL_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::RADICAL_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::radical_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::RADICAL_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::RADICAL_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.hide_degree, ctx)?;
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
@@ -7345,7 +7690,8 @@ impl super::Transform for math::RightMargin {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7359,7 +7705,7 @@ impl super::Visit for math::RightMargin {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7369,12 +7715,13 @@ impl WriteThrough for math::RightMargin {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::RIGHT_MARGIN_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::RIGHT_MARGIN_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::right_margin(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::RIGHT_MARGIN_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::RIGHT_MARGIN_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -7404,7 +7751,8 @@ impl super::Transform for math::RowSpacingRule {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7418,7 +7766,7 @@ impl super::Visit for math::RowSpacingRule {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7428,12 +7776,14 @@ impl WriteThrough for math::RowSpacingRule {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::ROW_SPACING_RULE_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::ROW_SPACING_RULE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::row_spacing_rule(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::ROW_SPACING_RULE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::ROW_SPACING_RULE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -7464,11 +7814,11 @@ impl super::Transform for math::Run {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.w_properties = super::transform_child(&self.w_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7482,7 +7832,7 @@ impl super::Visit for math::Run {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.properties, visitor);
         walk.child(&self.w_properties, visitor);
         walk.items(&self.content, visitor);
@@ -7496,12 +7846,12 @@ impl WriteThrough for math::Run {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::RUN_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::RUN_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::run(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::RUN_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::RUN_SHAPE, self.unknown.as_deref());
         through.child(&self.properties, ctx)?;
         through.child(&self.w_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -7619,12 +7969,12 @@ impl super::Transform for math::RunProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.literal = super::transform_child(&self.literal, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.r#break = super::transform_child(&self.r#break, ctx, &mut rebase);
         node.alignment = super::transform_child(&self.alignment, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7638,7 +7988,7 @@ impl super::Visit for math::RunProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.literal, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.r#break, visitor);
@@ -7653,12 +8003,13 @@ impl WriteThrough for math::RunProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::RUN_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::RUN_PROPERTIES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::run_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::RUN_PROPERTIES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::RUN_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.child(&self.literal, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.r#break, ctx)?;
@@ -7804,7 +8155,8 @@ impl super::Transform for math::Script {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7818,7 +8170,7 @@ impl super::Visit for math::Script {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7828,12 +8180,12 @@ impl WriteThrough for math::Script {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SCRIPT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::SCRIPT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::script(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SCRIPT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::SCRIPT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -7863,7 +8215,8 @@ impl super::Transform for math::Shp {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7877,7 +8230,7 @@ impl super::Visit for math::Shp {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7887,12 +8240,12 @@ impl WriteThrough for math::Shp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SHP_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::SHP_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::shp(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SHP_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::SHP_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -7922,7 +8275,8 @@ impl super::Transform for math::SmallFraction {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7936,7 +8290,7 @@ impl super::Visit for math::SmallFraction {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7946,12 +8300,13 @@ impl WriteThrough for math::SmallFraction {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SMALL_FRACTION_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::SMALL_FRACTION_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::small_fraction(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SMALL_FRACTION_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::SMALL_FRACTION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -7981,7 +8336,8 @@ impl super::Transform for math::Sty {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7995,7 +8351,7 @@ impl super::Visit for math::Sty {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8005,12 +8361,12 @@ impl WriteThrough for math::Sty {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::STY_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::STY_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::sty(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::STY_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::STY_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -8040,13 +8396,13 @@ impl super::Transform for math::Sub {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8060,7 +8416,7 @@ impl super::Visit for math::Sub {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -8074,12 +8430,12 @@ impl WriteThrough for math::Sub {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUB_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::SUB_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::sub(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SUB_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::SUB_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -8111,7 +8467,8 @@ impl super::Transform for math::SubHide {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8125,7 +8482,7 @@ impl super::Visit for math::SubHide {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8135,12 +8492,12 @@ impl WriteThrough for math::SubHide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUB_HIDE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::SUB_HIDE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::sub_hide(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SUB_HIDE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::SUB_HIDE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -8170,13 +8527,13 @@ impl super::Transform for math::SubSuperscriptObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sub_superscript_properties =
             super::transform_child(&self.sub_superscript_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
         node.sub = super::transform_child(&self.sub, ctx, &mut rebase);
         node.sup = super::transform_child(&self.sup, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8190,7 +8547,7 @@ impl super::Visit for math::SubSuperscriptObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sub_superscript_properties, visitor);
         walk.child(&self.e, visitor);
         walk.child(&self.sub, visitor);
@@ -8205,13 +8562,20 @@ impl WriteThrough for math::SubSuperscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::SUB_SUPERSCRIPT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::sub_superscript_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::SUB_SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::SUB_SUPERSCRIPT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.sub_superscript_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.child(&self.sub, ctx)?;
@@ -8249,11 +8613,11 @@ impl super::Transform for math::SubSuperscriptProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.align_scripts = super::transform_child(&self.align_scripts, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8271,7 +8635,7 @@ impl super::Visit for math::SubSuperscriptProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.align_scripts, visitor);
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
@@ -8284,14 +8648,20 @@ impl WriteThrough for math::SubSuperscriptProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &math::SUB_SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::sub_superscript_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::SUB_SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::SUB_SUPERSCRIPT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.align_scripts, ctx)?;
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
@@ -8327,12 +8697,12 @@ impl super::Transform for math::SubscriptObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.subscript_properties =
             super::transform_child(&self.subscript_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
         node.sub = super::transform_child(&self.sub, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8346,7 +8716,7 @@ impl super::Visit for math::SubscriptObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.subscript_properties, visitor);
         walk.child(&self.e, visitor);
         walk.child(&self.sub, visitor);
@@ -8360,12 +8730,14 @@ impl WriteThrough for math::SubscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUBSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &math::SUBSCRIPT_OBJECT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::subscript_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SUBSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::SUBSCRIPT_OBJECT_SHAPE, self.unknown.as_deref());
         through.child(&self.subscript_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.child(&self.sub, ctx)?;
@@ -8398,10 +8770,10 @@ impl super::Transform for math::SubscriptProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8415,7 +8787,7 @@ impl super::Visit for math::SubscriptProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
     }
@@ -8427,13 +8799,20 @@ impl WriteThrough for math::SubscriptProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUBSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::SUBSCRIPT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::subscript_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::SUBSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::SUBSCRIPT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
     }
@@ -8468,13 +8847,13 @@ impl super::Transform for math::Sup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.argument_properties =
             super::transform_child(&self.argument_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8488,7 +8867,7 @@ impl super::Visit for math::Sup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.argument_properties, visitor);
         walk.items(&self.content, visitor);
         walk.child(&self.control_properties, visitor);
@@ -8502,12 +8881,12 @@ impl WriteThrough for math::Sup {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUP_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::SUP_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::sup(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SUP_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::SUP_SHAPE, self.unknown.as_deref());
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -8539,7 +8918,8 @@ impl super::Transform for math::SupHide {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8553,7 +8933,7 @@ impl super::Visit for math::SupHide {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8563,12 +8943,12 @@ impl WriteThrough for math::SupHide {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUP_HIDE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::SUP_HIDE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::sup_hide(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SUP_HIDE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::SUP_HIDE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -8598,12 +8978,12 @@ impl super::Transform for math::SuperscriptObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.superscript_properties =
             super::transform_child(&self.superscript_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
         node.sup = super::transform_child(&self.sup, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8617,7 +8997,7 @@ impl super::Visit for math::SuperscriptObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.superscript_properties, visitor);
         walk.child(&self.e, visitor);
         walk.child(&self.sup, visitor);
@@ -8631,12 +9011,20 @@ impl WriteThrough for math::SuperscriptObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::SUPERSCRIPT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::superscript_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::SUPERSCRIPT_OBJECT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::SUPERSCRIPT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.superscript_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.child(&self.sup, ctx)?;
@@ -8673,10 +9061,10 @@ impl super::Transform for math::SuperscriptProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8690,7 +9078,7 @@ impl super::Visit for math::SuperscriptProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
     }
@@ -8702,13 +9090,20 @@ impl WriteThrough for math::SuperscriptProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::SUPERSCRIPT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::superscript_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::SUPERSCRIPT_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::SUPERSCRIPT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
     }
@@ -8743,7 +9138,8 @@ impl super::Transform for math::Text {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8757,7 +9153,7 @@ impl super::Visit for math::Text {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8767,12 +9163,12 @@ impl WriteThrough for math::Text {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::TEXT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::TEXT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::text(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::TEXT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::TEXT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.space);
         through.text(&self.value)?;
         through.finish(ctx)
@@ -8803,7 +9199,8 @@ impl super::Transform for math::Transp {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8817,7 +9214,7 @@ impl super::Visit for math::Transp {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8827,12 +9224,12 @@ impl WriteThrough for math::Transp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::TRANSP_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::TRANSP_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::transp(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::TRANSP_SHAPE, &self.unknown);
+        let mut through = super::Through::new(out, &math::TRANSP_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -8862,12 +9259,12 @@ impl super::Transform for math::UpperLimitObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.upper_limit_properties =
             super::transform_child(&self.upper_limit_properties, ctx, &mut rebase);
         node.e = super::transform_child(&self.e, ctx, &mut rebase);
         node.limit = super::transform_child(&self.limit, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8881,7 +9278,7 @@ impl super::Visit for math::UpperLimitObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.upper_limit_properties, visitor);
         walk.child(&self.e, visitor);
         walk.child(&self.limit, visitor);
@@ -8895,12 +9292,20 @@ impl WriteThrough for math::UpperLimitObject {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::UPPER_LIMIT_OBJECT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::UPPER_LIMIT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::upper_limit_object(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::UPPER_LIMIT_OBJECT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::UPPER_LIMIT_OBJECT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.upper_limit_properties, ctx)?;
         through.child(&self.e, ctx)?;
         through.child(&self.limit, ctx)?;
@@ -8937,10 +9342,10 @@ impl super::Transform for math::UpperLimitProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.control_properties =
             super::transform_child(&self.control_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8954,7 +9359,7 @@ impl super::Visit for math::UpperLimitProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.control_properties, visitor);
         walk.finish(visitor);
     }
@@ -8966,13 +9371,20 @@ impl WriteThrough for math::UpperLimitProperties {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::UPPER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::UPPER_LIMIT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::upper_limit_properties(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::UPPER_LIMIT_PROPERTIES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::UPPER_LIMIT_PROPERTIES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.control_properties, ctx)?;
         through.finish(ctx)
     }
@@ -9007,7 +9419,8 @@ impl super::Transform for math::UseDisplayMathDefaults {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9025,7 +9438,7 @@ impl super::Visit for math::UseDisplayMathDefaults {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9035,13 +9448,20 @@ impl WriteThrough for math::UseDisplayMathDefaults {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::USE_DISPLAY_MATH_DEFAULTS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::USE_DISPLAY_MATH_DEFAULTS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::use_display_math_defaults(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::USE_DISPLAY_MATH_DEFAULTS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::USE_DISPLAY_MATH_DEFAULTS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -9076,7 +9496,8 @@ impl super::Transform for math::VerticalJustification {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9090,7 +9511,7 @@ impl super::Visit for math::VerticalJustification {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9100,13 +9521,20 @@ impl WriteThrough for math::VerticalJustification {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::VERTICAL_JUSTIFICATION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &math::VERTICAL_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = math::write::vertical_justification(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &math::VERTICAL_JUSTIFICATION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &math::VERTICAL_JUSTIFICATION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -9141,7 +9569,8 @@ impl super::Transform for math::WrapIndent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9155,7 +9584,7 @@ impl super::Visit for math::WrapIndent {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9165,12 +9594,13 @@ impl WriteThrough for math::WrapIndent {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::WRAP_INDENT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::WRAP_INDENT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::wrap_indent(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::WRAP_INDENT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::WRAP_INDENT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }
@@ -9200,7 +9630,8 @@ impl super::Transform for math::WrapRight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -9214,7 +9645,7 @@ impl super::Visit for math::WrapRight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -9224,12 +9655,13 @@ impl WriteThrough for math::WrapRight {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &math::WRAP_RIGHT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &math::WRAP_RIGHT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = math::write::wrap_right(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &math::WRAP_RIGHT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &math::WRAP_RIGHT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.finish(ctx)
     }

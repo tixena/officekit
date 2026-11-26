@@ -227,7 +227,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct CNvGrpSpPrMirror {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub group_shape_locks: Option<Box<drawing::GroupShapeLocks>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -243,7 +243,7 @@ pub struct CNvPrMirror {
     pub id: Option<drawing::DrawingElementID>,
     pub name: Option<String>,
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -254,7 +254,7 @@ pub struct CNvSpPrMirror {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub shape_locks: Option<Box<drawing::ShapeLocks>>,
     pub tx_box: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -264,7 +264,7 @@ pub struct CNvSpPrMirror {
 pub struct DataModelExtMirror {
     pub min_ver: Option<String>,
     pub rel_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -273,7 +273,7 @@ pub struct DataModelExtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DrawingMirror {
     pub sp_tree: Box<super::SpTree>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -282,7 +282,7 @@ pub struct DrawingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -298,7 +298,7 @@ pub struct GrpSpMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub nv_grp_sp_pr: Box<super::NvGrpSpPr>,
     pub pr: Box<super::GrpSpPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -311,7 +311,7 @@ pub struct GrpSpPrMirror {
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub fill_properties_content: Option<Box<drawing::FillPropertiesContent>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_group_transform2d: Option<Box<drawing::XfrmGroupTransform2D>>,
 }
@@ -322,7 +322,7 @@ pub struct GrpSpPrMirror {
 pub struct NvGrpSpPrMirror {
     pub c: Box<super::CNvGrpSpPr>,
     pub c_nv_pr: Box<super::CNvPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -332,7 +332,7 @@ pub struct NvGrpSpPrMirror {
 pub struct NvSpPrMirror {
     pub c: Box<super::CNvSpPr>,
     pub c_nv_pr: Box<super::CNvPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -347,7 +347,7 @@ pub struct SpMirror {
     pub style: Option<Box<super::Style>>,
     pub tx_body: Option<Box<super::TxBody>>,
     pub tx_xfrm: Option<Box<super::TxXfrm>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -363,7 +363,7 @@ pub struct SpPrMirror {
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
@@ -376,7 +376,7 @@ pub struct SpTreeMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub grp_sp_pr: Box<super::GrpSpPr>,
     pub nv_grp_sp_pr: Box<super::NvGrpSpPr>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -388,7 +388,7 @@ pub struct StyleMirror {
     pub fill_reference: Box<drawing::FillReference>,
     pub font_reference: Box<drawing::FontReference>,
     pub line_reference: Box<drawing::LineReference>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -399,7 +399,7 @@ pub struct TxBodyMirror {
     pub properties: Box<drawing::BodyProperties>,
     pub text_list_styles: Option<Box<drawing::TextListStyles>>,
     pub text_paragraphs: Vec<drawing::TextParagraphs>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -412,7 +412,7 @@ pub struct TxXfrmMirror {
     pub flip_v: Option<String>,
     pub offset: Option<Box<drawing::Offset>>,
     pub rot: Option<drawing::Angle>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

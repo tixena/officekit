@@ -230,7 +230,7 @@ pub struct AuthorMirror {
     pub initials: Option<String>,
     pub name: Option<String>,
     pub provider_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub user_id: Option<String>,
 }
@@ -240,7 +240,7 @@ pub struct AuthorMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AuthorLstMirror {
     pub author: Vec<super::Author>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -266,7 +266,7 @@ pub struct CmMirror {
     pub tags: Option<String>,
     pub title: Option<String>,
     pub tx_body: Option<Box<super::TxBody>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -275,7 +275,7 @@ pub struct CmMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CmLstMirror {
     pub cm: Vec<super::Cm>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -284,7 +284,7 @@ pub struct CmLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentRelMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -293,7 +293,7 @@ pub struct CommentRelMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstCommentPropertiesExtensionListMirror {
     pub extension: Vec<presentation::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -302,7 +302,7 @@ pub struct ExtLstCommentPropertiesExtensionListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstExtensionListMirror {
     pub extension: Vec<presentation::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -310,7 +310,7 @@ pub struct ExtLstExtensionListMirror {
 #[rkyv(remote = super::Pos)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PosMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub x: Option<drawing::Coordinate>,
     pub y: Option<drawing::Coordinate>,
@@ -329,7 +329,7 @@ pub struct ReplyMirror {
     pub status: Option<super::CommentStatus>,
     pub tags: Option<String>,
     pub tx_body: Option<Box<super::TxBody>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -338,7 +338,7 @@ pub struct ReplyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ReplyLstMirror {
     pub reply: Vec<super::Reply>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -349,7 +349,7 @@ pub struct TxBodyMirror {
     pub properties: Box<drawing::BodyProperties>,
     pub text_list_styles: Option<Box<drawing::TextListStyles>>,
     pub text_paragraphs: Vec<drawing::TextParagraphs>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -357,7 +357,7 @@ pub struct TxBodyMirror {
 #[rkyv(remote = super::UnknownAnchor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnknownAnchorMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

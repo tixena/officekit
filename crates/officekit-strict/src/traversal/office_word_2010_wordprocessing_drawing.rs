@@ -233,7 +233,8 @@ impl super::Transform for office_word_2010_wordprocessing_drawing::PctHeight {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_word_2010_wordprocessing_drawing::PctHeight {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctHeight {
         let converted = super::converts(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_HEIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctHeight {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_HEIGHT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -318,7 +319,8 @@ impl super::Transform for office_word_2010_wordprocessing_drawing::PctPosHOffset
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -336,7 +338,7 @@ impl super::Visit for office_word_2010_wordprocessing_drawing::PctPosHOffset {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -349,7 +351,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctPosHOffset {
         let converted = super::converts(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_POS_H_OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -359,7 +361,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctPosHOffset {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_POS_H_OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -403,7 +405,8 @@ impl super::Transform for office_word_2010_wordprocessing_drawing::PctPosVOffset
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -421,7 +424,7 @@ impl super::Visit for office_word_2010_wordprocessing_drawing::PctPosVOffset {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -434,7 +437,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctPosVOffset {
         let converted = super::converts(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_POS_V_OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -444,7 +447,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctPosVOffset {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_POS_V_OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -488,7 +491,8 @@ impl super::Transform for office_word_2010_wordprocessing_drawing::PctWidth {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -506,7 +510,7 @@ impl super::Visit for office_word_2010_wordprocessing_drawing::PctWidth {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -519,7 +523,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctWidth {
         let converted = super::converts(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_WIDTH_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -529,7 +533,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::PctWidth {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::PCT_WIDTH_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -573,9 +577,9 @@ impl super::Transform for office_word_2010_wordprocessing_drawing::SizeRelH {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pct_width = super::transform_child(&self.pct_width, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -593,7 +597,7 @@ impl super::Visit for office_word_2010_wordprocessing_drawing::SizeRelH {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pct_width, visitor);
         walk.finish(visitor);
     }
@@ -608,7 +612,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::SizeRelH {
         let converted = super::converts(
             out,
             &office_word_2010_wordprocessing_drawing::SIZE_REL_H_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -618,7 +622,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::SizeRelH {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::SIZE_REL_H_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.relative_from);
         through.child(&self.pct_width, ctx)?;
@@ -663,9 +667,9 @@ impl super::Transform for office_word_2010_wordprocessing_drawing::SizeRelV {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.pct_height = super::transform_child(&self.pct_height, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -683,7 +687,7 @@ impl super::Visit for office_word_2010_wordprocessing_drawing::SizeRelV {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.pct_height, visitor);
         walk.finish(visitor);
     }
@@ -698,7 +702,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::SizeRelV {
         let converted = super::converts(
             out,
             &office_word_2010_wordprocessing_drawing::SIZE_REL_V_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -708,7 +712,7 @@ impl WriteThrough for office_word_2010_wordprocessing_drawing::SizeRelV {
         let mut through = super::Through::new(
             out,
             &office_word_2010_wordprocessing_drawing::SIZE_REL_V_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.relative_from);
         through.child(&self.pct_height, ctx)?;

@@ -233,12 +233,12 @@ impl super::Transform for office_drawing_2014_chart_ac::MultiLvlStrLit {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.point_count = super::transform_child(&self.point_count, ctx, &mut rebase);
         node.level = super::transform_child(&self.level, ctx, &mut rebase);
         node.chart_extensibility =
             super::transform_child(&self.chart_extensibility, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -256,7 +256,7 @@ impl super::Visit for office_drawing_2014_chart_ac::MultiLvlStrLit {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.point_count, visitor);
         walk.child(&self.level, visitor);
         walk.child(&self.chart_extensibility, visitor);
@@ -273,7 +273,7 @@ impl WriteThrough for office_drawing_2014_chart_ac::MultiLvlStrLit {
         let converted = super::converts(
             out,
             &office_drawing_2014_chart_ac::MULTI_LVL_STR_LIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2014_chart_ac::write::multi_lvl_str_lit(self, out.scope());
@@ -282,7 +282,7 @@ impl WriteThrough for office_drawing_2014_chart_ac::MultiLvlStrLit {
         let mut through = super::Through::new(
             out,
             &office_drawing_2014_chart_ac::MULTI_LVL_STR_LIT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.point_count, ctx)?;
         through.child(&self.level, ctx)?;

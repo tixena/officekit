@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Key)]
 #[rkyv(attr(non_exhaustive))]
 pub struct KeyMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -232,7 +232,7 @@ pub struct KeyMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PropsMirror {
     pub key: Box<super::Key>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: Box<super::Value>,
 }
@@ -241,7 +241,7 @@ pub struct PropsMirror {
 #[rkyv(remote = super::Value)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValueMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anim_pr(node: &super::AnimPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ANIM_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::ANIM_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.length);
     writer.attribute(2, &node.count);
@@ -238,8 +238,11 @@ pub fn anim_pr(node: &super::AnimPr, scope: &mut Scope) -> Element {
 /// Write a `EmbedAnim` as its element, `a3danim:embedAnim`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn embed_anim(node: &super::EmbedAnim, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EMBED_ANIM_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::EMBED_ANIM_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.anim_id);
     writer.child(&node.pr);
     writer.child(&node.ext_lst);
@@ -250,7 +253,7 @@ pub fn embed_anim(node: &super::EmbedAnim, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -258,8 +261,11 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `PosterFrame` as its element, `a3danim:posterFrame`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn poster_frame(node: &super::PosterFrame, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::POSTER_FRAME_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::POSTER_FRAME_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.anim_id);
     writer.attribute(1, &node.frame);
     writer.finish()

@@ -222,7 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `AssociatedXMLSchema` as its element, `ds:schemaRef`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn associated_xml_schema(node: &super::AssociatedXMLSchema, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::ASSOCIATED_XML_SCHEMA_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::ASSOCIATED_XML_SCHEMA_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.uri);
     writer.finish()
 }
@@ -236,7 +240,7 @@ pub fn custom_xml_data_properties(
     let mut writer = crate::Writer::new(
         scope,
         &super::CUSTOM_XML_DATA_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.item_id);
     writer.child(&node.set_of_associated_xml_schemas);
@@ -252,7 +256,7 @@ pub fn set_of_associated_xml_schemas(
     let mut writer = crate::Writer::new(
         scope,
         &super::SET_OF_ASSOCIATED_XML_SCHEMAS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.associated_xml_schema);
     writer.finish()

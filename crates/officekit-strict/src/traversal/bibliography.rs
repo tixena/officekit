@@ -233,7 +233,8 @@ impl super::Transform for bibliography::AbbreviatedCaseNumber {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for bibliography::AbbreviatedCaseNumber {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for bibliography::AbbreviatedCaseNumber {
         let converted = super::converts(
             out,
             &bibliography::ABBREVIATED_CASE_NUMBER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = bibliography::write::abbreviated_case_number(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for bibliography::AbbreviatedCaseNumber {
         let mut through = super::Through::new(
             out,
             &bibliography::ABBREVIATED_CASE_NUMBER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -313,7 +314,8 @@ impl super::Transform for bibliography::AlbumTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -331,7 +333,7 @@ impl super::Visit for bibliography::AlbumTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -341,12 +343,20 @@ impl WriteThrough for bibliography::AlbumTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::ALBUM_TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::ALBUM_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::album_title(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::ALBUM_TITLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::ALBUM_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -381,9 +391,9 @@ impl super::Transform for bibliography::Artist {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -397,7 +407,7 @@ impl super::Visit for bibliography::Artist {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -409,12 +419,13 @@ impl WriteThrough for bibliography::Artist {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::ARTIST_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::ARTIST_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::artist(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::ARTIST_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::ARTIST_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -449,9 +460,9 @@ impl super::Transform for bibliography::Author {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -465,7 +476,7 @@ impl super::Visit for bibliography::Author {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -477,12 +488,13 @@ impl WriteThrough for bibliography::Author {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::AUTHOR_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::AUTHOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::author(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::AUTHOR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::AUTHOR_SHAPE, self.unknown.as_deref());
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -517,9 +529,9 @@ impl super::Transform for bibliography::BookAuthor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -537,7 +549,7 @@ impl super::Visit for bibliography::BookAuthor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -549,12 +561,20 @@ impl WriteThrough for bibliography::BookAuthor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::BOOK_AUTHOR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::BOOK_AUTHOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::book_author(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::BOOK_AUTHOR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::BOOK_AUTHOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -589,7 +609,8 @@ impl super::Transform for bibliography::BookTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -607,7 +628,7 @@ impl super::Visit for bibliography::BookTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -617,12 +638,20 @@ impl WriteThrough for bibliography::BookTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::BOOK_TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::BOOK_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::book_title(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::BOOK_TITLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::BOOK_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -661,7 +690,8 @@ impl super::Transform for bibliography::BroadcastTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -679,7 +709,7 @@ impl super::Visit for bibliography::BroadcastTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -689,13 +719,20 @@ impl WriteThrough for bibliography::BroadcastTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::BROADCAST_TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::BROADCAST_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::broadcast_title(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::BROADCAST_TITLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::BROADCAST_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -734,7 +771,8 @@ impl super::Transform for bibliography::Broadcaster {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -752,7 +790,7 @@ impl super::Visit for bibliography::Broadcaster {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -762,12 +800,20 @@ impl WriteThrough for bibliography::Broadcaster {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::BROADCASTER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::BROADCASTER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::broadcaster(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::BROADCASTER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::BROADCASTER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -802,7 +848,8 @@ impl super::Transform for bibliography::CaseNumber {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -820,7 +867,7 @@ impl super::Visit for bibliography::CaseNumber {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -830,12 +877,20 @@ impl WriteThrough for bibliography::CaseNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::CASE_NUMBER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::CASE_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::case_number(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::CASE_NUMBER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::CASE_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -874,7 +929,8 @@ impl super::Transform for bibliography::ChapterNumber {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -892,7 +948,7 @@ impl super::Visit for bibliography::ChapterNumber {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -902,13 +958,20 @@ impl WriteThrough for bibliography::ChapterNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::CHAPTER_NUMBER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::CHAPTER_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::chapter_number(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::CHAPTER_NUMBER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::CHAPTER_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -947,7 +1010,8 @@ impl super::Transform for bibliography::City {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -961,7 +1025,7 @@ impl super::Visit for bibliography::City {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -971,12 +1035,13 @@ impl WriteThrough for bibliography::City {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::CITY_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::CITY_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::city(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::CITY_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::CITY_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -1011,7 +1076,8 @@ impl super::Transform for bibliography::Comments {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1029,7 +1095,7 @@ impl super::Visit for bibliography::Comments {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1039,12 +1105,14 @@ impl WriteThrough for bibliography::Comments {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::COMMENTS_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::COMMENTS_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::comments(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::COMMENTS_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::COMMENTS_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -1079,9 +1147,9 @@ impl super::Transform for bibliography::Compiler {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1099,7 +1167,7 @@ impl super::Visit for bibliography::Compiler {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -1111,12 +1179,14 @@ impl WriteThrough for bibliography::Compiler {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::COMPILER_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::COMPILER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::compiler(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::COMPILER_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::COMPILER_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -1151,9 +1221,9 @@ impl super::Transform for bibliography::Composer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1171,7 +1241,7 @@ impl super::Visit for bibliography::Composer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -1183,12 +1253,14 @@ impl WriteThrough for bibliography::Composer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::COMPOSER_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::COMPOSER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::composer(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::COMPOSER_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::COMPOSER_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -1223,9 +1295,9 @@ impl super::Transform for bibliography::Conductor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1243,7 +1315,7 @@ impl super::Visit for bibliography::Conductor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -1255,12 +1327,14 @@ impl WriteThrough for bibliography::Conductor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::CONDUCTOR_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::CONDUCTOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::conductor(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::CONDUCTOR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::CONDUCTOR_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -1299,7 +1373,8 @@ impl super::Transform for bibliography::ConferenceOrProceedingsName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1317,7 +1392,7 @@ impl super::Visit for bibliography::ConferenceOrProceedingsName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1330,7 +1405,7 @@ impl WriteThrough for bibliography::ConferenceOrProceedingsName {
         let converted = super::converts(
             out,
             &bibliography::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = bibliography::write::conference_or_proceedings_name(self, out.scope());
@@ -1339,7 +1414,7 @@ impl WriteThrough for bibliography::ConferenceOrProceedingsName {
         let mut through = super::Through::new(
             out,
             &bibliography::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1383,9 +1458,9 @@ impl super::Transform for bibliography::ContributorsList {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1403,7 +1478,7 @@ impl super::Visit for bibliography::ContributorsList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1415,13 +1490,20 @@ impl WriteThrough for bibliography::ContributorsList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::CONTRIBUTORS_LIST_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::CONTRIBUTORS_LIST_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::contributors_list(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::CONTRIBUTORS_LIST_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::CONTRIBUTORS_LIST_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1680,7 +1762,8 @@ impl super::Transform for bibliography::CorporateAuthor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1698,7 +1781,7 @@ impl super::Visit for bibliography::CorporateAuthor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1708,13 +1791,20 @@ impl WriteThrough for bibliography::CorporateAuthor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::CORPORATE_AUTHOR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::CORPORATE_AUTHOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::corporate_author(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::CORPORATE_AUTHOR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::CORPORATE_AUTHOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -1753,9 +1843,9 @@ impl super::Transform for bibliography::Counsel {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1769,7 +1859,7 @@ impl super::Visit for bibliography::Counsel {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -1781,12 +1871,13 @@ impl WriteThrough for bibliography::Counsel {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::COUNSEL_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::COUNSEL_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::counsel(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::COUNSEL_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::COUNSEL_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -1825,7 +1916,8 @@ impl super::Transform for bibliography::CountryOrRegion {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1843,7 +1935,7 @@ impl super::Visit for bibliography::CountryOrRegion {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1853,13 +1945,20 @@ impl WriteThrough for bibliography::CountryOrRegion {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::COUNTRY_OR_REGION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::COUNTRY_OR_REGION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::country_or_region(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::COUNTRY_OR_REGION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::COUNTRY_OR_REGION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -1898,7 +1997,8 @@ impl super::Transform for bibliography::Court {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1912,7 +2012,7 @@ impl super::Visit for bibliography::Court {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1922,12 +2022,13 @@ impl WriteThrough for bibliography::Court {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::COURT_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::COURT_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::court(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::COURT_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::COURT_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -1962,7 +2063,8 @@ impl super::Transform for bibliography::Day {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1976,7 +2078,7 @@ impl super::Visit for bibliography::Day {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1986,12 +2088,13 @@ impl WriteThrough for bibliography::Day {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::DAY_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::DAY_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::day(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::DAY_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::DAY_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2030,7 +2133,8 @@ impl super::Transform for bibliography::DayAccessed {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2048,7 +2152,7 @@ impl super::Visit for bibliography::DayAccessed {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2058,13 +2162,20 @@ impl WriteThrough for bibliography::DayAccessed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::DAY_ACCESSED_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::DAY_ACCESSED_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::day_accessed(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::DAY_ACCESSED_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::DAY_ACCESSED_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2103,7 +2214,8 @@ impl super::Transform for bibliography::Department {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2121,7 +2233,7 @@ impl super::Visit for bibliography::Department {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2131,12 +2243,20 @@ impl WriteThrough for bibliography::Department {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::DEPARTMENT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::DEPARTMENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::department(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::DEPARTMENT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::DEPARTMENT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2171,9 +2291,9 @@ impl super::Transform for bibliography::Director {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2191,7 +2311,7 @@ impl super::Visit for bibliography::Director {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -2203,12 +2323,14 @@ impl WriteThrough for bibliography::Director {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::DIRECTOR_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::DIRECTOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::director(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::DIRECTOR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::DIRECTOR_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -2243,7 +2365,8 @@ impl super::Transform for bibliography::Distributor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2261,7 +2384,7 @@ impl super::Visit for bibliography::Distributor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2271,12 +2394,20 @@ impl WriteThrough for bibliography::Distributor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::DISTRIBUTOR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::DISTRIBUTOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::distributor(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::DISTRIBUTOR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::DISTRIBUTOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2311,9 +2442,9 @@ impl super::Transform for bibliography::Editor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2327,7 +2458,7 @@ impl super::Visit for bibliography::Editor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -2339,12 +2470,13 @@ impl WriteThrough for bibliography::Editor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::EDITOR_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::EDITOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::editor(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::EDITOR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::EDITOR_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -2383,7 +2515,8 @@ impl super::Transform for bibliography::EditorEdition {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2401,7 +2534,7 @@ impl super::Visit for bibliography::EditorEdition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2411,13 +2544,20 @@ impl WriteThrough for bibliography::EditorEdition {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::EDITOR_EDITION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::EDITOR_EDITION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::editor_edition(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::EDITOR_EDITION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::EDITOR_EDITION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2456,7 +2596,8 @@ impl super::Transform for bibliography::Guid {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2470,7 +2611,7 @@ impl super::Visit for bibliography::Guid {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2480,12 +2621,13 @@ impl WriteThrough for bibliography::Guid {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::GUID_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::GUID_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::guid(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::GUID_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::GUID_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2520,7 +2662,8 @@ impl super::Transform for bibliography::Institution {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2538,7 +2681,7 @@ impl super::Visit for bibliography::Institution {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2548,12 +2691,20 @@ impl WriteThrough for bibliography::Institution {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::INSTITUTION_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::INSTITUTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::institution(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::INSTITUTION_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::INSTITUTION_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2592,7 +2743,8 @@ impl super::Transform for bibliography::InternetSiteTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2610,7 +2762,7 @@ impl super::Visit for bibliography::InternetSiteTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2620,14 +2772,20 @@ impl WriteThrough for bibliography::InternetSiteTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &bibliography::INTERNET_SITE_TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::INTERNET_SITE_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::internet_site_title(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::INTERNET_SITE_TITLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::INTERNET_SITE_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2666,9 +2824,9 @@ impl super::Transform for bibliography::Interviewee {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2686,7 +2844,7 @@ impl super::Visit for bibliography::Interviewee {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -2698,12 +2856,20 @@ impl WriteThrough for bibliography::Interviewee {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::INTERVIEWEE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::INTERVIEWEE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::interviewee(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::INTERVIEWEE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::INTERVIEWEE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -2738,9 +2904,9 @@ impl super::Transform for bibliography::Interviewer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2758,7 +2924,7 @@ impl super::Visit for bibliography::Interviewer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -2770,12 +2936,20 @@ impl WriteThrough for bibliography::Interviewer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::INTERVIEWER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::INTERVIEWER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::interviewer(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::INTERVIEWER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::INTERVIEWER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -2810,9 +2984,9 @@ impl super::Transform for bibliography::Inventor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2830,7 +3004,7 @@ impl super::Visit for bibliography::Inventor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -2842,12 +3016,14 @@ impl WriteThrough for bibliography::Inventor {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::INVENTOR_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::INVENTOR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::inventor(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::INVENTOR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::INVENTOR_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -2882,7 +3058,8 @@ impl super::Transform for bibliography::Issue {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2896,7 +3073,7 @@ impl super::Visit for bibliography::Issue {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2906,12 +3083,13 @@ impl WriteThrough for bibliography::Issue {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::ISSUE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::ISSUE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::issue(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::ISSUE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::ISSUE_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -2950,7 +3128,8 @@ impl super::Transform for bibliography::JournalName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2968,7 +3147,7 @@ impl super::Visit for bibliography::JournalName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2978,13 +3157,20 @@ impl WriteThrough for bibliography::JournalName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::JOURNAL_NAME_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::JOURNAL_NAME_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::journal_name(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::JOURNAL_NAME_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::JOURNAL_NAME_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3023,7 +3209,8 @@ impl super::Transform for bibliography::LocaleID {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3041,7 +3228,7 @@ impl super::Visit for bibliography::LocaleID {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3051,12 +3238,14 @@ impl WriteThrough for bibliography::LocaleID {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::LOCALE_ID_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::LOCALE_ID_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::locale_id(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::LOCALE_ID_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::LOCALE_ID_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3091,7 +3280,8 @@ impl super::Transform for bibliography::Medium {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3105,7 +3295,7 @@ impl super::Visit for bibliography::Medium {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3115,12 +3305,13 @@ impl WriteThrough for bibliography::Medium {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::MEDIUM_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::MEDIUM_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::medium(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::MEDIUM_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::MEDIUM_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3155,7 +3346,8 @@ impl super::Transform for bibliography::Month {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3169,7 +3361,7 @@ impl super::Visit for bibliography::Month {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3179,12 +3371,13 @@ impl WriteThrough for bibliography::Month {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::MONTH_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::MONTH_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::month(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::MONTH_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::MONTH_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3223,7 +3416,8 @@ impl super::Transform for bibliography::MonthAccessed {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3241,7 +3435,7 @@ impl super::Visit for bibliography::MonthAccessed {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3251,13 +3445,20 @@ impl WriteThrough for bibliography::MonthAccessed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::MONTH_ACCESSED_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::MONTH_ACCESSED_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::month_accessed(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::MONTH_ACCESSED_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::MONTH_ACCESSED_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3296,9 +3497,9 @@ impl super::Transform for bibliography::NameList {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.person = super::transform_child(&self.person, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3316,7 +3517,7 @@ impl super::Visit for bibliography::NameList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.person, visitor);
         walk.finish(visitor);
     }
@@ -3328,12 +3529,14 @@ impl WriteThrough for bibliography::NameList {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::NAME_LIST_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::NAME_LIST_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::name_list(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::NAME_LIST_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::NAME_LIST_SHAPE, self.unknown.as_deref());
         through.child(&self.person, ctx)?;
         through.finish(ctx)
     }
@@ -3469,7 +3672,8 @@ impl super::Transform for bibliography::NumberOfVolumes {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3487,7 +3691,7 @@ impl super::Visit for bibliography::NumberOfVolumes {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3497,13 +3701,20 @@ impl WriteThrough for bibliography::NumberOfVolumes {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::NUMBER_OF_VOLUMES_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::NUMBER_OF_VOLUMES_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::number_of_volumes(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::NUMBER_OF_VOLUMES_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::NUMBER_OF_VOLUMES_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3542,7 +3753,8 @@ impl super::Transform for bibliography::Pages {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3556,7 +3768,7 @@ impl super::Visit for bibliography::Pages {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3566,12 +3778,13 @@ impl WriteThrough for bibliography::Pages {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PAGES_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::PAGES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::pages(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::PAGES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::PAGES_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3610,7 +3823,8 @@ impl super::Transform for bibliography::PatentNumber {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3628,7 +3842,7 @@ impl super::Visit for bibliography::PatentNumber {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3638,13 +3852,20 @@ impl WriteThrough for bibliography::PatentNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PATENT_NUMBER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::PATENT_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::patent_number(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::PATENT_NUMBER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::PATENT_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3683,7 +3904,8 @@ impl super::Transform for bibliography::PatentType {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3701,7 +3923,7 @@ impl super::Visit for bibliography::PatentType {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3711,12 +3933,20 @@ impl WriteThrough for bibliography::PatentType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PATENT_TYPE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::PATENT_TYPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::patent_type(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::PATENT_TYPE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::PATENT_TYPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3751,9 +3981,9 @@ impl super::Transform for bibliography::Performer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3771,7 +4001,7 @@ impl super::Visit for bibliography::Performer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3783,12 +4013,14 @@ impl WriteThrough for bibliography::Performer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PERFORMER_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::PERFORMER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::performer(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::PERFORMER_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::PERFORMER_SHAPE, self.unknown.as_deref());
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3827,7 +4059,8 @@ impl super::Transform for bibliography::PeriodicalTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3845,7 +4078,7 @@ impl super::Visit for bibliography::PeriodicalTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3855,13 +4088,20 @@ impl WriteThrough for bibliography::PeriodicalTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PERIODICAL_TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::PERIODICAL_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::periodical_title(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::PERIODICAL_TITLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::PERIODICAL_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -3900,14 +4140,14 @@ impl super::Transform for bibliography::Person {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.persons_last_or_family_name =
             super::transform_child(&self.persons_last_or_family_name, ctx, &mut rebase);
         node.persons_first_or_given_name =
             super::transform_child(&self.persons_first_or_given_name, ctx, &mut rebase);
         node.persons_middle_or_other_name =
             super::transform_child(&self.persons_middle_or_other_name, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3921,7 +4161,7 @@ impl super::Visit for bibliography::Person {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.persons_last_or_family_name, visitor);
         walk.child(&self.persons_first_or_given_name, visitor);
         walk.child(&self.persons_middle_or_other_name, visitor);
@@ -3935,12 +4175,13 @@ impl WriteThrough for bibliography::Person {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PERSON_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::PERSON_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::person(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::PERSON_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::PERSON_SHAPE, self.unknown.as_deref());
         through.child(&self.persons_last_or_family_name, ctx)?;
         through.child(&self.persons_first_or_given_name, ctx)?;
         through.child(&self.persons_middle_or_other_name, ctx)?;
@@ -3981,7 +4222,8 @@ impl super::Transform for bibliography::PersonsFirstOrGivenName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3999,7 +4241,7 @@ impl super::Visit for bibliography::PersonsFirstOrGivenName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4012,7 +4254,7 @@ impl WriteThrough for bibliography::PersonsFirstOrGivenName {
         let converted = super::converts(
             out,
             &bibliography::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = bibliography::write::persons_first_or_given_name(self, out.scope());
@@ -4021,7 +4263,7 @@ impl WriteThrough for bibliography::PersonsFirstOrGivenName {
         let mut through = super::Through::new(
             out,
             &bibliography::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4065,7 +4307,8 @@ impl super::Transform for bibliography::PersonsLastOrFamilyName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4083,7 +4326,7 @@ impl super::Visit for bibliography::PersonsLastOrFamilyName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4096,7 +4339,7 @@ impl WriteThrough for bibliography::PersonsLastOrFamilyName {
         let converted = super::converts(
             out,
             &bibliography::PERSONS_LAST_OR_FAMILY_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = bibliography::write::persons_last_or_family_name(self, out.scope());
@@ -4105,7 +4348,7 @@ impl WriteThrough for bibliography::PersonsLastOrFamilyName {
         let mut through = super::Through::new(
             out,
             &bibliography::PERSONS_LAST_OR_FAMILY_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4149,7 +4392,8 @@ impl super::Transform for bibliography::PersonsMiddleOrOtherName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4167,7 +4411,7 @@ impl super::Visit for bibliography::PersonsMiddleOrOtherName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4180,7 +4424,7 @@ impl WriteThrough for bibliography::PersonsMiddleOrOtherName {
         let converted = super::converts(
             out,
             &bibliography::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = bibliography::write::persons_middle_or_other_name(self, out.scope());
@@ -4189,7 +4433,7 @@ impl WriteThrough for bibliography::PersonsMiddleOrOtherName {
         let mut through = super::Through::new(
             out,
             &bibliography::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -4233,9 +4477,9 @@ impl super::Transform for bibliography::ProducerName {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.list = super::transform_child(&self.list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4253,7 +4497,7 @@ impl super::Visit for bibliography::ProducerName {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.list, visitor);
         walk.finish(visitor);
     }
@@ -4265,13 +4509,20 @@ impl WriteThrough for bibliography::ProducerName {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PRODUCER_NAME_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::PRODUCER_NAME_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::producer_name(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::PRODUCER_NAME_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::PRODUCER_NAME_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.list, ctx)?;
         through.finish(ctx)
     }
@@ -4314,7 +4565,8 @@ impl super::Transform for bibliography::ProductionCompany {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4332,7 +4584,7 @@ impl super::Visit for bibliography::ProductionCompany {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4342,14 +4594,20 @@ impl WriteThrough for bibliography::ProductionCompany {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &bibliography::PRODUCTION_COMPANY_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::PRODUCTION_COMPANY_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::production_company(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::PRODUCTION_COMPANY_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::PRODUCTION_COMPANY_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4392,7 +4650,8 @@ impl super::Transform for bibliography::PublicationTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4410,7 +4669,7 @@ impl super::Visit for bibliography::PublicationTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4420,13 +4679,20 @@ impl WriteThrough for bibliography::PublicationTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PUBLICATION_TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::PUBLICATION_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::publication_title(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::PUBLICATION_TITLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::PUBLICATION_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4465,7 +4731,8 @@ impl super::Transform for bibliography::Publisher {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4483,7 +4750,7 @@ impl super::Visit for bibliography::Publisher {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4493,12 +4760,14 @@ impl WriteThrough for bibliography::Publisher {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::PUBLISHER_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::PUBLISHER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::publisher(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::PUBLISHER_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::PUBLISHER_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4537,7 +4806,8 @@ impl super::Transform for bibliography::RecordingNumber {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4555,7 +4825,7 @@ impl super::Visit for bibliography::RecordingNumber {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4565,13 +4835,20 @@ impl WriteThrough for bibliography::RecordingNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::RECORDING_NUMBER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::RECORDING_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::recording_number(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::RECORDING_NUMBER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::RECORDING_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4614,7 +4891,8 @@ impl super::Transform for bibliography::ReferenceOrder {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4632,7 +4910,7 @@ impl super::Visit for bibliography::ReferenceOrder {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4642,13 +4920,20 @@ impl WriteThrough for bibliography::ReferenceOrder {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::REFERENCE_ORDER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::REFERENCE_ORDER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::reference_order(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::REFERENCE_ORDER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::REFERENCE_ORDER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4687,7 +4972,8 @@ impl super::Transform for bibliography::Reporter {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4705,7 +4991,7 @@ impl super::Visit for bibliography::Reporter {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4715,12 +5001,14 @@ impl WriteThrough for bibliography::Reporter {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::REPORTER_SHAPE, &self.unknown);
+        let converted =
+            super::converts(out, &bibliography::REPORTER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::reporter(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::REPORTER_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::REPORTER_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4755,7 +5043,8 @@ impl super::Transform for bibliography::ShortTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4773,7 +5062,7 @@ impl super::Visit for bibliography::ShortTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4783,12 +5072,20 @@ impl WriteThrough for bibliography::ShortTitle {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::SHORT_TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::SHORT_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::short_title(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::SHORT_TITLE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::SHORT_TITLE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -4823,9 +5120,9 @@ impl super::Transform for bibliography::Source {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4839,7 +5136,7 @@ impl super::Visit for bibliography::Source {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -4851,12 +5148,13 @@ impl WriteThrough for bibliography::Source {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::SOURCE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::SOURCE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::source(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::SOURCE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::SOURCE_SHAPE, self.unknown.as_deref());
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5001,7 +5299,8 @@ impl super::Transform for bibliography::SourceType {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5019,7 +5318,7 @@ impl super::Visit for bibliography::SourceType {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5029,12 +5328,20 @@ impl WriteThrough for bibliography::SourceType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::SOURCE_TYPE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::SOURCE_TYPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::source_type(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::SOURCE_TYPE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::SOURCE_TYPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5069,9 +5376,9 @@ impl super::Transform for bibliography::Sources {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.source = super::transform_child(&self.source, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5085,7 +5392,7 @@ impl super::Visit for bibliography::Sources {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.source, visitor);
         walk.finish(visitor);
     }
@@ -5097,12 +5404,13 @@ impl WriteThrough for bibliography::Sources {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::SOURCES_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::SOURCES_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::sources(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::SOURCES_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::SOURCES_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.selected_style);
         through.attribute(1, &self.style_name);
         through.attribute(2, &self.uri);
@@ -5144,7 +5452,8 @@ impl super::Transform for bibliography::StandardNumber {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5162,7 +5471,7 @@ impl super::Visit for bibliography::StandardNumber {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5172,13 +5481,20 @@ impl WriteThrough for bibliography::StandardNumber {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::STANDARD_NUMBER_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::STANDARD_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::standard_number(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::STANDARD_NUMBER_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::STANDARD_NUMBER_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5221,7 +5537,8 @@ impl super::Transform for bibliography::StateOrProvince {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5239,7 +5556,7 @@ impl super::Visit for bibliography::StateOrProvince {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5249,13 +5566,20 @@ impl WriteThrough for bibliography::StateOrProvince {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::STATE_OR_PROVINCE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::STATE_OR_PROVINCE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::state_or_province(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::STATE_OR_PROVINCE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::STATE_OR_PROVINCE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5294,7 +5618,8 @@ impl super::Transform for bibliography::Station {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5308,7 +5633,7 @@ impl super::Visit for bibliography::Station {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5318,12 +5643,13 @@ impl WriteThrough for bibliography::Station {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::STATION_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::STATION_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::station(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::STATION_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::STATION_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5358,7 +5684,8 @@ impl super::Transform for bibliography::Tag {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5372,7 +5699,7 @@ impl super::Visit for bibliography::Tag {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5382,12 +5709,13 @@ impl WriteThrough for bibliography::Tag {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::TAG_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::TAG_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::tag(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::TAG_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::TAG_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5422,7 +5750,8 @@ impl super::Transform for bibliography::Theater {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5436,7 +5765,7 @@ impl super::Visit for bibliography::Theater {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5446,12 +5775,13 @@ impl WriteThrough for bibliography::Theater {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::THEATER_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::THEATER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::theater(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::THEATER_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::THEATER_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5486,7 +5816,8 @@ impl super::Transform for bibliography::ThesisType {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5504,7 +5835,7 @@ impl super::Visit for bibliography::ThesisType {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5514,12 +5845,20 @@ impl WriteThrough for bibliography::ThesisType {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::THESIS_TYPE_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::THESIS_TYPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::thesis_type(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::THESIS_TYPE_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::THESIS_TYPE_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5554,7 +5893,8 @@ impl super::Transform for bibliography::Title {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5568,7 +5908,7 @@ impl super::Visit for bibliography::Title {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5578,12 +5918,13 @@ impl WriteThrough for bibliography::Title {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::TITLE_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::TITLE_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::title(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::TITLE_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::TITLE_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5618,9 +5959,9 @@ impl super::Transform for bibliography::Translator {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5638,7 +5979,7 @@ impl super::Visit for bibliography::Translator {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -5650,12 +5991,20 @@ impl WriteThrough for bibliography::Translator {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::TRANSLATOR_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::TRANSLATOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::translator(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::TRANSLATOR_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::TRANSLATOR_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -5690,7 +6039,8 @@ impl super::Transform for bibliography::Url {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5704,7 +6054,7 @@ impl super::Visit for bibliography::Url {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5714,12 +6064,13 @@ impl WriteThrough for bibliography::Url {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::URL_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::URL_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::url(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::URL_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::URL_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5754,7 +6105,8 @@ impl super::Transform for bibliography::Version {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5768,7 +6120,7 @@ impl super::Visit for bibliography::Version {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5778,12 +6130,13 @@ impl WriteThrough for bibliography::Version {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::VERSION_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::VERSION_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::version(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::VERSION_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::VERSION_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5818,7 +6171,8 @@ impl super::Transform for bibliography::Volume {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5832,7 +6186,7 @@ impl super::Visit for bibliography::Volume {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5842,12 +6196,13 @@ impl WriteThrough for bibliography::Volume {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::VOLUME_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::VOLUME_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::volume(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::VOLUME_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::VOLUME_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -5882,9 +6237,9 @@ impl super::Transform for bibliography::Writer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.name_list = super::transform_child(&self.name_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5898,7 +6253,7 @@ impl super::Visit for bibliography::Writer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.name_list, visitor);
         walk.finish(visitor);
     }
@@ -5910,12 +6265,13 @@ impl WriteThrough for bibliography::Writer {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::WRITER_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::WRITER_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::writer(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::WRITER_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::WRITER_SHAPE, self.unknown.as_deref());
         through.child(&self.name_list, ctx)?;
         through.finish(ctx)
     }
@@ -5950,7 +6306,8 @@ impl super::Transform for bibliography::Year {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5964,7 +6321,7 @@ impl super::Visit for bibliography::Year {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5974,12 +6331,13 @@ impl WriteThrough for bibliography::Year {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::YEAR_SHAPE, &self.unknown);
+        let converted = super::converts(out, &bibliography::YEAR_SHAPE, self.unknown.as_deref());
         if converted {
             let element = bibliography::write::year(self, out.scope());
             return out.converted(element);
         }
-        let mut through = super::Through::new(out, &bibliography::YEAR_SHAPE, &self.unknown);
+        let mut through =
+            super::Through::new(out, &bibliography::YEAR_SHAPE, self.unknown.as_deref());
         through.text(&self.value)?;
         through.finish(ctx)
     }
@@ -6018,7 +6376,8 @@ impl super::Transform for bibliography::YearAccessed {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6036,7 +6395,7 @@ impl super::Visit for bibliography::YearAccessed {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6046,13 +6405,20 @@ impl WriteThrough for bibliography::YearAccessed {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &bibliography::YEAR_ACCESSED_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &bibliography::YEAR_ACCESSED_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = bibliography::write::year_accessed(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &bibliography::YEAR_ACCESSED_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &bibliography::YEAR_ACCESSED_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.text(&self.value)?;
         through.finish(ctx)
     }

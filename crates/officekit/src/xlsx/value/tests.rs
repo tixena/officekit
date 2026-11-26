@@ -37,14 +37,14 @@ fn cell(kind: Option<&str>, value: Option<&str>) -> Cell {
 /// A string item holding the plain text `plain`, when given, then `runs`.
 fn item(plain: Option<&str>, runs: Vec<RichTextRun>) -> StringItem {
     let mut node = StringItem::default();
-    node.text = plain.map(text);
+    node.text = plain.map(|value| Box::new(text(value)));
     node.rich_text_run = runs;
     node
 }
 
 fn rich(value: &str, properties: Option<RunProperties>) -> RichTextRun {
     let mut node = RichTextRun::default();
-    node.text = text(value);
+    node.text = Box::new(text(value));
     node.properties = properties.map(Box::new);
     node
 }
@@ -55,10 +55,10 @@ fn table(items: Vec<StringItem>) -> SharedStringTable {
     root
 }
 
-fn text(value: &str) -> Box<Text> {
+fn text(value: &str) -> Text {
     let mut node = Text::default();
     node.value = value.to_owned();
-    Box::new(node)
+    node
 }
 
 fn three() -> SharedStrings {
@@ -170,7 +170,7 @@ fn a_string_gives_its_text_then_its_runs_and_nothing_of_a_phonetic_run() {
         vec![rich("one ", None), rich("two", Some(bold()))],
     );
     let mut phonetic = PhoneticRun::default();
-    phonetic.text = text("reading");
+    phonetic.text = Box::new(text("reading"));
     string.phonetic_run.push(phonetic);
     string.phonetic_properties = Some(Box::new(PhoneticProperties::default()));
     let strings = SharedStrings::new(Some(&table(vec![string])));
@@ -257,7 +257,7 @@ fn a_string_in_the_cell_is_read_from_its_own_string() {
     let strings = SharedStrings::default();
     let mut inline = cell(Some("inlineStr"), None);
     let mut own = RichTextInline::default();
-    own.text = Some(text("inline"));
+    own.text = Some(Box::new(text("inline")));
     inline.rich_text_inline = Some(Box::new(own));
     assert_eq!(
         content(&inline, &strings),

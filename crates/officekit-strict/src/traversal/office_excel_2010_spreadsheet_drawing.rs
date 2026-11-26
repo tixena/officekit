@@ -233,10 +233,10 @@ impl super::Transform for office_excel_2010_spreadsheet_drawing::CNvContentPartP
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.cp_locks = super::transform_child(&self.cp_locks, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -254,7 +254,7 @@ impl super::Visit for office_excel_2010_spreadsheet_drawing::CNvContentPartPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.cp_locks, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -270,7 +270,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::CNvContentPartPr {
         let converted = super::converts(
             out,
             &office_excel_2010_spreadsheet_drawing::C_NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_excel_2010_spreadsheet_drawing::write::c_nv_content_part_pr(
@@ -282,7 +282,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::CNvContentPartPr {
         let mut through = super::Through::new(
             out,
             &office_excel_2010_spreadsheet_drawing::C_NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.is_comment);
         through.child(&self.cp_locks, ctx)?;
@@ -328,12 +328,12 @@ impl super::Transform for office_excel_2010_spreadsheet_drawing::CNvPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.click_hyperlink = super::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             super::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -351,7 +351,7 @@ impl super::Visit for office_excel_2010_spreadsheet_drawing::CNvPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.click_hyperlink, visitor);
         walk.child(&self.hyperlink_for_hover, visitor);
         walk.child(&self.extension_list, visitor);
@@ -368,7 +368,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::CNvPr {
         let converted = super::converts(
             out,
             &office_excel_2010_spreadsheet_drawing::C_NV_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_excel_2010_spreadsheet_drawing::write::c_nv_pr(self, out.scope());
@@ -377,7 +377,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::CNvPr {
         let mut through = super::Through::new(
             out,
             &office_excel_2010_spreadsheet_drawing::C_NV_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.name);
@@ -428,13 +428,13 @@ impl super::Transform for office_excel_2010_spreadsheet_drawing::ContentPart {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.nv_content_part_pr =
             super::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
         node.nv_pr = super::transform_child(&self.nv_pr, ctx, &mut rebase);
         node.xfrm = super::transform_child(&self.xfrm, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -452,7 +452,7 @@ impl super::Visit for office_excel_2010_spreadsheet_drawing::ContentPart {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.nv_content_part_pr, visitor);
         walk.child(&self.nv_pr, visitor);
         walk.child(&self.xfrm, visitor);
@@ -470,7 +470,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::ContentPart {
         let converted = super::converts(
             out,
             &office_excel_2010_spreadsheet_drawing::CONTENT_PART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -480,7 +480,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::ContentPart {
         let mut through = super::Through::new(
             out,
             &office_excel_2010_spreadsheet_drawing::CONTENT_PART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.bw_mode);
@@ -529,9 +529,9 @@ impl super::Transform for office_excel_2010_spreadsheet_drawing::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -549,7 +549,7 @@ impl super::Visit for office_excel_2010_spreadsheet_drawing::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -564,7 +564,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::ExtLst {
         let converted = super::converts(
             out,
             &office_excel_2010_spreadsheet_drawing::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_excel_2010_spreadsheet_drawing::write::ext_lst(self, out.scope());
@@ -573,7 +573,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_excel_2010_spreadsheet_drawing::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -617,10 +617,10 @@ impl super::Transform for office_excel_2010_spreadsheet_drawing::NvContentPartPr
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.c_nv_pr = super::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         node.c = super::transform_child(&self.c, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -638,7 +638,7 @@ impl super::Visit for office_excel_2010_spreadsheet_drawing::NvContentPartPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.c_nv_pr, visitor);
         walk.child(&self.c, visitor);
         walk.finish(visitor);
@@ -654,7 +654,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::NvContentPartPr {
         let converted = super::converts(
             out,
             &office_excel_2010_spreadsheet_drawing::NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -664,7 +664,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::NvContentPartPr {
         let mut through = super::Through::new(
             out,
             &office_excel_2010_spreadsheet_drawing::NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.c_nv_pr, ctx)?;
         through.child(&self.c, ctx)?;
@@ -709,7 +709,8 @@ impl super::Transform for office_excel_2010_spreadsheet_drawing::NvPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -727,7 +728,7 @@ impl super::Visit for office_excel_2010_spreadsheet_drawing::NvPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -740,7 +741,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::NvPr {
         let converted = super::converts(
             out,
             &office_excel_2010_spreadsheet_drawing::NV_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_excel_2010_spreadsheet_drawing::write::nv_pr(self, out.scope());
@@ -749,7 +750,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::NvPr {
         let mut through = super::Through::new(
             out,
             &office_excel_2010_spreadsheet_drawing::NV_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#macro);
         through.attribute(1, &self.f_published);
@@ -794,10 +795,10 @@ impl super::Transform for office_excel_2010_spreadsheet_drawing::Xfrm {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = super::transform_child(&self.extents, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -815,7 +816,7 @@ impl super::Visit for office_excel_2010_spreadsheet_drawing::Xfrm {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.offset, visitor);
         walk.child(&self.extents, visitor);
         walk.finish(visitor);
@@ -831,7 +832,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::Xfrm {
         let converted = super::converts(
             out,
             &office_excel_2010_spreadsheet_drawing::XFRM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_excel_2010_spreadsheet_drawing::write::xfrm(self, out.scope());
@@ -840,7 +841,7 @@ impl WriteThrough for office_excel_2010_spreadsheet_drawing::Xfrm {
         let mut through = super::Through::new(
             out,
             &office_excel_2010_spreadsheet_drawing::XFRM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rot);
         through.attribute(1, &self.flip_h);

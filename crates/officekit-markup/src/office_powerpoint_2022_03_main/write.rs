@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -232,7 +232,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn instance(node: &super::Instance, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::INSTANCE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::INSTANCE_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.time);
     writer.attribute(1, &node.author_id);
     writer.child(&node.ext_lst);
@@ -243,7 +243,7 @@ pub fn instance(node: &super::Instance, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reactions(node: &super::Reactions, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::REACTIONS_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::REACTIONS_SHAPE, node.unknown.as_deref());
     writer.child(&node.rxn);
     writer.finish()
 }
@@ -251,7 +251,8 @@ pub fn reactions(node: &super::Reactions, scope: &mut Scope) -> Element {
 /// Write a `Rxn` as its element, `p223:rxn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rxn(node: &super::Rxn, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::RXN_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::RXN_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.r#type);
     writer.child(&node.instance);
     writer.finish()

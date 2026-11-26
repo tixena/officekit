@@ -225,7 +225,7 @@ pub fn data_display_options16(node: &super::DataDisplayOptions16, scope: &mut Sc
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DATA_DISPLAY_OPTIONS16_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.disp_na_as_blank);
     writer.finish()
@@ -234,8 +234,11 @@ pub fn data_display_options16(node: &super::DataDisplayOptions16, scope: &mut Sc
 /// Write a `DispNaAsBlank` as its element, `c16r3:dispNaAsBlank`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn disp_na_as_blank(node: &super::DispNaAsBlank, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DISP_NA_AS_BLANK_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DISP_NA_AS_BLANK_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }

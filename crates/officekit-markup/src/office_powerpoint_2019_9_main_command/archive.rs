@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct CmMKMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -233,7 +233,7 @@ pub struct CmMKMirror {
 pub struct CmMkLstMirror {
     pub cm_mk: Box<super::CmMK>,
     pub sld_mk_lst: Box<super::super::office_powerpoint_2013_main_command::SldMkLst>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -242,7 +242,7 @@ pub struct CmMkLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CmRplyMkMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -252,7 +252,7 @@ pub struct CmRplyMkMirror {
 pub struct CmRplyMkLstMirror {
     pub cm_mk_lst: Box<super::CmMkLst>,
     pub cm_rply_mk: Box<super::CmRplyMk>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

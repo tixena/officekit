@@ -226,7 +226,7 @@ pub struct DesignPrMirror {
     pub design_tag_lst: Option<Box<super::DesignTagLst>>,
     pub edt_design_elem: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -235,7 +235,7 @@ pub struct DesignPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DesignTagMirror {
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }
@@ -245,7 +245,7 @@ pub struct DesignTagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct DesignTagLstMirror {
     pub design_tag: Vec<super::DesignTag>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -254,7 +254,7 @@ pub struct DesignTagLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<presentation::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

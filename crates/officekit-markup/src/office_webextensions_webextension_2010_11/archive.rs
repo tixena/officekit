@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct AlternateReferencesMirror {
     pub reference: Vec<super::Reference>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -236,7 +236,7 @@ pub struct BindingMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub r#type: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -245,7 +245,7 @@ pub struct BindingMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct BindingsMirror {
     pub binding: Vec<super::Binding>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -254,7 +254,7 @@ pub struct BindingsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -263,7 +263,7 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PropertiesMirror {
     pub property: Vec<super::Property>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -272,7 +272,7 @@ pub struct PropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PropertyMirror {
     pub name: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: Option<String>,
 }
@@ -285,7 +285,7 @@ pub struct ReferenceMirror {
     pub id: Option<String>,
     pub store: Option<String>,
     pub store_type: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub version: Option<String>,
 }
@@ -299,7 +299,7 @@ pub struct SnapshotMirror {
     pub embed: Option<String>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub link: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -315,7 +315,7 @@ pub struct WebextensionMirror {
     pub properties: Box<super::Properties>,
     pub reference: Box<super::Reference>,
     pub snapshot: Option<Box<super::Snapshot>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -324,7 +324,7 @@ pub struct WebextensionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct WebextensionrefMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

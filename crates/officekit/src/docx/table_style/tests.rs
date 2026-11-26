@@ -330,7 +330,10 @@ fn a_cell_s_own_margin_wins_over_the_style_s() {
         .unwrap();
     assert_eq!(left.w.map(|value| value.0), Some("200".to_owned()));
     assert_eq!(top.w.map(|value| value.0), Some("0".to_owned()));
-    assert_eq!(cell.unknown.children.len(), 0);
+    assert!(
+        cell.unknown
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 fn banded_sheet(rows_in_band: Option<i64>) -> StyleSheet {
@@ -516,7 +519,11 @@ fn the_table_s_own_border_wins_over_the_style_s() {
         borders.table_inside_horizontal_edges_border,
         style_borders.table_inside_horizontal_edges_border
     );
-    assert_eq!(borders.unknown.children.len(), 0);
+    assert!(
+        borders
+            .unknown()
+            .is_none_or(|unknown| unknown.children.is_empty())
+    );
 }
 
 #[test]

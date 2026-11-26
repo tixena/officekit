@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Cameo)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameoMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -232,7 +232,7 @@ pub struct CameoMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PhTypeExtMirror {
     pub r#type: Box<super::Type>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -241,7 +241,7 @@ pub struct PhTypeExtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TypeMirror {
     pub content: Box<super::PlaceholderTypeContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -249,7 +249,7 @@ pub struct TypeMirror {
 #[rkyv(remote = super::Unknown)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnknownMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2024_pivot_dynamic_arrays::PivotC
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2024_pivot_dynamic_arrays::PivotCache
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2024_pivot_dynamic_arrays::PivotCache
         let converted = super::converts(
             out,
             &office_spreadsheetml_2024_pivot_dynamic_arrays::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -277,7 +278,7 @@ impl WriteThrough for office_spreadsheetml_2024_pivot_dynamic_arrays::PivotCache
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2024_pivot_dynamic_arrays::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#ref);
         through.finish(ctx)

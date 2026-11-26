@@ -233,9 +233,9 @@ impl super::Transform for office_spreadsheetml_2023_ms_forms::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_spreadsheetml_2023_ms_forms::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::ExtLst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_ms_forms::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_ms_forms::write::ext_lst(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -321,11 +321,11 @@ impl super::Transform for office_spreadsheetml_2023_ms_forms::MsForm {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.synced_question_id =
             super::transform_child(&self.synced_question_id, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -343,7 +343,7 @@ impl super::Visit for office_spreadsheetml_2023_ms_forms::MsForm {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.synced_question_id, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -359,7 +359,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::MsForm {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_ms_forms::MS_FORM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_ms_forms::write::ms_form(self, out.scope());
@@ -368,7 +368,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::MsForm {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::MS_FORM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.is_form_connected);
@@ -417,9 +417,9 @@ impl super::Transform for office_spreadsheetml_2023_ms_forms::Question {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -437,7 +437,7 @@ impl super::Visit for office_spreadsheetml_2023_ms_forms::Question {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -452,7 +452,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::Question {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_ms_forms::QUESTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2023_ms_forms::write::question(self, out.scope());
@@ -461,7 +461,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::Question {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::QUESTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.child(&self.ext_lst, ctx)?;
@@ -506,7 +506,8 @@ impl super::Transform for office_spreadsheetml_2023_ms_forms::SyncedQuestionId {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -524,7 +525,7 @@ impl super::Visit for office_spreadsheetml_2023_ms_forms::SyncedQuestionId {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -537,7 +538,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::SyncedQuestionId {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2023_ms_forms::SYNCED_QUESTION_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -547,7 +548,7 @@ impl WriteThrough for office_spreadsheetml_2023_ms_forms::SyncedQuestionId {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2023_ms_forms::SYNCED_QUESTION_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)

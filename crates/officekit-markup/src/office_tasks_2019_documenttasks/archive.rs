@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 pub struct AnchorMirror {
     pub comment: Option<Box<super::Comment>>,
     pub ext_lst: Option<Box<super::ExtLst>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -233,7 +233,7 @@ pub struct AnchorMirror {
 #[rkyv(remote = super::Assign)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AssignMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -241,7 +241,7 @@ pub struct AssignMirror {
 #[rkyv(remote = super::Attribution)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AttributionMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -250,7 +250,7 @@ pub struct AttributionMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -258,7 +258,7 @@ pub struct CommentMirror {
 #[rkyv(remote = super::Create)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CreateMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -266,7 +266,7 @@ pub struct CreateMirror {
 #[rkyv(remote = super::Delete)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DeleteMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -280,7 +280,7 @@ pub struct EventMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub id: Option<String>,
     pub time: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -289,7 +289,7 @@ pub struct EventMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub ext: Vec<super::super::office_2019_extlst::Ext>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -298,7 +298,7 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct HistoryMirror {
     pub event: Vec<super::Event>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -306,7 +306,7 @@ pub struct HistoryMirror {
 #[rkyv(remote = super::Priority)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PriorityMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: Option<String>,
 }
@@ -316,7 +316,7 @@ pub struct PriorityMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ProgressMirror {
     pub percent_complete: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -326,7 +326,7 @@ pub struct ProgressMirror {
 pub struct ScheduleMirror {
     pub due_date: Option<String>,
     pub start_date: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -335,7 +335,7 @@ pub struct ScheduleMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct SetTitleMirror {
     pub title: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -347,7 +347,7 @@ pub struct TaskMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub history: Option<Box<super::History>>,
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -357,7 +357,7 @@ pub struct TaskMirror {
 pub struct TasksMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub task: Vec<super::Task>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -365,7 +365,7 @@ pub struct TasksMirror {
 #[rkyv(remote = super::Unassign)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnassignMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -373,7 +373,7 @@ pub struct UnassignMirror {
 #[rkyv(remote = super::UnassignAll)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnassignAllMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -381,7 +381,7 @@ pub struct UnassignAllMirror {
 #[rkyv(remote = super::Undelete)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UndeleteMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -390,7 +390,7 @@ pub struct UndeleteMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct UndoMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

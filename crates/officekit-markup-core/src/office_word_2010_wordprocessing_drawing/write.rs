@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `PctHeight` as its element, `wp14:pctHeight`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pct_height(node: &super::PctHeight, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PCT_HEIGHT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PCT_HEIGHT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -231,8 +234,11 @@ pub fn pct_height(node: &super::PctHeight, scope: &mut Scope) -> Element {
 /// Write a `PctPosHOffset` as its element, `wp14:pctPosHOffset`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pct_pos_h_offset(node: &super::PctPosHOffset, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PCT_POS_H_OFFSET_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PCT_POS_H_OFFSET_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -240,8 +246,11 @@ pub fn pct_pos_h_offset(node: &super::PctPosHOffset, scope: &mut Scope) -> Eleme
 /// Write a `PctPosVOffset` as its element, `wp14:pctPosVOffset`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pct_pos_v_offset(node: &super::PctPosVOffset, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PCT_POS_V_OFFSET_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PCT_POS_V_OFFSET_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -250,7 +259,7 @@ pub fn pct_pos_v_offset(node: &super::PctPosVOffset, scope: &mut Scope) -> Eleme
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pct_width(node: &super::PctWidth, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PCT_WIDTH_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PCT_WIDTH_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -258,8 +267,11 @@ pub fn pct_width(node: &super::PctWidth, scope: &mut Scope) -> Element {
 /// Write a `SizeRelH` as its element, `wp14:sizeRelH`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn size_rel_h(node: &super::SizeRelH, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SIZE_REL_H_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SIZE_REL_H_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.relative_from);
     writer.child(&node.pct_width);
     writer.finish()
@@ -268,8 +280,11 @@ pub fn size_rel_h(node: &super::SizeRelH, scope: &mut Scope) -> Element {
 /// Write a `SizeRelV` as its element, `wp14:sizeRelV`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn size_rel_v(node: &super::SizeRelV, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SIZE_REL_V_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SIZE_REL_V_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.relative_from);
     writer.child(&node.pct_height);
     writer.finish()

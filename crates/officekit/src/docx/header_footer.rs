@@ -5,6 +5,7 @@ mod tests;
 
 use crate::parts::part_root::{self, PartRoot};
 use crate::parts::{document_settings, footer, header};
+use officekit_markup::Unknown;
 use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
     BlockContent, ContentBlockContent, DifferentEvenOddPageHeadersAndFooters,
@@ -168,7 +169,10 @@ pub fn remove(
 
 fn declare_relationships(document: &mut Document, class: ConformanceClass) {
     let namespace = Namespace::from_uri(RELATIONSHIPS_URI);
-    let declarations = &mut document.unknown.namespace_declarations;
+    let declarations = &document
+        .unknown()
+        .unwrap_or_else(Unknown::empty)
+        .namespace_declarations;
     if declarations.iter().any(|declaration| {
         !declaration.prefix.is_empty() && Namespace::from_uri(&declaration.uri) == namespace
     }) {
@@ -183,10 +187,13 @@ fn declare_relationships(document: &mut Document, class: ConformanceClass) {
         suffix += 1;
         prefix = format!("r{suffix}");
     }
-    declarations.push(NamespaceDeclaration::new(
-        prefix,
-        namespace.uri(class).to_owned(),
-    ));
+    document
+        .unknown_mut()
+        .namespace_declarations
+        .push(NamespaceDeclaration::new(
+            prefix,
+            namespace.uri(class).to_owned(),
+        ));
 }
 
 fn is_on(flag: Option<&OnOffValue>) -> bool {

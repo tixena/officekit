@@ -250,7 +250,7 @@ pub struct AmbientLightMirror {
     pub enabled: Option<String>,
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub illuminance: Box<super::Illuminance>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -259,7 +259,7 @@ pub struct AmbientLightMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AttrSrcUrlMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -272,7 +272,7 @@ pub struct BlipMirror {
     pub embed: Option<String>,
     pub extension_list: Option<Box<drawing::ExtensionList>>,
     pub link: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -284,7 +284,7 @@ pub struct CameraMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub look_at: Box<super::LookAt>,
     pub pos: Box<super::Pos>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub up: Box<super::Up>,
     pub user_data: (),
 }
@@ -294,7 +294,7 @@ pub struct CameraMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ClrMirror {
     pub content: Box<drawing::ColorContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -309,7 +309,7 @@ pub struct DirLightMirror {
     pub illuminance: Box<super::Illuminance>,
     pub look_at: Box<super::LookAt>,
     pub pos: Box<super::Pos>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -318,7 +318,7 @@ pub struct DirLightMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtMirror {
     pub content: Box<super::Model3DExtensionContent>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub uri: Option<String>,
     pub user_data: (),
 }
@@ -328,7 +328,7 @@ pub struct ExtMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstModel3DExtensionListMirror {
     pub ext: Vec<super::Ext>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -337,7 +337,7 @@ pub struct ExtLstModel3DExtensionListMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstOfficeArtExtensionListMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -345,7 +345,7 @@ pub struct ExtLstOfficeArtExtensionListMirror {
 #[rkyv(remote = super::Illuminance)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IlluminanceMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -353,7 +353,7 @@ pub struct IlluminanceMirror {
 #[rkyv(remote = super::Intensity)]
 #[rkyv(attr(non_exhaustive))]
 pub struct IntensityMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -361,7 +361,7 @@ pub struct IntensityMirror {
 #[rkyv(remote = super::LookAt)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LookAtMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub x: Option<drawing::Coordinate>,
     pub y: Option<drawing::Coordinate>,
@@ -372,7 +372,7 @@ pub struct LookAtMirror {
 #[rkyv(remote = super::MeterPerModelUnit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MeterPerModelUnitMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -390,7 +390,7 @@ pub struct Model3dMirror {
     pub raster: Option<Box<super::Raster>>,
     pub sp_pr: Box<super::SpPr>,
     pub trans: Box<super::Trans>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub viewport_content: Box<super::Model3DViewportContent>,
 }
@@ -400,7 +400,7 @@ pub struct Model3dMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ObjViewportMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub viewport_sz: Option<String>,
 }
@@ -411,7 +411,7 @@ pub struct ObjViewportMirror {
 pub struct OrthographicMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub sz_positive_ratio: Box<super::SzPositiveRatio>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -421,7 +421,7 @@ pub struct OrthographicMirror {
 pub struct PerspectiveMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
     pub fov: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -429,7 +429,7 @@ pub struct PerspectiveMirror {
 #[rkyv(remote = super::Pos)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PosMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub x: Option<drawing::Coordinate>,
     pub y: Option<drawing::Coordinate>,
@@ -443,7 +443,7 @@ pub struct PostTransMirror {
     pub dx: Option<drawing::Coordinate>,
     pub dy: Option<drawing::Coordinate>,
     pub dz: Option<drawing::Coordinate>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -454,7 +454,7 @@ pub struct PreTransMirror {
     pub dx: Option<drawing::Coordinate>,
     pub dy: Option<drawing::Coordinate>,
     pub dz: Option<drawing::Coordinate>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -468,7 +468,7 @@ pub struct PtLightMirror {
     pub intensity: Box<super::Intensity>,
     pub pos: Box<super::Pos>,
     pub rad: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -479,7 +479,7 @@ pub struct RasterMirror {
     pub blip: Option<Box<super::Blip>>,
     pub r_name: Option<String>,
     pub r_ver: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -490,7 +490,7 @@ pub struct RotMirror {
     pub ax: Option<String>,
     pub ay: Option<String>,
     pub az: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -501,7 +501,7 @@ pub struct ScaleMirror {
     pub sx: Box<super::Sx>,
     pub sy: Box<super::Sy>,
     pub sz_ratio: Box<super::SzRatio>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -517,7 +517,7 @@ pub struct SpPrMirror {
     pub geometry_content: Option<Box<drawing::GeometryContent>>,
     pub outline: Option<Box<drawing::Outline>>,
     pub scene3d: Option<Box<drawing::Scene3d>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub xfrm_transform2d: Option<Box<drawing::XfrmTransform2D>>,
 }
@@ -534,7 +534,7 @@ pub struct SpotLightMirror {
     pub pos: Box<super::Pos>,
     pub rad: Option<String>,
     pub spot_ang: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -544,7 +544,7 @@ pub struct SpotLightMirror {
 pub struct SxMirror {
     pub d: Option<String>,
     pub n: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -554,7 +554,7 @@ pub struct SxMirror {
 pub struct SyMirror {
     pub d: Option<String>,
     pub n: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -562,7 +562,7 @@ pub struct SyMirror {
 #[rkyv(remote = super::SzPositiveRatio)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SzPositiveRatioMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -572,7 +572,7 @@ pub struct SzPositiveRatioMirror {
 pub struct SzRatioMirror {
     pub d: Option<String>,
     pub n: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -586,7 +586,7 @@ pub struct TransMirror {
     pub pre: Option<Box<super::PreTrans>>,
     pub rot: Option<Box<super::Rot>>,
     pub scale: Option<Box<super::Scale>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -594,7 +594,7 @@ pub struct TransMirror {
 #[rkyv(remote = super::UnkLight)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UnkLightMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -605,7 +605,7 @@ pub struct UpMirror {
     pub dx: Option<drawing::Coordinate>,
     pub dy: Option<drawing::Coordinate>,
     pub dz: Option<drawing::Coordinate>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -614,7 +614,7 @@ pub struct UpMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct WinViewportMirror {
     pub ext_lst_office_art_extension_list: Option<Box<super::ExtLstOfficeArtExtensionList>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

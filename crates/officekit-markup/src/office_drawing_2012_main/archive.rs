@@ -227,7 +227,7 @@ pub struct BackgroundPrMirror {
     pub bw_normal: Option<drawing::BlackAndWhiteMode>,
     pub bw_pure: Option<drawing::BlackAndWhiteMode>,
     pub target_screen_size: Option<super::TargetScreenSz>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -236,7 +236,7 @@ pub struct BackgroundPrMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct NonVisualGroupPropsMirror {
     pub is_legacy_group: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -247,7 +247,7 @@ pub struct ObjectPrMirror {
     pub is_active_x: Option<String>,
     pub link_type: Option<String>,
     pub object_id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -267,7 +267,7 @@ pub struct SignatureLineMirror {
     pub suggested_signer: Option<String>,
     pub suggested_signer2: Option<String>,
     pub suggested_signer_email: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

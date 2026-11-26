@@ -10,6 +10,7 @@ use alloc::collections::{BTreeMap, BTreeSet};
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
 };
+use officekit_markup::Unknown;
 use officekit_markup::wordprocessing::{self, BlockContent, Document, DocumentBody};
 use officekit_xml::element::{Attribute, Document as Part, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::{Namespace, QName};
@@ -692,16 +693,23 @@ pub fn import_body(
     source: &Docx,
 ) -> Result<Vec<BlockContent>, PackageError> {
     let source_document = source.main_document()?;
-    merge_declarations(
-        &mut document.unknown.namespace_declarations,
-        &mut document.unknown.attributes,
-        &source_document.unknown.namespace_declarations,
-        &source_document.unknown.attributes,
-    )
-    .map_err(|reason| PackageError::Read {
-        part: target.main.clone(),
-        reason,
-    })?;
+    let source_unknown = source_document
+        .unknown
+        .as_deref()
+        .unwrap_or_else(Unknown::empty);
+    if !source_unknown.is_empty() {
+        let unknown = document.unknown_mut();
+        merge_declarations(
+            &mut unknown.namespace_declarations,
+            &mut unknown.attributes,
+            &source_unknown.namespace_declarations,
+            &source_unknown.attributes,
+        )
+        .map_err(|reason| PackageError::Read {
+            part: target.main.clone(),
+            reason,
+        })?;
+    }
     let target_main = target.main.clone();
     let mut import = Import::new(source, target, document)?;
     let mut body = DocumentBody::default();
@@ -709,7 +717,7 @@ pub fn import_body(
         .body
         .map_or_else(Vec::new, |source_body| source_body.content);
     let mut scope = Scope::default();
-    scope.start(&source_document.unknown.namespace_declarations);
+    scope.start(&source_unknown.namespace_declarations);
     let mut element = wordprocessing::write::document_body(&body, &mut scope);
     scope.end();
     import.rewrite_children(&mut element, &source.main, &target_main)?;

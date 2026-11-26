@@ -223,8 +223,11 @@ use officekit_xml::write::Scope;
 /// Write a `AbbreviatedCaseNumber` as its element, `b:AbbreviatedCaseNumber`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn abbreviated_case_number(node: &super::AbbreviatedCaseNumber, scope: &mut Scope) -> Element {
-    let mut writer =
-        crate::Writer::new(scope, &super::ABBREVIATED_CASE_NUMBER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::ABBREVIATED_CASE_NUMBER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -232,7 +235,7 @@ pub fn abbreviated_case_number(node: &super::AbbreviatedCaseNumber, scope: &mut 
 /// Write a `AlbumTitle` as its element, `b:AlbumTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn album_title(node: &super::AlbumTitle, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::ALBUM_TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::ALBUM_TITLE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -240,7 +243,7 @@ pub fn album_title(node: &super::AlbumTitle, scope: &mut Scope) -> Element {
 /// Write a `Artist` as its element, `b:Artist`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn artist(node: &super::Artist, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::ARTIST_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::ARTIST_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -248,7 +251,7 @@ pub fn artist(node: &super::Artist, scope: &mut Scope) -> Element {
 /// Write a `Author` as its element, `b:Author`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn author(node: &super::Author, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::AUTHOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::AUTHOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -256,7 +259,7 @@ pub fn author(node: &super::Author, scope: &mut Scope) -> Element {
 /// Write a `BookAuthor` as its element, `b:BookAuthor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn book_author(node: &super::BookAuthor, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::BOOK_AUTHOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::BOOK_AUTHOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -264,7 +267,7 @@ pub fn book_author(node: &super::BookAuthor, scope: &mut Scope) -> Element {
 /// Write a `BookTitle` as its element, `b:BookTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn book_title(node: &super::BookTitle, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::BOOK_TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::BOOK_TITLE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -272,7 +275,11 @@ pub fn book_title(node: &super::BookTitle, scope: &mut Scope) -> Element {
 /// Write a `BroadcastTitle` as its element, `b:BroadcastTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn broadcast_title(node: &super::BroadcastTitle, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::BROADCAST_TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::BROADCAST_TITLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -280,7 +287,7 @@ pub fn broadcast_title(node: &super::BroadcastTitle, scope: &mut Scope) -> Eleme
 /// Write a `Broadcaster` as its element, `b:Broadcaster`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn broadcaster(node: &super::Broadcaster, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::BROADCASTER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::BROADCASTER_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -288,7 +295,7 @@ pub fn broadcaster(node: &super::Broadcaster, scope: &mut Scope) -> Element {
 /// Write a `CaseNumber` as its element, `b:CaseNumber`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn case_number(node: &super::CaseNumber, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CASE_NUMBER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::CASE_NUMBER_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -296,7 +303,8 @@ pub fn case_number(node: &super::CaseNumber, scope: &mut Scope) -> Element {
 /// Write a `ChapterNumber` as its element, `b:ChapterNumber`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn chapter_number(node: &super::ChapterNumber, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CHAPTER_NUMBER_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::CHAPTER_NUMBER_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -304,7 +312,7 @@ pub fn chapter_number(node: &super::ChapterNumber, scope: &mut Scope) -> Element
 /// Write a `City` as its element, `b:City`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn city(node: &super::City, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CITY_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::CITY_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -312,7 +320,7 @@ pub fn city(node: &super::City, scope: &mut Scope) -> Element {
 /// Write a `Comments` as its element, `b:Comments`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comments(node: &super::Comments, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::COMMENTS_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::COMMENTS_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -320,7 +328,7 @@ pub fn comments(node: &super::Comments, scope: &mut Scope) -> Element {
 /// Write a `Compiler` as its element, `b:Compiler`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn compiler(node: &super::Compiler, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::COMPILER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::COMPILER_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -328,7 +336,7 @@ pub fn compiler(node: &super::Compiler, scope: &mut Scope) -> Element {
 /// Write a `Composer` as its element, `b:Composer`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn composer(node: &super::Composer, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::COMPOSER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::COMPOSER_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -336,7 +344,7 @@ pub fn composer(node: &super::Composer, scope: &mut Scope) -> Element {
 /// Write a `Conductor` as its element, `b:Conductor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn conductor(node: &super::Conductor, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CONDUCTOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::CONDUCTOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -350,7 +358,7 @@ pub fn conference_or_proceedings_name(
     let mut writer = crate::Writer::new(
         scope,
         &super::CONFERENCE_OR_PROCEEDINGS_NAME_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()
@@ -359,7 +367,11 @@ pub fn conference_or_proceedings_name(
 /// Write a `ContributorsList` as its element, `b:Author`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn contributors_list(node: &super::ContributorsList, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CONTRIBUTORS_LIST_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::CONTRIBUTORS_LIST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -375,7 +387,11 @@ pub fn contributors_list_content(
 /// Write a `CorporateAuthor` as its element, `b:Corporate`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn corporate_author(node: &super::CorporateAuthor, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::CORPORATE_AUTHOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::CORPORATE_AUTHOR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -383,7 +399,7 @@ pub fn corporate_author(node: &super::CorporateAuthor, scope: &mut Scope) -> Ele
 /// Write a `Counsel` as its element, `b:Counsel`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn counsel(node: &super::Counsel, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::COUNSEL_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::COUNSEL_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -391,7 +407,11 @@ pub fn counsel(node: &super::Counsel, scope: &mut Scope) -> Element {
 /// Write a `CountryOrRegion` as its element, `b:CountryRegion`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn country_or_region(node: &super::CountryOrRegion, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::COUNTRY_OR_REGION_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::COUNTRY_OR_REGION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -399,7 +419,7 @@ pub fn country_or_region(node: &super::CountryOrRegion, scope: &mut Scope) -> El
 /// Write a `Court` as its element, `b:Court`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn court(node: &super::Court, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::COURT_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::COURT_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -407,7 +427,7 @@ pub fn court(node: &super::Court, scope: &mut Scope) -> Element {
 /// Write a `Day` as its element, `b:Day`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn day(node: &super::Day, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::DAY_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::DAY_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -415,7 +435,7 @@ pub fn day(node: &super::Day, scope: &mut Scope) -> Element {
 /// Write a `DayAccessed` as its element, `b:DayAccessed`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn day_accessed(node: &super::DayAccessed, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::DAY_ACCESSED_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::DAY_ACCESSED_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -423,7 +443,7 @@ pub fn day_accessed(node: &super::DayAccessed, scope: &mut Scope) -> Element {
 /// Write a `Department` as its element, `b:Department`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn department(node: &super::Department, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::DEPARTMENT_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::DEPARTMENT_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -431,7 +451,7 @@ pub fn department(node: &super::Department, scope: &mut Scope) -> Element {
 /// Write a `Director` as its element, `b:Director`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn director(node: &super::Director, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::DIRECTOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::DIRECTOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -439,7 +459,7 @@ pub fn director(node: &super::Director, scope: &mut Scope) -> Element {
 /// Write a `Distributor` as its element, `b:Distributor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn distributor(node: &super::Distributor, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::DISTRIBUTOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::DISTRIBUTOR_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -447,7 +467,7 @@ pub fn distributor(node: &super::Distributor, scope: &mut Scope) -> Element {
 /// Write a `Editor` as its element, `b:Editor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn editor(node: &super::Editor, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::EDITOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::EDITOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -455,7 +475,8 @@ pub fn editor(node: &super::Editor, scope: &mut Scope) -> Element {
 /// Write a `EditorEdition` as its element, `b:Edition`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn editor_edition(node: &super::EditorEdition, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::EDITOR_EDITION_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::EDITOR_EDITION_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -463,7 +484,7 @@ pub fn editor_edition(node: &super::EditorEdition, scope: &mut Scope) -> Element
 /// Write a `Guid` as its element, `b:Guid`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn guid(node: &super::Guid, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::GUID_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::GUID_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -471,7 +492,7 @@ pub fn guid(node: &super::Guid, scope: &mut Scope) -> Element {
 /// Write a `Institution` as its element, `b:Institution`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn institution(node: &super::Institution, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::INSTITUTION_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::INSTITUTION_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -479,7 +500,11 @@ pub fn institution(node: &super::Institution, scope: &mut Scope) -> Element {
 /// Write a `InternetSiteTitle` as its element, `b:InternetSiteTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn internet_site_title(node: &super::InternetSiteTitle, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::INTERNET_SITE_TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::INTERNET_SITE_TITLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -487,7 +512,7 @@ pub fn internet_site_title(node: &super::InternetSiteTitle, scope: &mut Scope) -
 /// Write a `Interviewee` as its element, `b:Interviewee`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn interviewee(node: &super::Interviewee, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::INTERVIEWEE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::INTERVIEWEE_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -495,7 +520,7 @@ pub fn interviewee(node: &super::Interviewee, scope: &mut Scope) -> Element {
 /// Write a `Interviewer` as its element, `b:Interviewer`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn interviewer(node: &super::Interviewer, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::INTERVIEWER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::INTERVIEWER_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -503,7 +528,7 @@ pub fn interviewer(node: &super::Interviewer, scope: &mut Scope) -> Element {
 /// Write a `Inventor` as its element, `b:Inventor`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn inventor(node: &super::Inventor, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::INVENTOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::INVENTOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -511,7 +536,7 @@ pub fn inventor(node: &super::Inventor, scope: &mut Scope) -> Element {
 /// Write a `Issue` as its element, `b:Issue`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn issue(node: &super::Issue, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::ISSUE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::ISSUE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -519,7 +544,7 @@ pub fn issue(node: &super::Issue, scope: &mut Scope) -> Element {
 /// Write a `JournalName` as its element, `b:JournalName`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn journal_name(node: &super::JournalName, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::JOURNAL_NAME_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::JOURNAL_NAME_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -527,7 +552,7 @@ pub fn journal_name(node: &super::JournalName, scope: &mut Scope) -> Element {
 /// Write a `LocaleID` as its element, `b:LCID`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn locale_id(node: &super::LocaleID, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::LOCALE_ID_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::LOCALE_ID_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -535,7 +560,7 @@ pub fn locale_id(node: &super::LocaleID, scope: &mut Scope) -> Element {
 /// Write a `Medium` as its element, `b:Medium`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn medium(node: &super::Medium, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::MEDIUM_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::MEDIUM_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -543,7 +568,7 @@ pub fn medium(node: &super::Medium, scope: &mut Scope) -> Element {
 /// Write a `Month` as its element, `b:Month`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn month(node: &super::Month, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::MONTH_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::MONTH_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -551,7 +576,8 @@ pub fn month(node: &super::Month, scope: &mut Scope) -> Element {
 /// Write a `MonthAccessed` as its element, `b:MonthAccessed`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn month_accessed(node: &super::MonthAccessed, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::MONTH_ACCESSED_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::MONTH_ACCESSED_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -559,7 +585,7 @@ pub fn month_accessed(node: &super::MonthAccessed, scope: &mut Scope) -> Element
 /// Write a `NameList` as its element, `b:NameList`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn name_list(node: &super::NameList, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::NAME_LIST_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::NAME_LIST_SHAPE, node.unknown.as_deref());
     writer.child(&node.person);
     writer.finish()
 }
@@ -572,7 +598,11 @@ pub fn name_or_corporate(node: &super::NameOrCorporateContent, writer: &mut crat
 /// Write a `NumberOfVolumes` as its element, `b:NumberVolumes`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn number_of_volumes(node: &super::NumberOfVolumes, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::NUMBER_OF_VOLUMES_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::NUMBER_OF_VOLUMES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -580,7 +610,7 @@ pub fn number_of_volumes(node: &super::NumberOfVolumes, scope: &mut Scope) -> El
 /// Write a `Pages` as its element, `b:Pages`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pages(node: &super::Pages, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PAGES_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::PAGES_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -588,7 +618,8 @@ pub fn pages(node: &super::Pages, scope: &mut Scope) -> Element {
 /// Write a `PatentNumber` as its element, `b:PatentNumber`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn patent_number(node: &super::PatentNumber, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PATENT_NUMBER_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::PATENT_NUMBER_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -596,7 +627,7 @@ pub fn patent_number(node: &super::PatentNumber, scope: &mut Scope) -> Element {
 /// Write a `PatentType` as its element, `b:Type`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn patent_type(node: &super::PatentType, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PATENT_TYPE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::PATENT_TYPE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -604,7 +635,7 @@ pub fn patent_type(node: &super::PatentType, scope: &mut Scope) -> Element {
 /// Write a `Performer` as its element, `b:Performer`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn performer(node: &super::Performer, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PERFORMER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::PERFORMER_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -612,7 +643,11 @@ pub fn performer(node: &super::Performer, scope: &mut Scope) -> Element {
 /// Write a `PeriodicalTitle` as its element, `b:PeriodicalTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn periodical_title(node: &super::PeriodicalTitle, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PERIODICAL_TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::PERIODICAL_TITLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -620,7 +655,7 @@ pub fn periodical_title(node: &super::PeriodicalTitle, scope: &mut Scope) -> Ele
 /// Write a `Person` as its element, `b:Person`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn person(node: &super::Person, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PERSON_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::PERSON_SHAPE, node.unknown.as_deref());
     writer.child(&node.persons_last_or_family_name);
     writer.child(&node.persons_first_or_given_name);
     writer.child(&node.persons_middle_or_other_name);
@@ -636,7 +671,7 @@ pub fn persons_first_or_given_name(
     let mut writer = crate::Writer::new(
         scope,
         &super::PERSONS_FIRST_OR_GIVEN_NAME_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()
@@ -651,7 +686,7 @@ pub fn persons_last_or_family_name(
     let mut writer = crate::Writer::new(
         scope,
         &super::PERSONS_LAST_OR_FAMILY_NAME_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()
@@ -666,7 +701,7 @@ pub fn persons_middle_or_other_name(
     let mut writer = crate::Writer::new(
         scope,
         &super::PERSONS_MIDDLE_OR_OTHER_NAME_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()
@@ -675,7 +710,8 @@ pub fn persons_middle_or_other_name(
 /// Write a `ProducerName` as its element, `b:ProducerName`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn producer_name(node: &super::ProducerName, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PRODUCER_NAME_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::PRODUCER_NAME_SHAPE, node.unknown.as_deref());
     writer.child(&node.list);
     writer.finish()
 }
@@ -683,7 +719,11 @@ pub fn producer_name(node: &super::ProducerName, scope: &mut Scope) -> Element {
 /// Write a `ProductionCompany` as its element, `b:ProductionCompany`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn production_company(node: &super::ProductionCompany, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PRODUCTION_COMPANY_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::PRODUCTION_COMPANY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -691,7 +731,11 @@ pub fn production_company(node: &super::ProductionCompany, scope: &mut Scope) ->
 /// Write a `PublicationTitle` as its element, `b:PublicationTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn publication_title(node: &super::PublicationTitle, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PUBLICATION_TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::PUBLICATION_TITLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -699,7 +743,7 @@ pub fn publication_title(node: &super::PublicationTitle, scope: &mut Scope) -> E
 /// Write a `Publisher` as its element, `b:Publisher`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn publisher(node: &super::Publisher, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::PUBLISHER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::PUBLISHER_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -707,7 +751,11 @@ pub fn publisher(node: &super::Publisher, scope: &mut Scope) -> Element {
 /// Write a `RecordingNumber` as its element, `b:RecordingNumber`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn recording_number(node: &super::RecordingNumber, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::RECORDING_NUMBER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::RECORDING_NUMBER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -715,7 +763,11 @@ pub fn recording_number(node: &super::RecordingNumber, scope: &mut Scope) -> Ele
 /// Write a `ReferenceOrder` as its element, `b:RefOrder`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reference_order(node: &super::ReferenceOrder, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::REFERENCE_ORDER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::REFERENCE_ORDER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -723,7 +775,7 @@ pub fn reference_order(node: &super::ReferenceOrder, scope: &mut Scope) -> Eleme
 /// Write a `Reporter` as its element, `b:Reporter`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reporter(node: &super::Reporter, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::REPORTER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::REPORTER_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -731,7 +783,7 @@ pub fn reporter(node: &super::Reporter, scope: &mut Scope) -> Element {
 /// Write a `ShortTitle` as its element, `b:ShortTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn short_title(node: &super::ShortTitle, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::SHORT_TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::SHORT_TITLE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -739,7 +791,7 @@ pub fn short_title(node: &super::ShortTitle, scope: &mut Scope) -> Element {
 /// Write a `Source` as its element, `b:Source`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn source(node: &super::Source, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::SOURCE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::SOURCE_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -752,7 +804,7 @@ pub fn source_content(node: &super::SourceContent, writer: &mut crate::Writer<'_
 /// Write a `SourceType` as its element, `b:SourceType`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn source_type(node: &super::SourceType, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::SOURCE_TYPE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::SOURCE_TYPE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -760,7 +812,7 @@ pub fn source_type(node: &super::SourceType, scope: &mut Scope) -> Element {
 /// Write a `Sources` as its element, `b:Sources`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sources(node: &super::Sources, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::SOURCES_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::SOURCES_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.selected_style);
     writer.attribute(1, &node.style_name);
     writer.attribute(2, &node.uri);
@@ -771,7 +823,11 @@ pub fn sources(node: &super::Sources, scope: &mut Scope) -> Element {
 /// Write a `StandardNumber` as its element, `b:StandardNumber`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn standard_number(node: &super::StandardNumber, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::STANDARD_NUMBER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::STANDARD_NUMBER_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -779,7 +835,11 @@ pub fn standard_number(node: &super::StandardNumber, scope: &mut Scope) -> Eleme
 /// Write a `StateOrProvince` as its element, `b:StateProvince`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn state_or_province(node: &super::StateOrProvince, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::STATE_OR_PROVINCE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::STATE_OR_PROVINCE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -787,7 +847,7 @@ pub fn state_or_province(node: &super::StateOrProvince, scope: &mut Scope) -> El
 /// Write a `Station` as its element, `b:Station`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn station(node: &super::Station, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::STATION_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::STATION_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -795,7 +855,7 @@ pub fn station(node: &super::Station, scope: &mut Scope) -> Element {
 /// Write a `Tag` as its element, `b:Tag`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tag(node: &super::Tag, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::TAG_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::TAG_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -803,7 +863,7 @@ pub fn tag(node: &super::Tag, scope: &mut Scope) -> Element {
 /// Write a `Theater` as its element, `b:Theater`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theater(node: &super::Theater, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::THEATER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::THEATER_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -811,7 +871,7 @@ pub fn theater(node: &super::Theater, scope: &mut Scope) -> Element {
 /// Write a `ThesisType` as its element, `b:ThesisType`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn thesis_type(node: &super::ThesisType, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::THESIS_TYPE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::THESIS_TYPE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -819,7 +879,7 @@ pub fn thesis_type(node: &super::ThesisType, scope: &mut Scope) -> Element {
 /// Write a `Title` as its element, `b:Title`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn title(node: &super::Title, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::TITLE_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::TITLE_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -827,7 +887,7 @@ pub fn title(node: &super::Title, scope: &mut Scope) -> Element {
 /// Write a `Translator` as its element, `b:Translator`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn translator(node: &super::Translator, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::TRANSLATOR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::TRANSLATOR_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -835,7 +895,7 @@ pub fn translator(node: &super::Translator, scope: &mut Scope) -> Element {
 /// Write a `Url` as its element, `b:URL`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn url(node: &super::Url, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::URL_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::URL_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -843,7 +903,7 @@ pub fn url(node: &super::Url, scope: &mut Scope) -> Element {
 /// Write a `Version` as its element, `b:Version`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn version(node: &super::Version, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::VERSION_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::VERSION_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -851,7 +911,7 @@ pub fn version(node: &super::Version, scope: &mut Scope) -> Element {
 /// Write a `Volume` as its element, `b:Volume`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn volume(node: &super::Volume, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::VOLUME_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::VOLUME_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -859,7 +919,7 @@ pub fn volume(node: &super::Volume, scope: &mut Scope) -> Element {
 /// Write a `Writer` as its element, `b:Writer`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn writer(node: &super::Writer, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::WRITER_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::WRITER_SHAPE, node.unknown.as_deref());
     writer.child(&node.name_list);
     writer.finish()
 }
@@ -867,7 +927,7 @@ pub fn writer(node: &super::Writer, scope: &mut Scope) -> Element {
 /// Write a `Year` as its element, `b:Year`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn year(node: &super::Year, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::YEAR_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(scope, &super::YEAR_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -875,7 +935,8 @@ pub fn year(node: &super::Year, scope: &mut Scope) -> Element {
 /// Write a `YearAccessed` as its element, `b:YearAccessed`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn year_accessed(node: &super::YearAccessed, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::YEAR_ACCESSED_SHAPE, &node.unknown);
+    let mut writer =
+        crate::Writer::new(scope, &super::YEAR_ACCESSED_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }

@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `AggregationInfo` as its element, `xlpcalc:aggregationInfo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn aggregation_info(node: &super::AggregationInfo, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::AGGREGATION_INFO_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::AGGREGATION_INFO_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.aggregation_type);
     writer.attribute(1, &node.source_field);
     writer.finish()
@@ -235,7 +238,7 @@ pub fn feature_support_info(node: &super::FeatureSupportInfo, scope: &mut Scope)
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::FEATURE_SUPPORT_INFO_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.feature_name);
     writer.finish()
@@ -250,7 +253,7 @@ pub fn pivot_area_reference_subtotals(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::PIVOT_AREA_REFERENCE_SUBTOTALS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.subtotal_pivot_subtotal_type);
     writer.finish()
@@ -265,7 +268,7 @@ pub fn pivot_field_subtotal_line_items(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::PIVOT_FIELD_SUBTOTAL_LINE_ITEMS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.subtotal_line_item);
     writer.finish()
@@ -277,7 +280,7 @@ pub fn pivot_field_subtotals(node: &super::PivotFieldSubtotals, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::PIVOT_FIELD_SUBTOTALS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.subtotal_pivot_item_subtotal);
     writer.finish()
@@ -286,8 +289,11 @@ pub fn pivot_field_subtotals(node: &super::PivotFieldSubtotals, scope: &mut Scop
 /// Write a `SubtotalLineItem` as its element, `xlpcalc:subtotalLineItem`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn subtotal_line_item(node: &super::SubtotalLineItem, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::SUBTOTAL_LINE_ITEM_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SUBTOTAL_LINE_ITEM_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
@@ -300,7 +306,7 @@ pub fn subtotal_pivot_item_subtotal(
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::SUBTOTAL_PIVOT_ITEM_SUBTOTAL_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -314,7 +320,7 @@ pub fn subtotal_pivot_subtotal_type(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SUBTOTAL_PIVOT_SUBTOTAL_TYPE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.subtotal_type);
     writer.finish()

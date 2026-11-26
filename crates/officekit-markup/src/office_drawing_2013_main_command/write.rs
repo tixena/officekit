@@ -229,7 +229,7 @@ pub fn blip_fill_blip_fill_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BLIP_FILL_BLIP_FILL_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.dpi);
     writer.attribute(1, &node.rot_with_shape);
@@ -248,7 +248,7 @@ pub fn blip_fill_reset_blip_fill_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BLIP_FILL_RESET_BLIP_FILL_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.src_rect_empty);
     writer.child(&node.fill_mode);
@@ -261,7 +261,7 @@ pub fn blip_fill_reset_blip_fill_properties(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BODY_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::BODY_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.spc_first_last_para);
     writer.attribute(2, &node.vert_overflow);
@@ -292,7 +292,8 @@ pub fn body_pr(node: &super::BodyPr, scope: &mut Scope) -> Element {
 /// Write a `Bounds` as its element, `oac:bounds`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bounds(node: &super::Bounds, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::BOUNDS_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::BOUNDS_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.l);
     writer.attribute(1, &node.t);
     writer.attribute(2, &node.r);
@@ -303,7 +304,9 @@ pub fn bounds(node: &super::Bounds, scope: &mut Scope) -> Element {
 /// Write a `BwMode` as its element, `oac:bwMode`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bw_mode(node: &super::BwMode, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::BW_MODE_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::BW_MODE_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `CNvCxnSpPrModifyNonVisualConnectorProps` as its element, `oac:cNvCxnSpPr`.
@@ -315,7 +318,7 @@ pub fn c_nv_cxn_sp_pr_modify_non_visual_connector_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_CXN_SP_PR_MODIFY_NON_VISUAL_CONNECTOR_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_select);
@@ -341,7 +344,7 @@ pub fn c_nv_cxn_sp_pr_reset_non_visual_connector_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_CXN_SP_PR_RESET_NON_VISUAL_CONNECTOR_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.st_cxn_empty);
     writer.child(&node.end_cxn_empty);
@@ -364,7 +367,7 @@ pub fn c_nv_graphic_frame_pr(node: &super::CNvGraphicFramePr, scope: &mut Scope)
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_GRAPHIC_FRAME_PR_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_drilldown);
@@ -384,7 +387,7 @@ pub fn c_nv_grp_sp_pr_modify_non_visual_group_drawing_shape_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_GRP_SP_PR_MODIFY_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_ungrp);
@@ -405,7 +408,7 @@ pub fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_GRP_SP_PR_NON_VISUAL_GROUP_DRAWING_SHAPE_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.group_shape_locks);
     writer.child(&node.extension_list);
@@ -415,8 +418,11 @@ pub fn c_nv_grp_sp_pr_non_visual_group_drawing_shape_props(
 /// Write a `CNvInkPr` as its element, `oac:cNvInkPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_ink_pr(node: &super::CNvInkPr, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::C_NV_INK_PR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::C_NV_INK_PR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_select);
     writer.attribute(2, &node.no_rot);
@@ -440,7 +446,7 @@ pub fn c_nv_pic_pr_modify_non_visual_picture_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_PIC_PR_MODIFY_NON_VISUAL_PICTURE_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_select);
@@ -466,7 +472,7 @@ pub fn c_nv_pic_pr_reset_non_visual_picture_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_PIC_PR_RESET_NON_VISUAL_PICTURE_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.lf_pr);
     writer.finish()
@@ -481,7 +487,7 @@ pub fn c_nv_pr_modify_non_visual_drawing_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_PR_MODIFY_NON_VISUAL_DRAWING_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.descr);
@@ -501,7 +507,7 @@ pub fn c_nv_pr_non_visual_drawing_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::C_NV_PR_NON_VISUAL_DRAWING_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -517,8 +523,11 @@ pub fn c_nv_pr_non_visual_drawing_props(
 /// Write a `CNvSpPr` as its element, `oac:cNvSpPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::C_NV_SP_PR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::C_NV_SP_PR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.no_grp);
     writer.attribute(1, &node.no_select);
     writer.attribute(2, &node.no_rot);
@@ -537,8 +546,11 @@ pub fn c_nv_sp_pr(node: &super::CNvSpPr, scope: &mut Scope) -> Element {
 /// Write a `CompressPicPr` as its element, `oac:compressPicPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn compress_pic_pr(node: &super::CompressPicPr, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COMPRESS_PIC_PR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::COMPRESS_PIC_PR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.remove_crop);
     writer.attribute(1, &node.use_local_dpi);
     writer.attribute(2, &node.cstate);
@@ -554,7 +566,7 @@ pub fn context_text_char_range_context(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CONTEXT_TEXT_CHAR_RANGE_CONTEXT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.len);
     writer.attribute(1, &node.hash);
@@ -565,7 +577,7 @@ pub fn context_text_char_range_context(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cxn_sp_mk(node: &super::CxnSpMk, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CXN_SP_MK_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::CXN_SP_MK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
     writer.finish()
@@ -574,8 +586,11 @@ pub fn cxn_sp_mk(node: &super::CxnSpMk, scope: &mut Scope) -> Element {
 /// Write a `CxnSpMkLst` as its element, `oac:cxnSpMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cxn_sp_mk_lst(node: &super::CxnSpMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CXN_SP_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CXN_SP_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -584,7 +599,7 @@ pub fn cxn_sp_mk_lst(node: &super::CxnSpMkLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dc_mk_lst(node: &super::DcMkLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DC_MK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::DC_MK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -592,8 +607,11 @@ pub fn dc_mk_lst(node: &super::DcMkLst, scope: &mut Scope) -> Element {
 /// Write a `DeMasterMkLst` as its element, `oac:deMasterMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn de_master_mk_lst(node: &super::DeMasterMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DE_MASTER_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DE_MASTER_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -602,7 +620,7 @@ pub fn de_master_mk_lst(node: &super::DeMasterMkLst, scope: &mut Scope) -> Eleme
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn de_mk_lst(node: &super::DeMkLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DE_MK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::DE_MK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -610,14 +628,19 @@ pub fn de_mk_lst(node: &super::DeMkLst, scope: &mut Scope) -> Element {
 /// Write a `DePkg` as its element, `oac:dePkg`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn de_pkg(node: &super::DePkg, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::DE_PKG_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::DE_PKG_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `DeSrcMkLst` as its element, `oac:deSrcMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn de_src_mk_lst(node: &super::DeSrcMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DE_SRC_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DE_SRC_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -625,8 +648,11 @@ pub fn de_src_mk_lst(node: &super::DeSrcMkLst, scope: &mut Scope) -> Element {
 /// Write a `DeTgtMkLst` as its element, `oac:deTgtMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn de_tgt_mk_lst(node: &super::DeTgtMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DE_TGT_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DE_TGT_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -635,7 +661,7 @@ pub fn de_tgt_mk_lst(node: &super::DeTgtMkLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dg_mk_lst(node: &super::DgMkLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DG_MK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::DG_MK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -643,14 +669,17 @@ pub fn dg_mk_lst(node: &super::DgMkLst, scope: &mut Scope) -> Element {
 /// Write a `Dpi` as its element, `oac:dpi`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dpi(node: &super::Dpi, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::DPI_SHAPE, &node.unknown).finish()
+    officekit_markup_base::Writer::new(scope, &super::DPI_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `DrSelLst` as its element, `oac:drSelLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn dr_sel_lst(node: &super::DrSelLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DR_SEL_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DR_SEL_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -658,8 +687,11 @@ pub fn dr_sel_lst(node: &super::DrSelLst, scope: &mut Scope) -> Element {
 /// Write a `EditorSelLst` as its element, `oac:editorSelLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn editor_sel_lst(node: &super::EditorSelLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EDITOR_SEL_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::EDITOR_SEL_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -667,14 +699,19 @@ pub fn editor_sel_lst(node: &super::EditorSelLst, scope: &mut Scope) -> Element 
 /// Write a `Effect` as its element, `oac:effect`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn effect(node: &super::Effect, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::EFFECT_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::EFFECT_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `EffectRef` as its element, `oac:effectRef`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn effect_ref(node: &super::EffectRef, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EFFECT_REF_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::EFFECT_REF_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
     writer.finish()
@@ -683,8 +720,11 @@ pub fn effect_ref(node: &super::EffectRef, scope: &mut Scope) -> Element {
 /// Write a `EndCxnConnection` as its element, `oac:endCxn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn end_cxn_connection(node: &super::EndCxnConnection, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::END_CXN_CONNECTION_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::END_CXN_CONNECTION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.idx);
     writer.finish()
@@ -693,38 +733,49 @@ pub fn end_cxn_connection(node: &super::EndCxnConnection, scope: &mut Scope) -> 
 /// Write a `EndCxnEmpty` as its element, `oac:endCxn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn end_cxn_empty(node: &super::EndCxnEmpty, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::END_CXN_EMPTY_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::END_CXN_EMPTY_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `ExtLst` as its element, `oac:extLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `Fill` as its element, `oac:fill`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fill(node: &super::Fill, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::FILL_SHAPE, &node.unknown).finish()
+    officekit_markup_base::Writer::new(scope, &super::FILL_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `FillMode` as its element, `oac:fillMode`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fill_mode(node: &super::FillMode, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::FILL_MODE_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::FILL_MODE_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `FillRect` as its element, `oac:fillRect`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fill_rect(node: &super::FillRect, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::FILL_RECT_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::FILL_RECT_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `FillRef` as its element, `oac:fillRef`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn fill_ref(node: &super::FillRef, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::FILL_REF_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::FILL_REF_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
     writer.finish()
@@ -734,7 +785,7 @@ pub fn fill_ref(node: &super::FillRef, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn font_ref(node: &super::FontRef, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::FONT_REF_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::FONT_REF_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
     writer.finish()
@@ -743,14 +794,17 @@ pub fn font_ref(node: &super::FontRef, scope: &mut Scope) -> Element {
 /// Write a `Geom` as its element, `oac:geom`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn geom(node: &super::Geom, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::GEOM_SHAPE, &node.unknown).finish()
+    officekit_markup_base::Writer::new(scope, &super::GEOM_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `GraphicFrameMk` as its element, `oac:graphicFrameMk`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphic_frame_mk(node: &super::GraphicFrameMk, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRAPHIC_FRAME_MK_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRAPHIC_FRAME_MK_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
     writer.finish()
@@ -762,7 +816,7 @@ pub fn graphic_frame_mk_lst(node: &super::GraphicFrameMkLst, scope: &mut Scope) 
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GRAPHIC_FRAME_MK_LST_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.content);
     writer.finish()
@@ -774,7 +828,7 @@ pub fn graphic_parent_mk_lst(node: &super::GraphicParentMkLst, scope: &mut Scope
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GRAPHIC_PARENT_MK_LST_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.content);
     writer.finish()
@@ -783,8 +837,11 @@ pub fn graphic_parent_mk_lst(node: &super::GraphicParentMkLst, scope: &mut Scope
 /// Write a `GridColMkLst` as its element, `oac:gridColMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grid_col_mk_lst(node: &super::GridColMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRID_COL_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRID_COL_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -801,7 +858,7 @@ pub fn group_command(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grp_cmd(node: &super::GrpCmd, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRP_CMD_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::GRP_CMD_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.ver_id);
     writer.attribute(1, &node.prevent_regroup);
     writer.attribute(2, &node.grp_id);
@@ -817,7 +874,7 @@ pub fn grp_cmd(node: &super::GrpCmd, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grp_sp_mk(node: &super::GrpSpMk, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRP_SP_MK_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::GRP_SP_MK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
     writer.finish()
@@ -826,8 +883,11 @@ pub fn grp_sp_mk(node: &super::GrpSpMk, scope: &mut Scope) -> Element {
 /// Write a `GrpSpMkLst` as its element, `oac:grpSpMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grp_sp_mk_lst(node: &super::GrpSpMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRP_SP_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRP_SP_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -841,7 +901,7 @@ pub fn grp_sp_pr_group_shape_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GRP_SP_PR_GROUP_SHAPE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_group_transform2d);
@@ -861,7 +921,7 @@ pub fn grp_sp_pr_reset_group_shape_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GRP_SP_PR_RESET_GROUP_SHAPE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.xfrm_empty);
     writer.child(&node.fill);
@@ -875,8 +935,11 @@ pub fn grp_sp_pr_reset_group_shape_properties(
 /// Write a `HlinkClickEmpty` as its element, `oac:hlinkClick`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hlink_click_empty(node: &super::HlinkClickEmpty, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::HLINK_CLICK_EMPTY_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::HLINK_CLICK_EMPTY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
@@ -889,7 +952,7 @@ pub fn hlink_click_hyperlink_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::HLINK_CLICK_HYPERLINK_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.snd_data);
     writer.finish()
@@ -898,8 +961,11 @@ pub fn hlink_click_hyperlink_props(
 /// Write a `HlinkHoverEmpty` as its element, `oac:hlinkHover`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hlink_hover_empty(node: &super::HlinkHoverEmpty, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::HLINK_HOVER_EMPTY_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::HLINK_HOVER_EMPTY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
@@ -912,7 +978,7 @@ pub fn hlink_hover_hyperlink_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::HLINK_HOVER_HYPERLINK_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.snd_data);
     writer.finish()
@@ -921,8 +987,11 @@ pub fn hlink_hover_hyperlink_props(
 /// Write a `HlinkMkLst` as its element, `oac:hlinkMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn hlink_mk_lst(node: &super::HlinkMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::HLINK_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::HLINK_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -936,7 +1005,7 @@ pub fn hlink_modify_hyperlink_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::HLINK_MODIFY_HYPERLINK_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.hlink_click_hyperlink_props);
     writer.child(&node.hlink_hover_hyperlink_props);
@@ -952,7 +1021,7 @@ pub fn hlink_reset_hyperlink_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::HLINK_RESET_HYPERLINK_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.hlink_click_empty);
     writer.child(&node.hlink_hover_empty);
@@ -963,7 +1032,7 @@ pub fn hlink_reset_hyperlink_props(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn img_data(node: &super::ImgData, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::IMG_DATA_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::IMG_DATA_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -972,7 +1041,7 @@ pub fn img_data(node: &super::ImgData, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn img_link(node: &super::ImgLink, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::IMG_LINK_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::IMG_LINK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.tgt);
     writer.finish()
 }
@@ -981,7 +1050,7 @@ pub fn img_link(node: &super::ImgLink, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn img_url(node: &super::ImgUrl, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::IMG_URL_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::IMG_URL_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.src);
     writer.attribute(1, &node.linkage);
     writer.finish()
@@ -990,7 +1059,8 @@ pub fn img_url(node: &super::ImgUrl, scope: &mut Scope) -> Element {
 /// Write a `InkMk` as its element, `oac:inkMk`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ink_mk(node: &super::InkMk, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::INK_MK_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::INK_MK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
     writer.finish()
@@ -999,8 +1069,11 @@ pub fn ink_mk(node: &super::InkMk, scope: &mut Scope) -> Element {
 /// Write a `InkMkLst` as its element, `oac:inkMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ink_mk_lst(node: &super::InkMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::INK_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::INK_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1008,14 +1081,17 @@ pub fn ink_mk_lst(node: &super::InkMkLst, scope: &mut Scope) -> Element {
 /// Write a `LfPr` as its element, `oac:lfPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn lf_pr(node: &super::LfPr, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::LF_PR_SHAPE, &node.unknown).finish()
+    officekit_markup_base::Writer::new(scope, &super::LF_PR_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `LineProps` as its element, `oac:lineProps`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn line_props(node: &super::LineProps, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LINE_PROPS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::LINE_PROPS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.w);
     writer.attribute(1, &node.cap);
     writer.attribute(2, &node.cmpd);
@@ -1032,13 +1108,14 @@ pub fn line_props(node: &super::LineProps, scope: &mut Scope) -> Element {
 /// Write a `Ln` as its element, `oac:ln`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ln(node: &super::Ln, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::LN_SHAPE, &node.unknown).finish()
+    officekit_markup_base::Writer::new(scope, &super::LN_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `LnRef` as its element, `oac:lnRef`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ln_ref(node: &super::LnRef, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::LN_REF_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::LN_REF_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.idx);
     writer.child(&node.content);
     writer.finish()
@@ -1047,8 +1124,11 @@ pub fn ln_ref(node: &super::LnRef, scope: &mut Scope) -> Element {
 /// Write a `Model3DMkLst` as its element, `oac:model3DMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn model3d_mk_lst(node: &super::Model3DMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MODEL3D_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::MODEL3D_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1056,8 +1136,11 @@ pub fn model3d_mk_lst(node: &super::Model3DMkLst, scope: &mut Scope) -> Element 
 /// Write a `NoAdjustHandles` as its element, `oac:noAdjustHandles`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_adjust_handles(node: &super::NoAdjustHandles, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::NO_ADJUST_HANDLES_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NO_ADJUST_HANDLES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
@@ -1067,7 +1150,7 @@ pub fn no_change_arrowheads(node: &super::NoChangeArrowheads, scope: &mut Scope)
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::NO_CHANGE_ARROWHEADS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -1075,8 +1158,11 @@ pub fn no_change_arrowheads(node: &super::NoChangeArrowheads, scope: &mut Scope)
 /// Write a `NoChangeAspect` as its element, `oac:noChangeAspect`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_change_aspect(node: &super::NoChangeAspect, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::NO_CHANGE_ASPECT_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NO_CHANGE_ASPECT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
@@ -1086,7 +1172,7 @@ pub fn no_change_shape_type(node: &super::NoChangeShapeType, scope: &mut Scope) 
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::NO_CHANGE_SHAPE_TYPE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -1094,43 +1180,59 @@ pub fn no_change_shape_type(node: &super::NoChangeShapeType, scope: &mut Scope) 
 /// Write a `NoEditPoints` as its element, `oac:noEditPoints`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_edit_points(node: &super::NoEditPoints, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::NO_EDIT_POINTS_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NO_EDIT_POINTS_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `NoGrp` as its element, `oac:noGrp`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_grp(node: &super::NoGrp, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::NO_GRP_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::NO_GRP_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `NoMove` as its element, `oac:noMove`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_move(node: &super::NoMove, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::NO_MOVE_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::NO_MOVE_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `NoResize` as its element, `oac:noResize`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_resize(node: &super::NoResize, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::NO_RESIZE_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::NO_RESIZE_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `NoRot` as its element, `oac:noRot`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_rot(node: &super::NoRot, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::NO_ROT_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::NO_ROT_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `NoSelect` as its element, `oac:noSelect`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_select(node: &super::NoSelect, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::NO_SELECT_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::NO_SELECT_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `Off` as its element, `oac:off`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn off(node: &super::Off, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::OFF_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::OFF_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
     writer.finish()
@@ -1139,8 +1241,11 @@ pub fn off(node: &super::Off, scope: &mut Scope) -> Element {
 /// Write a `OrigImgData` as its element, `oac:origImgData`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn orig_img_data(node: &super::OrigImgData, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ORIG_IMG_DATA_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ORIG_IMG_DATA_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -1148,7 +1253,8 @@ pub fn orig_img_data(node: &super::OrigImgData, scope: &mut Scope) -> Element {
 /// Write a `PPr` as its element, `oac:pPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn p_pr(node: &super::PPr, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::P_PR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::P_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.mar_l);
     writer.attribute(1, &node.mar_r);
     writer.attribute(2, &node.lvl);
@@ -1176,7 +1282,8 @@ pub fn p_pr(node: &super::PPr, scope: &mut Scope) -> Element {
 /// Write a `PicMk` as its element, `oac:picMk`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pic_mk(node: &super::PicMk, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::PIC_MK_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::PIC_MK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
     writer.finish()
@@ -1185,8 +1292,11 @@ pub fn pic_mk(node: &super::PicMk, scope: &mut Scope) -> Element {
 /// Write a `PicMkLst` as its element, `oac:picMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn pic_mk_lst(node: &super::PicMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PIC_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PIC_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1194,7 +1304,8 @@ pub fn pic_mk_lst(node: &super::PicMkLst, scope: &mut Scope) -> Element {
 /// Write a `Reset` as its element, `oac:reset`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn reset(node: &super::Reset, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::RESET_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::RESET_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -1202,20 +1313,27 @@ pub fn reset(node: &super::Reset, scope: &mut Scope) -> Element {
 /// Write a `RotWithShape` as its element, `oac:rotWithShape`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rot_with_shape(node: &super::RotWithShape, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::ROT_WITH_SHAPE_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ROT_WITH_SHAPE_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `Scene3d` as its element, `oac:scene3d`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn scene3d(node: &super::Scene3d, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::SCENE3D_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::SCENE3D_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `SndData` as its element, `oac:sndData`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn snd_data(node: &super::SndData, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SND_DATA_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::SND_DATA_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -1223,13 +1341,14 @@ pub fn snd_data(node: &super::SndData, scope: &mut Scope) -> Element {
 /// Write a `Sp3d` as its element, `oac:sp3d`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp3d(node: &super::Sp3d, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::SP3D_SHAPE, &node.unknown).finish()
+    officekit_markup_base::Writer::new(scope, &super::SP3D_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `SpMk` as its element, `oac:spMk`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_mk(node: &super::SpMk, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_MK_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SP_MK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.creation_id);
     writer.finish()
@@ -1244,7 +1363,7 @@ pub fn sp_mk_lst_shape_moniker_list(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SP_MK_LST_SHAPE_MONIKER_LIST_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.content);
     writer.finish()
@@ -1259,7 +1378,7 @@ pub fn sp_mk_lst_shape_props_moniker_list(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SP_MK_LST_SHAPE_PROPS_MONIKER_LIST_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.content);
     writer.finish()
@@ -1274,7 +1393,7 @@ pub fn sp_pr_reset_shape_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SP_PR_RESET_SHAPE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.xfrm_empty);
     writer.child(&node.geom);
@@ -1294,7 +1413,7 @@ pub fn sp_pr_shape_properties(node: &super::SpPrShapeProperties, scope: &mut Sco
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SP_PR_SHAPE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
@@ -1311,7 +1430,12 @@ pub fn sp_pr_shape_properties(node: &super::SpPrShapeProperties, scope: &mut Sco
 /// Write a `SrcRectEmpty` as its element, `oac:srcRect`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn src_rect_empty(node: &super::SrcRectEmpty, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::SRC_RECT_EMPTY_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SRC_RECT_EMPTY_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `SrcRectRelativeRectProps` as its element, `oac:srcRect`.
@@ -1323,7 +1447,7 @@ pub fn src_rect_relative_rect_props(
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::SRC_RECT_RELATIVE_RECT_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -1331,8 +1455,11 @@ pub fn src_rect_relative_rect_props(
 /// Write a `StCxnConnection` as its element, `oac:stCxn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn st_cxn_connection(node: &super::StCxnConnection, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ST_CXN_CONNECTION_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ST_CXN_CONNECTION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.idx);
     writer.finish()
@@ -1341,13 +1468,19 @@ pub fn st_cxn_connection(node: &super::StCxnConnection, scope: &mut Scope) -> El
 /// Write a `StCxnEmpty` as its element, `oac:stCxn`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn st_cxn_empty(node: &super::StCxnEmpty, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::ST_CXN_EMPTY_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ST_CXN_EMPTY_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `Style` as its element, `oac:style`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::STYLE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::STYLE_SHAPE, node.unknown.as_deref());
     writer.child(&node.ln_ref);
     writer.child(&node.fill_ref);
     writer.child(&node.effect_ref);
@@ -1358,8 +1491,11 @@ pub fn style(node: &super::Style, scope: &mut Scope) -> Element {
 /// Write a `SvgBlipMkLst` as its element, `oac:svgBlipMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn svg_blip_mk_lst(node: &super::SvgBlipMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SVG_BLIP_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SVG_BLIP_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1367,8 +1503,11 @@ pub fn svg_blip_mk_lst(node: &super::SvgBlipMkLst, scope: &mut Scope) -> Element
 /// Write a `TblMkLst` as its element, `oac:tblMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tbl_mk_lst(node: &super::TblMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TBL_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TBL_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1377,7 +1516,7 @@ pub fn tbl_mk_lst(node: &super::TblMkLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tc_mk_lst(node: &super::TcMkLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TC_MK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TC_MK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -1386,7 +1525,7 @@ pub fn tc_mk_lst(node: &super::TcMkLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tr_mk_lst(node: &super::TrMkLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TR_MK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TR_MK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -1394,8 +1533,11 @@ pub fn tr_mk_lst(node: &super::TrMkLst, scope: &mut Scope) -> Element {
 /// Write a `TxBodyMkLst` as its element, `oac:txBodyMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tx_body_mk_lst(node: &super::TxBodyMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TX_BODY_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TX_BODY_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1403,14 +1545,19 @@ pub fn tx_body_mk_lst(node: &super::TxBodyMkLst, scope: &mut Scope) -> Element {
 /// Write a `TxBodyPkg` as its element, `oac:txBodyPkg`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tx_body_pkg(node: &super::TxBodyPkg, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::TX_BODY_PKG_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TX_BODY_PKG_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `TxMkLst` as its element, `oac:txMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tx_mk_lst(node: &super::TxMkLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TX_MK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::TX_MK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -1418,8 +1565,11 @@ pub fn tx_mk_lst(node: &super::TxMkLst, scope: &mut Scope) -> Element {
 /// Write a `UseBounds` as its element, `oac:useBounds`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn use_bounds(node: &super::UseBounds, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::USE_BOUNDS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::USE_BOUNDS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.text(&node.value);
     writer.finish()
 }
@@ -1427,8 +1577,11 @@ pub fn use_bounds(node: &super::UseBounds, scope: &mut Scope) -> Element {
 /// Write a `ViewSelLst` as its element, `oac:viewSelLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn view_sel_lst(node: &super::ViewSelLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::VIEW_SEL_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::VIEW_SEL_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -1436,7 +1589,12 @@ pub fn view_sel_lst(node: &super::ViewSelLst, scope: &mut Scope) -> Element {
 /// Write a `XfrmEmpty` as its element, `oac:xfrm`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm_empty(node: &super::XfrmEmpty, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::XFRM_EMPTY_SHAPE, &node.unknown).finish()
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::XFRM_EMPTY_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `XfrmModifyTransformProps` as its element, `oac:xfrm`.
@@ -1448,7 +1606,7 @@ pub fn xfrm_modify_transform_props(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::XFRM_MODIFY_TRANSFORM_PROPS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -1463,8 +1621,11 @@ pub fn xfrm_modify_transform_props(
 /// Write a `XfrmTransform2D` as its element, `oac:xfrm`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm_transform2d(node: &super::XfrmTransform2D, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::XFRM_TRANSFORM2D_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::XFRM_TRANSFORM2D_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);
     writer.attribute(2, &node.flip_v);

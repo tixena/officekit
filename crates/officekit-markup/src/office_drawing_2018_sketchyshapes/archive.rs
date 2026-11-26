@@ -225,7 +225,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<drawing::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -233,7 +233,7 @@ pub struct ExtLstMirror {
 #[rkyv(remote = super::LineSketchCurved)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchCurvedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -241,7 +241,7 @@ pub struct LineSketchCurvedMirror {
 #[rkyv(remote = super::LineSketchFreehand)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchFreehandMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -249,7 +249,7 @@ pub struct LineSketchFreehandMirror {
 #[rkyv(remote = super::LineSketchNone)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchNoneMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -257,7 +257,7 @@ pub struct LineSketchNoneMirror {
 #[rkyv(remote = super::LineSketchScribble)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LineSketchScribbleMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -270,7 +270,7 @@ pub struct LineSketchStylePropsMirror {
     pub sd: Option<String>,
     pub seed: Option<Box<super::Seed>>,
     pub r#type: Option<Box<super::Type>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -278,7 +278,7 @@ pub struct LineSketchStylePropsMirror {
 #[rkyv(remote = super::Seed)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SeedMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -288,7 +288,7 @@ pub struct SeedMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct TypeMirror {
     pub content: Option<Box<super::LineSketchTypePropertiesContent>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

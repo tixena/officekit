@@ -233,7 +233,8 @@ impl super::Transform for wordprocessing_drawing::AbsolutePositionOffset {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for wordprocessing_drawing::AbsolutePositionOffset {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for wordprocessing_drawing::AbsolutePositionOffset {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::ABSOLUTE_POSITION_OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for wordprocessing_drawing::AbsolutePositionOffset {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::ABSOLUTE_POSITION_OFFSET_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -436,7 +437,7 @@ impl super::Transform for wordprocessing_drawing::AnchorForFloatingDrawingMLObje
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.simple_positioning_coordinates =
             super::transform_child(&self.simple_positioning_coordinates, ctx, &mut rebase);
         node.horizontal_positioning =
@@ -458,7 +459,7 @@ impl super::Transform for wordprocessing_drawing::AnchorForFloatingDrawingMLObje
         node.graphic_object = super::transform_child(&self.graphic_object, ctx, &mut rebase);
         node.size_rel_h = super::transform_child(&self.size_rel_h, ctx, &mut rebase);
         node.size_rel_v = super::transform_child(&self.size_rel_v, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -476,7 +477,7 @@ impl super::Visit for wordprocessing_drawing::AnchorForFloatingDrawingMLObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.simple_positioning_coordinates, visitor);
         walk.child(&self.horizontal_positioning, visitor);
         walk.child(&self.vertical_positioning, visitor);
@@ -501,7 +502,7 @@ impl WriteThrough for wordprocessing_drawing::AnchorForFloatingDrawingMLObject {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::anchor_for_floating_drawing_ml_object(
@@ -513,7 +514,7 @@ impl WriteThrough for wordprocessing_drawing::AnchorForFloatingDrawingMLObject {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.dist_t);
         through.attribute(1, &self.dist_b);
@@ -580,12 +581,12 @@ impl super::Transform for wordprocessing_drawing::BackgroundFormatting {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fill_properties_content =
             super::transform_choice(&self.fill_properties_content, ctx, &mut rebase);
         node.effect_properties_content =
             super::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -603,7 +604,7 @@ impl super::Visit for wordprocessing_drawing::BackgroundFormatting {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.fill_properties_content, visitor);
         walk.choice(&self.effect_properties_content, visitor);
         walk.finish(visitor);
@@ -619,7 +620,7 @@ impl WriteThrough for wordprocessing_drawing::BackgroundFormatting {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::BACKGROUND_FORMATTING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::background_formatting(self, out.scope());
@@ -628,7 +629,7 @@ impl WriteThrough for wordprocessing_drawing::BackgroundFormatting {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::BACKGROUND_FORMATTING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -673,14 +674,14 @@ impl super::Transform for wordprocessing_drawing::BodyProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.preset_text_warp = super::transform_child(&self.preset_text_warp, ctx, &mut rebase);
         node.text_autofit_content =
             super::transform_choice(&self.text_autofit_content, ctx, &mut rebase);
         node.scene3d = super::transform_child(&self.scene3d, ctx, &mut rebase);
         node.text3d_content = super::transform_choice(&self.text3d_content, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -698,7 +699,7 @@ impl super::Visit for wordprocessing_drawing::BodyProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.preset_text_warp, visitor);
         walk.choice(&self.text_autofit_content, visitor);
         walk.child(&self.scene3d, visitor);
@@ -717,7 +718,7 @@ impl WriteThrough for wordprocessing_drawing::BodyProperties {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::BODY_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::body_properties(self, out.scope());
@@ -726,7 +727,7 @@ impl WriteThrough for wordprocessing_drawing::BodyProperties {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::BODY_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rot);
         through.attribute(1, &self.spc_first_last_para);
@@ -793,11 +794,11 @@ impl super::Transform for wordprocessing_drawing::CommonDrawingMLNonVisualProper
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.graphic_frame_locks =
             super::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -815,7 +816,7 @@ impl super::Visit for wordprocessing_drawing::CommonDrawingMLNonVisualProperties
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.graphic_frame_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -831,7 +832,7 @@ impl WriteThrough for wordprocessing_drawing::CommonDrawingMLNonVisualProperties
         let converted = super::converts(
             out,
             &wordprocessing_drawing::COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::common_drawing_ml_non_visual_properties(
@@ -843,7 +844,7 @@ impl WriteThrough for wordprocessing_drawing::CommonDrawingMLNonVisualProperties
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.graphic_frame_locks, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -888,12 +889,12 @@ impl super::Transform for wordprocessing_drawing::ContentPart {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.nv_content_part_pr =
             super::transform_child(&self.nv_content_part_pr, ctx, &mut rebase);
         node.xfrm = super::transform_child(&self.xfrm, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -911,7 +912,7 @@ impl super::Visit for wordprocessing_drawing::ContentPart {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.nv_content_part_pr, visitor);
         walk.child(&self.xfrm, visitor);
         walk.child(&self.extension_list, visitor);
@@ -928,7 +929,7 @@ impl WriteThrough for wordprocessing_drawing::ContentPart {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::CONTENT_PART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::content_part(self, out.scope());
@@ -937,7 +938,7 @@ impl WriteThrough for wordprocessing_drawing::ContentPart {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::CONTENT_PART_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.attribute(1, &self.id);
@@ -1124,12 +1125,12 @@ impl super::Transform for wordprocessing_drawing::DrawingObjectNonVisualProperti
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.click_hyperlink = super::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             super::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1147,7 +1148,7 @@ impl super::Visit for wordprocessing_drawing::DrawingObjectNonVisualProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.click_hyperlink, visitor);
         walk.child(&self.hyperlink_for_hover, visitor);
         walk.child(&self.extension_list, visitor);
@@ -1164,7 +1165,7 @@ impl WriteThrough for wordprocessing_drawing::DrawingObjectNonVisualProperties {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::drawing_object_non_visual_properties(
@@ -1176,7 +1177,7 @@ impl WriteThrough for wordprocessing_drawing::DrawingObjectNonVisualProperties {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.name);
@@ -1227,7 +1228,8 @@ impl super::Transform for wordprocessing_drawing::DrawingObjectSize {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1245,7 +1247,7 @@ impl super::Visit for wordprocessing_drawing::DrawingObjectSize {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1258,7 +1260,7 @@ impl WriteThrough for wordprocessing_drawing::DrawingObjectSize {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::DRAWING_OBJECT_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::drawing_object_size(self, out.scope());
@@ -1267,7 +1269,7 @@ impl WriteThrough for wordprocessing_drawing::DrawingObjectSize {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::DRAWING_OBJECT_SIZE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.cx);
         through.attribute(1, &self.cy);
@@ -1312,9 +1314,9 @@ impl super::Transform for wordprocessing_drawing::ExtensionList {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1332,7 +1334,7 @@ impl super::Visit for wordprocessing_drawing::ExtensionList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -1347,7 +1349,7 @@ impl WriteThrough for wordprocessing_drawing::ExtensionList {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::extension_list(self, out.scope());
@@ -1356,7 +1358,7 @@ impl WriteThrough for wordprocessing_drawing::ExtensionList {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::EXTENSION_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -1400,7 +1402,7 @@ impl super::Transform for wordprocessing_drawing::GraphicalObjectContainer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_graphic_frame_drawing_properties = super::transform_child(
@@ -1411,7 +1413,7 @@ impl super::Transform for wordprocessing_drawing::GraphicalObjectContainer {
         node.xfrm = super::transform_child(&self.xfrm, ctx, &mut rebase);
         node.graphic_object = super::transform_child(&self.graphic_object, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1429,7 +1431,7 @@ impl super::Visit for wordprocessing_drawing::GraphicalObjectContainer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_graphic_frame_drawing_properties, visitor);
         walk.child(&self.xfrm, visitor);
@@ -1448,7 +1450,7 @@ impl WriteThrough for wordprocessing_drawing::GraphicalObjectContainer {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::GRAPHICAL_OBJECT_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1458,7 +1460,7 @@ impl WriteThrough for wordprocessing_drawing::GraphicalObjectContainer {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::GRAPHICAL_OBJECT_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_graphic_frame_drawing_properties, ctx)?;
@@ -1506,7 +1508,7 @@ impl super::Transform for wordprocessing_drawing::GroupShape {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_group_shape_drawing_properties = super::transform_child(
@@ -1517,7 +1519,7 @@ impl super::Transform for wordprocessing_drawing::GroupShape {
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1535,7 +1537,7 @@ impl super::Visit for wordprocessing_drawing::GroupShape {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_group_shape_drawing_properties, visitor);
         walk.child(&self.properties, visitor);
@@ -1554,7 +1556,7 @@ impl WriteThrough for wordprocessing_drawing::GroupShape {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::GROUP_SHAPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::group_shape(self, out.scope());
@@ -1563,7 +1565,7 @@ impl WriteThrough for wordprocessing_drawing::GroupShape {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::GROUP_SHAPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_group_shape_drawing_properties, ctx)?;
@@ -1750,7 +1752,7 @@ impl super::Transform for wordprocessing_drawing::GroupShapeProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_group_transform2d =
             super::transform_child(&self.xfrm_group_transform2d, ctx, &mut rebase);
         node.fill_properties_content =
@@ -1759,7 +1761,7 @@ impl super::Transform for wordprocessing_drawing::GroupShapeProperties {
             super::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
         node.scene3d = super::transform_child(&self.scene3d, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1777,7 +1779,7 @@ impl super::Visit for wordprocessing_drawing::GroupShapeProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_group_transform2d, visitor);
         walk.choice(&self.fill_properties_content, visitor);
         walk.choice(&self.effect_properties_content, visitor);
@@ -1796,7 +1798,7 @@ impl WriteThrough for wordprocessing_drawing::GroupShapeProperties {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::GROUP_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::group_shape_properties(self, out.scope());
@@ -1805,7 +1807,7 @@ impl WriteThrough for wordprocessing_drawing::GroupShapeProperties {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::GROUP_SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_group_transform2d, ctx)?;
@@ -1854,9 +1856,9 @@ impl super::Transform for wordprocessing_drawing::HorizontalPositioning {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1874,7 +1876,7 @@ impl super::Visit for wordprocessing_drawing::HorizontalPositioning {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1889,7 +1891,7 @@ impl WriteThrough for wordprocessing_drawing::HorizontalPositioning {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::HORIZONTAL_POSITIONING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::horizontal_positioning(self, out.scope());
@@ -1898,7 +1900,7 @@ impl WriteThrough for wordprocessing_drawing::HorizontalPositioning {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::HORIZONTAL_POSITIONING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.relative_from);
         through.choice(&self.content, ctx)?;
@@ -2047,7 +2049,7 @@ impl super::Transform for wordprocessing_drawing::InlineDrawingMLObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.drawing_object_size =
             super::transform_child(&self.drawing_object_size, ctx, &mut rebase);
         node.extents_including_effects =
@@ -2060,7 +2062,7 @@ impl super::Transform for wordprocessing_drawing::InlineDrawingMLObject {
             &mut rebase,
         );
         node.graphic_object = super::transform_child(&self.graphic_object, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2078,7 +2080,7 @@ impl super::Visit for wordprocessing_drawing::InlineDrawingMLObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.drawing_object_size, visitor);
         walk.child(&self.extents_including_effects, visitor);
         walk.child(&self.drawing_object_non_visual_properties, visitor);
@@ -2097,7 +2099,7 @@ impl WriteThrough for wordprocessing_drawing::InlineDrawingMLObject {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::INLINE_DRAWING_ML_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2107,7 +2109,7 @@ impl WriteThrough for wordprocessing_drawing::InlineDrawingMLObject {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::INLINE_DRAWING_ML_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.dist_t);
         through.attribute(1, &self.dist_b);
@@ -2161,7 +2163,8 @@ impl super::Transform for wordprocessing_drawing::NoTextWrapping {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2179,7 +2182,7 @@ impl super::Visit for wordprocessing_drawing::NoTextWrapping {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2192,7 +2195,7 @@ impl WriteThrough for wordprocessing_drawing::NoTextWrapping {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NO_TEXT_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::no_text_wrapping(self, out.scope());
@@ -2201,7 +2204,7 @@ impl WriteThrough for wordprocessing_drawing::NoTextWrapping {
         let through = super::Through::new(
             out,
             &wordprocessing_drawing::NO_TEXT_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -2244,13 +2247,13 @@ impl super::Transform for wordprocessing_drawing::NonVisualConnectorShapeDrawing
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.connection_shape_locks =
             super::transform_child(&self.connection_shape_locks, ctx, &mut rebase);
         node.connection_start = super::transform_child(&self.connection_start, ctx, &mut rebase);
         node.connection_end = super::transform_child(&self.connection_end, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2268,7 +2271,7 @@ impl super::Visit for wordprocessing_drawing::NonVisualConnectorShapeDrawingProp
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.connection_shape_locks, visitor);
         walk.child(&self.connection_start, visitor);
         walk.child(&self.connection_end, visitor);
@@ -2286,7 +2289,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualConnectorShapeDrawingProp
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2299,7 +2302,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualConnectorShapeDrawingProp
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.connection_shape_locks, ctx)?;
         through.child(&self.connection_start, ctx)?;
@@ -2346,11 +2349,11 @@ impl super::Transform for wordprocessing_drawing::NonVisualContentPartDrawingPro
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content_part_locks =
             super::transform_child(&self.content_part_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2368,7 +2371,7 @@ impl super::Visit for wordprocessing_drawing::NonVisualContentPartDrawingPropert
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.content_part_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -2384,7 +2387,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualContentPartDrawingPropert
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::non_visual_content_part_drawing_properties(
@@ -2396,7 +2399,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualContentPartDrawingPropert
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.is_comment);
         through.child(&self.content_part_locks, ctx)?;
@@ -2442,12 +2445,12 @@ impl super::Transform for wordprocessing_drawing::NonVisualDrawingProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.click_hyperlink = super::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             super::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2465,7 +2468,7 @@ impl super::Visit for wordprocessing_drawing::NonVisualDrawingProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.click_hyperlink, visitor);
         walk.child(&self.hyperlink_for_hover, visitor);
         walk.child(&self.extension_list, visitor);
@@ -2482,7 +2485,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualDrawingProperties {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2492,7 +2495,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualDrawingProperties {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.name);
@@ -2543,10 +2546,10 @@ impl super::Transform for wordprocessing_drawing::NonVisualDrawingPropertiesForA
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.locks = super::transform_child(&self.locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2564,7 +2567,7 @@ impl super::Visit for wordprocessing_drawing::NonVisualDrawingPropertiesForAShap
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -2580,7 +2583,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualDrawingPropertiesForAShap
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::non_visual_drawing_properties_for_a_shape(
@@ -2592,7 +2595,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualDrawingPropertiesForAShap
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.tx_box);
         through.child(&self.locks, ctx)?;
@@ -2638,11 +2641,11 @@ impl super::Transform for wordprocessing_drawing::NonVisualGraphicFrameDrawingPr
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.graphic_frame_locks =
             super::transform_child(&self.graphic_frame_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2660,7 +2663,7 @@ impl super::Visit for wordprocessing_drawing::NonVisualGraphicFrameDrawingProper
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.graphic_frame_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -2676,7 +2679,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualGraphicFrameDrawingProper
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2689,7 +2692,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualGraphicFrameDrawingProper
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.graphic_frame_locks, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -2734,10 +2737,10 @@ impl super::Transform for wordprocessing_drawing::NonVisualGroupShapeDrawingProp
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group_shape_locks = super::transform_child(&self.group_shape_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2755,7 +2758,7 @@ impl super::Visit for wordprocessing_drawing::NonVisualGroupShapeDrawingProperti
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group_shape_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -2771,7 +2774,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualGroupShapeDrawingProperti
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::non_visual_group_shape_drawing_properties(
@@ -2783,7 +2786,7 @@ impl WriteThrough for wordprocessing_drawing::NonVisualGroupShapeDrawingProperti
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.group_shape_locks, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -2828,7 +2831,7 @@ impl super::Transform for wordprocessing_drawing::NvContentPartPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_content_part_drawing_properties = super::transform_child(
@@ -2836,7 +2839,7 @@ impl super::Transform for wordprocessing_drawing::NvContentPartPr {
             ctx,
             &mut rebase,
         );
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2854,7 +2857,7 @@ impl super::Visit for wordprocessing_drawing::NvContentPartPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_content_part_drawing_properties, visitor);
         walk.finish(visitor);
@@ -2870,7 +2873,7 @@ impl WriteThrough for wordprocessing_drawing::NvContentPartPr {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::nv_content_part_pr(self, out.scope());
@@ -2879,7 +2882,7 @@ impl WriteThrough for wordprocessing_drawing::NvContentPartPr {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::NV_CONTENT_PART_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_content_part_drawing_properties, ctx)?;
@@ -2924,7 +2927,8 @@ impl super::Transform for wordprocessing_drawing::ObjectExtentsIncludingEffects 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2942,7 +2946,7 @@ impl super::Visit for wordprocessing_drawing::ObjectExtentsIncludingEffects {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2955,7 +2959,7 @@ impl WriteThrough for wordprocessing_drawing::ObjectExtentsIncludingEffects {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2965,7 +2969,7 @@ impl WriteThrough for wordprocessing_drawing::ObjectExtentsIncludingEffects {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.l);
         through.attribute(1, &self.t);
@@ -3012,7 +3016,8 @@ impl super::Transform for wordprocessing_drawing::RelativeHorizontalAlignment {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3030,7 +3035,7 @@ impl super::Visit for wordprocessing_drawing::RelativeHorizontalAlignment {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3043,7 +3048,7 @@ impl WriteThrough for wordprocessing_drawing::RelativeHorizontalAlignment {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3053,7 +3058,7 @@ impl WriteThrough for wordprocessing_drawing::RelativeHorizontalAlignment {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3097,7 +3102,8 @@ impl super::Transform for wordprocessing_drawing::RelativeVerticalAlignment {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3115,7 +3121,7 @@ impl super::Visit for wordprocessing_drawing::RelativeVerticalAlignment {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3128,7 +3134,7 @@ impl WriteThrough for wordprocessing_drawing::RelativeVerticalAlignment {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::RELATIVE_VERTICAL_ALIGNMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3138,7 +3144,7 @@ impl WriteThrough for wordprocessing_drawing::RelativeVerticalAlignment {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::RELATIVE_VERTICAL_ALIGNMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3182,9 +3188,9 @@ impl super::Transform for wordprocessing_drawing::RichTextBoxContentContainer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3202,7 +3208,7 @@ impl super::Visit for wordprocessing_drawing::RichTextBoxContentContainer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3217,7 +3223,7 @@ impl WriteThrough for wordprocessing_drawing::RichTextBoxContentContainer {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3227,7 +3233,7 @@ impl WriteThrough for wordprocessing_drawing::RichTextBoxContentContainer {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -3368,7 +3374,7 @@ impl super::Transform for wordprocessing_drawing::ShapeProperties {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -3379,7 +3385,7 @@ impl super::Transform for wordprocessing_drawing::ShapeProperties {
         node.scene3d = super::transform_child(&self.scene3d, ctx, &mut rebase);
         node.apply_3d = super::transform_child(&self.apply_3d, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3397,7 +3403,7 @@ impl super::Visit for wordprocessing_drawing::ShapeProperties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -3419,7 +3425,7 @@ impl WriteThrough for wordprocessing_drawing::ShapeProperties {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::shape_properties(self, out.scope());
@@ -3428,7 +3434,7 @@ impl WriteThrough for wordprocessing_drawing::ShapeProperties {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::SHAPE_PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
@@ -3480,12 +3486,12 @@ impl super::Transform for wordprocessing_drawing::ShapeStyle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.line_reference = super::transform_child(&self.line_reference, ctx, &mut rebase);
         node.fill_reference = super::transform_child(&self.fill_reference, ctx, &mut rebase);
         node.effect_reference = super::transform_child(&self.effect_reference, ctx, &mut rebase);
         node.font_reference = super::transform_child(&self.font_reference, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3503,7 +3509,7 @@ impl super::Visit for wordprocessing_drawing::ShapeStyle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.line_reference, visitor);
         walk.child(&self.fill_reference, visitor);
         walk.child(&self.effect_reference, visitor);
@@ -3521,7 +3527,7 @@ impl WriteThrough for wordprocessing_drawing::ShapeStyle {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::SHAPE_STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::shape_style(self, out.scope());
@@ -3530,7 +3536,7 @@ impl WriteThrough for wordprocessing_drawing::ShapeStyle {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::SHAPE_STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.line_reference, ctx)?;
         through.child(&self.fill_reference, ctx)?;
@@ -3674,7 +3680,8 @@ impl super::Transform for wordprocessing_drawing::SimplePositioningCoordinates {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3692,7 +3699,7 @@ impl super::Visit for wordprocessing_drawing::SimplePositioningCoordinates {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3705,7 +3712,7 @@ impl WriteThrough for wordprocessing_drawing::SimplePositioningCoordinates {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::SIMPLE_POSITIONING_COORDINATES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3715,7 +3722,7 @@ impl WriteThrough for wordprocessing_drawing::SimplePositioningCoordinates {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::SIMPLE_POSITIONING_COORDINATES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -3760,10 +3767,10 @@ impl super::Transform for wordprocessing_drawing::SquareWrapping {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.object_extents_including_effects =
             super::transform_child(&self.object_extents_including_effects, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3781,7 +3788,7 @@ impl super::Visit for wordprocessing_drawing::SquareWrapping {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.object_extents_including_effects, visitor);
         walk.finish(visitor);
     }
@@ -3796,7 +3803,7 @@ impl WriteThrough for wordprocessing_drawing::SquareWrapping {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::SQUARE_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::square_wrapping(self, out.scope());
@@ -3805,7 +3812,7 @@ impl WriteThrough for wordprocessing_drawing::SquareWrapping {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::SQUARE_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.wrap_text);
         through.attribute(1, &self.dist_t);
@@ -3854,9 +3861,9 @@ impl super::Transform for wordprocessing_drawing::TextualContentsOfShapeLinkedTx
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3874,7 +3881,7 @@ impl super::Visit for wordprocessing_drawing::TextualContentsOfShapeLinkedTxbx {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
     }
@@ -3889,7 +3896,7 @@ impl WriteThrough for wordprocessing_drawing::TextualContentsOfShapeLinkedTxbx {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::textual_contents_of_shape_linked_txbx(
@@ -3901,7 +3908,7 @@ impl WriteThrough for wordprocessing_drawing::TextualContentsOfShapeLinkedTxbx {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.seq);
@@ -3947,11 +3954,11 @@ impl super::Transform for wordprocessing_drawing::TextualContentsOfShapeTxbx {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.rich_text_box_content_container =
             super::transform_child(&self.rich_text_box_content_container, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3969,7 +3976,7 @@ impl super::Visit for wordprocessing_drawing::TextualContentsOfShapeTxbx {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.rich_text_box_content_container, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -3985,7 +3992,7 @@ impl WriteThrough for wordprocessing_drawing::TextualContentsOfShapeTxbx {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3995,7 +4002,7 @@ impl WriteThrough for wordprocessing_drawing::TextualContentsOfShapeTxbx {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.child(&self.rich_text_box_content_container, ctx)?;
@@ -4041,9 +4048,9 @@ impl super::Transform for wordprocessing_drawing::ThroughWrapping {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.polygon = super::transform_child(&self.polygon, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4061,7 +4068,7 @@ impl super::Visit for wordprocessing_drawing::ThroughWrapping {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.polygon, visitor);
         walk.finish(visitor);
     }
@@ -4076,7 +4083,7 @@ impl WriteThrough for wordprocessing_drawing::ThroughWrapping {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::THROUGH_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::through_wrapping(self, out.scope());
@@ -4085,7 +4092,7 @@ impl WriteThrough for wordprocessing_drawing::ThroughWrapping {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::THROUGH_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.wrap_text);
         through.attribute(1, &self.dist_l);
@@ -4132,9 +4139,9 @@ impl super::Transform for wordprocessing_drawing::TightWrapping {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.polygon = super::transform_child(&self.polygon, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4152,7 +4159,7 @@ impl super::Visit for wordprocessing_drawing::TightWrapping {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.polygon, visitor);
         walk.finish(visitor);
     }
@@ -4167,7 +4174,7 @@ impl WriteThrough for wordprocessing_drawing::TightWrapping {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::TIGHT_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::tight_wrapping(self, out.scope());
@@ -4176,7 +4183,7 @@ impl WriteThrough for wordprocessing_drawing::TightWrapping {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::TIGHT_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.wrap_text);
         through.attribute(1, &self.dist_l);
@@ -4223,10 +4230,10 @@ impl super::Transform for wordprocessing_drawing::TopAndBottomWrapping {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.object_extents_including_effects =
             super::transform_child(&self.object_extents_including_effects, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4244,7 +4251,7 @@ impl super::Visit for wordprocessing_drawing::TopAndBottomWrapping {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.object_extents_including_effects, visitor);
         walk.finish(visitor);
     }
@@ -4259,7 +4266,7 @@ impl WriteThrough for wordprocessing_drawing::TopAndBottomWrapping {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::TOP_AND_BOTTOM_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::top_and_bottom_wrapping(self, out.scope());
@@ -4268,7 +4275,7 @@ impl WriteThrough for wordprocessing_drawing::TopAndBottomWrapping {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::TOP_AND_BOTTOM_WRAPPING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.dist_t);
         through.attribute(1, &self.dist_b);
@@ -4314,9 +4321,9 @@ impl super::Transform for wordprocessing_drawing::VerticalPositioning {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4334,7 +4341,7 @@ impl super::Visit for wordprocessing_drawing::VerticalPositioning {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -4349,7 +4356,7 @@ impl WriteThrough for wordprocessing_drawing::VerticalPositioning {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::VERTICAL_POSITIONING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::vertical_positioning(self, out.scope());
@@ -4358,7 +4365,7 @@ impl WriteThrough for wordprocessing_drawing::VerticalPositioning {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::VERTICAL_POSITIONING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.relative_from);
         through.choice(&self.content, ctx)?;
@@ -4507,10 +4514,10 @@ impl super::Transform for wordprocessing_drawing::WholeE2OFormatting {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.outline = super::transform_child(&self.outline, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4528,7 +4535,7 @@ impl super::Visit for wordprocessing_drawing::WholeE2OFormatting {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.outline, visitor);
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
@@ -4544,7 +4551,7 @@ impl WriteThrough for wordprocessing_drawing::WholeE2OFormatting {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::WHOLE_E2O_FORMATTING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::whole_e2o_formatting(self, out.scope());
@@ -4553,7 +4560,7 @@ impl WriteThrough for wordprocessing_drawing::WholeE2OFormatting {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::WHOLE_E2O_FORMATTING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.outline, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -4598,14 +4605,14 @@ impl super::Transform for wordprocessing_drawing::WordprocessingMLDrawingCanvas 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.background_formatting =
             super::transform_child(&self.background_formatting, ctx, &mut rebase);
         node.whole_e2o_formatting =
             super::transform_child(&self.whole_e2o_formatting, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4623,7 +4630,7 @@ impl super::Visit for wordprocessing_drawing::WordprocessingMLDrawingCanvas {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.background_formatting, visitor);
         walk.child(&self.whole_e2o_formatting, visitor);
         walk.items(&self.content, visitor);
@@ -4641,7 +4648,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLDrawingCanvas {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4651,7 +4658,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLDrawingCanvas {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.background_formatting, ctx)?;
         through.child(&self.whole_e2o_formatting, ctx)?;
@@ -4698,7 +4705,7 @@ impl super::Transform for wordprocessing_drawing::WordprocessingMLShape {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_properties_content =
@@ -4708,7 +4715,7 @@ impl super::Transform for wordprocessing_drawing::WordprocessingMLShape {
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
         node.text_content = super::transform_choice(&self.text_content, ctx, &mut rebase);
         node.body_properties = super::transform_child(&self.body_properties, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4726,7 +4733,7 @@ impl super::Visit for wordprocessing_drawing::WordprocessingMLShape {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.choice(&self.non_visual_properties_content, visitor);
         walk.child(&self.properties, visitor);
@@ -4747,7 +4754,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLShape {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::WORDPROCESSING_ML_SHAPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::wordprocessing_ml_shape(self, out.scope());
@@ -4756,7 +4763,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLShape {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::WORDPROCESSING_ML_SHAPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.normal_east_asian_flow);
         through.child(&self.non_visual_drawing_properties, ctx)?;
@@ -4807,7 +4814,7 @@ impl super::Transform for wordprocessing_drawing::WordprocessingMLShapeGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.non_visual_drawing_properties =
             super::transform_child(&self.non_visual_drawing_properties, ctx, &mut rebase);
         node.non_visual_group_shape_drawing_properties = super::transform_child(
@@ -4818,7 +4825,7 @@ impl super::Transform for wordprocessing_drawing::WordprocessingMLShapeGroup {
         node.shape_properties = super::transform_child(&self.shape_properties, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4836,7 +4843,7 @@ impl super::Visit for wordprocessing_drawing::WordprocessingMLShapeGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.non_visual_drawing_properties, visitor);
         walk.child(&self.non_visual_group_shape_drawing_properties, visitor);
         walk.child(&self.shape_properties, visitor);
@@ -4855,7 +4862,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLShapeGroup {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4865,7 +4872,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLShapeGroup {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_group_shape_drawing_properties, ctx)?;
@@ -4913,10 +4920,10 @@ impl super::Transform for wordprocessing_drawing::WrappingPolygon {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.start = super::transform_child(&self.start, ctx, &mut rebase);
         node.line_end_position = super::transform_child(&self.line_end_position, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4934,7 +4941,7 @@ impl super::Visit for wordprocessing_drawing::WrappingPolygon {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.start, visitor);
         walk.child(&self.line_end_position, visitor);
         walk.finish(visitor);
@@ -4950,7 +4957,7 @@ impl WriteThrough for wordprocessing_drawing::WrappingPolygon {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::WRAPPING_POLYGON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::wrapping_polygon(self, out.scope());
@@ -4959,7 +4966,7 @@ impl WriteThrough for wordprocessing_drawing::WrappingPolygon {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::WRAPPING_POLYGON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.edited);
         through.child(&self.start, ctx)?;
@@ -5005,7 +5012,8 @@ impl super::Transform for wordprocessing_drawing::WrappingPolygonLineEndPosition
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5023,7 +5031,7 @@ impl super::Visit for wordprocessing_drawing::WrappingPolygonLineEndPosition {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5036,7 +5044,7 @@ impl WriteThrough for wordprocessing_drawing::WrappingPolygonLineEndPosition {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::WRAPPING_POLYGON_LINE_END_POSITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::wrapping_polygon_line_end_position(
@@ -5048,7 +5056,7 @@ impl WriteThrough for wordprocessing_drawing::WrappingPolygonLineEndPosition {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::WRAPPING_POLYGON_LINE_END_POSITION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -5093,7 +5101,8 @@ impl super::Transform for wordprocessing_drawing::WrappingPolygonStart {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5111,7 +5120,7 @@ impl super::Visit for wordprocessing_drawing::WrappingPolygonStart {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5124,7 +5133,7 @@ impl WriteThrough for wordprocessing_drawing::WrappingPolygonStart {
         let converted = super::converts(
             out,
             &wordprocessing_drawing::WRAPPING_POLYGON_START_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = wordprocessing_drawing::write::wrapping_polygon_start(self, out.scope());
@@ -5133,7 +5142,7 @@ impl WriteThrough for wordprocessing_drawing::WrappingPolygonStart {
         let mut through = super::Through::new(
             out,
             &wordprocessing_drawing::WRAPPING_POLYGON_START_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.x);
         through.attribute(1, &self.y);
@@ -5178,10 +5187,10 @@ impl super::Transform for wordprocessing_drawing::Xfrm {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = super::transform_child(&self.extents, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5199,7 +5208,7 @@ impl super::Visit for wordprocessing_drawing::Xfrm {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.offset, visitor);
         walk.child(&self.extents, visitor);
         walk.finish(visitor);
@@ -5212,13 +5221,20 @@ impl WriteThrough for wordprocessing_drawing::Xfrm {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &wordprocessing_drawing::XFRM_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &wordprocessing_drawing::XFRM_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = wordprocessing_drawing::write::xfrm(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &wordprocessing_drawing::XFRM_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &wordprocessing_drawing::XFRM_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.rot);
         through.attribute(1, &self.flip_h);
         through.attribute(2, &self.flip_v);

@@ -222,13 +222,22 @@ use officekit_xml::write::Scope;
 /// Write a `InkAnnotationFlag` as its element, `pvml:iscomment`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ink_annotation_flag(node: &super::InkAnnotationFlag, scope: &mut Scope) -> Element {
-    crate::Writer::new(scope, &super::INK_ANNOTATION_FLAG_SHAPE, &node.unknown).finish()
+    let writer = crate::Writer::new(
+        scope,
+        &super::INK_ANNOTATION_FLAG_SHAPE,
+        node.unknown.as_deref(),
+    );
+    writer.finish()
 }
 
 /// Write a `VMLDiagramText` as its element, `pvml:textdata`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn vml_diagram_text(node: &super::VMLDiagramText, scope: &mut Scope) -> Element {
-    let mut writer = crate::Writer::new(scope, &super::VML_DIAGRAM_TEXT_SHAPE, &node.unknown);
+    let mut writer = crate::Writer::new(
+        scope,
+        &super::VML_DIAGRAM_TEXT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.id);
     writer.finish()
 }

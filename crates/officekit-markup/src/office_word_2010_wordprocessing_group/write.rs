@@ -223,8 +223,11 @@ use officekit_xml::write::Scope;
 /// Write a `CNvFrPr` as its element, `wpg:cNvFrPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_fr_pr(node: &super::CNvFrPr, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::C_NV_FR_PR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::C_NV_FR_PR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.graphic_frame_locks);
     writer.child(&node.extension_list);
     writer.finish()
@@ -233,8 +236,11 @@ pub fn c_nv_fr_pr(node: &super::CNvFrPr, scope: &mut Scope) -> Element {
 /// Write a `CNvGrpSpPr` as its element, `wpg:cNvGrpSpPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_grp_sp_pr(node: &super::CNvGrpSpPr, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::C_NV_GRP_SP_PR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::C_NV_GRP_SP_PR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.group_shape_locks);
     writer.child(&node.extension_list);
     writer.finish()
@@ -244,7 +250,7 @@ pub fn c_nv_grp_sp_pr(node: &super::CNvGrpSpPr, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::C_NV_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
     writer.attribute(2, &node.descr);
@@ -260,7 +266,7 @@ pub fn c_nv_pr(node: &super::CNvPr, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -268,8 +274,11 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `GraphicFrame` as its element, `wpg:graphicFrame`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRAPHIC_FRAME_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_fr_pr);
     writer.child(&node.xfrm);
@@ -281,7 +290,8 @@ pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
 /// Write a `GrpSp` as its element, `wpg:grpSp`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grp_sp(node: &super::GrpSp, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::GRP_SP_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::GRP_SP_SHAPE, node.unknown.as_deref());
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_grp_sp_pr);
     writer.child(&node.pr);
@@ -294,7 +304,7 @@ pub fn grp_sp(node: &super::GrpSp, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRP_SP_PR_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::GRP_SP_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_group_transform2d);
     writer.child(&node.fill_properties_content);
@@ -307,7 +317,8 @@ pub fn grp_sp_pr(node: &super::GrpSpPr, scope: &mut Scope) -> Element {
 /// Write a `Wgp` as its element, `wpg:wgp`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wgp(node: &super::Wgp, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::WGP_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::WGP_SHAPE, node.unknown.as_deref());
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_grp_sp_pr);
     writer.child(&node.grp_sp_pr);
@@ -328,7 +339,8 @@ pub fn wordprocessing_group(
 /// Write a `Xfrm` as its element, `wpg:xfrm`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);
     writer.attribute(2, &node.flip_v);

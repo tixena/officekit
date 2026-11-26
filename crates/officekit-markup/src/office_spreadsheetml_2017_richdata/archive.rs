@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -233,7 +233,7 @@ pub struct ExtLstMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct FbMirror {
     pub t: Option<super::RichValueFallbackType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -244,7 +244,7 @@ pub struct FbMirror {
 pub struct KMirror {
     pub n: Option<String>,
     pub t: Option<super::RichValueValueType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -254,7 +254,7 @@ pub struct KMirror {
 pub struct RvMirror {
     pub fb: Option<Box<super::Fb>>,
     pub s: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub v: Vec<super::V>,
 }
@@ -266,7 +266,7 @@ pub struct RvDataMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub rv: Vec<super::Rv>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -277,7 +277,7 @@ pub struct RvStructuresMirror {
     pub count: Option<String>,
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub s: Vec<super::S>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -286,7 +286,7 @@ pub struct RvStructuresMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RvbMirror {
     pub i: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -296,7 +296,7 @@ pub struct RvbMirror {
 pub struct SMirror {
     pub k: Vec<super::K>,
     pub t: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -304,7 +304,7 @@ pub struct SMirror {
 #[rkyv(remote = super::V)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

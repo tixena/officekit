@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn lst_style(node: &super::LstStyle, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::LST_STYLE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::LST_STYLE_SHAPE, node.unknown.as_deref());
     writer.child(&node.default_paragraph_style);
     writer.child(&node.list_level_1_text_style);
     writer.child(&node.list_level_2_text_style);
@@ -241,7 +241,8 @@ pub fn lst_style(node: &super::LstStyle, scope: &mut Scope) -> Element {
 /// Write a `SpPr` as its element, `dgm1612:spPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sp_pr(node: &super::SpPr, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SP_PR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
     writer.child(&node.geometry_content);

@@ -229,7 +229,7 @@ pub fn absolute_position_offset(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::ABSOLUTE_POSITION_OFFSET_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()
@@ -249,7 +249,7 @@ pub fn anchor_for_floating_drawing_ml_object(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::ANCHOR_FOR_FLOATING_DRAWING_ML_OBJECT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.dist_t);
     writer.attribute(1, &node.dist_b);
@@ -284,7 +284,7 @@ pub fn background_formatting(node: &super::BackgroundFormatting, scope: &mut Sco
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::BACKGROUND_FORMATTING_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.fill_properties_content);
     writer.child(&node.effect_properties_content);
@@ -294,8 +294,11 @@ pub fn background_formatting(node: &super::BackgroundFormatting, scope: &mut Sco
 /// Write a `BodyProperties` as its element, `wp:bodyPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn body_properties(node: &super::BodyProperties, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::BODY_PROPERTIES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::BODY_PROPERTIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.spc_first_last_para);
     writer.attribute(2, &node.vert_overflow);
@@ -332,7 +335,7 @@ pub fn common_drawing_ml_non_visual_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::COMMON_DRAWING_ML_NON_VISUAL_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.graphic_frame_locks);
     writer.child(&node.extension_list);
@@ -342,8 +345,11 @@ pub fn common_drawing_ml_non_visual_properties(
 /// Write a `ContentPart` as its element, `wp:contentPart`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn content_part(node: &super::ContentPart, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CONTENT_PART_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CONTENT_PART_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.bw_mode);
     writer.attribute(1, &node.id);
     writer.child(&node.nv_content_part_pr);
@@ -369,7 +375,7 @@ pub fn drawing_object_non_visual_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DRAWING_OBJECT_NON_VISUAL_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -385,8 +391,11 @@ pub fn drawing_object_non_visual_properties(
 /// Write a `DrawingObjectSize` as its element, `wp:extent`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn drawing_object_size(node: &super::DrawingObjectSize, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DRAWING_OBJECT_SIZE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DRAWING_OBJECT_SIZE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.cx);
     writer.attribute(1, &node.cy);
     writer.finish()
@@ -395,8 +404,11 @@ pub fn drawing_object_size(node: &super::DrawingObjectSize, scope: &mut Scope) -
 /// Write a `ExtensionList` as its element, `wp:extLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn extension_list(node: &super::ExtensionList, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXTENSION_LIST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::EXTENSION_LIST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.extension);
     writer.finish()
 }
@@ -410,7 +422,7 @@ pub fn graphical_object_container(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GRAPHICAL_OBJECT_CONTAINER_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_graphic_frame_drawing_properties);
@@ -423,8 +435,11 @@ pub fn graphical_object_container(
 /// Write a `GroupShape` as its element, `wp:grpSp`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn group_shape(node: &super::GroupShape, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GROUP_SHAPE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GROUP_SHAPE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_group_shape_drawing_properties);
     writer.child(&node.properties);
@@ -447,7 +462,7 @@ pub fn group_shape_properties(node: &super::GroupShapeProperties, scope: &mut Sc
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::GROUP_SHAPE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_group_transform2d);
@@ -464,7 +479,7 @@ pub fn horizontal_positioning(node: &super::HorizontalPositioning, scope: &mut S
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::HORIZONTAL_POSITIONING_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.relative_from);
     writer.child(&node.content);
@@ -486,7 +501,7 @@ pub fn inline_drawing_ml_object(node: &super::InlineDrawingMLObject, scope: &mut
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::INLINE_DRAWING_ML_OBJECT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.dist_t);
     writer.attribute(1, &node.dist_b);
@@ -505,8 +520,11 @@ pub fn inline_drawing_ml_object(node: &super::InlineDrawingMLObject, scope: &mut
 /// Write a `NoTextWrapping` as its element, `wp:wrapNone`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn no_text_wrapping(node: &super::NoTextWrapping, scope: &mut Scope) -> Element {
-    let writer =
-        officekit_markup_base::Writer::new(scope, &super::NO_TEXT_WRAPPING_SHAPE, &node.unknown);
+    let writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NO_TEXT_WRAPPING_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.finish()
 }
 
@@ -519,7 +537,7 @@ pub fn non_visual_connector_shape_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_CONNECTOR_SHAPE_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.connection_shape_locks);
     writer.child(&node.connection_start);
@@ -537,7 +555,7 @@ pub fn non_visual_content_part_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_CONTENT_PART_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.is_comment);
     writer.child(&node.content_part_locks);
@@ -554,7 +572,7 @@ pub fn non_visual_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -576,7 +594,7 @@ pub fn non_visual_drawing_properties_for_a_shape(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_FOR_A_SHAPE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.tx_box);
     writer.child(&node.locks);
@@ -593,7 +611,7 @@ pub fn non_visual_graphic_frame_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_GRAPHIC_FRAME_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.graphic_frame_locks);
     writer.child(&node.extension_list);
@@ -609,7 +627,7 @@ pub fn non_visual_group_shape_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_GROUP_SHAPE_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.group_shape_locks);
     writer.child(&node.extension_list);
@@ -619,8 +637,11 @@ pub fn non_visual_group_shape_drawing_properties(
 /// Write a `NvContentPartPr` as its element, `wp:nvContentPartPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn nv_content_part_pr(node: &super::NvContentPartPr, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NV_CONTENT_PART_PR_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NV_CONTENT_PART_PR_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_content_part_drawing_properties);
     writer.finish()
@@ -635,7 +656,7 @@ pub fn object_extents_including_effects(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::OBJECT_EXTENTS_INCLUDING_EFFECTS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.l);
     writer.attribute(1, &node.t);
@@ -653,7 +674,7 @@ pub fn relative_horizontal_alignment(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::RELATIVE_HORIZONTAL_ALIGNMENT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()
@@ -668,7 +689,7 @@ pub fn relative_vertical_alignment(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::RELATIVE_VERTICAL_ALIGNMENT_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.text(&node.value);
     writer.finish()
@@ -683,7 +704,7 @@ pub fn rich_text_box_content_container(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.content);
     writer.finish()
@@ -701,8 +722,11 @@ pub fn shape_non_visual_properties(
 /// Write a `ShapeProperties` as its element, `wp:spPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHAPE_PROPERTIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
     writer.child(&node.geometry_content);
@@ -718,8 +742,11 @@ pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Ele
 /// Write a `ShapeStyle` as its element, `wp:style`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_style(node: &super::ShapeStyle, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHAPE_STYLE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHAPE_STYLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.line_reference);
     writer.child(&node.fill_reference);
     writer.child(&node.effect_reference);
@@ -744,7 +771,7 @@ pub fn simple_positioning_coordinates(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SIMPLE_POSITIONING_COORDINATES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -754,8 +781,11 @@ pub fn simple_positioning_coordinates(
 /// Write a `SquareWrapping` as its element, `wp:wrapSquare`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn square_wrapping(node: &super::SquareWrapping, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SQUARE_WRAPPING_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SQUARE_WRAPPING_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.wrap_text);
     writer.attribute(1, &node.dist_t);
     writer.attribute(2, &node.dist_b);
@@ -774,7 +804,7 @@ pub fn textual_contents_of_shape_linked_txbx(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TEXTUAL_CONTENTS_OF_SHAPE_LINKED_TXBX_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.seq);
@@ -791,7 +821,7 @@ pub fn textual_contents_of_shape_txbx(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TEXTUAL_CONTENTS_OF_SHAPE_TXBX_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.child(&node.rich_text_box_content_container);
@@ -802,8 +832,11 @@ pub fn textual_contents_of_shape_txbx(
 /// Write a `ThroughWrapping` as its element, `wp:wrapThrough`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn through_wrapping(node: &super::ThroughWrapping, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::THROUGH_WRAPPING_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::THROUGH_WRAPPING_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.wrap_text);
     writer.attribute(1, &node.dist_l);
     writer.attribute(2, &node.dist_r);
@@ -814,8 +847,11 @@ pub fn through_wrapping(node: &super::ThroughWrapping, scope: &mut Scope) -> Ele
 /// Write a `TightWrapping` as its element, `wp:wrapTight`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tight_wrapping(node: &super::TightWrapping, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TIGHT_WRAPPING_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TIGHT_WRAPPING_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.wrap_text);
     writer.attribute(1, &node.dist_l);
     writer.attribute(2, &node.dist_r);
@@ -829,7 +865,7 @@ pub fn top_and_bottom_wrapping(node: &super::TopAndBottomWrapping, scope: &mut S
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::TOP_AND_BOTTOM_WRAPPING_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.dist_t);
     writer.attribute(1, &node.dist_b);
@@ -843,7 +879,7 @@ pub fn vertical_positioning(node: &super::VerticalPositioning, scope: &mut Scope
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::VERTICAL_POSITIONING_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.relative_from);
     writer.child(&node.content);
@@ -865,7 +901,7 @@ pub fn whole_e2o_formatting(node: &super::WholeE2OFormatting, scope: &mut Scope)
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WHOLE_E2O_FORMATTING_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.outline);
     writer.child(&node.content);
@@ -881,7 +917,7 @@ pub fn wordprocessing_ml_drawing_canvas(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.background_formatting);
     writer.child(&node.whole_e2o_formatting);
@@ -896,7 +932,7 @@ pub fn wordprocessing_ml_shape(node: &super::WordprocessingMLShape, scope: &mut 
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WORDPROCESSING_ML_SHAPE_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.normal_east_asian_flow);
     writer.child(&node.non_visual_drawing_properties);
@@ -918,7 +954,7 @@ pub fn wordprocessing_ml_shape_group(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_group_shape_drawing_properties);
@@ -931,8 +967,11 @@ pub fn wordprocessing_ml_shape_group(
 /// Write a `WrappingPolygon` as its element, `wp:wrapPolygon`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wrapping_polygon(node: &super::WrappingPolygon, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::WRAPPING_POLYGON_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::WRAPPING_POLYGON_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.edited);
     writer.child(&node.start);
     writer.child(&node.line_end_position);
@@ -948,7 +987,7 @@ pub fn wrapping_polygon_line_end_position(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WRAPPING_POLYGON_LINE_END_POSITION_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -961,7 +1000,7 @@ pub fn wrapping_polygon_start(node: &super::WrappingPolygonStart, scope: &mut Sc
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WRAPPING_POLYGON_START_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.x);
     writer.attribute(1, &node.y);
@@ -971,7 +1010,8 @@ pub fn wrapping_polygon_start(node: &super::WrappingPolygonStart, scope: &mut Sc
 /// Write a `Xfrm` as its element, `wp:xfrm`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn xfrm(node: &super::Xfrm, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::XFRM_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.rot);
     writer.attribute(1, &node.flip_h);
     writer.attribute(2, &node.flip_v);

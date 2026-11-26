@@ -233,7 +233,7 @@ impl super::Transform for office_drawing_2016_12_diagram::LstStyle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.default_paragraph_style =
             super::transform_child(&self.default_paragraph_style, ctx, &mut rebase);
         node.list_level_1_text_style =
@@ -255,7 +255,7 @@ impl super::Transform for office_drawing_2016_12_diagram::LstStyle {
         node.list_level_9_text_style =
             super::transform_child(&self.list_level_9_text_style, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -273,7 +273,7 @@ impl super::Visit for office_drawing_2016_12_diagram::LstStyle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.default_paragraph_style, visitor);
         walk.child(&self.list_level_1_text_style, visitor);
         walk.child(&self.list_level_2_text_style, visitor);
@@ -298,7 +298,7 @@ impl WriteThrough for office_drawing_2016_12_diagram::LstStyle {
         let converted = super::converts(
             out,
             &office_drawing_2016_12_diagram::LST_STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2016_12_diagram::write::lst_style(self, out.scope());
@@ -307,7 +307,7 @@ impl WriteThrough for office_drawing_2016_12_diagram::LstStyle {
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_12_diagram::LST_STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.default_paragraph_style, ctx)?;
         through.child(&self.list_level_1_text_style, ctx)?;
@@ -361,7 +361,7 @@ impl super::Transform for office_drawing_2016_12_diagram::SpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -373,7 +373,7 @@ impl super::Transform for office_drawing_2016_12_diagram::SpPr {
         node.apply_3d_shape_properties =
             super::transform_child(&self.apply_3d_shape_properties, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -391,7 +391,7 @@ impl super::Visit for office_drawing_2016_12_diagram::SpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -413,7 +413,7 @@ impl WriteThrough for office_drawing_2016_12_diagram::SpPr {
         let converted = super::converts(
             out,
             &office_drawing_2016_12_diagram::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2016_12_diagram::write::sp_pr(self, out.scope());
@@ -422,7 +422,7 @@ impl WriteThrough for office_drawing_2016_12_diagram::SpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_12_diagram::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;

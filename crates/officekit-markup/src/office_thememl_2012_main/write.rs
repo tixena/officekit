@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -231,8 +231,11 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `ThemeFamily` as its element, `thm15:themeFamily`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_family(node: &super::ThemeFamily, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::THEME_FAMILY_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::THEME_FAMILY_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.id);
     writer.attribute(2, &node.vid);
@@ -243,8 +246,11 @@ pub fn theme_family(node: &super::ThemeFamily, scope: &mut Scope) -> Element {
 /// Write a `ThemeVariant` as its element, `thm15:themeVariant`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_variant(node: &super::ThemeVariant, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::THEME_VARIANT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::THEME_VARIANT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.name);
     writer.attribute(1, &node.vid);
     writer.attribute(2, &node.cx);
@@ -257,8 +263,11 @@ pub fn theme_variant(node: &super::ThemeVariant, scope: &mut Scope) -> Element {
 /// Write a `ThemeVariantLst` as its element, `thm15:themeVariantLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn theme_variant_lst(node: &super::ThemeVariantLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::THEME_VARIANT_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::THEME_VARIANT_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.theme_variant);
     writer.finish()
 }

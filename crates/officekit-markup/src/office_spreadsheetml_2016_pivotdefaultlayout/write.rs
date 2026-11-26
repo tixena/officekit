@@ -228,7 +228,7 @@ pub fn pivot_table_definition16(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::PIVOT_TABLE_DEFINITION16_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.enabled_subtotals_default);
     writer.attribute(1, &node.subtotals_on_top_default);

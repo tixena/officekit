@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `DesignElem` as its element, `p16:designElem`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn design_elem(node: &super::DesignElem, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DESIGN_ELEM_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DESIGN_ELEM_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }

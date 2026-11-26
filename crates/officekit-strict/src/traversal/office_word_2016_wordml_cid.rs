@@ -233,7 +233,8 @@ impl super::Transform for office_word_2016_wordml_cid::CommentId {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_word_2016_wordml_cid::CommentId {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_word_2016_wordml_cid::CommentId {
         let converted = super::converts(
             out,
             &office_word_2016_wordml_cid::COMMENT_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2016_wordml_cid::write::comment_id(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_word_2016_wordml_cid::CommentId {
         let mut through = super::Through::new(
             out,
             &office_word_2016_wordml_cid::COMMENT_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.para_id);
         through.attribute(1, &self.durable_id);
@@ -318,9 +319,9 @@ impl super::Transform for office_word_2016_wordml_cid::CommentsIds {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.comment_id = super::transform_child(&self.comment_id, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -338,7 +339,7 @@ impl super::Visit for office_word_2016_wordml_cid::CommentsIds {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.comment_id, visitor);
         walk.finish(visitor);
     }
@@ -353,7 +354,7 @@ impl WriteThrough for office_word_2016_wordml_cid::CommentsIds {
         let converted = super::converts(
             out,
             &office_word_2016_wordml_cid::COMMENTS_IDS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_word_2016_wordml_cid::write::comments_ids(self, out.scope());
@@ -362,7 +363,7 @@ impl WriteThrough for office_word_2016_wordml_cid::CommentsIds {
         let mut through = super::Through::new(
             out,
             &office_word_2016_wordml_cid::COMMENTS_IDS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.comment_id, ctx)?;
         through.finish(ctx)

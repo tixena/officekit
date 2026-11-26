@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::InkAnnotationFlag)]
 #[rkyv(attr(non_exhaustive))]
 pub struct InkAnnotationFlagMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -231,7 +231,7 @@ pub struct InkAnnotationFlagMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct VMLDiagramTextMirror {
     pub id: Option<String>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 

@@ -233,9 +233,9 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::A {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::A {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::A {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::A_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::a(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::A {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::A_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
         through.items(&self.content, ctx)?;
@@ -465,7 +465,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::BBoolFea
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -483,7 +484,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::BBoolFeature
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -496,7 +497,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BBoolFeature
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::B_BOOL_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -509,7 +510,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BBoolFeature
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::B_BOOL_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
         through.text(&self.value)?;
@@ -554,7 +555,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::BBoolean
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -572,7 +574,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::BBoolean {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -585,7 +587,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BBoolean {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::B_BOOLEAN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -595,7 +597,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BBoolean {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::B_BOOLEAN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -639,9 +641,9 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::Bag {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -659,7 +661,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::Bag {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -674,7 +676,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Bag {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -684,7 +686,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Bag {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.ext_ref);
@@ -732,9 +734,9 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::BagExt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.lst = super::transform_child(&self.lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -752,7 +754,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::BagExt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.lst, visitor);
         walk.finish(visitor);
     }
@@ -767,7 +769,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagExt {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -777,7 +779,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagExt {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.lst, ctx)?;
         through.finish(ctx)
@@ -821,7 +823,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::BagIdBag
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -839,7 +842,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::BagIdBagFeat
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -852,7 +855,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagIdBagFeat
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_ID_BAG_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -865,7 +868,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagIdBagFeat
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_ID_BAG_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
         through.text(&self.value)?;
@@ -905,7 +908,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::BagIdUns
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -923,7 +927,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::BagIdUnsigne
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -936,7 +940,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagIdUnsigne
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_ID_UNSIGNED_INT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::bag_id_unsigned_int(
@@ -948,7 +952,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::BagIdUnsigne
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::BAG_ID_UNSIGNED_INT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -992,10 +996,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::ColumnBo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1013,7 +1017,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::ColumnBodyRe
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -1029,7 +1033,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnBodyRe
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_BODY_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::column_body_rev_dxf(
@@ -1041,7 +1045,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnBodyRe
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_BODY_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -1086,10 +1090,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::ColumnHe
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1107,7 +1111,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::ColumnHeader
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -1123,7 +1127,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnHeader
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_HEADER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1136,7 +1140,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnHeader
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_HEADER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -1181,10 +1185,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::ColumnTo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1202,7 +1206,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::ColumnTotals
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -1218,7 +1222,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnTotals
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_TOTALS_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1231,7 +1235,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ColumnTotals
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::COLUMN_TOTALS_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -1276,7 +1280,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::DDecimal
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1294,7 +1299,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::DDecimalFeat
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1307,7 +1312,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DDecimalFeat
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::D_DECIMAL_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1320,7 +1325,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DDecimalFeat
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::D_DECIMAL_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
         through.text(&self.value)?;
@@ -1365,7 +1370,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::DDouble 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1383,7 +1389,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::DDouble {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1396,7 +1402,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DDouble {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::D_DOUBLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1406,7 +1412,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DDouble {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::D_DOUBLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1450,7 +1456,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::DXFCompl
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1468,7 +1475,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::DXFComplemen
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1481,7 +1488,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DXFComplemen
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DXF_COMPLEMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::dxf_complement(
@@ -1493,7 +1500,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DXFComplemen
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DXF_COMPLEMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.i);
         through.finish(ctx)
@@ -1537,10 +1544,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::DataRevD
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1558,7 +1565,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::DataRevDxf {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -1574,7 +1581,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DataRevDxf {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DATA_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::data_rev_dxf(
@@ -1586,7 +1593,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::DataRevDxf {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DATA_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -1631,7 +1638,7 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::Dxf {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.font = super::transform_child(&self.font, ctx, &mut rebase);
         node.number_format = super::transform_child(&self.number_format, ctx, &mut rebase);
         node.fill = super::transform_child(&self.fill, ctx, &mut rebase);
@@ -1641,7 +1648,7 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::Dxf {
             super::transform_child(&self.protection_properties, ctx, &mut rebase);
         node.future_feature_data_storage_area =
             super::transform_child(&self.future_feature_data_storage_area, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1659,7 +1666,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::Dxf {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.font, visitor);
         walk.child(&self.number_format, visitor);
         walk.child(&self.fill, visitor);
@@ -1680,7 +1687,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Dxf {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1690,7 +1697,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Dxf {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.font, ctx)?;
         through.child(&self.number_format, ctx)?;
@@ -1740,9 +1747,9 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1760,7 +1767,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -1775,7 +1782,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ExtLst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1785,7 +1792,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -1982,11 +1989,11 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::FeatureP
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.bag_ext = super::transform_child(&self.bag_ext, ctx, &mut rebase);
         node.bag = super::transform_child(&self.bag, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2004,7 +2011,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::FeaturePrope
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.bag_ext, visitor);
         walk.child(&self.bag, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -2021,7 +2028,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::FeaturePrope
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::FEATURE_PROPERTY_BAGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2034,7 +2041,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::FeaturePrope
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::FEATURE_PROPERTY_BAGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
         through.child(&self.bag_ext, ctx)?;
@@ -2081,11 +2088,11 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::Fpbs {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.bag_ext = super::transform_child(&self.bag_ext, ctx, &mut rebase);
         node.bag = super::transform_child(&self.bag, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2103,7 +2110,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::Fpbs {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.bag_ext, visitor);
         walk.child(&self.bag, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -2120,7 +2127,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Fpbs {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::FPBS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2130,7 +2137,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Fpbs {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::FPBS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.bag_ext, ctx)?;
         through.child(&self.bag, ctx)?;
@@ -2176,10 +2183,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::HeaderRo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2197,7 +2204,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::HeaderRowBor
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -2213,7 +2220,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::HeaderRowBor
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_BORDER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2226,7 +2233,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::HeaderRowBor
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_BORDER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -2271,10 +2278,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::HeaderRo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2292,7 +2299,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::HeaderRowRev
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -2308,7 +2315,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::HeaderRowRev
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::header_row_rev_dxf(
@@ -2320,7 +2327,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::HeaderRowRev
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::HEADER_ROW_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -2365,7 +2372,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::IIntFeat
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2383,7 +2391,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::IIntFeatureP
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2396,7 +2404,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::IIntFeatureP
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::I_INT_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2409,7 +2417,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::IIntFeatureP
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::I_INT_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
         through.text(&self.value)?;
@@ -2454,7 +2462,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::IInteger
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2472,7 +2481,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::IInteger {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2485,7 +2494,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::IInteger {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::I_INTEGER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2495,7 +2504,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::IInteger {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::I_INTEGER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2539,7 +2548,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::RelRelFe
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2557,7 +2567,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::RelRelFeatur
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2570,7 +2580,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::RelRelFeatur
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REL_REL_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2583,7 +2593,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::RelRelFeatur
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REL_REL_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
         through.text(&self.value)?;
@@ -2628,7 +2638,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::RelStrin
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2646,7 +2657,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::RelString {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2659,7 +2670,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::RelString {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REL_STRING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2669,7 +2680,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::RelString {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REL_STRING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2713,10 +2724,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::Revdxf {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2734,7 +2745,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::Revdxf {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -2750,7 +2761,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Revdxf {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REVDXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2760,7 +2771,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Revdxf {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::REVDXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -2805,7 +2816,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::SString 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2823,7 +2835,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::SString {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2836,7 +2848,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::SString {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::S_STRING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2846,7 +2858,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::SString {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::S_STRING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2890,7 +2902,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::SStringF
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2908,7 +2921,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::SStringFeatu
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2921,7 +2934,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::SStringFeatu
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::S_STRING_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2934,7 +2947,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::SStringFeatu
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::S_STRING_FEATURE_PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
         through.text(&self.value)?;
@@ -2979,10 +2992,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::TableBor
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3000,7 +3013,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::TableBorderR
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -3016,7 +3029,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TableBorderR
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TABLE_BORDER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::table_border_rev_dxf(
@@ -3028,7 +3041,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TableBorderR
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TABLE_BORDER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -3073,10 +3086,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::TotalsRo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3094,7 +3107,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::TotalsRowBor
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -3110,7 +3123,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TotalsRowBor
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_BORDER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3123,7 +3136,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TotalsRowBor
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_BORDER_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -3168,10 +3181,10 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::TotalsRo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.fpbs = super::transform_child(&self.fpbs, ctx, &mut rebase);
         node.dxf = super::transform_child(&self.dxf, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3189,7 +3202,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::TotalsRowRev
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.fpbs, visitor);
         walk.child(&self.dxf, visitor);
         walk.finish(visitor);
@@ -3205,7 +3218,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TotalsRowRev
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::totals_row_rev_dxf(
@@ -3217,7 +3230,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::TotalsRowRev
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::TOTALS_ROW_REV_DXF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.fpbs, ctx)?;
         through.child(&self.dxf, ctx)?;
@@ -3262,7 +3275,8 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::XfComple
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3280,7 +3294,7 @@ impl super::Visit for office_spreadsheetml_2022_featurepropertybag::XfComplement
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3293,7 +3307,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::XfComplement
         let converted = super::converts(
             out,
             &office_spreadsheetml_2022_featurepropertybag::XF_COMPLEMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_spreadsheetml_2022_featurepropertybag::write::xf_complement(
@@ -3305,7 +3319,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::XfComplement
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2022_featurepropertybag::XF_COMPLEMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.i);
         through.finish(ctx)

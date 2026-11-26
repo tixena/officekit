@@ -233,7 +233,8 @@ impl super::Transform for office_powerpoint_2023_02_main::Cameo {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_powerpoint_2023_02_main::Cameo {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::Cameo {
         let converted = super::converts(
             out,
             &office_powerpoint_2023_02_main::CAMEO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2023_02_main::write::cameo(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::Cameo {
         let through = super::Through::new(
             out,
             &office_powerpoint_2023_02_main::CAMEO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -316,9 +317,9 @@ impl super::Transform for office_powerpoint_2023_02_main::PhTypeExt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.r#type = super::transform_child(&self.r#type, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -336,7 +337,7 @@ impl super::Visit for office_powerpoint_2023_02_main::PhTypeExt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.r#type, visitor);
         walk.finish(visitor);
     }
@@ -351,7 +352,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::PhTypeExt {
         let converted = super::converts(
             out,
             &office_powerpoint_2023_02_main::PH_TYPE_EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2023_02_main::write::ph_type_ext(self, out.scope());
@@ -360,7 +361,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::PhTypeExt {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2023_02_main::PH_TYPE_EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.r#type, ctx)?;
         through.finish(ctx)
@@ -501,9 +502,9 @@ impl super::Transform for office_powerpoint_2023_02_main::Type {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -521,7 +522,7 @@ impl super::Visit for office_powerpoint_2023_02_main::Type {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -536,7 +537,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::Type {
         let converted = super::converts(
             out,
             &office_powerpoint_2023_02_main::TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2023_02_main::write::r#type(self, out.scope());
@@ -545,7 +546,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::Type {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2023_02_main::TYPE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -589,7 +590,8 @@ impl super::Transform for office_powerpoint_2023_02_main::Unknown {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -607,7 +609,7 @@ impl super::Visit for office_powerpoint_2023_02_main::Unknown {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -620,7 +622,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::Unknown {
         let converted = super::converts(
             out,
             &office_powerpoint_2023_02_main::UNKNOWN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2023_02_main::write::unknown(self, out.scope());
@@ -629,7 +631,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::Unknown {
         let through = super::Through::new(
             out,
             &office_powerpoint_2023_02_main::UNKNOWN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }

@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rich_info(node: &super::RichInfo, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::RICH_INFO_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::RICH_INFO_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.pivot_cache_guid);
     writer.attribute(1, &node.pivot_ignore_invalid_cache);
     writer.attribute(2, &node.id);

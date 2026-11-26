@@ -233,10 +233,10 @@ impl super::Transform for office_drawing_2008_diagram::CNvGrpSpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group_shape_locks = super::transform_child(&self.group_shape_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -254,7 +254,7 @@ impl super::Visit for office_drawing_2008_diagram::CNvGrpSpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group_shape_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -270,7 +270,7 @@ impl WriteThrough for office_drawing_2008_diagram::CNvGrpSpPr {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::C_NV_GRP_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::c_nv_grp_sp_pr(self, out.scope());
@@ -279,7 +279,7 @@ impl WriteThrough for office_drawing_2008_diagram::CNvGrpSpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::C_NV_GRP_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.group_shape_locks, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -324,12 +324,12 @@ impl super::Transform for office_drawing_2008_diagram::CNvPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.click_hyperlink = super::transform_child(&self.click_hyperlink, ctx, &mut rebase);
         node.hyperlink_for_hover =
             super::transform_child(&self.hyperlink_for_hover, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -347,7 +347,7 @@ impl super::Visit for office_drawing_2008_diagram::CNvPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.click_hyperlink, visitor);
         walk.child(&self.hyperlink_for_hover, visitor);
         walk.child(&self.extension_list, visitor);
@@ -364,7 +364,7 @@ impl WriteThrough for office_drawing_2008_diagram::CNvPr {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::C_NV_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::c_nv_pr(self, out.scope());
@@ -373,7 +373,7 @@ impl WriteThrough for office_drawing_2008_diagram::CNvPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::C_NV_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.name);
@@ -424,10 +424,10 @@ impl super::Transform for office_drawing_2008_diagram::CNvSpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.shape_locks = super::transform_child(&self.shape_locks, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -445,7 +445,7 @@ impl super::Visit for office_drawing_2008_diagram::CNvSpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.shape_locks, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -461,7 +461,7 @@ impl WriteThrough for office_drawing_2008_diagram::CNvSpPr {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::C_NV_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::c_nv_sp_pr(self, out.scope());
@@ -470,7 +470,7 @@ impl WriteThrough for office_drawing_2008_diagram::CNvSpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::C_NV_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.tx_box);
         through.child(&self.shape_locks, ctx)?;
@@ -516,7 +516,8 @@ impl super::Transform for office_drawing_2008_diagram::DataModelExt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -534,7 +535,7 @@ impl super::Visit for office_drawing_2008_diagram::DataModelExt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -547,7 +548,7 @@ impl WriteThrough for office_drawing_2008_diagram::DataModelExt {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::DATA_MODEL_EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::data_model_ext(self, out.scope());
@@ -556,7 +557,7 @@ impl WriteThrough for office_drawing_2008_diagram::DataModelExt {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::DATA_MODEL_EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rel_id);
         through.attribute(1, &self.min_ver);
@@ -601,9 +602,9 @@ impl super::Transform for office_drawing_2008_diagram::Drawing {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.sp_tree = super::transform_child(&self.sp_tree, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -621,7 +622,7 @@ impl super::Visit for office_drawing_2008_diagram::Drawing {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.sp_tree, visitor);
         walk.finish(visitor);
     }
@@ -636,7 +637,7 @@ impl WriteThrough for office_drawing_2008_diagram::Drawing {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::DRAWING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::drawing(self, out.scope());
@@ -645,7 +646,7 @@ impl WriteThrough for office_drawing_2008_diagram::Drawing {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::DRAWING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.sp_tree, ctx)?;
         through.finish(ctx)
@@ -689,9 +690,9 @@ impl super::Transform for office_drawing_2008_diagram::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -709,7 +710,7 @@ impl super::Visit for office_drawing_2008_diagram::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -724,7 +725,7 @@ impl WriteThrough for office_drawing_2008_diagram::ExtLst {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::ext_lst(self, out.scope());
@@ -733,7 +734,7 @@ impl WriteThrough for office_drawing_2008_diagram::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -895,12 +896,12 @@ impl super::Transform for office_drawing_2008_diagram::GrpSp {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.nv_grp_sp_pr = super::transform_child(&self.nv_grp_sp_pr, ctx, &mut rebase);
         node.pr = super::transform_child(&self.pr, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -918,7 +919,7 @@ impl super::Visit for office_drawing_2008_diagram::GrpSp {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.nv_grp_sp_pr, visitor);
         walk.child(&self.pr, visitor);
         walk.items(&self.content, visitor);
@@ -936,7 +937,7 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSp {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::GRP_SP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::grp_sp(self, out.scope());
@@ -945,7 +946,7 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSp {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::GRP_SP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.nv_grp_sp_pr, ctx)?;
         through.child(&self.pr, ctx)?;
@@ -992,7 +993,7 @@ impl super::Transform for office_drawing_2008_diagram::GrpSpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_group_transform2d =
             super::transform_child(&self.xfrm_group_transform2d, ctx, &mut rebase);
         node.fill_properties_content =
@@ -1001,7 +1002,7 @@ impl super::Transform for office_drawing_2008_diagram::GrpSpPr {
             super::transform_choice(&self.effect_properties_content, ctx, &mut rebase);
         node.scene3d = super::transform_child(&self.scene3d, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1019,7 +1020,7 @@ impl super::Visit for office_drawing_2008_diagram::GrpSpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_group_transform2d, visitor);
         walk.choice(&self.fill_properties_content, visitor);
         walk.choice(&self.effect_properties_content, visitor);
@@ -1038,7 +1039,7 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSpPr {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::GRP_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::grp_sp_pr(self, out.scope());
@@ -1047,7 +1048,7 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::GRP_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_group_transform2d, ctx)?;
@@ -1096,10 +1097,10 @@ impl super::Transform for office_drawing_2008_diagram::NvGrpSpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.c_nv_pr = super::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         node.c = super::transform_child(&self.c, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1117,7 +1118,7 @@ impl super::Visit for office_drawing_2008_diagram::NvGrpSpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.c_nv_pr, visitor);
         walk.child(&self.c, visitor);
         walk.finish(visitor);
@@ -1133,7 +1134,7 @@ impl WriteThrough for office_drawing_2008_diagram::NvGrpSpPr {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::NV_GRP_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::nv_grp_sp_pr(self, out.scope());
@@ -1142,7 +1143,7 @@ impl WriteThrough for office_drawing_2008_diagram::NvGrpSpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::NV_GRP_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.c_nv_pr, ctx)?;
         through.child(&self.c, ctx)?;
@@ -1187,10 +1188,10 @@ impl super::Transform for office_drawing_2008_diagram::NvSpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.c_nv_pr = super::transform_child(&self.c_nv_pr, ctx, &mut rebase);
         node.c = super::transform_child(&self.c, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1208,7 +1209,7 @@ impl super::Visit for office_drawing_2008_diagram::NvSpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.c_nv_pr, visitor);
         walk.child(&self.c, visitor);
         walk.finish(visitor);
@@ -1224,7 +1225,7 @@ impl WriteThrough for office_drawing_2008_diagram::NvSpPr {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::NV_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::nv_sp_pr(self, out.scope());
@@ -1233,7 +1234,7 @@ impl WriteThrough for office_drawing_2008_diagram::NvSpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::NV_SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.c_nv_pr, ctx)?;
         through.child(&self.c, ctx)?;
@@ -1278,14 +1279,14 @@ impl super::Transform for office_drawing_2008_diagram::Sp {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.nv_sp_pr = super::transform_child(&self.nv_sp_pr, ctx, &mut rebase);
         node.pr = super::transform_child(&self.pr, ctx, &mut rebase);
         node.style = super::transform_child(&self.style, ctx, &mut rebase);
         node.tx_body = super::transform_child(&self.tx_body, ctx, &mut rebase);
         node.tx_xfrm = super::transform_child(&self.tx_xfrm, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1303,7 +1304,7 @@ impl super::Visit for office_drawing_2008_diagram::Sp {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.nv_sp_pr, visitor);
         walk.child(&self.pr, visitor);
         walk.child(&self.style, visitor);
@@ -1320,13 +1321,20 @@ impl WriteThrough for office_drawing_2008_diagram::Sp {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_drawing_2008_diagram::SP_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_drawing_2008_diagram::SP_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_drawing_2008_diagram::write::sp(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_drawing_2008_diagram::SP_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_drawing_2008_diagram::SP_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.model_id);
         through.child(&self.nv_sp_pr, ctx)?;
         through.child(&self.pr, ctx)?;
@@ -1375,7 +1383,7 @@ impl super::Transform for office_drawing_2008_diagram::SpPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.xfrm_transform2d = super::transform_child(&self.xfrm_transform2d, ctx, &mut rebase);
         node.geometry_content = super::transform_choice(&self.geometry_content, ctx, &mut rebase);
         node.fill_properties_content =
@@ -1387,7 +1395,7 @@ impl super::Transform for office_drawing_2008_diagram::SpPr {
         node.apply_3d_shape_properties =
             super::transform_child(&self.apply_3d_shape_properties, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1405,7 +1413,7 @@ impl super::Visit for office_drawing_2008_diagram::SpPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.xfrm_transform2d, visitor);
         walk.choice(&self.geometry_content, visitor);
         walk.choice(&self.fill_properties_content, visitor);
@@ -1427,7 +1435,7 @@ impl WriteThrough for office_drawing_2008_diagram::SpPr {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::sp_pr(self, out.scope());
@@ -1436,7 +1444,7 @@ impl WriteThrough for office_drawing_2008_diagram::SpPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::SP_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
         through.child(&self.xfrm_transform2d, ctx)?;
@@ -1488,12 +1496,12 @@ impl super::Transform for office_drawing_2008_diagram::SpTree {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.nv_grp_sp_pr = super::transform_child(&self.nv_grp_sp_pr, ctx, &mut rebase);
         node.grp_sp_pr = super::transform_child(&self.grp_sp_pr, ctx, &mut rebase);
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1511,7 +1519,7 @@ impl super::Visit for office_drawing_2008_diagram::SpTree {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.nv_grp_sp_pr, visitor);
         walk.child(&self.grp_sp_pr, visitor);
         walk.items(&self.content, visitor);
@@ -1529,7 +1537,7 @@ impl WriteThrough for office_drawing_2008_diagram::SpTree {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::SP_TREE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::sp_tree(self, out.scope());
@@ -1538,7 +1546,7 @@ impl WriteThrough for office_drawing_2008_diagram::SpTree {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::SP_TREE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.nv_grp_sp_pr, ctx)?;
         through.child(&self.grp_sp_pr, ctx)?;
@@ -1585,12 +1593,12 @@ impl super::Transform for office_drawing_2008_diagram::Style {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.line_reference = super::transform_child(&self.line_reference, ctx, &mut rebase);
         node.fill_reference = super::transform_child(&self.fill_reference, ctx, &mut rebase);
         node.effect_reference = super::transform_child(&self.effect_reference, ctx, &mut rebase);
         node.font_reference = super::transform_child(&self.font_reference, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1608,7 +1616,7 @@ impl super::Visit for office_drawing_2008_diagram::Style {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.line_reference, visitor);
         walk.child(&self.fill_reference, visitor);
         walk.child(&self.effect_reference, visitor);
@@ -1626,7 +1634,7 @@ impl WriteThrough for office_drawing_2008_diagram::Style {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::style(self, out.scope());
@@ -1635,7 +1643,7 @@ impl WriteThrough for office_drawing_2008_diagram::Style {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::STYLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.line_reference, ctx)?;
         through.child(&self.fill_reference, ctx)?;
@@ -1682,11 +1690,11 @@ impl super::Transform for office_drawing_2008_diagram::TxBody {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.properties = super::transform_child(&self.properties, ctx, &mut rebase);
         node.text_list_styles = super::transform_child(&self.text_list_styles, ctx, &mut rebase);
         node.text_paragraphs = super::transform_child(&self.text_paragraphs, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1704,7 +1712,7 @@ impl super::Visit for office_drawing_2008_diagram::TxBody {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.properties, visitor);
         walk.child(&self.text_list_styles, visitor);
         walk.child(&self.text_paragraphs, visitor);
@@ -1721,7 +1729,7 @@ impl WriteThrough for office_drawing_2008_diagram::TxBody {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::TX_BODY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::tx_body(self, out.scope());
@@ -1730,7 +1738,7 @@ impl WriteThrough for office_drawing_2008_diagram::TxBody {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::TX_BODY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.properties, ctx)?;
         through.child(&self.text_list_styles, ctx)?;
@@ -1776,10 +1784,10 @@ impl super::Transform for office_drawing_2008_diagram::TxXfrm {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.offset = super::transform_child(&self.offset, ctx, &mut rebase);
         node.extents = super::transform_child(&self.extents, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1797,7 +1805,7 @@ impl super::Visit for office_drawing_2008_diagram::TxXfrm {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.offset, visitor);
         walk.child(&self.extents, visitor);
         walk.finish(visitor);
@@ -1813,7 +1821,7 @@ impl WriteThrough for office_drawing_2008_diagram::TxXfrm {
         let converted = super::converts(
             out,
             &office_drawing_2008_diagram::TX_XFRM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2008_diagram::write::tx_xfrm(self, out.scope());
@@ -1822,7 +1830,7 @@ impl WriteThrough for office_drawing_2008_diagram::TxXfrm {
         let mut through = super::Through::new(
             out,
             &office_drawing_2008_diagram::TX_XFRM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.rot);
         through.attribute(1, &self.flip_h);

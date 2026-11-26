@@ -233,7 +233,8 @@ impl super::Transform for office_powerpoint_2012_roaming_settings::Key {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_powerpoint_2012_roaming_settings::Key {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Key {
         let converted = super::converts(
             out,
             &office_powerpoint_2012_roaming_settings::KEY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2012_roaming_settings::write::key(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Key {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_roaming_settings::KEY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -317,10 +318,10 @@ impl super::Transform for office_powerpoint_2012_roaming_settings::Props {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.key = super::transform_child(&self.key, ctx, &mut rebase);
         node.value = super::transform_child(&self.value, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -338,7 +339,7 @@ impl super::Visit for office_powerpoint_2012_roaming_settings::Props {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.key, visitor);
         walk.child(&self.value, visitor);
         walk.finish(visitor);
@@ -354,7 +355,7 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Props {
         let converted = super::converts(
             out,
             &office_powerpoint_2012_roaming_settings::PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2012_roaming_settings::write::props(self, out.scope());
@@ -363,7 +364,7 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Props {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_roaming_settings::PROPS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.key, ctx)?;
         through.child(&self.value, ctx)?;
@@ -408,7 +409,8 @@ impl super::Transform for office_powerpoint_2012_roaming_settings::Value {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -426,7 +428,7 @@ impl super::Visit for office_powerpoint_2012_roaming_settings::Value {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -439,7 +441,7 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Value {
         let converted = super::converts(
             out,
             &office_powerpoint_2012_roaming_settings::VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2012_roaming_settings::write::value(self, out.scope());
@@ -448,7 +450,7 @@ impl WriteThrough for office_powerpoint_2012_roaming_settings::Value {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2012_roaming_settings::VALUE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)

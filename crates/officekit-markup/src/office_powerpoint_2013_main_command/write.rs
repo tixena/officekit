@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `AnimEffectMkLst` as its element, `pc:animEffectMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn anim_effect_mk_lst(node: &super::AnimEffectMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::ANIM_EFFECT_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::ANIM_EFFECT_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -237,7 +240,7 @@ pub fn anim_effect_parent_mk_lst(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::ANIM_EFFECT_PARENT_MK_LST_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.content);
     writer.finish()
@@ -246,8 +249,11 @@ pub fn anim_effect_parent_mk_lst(
 /// Write a `CXmlMkLst` as its element, `pc:cXmlMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn c_xml_mk_lst(node: &super::CXmlMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::C_XML_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::C_XML_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -255,8 +261,11 @@ pub fn c_xml_mk_lst(node: &super::CXmlMkLst, scope: &mut Scope) -> Element {
 /// Write a `CmAuthorMkLst` as its element, `pc:cmAuthorMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm_author_mk_lst(node: &super::CmAuthorMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CM_AUTHOR_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CM_AUTHOR_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -265,7 +274,7 @@ pub fn cm_author_mk_lst(node: &super::CmAuthorMkLst, scope: &mut Scope) -> Eleme
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CM_MK_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::CM_MK_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -273,8 +282,11 @@ pub fn cm_mk_lst(node: &super::CmMkLst, scope: &mut Scope) -> Element {
 /// Write a `CustShowMkLst` as its element, `pc:custShowMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cust_show_mk_lst(node: &super::CustShowMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::CUST_SHOW_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::CUST_SHOW_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -282,8 +294,11 @@ pub fn cust_show_mk_lst(node: &super::CustShowMkLst, scope: &mut Scope) -> Eleme
 /// Write a `DesignTagMkLst` as its element, `pc:designTagMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn design_tag_mk_lst(node: &super::DesignTagMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DESIGN_TAG_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DESIGN_TAG_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -291,14 +306,19 @@ pub fn design_tag_mk_lst(node: &super::DesignTagMkLst, scope: &mut Scope) -> Ele
 /// Write a `DocMk` as its element, `pc:docMk`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn doc_mk(node: &super::DocMk, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::DOC_MK_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::DOC_MK_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }
 
 /// Write a `DocMkLst` as its element, `pc:docMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn doc_mk_lst(node: &super::DocMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DOC_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DOC_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -306,8 +326,11 @@ pub fn doc_mk_lst(node: &super::DocMkLst, scope: &mut Scope) -> Element {
 /// Write a `HandoutMkLst` as its element, `pc:handoutMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn handout_mk_lst(node: &super::HandoutMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::HANDOUT_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::HANDOUT_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -315,8 +338,11 @@ pub fn handout_mk_lst(node: &super::HandoutMkLst, scope: &mut Scope) -> Element 
 /// Write a `NotesMasterMkLst` as its element, `pc:notesMasterMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn notes_master_mk_lst(node: &super::NotesMasterMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NOTES_MASTER_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NOTES_MASTER_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -324,8 +350,11 @@ pub fn notes_master_mk_lst(node: &super::NotesMasterMkLst, scope: &mut Scope) ->
 /// Write a `NotesMkLst` as its element, `pc:notesMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn notes_mk_lst(node: &super::NotesMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NOTES_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NOTES_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -333,8 +362,11 @@ pub fn notes_mk_lst(node: &super::NotesMkLst, scope: &mut Scope) -> Element {
 /// Write a `NotesTxtMkLst` as its element, `pc:notesTxtMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn notes_txt_mk_lst(node: &super::NotesTxtMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::NOTES_TXT_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::NOTES_TXT_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -345,7 +377,7 @@ pub fn section_lnk_obj_mk_lst(node: &super::SectionLnkObjMkLst, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::SECTION_LNK_OBJ_MK_LST_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.content);
     writer.finish()
@@ -354,8 +386,11 @@ pub fn section_lnk_obj_mk_lst(node: &super::SectionLnkObjMkLst, scope: &mut Scop
 /// Write a `SectionMkLst` as its element, `pc:sectionMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn section_mk_lst(node: &super::SectionMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SECTION_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SECTION_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -363,8 +398,11 @@ pub fn section_mk_lst(node: &super::SectionMkLst, scope: &mut Scope) -> Element 
 /// Write a `SldBaseMkLst` as its element, `pc:sldBaseMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_base_mk_lst(node: &super::SldBaseMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SLD_BASE_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SLD_BASE_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -372,8 +410,11 @@ pub fn sld_base_mk_lst(node: &super::SldBaseMkLst, scope: &mut Scope) -> Element
 /// Write a `SldLayoutMkLst` as its element, `pc:sldLayoutMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_layout_mk_lst(node: &super::SldLayoutMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SLD_LAYOUT_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SLD_LAYOUT_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -381,8 +422,11 @@ pub fn sld_layout_mk_lst(node: &super::SldLayoutMkLst, scope: &mut Scope) -> Ele
 /// Write a `SldMasterMkLst` as its element, `pc:sldMasterMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_master_mk_lst(node: &super::SldMasterMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SLD_MASTER_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SLD_MASTER_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -390,7 +434,8 @@ pub fn sld_master_mk_lst(node: &super::SldMasterMkLst, scope: &mut Scope) -> Ele
 /// Write a `SldMk` as its element, `pc:sldMk`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_mk(node: &super::SldMk, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SLD_MK_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SLD_MK_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.c_id);
     writer.attribute(1, &node.sld_id);
     writer.finish()
@@ -399,8 +444,11 @@ pub fn sld_mk(node: &super::SldMk, scope: &mut Scope) -> Element {
 /// Write a `SldMkLst` as its element, `pc:sldMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_mk_lst(node: &super::SldMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SLD_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SLD_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.doc_mk);
     writer.child(&node.sld_mk);
     writer.child(&node.content);
@@ -410,8 +458,11 @@ pub fn sld_mk_lst(node: &super::SldMkLst, scope: &mut Scope) -> Element {
 /// Write a `SldPosMkLst` as its element, `pc:sldPosMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sld_pos_mk_lst(node: &super::SldPosMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SLD_POS_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SLD_POS_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -419,8 +470,11 @@ pub fn sld_pos_mk_lst(node: &super::SldPosMkLst, scope: &mut Scope) -> Element {
 /// Write a `TagMkLst` as its element, `pc:tagMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tag_mk_lst(node: &super::TagMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TAG_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TAG_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -428,8 +482,11 @@ pub fn tag_mk_lst(node: &super::TagMkLst, scope: &mut Scope) -> Element {
 /// Write a `TkAppMkLst` as its element, `pc:tkAppMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn tk_app_mk_lst(node: &super::TkAppMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TK_APP_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TK_APP_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }
@@ -437,8 +494,11 @@ pub fn tk_app_mk_lst(node: &super::TkAppMkLst, scope: &mut Scope) -> Element {
 /// Write a `TocMkLst` as its element, `pc:tocMkLst`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn toc_mk_lst(node: &super::TocMkLst, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::TOC_MK_LST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::TOC_MK_LST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.content);
     writer.finish()
 }

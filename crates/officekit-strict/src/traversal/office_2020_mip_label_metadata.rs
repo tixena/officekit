@@ -233,9 +233,9 @@ impl super::Transform for office_2020_mip_label_metadata::Ext {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_2020_mip_label_metadata::Ext {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_2020_mip_label_metadata::Ext {
         let converted = super::converts(
             out,
             &office_2020_mip_label_metadata::EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2020_mip_label_metadata::write::ext(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_2020_mip_label_metadata::Ext {
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::EXT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.uri);
         through.choice(&self.content, ctx)?;
@@ -322,9 +322,9 @@ impl super::Transform for office_2020_mip_label_metadata::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext = super::transform_child(&self.ext, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -342,7 +342,7 @@ impl super::Visit for office_2020_mip_label_metadata::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext, visitor);
         walk.finish(visitor);
     }
@@ -357,7 +357,7 @@ impl WriteThrough for office_2020_mip_label_metadata::ExtLst {
         let converted = super::converts(
             out,
             &office_2020_mip_label_metadata::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2020_mip_label_metadata::write::ext_lst(self, out.scope());
@@ -366,7 +366,7 @@ impl WriteThrough for office_2020_mip_label_metadata::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext, ctx)?;
         through.finish(ctx)
@@ -410,7 +410,8 @@ impl super::Transform for office_2020_mip_label_metadata::Label {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -428,7 +429,7 @@ impl super::Visit for office_2020_mip_label_metadata::Label {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -441,7 +442,7 @@ impl WriteThrough for office_2020_mip_label_metadata::Label {
         let converted = super::converts(
             out,
             &office_2020_mip_label_metadata::LABEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2020_mip_label_metadata::write::label(self, out.scope());
@@ -450,7 +451,7 @@ impl WriteThrough for office_2020_mip_label_metadata::Label {
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::LABEL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.enabled);
@@ -502,10 +503,10 @@ impl super::Transform for office_2020_mip_label_metadata::LabelList {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.label = super::transform_child(&self.label, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -523,7 +524,7 @@ impl super::Visit for office_2020_mip_label_metadata::LabelList {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.label, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -539,7 +540,7 @@ impl WriteThrough for office_2020_mip_label_metadata::LabelList {
         let converted = super::converts(
             out,
             &office_2020_mip_label_metadata::LABEL_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2020_mip_label_metadata::write::label_list(self, out.scope());
@@ -548,7 +549,7 @@ impl WriteThrough for office_2020_mip_label_metadata::LabelList {
         let mut through = super::Through::new(
             out,
             &office_2020_mip_label_metadata::LABEL_LIST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.label, ctx)?;
         through.child(&self.ext_lst, ctx)?;

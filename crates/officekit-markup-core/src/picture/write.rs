@@ -228,7 +228,7 @@ pub fn non_visual_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.id);
     writer.attribute(1, &node.name);
@@ -250,7 +250,7 @@ pub fn non_visual_picture_drawing_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_DRAWING_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.prefer_relative_resize);
     writer.child(&node.picture_locks);
@@ -267,7 +267,7 @@ pub fn non_visual_picture_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::NON_VISUAL_PICTURE_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.child(&node.non_visual_drawing_properties);
     writer.child(&node.non_visual_picture_drawing_properties);
@@ -278,7 +278,7 @@ pub fn non_visual_picture_properties(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PICTURE_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::PICTURE_SHAPE, node.unknown.as_deref());
     writer.child(&node.non_visual_picture_properties);
     writer.child(&node.fill);
     writer.child(&node.shape_properties);
@@ -290,8 +290,11 @@ pub fn picture(node: &super::Picture, scope: &mut Scope) -> Element {
 /// Write a `PictureFill` as its element, `pic:blipFill`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PICTURE_FILL_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PICTURE_FILL_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.dpi);
     writer.attribute(1, &node.rot_with_shape);
     writer.child(&node.blip);
@@ -303,8 +306,11 @@ pub fn picture_fill(node: &super::PictureFill, scope: &mut Scope) -> Element {
 /// Write a `ShapeProperties` as its element, `pic:spPr`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn shape_properties(node: &super::ShapeProperties, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SHAPE_PROPERTIES_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SHAPE_PROPERTIES_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.bw_mode);
     writer.child(&node.xfrm_transform2d);
     writer.child(&node.geometry_content);

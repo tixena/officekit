@@ -233,7 +233,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Add {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Add {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Add {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::ADD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::add(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Add {
         let through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::ADD_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -316,10 +317,10 @@ impl super::Transform for office_powerpoint_2021_06_main::Anchr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.comment = super::transform_child(&self.comment, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -337,7 +338,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Anchr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.comment, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -353,7 +354,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Anchr {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::ANCHR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::anchr(self, out.scope());
@@ -362,7 +363,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Anchr {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::ANCHR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.comment, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -407,7 +408,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Asgn {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -425,7 +427,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Asgn {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -438,7 +440,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Asgn {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::ASGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::asgn(self, out.scope());
@@ -447,7 +449,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Asgn {
         let through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::ASGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -490,7 +492,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Atrbtn {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -508,7 +511,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Atrbtn {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -521,7 +524,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Atrbtn {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::ATRBTN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::atrbtn(self, out.scope());
@@ -530,7 +533,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Atrbtn {
         let through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::ATRBTN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -573,7 +576,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Comment {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -591,7 +595,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Comment {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -604,7 +608,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Comment {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::COMMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::comment(self, out.scope());
@@ -613,7 +617,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Comment {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::COMMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -657,7 +661,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Date {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -675,7 +680,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Date {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -688,7 +693,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Date {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::DATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::date(self, out.scope());
@@ -697,7 +702,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Date {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::DATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.st_dt);
         through.attribute(1, &self.end_dt);
@@ -742,12 +747,12 @@ impl super::Transform for office_powerpoint_2021_06_main::Event {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.atrbtn = super::transform_child(&self.atrbtn, ctx, &mut rebase);
         node.anchr = super::transform_child(&self.anchr, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -765,7 +770,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Event {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.atrbtn, visitor);
         walk.child(&self.anchr, visitor);
         walk.choice(&self.content, visitor);
@@ -783,7 +788,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Event {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::EVENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::event(self, out.scope());
@@ -792,7 +797,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Event {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::EVENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.time);
         through.attribute(1, &self.id);
@@ -841,9 +846,9 @@ impl super::Transform for office_powerpoint_2021_06_main::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -861,7 +866,7 @@ impl super::Visit for office_powerpoint_2021_06_main::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -876,7 +881,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::ExtLst {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::ext_lst(self, out.scope());
@@ -885,7 +890,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -929,9 +934,9 @@ impl super::Transform for office_powerpoint_2021_06_main::History {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.event = super::transform_child(&self.event, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -949,7 +954,7 @@ impl super::Visit for office_powerpoint_2021_06_main::History {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.event, visitor);
         walk.finish(visitor);
     }
@@ -964,7 +969,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::History {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::HISTORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::history(self, out.scope());
@@ -973,7 +978,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::History {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::HISTORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.event, ctx)?;
         through.finish(ctx)
@@ -1017,7 +1022,8 @@ impl super::Transform for office_powerpoint_2021_06_main::PcntCmplt {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1035,7 +1041,7 @@ impl super::Visit for office_powerpoint_2021_06_main::PcntCmplt {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1048,7 +1054,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::PcntCmplt {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::PCNT_CMPLT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::pcnt_cmplt(self, out.scope());
@@ -1057,7 +1063,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::PcntCmplt {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::PCNT_CMPLT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1101,7 +1107,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Pri {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1119,7 +1126,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Pri {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1132,7 +1139,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Pri {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::PRI_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::pri(self, out.scope());
@@ -1141,7 +1148,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Pri {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::PRI_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1185,10 +1192,10 @@ impl super::Transform for office_powerpoint_2021_06_main::TaskHistoryDetails {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.history = super::transform_child(&self.history, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1206,7 +1213,7 @@ impl super::Visit for office_powerpoint_2021_06_main::TaskHistoryDetails {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.history, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -1222,7 +1229,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::TaskHistoryDetails {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::TASK_HISTORY_DETAILS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1232,7 +1239,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::TaskHistoryDetails {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::TASK_HISTORY_DETAILS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.child(&self.history, ctx)?;
@@ -1431,7 +1438,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Title {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1449,7 +1457,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Title {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1462,7 +1470,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Title {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::title(self, out.scope());
@@ -1471,7 +1479,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Title {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)
@@ -1515,7 +1523,8 @@ impl super::Transform for office_powerpoint_2021_06_main::UnAsgn {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1533,7 +1542,7 @@ impl super::Visit for office_powerpoint_2021_06_main::UnAsgn {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1546,7 +1555,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::UnAsgn {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::UN_ASGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::un_asgn(self, out.scope());
@@ -1555,7 +1564,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::UnAsgn {
         let through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::UN_ASGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1598,7 +1607,8 @@ impl super::Transform for office_powerpoint_2021_06_main::UnasgnAll {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1616,7 +1626,7 @@ impl super::Visit for office_powerpoint_2021_06_main::UnasgnAll {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1629,7 +1639,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::UnasgnAll {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::UNASGN_ALL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::unasgn_all(self, out.scope());
@@ -1638,7 +1648,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::UnasgnAll {
         let through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::UNASGN_ALL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1681,7 +1691,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Undo {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1699,7 +1710,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Undo {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1712,7 +1723,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Undo {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::UNDO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::undo(self, out.scope());
@@ -1721,7 +1732,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Undo {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::UNDO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -1765,7 +1776,8 @@ impl super::Transform for office_powerpoint_2021_06_main::Unknown {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1783,7 +1795,7 @@ impl super::Visit for office_powerpoint_2021_06_main::Unknown {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1796,7 +1808,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Unknown {
         let converted = super::converts(
             out,
             &office_powerpoint_2021_06_main::UNKNOWN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2021_06_main::write::unknown(self, out.scope());
@@ -1805,7 +1817,7 @@ impl WriteThrough for office_powerpoint_2021_06_main::Unknown {
         let through = super::Through::new(
             out,
             &office_powerpoint_2021_06_main::UNKNOWN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }

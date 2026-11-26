@@ -225,7 +225,7 @@ pub struct PivotTableDefinition16Mirror {
     pub enabled_subtotals_default: Option<String>,
     pub insert_blank_row_default: Option<String>,
     pub subtotals_on_top_default: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

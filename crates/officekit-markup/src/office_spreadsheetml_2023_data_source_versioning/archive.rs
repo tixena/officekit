@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::LastEditFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastEditFeatureMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -231,7 +231,7 @@ pub struct LastEditFeatureMirror {
 #[rkyv(remote = super::LastRefreshFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LastRefreshFeatureMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -240,7 +240,7 @@ pub struct LastRefreshFeatureMirror {
 #[rkyv(remote = super::RequiredFeature)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RequiredFeatureMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -252,7 +252,7 @@ pub struct VersionInfoMirror {
     pub last_edit_feature: Vec<super::LastEditFeature>,
     pub last_refresh_feature: Vec<super::LastRefreshFeature>,
     pub required_feature: Vec<super::RequiredFeature>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

@@ -225,7 +225,7 @@ pub struct RefreshIntervalMirror {
     pub interval: Option<String>,
     pub resource_id_int: Option<String>,
     pub resource_id_str: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -234,7 +234,7 @@ pub struct RefreshIntervalMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct RefreshIntervalsMirror {
     pub refresh_interval: Vec<super::RefreshInterval>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

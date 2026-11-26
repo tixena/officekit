@@ -233,9 +233,9 @@ impl super::Transform for office_webextensions_taskpanes_2010_11::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_webextensions_taskpanes_2010_11::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::ExtLst {
         let converted = super::converts(
             out,
             &office_webextensions_taskpanes_2010_11::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_webextensions_taskpanes_2010_11::write::ext_lst(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -321,10 +321,10 @@ impl super::Transform for office_webextensions_taskpanes_2010_11::Taskpane {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.webextensionref = super::transform_child(&self.webextensionref, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -342,7 +342,7 @@ impl super::Visit for office_webextensions_taskpanes_2010_11::Taskpane {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.webextensionref, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -358,7 +358,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Taskpane {
         let converted = super::converts(
             out,
             &office_webextensions_taskpanes_2010_11::TASKPANE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -368,7 +368,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Taskpane {
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::TASKPANE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.dockstate);
         through.attribute(1, &self.visibility);
@@ -418,9 +418,9 @@ impl super::Transform for office_webextensions_taskpanes_2010_11::Taskpanes {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.taskpane = super::transform_child(&self.taskpane, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -438,7 +438,7 @@ impl super::Visit for office_webextensions_taskpanes_2010_11::Taskpanes {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.taskpane, visitor);
         walk.finish(visitor);
     }
@@ -453,7 +453,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Taskpanes {
         let converted = super::converts(
             out,
             &office_webextensions_taskpanes_2010_11::TASKPANES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -463,7 +463,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Taskpanes {
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::TASKPANES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.taskpane, ctx)?;
         through.finish(ctx)
@@ -507,7 +507,8 @@ impl super::Transform for office_webextensions_taskpanes_2010_11::Webextensionre
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -525,7 +526,7 @@ impl super::Visit for office_webextensions_taskpanes_2010_11::Webextensionref {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -538,7 +539,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Webextensionref {
         let converted = super::converts(
             out,
             &office_webextensions_taskpanes_2010_11::WEBEXTENSIONREF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -548,7 +549,7 @@ impl WriteThrough for office_webextensions_taskpanes_2010_11::Webextensionref {
         let mut through = super::Through::new(
             out,
             &office_webextensions_taskpanes_2010_11::WEBEXTENSIONREF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)

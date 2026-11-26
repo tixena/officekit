@@ -50,23 +50,24 @@ fn canvas(held: WordprocessingMLShape) -> WordprocessingMLDrawingCanvas {
 /// `shape` under Word's names, with the namespaces of those names declared on it.
 fn word_shape(text_box: bool) -> WordprocessingMLShape {
     let mut built = shape(text_box);
-    built.unknown.name = Some(Box::new(QName::prefixed("wps", "wsp", WPS)));
-    built.unknown.namespace_declarations = vec![
+    built.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "wsp", WPS)));
+    built.unknown_mut().namespace_declarations = vec![
         NamespaceDeclaration::new("wps".to_owned(), WPS.to_owned()),
         NamespaceDeclaration::new("w".to_owned(), W.to_owned()),
     ];
-    built.properties.unknown.name = Some(Box::new(QName::prefixed("wps", "spPr", WPS)));
-    built.body_properties.unknown.name = Some(Box::new(QName::prefixed("wps", "bodyPr", WPS)));
+    built.properties.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "spPr", WPS)));
+    built.body_properties.unknown_mut().name =
+        Some(Box::new(QName::prefixed("wps", "bodyPr", WPS)));
     if let ShapeNonVisualPropertiesContent::NonVisualDrawingPropertiesForAShape(properties) =
         &mut *built.non_visual_properties_content
     {
-        properties.unknown.name = Some(Box::new(QName::prefixed("wps", "cNvSpPr", WPS)));
+        properties.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "cNvSpPr", WPS)));
     }
     if let Some(ShapeTextContent::TextualContentsOfShapeTxbx(found)) =
         built.text_content.as_deref_mut()
     {
-        found.unknown.name = Some(Box::new(QName::prefixed("wps", "txbx", WPS)));
-        found.rich_text_box_content_container.unknown.name =
+        found.unknown_mut().name = Some(Box::new(QName::prefixed("wps", "txbx", WPS)));
+        found.rich_text_box_content_container.unknown_mut().name =
             Some(Box::new(QName::prefixed("w", "txbxContent", W)));
     }
     built
@@ -227,7 +228,7 @@ fn a_drawing_read_from_the_alternate_content_word_writes_reads_the_same_after_a_
         WPS,
         AnyElementContent::WordprocessingMLShape(word_shape(true)),
     ))]);
-    word_file.unknown.namespace_declarations = vec![
+    word_file.unknown_mut().namespace_declarations = vec![
         NamespaceDeclaration::new("mc".to_owned(), MC.to_owned()),
         NamespaceDeclaration::new("wps".to_owned(), WPS.to_owned()),
     ];

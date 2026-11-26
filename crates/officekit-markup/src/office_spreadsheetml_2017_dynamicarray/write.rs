@@ -228,7 +228,7 @@ pub fn dynamic_array_properties(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DYNAMIC_ARRAY_PROPERTIES_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.f_dynamic);
     writer.attribute(1, &node.f_collapsed);
@@ -240,7 +240,7 @@ pub fn dynamic_array_properties(
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }

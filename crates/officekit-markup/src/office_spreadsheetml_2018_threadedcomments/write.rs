@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -232,7 +232,7 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn mention(node: &super::Mention, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MENTION_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::MENTION_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.mentionperson_id);
     writer.attribute(1, &node.mention_id);
     writer.attribute(2, &node.start_index);
@@ -244,7 +244,7 @@ pub fn mention(node: &super::Mention, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn mentions(node: &super::Mentions, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::MENTIONS_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::MENTIONS_SHAPE, node.unknown.as_deref());
     writer.child(&node.mention);
     writer.finish()
 }
@@ -252,7 +252,8 @@ pub fn mentions(node: &super::Mentions, scope: &mut Scope) -> Element {
 /// Write a `Person` as its element, `xltc:person`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn person(node: &super::Person, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::PERSON_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::PERSON_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.display_name);
     writer.attribute(1, &node.id);
     writer.attribute(2, &node.user_id);
@@ -264,8 +265,11 @@ pub fn person(node: &super::Person, scope: &mut Scope) -> Element {
 /// Write a `PersonList` as its element, `xltc:personList`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn person_list(node: &super::PersonList, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PERSON_LIST_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PERSON_LIST_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.person);
     writer.child(&node.ext_lst);
     writer.finish()
@@ -274,7 +278,8 @@ pub fn person_list(node: &super::PersonList, scope: &mut Scope) -> Element {
 /// Write a `Text` as its element, `xltc:text`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn text(node: &super::Text, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::TEXT_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::TEXT_SHAPE, node.unknown.as_deref());
     writer.text(&node.value);
     writer.finish()
 }
@@ -282,8 +287,11 @@ pub fn text(node: &super::Text, scope: &mut Scope) -> Element {
 /// Write a `ThreadedComment` as its element, `xltc:threadedComment`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn threaded_comment(node: &super::ThreadedComment, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::THREADED_COMMENT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::THREADED_COMMENT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.r#ref);
     writer.attribute(1, &node.d_t);
     writer.attribute(2, &node.person_id);
@@ -299,8 +307,11 @@ pub fn threaded_comment(node: &super::ThreadedComment, scope: &mut Scope) -> Ele
 /// Write a `ThreadedComments` as its element, `xltc:ThreadedComments`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn threaded_comments(node: &super::ThreadedComments, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::THREADED_COMMENTS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::THREADED_COMMENTS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.threaded_comment);
     writer.child(&node.ext_lst);
     writer.finish()

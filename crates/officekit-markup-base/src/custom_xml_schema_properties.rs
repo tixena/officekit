@@ -256,8 +256,9 @@ pub struct CustomXMLSchemaReferenceWith<X: UserData> {
     pub schema_language: Option<String>,
     /// The attribute `sl:schemaLocation`, when the element has it.
     pub schema_location: Option<String>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// The attribute `sl:uri`, when the element has it.
     pub uri: Option<String>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
@@ -277,8 +278,9 @@ impl Eq for CustomXMLSchemaReferenceWith<()> {}
 pub struct EmbeddedCustomXMLSchemaSupplementaryDataWith<X: UserData> {
     /// The children that are `CustomXMLSchemaReference`, in order.
     pub custom_xml_schema_reference: Vec<CustomXMLSchemaReferenceWith<X>>,
-    /// What a read found that the schemas do not declare, which a write gives back.
-    pub unknown: crate::Unknown,
+    /// What a read found that the schemas do not declare, which a write gives back; `None` when it
+    /// found nothing. A read never leaves an empty record here.
+    pub unknown: Option<Box<crate::Unknown>>,
     /// What `X` holds for this node. For the tree a read gives, nothing.
     pub user_data: X::CustomXmlSchemaPropertiesEmbeddedCustomXMLSchemaSupplementaryData,
 }
@@ -306,6 +308,17 @@ impl<X: UserData> CustomXMLSchemaReferenceWith<X> {
             uri: self.uri,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.
@@ -350,6 +363,17 @@ impl<X: UserData> EmbeddedCustomXMLSchemaSupplementaryDataWith<X> {
             unknown: self.unknown,
             user_data: Default::default(),
         }
+    }
+
+    /// What a read found that the schemas do not declare; `None` when it found nothing.
+    #[must_use = "this only returns the value"]
+    pub fn unknown(&self) -> Option<&crate::Unknown> {
+        self.unknown.as_deref()
+    }
+
+    /// The unknown content to change, an empty record put in place when the node holds none.
+    pub fn unknown_mut(&mut self) -> &mut crate::Unknown {
+        self.unknown.get_or_insert_default()
     }
 
     /// This node's attributes, copied, with no declared child and no unknown content.

@@ -233,9 +233,9 @@ impl super::Transform for office_2009_07_customui::Backstage {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_2009_07_customui::Backstage {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_2009_07_customui::Backstage {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BACKSTAGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::backstage(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for office_2009_07_customui::Backstage {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BACKSTAGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.on_show);
         through.attribute(1, &self.on_hide);
@@ -698,9 +698,9 @@ impl super::Transform for office_2009_07_customui::BottomItems {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -718,7 +718,7 @@ impl super::Visit for office_2009_07_customui::BottomItems {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -733,7 +733,7 @@ impl WriteThrough for office_2009_07_customui::BottomItems {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BOTTOM_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::bottom_items(self, out.scope());
@@ -742,7 +742,7 @@ impl WriteThrough for office_2009_07_customui::BottomItems {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BOTTOM_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -786,9 +786,9 @@ impl super::Transform for office_2009_07_customui::BoxBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -806,7 +806,7 @@ impl super::Visit for office_2009_07_customui::BoxBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -818,14 +818,20 @@ impl WriteThrough for office_2009_07_customui::BoxBox {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_2009_07_customui::BOX_BOX_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::BOX_BOX_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::box_box(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::BOX_BOX_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::BOX_BOX_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
         through.attribute(2, &self.tag);
@@ -1080,7 +1086,8 @@ impl super::Transform for office_2009_07_customui::ButtonBackstageFastCommandBut
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1098,7 +1105,7 @@ impl super::Visit for office_2009_07_customui::ButtonBackstageFastCommandButton 
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1111,7 +1118,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageFastCommandButton 
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::button_backstage_fast_command_button(
@@ -1123,7 +1130,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageFastCommandButton 
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_FAST_COMMAND_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id_mso);
         through.attribute(1, &self.insert_after_mso);
@@ -1187,7 +1194,8 @@ impl super::Transform for office_2009_07_customui::ButtonBackstageGroupButton {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1205,7 +1213,7 @@ impl super::Visit for office_2009_07_customui::ButtonBackstageGroupButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1218,7 +1226,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageGroupButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1228,7 +1236,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageGroupButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_GROUP_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.expand);
         through.attribute(1, &self.style);
@@ -1293,7 +1301,8 @@ impl super::Transform for office_2009_07_customui::ButtonBackstageMenuButton {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1311,7 +1320,7 @@ impl super::Visit for office_2009_07_customui::ButtonBackstageMenuButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1324,7 +1333,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageMenuButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1334,7 +1343,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageMenuButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_MENU_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.description);
         through.attribute(1, &self.get_description);
@@ -1395,7 +1404,8 @@ impl super::Transform for office_2009_07_customui::ButtonBackstageRegularButton 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1413,7 +1423,7 @@ impl super::Visit for office_2009_07_customui::ButtonBackstageRegularButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1426,7 +1436,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageRegularButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1436,7 +1446,7 @@ impl WriteThrough for office_2009_07_customui::ButtonBackstageRegularButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BACKSTAGE_REGULAR_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.screentip);
         through.attribute(1, &self.get_screentip);
@@ -1499,7 +1509,8 @@ impl super::Transform for office_2009_07_customui::ButtonButton {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1517,7 +1528,7 @@ impl super::Visit for office_2009_07_customui::ButtonButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1530,7 +1541,7 @@ impl WriteThrough for office_2009_07_customui::ButtonButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::button_button(self, out.scope());
@@ -1539,7 +1550,7 @@ impl WriteThrough for office_2009_07_customui::ButtonButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.size);
         through.attribute(1, &self.get_size);
@@ -1614,7 +1625,8 @@ impl super::Transform for office_2009_07_customui::ButtonButtonRegular {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1632,7 +1644,7 @@ impl super::Visit for office_2009_07_customui::ButtonButtonRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1645,7 +1657,7 @@ impl WriteThrough for office_2009_07_customui::ButtonButtonRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_BUTTON_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::button_button_regular(self, out.scope());
@@ -1654,7 +1666,7 @@ impl WriteThrough for office_2009_07_customui::ButtonButtonRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_BUTTON_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.on_action);
         through.attribute(1, &self.enabled);
@@ -1727,9 +1739,9 @@ impl super::Transform for office_2009_07_customui::ButtonGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1747,7 +1759,7 @@ impl super::Visit for office_2009_07_customui::ButtonGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -1762,7 +1774,7 @@ impl WriteThrough for office_2009_07_customui::ButtonGroup {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::button_group(self, out.scope());
@@ -1771,7 +1783,7 @@ impl WriteThrough for office_2009_07_customui::ButtonGroup {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -1984,7 +1996,8 @@ impl super::Transform for office_2009_07_customui::ButtonVisibleButton {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2002,7 +2015,7 @@ impl super::Visit for office_2009_07_customui::ButtonVisibleButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2015,7 +2028,7 @@ impl WriteThrough for office_2009_07_customui::ButtonVisibleButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::BUTTON_VISIBLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::button_visible_button(self, out.scope());
@@ -2024,7 +2037,7 @@ impl WriteThrough for office_2009_07_customui::ButtonVisibleButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::BUTTON_VISIBLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.on_action);
         through.attribute(1, &self.enabled);
@@ -2095,10 +2108,10 @@ impl super::Transform for office_2009_07_customui::CategoryTaskFormGroupCategory
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.task_task_form_group_task =
             super::transform_child(&self.task_task_form_group_task, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2116,7 +2129,7 @@ impl super::Visit for office_2009_07_customui::CategoryTaskFormGroupCategory {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.task_task_form_group_task, visitor);
         walk.finish(visitor);
     }
@@ -2131,7 +2144,7 @@ impl WriteThrough for office_2009_07_customui::CategoryTaskFormGroupCategory {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::category_task_form_group_category(
@@ -2143,7 +2156,7 @@ impl WriteThrough for office_2009_07_customui::CategoryTaskFormGroupCategory {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CATEGORY_TASK_FORM_GROUP_CATEGORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -2199,10 +2212,10 @@ impl super::Transform for office_2009_07_customui::CategoryTaskGroupCategory {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.task_task_group_task =
             super::transform_child(&self.task_task_group_task, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2220,7 +2233,7 @@ impl super::Visit for office_2009_07_customui::CategoryTaskGroupCategory {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.task_task_group_task, visitor);
         walk.finish(visitor);
     }
@@ -2235,7 +2248,7 @@ impl WriteThrough for office_2009_07_customui::CategoryTaskGroupCategory {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CATEGORY_TASK_GROUP_CATEGORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2245,7 +2258,7 @@ impl WriteThrough for office_2009_07_customui::CategoryTaskGroupCategory {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CATEGORY_TASK_GROUP_CATEGORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -2301,7 +2314,8 @@ impl super::Transform for office_2009_07_customui::CheckBoxBackstageCheckBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2319,7 +2333,7 @@ impl super::Visit for office_2009_07_customui::CheckBoxBackstageCheckBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2332,7 +2346,7 @@ impl WriteThrough for office_2009_07_customui::CheckBoxBackstageCheckBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2342,7 +2356,7 @@ impl WriteThrough for office_2009_07_customui::CheckBoxBackstageCheckBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CHECK_BOX_BACKSTAGE_CHECK_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.expand);
         through.attribute(1, &self.description);
@@ -2405,7 +2419,8 @@ impl super::Transform for office_2009_07_customui::CheckBoxBackstageMenuCheckBox
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2423,7 +2438,7 @@ impl super::Visit for office_2009_07_customui::CheckBoxBackstageMenuCheckBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2436,7 +2451,7 @@ impl WriteThrough for office_2009_07_customui::CheckBoxBackstageMenuCheckBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::check_box_backstage_menu_check_box(
@@ -2448,7 +2463,7 @@ impl WriteThrough for office_2009_07_customui::CheckBoxBackstageMenuCheckBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CHECK_BOX_BACKSTAGE_MENU_CHECK_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.description);
         through.attribute(1, &self.get_description);
@@ -2506,7 +2521,8 @@ impl super::Transform for office_2009_07_customui::CheckBoxCheckBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2524,7 +2540,7 @@ impl super::Visit for office_2009_07_customui::CheckBoxCheckBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2537,7 +2553,7 @@ impl WriteThrough for office_2009_07_customui::CheckBoxCheckBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CHECK_BOX_CHECK_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::check_box_check_box(self, out.scope());
@@ -2546,7 +2562,7 @@ impl WriteThrough for office_2009_07_customui::CheckBoxCheckBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CHECK_BOX_CHECK_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.get_pressed);
         through.attribute(1, &self.on_action);
@@ -2613,10 +2629,10 @@ impl super::Transform for office_2009_07_customui::ComboBoxBackstageComboBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item_backstage_item =
             super::transform_child(&self.item_backstage_item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2634,7 +2650,7 @@ impl super::Visit for office_2009_07_customui::ComboBoxBackstageComboBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item_backstage_item, visitor);
         walk.finish(visitor);
     }
@@ -2649,7 +2665,7 @@ impl WriteThrough for office_2009_07_customui::ComboBoxBackstageComboBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -2659,7 +2675,7 @@ impl WriteThrough for office_2009_07_customui::ComboBoxBackstageComboBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::COMBO_BOX_BACKSTAGE_COMBO_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -2722,9 +2738,9 @@ impl super::Transform for office_2009_07_customui::ComboBoxComboBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item_item = super::transform_child(&self.item_item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2742,7 +2758,7 @@ impl super::Visit for office_2009_07_customui::ComboBoxComboBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item_item, visitor);
         walk.finish(visitor);
     }
@@ -2757,7 +2773,7 @@ impl WriteThrough for office_2009_07_customui::ComboBoxComboBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::COMBO_BOX_COMBO_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::combo_box_combo_box(self, out.scope());
@@ -2766,7 +2782,7 @@ impl WriteThrough for office_2009_07_customui::ComboBoxComboBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::COMBO_BOX_COMBO_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.show_item_image);
         through.attribute(1, &self.get_item_count);
@@ -2849,7 +2865,8 @@ impl super::Transform for office_2009_07_customui::Command {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2867,7 +2884,7 @@ impl super::Visit for office_2009_07_customui::Command {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2877,14 +2894,20 @@ impl WriteThrough for office_2009_07_customui::Command {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_2009_07_customui::COMMAND_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::COMMAND_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::command(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::COMMAND_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::COMMAND_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.on_action);
         through.attribute(1, &self.enabled);
         through.attribute(2, &self.get_enabled);
@@ -2930,9 +2953,9 @@ impl super::Transform for office_2009_07_customui::Commands {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.command = super::transform_child(&self.command, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -2950,7 +2973,7 @@ impl super::Visit for office_2009_07_customui::Commands {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.command, visitor);
         walk.finish(visitor);
     }
@@ -2962,14 +2985,20 @@ impl WriteThrough for office_2009_07_customui::Commands {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_2009_07_customui::COMMANDS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::COMMANDS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::commands(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::COMMANDS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::COMMANDS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.command, ctx)?;
         through.finish(ctx)
     }
@@ -3012,9 +3041,9 @@ impl super::Transform for office_2009_07_customui::ContextMenu {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3032,7 +3061,7 @@ impl super::Visit for office_2009_07_customui::ContextMenu {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3047,7 +3076,7 @@ impl WriteThrough for office_2009_07_customui::ContextMenu {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CONTEXT_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::context_menu(self, out.scope());
@@ -3056,7 +3085,7 @@ impl WriteThrough for office_2009_07_customui::ContextMenu {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTEXT_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id_mso);
         through.items(&self.content, ctx)?;
@@ -3268,9 +3297,9 @@ impl super::Transform for office_2009_07_customui::ContextMenus {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.context_menu = super::transform_child(&self.context_menu, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3288,7 +3317,7 @@ impl super::Visit for office_2009_07_customui::ContextMenus {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.context_menu, visitor);
         walk.finish(visitor);
     }
@@ -3303,7 +3332,7 @@ impl WriteThrough for office_2009_07_customui::ContextMenus {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CONTEXT_MENUS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::context_menus(self, out.scope());
@@ -3312,7 +3341,7 @@ impl WriteThrough for office_2009_07_customui::ContextMenus {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTEXT_MENUS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.context_menu, ctx)?;
         through.finish(ctx)
@@ -3356,9 +3385,9 @@ impl super::Transform for office_2009_07_customui::ContextualTabs {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tab_set = super::transform_child(&self.tab_set, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3376,7 +3405,7 @@ impl super::Visit for office_2009_07_customui::ContextualTabs {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tab_set, visitor);
         walk.finish(visitor);
     }
@@ -3391,7 +3420,7 @@ impl WriteThrough for office_2009_07_customui::ContextualTabs {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CONTEXTUAL_TABS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::contextual_tabs(self, out.scope());
@@ -3400,7 +3429,7 @@ impl WriteThrough for office_2009_07_customui::ContextualTabs {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTEXTUAL_TABS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.tab_set, ctx)?;
         through.finish(ctx)
@@ -3444,7 +3473,8 @@ impl super::Transform for office_2009_07_customui::ControlControlClone {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3462,7 +3492,7 @@ impl super::Visit for office_2009_07_customui::ControlControlClone {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3475,7 +3505,7 @@ impl WriteThrough for office_2009_07_customui::ControlControlClone {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::control_control_clone(self, out.scope());
@@ -3484,7 +3514,7 @@ impl WriteThrough for office_2009_07_customui::ControlControlClone {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.size);
         through.attribute(1, &self.get_size);
@@ -3557,7 +3587,8 @@ impl super::Transform for office_2009_07_customui::ControlControlCloneQat {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3575,7 +3606,7 @@ impl super::Visit for office_2009_07_customui::ControlControlCloneQat {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3588,7 +3619,7 @@ impl WriteThrough for office_2009_07_customui::ControlControlCloneQat {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_QAT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3598,7 +3629,7 @@ impl WriteThrough for office_2009_07_customui::ControlControlCloneQat {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_QAT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -3671,7 +3702,8 @@ impl super::Transform for office_2009_07_customui::ControlControlCloneRegular {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3689,7 +3721,7 @@ impl super::Visit for office_2009_07_customui::ControlControlCloneRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3702,7 +3734,7 @@ impl WriteThrough for office_2009_07_customui::ControlControlCloneRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3712,7 +3744,7 @@ impl WriteThrough for office_2009_07_customui::ControlControlCloneRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CONTROL_CONTROL_CLONE_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id_q);
         through.attribute(1, &self.tag);
@@ -3781,12 +3813,12 @@ impl super::Transform for office_2009_07_customui::CustomUI {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.commands = super::transform_child(&self.commands, ctx, &mut rebase);
         node.ribbon = super::transform_child(&self.ribbon, ctx, &mut rebase);
         node.backstage = super::transform_child(&self.backstage, ctx, &mut rebase);
         node.context_menus = super::transform_child(&self.context_menus, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3804,7 +3836,7 @@ impl super::Visit for office_2009_07_customui::CustomUI {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.commands, visitor);
         walk.child(&self.ribbon, visitor);
         walk.child(&self.backstage, visitor);
@@ -3822,7 +3854,7 @@ impl WriteThrough for office_2009_07_customui::CustomUI {
         let converted = super::converts(
             out,
             &office_2009_07_customui::CUSTOM_UI_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::custom_ui(self, out.scope());
@@ -3831,7 +3863,7 @@ impl WriteThrough for office_2009_07_customui::CustomUI {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::CUSTOM_UI_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.on_load);
         through.attribute(1, &self.load_image);
@@ -3880,10 +3912,10 @@ impl super::Transform for office_2009_07_customui::DialogBoxLauncher {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.button_button_regular =
             super::transform_child(&self.button_button_regular, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3901,7 +3933,7 @@ impl super::Visit for office_2009_07_customui::DialogBoxLauncher {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.button_button_regular, visitor);
         walk.finish(visitor);
     }
@@ -3916,7 +3948,7 @@ impl WriteThrough for office_2009_07_customui::DialogBoxLauncher {
         let converted = super::converts(
             out,
             &office_2009_07_customui::DIALOG_BOX_LAUNCHER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::dialog_box_launcher(self, out.scope());
@@ -3925,7 +3957,7 @@ impl WriteThrough for office_2009_07_customui::DialogBoxLauncher {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DIALOG_BOX_LAUNCHER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.button_button_regular, ctx)?;
         through.finish(ctx)
@@ -3969,9 +4001,9 @@ impl super::Transform for office_2009_07_customui::DocumentControls {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3989,7 +4021,7 @@ impl super::Visit for office_2009_07_customui::DocumentControls {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -4004,7 +4036,7 @@ impl WriteThrough for office_2009_07_customui::DocumentControls {
         let converted = super::converts(
             out,
             &office_2009_07_customui::DOCUMENT_CONTROLS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::document_controls(self, out.scope());
@@ -4013,7 +4045,7 @@ impl WriteThrough for office_2009_07_customui::DocumentControls {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DOCUMENT_CONTROLS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -4057,10 +4089,10 @@ impl super::Transform for office_2009_07_customui::DropDownBackstageDropDown {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item_backstage_item =
             super::transform_child(&self.item_backstage_item, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4078,7 +4110,7 @@ impl super::Visit for office_2009_07_customui::DropDownBackstageDropDown {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item_backstage_item, visitor);
         walk.finish(visitor);
     }
@@ -4093,7 +4125,7 @@ impl WriteThrough for office_2009_07_customui::DropDownBackstageDropDown {
         let converted = super::converts(
             out,
             &office_2009_07_customui::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4103,7 +4135,7 @@ impl WriteThrough for office_2009_07_customui::DropDownBackstageDropDown {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DROP_DOWN_BACKSTAGE_DROP_DOWN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -4170,11 +4202,11 @@ impl super::Transform for office_2009_07_customui::DropDownDropDownRegular {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item_item = super::transform_child(&self.item_item, ctx, &mut rebase);
         node.button_button_regular =
             super::transform_child(&self.button_button_regular, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4192,7 +4224,7 @@ impl super::Visit for office_2009_07_customui::DropDownDropDownRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item_item, visitor);
         walk.child(&self.button_button_regular, visitor);
         walk.finish(visitor);
@@ -4208,7 +4240,7 @@ impl WriteThrough for office_2009_07_customui::DropDownDropDownRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4218,7 +4250,7 @@ impl WriteThrough for office_2009_07_customui::DropDownDropDownRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DROP_DOWN_DROP_DOWN_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.on_action);
         through.attribute(1, &self.enabled);
@@ -4302,7 +4334,8 @@ impl super::Transform for office_2009_07_customui::DynamicMenuDynamicMenu {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4320,7 +4353,7 @@ impl super::Visit for office_2009_07_customui::DynamicMenuDynamicMenu {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4333,7 +4366,7 @@ impl WriteThrough for office_2009_07_customui::DynamicMenuDynamicMenu {
         let converted = super::converts(
             out,
             &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4343,7 +4376,7 @@ impl WriteThrough for office_2009_07_customui::DynamicMenuDynamicMenu {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.size);
         through.attribute(1, &self.get_size);
@@ -4419,7 +4452,8 @@ impl super::Transform for office_2009_07_customui::DynamicMenuDynamicMenuRegular
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4437,7 +4471,7 @@ impl super::Visit for office_2009_07_customui::DynamicMenuDynamicMenuRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4450,7 +4484,7 @@ impl WriteThrough for office_2009_07_customui::DynamicMenuDynamicMenuRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::dynamic_menu_dynamic_menu_regular(
@@ -4462,7 +4496,7 @@ impl WriteThrough for office_2009_07_customui::DynamicMenuDynamicMenuRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::DYNAMIC_MENU_DYNAMIC_MENU_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.description);
         through.attribute(1, &self.get_description);
@@ -4536,7 +4570,8 @@ impl super::Transform for office_2009_07_customui::EditBoxBackstageEditBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4554,7 +4589,7 @@ impl super::Visit for office_2009_07_customui::EditBoxBackstageEditBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4567,7 +4602,7 @@ impl WriteThrough for office_2009_07_customui::EditBoxBackstageEditBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -4577,7 +4612,7 @@ impl WriteThrough for office_2009_07_customui::EditBoxBackstageEditBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::EDIT_BOX_BACKSTAGE_EDIT_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -4637,7 +4672,8 @@ impl super::Transform for office_2009_07_customui::EditBoxEditBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -4655,7 +4691,7 @@ impl super::Visit for office_2009_07_customui::EditBoxEditBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -4668,7 +4704,7 @@ impl WriteThrough for office_2009_07_customui::EditBoxEditBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::EDIT_BOX_EDIT_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::edit_box_edit_box(self, out.scope());
@@ -4677,7 +4713,7 @@ impl WriteThrough for office_2009_07_customui::EditBoxEditBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::EDIT_BOX_EDIT_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.enabled);
         through.attribute(1, &self.get_enabled);
@@ -4751,9 +4787,9 @@ impl super::Transform for office_2009_07_customui::FirstColumn {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4771,7 +4807,7 @@ impl super::Visit for office_2009_07_customui::FirstColumn {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -4786,7 +4822,7 @@ impl WriteThrough for office_2009_07_customui::FirstColumn {
         let converted = super::converts(
             out,
             &office_2009_07_customui::FIRST_COLUMN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::first_column(self, out.scope());
@@ -4795,7 +4831,7 @@ impl WriteThrough for office_2009_07_customui::FirstColumn {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::FIRST_COLUMN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -4839,11 +4875,11 @@ impl super::Transform for office_2009_07_customui::GalleryGallery {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item_item = super::transform_child(&self.item_item, ctx, &mut rebase);
         node.button_button_regular =
             super::transform_child(&self.button_button_regular, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -4861,7 +4897,7 @@ impl super::Visit for office_2009_07_customui::GalleryGallery {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item_item, visitor);
         walk.child(&self.button_button_regular, visitor);
         walk.finish(visitor);
@@ -4877,7 +4913,7 @@ impl WriteThrough for office_2009_07_customui::GalleryGallery {
         let converted = super::converts(
             out,
             &office_2009_07_customui::GALLERY_GALLERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::gallery_gallery(self, out.scope());
@@ -4886,7 +4922,7 @@ impl WriteThrough for office_2009_07_customui::GalleryGallery {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GALLERY_GALLERY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.size);
         through.attribute(1, &self.get_size);
@@ -4982,11 +5018,11 @@ impl super::Transform for office_2009_07_customui::GalleryGalleryRegular {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.item_item = super::transform_child(&self.item_item, ctx, &mut rebase);
         node.button_button_regular =
             super::transform_child(&self.button_button_regular, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5004,7 +5040,7 @@ impl super::Visit for office_2009_07_customui::GalleryGalleryRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.item_item, visitor);
         walk.child(&self.button_button_regular, visitor);
         walk.finish(visitor);
@@ -5020,7 +5056,7 @@ impl WriteThrough for office_2009_07_customui::GalleryGalleryRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::GALLERY_GALLERY_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -5030,7 +5066,7 @@ impl WriteThrough for office_2009_07_customui::GalleryGalleryRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GALLERY_GALLERY_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.description);
         through.attribute(1, &self.get_description);
@@ -5124,11 +5160,11 @@ impl super::Transform for office_2009_07_customui::GroupBackstageGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.primary_item = super::transform_child(&self.primary_item, ctx, &mut rebase);
         node.top_items = super::transform_child(&self.top_items, ctx, &mut rebase);
         node.bottom_items = super::transform_child(&self.bottom_items, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5146,7 +5182,7 @@ impl super::Visit for office_2009_07_customui::GroupBackstageGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.primary_item, visitor);
         walk.child(&self.top_items, visitor);
         walk.child(&self.bottom_items, visitor);
@@ -5163,7 +5199,7 @@ impl WriteThrough for office_2009_07_customui::GroupBackstageGroup {
         let converted = super::converts(
             out,
             &office_2009_07_customui::GROUP_BACKSTAGE_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::group_backstage_group(self, out.scope());
@@ -5172,7 +5208,7 @@ impl WriteThrough for office_2009_07_customui::GroupBackstageGroup {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GROUP_BACKSTAGE_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -5236,9 +5272,9 @@ impl super::Transform for office_2009_07_customui::GroupBox {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5256,7 +5292,7 @@ impl super::Visit for office_2009_07_customui::GroupBox {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -5271,7 +5307,7 @@ impl WriteThrough for office_2009_07_customui::GroupBox {
         let converted = super::converts(
             out,
             &office_2009_07_customui::GROUP_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::group_box(self, out.scope());
@@ -5280,7 +5316,7 @@ impl WriteThrough for office_2009_07_customui::GroupBox {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GROUP_BOX_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -5720,11 +5756,11 @@ impl super::Transform for office_2009_07_customui::GroupGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.dialog_box_launcher =
             super::transform_child(&self.dialog_box_launcher, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -5742,7 +5778,7 @@ impl super::Visit for office_2009_07_customui::GroupGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.child(&self.dialog_box_launcher, visitor);
         walk.finish(visitor);
@@ -5758,7 +5794,7 @@ impl WriteThrough for office_2009_07_customui::GroupGroup {
         let converted = super::converts(
             out,
             &office_2009_07_customui::GROUP_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::group_group(self, out.scope());
@@ -5767,7 +5803,7 @@ impl WriteThrough for office_2009_07_customui::GroupGroup {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::GROUP_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -5835,7 +5871,8 @@ impl super::Transform for office_2009_07_customui::Hyperlink {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5853,7 +5890,7 @@ impl super::Visit for office_2009_07_customui::Hyperlink {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5866,7 +5903,7 @@ impl WriteThrough for office_2009_07_customui::Hyperlink {
         let converted = super::converts(
             out,
             &office_2009_07_customui::HYPERLINK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::hyperlink(self, out.scope());
@@ -5875,7 +5912,7 @@ impl WriteThrough for office_2009_07_customui::Hyperlink {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::HYPERLINK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -5941,7 +5978,8 @@ impl super::Transform for office_2009_07_customui::ImageControl {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -5959,7 +5997,7 @@ impl super::Visit for office_2009_07_customui::ImageControl {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -5972,7 +6010,7 @@ impl WriteThrough for office_2009_07_customui::ImageControl {
         let converted = super::converts(
             out,
             &office_2009_07_customui::IMAGE_CONTROL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::image_control(self, out.scope());
@@ -5981,7 +6019,7 @@ impl WriteThrough for office_2009_07_customui::ImageControl {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::IMAGE_CONTROL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -6036,7 +6074,8 @@ impl super::Transform for office_2009_07_customui::ItemBackstageItem {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6054,7 +6093,7 @@ impl super::Visit for office_2009_07_customui::ItemBackstageItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6067,7 +6106,7 @@ impl WriteThrough for office_2009_07_customui::ItemBackstageItem {
         let converted = super::converts(
             out,
             &office_2009_07_customui::ITEM_BACKSTAGE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::item_backstage_item(self, out.scope());
@@ -6076,7 +6115,7 @@ impl WriteThrough for office_2009_07_customui::ItemBackstageItem {
         let through = super::Through::new(
             out,
             &office_2009_07_customui::ITEM_BACKSTAGE_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -6119,7 +6158,8 @@ impl super::Transform for office_2009_07_customui::ItemItem {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6137,7 +6177,7 @@ impl super::Visit for office_2009_07_customui::ItemItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6150,7 +6190,7 @@ impl WriteThrough for office_2009_07_customui::ItemItem {
         let converted = super::converts(
             out,
             &office_2009_07_customui::ITEM_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::item_item(self, out.scope());
@@ -6159,7 +6199,7 @@ impl WriteThrough for office_2009_07_customui::ItemItem {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::ITEM_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.label);
@@ -6208,7 +6248,8 @@ impl super::Transform for office_2009_07_customui::LabelControlBackstageLabelCon
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6226,7 +6267,7 @@ impl super::Visit for office_2009_07_customui::LabelControlBackstageLabelControl
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6239,7 +6280,7 @@ impl WriteThrough for office_2009_07_customui::LabelControlBackstageLabelControl
         let converted = super::converts(
             out,
             &office_2009_07_customui::LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::label_control_backstage_label_control(
@@ -6251,7 +6292,7 @@ impl WriteThrough for office_2009_07_customui::LabelControlBackstageLabelControl
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::LABEL_CONTROL_BACKSTAGE_LABEL_CONTROL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -6306,7 +6347,8 @@ impl super::Transform for office_2009_07_customui::LabelControlLabelControl {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -6324,7 +6366,7 @@ impl super::Visit for office_2009_07_customui::LabelControlLabelControl {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -6337,7 +6379,7 @@ impl WriteThrough for office_2009_07_customui::LabelControlLabelControl {
         let converted = super::converts(
             out,
             &office_2009_07_customui::LABEL_CONTROL_LABEL_CONTROL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -6347,7 +6389,7 @@ impl WriteThrough for office_2009_07_customui::LabelControlLabelControl {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::LABEL_CONTROL_LABEL_CONTROL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -6410,9 +6452,9 @@ impl super::Transform for office_2009_07_customui::LayoutContainer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6430,7 +6472,7 @@ impl super::Visit for office_2009_07_customui::LayoutContainer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -6445,7 +6487,7 @@ impl WriteThrough for office_2009_07_customui::LayoutContainer {
         let converted = super::converts(
             out,
             &office_2009_07_customui::LAYOUT_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::layout_container(self, out.scope());
@@ -6454,7 +6496,7 @@ impl WriteThrough for office_2009_07_customui::LayoutContainer {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::LAYOUT_CONTAINER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -6504,9 +6546,9 @@ impl super::Transform for office_2009_07_customui::MenuBackstagePrimaryMenu {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group = super::transform_child(&self.group, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6524,7 +6566,7 @@ impl super::Visit for office_2009_07_customui::MenuBackstagePrimaryMenu {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group, visitor);
         walk.finish(visitor);
     }
@@ -6539,7 +6581,7 @@ impl WriteThrough for office_2009_07_customui::MenuBackstagePrimaryMenu {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -6549,7 +6591,7 @@ impl WriteThrough for office_2009_07_customui::MenuBackstagePrimaryMenu {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_BACKSTAGE_PRIMARY_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.screentip);
         through.attribute(1, &self.get_screentip);
@@ -6611,9 +6653,9 @@ impl super::Transform for office_2009_07_customui::MenuBackstageSubMenu {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group = super::transform_child(&self.group, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6631,7 +6673,7 @@ impl super::Visit for office_2009_07_customui::MenuBackstageSubMenu {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group, visitor);
         walk.finish(visitor);
     }
@@ -6646,7 +6688,7 @@ impl WriteThrough for office_2009_07_customui::MenuBackstageSubMenu {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_BACKSTAGE_SUB_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -6656,7 +6698,7 @@ impl WriteThrough for office_2009_07_customui::MenuBackstageSubMenu {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_BACKSTAGE_SUB_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.description);
         through.attribute(1, &self.get_description);
@@ -6883,9 +6925,9 @@ impl super::Transform for office_2009_07_customui::MenuGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6903,7 +6945,7 @@ impl super::Visit for office_2009_07_customui::MenuGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -6918,7 +6960,7 @@ impl WriteThrough for office_2009_07_customui::MenuGroup {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::menu_group(self, out.scope());
@@ -6927,7 +6969,7 @@ impl WriteThrough for office_2009_07_customui::MenuGroup {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -6977,9 +7019,9 @@ impl super::Transform for office_2009_07_customui::MenuMenu {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -6997,7 +7039,7 @@ impl super::Visit for office_2009_07_customui::MenuMenu {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7012,7 +7054,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenu {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::menu_menu(self, out.scope());
@@ -7021,7 +7063,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenu {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.size);
         through.attribute(1, &self.get_size);
@@ -7097,9 +7139,9 @@ impl super::Transform for office_2009_07_customui::MenuMenuRegular {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7117,7 +7159,7 @@ impl super::Visit for office_2009_07_customui::MenuMenuRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7132,7 +7174,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_MENU_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::menu_menu_regular(self, out.scope());
@@ -7141,7 +7183,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.item_size);
         through.attribute(1, &self.description);
@@ -7215,9 +7257,9 @@ impl super::Transform for office_2009_07_customui::MenuMenuRoot {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7235,7 +7277,7 @@ impl super::Visit for office_2009_07_customui::MenuMenuRoot {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7250,7 +7292,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRoot {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_MENU_ROOT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::menu_menu_root(self, out.scope());
@@ -7259,7 +7301,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRoot {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_ROOT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.title);
         through.attribute(1, &self.get_title);
@@ -7306,9 +7348,9 @@ impl super::Transform for office_2009_07_customui::MenuMenuWithTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7326,7 +7368,7 @@ impl super::Visit for office_2009_07_customui::MenuMenuWithTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7341,7 +7383,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuWithTitle {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_MENU_WITH_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::menu_menu_with_title(self, out.scope());
@@ -7350,7 +7392,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuWithTitle {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_MENU_WITH_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -7424,7 +7466,8 @@ impl super::Transform for office_2009_07_customui::MenuSeparatorMenuSeparator {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7442,7 +7485,7 @@ impl super::Visit for office_2009_07_customui::MenuSeparatorMenuSeparator {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7455,7 +7498,7 @@ impl WriteThrough for office_2009_07_customui::MenuSeparatorMenuSeparator {
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -7465,7 +7508,7 @@ impl WriteThrough for office_2009_07_customui::MenuSeparatorMenuSeparator {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -7517,7 +7560,8 @@ impl super::Transform for office_2009_07_customui::MenuSeparatorMenuSeparatorNoT
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -7535,7 +7579,7 @@ impl super::Visit for office_2009_07_customui::MenuSeparatorMenuSeparatorNoTitle
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -7548,7 +7592,7 @@ impl WriteThrough for office_2009_07_customui::MenuSeparatorMenuSeparatorNoTitle
         let converted = super::converts(
             out,
             &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::menu_separator_menu_separator_no_title(
@@ -7560,7 +7604,7 @@ impl WriteThrough for office_2009_07_customui::MenuSeparatorMenuSeparatorNoTitle
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::MENU_SEPARATOR_MENU_SEPARATOR_NO_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -7777,9 +7821,9 @@ impl super::Transform for office_2009_07_customui::PrimaryItem {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7797,7 +7841,7 @@ impl super::Visit for office_2009_07_customui::PrimaryItem {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -7812,7 +7856,7 @@ impl WriteThrough for office_2009_07_customui::PrimaryItem {
         let converted = super::converts(
             out,
             &office_2009_07_customui::PRIMARY_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::primary_item(self, out.scope());
@@ -7821,7 +7865,7 @@ impl WriteThrough for office_2009_07_customui::PrimaryItem {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::PRIMARY_ITEM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -7962,10 +8006,10 @@ impl super::Transform for office_2009_07_customui::Qat {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.shared_controls = super::transform_child(&self.shared_controls, ctx, &mut rebase);
         node.document_controls = super::transform_child(&self.document_controls, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -7983,7 +8027,7 @@ impl super::Visit for office_2009_07_customui::Qat {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.shared_controls, visitor);
         walk.child(&self.document_controls, visitor);
         walk.finish(visitor);
@@ -7996,13 +8040,20 @@ impl WriteThrough for office_2009_07_customui::Qat {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_2009_07_customui::QAT_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::QAT_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::qat(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::QAT_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::QAT_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.shared_controls, ctx)?;
         through.child(&self.document_controls, ctx)?;
         through.finish(ctx)
@@ -8171,7 +8222,8 @@ impl super::Transform for office_2009_07_customui::RadioButton {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8189,7 +8241,7 @@ impl super::Visit for office_2009_07_customui::RadioButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8202,7 +8254,7 @@ impl WriteThrough for office_2009_07_customui::RadioButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::RADIO_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::radio_button(self, out.scope());
@@ -8211,7 +8263,7 @@ impl WriteThrough for office_2009_07_customui::RadioButton {
         let through = super::Through::new(
             out,
             &office_2009_07_customui::RADIO_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -8254,9 +8306,9 @@ impl super::Transform for office_2009_07_customui::RadioGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.radio_button = super::transform_child(&self.radio_button, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8274,7 +8326,7 @@ impl super::Visit for office_2009_07_customui::RadioGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.radio_button, visitor);
         walk.finish(visitor);
     }
@@ -8289,7 +8341,7 @@ impl WriteThrough for office_2009_07_customui::RadioGroup {
         let converted = super::converts(
             out,
             &office_2009_07_customui::RADIO_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::radio_group(self, out.scope());
@@ -8298,7 +8350,7 @@ impl WriteThrough for office_2009_07_customui::RadioGroup {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::RADIO_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -8360,9 +8412,9 @@ impl super::Transform for office_2009_07_customui::Ribbon {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8380,7 +8432,7 @@ impl super::Visit for office_2009_07_customui::Ribbon {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -8392,13 +8444,20 @@ impl WriteThrough for office_2009_07_customui::Ribbon {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_2009_07_customui::RIBBON_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::RIBBON_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::ribbon(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::RIBBON_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::RIBBON_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.start_from_scratch);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -8567,9 +8626,9 @@ impl super::Transform for office_2009_07_customui::SecondColumn {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8587,7 +8646,7 @@ impl super::Visit for office_2009_07_customui::SecondColumn {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -8602,7 +8661,7 @@ impl WriteThrough for office_2009_07_customui::SecondColumn {
         let converted = super::converts(
             out,
             &office_2009_07_customui::SECOND_COLUMN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::second_column(self, out.scope());
@@ -8611,7 +8670,7 @@ impl WriteThrough for office_2009_07_customui::SecondColumn {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SECOND_COLUMN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -8655,7 +8714,8 @@ impl super::Transform for office_2009_07_customui::Separator {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -8673,7 +8733,7 @@ impl super::Visit for office_2009_07_customui::Separator {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -8686,7 +8746,7 @@ impl WriteThrough for office_2009_07_customui::Separator {
         let converted = super::converts(
             out,
             &office_2009_07_customui::SEPARATOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::separator(self, out.scope());
@@ -8695,7 +8755,7 @@ impl WriteThrough for office_2009_07_customui::Separator {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SEPARATOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -8747,9 +8807,9 @@ impl super::Transform for office_2009_07_customui::SharedControls {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -8767,7 +8827,7 @@ impl super::Visit for office_2009_07_customui::SharedControls {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -8782,7 +8842,7 @@ impl WriteThrough for office_2009_07_customui::SharedControls {
         let converted = super::converts(
             out,
             &office_2009_07_customui::SHARED_CONTROLS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::shared_controls(self, out.scope());
@@ -8791,7 +8851,7 @@ impl WriteThrough for office_2009_07_customui::SharedControls {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SHARED_CONTROLS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -9050,10 +9110,10 @@ impl super::Transform for office_2009_07_customui::SplitButtonSplitButton {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.menu_menu_regular = super::transform_child(&self.menu_menu_regular, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9071,7 +9131,7 @@ impl super::Visit for office_2009_07_customui::SplitButtonSplitButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.child(&self.menu_menu_regular, visitor);
         walk.finish(visitor);
@@ -9087,7 +9147,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -9097,7 +9157,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.size);
         through.attribute(1, &self.get_size);
@@ -9160,10 +9220,10 @@ impl super::Transform for office_2009_07_customui::SplitButtonSplitButtonRegular
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.menu_menu_regular = super::transform_child(&self.menu_menu_regular, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9181,7 +9241,7 @@ impl super::Visit for office_2009_07_customui::SplitButtonSplitButtonRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.child(&self.menu_menu_regular, visitor);
         walk.finish(visitor);
@@ -9197,7 +9257,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::split_button_split_button_regular(
@@ -9209,7 +9269,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.enabled);
         through.attribute(1, &self.get_enabled);
@@ -9270,11 +9330,11 @@ impl super::Transform for office_2009_07_customui::SplitButtonSplitButtonWithTit
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.menu_menu_with_title =
             super::transform_child(&self.menu_menu_with_title, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9292,7 +9352,7 @@ impl super::Visit for office_2009_07_customui::SplitButtonSplitButtonWithTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.child(&self.menu_menu_with_title, visitor);
         walk.finish(visitor);
@@ -9308,7 +9368,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonWithTitle {
         let converted = super::converts(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::split_button_split_button_with_title(
@@ -9320,7 +9380,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonWithTitle {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::SPLIT_BUTTON_SPLIT_BUTTON_WITH_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.enabled);
         through.attribute(1, &self.get_enabled);
@@ -9381,10 +9441,10 @@ impl super::Transform for office_2009_07_customui::TabBackstageTab {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.first_column = super::transform_child(&self.first_column, ctx, &mut rebase);
         node.second_column = super::transform_child(&self.second_column, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9402,7 +9462,7 @@ impl super::Visit for office_2009_07_customui::TabBackstageTab {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.first_column, visitor);
         walk.child(&self.second_column, visitor);
         walk.finish(visitor);
@@ -9418,7 +9478,7 @@ impl WriteThrough for office_2009_07_customui::TabBackstageTab {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TAB_BACKSTAGE_TAB_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::tab_backstage_tab(self, out.scope());
@@ -9427,7 +9487,7 @@ impl WriteThrough for office_2009_07_customui::TabBackstageTab {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TAB_BACKSTAGE_TAB_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -9495,9 +9555,9 @@ impl super::Transform for office_2009_07_customui::TabSet {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tab_tab = super::transform_child(&self.tab_tab, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9515,7 +9575,7 @@ impl super::Visit for office_2009_07_customui::TabSet {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tab_tab, visitor);
         walk.finish(visitor);
     }
@@ -9527,14 +9587,20 @@ impl WriteThrough for office_2009_07_customui::TabSet {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_2009_07_customui::TAB_SET_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TAB_SET_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::tab_set(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::TAB_SET_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::TAB_SET_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id_mso);
         through.attribute(1, &self.visible);
         through.attribute(2, &self.get_visible);
@@ -9580,9 +9646,9 @@ impl super::Transform for office_2009_07_customui::TabTab {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group_group = super::transform_child(&self.group_group, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9600,7 +9666,7 @@ impl super::Visit for office_2009_07_customui::TabTab {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group_group, visitor);
         walk.finish(visitor);
     }
@@ -9612,14 +9678,20 @@ impl WriteThrough for office_2009_07_customui::TabTab {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted =
-            super::converts(out, &office_2009_07_customui::TAB_TAB_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TAB_TAB_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::tab_tab(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::TAB_TAB_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::TAB_TAB_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
         through.attribute(2, &self.tag);
@@ -9676,9 +9748,9 @@ impl super::Transform for office_2009_07_customui::Tabs {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.tab_tab = super::transform_child(&self.tab_tab, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9696,7 +9768,7 @@ impl super::Visit for office_2009_07_customui::Tabs {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.tab_tab, visitor);
         walk.finish(visitor);
     }
@@ -9708,13 +9780,20 @@ impl WriteThrough for office_2009_07_customui::Tabs {
         ctx: &mut dyn officekit_markup::Context,
         out: &mut PartWriter<'_>,
     ) -> io::Result<()> {
-        let converted = super::converts(out, &office_2009_07_customui::TABS_SHAPE, &self.unknown);
+        let converted = super::converts(
+            out,
+            &office_2009_07_customui::TABS_SHAPE,
+            self.unknown.as_deref(),
+        );
         if converted {
             let element = office_2009_07_customui::write::tabs(self, out.scope());
             return out.converted(element);
         }
-        let mut through =
-            super::Through::new(out, &office_2009_07_customui::TABS_SHAPE, &self.unknown);
+        let mut through = super::Through::new(
+            out,
+            &office_2009_07_customui::TABS_SHAPE,
+            self.unknown.as_deref(),
+        );
         through.child(&self.tab_tab, ctx)?;
         through.finish(ctx)
     }
@@ -9757,10 +9836,10 @@ impl super::Transform for office_2009_07_customui::TaskFormGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.category_task_form_group_category =
             super::transform_child(&self.category_task_form_group_category, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9778,7 +9857,7 @@ impl super::Visit for office_2009_07_customui::TaskFormGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.category_task_form_group_category, visitor);
         walk.finish(visitor);
     }
@@ -9793,7 +9872,7 @@ impl WriteThrough for office_2009_07_customui::TaskFormGroup {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TASK_FORM_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::task_form_group(self, out.scope());
@@ -9802,7 +9881,7 @@ impl WriteThrough for office_2009_07_customui::TaskFormGroup {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_FORM_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -9859,10 +9938,10 @@ impl super::Transform for office_2009_07_customui::TaskGroup {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.category_task_group_category =
             super::transform_child(&self.category_task_group_category, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9880,7 +9959,7 @@ impl super::Visit for office_2009_07_customui::TaskGroup {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.category_task_group_category, visitor);
         walk.finish(visitor);
     }
@@ -9895,7 +9974,7 @@ impl WriteThrough for office_2009_07_customui::TaskGroup {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TASK_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::task_group(self, out.scope());
@@ -9904,7 +9983,7 @@ impl WriteThrough for office_2009_07_customui::TaskGroup {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_GROUP_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -9965,10 +10044,10 @@ impl super::Transform for office_2009_07_customui::TaskTaskFormGroupTask {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.group_backstage_group =
             super::transform_child(&self.group_backstage_group, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -9986,7 +10065,7 @@ impl super::Visit for office_2009_07_customui::TaskTaskFormGroupTask {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.group_backstage_group, visitor);
         walk.finish(visitor);
     }
@@ -10001,7 +10080,7 @@ impl WriteThrough for office_2009_07_customui::TaskTaskFormGroupTask {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TASK_TASK_FORM_GROUP_TASK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -10011,7 +10090,7 @@ impl WriteThrough for office_2009_07_customui::TaskTaskFormGroupTask {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_TASK_FORM_GROUP_TASK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -10076,7 +10155,8 @@ impl super::Transform for office_2009_07_customui::TaskTaskGroupTask {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10094,7 +10174,7 @@ impl super::Visit for office_2009_07_customui::TaskTaskGroupTask {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10107,7 +10187,7 @@ impl WriteThrough for office_2009_07_customui::TaskTaskGroupTask {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TASK_TASK_GROUP_TASK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::task_task_group_task(self, out.scope());
@@ -10116,7 +10196,7 @@ impl WriteThrough for office_2009_07_customui::TaskTaskGroupTask {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TASK_TASK_GROUP_TASK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.id_q);
@@ -10182,7 +10262,8 @@ impl super::Transform for office_2009_07_customui::ToggleButtonBackstageMenuTogg
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10200,7 +10281,7 @@ impl super::Visit for office_2009_07_customui::ToggleButtonBackstageMenuToggleBu
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10213,7 +10294,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonBackstageMenuToggleBu
         let converted = super::converts(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -10226,7 +10307,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonBackstageMenuToggleBu
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_BACKSTAGE_MENU_TOGGLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.image);
         through.attribute(1, &self.image_mso);
@@ -10287,7 +10368,8 @@ impl super::Transform for office_2009_07_customui::ToggleButtonToggleButton {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10305,7 +10387,7 @@ impl super::Visit for office_2009_07_customui::ToggleButtonToggleButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10318,7 +10400,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonToggleButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -10328,7 +10410,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonToggleButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.size);
         through.attribute(1, &self.get_size);
@@ -10404,7 +10486,8 @@ impl super::Transform for office_2009_07_customui::ToggleButtonToggleButtonRegul
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10422,7 +10505,7 @@ impl super::Visit for office_2009_07_customui::ToggleButtonToggleButtonRegular {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10435,7 +10518,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonToggleButtonRegular {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::toggle_button_toggle_button_regular(
@@ -10447,7 +10530,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonToggleButtonRegular {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_TOGGLE_BUTTON_REGULAR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.get_pressed);
         through.attribute(1, &self.on_action);
@@ -10521,7 +10604,8 @@ impl super::Transform for office_2009_07_customui::ToggleButtonVisibleToggleButt
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -10539,7 +10623,7 @@ impl super::Visit for office_2009_07_customui::ToggleButtonVisibleToggleButton {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -10552,7 +10636,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonVisibleToggleButton {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::toggle_button_visible_toggle_button(
@@ -10564,7 +10648,7 @@ impl WriteThrough for office_2009_07_customui::ToggleButtonVisibleToggleButton {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOGGLE_BUTTON_VISIBLE_TOGGLE_BUTTON_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.get_pressed);
         through.attribute(1, &self.on_action);
@@ -10636,9 +10720,9 @@ impl super::Transform for office_2009_07_customui::TopItems {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -10656,7 +10740,7 @@ impl super::Visit for office_2009_07_customui::TopItems {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -10671,7 +10755,7 @@ impl WriteThrough for office_2009_07_customui::TopItems {
         let converted = super::converts(
             out,
             &office_2009_07_customui::TOP_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_2009_07_customui::write::top_items(self, out.scope());
@@ -10680,7 +10764,7 @@ impl WriteThrough for office_2009_07_customui::TopItems {
         let mut through = super::Through::new(
             out,
             &office_2009_07_customui::TOP_ITEMS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.items(&self.content, ctx)?;
         through.finish(ctx)

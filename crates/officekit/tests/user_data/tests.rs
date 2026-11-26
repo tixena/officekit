@@ -71,7 +71,7 @@ fn document() -> Document {
         BlockContent::Table(table("in a cell")),
     ];
     body.document_final_section_properties = Some(Box::new(section));
-    body.unknown
+    body.unknown_mut()
         .children
         .push(Extra::new(3, Node::Element(note)));
     let mut document = Document::default();
@@ -120,7 +120,7 @@ fn the_plain_tree_converted_to_the_plain_tree_is_the_identity() {
 fn the_unknown_content_survives_the_conversion() {
     let laid_out: DocumentWith<Placement> = document().into_user_data();
     let body = laid_out.body.as_deref().unwrap();
-    assert_eq!(body.unknown.children.len(), 1);
+    assert_eq!(body.unknown().unwrap().children.len(), 1);
 }
 
 /// The paragraph of the first cell of the first row of the table that ends the body.

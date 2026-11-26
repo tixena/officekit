@@ -437,7 +437,11 @@ impl ModuleItems {
             let converted = into_user_data_text(names, cycles, index, node, &mut parts.helpers);
             methods.insert_str(
                 opening,
-                &format!("{}\n", converted.trim_start_matches('\n')),
+                &format!(
+                    "{}\n{}",
+                    converted.trim_start_matches('\n'),
+                    unknown_accessors(names.runtime())
+                ),
             );
             parts.impls.push((node.name.clone(), methods));
             parts
@@ -657,11 +661,12 @@ pub fn struct_fields(
     }
     fields.push(Field {
         conversion: Conversion::Move,
-        doc: "What a read found that the schemas do not declare, which a write gives back."
+        doc: "What a read found that the schemas do not declare, which a write gives back; \
+              `None` when it found nothing. A read never leaves an empty record here."
             .to_owned(),
         name: "unknown".to_owned(),
         recursive: false,
-        shown: format!("{}::Unknown", names.runtime()),
+        shown: format!("Option<Box<{}::Unknown>>", names.runtime()),
     });
     fields.push(Field {
         conversion: Conversion::Slot,
@@ -1315,6 +1320,20 @@ fn alias(name: &str, with: &str) -> String {
         format!("pub type {name} =\n    {with}<()>;")
     };
     format!("{declared}\n\nimpl Eq for {with}<()> {{}}\n")
+}
+
+/// A struct's `unknown` and `unknown_mut`, which read its boxed unknown content and put an empty
+/// record in place to change.
+fn unknown_accessors(runtime: &str) -> String {
+    format!(
+        "    /// What a read found that the schemas do not declare; `None` when it found nothing.\n    \
+         #[must_use = \"this only returns the value\"]\n    \
+         pub fn unknown(&self) -> Option<&{runtime}::Unknown> {{\n        \
+         self.unknown.as_deref()\n    }}\n\n    \
+         /// The unknown content to change, an empty record put in place when the node holds none.\n    \
+         pub fn unknown_mut(&mut self) -> &mut {runtime}::Unknown {{\n        \
+         self.unknown.get_or_insert_default()\n    }}\n\n"
+    )
 }
 
 /// A struct's `without_children`: a struct literal of its attributes and its

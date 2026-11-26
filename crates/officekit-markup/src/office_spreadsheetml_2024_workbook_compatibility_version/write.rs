@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn version(node: &super::Version, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::VERSION_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::VERSION_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.warn_below_version);
     writer.attribute(1, &node.set_version);
     writer.finish()

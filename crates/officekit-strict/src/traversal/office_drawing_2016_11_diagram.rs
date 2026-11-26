@@ -233,9 +233,9 @@ impl super::Transform for office_drawing_2016_11_diagram::AutoBuNodeInfo {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.bu_pr = super::transform_child(&self.bu_pr, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_drawing_2016_11_diagram::AutoBuNodeInfo {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.bu_pr, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_drawing_2016_11_diagram::AutoBuNodeInfo {
         let converted = super::converts(
             out,
             &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -278,7 +278,7 @@ impl WriteThrough for office_drawing_2016_11_diagram::AutoBuNodeInfo {
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.lvl);
         through.attribute(1, &self.pt_type);
@@ -324,9 +324,9 @@ impl super::Transform for office_drawing_2016_11_diagram::AutoBuNodeInfoLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.auto_bu_node_info = super::transform_child(&self.auto_bu_node_info, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -344,7 +344,7 @@ impl super::Visit for office_drawing_2016_11_diagram::AutoBuNodeInfoLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.auto_bu_node_info, visitor);
         walk.finish(visitor);
     }
@@ -359,7 +359,7 @@ impl WriteThrough for office_drawing_2016_11_diagram::AutoBuNodeInfoLst {
         let converted = super::converts(
             out,
             &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -369,7 +369,7 @@ impl WriteThrough for office_drawing_2016_11_diagram::AutoBuNodeInfoLst {
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_11_diagram::AUTO_BU_NODE_INFO_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.auto_bu_node_info, ctx)?;
         through.finish(ctx)
@@ -413,9 +413,9 @@ impl super::Transform for office_drawing_2016_11_diagram::BuPr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -433,7 +433,7 @@ impl super::Visit for office_drawing_2016_11_diagram::BuPr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -448,7 +448,7 @@ impl WriteThrough for office_drawing_2016_11_diagram::BuPr {
         let converted = super::converts(
             out,
             &office_drawing_2016_11_diagram::BU_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_drawing_2016_11_diagram::write::bu_pr(self, out.scope());
@@ -457,7 +457,7 @@ impl WriteThrough for office_drawing_2016_11_diagram::BuPr {
         let mut through = super::Through::new(
             out,
             &office_drawing_2016_11_diagram::BU_PR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.prefix);
         through.attribute(1, &self.lead_zeros);

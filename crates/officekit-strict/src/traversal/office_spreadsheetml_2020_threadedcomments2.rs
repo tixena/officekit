@@ -233,7 +233,8 @@ impl super::Transform for office_spreadsheetml_2020_threadedcomments2::Checksum 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_spreadsheetml_2020_threadedcomments2::Checksum {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::Checksum {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_threadedcomments2::CHECKSUM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -274,7 +275,7 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::Checksum {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_threadedcomments2::CHECKSUM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -318,9 +319,9 @@ impl super::Transform for office_spreadsheetml_2020_threadedcomments2::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -338,7 +339,7 @@ impl super::Visit for office_spreadsheetml_2020_threadedcomments2::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -353,7 +354,7 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::ExtLst {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_threadedcomments2::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -363,7 +364,7 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_threadedcomments2::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -407,9 +408,9 @@ impl super::Transform for office_spreadsheetml_2020_threadedcomments2::Hyperlink
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -427,7 +428,7 @@ impl super::Visit for office_spreadsheetml_2020_threadedcomments2::Hyperlink {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -442,7 +443,7 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::Hyperlink {
         let converted = super::converts(
             out,
             &office_spreadsheetml_2020_threadedcomments2::HYPERLINK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -452,7 +453,7 @@ impl WriteThrough for office_spreadsheetml_2020_threadedcomments2::Hyperlink {
         let mut through = super::Through::new(
             out,
             &office_spreadsheetml_2020_threadedcomments2::HYPERLINK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.start_index);
         through.attribute(1, &self.length);

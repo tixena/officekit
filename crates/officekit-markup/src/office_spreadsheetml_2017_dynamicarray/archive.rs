@@ -226,7 +226,7 @@ pub struct DynamicArrayPropertiesMirror {
     pub ext_lst: Option<Box<super::ExtLst>>,
     pub f_collapsed: Option<String>,
     pub f_dynamic: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -235,7 +235,7 @@ pub struct DynamicArrayPropertiesMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct ExtLstMirror {
     pub extension: Vec<spreadsheet::Extension>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

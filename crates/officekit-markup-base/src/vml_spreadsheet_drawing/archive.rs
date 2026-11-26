@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::Anchor)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AnchorMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -234,7 +234,7 @@ pub struct AnchorMirror {
 pub struct AttachedObjectDataMirror {
     pub content: Vec<super::AttachedObjectDataContent>,
     pub object_type: Option<super::ObjectType>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -242,7 +242,7 @@ pub struct AttachedObjectDataMirror {
 #[rkyv(remote = super::AutoFill)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoFillMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -251,7 +251,7 @@ pub struct AutoFillMirror {
 #[rkyv(remote = super::AutoLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoLineMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -260,7 +260,7 @@ pub struct AutoLineMirror {
 #[rkyv(remote = super::AutomaticallySize)]
 #[rkyv(attr(non_exhaustive))]
 pub struct AutomaticallySizeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -269,7 +269,7 @@ pub struct AutomaticallySizeMirror {
 #[rkyv(remote = super::CallbackType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CallbackTypeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -278,7 +278,7 @@ pub struct CallbackTypeMirror {
 #[rkyv(remote = super::CameraSourceRange)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraSourceRangeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -287,7 +287,7 @@ pub struct CameraSourceRangeMirror {
 #[rkyv(remote = super::CameraTool)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CameraToolMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -296,7 +296,7 @@ pub struct CameraToolMirror {
 #[rkyv(remote = super::CancelButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CancelButtonMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -305,7 +305,7 @@ pub struct CancelButtonMirror {
 #[rkyv(remote = super::Checked)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CheckedMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -314,7 +314,7 @@ pub struct CheckedMirror {
 #[rkyv(remote = super::ClipboardFormat)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ClipboardFormatMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -323,7 +323,7 @@ pub struct ClipboardFormatMirror {
 #[rkyv(remote = super::CommentColumnTarget)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentColumnTargetMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -332,7 +332,7 @@ pub struct CommentColumnTargetMirror {
 #[rkyv(remote = super::CommentRowTarget)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentRowTargetMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -341,7 +341,7 @@ pub struct CommentRowTargetMirror {
 #[rkyv(remote = super::CommentVisibilityToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentVisibilityToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -350,7 +350,7 @@ pub struct CommentVisibilityToggleMirror {
 #[rkyv(remote = super::CommentsColumnIsHidden)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsColumnIsHiddenMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -359,7 +359,7 @@ pub struct CommentsColumnIsHiddenMirror {
 #[rkyv(remote = super::CommentsRowIsHidden)]
 #[rkyv(attr(non_exhaustive))]
 pub struct CommentsRowIsHiddenMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -368,7 +368,7 @@ pub struct CommentsRowIsHiddenMirror {
 #[rkyv(remote = super::DefaultButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultButtonMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -377,7 +377,7 @@ pub struct DefaultButtonMirror {
 #[rkyv(remote = super::DefaultSizeToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DefaultSizeToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -386,7 +386,7 @@ pub struct DefaultSizeToggleMirror {
 #[rkyv(remote = super::Disable3DNoThreeD)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Disable3DNoThreeDMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -395,7 +395,7 @@ pub struct Disable3DNoThreeDMirror {
 #[rkyv(remote = super::Disable3DNoThreeD2)]
 #[rkyv(attr(non_exhaustive))]
 pub struct Disable3DNoThreeD2Mirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -404,7 +404,7 @@ pub struct Disable3DNoThreeD2Mirror {
 #[rkyv(remote = super::DismissButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DismissButtonMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -413,7 +413,7 @@ pub struct DismissButtonMirror {
 #[rkyv(remote = super::DropdownColorToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropdownColorToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -422,7 +422,7 @@ pub struct DropdownColorToggleMirror {
 #[rkyv(remote = super::DropdownMaximumLines)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropdownMaximumLinesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -431,7 +431,7 @@ pub struct DropdownMaximumLinesMirror {
 #[rkyv(remote = super::DropdownStyle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DropdownStyleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -440,7 +440,7 @@ pub struct DropdownStyleMirror {
 #[rkyv(remote = super::DynamicDataExchange)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DynamicDataExchangeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -449,7 +449,7 @@ pub struct DynamicDataExchangeMirror {
 #[rkyv(remote = super::EmbeddedControl)]
 #[rkyv(attr(non_exhaustive))]
 pub struct EmbeddedControlMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -458,7 +458,7 @@ pub struct EmbeddedControlMirror {
 #[rkyv(remote = super::FarEastAlignmentToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FarEastAlignmentToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -467,7 +467,7 @@ pub struct FarEastAlignmentToggleMirror {
 #[rkyv(remote = super::FirstRadioButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FirstRadioButtonMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -476,7 +476,7 @@ pub struct FirstRadioButtonMirror {
 #[rkyv(remote = super::FontAutoScale)]
 #[rkyv(attr(non_exhaustive))]
 pub struct FontAutoScaleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -485,7 +485,7 @@ pub struct FontAutoScaleMirror {
 #[rkyv(remote = super::HTMLScriptAttributes)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptAttributesMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -494,7 +494,7 @@ pub struct HTMLScriptAttributesMirror {
 #[rkyv(remote = super::HTMLScriptLanguage)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptLanguageMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -503,7 +503,7 @@ pub struct HTMLScriptLanguageMirror {
 #[rkyv(remote = super::HTMLScriptLocation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptLocationMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -512,7 +512,7 @@ pub struct HTMLScriptLocationMirror {
 #[rkyv(remote = super::HTMLScriptText)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HTMLScriptTextMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -521,7 +521,7 @@ pub struct HTMLScriptTextMirror {
 #[rkyv(remote = super::HelpButton)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HelpButtonMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -530,7 +530,7 @@ pub struct HelpButtonMirror {
 #[rkyv(remote = super::HorizontalTextAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct HorizontalTextAlignmentMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -539,7 +539,7 @@ pub struct HorizontalTextAlignmentMirror {
 #[rkyv(remote = super::LinkedFormula)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedFormulaMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -548,7 +548,7 @@ pub struct LinkedFormulaMirror {
 #[rkyv(remote = super::LinkedFormulaGroupBox)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LinkedFormulaGroupBoxMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -557,7 +557,7 @@ pub struct LinkedFormulaGroupBoxMirror {
 #[rkyv(remote = super::ListItemsSourceRange)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ListItemsSourceRangeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -566,7 +566,7 @@ pub struct ListItemsSourceRangeMirror {
 #[rkyv(remote = super::LockToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct LockToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -575,7 +575,7 @@ pub struct LockToggleMirror {
 #[rkyv(remote = super::MacroDisableToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MacroDisableToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -584,7 +584,7 @@ pub struct MacroDisableToggleMirror {
 #[rkyv(remote = super::MinimumWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MinimumWidthMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -593,7 +593,7 @@ pub struct MinimumWidthMirror {
 #[rkyv(remote = super::MoveWithCells)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MoveWithCellsMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -602,7 +602,7 @@ pub struct MoveWithCellsMirror {
 #[rkyv(remote = super::MultiLine)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MultiLineMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -611,7 +611,7 @@ pub struct MultiLineMirror {
 #[rkyv(remote = super::MultipleSelections)]
 #[rkyv(attr(non_exhaustive))]
 pub struct MultipleSelectionsMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -620,7 +620,7 @@ pub struct MultipleSelectionsMirror {
 #[rkyv(remote = super::NonLinkedListItem)]
 #[rkyv(attr(non_exhaustive))]
 pub struct NonLinkedListItemMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -629,7 +629,7 @@ pub struct NonLinkedListItemMirror {
 #[rkyv(remote = super::PasswordEdit)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PasswordEditMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -638,7 +638,7 @@ pub struct PasswordEditMirror {
 #[rkyv(remote = super::PrimaryKeyboardAccelerator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrimaryKeyboardAcceleratorMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -647,7 +647,7 @@ pub struct PrimaryKeyboardAcceleratorMirror {
 #[rkyv(remote = super::PrintToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct PrintToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -656,7 +656,7 @@ pub struct PrintToggleMirror {
 #[rkyv(remote = super::RecalculationToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RecalculationToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -665,7 +665,7 @@ pub struct RecalculationToggleMirror {
 #[rkyv(remote = super::ReferenceToCustomFunction)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ReferenceToCustomFunctionMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -674,7 +674,7 @@ pub struct ReferenceToCustomFunctionMirror {
 #[rkyv(remote = super::ResizeWithCells)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ResizeWithCellsMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -683,7 +683,7 @@ pub struct ResizeWithCellsMirror {
 #[rkyv(remote = super::ScrollBarIncrement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarIncrementMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -692,7 +692,7 @@ pub struct ScrollBarIncrementMirror {
 #[rkyv(remote = super::ScrollBarMaximum)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarMaximumMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -701,7 +701,7 @@ pub struct ScrollBarMaximumMirror {
 #[rkyv(remote = super::ScrollBarMinimum)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarMinimumMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -710,7 +710,7 @@ pub struct ScrollBarMinimumMirror {
 #[rkyv(remote = super::ScrollBarOrientation)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarOrientationMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -719,7 +719,7 @@ pub struct ScrollBarOrientationMirror {
 #[rkyv(remote = super::ScrollBarPageIncrement)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarPageIncrementMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -728,7 +728,7 @@ pub struct ScrollBarPageIncrementMirror {
 #[rkyv(remote = super::ScrollBarPosition)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarPositionMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -737,7 +737,7 @@ pub struct ScrollBarPositionMirror {
 #[rkyv(remote = super::ScrollBarWidth)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ScrollBarWidthMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -746,7 +746,7 @@ pub struct ScrollBarWidthMirror {
 #[rkyv(remote = super::SecondaryKeyboardAccelerator)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SecondaryKeyboardAcceleratorMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -755,7 +755,7 @@ pub struct SecondaryKeyboardAcceleratorMirror {
 #[rkyv(remote = super::SelectedEntry)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SelectedEntryMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -764,7 +764,7 @@ pub struct SelectedEntryMirror {
 #[rkyv(remote = super::SelectionType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct SelectionTypeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -773,7 +773,7 @@ pub struct SelectionTypeMirror {
 #[rkyv(remote = super::TextFormula)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextFormulaMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -782,7 +782,7 @@ pub struct TextFormulaMirror {
 #[rkyv(remote = super::TextLock)]
 #[rkyv(attr(non_exhaustive))]
 pub struct TextLockMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -791,7 +791,7 @@ pub struct TextLockMirror {
 #[rkyv(remote = super::UIObjectToggle)]
 #[rkyv(attr(non_exhaustive))]
 pub struct UIObjectToggleMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -800,7 +800,7 @@ pub struct UIObjectToggleMirror {
 #[rkyv(remote = super::ValidID)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValidIDMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -809,7 +809,7 @@ pub struct ValidIDMirror {
 #[rkyv(remote = super::ValidationType)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ValidationTypeMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }
@@ -818,7 +818,7 @@ pub struct ValidationTypeMirror {
 #[rkyv(remote = super::VerticalScroll)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalScrollMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: super::super::common_simple_types::BooleanValueWithBlankFalseState,
 }
@@ -827,7 +827,7 @@ pub struct VerticalScrollMirror {
 #[rkyv(remote = super::VerticalTextAlignment)]
 #[rkyv(attr(non_exhaustive))]
 pub struct VerticalTextAlignmentMirror {
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
     pub value: String,
 }

@@ -153,14 +153,15 @@ fn a_paragraph_built_from_default_writes_and_reads_back() {
     // The writer declares the prefixes its element uses, and the reader keeps
     // an element's own declarations.
     let mut read_back = read::paragraph(&element);
-    let declared: Vec<&str> = read_back
-        .unknown
+    let mut unknown = *read_back.unknown.take().unwrap();
+    let declared: Vec<&str> = unknown
         .namespace_declarations
         .iter()
         .map(|declaration| declaration.prefix.as_str())
         .collect();
     assert_eq!(declared, ["w", "w14"]);
-    read_back.unknown.namespace_declarations.clear();
+    unknown.namespace_declarations.clear();
+    read_back.unknown = unknown.boxed();
     assert_eq!(read_back, paragraph);
 }
 

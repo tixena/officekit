@@ -240,7 +240,7 @@ fn a_read_holds_xml_space_on_the_field_of_spreadsheet_text() {
         .unwrap();
         assert_eq!(text.space.as_deref(), Some("preserve"));
         assert_eq!(text.value, " two");
-        assert_eq!(text.unknown.attributes, []);
+        assert_eq!(text.unknown().unwrap().attributes, []);
     }
 }
 

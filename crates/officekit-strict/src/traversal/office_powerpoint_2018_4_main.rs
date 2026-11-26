@@ -233,7 +233,8 @@ impl super::Transform for office_powerpoint_2018_4_main::Classification {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -251,7 +252,7 @@ impl super::Visit for office_powerpoint_2018_4_main::Classification {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -264,7 +265,7 @@ impl WriteThrough for office_powerpoint_2018_4_main::Classification {
         let converted = super::converts(
             out,
             &office_powerpoint_2018_4_main::CLASSIFICATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_powerpoint_2018_4_main::write::classification(self, out.scope());
@@ -273,7 +274,7 @@ impl WriteThrough for office_powerpoint_2018_4_main::Classification {
         let mut through = super::Through::new(
             out,
             &office_powerpoint_2018_4_main::CLASSIFICATION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
         through.finish(ctx)

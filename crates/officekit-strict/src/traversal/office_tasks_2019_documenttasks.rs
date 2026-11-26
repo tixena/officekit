@@ -233,10 +233,10 @@ impl super::Transform for office_tasks_2019_documenttasks::Anchor {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.comment = super::transform_child(&self.comment, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -254,7 +254,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Anchor {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.comment, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -270,7 +270,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Anchor {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::ANCHOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::anchor(self, out.scope());
@@ -279,7 +279,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Anchor {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::ANCHOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.comment, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -324,7 +324,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Assign {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -342,7 +343,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Assign {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -355,7 +356,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Assign {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::ASSIGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::assign(self, out.scope());
@@ -364,7 +365,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Assign {
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::ASSIGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -407,7 +408,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Attribution {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -425,7 +427,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Attribution {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -438,7 +440,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Attribution {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::ATTRIBUTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::attribution(self, out.scope());
@@ -447,7 +449,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Attribution {
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::ATTRIBUTION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -490,7 +492,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Comment {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -508,7 +511,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Comment {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -521,7 +524,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Comment {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::COMMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::comment(self, out.scope());
@@ -530,7 +533,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Comment {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::COMMENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)
@@ -574,7 +577,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Create {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -592,7 +596,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Create {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -605,7 +609,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Create {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::CREATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::create(self, out.scope());
@@ -614,7 +618,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Create {
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::CREATE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -657,7 +661,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Delete {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -675,7 +680,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Delete {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -688,7 +693,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Delete {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::DELETE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::delete(self, out.scope());
@@ -697,7 +702,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Delete {
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::DELETE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -740,12 +745,12 @@ impl super::Transform for office_tasks_2019_documenttasks::Event {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.attribution = super::transform_child(&self.attribution, ctx, &mut rebase);
         node.anchor = super::transform_child(&self.anchor, ctx, &mut rebase);
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -763,7 +768,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Event {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.attribution, visitor);
         walk.child(&self.anchor, visitor);
         walk.choice(&self.content, visitor);
@@ -781,7 +786,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Event {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::EVENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::event(self, out.scope());
@@ -790,7 +795,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Event {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::EVENT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.time);
         through.attribute(1, &self.id);
@@ -839,9 +844,9 @@ impl super::Transform for office_tasks_2019_documenttasks::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext = super::transform_child(&self.ext, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -859,7 +864,7 @@ impl super::Visit for office_tasks_2019_documenttasks::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext, visitor);
         walk.finish(visitor);
     }
@@ -874,7 +879,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::ExtLst {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::ext_lst(self, out.scope());
@@ -883,7 +888,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.ext, ctx)?;
         through.finish(ctx)
@@ -927,9 +932,9 @@ impl super::Transform for office_tasks_2019_documenttasks::History {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.event = super::transform_child(&self.event, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -947,7 +952,7 @@ impl super::Visit for office_tasks_2019_documenttasks::History {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.event, visitor);
         walk.finish(visitor);
     }
@@ -962,7 +967,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::History {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::HISTORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::history(self, out.scope());
@@ -971,7 +976,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::History {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::HISTORY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.event, ctx)?;
         through.finish(ctx)
@@ -1015,7 +1020,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Priority {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1033,7 +1039,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Priority {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1046,7 +1052,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Priority {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::PRIORITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::priority(self, out.scope());
@@ -1055,7 +1061,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Priority {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::PRIORITY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.value);
         through.finish(ctx)
@@ -1099,7 +1105,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Progress {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1117,7 +1124,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Progress {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1130,7 +1137,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Progress {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::PROGRESS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::progress(self, out.scope());
@@ -1139,7 +1146,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Progress {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::PROGRESS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.percent_complete);
         through.finish(ctx)
@@ -1183,7 +1190,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Schedule {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1201,7 +1209,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Schedule {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1214,7 +1222,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Schedule {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::SCHEDULE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::schedule(self, out.scope());
@@ -1223,7 +1231,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Schedule {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::SCHEDULE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.start_date);
         through.attribute(1, &self.due_date);
@@ -1268,7 +1276,8 @@ impl super::Transform for office_tasks_2019_documenttasks::SetTitle {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1286,7 +1295,7 @@ impl super::Visit for office_tasks_2019_documenttasks::SetTitle {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1299,7 +1308,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::SetTitle {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::SET_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::set_title(self, out.scope());
@@ -1308,7 +1317,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::SetTitle {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::SET_TITLE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.title);
         through.finish(ctx)
@@ -1352,11 +1361,11 @@ impl super::Transform for office_tasks_2019_documenttasks::Task {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.anchor = super::transform_child(&self.anchor, ctx, &mut rebase);
         node.history = super::transform_child(&self.history, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1374,7 +1383,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Task {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.anchor, visitor);
         walk.child(&self.history, visitor);
         walk.child(&self.ext_lst, visitor);
@@ -1391,7 +1400,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Task {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::TASK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::task(self, out.scope());
@@ -1400,7 +1409,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Task {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::TASK_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.child(&self.anchor, ctx)?;
@@ -1607,10 +1616,10 @@ impl super::Transform for office_tasks_2019_documenttasks::Tasks {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.task = super::transform_child(&self.task, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -1628,7 +1637,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Tasks {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.task, visitor);
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
@@ -1644,7 +1653,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Tasks {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::TASKS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::tasks(self, out.scope());
@@ -1653,7 +1662,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Tasks {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::TASKS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.task, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -1698,7 +1707,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Unassign {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1716,7 +1726,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Unassign {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1729,7 +1739,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Unassign {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::UNASSIGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::unassign(self, out.scope());
@@ -1738,7 +1748,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Unassign {
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNASSIGN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1781,7 +1791,8 @@ impl super::Transform for office_tasks_2019_documenttasks::UnassignAll {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1799,7 +1810,7 @@ impl super::Visit for office_tasks_2019_documenttasks::UnassignAll {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1812,7 +1823,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::UnassignAll {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::UNASSIGN_ALL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::unassign_all(self, out.scope());
@@ -1821,7 +1832,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::UnassignAll {
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNASSIGN_ALL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1864,7 +1875,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Undelete {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1882,7 +1894,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Undelete {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1895,7 +1907,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Undelete {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::UNDELETE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::undelete(self, out.scope());
@@ -1904,7 +1916,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Undelete {
         let through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNDELETE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1947,7 +1959,8 @@ impl super::Transform for office_tasks_2019_documenttasks::Undo {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1965,7 +1978,7 @@ impl super::Visit for office_tasks_2019_documenttasks::Undo {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1978,7 +1991,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Undo {
         let converted = super::converts(
             out,
             &office_tasks_2019_documenttasks::UNDO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_tasks_2019_documenttasks::write::undo(self, out.scope());
@@ -1987,7 +2000,7 @@ impl WriteThrough for office_tasks_2019_documenttasks::Undo {
         let mut through = super::Through::new(
             out,
             &office_tasks_2019_documenttasks::UNDO_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)

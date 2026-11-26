@@ -225,7 +225,7 @@ pub struct RichInfoMirror {
     pub id: Option<String>,
     pub pivot_cache_guid: Option<String>,
     pub pivot_ignore_invalid_cache: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

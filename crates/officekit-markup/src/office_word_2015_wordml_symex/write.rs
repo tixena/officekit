@@ -222,7 +222,8 @@ use officekit_xml::write::Scope;
 /// Write a `SymEx` as its element, `w16se:symEx`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn sym_ex(node: &super::SymEx, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::SYM_EX_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::SYM_EX_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.font);
     writer.attribute(1, &node.char);
     writer.finish()

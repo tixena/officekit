@@ -223,7 +223,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct DataDisplayOptions16Mirror {
     pub disp_na_as_blank: Option<Box<super::DispNaAsBlank>>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -231,7 +231,7 @@ pub struct DataDisplayOptions16Mirror {
 #[rkyv(remote = super::DispNaAsBlank)]
 #[rkyv(attr(non_exhaustive))]
 pub struct DispNaAsBlankMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
     pub val: Option<String>,
 }

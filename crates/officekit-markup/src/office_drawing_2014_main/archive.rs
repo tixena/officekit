@@ -222,7 +222,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(remote = super::ColId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct ColIdMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -231,7 +231,7 @@ pub struct ColIdMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct CreationIdMirror {
     pub id: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -241,7 +241,7 @@ pub struct CreationIdMirror {
 pub struct CxnDERefsMirror {
     pub end: Option<String>,
     pub st: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -250,7 +250,7 @@ pub struct CxnDERefsMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct PredDERefMirror {
     pub pred: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -258,7 +258,7 @@ pub struct PredDERefMirror {
 #[rkyv(remote = super::RowId)]
 #[rkyv(attr(non_exhaustive))]
 pub struct RowIdMirror {
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 

@@ -228,7 +228,7 @@ pub fn pivot_cache_dynamic_array(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::PIVOT_CACHE_DYNAMIC_ARRAY_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.r#ref);
     writer.finish()

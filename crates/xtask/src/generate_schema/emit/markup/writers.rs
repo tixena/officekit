@@ -122,7 +122,7 @@ fn node_writer(names: &Names<'_>, index: usize, function: &str) -> String {
         vec![
             Expr::atom("scope"),
             Expr::Atom(format!("&super::{}", names.shape(index))),
-            Expr::atom("&node.unknown"),
+            Expr::atom("node.unknown.as_deref()"),
         ],
     );
     if statements.is_empty() {

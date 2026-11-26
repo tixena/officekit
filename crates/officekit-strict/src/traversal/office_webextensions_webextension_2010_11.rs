@@ -233,9 +233,9 @@ impl super::Transform for office_webextensions_webextension_2010_11::AlternateRe
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.reference = super::transform_child(&self.reference, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::AlternateRefere
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.reference, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::AlternateRefere
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::ALTERNATE_REFERENCES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_webextensions_webextension_2010_11::write::alternate_references(
@@ -280,7 +280,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::AlternateRefere
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::ALTERNATE_REFERENCES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.reference, ctx)?;
         through.finish(ctx)
@@ -324,9 +324,9 @@ impl super::Transform for office_webextensions_webextension_2010_11::Binding {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -344,7 +344,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Binding {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -359,7 +359,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Binding {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::BINDING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -369,7 +369,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Binding {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::BINDING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.r#type);
@@ -416,9 +416,9 @@ impl super::Transform for office_webextensions_webextension_2010_11::Bindings {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.binding = super::transform_child(&self.binding, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -436,7 +436,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Bindings {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.binding, visitor);
         walk.finish(visitor);
     }
@@ -451,7 +451,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Bindings {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::BINDINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -461,7 +461,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Bindings {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::BINDINGS_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.binding, ctx)?;
         through.finish(ctx)
@@ -505,9 +505,9 @@ impl super::Transform for office_webextensions_webextension_2010_11::ExtLst {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.extension = super::transform_child(&self.extension, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -525,7 +525,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::ExtLst {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.extension, visitor);
         walk.finish(visitor);
     }
@@ -540,7 +540,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::ExtLst {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -550,7 +550,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::ExtLst {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::EXT_LST_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.extension, ctx)?;
         through.finish(ctx)
@@ -594,9 +594,9 @@ impl super::Transform for office_webextensions_webextension_2010_11::Properties 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.property = super::transform_child(&self.property, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -614,7 +614,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Properties {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.property, visitor);
         walk.finish(visitor);
     }
@@ -629,7 +629,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Properties {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -639,7 +639,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Properties {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::PROPERTIES_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.child(&self.property, ctx)?;
         through.finish(ctx)
@@ -683,7 +683,8 @@ impl super::Transform for office_webextensions_webextension_2010_11::Property {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -701,7 +702,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Property {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -714,7 +715,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Property {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -724,7 +725,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Property {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::PROPERTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.name);
         through.attribute(1, &self.value);
@@ -769,9 +770,9 @@ impl super::Transform for office_webextensions_webextension_2010_11::Reference {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -789,7 +790,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Reference {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.ext_lst, visitor);
         walk.finish(visitor);
     }
@@ -804,7 +805,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Reference {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::REFERENCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -814,7 +815,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Reference {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::REFERENCE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.version);
@@ -862,10 +863,10 @@ impl super::Transform for office_webextensions_webextension_2010_11::Snapshot {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
         node.extension_list = super::transform_child(&self.extension_list, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -883,7 +884,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Snapshot {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.child(&self.extension_list, visitor);
         walk.finish(visitor);
@@ -899,7 +900,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Snapshot {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::SNAPSHOT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -909,7 +910,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Snapshot {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::SNAPSHOT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
@@ -957,7 +958,7 @@ impl super::Transform for office_webextensions_webextension_2010_11::Webextensio
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.reference = super::transform_child(&self.reference, ctx, &mut rebase);
         node.alternate_references =
             super::transform_child(&self.alternate_references, ctx, &mut rebase);
@@ -965,7 +966,7 @@ impl super::Transform for office_webextensions_webextension_2010_11::Webextensio
         node.bindings = super::transform_child(&self.bindings, ctx, &mut rebase);
         node.snapshot = super::transform_child(&self.snapshot, ctx, &mut rebase);
         node.ext_lst = super::transform_child(&self.ext_lst, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -983,7 +984,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Webextension {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.child(&self.reference, visitor);
         walk.child(&self.alternate_references, visitor);
         walk.child(&self.properties, visitor);
@@ -1003,7 +1004,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Webextension {
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::WEBEXTENSION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1013,7 +1014,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Webextension {
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::WEBEXTENSION_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.frozen);
@@ -1064,7 +1065,8 @@ impl super::Transform for office_webextensions_webextension_2010_11::Webextensio
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1082,7 +1084,7 @@ impl super::Visit for office_webextensions_webextension_2010_11::Webextensionref
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1095,7 +1097,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Webextensionref
         let converted = super::converts(
             out,
             &office_webextensions_webextension_2010_11::WEBEXTENSIONREF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = office_webextensions_webextension_2010_11::write::webextensionref(
@@ -1107,7 +1109,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Webextensionref
         let mut through = super::Through::new(
             out,
             &office_webextensions_webextension_2010_11::WEBEXTENSIONREF_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
         through.finish(ctx)

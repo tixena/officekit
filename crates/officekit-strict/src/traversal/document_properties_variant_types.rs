@@ -233,9 +233,9 @@ impl super::Transform for document_properties_variant_types::Array {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -253,7 +253,7 @@ impl super::Visit for document_properties_variant_types::Array {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -268,7 +268,7 @@ impl WriteThrough for document_properties_variant_types::Array {
         let converted = super::converts(
             out,
             &document_properties_variant_types::ARRAY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::array(self, out.scope());
@@ -277,7 +277,7 @@ impl WriteThrough for document_properties_variant_types::Array {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::ARRAY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.l_bounds);
         through.attribute(1, &self.u_bounds);
@@ -547,7 +547,8 @@ impl super::Transform for document_properties_variant_types::BasicString {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -565,7 +566,7 @@ impl super::Visit for document_properties_variant_types::BasicString {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -578,7 +579,7 @@ impl WriteThrough for document_properties_variant_types::BasicString {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BASIC_STRING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::basic_string(self, out.scope());
@@ -587,7 +588,7 @@ impl WriteThrough for document_properties_variant_types::BasicString {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BASIC_STRING_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -631,7 +632,8 @@ impl super::Transform for document_properties_variant_types::BinaryBlob {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -649,7 +651,7 @@ impl super::Visit for document_properties_variant_types::BinaryBlob {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -662,7 +664,7 @@ impl WriteThrough for document_properties_variant_types::BinaryBlob {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BINARY_BLOB_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::binary_blob(self, out.scope());
@@ -671,7 +673,7 @@ impl WriteThrough for document_properties_variant_types::BinaryBlob {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_BLOB_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -715,7 +717,8 @@ impl super::Transform for document_properties_variant_types::BinaryBlobObject {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -733,7 +736,7 @@ impl super::Visit for document_properties_variant_types::BinaryBlobObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -746,7 +749,7 @@ impl WriteThrough for document_properties_variant_types::BinaryBlobObject {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BINARY_BLOB_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -756,7 +759,7 @@ impl WriteThrough for document_properties_variant_types::BinaryBlobObject {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_BLOB_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -800,7 +803,8 @@ impl super::Transform for document_properties_variant_types::BinaryStorage {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -818,7 +822,7 @@ impl super::Visit for document_properties_variant_types::BinaryStorage {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -831,7 +835,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStorage {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BINARY_STORAGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -841,7 +845,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStorage {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STORAGE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -885,7 +889,8 @@ impl super::Transform for document_properties_variant_types::BinaryStorageObject
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -903,7 +908,7 @@ impl super::Visit for document_properties_variant_types::BinaryStorageObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -916,7 +921,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStorageObject {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BINARY_STORAGE_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -926,7 +931,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStorageObject {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STORAGE_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -970,7 +975,8 @@ impl super::Transform for document_properties_variant_types::BinaryStream {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -988,7 +994,7 @@ impl super::Visit for document_properties_variant_types::BinaryStream {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1001,7 +1007,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStream {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BINARY_STREAM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1011,7 +1017,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStream {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STREAM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1055,7 +1061,8 @@ impl super::Transform for document_properties_variant_types::BinaryStreamObject 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1073,7 +1080,7 @@ impl super::Visit for document_properties_variant_types::BinaryStreamObject {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1086,7 +1093,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStreamObject {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BINARY_STREAM_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1096,7 +1103,7 @@ impl WriteThrough for document_properties_variant_types::BinaryStreamObject {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_STREAM_OBJECT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1140,7 +1147,8 @@ impl super::Transform for document_properties_variant_types::BinaryVersionedStre
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1158,7 +1166,7 @@ impl super::Visit for document_properties_variant_types::BinaryVersionedStream {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1171,7 +1179,7 @@ impl WriteThrough for document_properties_variant_types::BinaryVersionedStream {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BINARY_VERSIONED_STREAM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::binary_versioned_stream(
@@ -1183,7 +1191,7 @@ impl WriteThrough for document_properties_variant_types::BinaryVersionedStream {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BINARY_VERSIONED_STREAM_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.version);
         through.text(&self.value)?;
@@ -1228,7 +1236,8 @@ impl super::Transform for document_properties_variant_types::Boolean {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1246,7 +1255,7 @@ impl super::Visit for document_properties_variant_types::Boolean {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1259,7 +1268,7 @@ impl WriteThrough for document_properties_variant_types::Boolean {
         let converted = super::converts(
             out,
             &document_properties_variant_types::BOOLEAN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::boolean(self, out.scope());
@@ -1268,7 +1277,7 @@ impl WriteThrough for document_properties_variant_types::Boolean {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::BOOLEAN_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1312,7 +1321,8 @@ impl super::Transform for document_properties_variant_types::ClassID {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1330,7 +1340,7 @@ impl super::Visit for document_properties_variant_types::ClassID {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1343,7 +1353,7 @@ impl WriteThrough for document_properties_variant_types::ClassID {
         let converted = super::converts(
             out,
             &document_properties_variant_types::CLASS_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::class_id(self, out.scope());
@@ -1352,7 +1362,7 @@ impl WriteThrough for document_properties_variant_types::ClassID {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::CLASS_ID_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1396,7 +1406,8 @@ impl super::Transform for document_properties_variant_types::Currency {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1414,7 +1425,7 @@ impl super::Visit for document_properties_variant_types::Currency {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1427,7 +1438,7 @@ impl WriteThrough for document_properties_variant_types::Currency {
         let converted = super::converts(
             out,
             &document_properties_variant_types::CURRENCY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::currency(self, out.scope());
@@ -1436,7 +1447,7 @@ impl WriteThrough for document_properties_variant_types::Currency {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::CURRENCY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1480,7 +1491,8 @@ impl super::Transform for document_properties_variant_types::DateAndTime {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1498,7 +1510,7 @@ impl super::Visit for document_properties_variant_types::DateAndTime {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1511,7 +1523,7 @@ impl WriteThrough for document_properties_variant_types::DateAndTime {
         let converted = super::converts(
             out,
             &document_properties_variant_types::DATE_AND_TIME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1521,7 +1533,7 @@ impl WriteThrough for document_properties_variant_types::DateAndTime {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::DATE_AND_TIME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1565,7 +1577,8 @@ impl super::Transform for document_properties_variant_types::Decimal {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1583,7 +1596,7 @@ impl super::Visit for document_properties_variant_types::Decimal {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1596,7 +1609,7 @@ impl WriteThrough for document_properties_variant_types::Decimal {
         let converted = super::converts(
             out,
             &document_properties_variant_types::DECIMAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::decimal(self, out.scope());
@@ -1605,7 +1618,7 @@ impl WriteThrough for document_properties_variant_types::Decimal {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::DECIMAL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1649,7 +1662,8 @@ impl super::Transform for document_properties_variant_types::Empty {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1667,7 +1681,7 @@ impl super::Visit for document_properties_variant_types::Empty {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1680,7 +1694,7 @@ impl WriteThrough for document_properties_variant_types::Empty {
         let converted = super::converts(
             out,
             &document_properties_variant_types::EMPTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::empty(self, out.scope());
@@ -1689,7 +1703,7 @@ impl WriteThrough for document_properties_variant_types::Empty {
         let through = super::Through::new(
             out,
             &document_properties_variant_types::EMPTY_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -1732,7 +1746,8 @@ impl super::Transform for document_properties_variant_types::ErrorStatusCode {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1750,7 +1765,7 @@ impl super::Visit for document_properties_variant_types::ErrorStatusCode {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1763,7 +1778,7 @@ impl WriteThrough for document_properties_variant_types::ErrorStatusCode {
         let converted = super::converts(
             out,
             &document_properties_variant_types::ERROR_STATUS_CODE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -1773,7 +1788,7 @@ impl WriteThrough for document_properties_variant_types::ErrorStatusCode {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::ERROR_STATUS_CODE_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1817,7 +1832,8 @@ impl super::Transform for document_properties_variant_types::FileTime {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1835,7 +1851,7 @@ impl super::Visit for document_properties_variant_types::FileTime {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1848,7 +1864,7 @@ impl WriteThrough for document_properties_variant_types::FileTime {
         let converted = super::converts(
             out,
             &document_properties_variant_types::FILE_TIME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::file_time(self, out.scope());
@@ -1857,7 +1873,7 @@ impl WriteThrough for document_properties_variant_types::FileTime {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::FILE_TIME_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1901,7 +1917,8 @@ impl super::Transform for document_properties_variant_types::I1 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -1919,7 +1936,7 @@ impl super::Visit for document_properties_variant_types::I1 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -1932,7 +1949,7 @@ impl WriteThrough for document_properties_variant_types::I1 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::I1_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::i1(self, out.scope());
@@ -1941,7 +1958,7 @@ impl WriteThrough for document_properties_variant_types::I1 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I1_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -1985,7 +2002,8 @@ impl super::Transform for document_properties_variant_types::I2 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2003,7 +2021,7 @@ impl super::Visit for document_properties_variant_types::I2 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2016,7 +2034,7 @@ impl WriteThrough for document_properties_variant_types::I2 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::I2_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::i2(self, out.scope());
@@ -2025,7 +2043,7 @@ impl WriteThrough for document_properties_variant_types::I2 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I2_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2069,7 +2087,8 @@ impl super::Transform for document_properties_variant_types::I4 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2087,7 +2106,7 @@ impl super::Visit for document_properties_variant_types::I4 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2100,7 +2119,7 @@ impl WriteThrough for document_properties_variant_types::I4 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::I4_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::i4(self, out.scope());
@@ -2109,7 +2128,7 @@ impl WriteThrough for document_properties_variant_types::I4 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I4_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2153,7 +2172,8 @@ impl super::Transform for document_properties_variant_types::I8 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2171,7 +2191,7 @@ impl super::Visit for document_properties_variant_types::I8 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2184,7 +2204,7 @@ impl WriteThrough for document_properties_variant_types::I8 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::I8_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::i8(self, out.scope());
@@ -2193,7 +2213,7 @@ impl WriteThrough for document_properties_variant_types::I8 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::I8_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2237,7 +2257,8 @@ impl super::Transform for document_properties_variant_types::Integer {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2255,7 +2276,7 @@ impl super::Visit for document_properties_variant_types::Integer {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2268,7 +2289,7 @@ impl WriteThrough for document_properties_variant_types::Integer {
         let converted = super::converts(
             out,
             &document_properties_variant_types::INTEGER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::integer(self, out.scope());
@@ -2277,7 +2298,7 @@ impl WriteThrough for document_properties_variant_types::Integer {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::INTEGER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2321,7 +2342,8 @@ impl super::Transform for document_properties_variant_types::Lpstr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2339,7 +2361,7 @@ impl super::Visit for document_properties_variant_types::Lpstr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2352,7 +2374,7 @@ impl WriteThrough for document_properties_variant_types::Lpstr {
         let converted = super::converts(
             out,
             &document_properties_variant_types::LPSTR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::lpstr(self, out.scope());
@@ -2361,7 +2383,7 @@ impl WriteThrough for document_properties_variant_types::Lpstr {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::LPSTR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2405,7 +2427,8 @@ impl super::Transform for document_properties_variant_types::Lpwstr {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2423,7 +2446,7 @@ impl super::Visit for document_properties_variant_types::Lpwstr {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2436,7 +2459,7 @@ impl WriteThrough for document_properties_variant_types::Lpwstr {
         let converted = super::converts(
             out,
             &document_properties_variant_types::LPWSTR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::lpwstr(self, out.scope());
@@ -2445,7 +2468,7 @@ impl WriteThrough for document_properties_variant_types::Lpwstr {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::LPWSTR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2489,7 +2512,8 @@ impl super::Transform for document_properties_variant_types::Null {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2507,7 +2531,7 @@ impl super::Visit for document_properties_variant_types::Null {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2520,7 +2544,7 @@ impl WriteThrough for document_properties_variant_types::Null {
         let converted = super::converts(
             out,
             &document_properties_variant_types::NULL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::null(self, out.scope());
@@ -2529,7 +2553,7 @@ impl WriteThrough for document_properties_variant_types::Null {
         let through = super::Through::new(
             out,
             &document_properties_variant_types::NULL_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.finish(ctx)
     }
@@ -2572,7 +2596,8 @@ impl super::Transform for document_properties_variant_types::R4 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2590,7 +2615,7 @@ impl super::Visit for document_properties_variant_types::R4 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2603,7 +2628,7 @@ impl WriteThrough for document_properties_variant_types::R4 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::R4_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::r4(self, out.scope());
@@ -2612,7 +2637,7 @@ impl WriteThrough for document_properties_variant_types::R4 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::R4_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2656,7 +2681,8 @@ impl super::Transform for document_properties_variant_types::R8 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2674,7 +2700,7 @@ impl super::Visit for document_properties_variant_types::R8 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2687,7 +2713,7 @@ impl WriteThrough for document_properties_variant_types::R8 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::R8_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::r8(self, out.scope());
@@ -2696,7 +2722,7 @@ impl WriteThrough for document_properties_variant_types::R8 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::R8_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2740,7 +2766,8 @@ impl super::Transform for document_properties_variant_types::Ui1 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2758,7 +2785,7 @@ impl super::Visit for document_properties_variant_types::Ui1 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2771,7 +2798,7 @@ impl WriteThrough for document_properties_variant_types::Ui1 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::UI1_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::ui1(self, out.scope());
@@ -2780,7 +2807,7 @@ impl WriteThrough for document_properties_variant_types::Ui1 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI1_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2824,7 +2851,8 @@ impl super::Transform for document_properties_variant_types::Ui2 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2842,7 +2870,7 @@ impl super::Visit for document_properties_variant_types::Ui2 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2855,7 +2883,7 @@ impl WriteThrough for document_properties_variant_types::Ui2 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::UI2_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::ui2(self, out.scope());
@@ -2864,7 +2892,7 @@ impl WriteThrough for document_properties_variant_types::Ui2 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI2_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2908,7 +2936,8 @@ impl super::Transform for document_properties_variant_types::Ui4 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -2926,7 +2955,7 @@ impl super::Visit for document_properties_variant_types::Ui4 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -2939,7 +2968,7 @@ impl WriteThrough for document_properties_variant_types::Ui4 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::UI4_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::ui4(self, out.scope());
@@ -2948,7 +2977,7 @@ impl WriteThrough for document_properties_variant_types::Ui4 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI4_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -2992,7 +3021,8 @@ impl super::Transform for document_properties_variant_types::Ui8 {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3010,7 +3040,7 @@ impl super::Visit for document_properties_variant_types::Ui8 {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3023,7 +3053,7 @@ impl WriteThrough for document_properties_variant_types::Ui8 {
         let converted = super::converts(
             out,
             &document_properties_variant_types::UI8_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::ui8(self, out.scope());
@@ -3032,7 +3062,7 @@ impl WriteThrough for document_properties_variant_types::Ui8 {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UI8_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3076,7 +3106,8 @@ impl super::Transform for document_properties_variant_types::UnsignedInteger {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &super::Rebase::default());
+        node.unknown =
+            super::transform_unknown(self.unknown.as_deref(), ctx, &super::Rebase::default());
         node
     }
 }
@@ -3094,7 +3125,7 @@ impl super::Visit for document_properties_variant_types::UnsignedInteger {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        super::Walk::new(&self.unknown).finish(visitor);
+        super::Walk::new(self.unknown.as_deref()).finish(visitor);
     }
 }
 
@@ -3107,7 +3138,7 @@ impl WriteThrough for document_properties_variant_types::UnsignedInteger {
         let converted = super::converts(
             out,
             &document_properties_variant_types::UNSIGNED_INTEGER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element =
@@ -3117,7 +3148,7 @@ impl WriteThrough for document_properties_variant_types::UnsignedInteger {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::UNSIGNED_INTEGER_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.text(&self.value)?;
         through.finish(ctx)
@@ -3161,9 +3192,9 @@ impl super::Transform for document_properties_variant_types::Variant {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_choice(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3181,7 +3212,7 @@ impl super::Visit for document_properties_variant_types::Variant {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.choice(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3196,7 +3227,7 @@ impl WriteThrough for document_properties_variant_types::Variant {
         let converted = super::converts(
             out,
             &document_properties_variant_types::VARIANT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::variant(self, out.scope());
@@ -3205,7 +3236,7 @@ impl WriteThrough for document_properties_variant_types::Variant {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::VARIANT_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3335,9 +3366,9 @@ impl super::Transform for document_properties_variant_types::Vector {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         let mut node = self.without_children();
-        let mut rebase = super::Rebase::new(&self.unknown);
+        let mut rebase = super::Rebase::new(self.unknown.as_deref());
         node.content = super::transform_items(&self.content, ctx, &mut rebase);
-        node.unknown = super::transform_unknown(&self.unknown, ctx, &rebase);
+        node.unknown = super::transform_unknown(self.unknown.as_deref(), ctx, &rebase);
         node
     }
 }
@@ -3355,7 +3386,7 @@ impl super::Visit for document_properties_variant_types::Vector {
     }
 
     fn visit_children(&self, visitor: &mut dyn officekit_markup::Visitor) {
-        let mut walk = super::Walk::new(&self.unknown);
+        let mut walk = super::Walk::new(self.unknown.as_deref());
         walk.items(&self.content, visitor);
         walk.finish(visitor);
     }
@@ -3370,7 +3401,7 @@ impl WriteThrough for document_properties_variant_types::Vector {
         let converted = super::converts(
             out,
             &document_properties_variant_types::VECTOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         if converted {
             let element = document_properties_variant_types::write::vector(self, out.scope());
@@ -3379,7 +3410,7 @@ impl WriteThrough for document_properties_variant_types::Vector {
         let mut through = super::Through::new(
             out,
             &document_properties_variant_types::VECTOR_SHAPE,
-            &self.unknown,
+            self.unknown.as_deref(),
         );
         through.attribute(0, &self.base_type);
         through.attribute(1, &self.size);

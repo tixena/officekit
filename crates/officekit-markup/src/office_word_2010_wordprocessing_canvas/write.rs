@@ -223,7 +223,8 @@ use officekit_xml::write::Scope;
 /// Write a `Bg` as its element, `wpc:bg`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn bg(node: &super::Bg, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::BG_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::BG_SHAPE, node.unknown.as_deref());
     writer.child(&node.fill_properties_content);
     writer.child(&node.effect_properties_content);
     writer.finish()
@@ -233,7 +234,7 @@ pub fn bg(node: &super::Bg, scope: &mut Scope) -> Element {
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -241,8 +242,11 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `GraphicFrame` as its element, `wpc:graphicFrame`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::GRAPHIC_FRAME_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::GRAPHIC_FRAME_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.c_nv_pr);
     writer.child(&node.c_nv_fr_pr);
     writer.child(&node.xfrm);
@@ -254,7 +258,8 @@ pub fn graphic_frame(node: &super::GraphicFrame, scope: &mut Scope) -> Element {
 /// Write a `Whole` as its element, `wpc:whole`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn whole(node: &super::Whole, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::WHOLE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::WHOLE_SHAPE, node.unknown.as_deref());
     writer.child(&node.outline);
     writer.child(&node.content);
     writer.finish()
@@ -272,7 +277,8 @@ pub fn wordprocessing_canvas(
 /// Write a `Wpc` as its element, `wpc:wpc`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn wpc(node: &super::Wpc, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::WPC_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::WPC_SHAPE, node.unknown.as_deref());
     writer.child(&node.bg);
     writer.child(&node.whole);
     writer.child(&node.content);

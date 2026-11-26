@@ -223,14 +223,17 @@ use officekit_xml::write::Scope;
 /// Write a `Cameo` as its element, `p232:cameo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn cameo(node: &super::Cameo, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::CAMEO_SHAPE, &node.unknown).finish()
+    officekit_markup_base::Writer::new(scope, &super::CAMEO_SHAPE, node.unknown.as_deref()).finish()
 }
 
 /// Write a `PhTypeExt` as its element, `p232:phTypeExt`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ph_type_ext(node: &super::PhTypeExt, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PH_TYPE_EXT_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PH_TYPE_EXT_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.r#type);
     writer.finish()
 }
@@ -246,7 +249,8 @@ pub fn placeholder_type(
 /// Write a `Type` as its element, `p232:type`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn r#type(node: &super::Type, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::TYPE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::TYPE_SHAPE, node.unknown.as_deref());
     writer.child(&node.content);
     writer.finish()
 }
@@ -254,5 +258,7 @@ pub fn r#type(node: &super::Type, scope: &mut Scope) -> Element {
 /// Write a `Unknown` as its element, `p232:unknown`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn unknown(node: &super::Unknown, scope: &mut Scope) -> Element {
-    officekit_markup_base::Writer::new(scope, &super::UNKNOWN_SHAPE, &node.unknown).finish()
+    let writer =
+        officekit_markup_base::Writer::new(scope, &super::UNKNOWN_SHAPE, node.unknown.as_deref());
+    writer.finish()
 }

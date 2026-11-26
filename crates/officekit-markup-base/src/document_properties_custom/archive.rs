@@ -224,7 +224,7 @@ use rkyv::with::{ArchiveWith as _, DeserializeWith as _, SerializeWith as _};
 #[rkyv(attr(non_exhaustive))]
 pub struct CustomFilePropertiesMirror {
     pub custom_file_property: Vec<super::CustomFileProperty>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 
@@ -237,7 +237,7 @@ pub struct CustomFilePropertyMirror {
     pub link_target: Option<String>,
     pub name: Option<String>,
     pub pid: Option<String>,
-    pub unknown: crate::Unknown,
+    pub unknown: Option<Box<crate::Unknown>>,
     pub user_data: (),
 }
 

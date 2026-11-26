@@ -223,7 +223,7 @@ use officekit_xml::write::Scope;
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::EXT_LST_SHAPE, node.unknown.as_deref());
     writer.child(&node.extension);
     writer.finish()
 }
@@ -231,7 +231,8 @@ pub fn ext_lst(node: &super::ExtLst, scope: &mut Scope) -> Element {
 /// Write a `Rel` as its element, `xlrvrel:rel`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rel(node: &super::Rel, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::REL_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::REL_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.id);
     writer.finish()
 }
@@ -239,8 +240,11 @@ pub fn rel(node: &super::Rel, scope: &mut Scope) -> Element {
 /// Write a `RichValueRels` as its element, `xlrvrel:richValueRels`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn rich_value_rels(node: &super::RichValueRels, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::RICH_VALUE_RELS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::RICH_VALUE_RELS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.rel);
     writer.child(&node.ext_lst);
     writer.finish()

@@ -222,8 +222,11 @@ use officekit_xml::write::Scope;
 /// Write a `Appearance` as its element, `w15:appearance`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn appearance(node: &super::Appearance, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::APPEARANCE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::APPEARANCE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -234,7 +237,7 @@ pub fn chart_tracking_ref_based(node: &super::ChartTrackingRefBased, scope: &mut
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::CHART_TRACKING_REF_BASED_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.val);
     writer.finish()
@@ -244,7 +247,7 @@ pub fn chart_tracking_ref_based(node: &super::ChartTrackingRefBased, scope: &mut
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn collapsed(node: &super::Collapsed, scope: &mut Scope) -> Element {
     let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COLLAPSED_SHAPE, &node.unknown);
+        officekit_markup_base::Writer::new(scope, &super::COLLAPSED_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -252,7 +255,8 @@ pub fn collapsed(node: &super::Collapsed, scope: &mut Scope) -> Element {
 /// Write a `Color` as its element, `w15:color`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn color(node: &super::Color, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::COLOR_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::COLOR_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.val);
     writer.attribute(1, &node.theme_color);
     writer.attribute(2, &node.theme_tint);
@@ -263,8 +267,11 @@ pub fn color(node: &super::Color, scope: &mut Scope) -> Element {
 /// Write a `CommentEx` as its element, `w15:commentEx`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comment_ex(node: &super::CommentEx, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COMMENT_EX_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::COMMENT_EX_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.para_id);
     writer.attribute(1, &node.para_id_parent);
     writer.attribute(2, &node.done);
@@ -274,8 +281,11 @@ pub fn comment_ex(node: &super::CommentEx, scope: &mut Scope) -> Element {
 /// Write a `CommentsEx` as its element, `w15:commentsEx`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn comments_ex(node: &super::CommentsEx, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::COMMENTS_EX_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::COMMENTS_EX_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.comment_ex);
     writer.finish()
 }
@@ -283,8 +293,11 @@ pub fn comments_ex(node: &super::CommentsEx, scope: &mut Scope) -> Element {
 /// Write a `DataBinding` as its element, `w15:dataBinding`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn data_binding(node: &super::DataBinding, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::DATA_BINDING_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::DATA_BINDING_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.prefix_mappings);
     writer.attribute(1, &node.xpath);
     writer.attribute(2, &node.store_item_id);
@@ -300,7 +313,7 @@ pub fn do_not_allow_insert_delete_section(
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::DO_NOT_ALLOW_INSERT_DELETE_SECTION_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.val);
     writer.finish()
@@ -309,7 +322,8 @@ pub fn do_not_allow_insert_delete_section(
 /// Write a `DocId` as its element, `w15:docId`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn doc_id(node: &super::DocId, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::DOC_ID_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::DOC_ID_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -317,8 +331,11 @@ pub fn doc_id(node: &super::DocId, scope: &mut Scope) -> Element {
 /// Write a `FootnoteColumns` as its element, `w15:footnoteColumns`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn footnote_columns(node: &super::FootnoteColumns, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::FOOTNOTE_COLUMNS_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::FOOTNOTE_COLUMNS_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -326,7 +343,8 @@ pub fn footnote_columns(node: &super::FootnoteColumns, scope: &mut Scope) -> Ele
 /// Write a `People` as its element, `w15:people`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn people(node: &super::People, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::PEOPLE_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::PEOPLE_SHAPE, node.unknown.as_deref());
     writer.child(&node.person);
     writer.finish()
 }
@@ -334,7 +352,8 @@ pub fn people(node: &super::People, scope: &mut Scope) -> Element {
 /// Write a `Person` as its element, `w15:person`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn person(node: &super::Person, scope: &mut Scope) -> Element {
-    let mut writer = officekit_markup_base::Writer::new(scope, &super::PERSON_SHAPE, &node.unknown);
+    let mut writer =
+        officekit_markup_base::Writer::new(scope, &super::PERSON_SHAPE, node.unknown.as_deref());
     writer.attribute(0, &node.author);
     writer.child(&node.presence_info);
     writer.finish()
@@ -343,8 +362,11 @@ pub fn person(node: &super::Person, scope: &mut Scope) -> Element {
 /// Write a `PresenceInfo` as its element, `w15:presenceInfo`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn presence_info(node: &super::PresenceInfo, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::PRESENCE_INFO_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::PRESENCE_INFO_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.provider_id);
     writer.attribute(1, &node.user_id);
     writer.finish()
@@ -353,8 +375,11 @@ pub fn presence_info(node: &super::PresenceInfo, scope: &mut Scope) -> Element {
 /// Write a `RepeatingSection` as its element, `w15:repeatingSection`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn repeating_section(node: &super::RepeatingSection, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::REPEATING_SECTION_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::REPEATING_SECTION_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.child(&node.title);
     writer.child(&node.do_not_allow_insert_delete_section);
     writer.finish()
@@ -366,7 +391,7 @@ pub fn repeating_section_item(node: &super::RepeatingSectionItem, scope: &mut Sc
     let writer = officekit_markup_base::Writer::new(
         scope,
         &super::REPEATING_SECTION_ITEM_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.finish()
 }
@@ -374,8 +399,11 @@ pub fn repeating_section_item(node: &super::RepeatingSectionItem, scope: &mut Sc
 /// Write a `SectionTitle` as its element, `w15:sectionTitle`.
 #[must_use = "the element written is returned; nothing else keeps it"]
 pub fn section_title(node: &super::SectionTitle, scope: &mut Scope) -> Element {
-    let mut writer =
-        officekit_markup_base::Writer::new(scope, &super::SECTION_TITLE_SHAPE, &node.unknown);
+    let mut writer = officekit_markup_base::Writer::new(
+        scope,
+        &super::SECTION_TITLE_SHAPE,
+        node.unknown.as_deref(),
+    );
     writer.attribute(0, &node.val);
     writer.finish()
 }
@@ -386,7 +414,7 @@ pub fn web_extension_created(node: &super::WebExtensionCreated, scope: &mut Scop
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WEB_EXTENSION_CREATED_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.val);
     writer.finish()
@@ -398,7 +426,7 @@ pub fn web_extension_linked(node: &super::WebExtensionLinked, scope: &mut Scope)
     let mut writer = officekit_markup_base::Writer::new(
         scope,
         &super::WEB_EXTENSION_LINKED_SHAPE,
-        &node.unknown,
+        node.unknown.as_deref(),
     );
     writer.attribute(0, &node.val);
     writer.finish()

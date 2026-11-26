@@ -226,7 +226,7 @@ pub struct AutoBuNodeInfoMirror {
     pub bu_pr: Box<super::BuPr>,
     pub lvl: Option<String>,
     pub pt_type: Option<super::STorageType>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -235,7 +235,7 @@ pub struct AutoBuNodeInfoMirror {
 #[rkyv(attr(non_exhaustive))]
 pub struct AutoBuNodeInfoLstMirror {
     pub auto_bu_node_info: Vec<super::AutoBuNodeInfo>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
@@ -246,7 +246,7 @@ pub struct BuPrMirror {
     pub content: Box<drawing::TextBulletContent>,
     pub lead_zeros: Option<String>,
     pub prefix: Option<String>,
-    pub unknown: officekit_markup_base::Unknown,
+    pub unknown: Option<Box<officekit_markup_base::Unknown>>,
     pub user_data: (),
 }
 
