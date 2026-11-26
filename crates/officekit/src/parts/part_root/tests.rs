@@ -8,7 +8,7 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
-use officekit_xml::write::WriteOptions;
+use officekit_xml::write::{Layout, WriteOptions};
 
 use super::{PartRoot, load, store};
 #[cfg(feature = "transitional")]
@@ -17,6 +17,7 @@ use crate::parts::footer;
 const MAIN: &str =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 
 /// A typed root for the tests: `<w:note>` holding its text.
 #[derive(Debug, PartialEq, Eq)]
@@ -61,6 +62,26 @@ impl PartRoot for Picture {
 
     fn to_tree(&self, class: ConformanceClass) -> Result<Element, WriteError> {
         Err(WriteError::NotInClass { class, tag: "pict" })
+    }
+}
+
+/// A typed root for the tests that declares a namespace it does not use: `<w:spare>`.
+struct Spare;
+
+impl PartRoot for Spare {
+    const LOCAL_NAME: &'static str = "spare";
+
+    fn from_tree(_root: &Element) -> Result<Self, String> {
+        Ok(Self)
+    }
+
+    fn to_tree(&self, _class: ConformanceClass) -> Result<Element, WriteError> {
+        let mut root = Element::new(QName::prefixed("w", "spare", WORDPROCESSING));
+        for (prefix, uri) in [("w", WORDPROCESSING), ("w14", W14)] {
+            root.namespace_declarations
+                .push(NamespaceDeclaration::new(prefix.to_owned(), uri.to_owned()));
+        }
+        Ok(root)
     }
 }
 
@@ -130,6 +151,92 @@ fn storing_a_typed_root_keeps_the_parts_prolog() {
     assert_eq!(
         String::from_utf8(package.part_bytes(&part).unwrap()).unwrap(),
         "<?xml version=\"1.0\"?>\n<!-- kept --><w:note xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">new</w:note>"
+    );
+}
+
+#[test]
+fn storing_a_typed_root_keeps_the_parts_epilog() {
+    let mut package = Package::new();
+    let part = name("/word/note.xml");
+    package
+        .set_part_bytes(&part, "application/xml", b"<?xml version=\"1.0\"?><?mso-application progid=\"Word.Document\"?><w:note xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">old</w:note>\n<!-- after -->")
+        .unwrap();
+    let note = Note {
+        text: "new".to_owned(),
+    };
+    store(
+        &mut package,
+        &part,
+        "application/xml",
+        &note,
+        ConformanceClass::Transitional,
+        WriteOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(
+        String::from_utf8(package.part_bytes(&part).unwrap()).unwrap(),
+        "<?xml version=\"1.0\"?><?mso-application progid=\"Word.Document\"?><w:note xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">new</w:note>\n<!-- after -->"
+    );
+}
+
+#[test]
+fn storing_over_a_part_that_does_not_parse_writes_the_declaration() {
+    let mut package = Package::new();
+    let part = name("/word/note.xml");
+    package
+        .set_part_bytes(&part, "application/xml", b"<!-- kept? --><w:note>")
+        .unwrap();
+    let note = Note {
+        text: "new".to_owned(),
+    };
+    store(
+        &mut package,
+        &part,
+        "application/xml",
+        &note,
+        ConformanceClass::Transitional,
+        WriteOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(
+        String::from_utf8(package.part_bytes(&part).unwrap()).unwrap(),
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:note xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">new</w:note>"
+    );
+}
+
+/// The bytes `Spare` stores with `options`.
+fn spare_stored(options: WriteOptions) -> String {
+    let mut package = Package::new();
+    let part = name("/word/spare.xml");
+    store(
+        &mut package,
+        &part,
+        "application/xml",
+        &Spare,
+        ConformanceClass::Transitional,
+        options,
+    )
+    .unwrap();
+    String::from_utf8(package.part_bytes(&part).unwrap()).unwrap()
+}
+
+#[test]
+fn a_store_with_the_cleanup_on_removes_an_unused_declaration() {
+    assert_eq!(
+        spare_stored(WriteOptions::default()),
+        format!(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:spare xmlns:w=\"{WORDPROCESSING}\"/>"
+        )
+    );
+}
+
+#[test]
+fn a_store_with_the_cleanup_off_keeps_an_unused_declaration() {
+    assert_eq!(
+        spare_stored(WriteOptions::new(Layout::Compact, false)),
+        format!(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<w:spare xmlns:w=\"{WORDPROCESSING}\" xmlns:w14=\"{W14}\"/>"
+        )
     );
 }
 

@@ -219,7 +219,7 @@ fn binds(uri: &str, namespace: &Namespace) -> bool {
 /// still needs it (see `list_entry_needed`), and the same prefix from the `mc`
 /// lists where the declaration was in scope. Repeats until nothing changes: a
 /// dropped list can leave `mc` itself unused.
-fn clean_namespaces(root: &mut Element) {
+pub(crate) fn clean_namespaces(root: &mut Element) {
     loop {
         let mut items = BTreeSet::new();
         item_namespaces(root, &mut items);

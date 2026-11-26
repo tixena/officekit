@@ -232,3 +232,36 @@ fn set_class_writes_each_mapping_of_a_binding() {
         format!("xmlns:a='{BIBLIOGRAPHY_STRICT}' xmlns:b='urn:x' xmlns:c='{BIBLIOGRAPHY_STRICT}'")
     );
 }
+
+#[test]
+fn clean_namespaces_gives_the_bytes_of_a_write_with_the_cleanup_on() {
+    let bytes = format!(
+        "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<!--before-->\
+         <w:document xmlns:w=\"{W}\" xmlns:w14=\"{W14}\" xmlns:a=\"{A}\" \
+         xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" \
+         mc:Ignorable=\"w14\"><w:body><w:p/></w:body></w:document><!--after-->"
+    );
+    let document = parse(bytes.as_bytes()).unwrap();
+    let mut cleaned = document.clone();
+    cleaned.root.clean_namespaces();
+    assert_eq!(
+        written(&cleaned),
+        String::from_utf8(document.to_xml(WriteOptions::default())).unwrap()
+    );
+    assert_eq!(
+        written(&cleaned),
+        format!(
+            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n<!--before-->\
+             <w:document xmlns:w=\"{W}\"><w:body><w:p/></w:body></w:document><!--after-->"
+        )
+    );
+}
+
+#[test]
+fn clean_namespaces_leaves_an_element_whose_declarations_are_all_used() {
+    let bytes = format!("<w:document xmlns:w=\"{W}\"><w:body><w:p/></w:body></w:document>");
+    let document = parse(bytes.as_bytes()).unwrap();
+    let mut cleaned = document.clone();
+    cleaned.root.clean_namespaces();
+    assert_eq!(cleaned, document);
+}

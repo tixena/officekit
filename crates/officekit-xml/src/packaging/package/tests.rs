@@ -6,6 +6,7 @@ use std::io::{Cursor, Write as _};
 use std::path::Path;
 
 use crate::conformance::ConformanceClass;
+use crate::element::{Node, PartFrame};
 use crate::mc::MarkupCompatibility;
 use crate::name::OfficeVersion;
 use crate::ready::ready_now;
@@ -1242,4 +1243,99 @@ fn a_zip_item_with_a_non_ascii_name_opens_and_saves_with_an_ascii_name() {
         let entry = archive.by_index(index).unwrap();
         assert!(entry.name().unwrap().is_ascii(), "{:?}", entry.name());
     }
+}
+
+/// The frame of a part holding `bytes`, checked against the declaration, prolog and epilog
+/// [`Package::tree_at`] parses.
+fn frame_of(bytes: &[u8]) -> Option<PartFrame> {
+    let mut package = Package::new();
+    let main = name("/word/document.xml");
+    package.set_part_bytes(&main, MAIN, bytes).unwrap();
+    let frame = package.part_frame(&main).unwrap();
+    let parsed = package.tree_at(&main).ok().map(|document| PartFrame {
+        declaration: document.declaration,
+        epilog: document.epilog,
+        prolog: document.prolog,
+    });
+    assert_eq!(frame, parsed);
+    frame
+}
+
+#[test]
+fn part_frame_keeps_a_comment_and_a_processing_instruction_before_the_root() {
+    let frame = frame_of(
+        b"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<!--made by hand--><?mso-application progid=\"Word.Document\"?>\n<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body><w:p><w:r><w:t>a &amp; b</w:t></w:r></w:p></w:body></w:document>",
+    )
+    .unwrap();
+    assert_eq!(
+        frame.declaration.as_deref(),
+        Some("xml version=\"1.0\" encoding=\"UTF-8\"")
+    );
+    assert_eq!(
+        frame.prolog,
+        [
+            Node::Text("\r\n".to_owned()),
+            Node::Comment("made by hand".to_owned()),
+            Node::ProcessingInstruction {
+                content: "progid=\"Word.Document\"".to_owned(),
+                target: "mso-application".to_owned(),
+            },
+            Node::Text("\n".to_owned()),
+        ]
+    );
+    assert_eq!(frame.epilog, []);
+}
+
+#[test]
+fn part_frame_keeps_a_comment_after_the_root() {
+    let frame = frame_of(b"<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:body/></w:document>\n<!--end-->").unwrap();
+    assert_eq!(frame.declaration, None);
+    assert_eq!(frame.prolog, []);
+    assert_eq!(
+        frame.epilog,
+        [Node::Text("\n".to_owned()), Node::Comment("end".to_owned())]
+    );
+}
+
+#[test]
+fn part_frame_of_a_part_with_nothing_around_its_root_is_empty() {
+    let frame = frame_of(b"<note/>").unwrap();
+    assert_eq!(
+        frame,
+        PartFrame {
+            declaration: None,
+            epilog: Vec::new(),
+            prolog: Vec::new(),
+        }
+    );
+}
+
+#[test]
+fn part_frame_of_a_part_that_does_not_parse_is_none() {
+    assert_eq!(frame_of(b"<w:document><w:body/></w:document>"), None);
+    assert_eq!(frame_of(b"<a><b></a>"), None);
+    assert_eq!(frame_of(b"<a/><b/>"), None);
+    assert_eq!(frame_of(b"<!--no root-->"), None);
+}
+
+#[test]
+fn part_frame_of_a_utf_16_part_declares_utf_8() {
+    let text = "<?xml version=\"1.0\" encoding=\"UTF-16\"?>\r\n<note>x</note>";
+    let mut bytes = vec![0xFF, 0xFE];
+    bytes.extend(text.bytes().flat_map(|byte| [byte, 0]));
+    let frame = frame_of(&bytes).unwrap();
+    assert_eq!(
+        frame.declaration.as_deref(),
+        Some("xml version=\"1.0\" encoding=\"UTF-8\"")
+    );
+}
+
+#[test]
+fn part_frame_of_a_missing_part_is_none() {
+    assert_eq!(
+        Package::new()
+            .part_frame(&name("/word/document.xml"))
+            .unwrap(),
+        None
+    );
 }

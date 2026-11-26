@@ -132,7 +132,7 @@ where
 /// # Errors
 ///
 /// [`PackageError::Write`] when the root holds content `class` has no
-/// form for, and nothing is written; the errors of
+/// form for, and nothing is written; the errors of [`Package::part_frame`] and
 /// [`Package::store_tree`].
 pub fn store<R>(
     package: &mut Package,
@@ -150,12 +150,17 @@ where
         part: name.clone(),
     })?;
     tree.set_class(class);
-    let document = match package.tree_at(name) {
-        Ok(mut previous) => {
-            previous.root = tree;
-            previous
-        }
-        Err(_) => Document::new(DECLARATION, tree),
+    if options.namespace_cleanup {
+        tree.clean_namespaces();
+    }
+    let document = match package.part_frame(name)? {
+        Some(frame) => frame.with_root(tree),
+        None => Document::new(DECLARATION, tree),
     };
-    package.store_tree(name, content_type, &document, options)
+    package.store_tree(
+        name,
+        content_type,
+        &document,
+        WriteOptions::new(options.layout, false),
+    )
 }

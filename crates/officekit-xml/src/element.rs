@@ -64,6 +64,19 @@ pub struct Document {
     pub root: Element,
 }
 
+/// What a part holds around its root: its XML declaration as written, and the nodes before and
+/// after the root.
+#[derive(Clone, Debug, PartialEq, Eq)]
+#[non_exhaustive]
+pub struct PartFrame {
+    /// The XML declaration's text without `<?` and `?>`; `None` when the part has none.
+    pub declaration: Option<String>,
+    /// The nodes after the root: whitespace, comments and processing instructions.
+    pub epilog: Vec<Node>,
+    /// The nodes between the declaration and the root.
+    pub prolog: Vec<Node>,
+}
+
 /// One element: attributes and namespace declarations, each in document
 /// order, and children in order.
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -213,6 +226,13 @@ impl Element {
         })
     }
 
+    /// Remove every namespace declaration of the subtree nothing in its scope uses, and its prefix
+    /// from the markup-compatibility lists: the cleanup [`WriteOptions::namespace_cleanup`] turns
+    /// on, done in place.
+    pub fn clean_namespaces(&mut self) {
+        write::clean_namespaces(self);
+    }
+
     /// An element with no attributes, declarations, or children.
     #[must_use = "this only builds the value"]
     pub const fn new(name: QName) -> Self {
@@ -299,6 +319,19 @@ impl Element {
             if let Node::Element(element) = child {
                 element.set_class(class);
             }
+        }
+    }
+}
+
+impl PartFrame {
+    /// The part with `root` inside this frame.
+    #[must_use = "this only builds the value"]
+    pub fn with_root(self, root: Element) -> Document {
+        Document {
+            declaration: self.declaration,
+            epilog: self.epilog,
+            prolog: self.prolog,
+            root,
         }
     }
 }

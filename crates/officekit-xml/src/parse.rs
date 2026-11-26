@@ -8,8 +8,11 @@ use core::mem;
 use quick_xml::events::{BytesDecl, BytesRef, BytesStart, Event};
 use quick_xml::{Reader, XmlVersion};
 
-use super::element::{Attribute, Document, Element, NamespaceDeclaration, Node, XmlError};
+use super::element::{
+    Attribute, Document, Element, NamespaceDeclaration, Node, PartFrame, XmlError,
+};
 use super::name::{Namespace, QName};
+use super::stream::reader::{PartEvent, PartReader};
 
 #[cfg(test)]
 mod tests;
@@ -95,6 +98,53 @@ fn declaration_in_utf8(declaration: &BytesDecl<'_>) -> Result<String, XmlError> 
     let version = declaration.version().map_err(malformed)?;
     let standalone = declaration.standalone().transpose().map_err(malformed)?;
     Ok((*BytesDecl::new(&version, Some("UTF-8"), standalone.as_deref())).to_owned())
+}
+
+/// The declaration, prolog and epilog of a part's bytes, its root read as events and left unbuilt.
+/// The bytes that [`parse`] reads give its frame, and the bytes it refuses an error.
+///
+/// # Errors
+///
+/// The errors of [`parse`].
+pub(crate) fn frame(bytes: &[u8]) -> Result<PartFrame, XmlError> {
+    let utf8 = utf8_of(bytes)?;
+    let read_from_utf16 = matches!(utf8, Cow::Owned(_));
+    let mut reader = PartReader::new(utf8.as_ref());
+    let mut frame = PartFrame {
+        declaration: None,
+        epilog: Vec::new(),
+        prolog: Vec::new(),
+    };
+    let mut depth = 0_usize;
+    let mut rooted = false;
+    while let Some(event) = reader.read_event()? {
+        match event {
+            PartEvent::Declaration(content) if read_from_utf16 => {
+                let declaration =
+                    BytesDecl::from_start(BytesStart::from_content(content, "xml".len()));
+                frame.declaration = Some(declaration_in_utf8(&declaration)?);
+            }
+            PartEvent::Declaration(content) => frame.declaration = Some(content),
+            PartEvent::End => depth -= 1,
+            PartEvent::Start(_) if depth > 0 => depth += 1,
+            PartEvent::Node(_) if depth > 0 => {}
+            PartEvent::Node(Node::Element(_)) | PartEvent::Start(_) if rooted => {
+                return Err(XmlError::Malformed("more than one root element".to_owned()));
+            }
+            PartEvent::Node(Node::Element(_)) => rooted = true,
+            PartEvent::Start(_) => {
+                rooted = true;
+                depth = 1;
+            }
+            PartEvent::Node(node) if rooted => frame.epilog.push(node),
+            PartEvent::Node(node) => frame.prolog.push(node),
+        }
+    }
+    if rooted {
+        Ok(frame)
+    } else {
+        Err(XmlError::Malformed("no root element".to_owned()))
+    }
 }
 
 pub(crate) fn malformed<E>(error: E) -> XmlError

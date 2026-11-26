@@ -8,11 +8,11 @@ use std::io::Cursor;
 use std::path::{Path, PathBuf};
 
 use crate::conformance::ConformanceClass;
-use crate::element::{Attribute, Document, Element, NamespaceDeclaration, Node};
+use crate::element::{Attribute, Document, Element, NamespaceDeclaration, Node, PartFrame};
 use crate::mc::MarkupCompatibility;
 use crate::name::QName;
 use crate::packaging::archive;
-use crate::parse::parse;
+use crate::parse::{frame, parse};
 use crate::ready::ready_now;
 use crate::stream::reader::PartReader;
 use crate::write::WriteOptions;
@@ -555,6 +555,20 @@ impl Package {
             .ok_or_else(|| PackageError::MissingPart(name.clone()))?;
         let (bytes, _revision) = ready_now(self.fs.read(&path))?;
         Ok(bytes)
+    }
+
+    /// The XML declaration, prolog and epilog of the part called `name`, its root read as events
+    /// and never built; `None` when the package has no such part or the part is not well-formed.
+    ///
+    /// # Errors
+    ///
+    /// [`PackageError::Io`] when the part cannot be read.
+    pub fn part_frame(&self, name: &PartName) -> Result<Option<PartFrame>, PackageError> {
+        match self.part_bytes(name) {
+            Ok(bytes) => Ok(frame(&bytes).ok()),
+            Err(PackageError::MissingPart(_)) => Ok(None),
+            Err(error) => Err(error),
+        }
     }
 
     /// Every part but `[Content_Types].xml` and the relationship parts, which
