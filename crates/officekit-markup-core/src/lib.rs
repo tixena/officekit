@@ -40,5 +40,7 @@
     reason = "ext matches the enums its `From` impls convert arm by arm, which `#[non_exhaustive]` forbids across crates"
 )]
 
+extern crate alloc;
+
 // The namespace modules, generated in a file of their own.
 include!("modules.rs");

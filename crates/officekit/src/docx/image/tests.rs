@@ -2,12 +2,14 @@
 
 use crate::parts::kinds::WordprocessingKind;
 use officekit_markup::Read as _;
+use officekit_markup::Spelling;
 use officekit_markup::drawing::{AnyElementContent, Blip, Extension, ExtensionList};
 use officekit_markup::wordprocessing::{
     BlockContent, Document, DocumentBody, DrawingMLObject, DrawingObjectContent, Paragraph,
     ParagraphContent, TextRun, TextRunContent, write,
 };
 use officekit_markup::wordprocessing_drawing::InlineDrawingMLObject;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Element;
 use officekit_xml::name::{Namespace, OfficeVersion};
 use officekit_xml::packaging::error::PackageError;
@@ -247,7 +249,7 @@ fn width_keeps_cx_sets_cy_from_the_pixel_size_and_leaves_the_extension_list_alon
             None
         }
     });
-    assert_eq!(offset.map(|x| x.0).as_deref(), Some("0"));
+    assert_eq!(offset.map(|x| spelled(&x)).as_deref(), Some("0"));
     assert_eq!(
         inline.drawing_object_non_visual_properties.name.as_deref(),
         Some("Picture 1")
@@ -609,4 +611,12 @@ fn set_picture_fits_an_inline_picture_in_either_mode() {
         assert_eq!(sizes(inline), [size.clone(), size], "{fit:?}");
         assert_ne!(blip_of(inline).embed.as_deref(), Some("rId99"));
     }
+}
+
+/// The text of a simple-type value.
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

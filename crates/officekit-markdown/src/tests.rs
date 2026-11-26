@@ -1,3 +1,4 @@
+use alloc::borrow::Cow;
 use alloc::string::String;
 use alloc::vec::Vec;
 use std::io::{Cursor, ErrorKind};
@@ -14,6 +15,7 @@ use image_webp::{ColorType as WebPColor, WebPEncoder};
 use officekit::parts::numbering_definitions;
 use officekit::parts::style_definitions::{self, CONTENT_TYPE, RELATIONSHIP_TYPE};
 use officekit::validation::validator::Validator;
+use officekit_markup::Spelling;
 use officekit_markup::wordprocessing::{
     BlockContent, ContentCellContent, ContentRowContent, Paragraph, ParagraphContent,
     RunPropertiesContent, StyleDefinition, Table, TableCell, TableRow, TableRowPropertiesContent,
@@ -701,7 +703,7 @@ fn style_line(style: &StyleDefinition) -> String {
             .as_ref()
             .and_then(|name| name.val.clone())
             .unwrap_or_default(),
-        value(style.r#type.as_ref()).to_owned(),
+        value(style.r#type.as_ref()).into_owned(),
     ];
     if style.default.is_some() {
         parts.push(format!("default={}", value(style.default.as_ref())));
@@ -775,11 +777,13 @@ fn style_mark(property: &RunPropertiesContent) -> String {
 }
 
 /// The text of an optional simple value, empty when it is absent.
-fn value<T>(value: Option<&T>) -> &str
+fn value<T>(value: Option<&T>) -> Cow<'_, str>
 where
-    T: AsRef<str>,
+    T: Spelling,
 {
-    value.map_or("", AsRef::as_ref)
+    value.map_or(Cow::Borrowed(""), |found| {
+        found.spelling(ConformanceClass::Transitional)
+    })
 }
 
 #[test]

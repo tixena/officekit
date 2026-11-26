@@ -78,8 +78,8 @@ use core::iter;
 use std::io;
 
 use officekit_markup::{
-    AttributeValue, Context, Descend, Extra, Nodes, Positions, Shape, Unknown, Visitor, Written,
-    uri,
+    AttributeValue, Context, Descend, Extra, Nodes, Positions, Shape, Spelling, Unknown, Visitor,
+    Written, uri,
 };
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Element, Node};
@@ -362,7 +362,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
         if let (Some(text), Some(tag)) = (value.text(), self.shape.attributes.get(index)) {
             self.out
                 .scope()
-                .attribute(&mut self.element, tag.0.map(uri), tag.1, text);
+                .attribute(&mut self.element, tag.0.map(uri), tag.1, &text);
         }
     }
 
@@ -507,14 +507,14 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
     /// The sink's.
     pub fn text<T>(&mut self, text: &T) -> io::Result<()>
     where
-        T: AsRef<str> + ?Sized,
+        T: Spelling + ?Sized,
     {
-        let value = text.as_ref();
+        let value = text.spelling(ConformanceClass::Transitional);
         self.open(!value.is_empty())?;
         if value.is_empty() {
             return Ok(());
         }
-        self.out.text(value)
+        self.out.text(&value)
     }
 }
 

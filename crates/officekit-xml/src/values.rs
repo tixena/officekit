@@ -2,6 +2,8 @@
 
 pub mod parse;
 
+use core::fmt::{self, Display, Formatter};
+
 use regex::Regex;
 
 /// Why a stored text is not a value of its simple type; the text stays stored
@@ -83,6 +85,58 @@ impl DateTime {
             second,
             year,
         }
+    }
+}
+
+impl Display for DateTime {
+    /// The value as `xsd:dateTime` spells it: a year of four digits at least, the fraction of the
+    /// second with no trailing zero, and `Z` for UTC.
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        if self.year < 0_i32 {
+            f.write_str("-")?;
+        }
+        write!(
+            f,
+            "{:04}-{:02}-{:02}T{:02}:{:02}:{:02}",
+            self.year.unsigned_abs(),
+            self.month,
+            self.day,
+            self.hour,
+            self.minute,
+            self.second
+        )?;
+        if self.nanosecond > 0 {
+            let mut digits = self.nanosecond;
+            let mut width = 9;
+            while digits % 10 == 0 {
+                digits /= 10;
+                width -= 1;
+            }
+            write!(f, ".{digits:0width$}")?;
+        }
+        match self.offset_minutes {
+            None => Ok(()),
+            Some(0) => f.write_str("Z"),
+            Some(offset) => {
+                let sign = if offset < 0 { '-' } else { '+' };
+                let minutes = offset.unsigned_abs();
+                write!(f, "{sign}{:02}:{:02}", minutes / 60, minutes % 60)
+            }
+        }
+    }
+}
+
+impl Display for Measure {
+    /// The value as `ST_UniversalMeasure` spells it, `2.5cm`; picas as `pc`.
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        let unit = match self.unit {
+            MeasureUnit::Centimeters => "cm",
+            MeasureUnit::Inches => "in",
+            MeasureUnit::Millimeters => "mm",
+            MeasureUnit::Picas => "pc",
+            MeasureUnit::Points => "pt",
+        };
+        write!(f, "{}{unit}", self.value)
     }
 }
 

@@ -223,13 +223,17 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use core::fmt;
 use core::mem;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_base::office_excel_2006_main;
 use officekit_markup_base::office_spreadsheetml_2011_1_ac;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -1050,18 +1054,19 @@ pub static STATE_BASED_OBJECT_CONTENT_TAGS: officekit_markup_base::Accept =
         ],
     };
 
-/// The simple type `ST_AdjustType`, kept as the text the file carried.
+/// The simple type `ST_AdjustType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct AdjustType(pub String);
+pub enum AdjustType {
+    /// A member, spelled as the class being written spells it.
+    Member(AdjustTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_AdjustType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1087,18 +1092,19 @@ pub enum AdjustTypeMember {
     Sparkline,
 }
 
-/// The simple type `ST_AdjustTypeExt`, kept as the text the file carried.
+/// The simple type `ST_AdjustTypeExt`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct AdjustTypeExt(pub String);
+pub enum AdjustTypeExt {
+    /// A member, spelled as the class being written spells it.
+    Member(AdjustTypeExtMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_AdjustTypeExt`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2417,18 +2423,19 @@ pub type Dxf = DxfWith<()>;
 
 impl Eq for DxfWith<()> {}
 
-/// The simple type `ST_ExtFeatureType`, kept as the text the file carried.
+/// The simple type `ST_ExtFeatureType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct ExtFeatureType(pub String);
+pub enum ExtFeatureType {
+    /// A member, spelled as the class being written spells it.
+    Member(ExtFeatureTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_ExtFeatureType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2457,18 +2464,19 @@ pub type ExtLst = ExtLstWith<()>;
 
 impl Eq for ExtLstWith<()> {}
 
-/// The simple type `ST_ExtSubFeatureType`, kept as the text the file carried.
+/// The simple type `ST_ExtSubFeatureType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct ExtSubFeatureType(pub String);
+pub enum ExtSubFeatureType {
+    /// A member, spelled as the class being written spells it.
+    Member(ExtSubFeatureTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_ExtSubFeatureType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2497,18 +2505,19 @@ pub type F = FWith<()>;
 
 impl Eq for FWith<()> {}
 
-/// The simple type `ST_FeatureType`, kept as the text the file carried.
+/// The simple type `ST_FeatureType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct FeatureType(pub String);
+pub enum FeatureType {
+    /// A member, spelled as the class being written spells it.
+    Member(FeatureTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_FeatureType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2542,18 +2551,19 @@ pub enum FeatureTypeMember {
     Sparklines,
 }
 
-/// The simple type `ST_FillType`, kept as the text the file carried.
+/// The simple type `ST_FillType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct FillType(pub String);
+pub enum FillType {
+    /// A member, spelled as the class being written spells it.
+    Member(FillTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_FillType`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2567,18 +2577,19 @@ pub enum FillTypeMember {
     Future,
 }
 
-/// The simple type `ST_FillTypeExt`, kept as the text the file carried.
+/// The simple type `ST_FillTypeExt`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct FillTypeExt(pub String);
+pub enum FillTypeExt {
+    /// A member, spelled as the class being written spells it.
+    Member(FillTypeExtMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_FillTypeExt`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2839,18 +2850,19 @@ pub type OartAnchor = OartAnchorWith<()>;
 
 impl Eq for OartAnchorWith<()> {}
 
-/// The simple type `ST_OartAnchorType`, kept as the text the file carried.
+/// The simple type `ST_OartAnchorType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct OartAnchorType(pub String);
+pub enum OartAnchorType {
+    /// A member, spelled as the class being written spells it.
+    Member(OartAnchorTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_OartAnchorType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3266,18 +3278,19 @@ pub type RevisionChangeObjectContent = RevisionChangeObjectContentWith<()>;
 
 impl Eq for RevisionChangeObjectContentWith<()> {}
 
-/// The simple type `ST_RevisionContext`, kept as the text the file carried.
+/// The simple type `ST_RevisionContext`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct RevisionContext(pub String);
+pub enum RevisionContext {
+    /// A member, spelled as the class being written spells it.
+    Member(RevisionContextMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_RevisionContext`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3433,18 +3446,19 @@ pub type RevisionStreamContent = RevisionStreamContentWith<()>;
 
 impl Eq for RevisionStreamContentWith<()> {}
 
-/// The simple type `ST_RowColVisualOp`, kept as the text the file carried.
+/// The simple type `ST_RowColVisualOp`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct RowColVisualOp(pub String);
+pub enum RowColVisualOp {
+    /// A member, spelled as the class being written spells it.
+    Member(RowColVisualOpMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_RowColVisualOp`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3486,18 +3500,19 @@ pub type RowColVisualOps = RowColVisualOpsWith<()>;
 
 impl Eq for RowColVisualOpsWith<()> {}
 
-/// The simple type `ST_RwColAction`, kept as the text the file carried.
+/// The simple type `ST_RwColAction`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct RwColAction(pub String);
+pub enum RwColAction {
+    /// A member, spelled as the class being written spells it.
+    Member(RwColActionMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_RwColAction`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3513,18 +3528,19 @@ pub enum RwColActionMember {
     Insr,
 }
 
-/// The simple type `ST_SheetOp`, kept as the text the file carried.
+/// The simple type `ST_SheetOp`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SheetOp(pub String);
+pub enum SheetOp {
+    /// A member, spelled as the class being written spells it.
+    Member(SheetOpMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SheetOp`, in alphabetical order. `as_str` gives the text of a
 /// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3692,18 +3708,19 @@ pub type StateBasedObjectContent = StateBasedObjectContentWith<()>;
 
 impl Eq for StateBasedObjectContentWith<()> {}
 
-/// The simple type `ST_SubFeatureType`, kept as the text the file carried.
+/// The simple type `ST_SubFeatureType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SubFeatureType(pub String);
+pub enum SubFeatureType {
+    /// A member, spelled as the class being written spells it.
+    Member(SubFeatureTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SubFeatureType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -4605,21 +4622,42 @@ pub type Xrrtest = XrrtestWith<()>;
 
 impl Eq for XrrtestWith<()> {}
 
-impl AsRef<str> for AdjustType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(AdjustType);
+
+impl Default for AdjustType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for AdjustType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<AdjustTypeMember> for AdjustType {
     fn from(member: AdjustTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for AdjustType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for AdjustTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4659,31 +4697,64 @@ impl AdjustTypeMember {
 }
 
 impl AdjustType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_AdjustType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_AdjustType`.
+    pub fn parse(text: &str) -> Result<AdjustTypeMember, ValueError> {
+        officekit_markup_base::member(AdjustTypeMember::MEMBERS, text, "ST_AdjustType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_AdjustType`.
     pub fn value(&self) -> Result<AdjustTypeMember, ValueError> {
-        officekit_markup_base::member(AdjustTypeMember::MEMBERS, &self.0, "ST_AdjustType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for AdjustTypeExt {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(AdjustTypeExt);
+
+impl Default for AdjustTypeExt {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for AdjustTypeExt {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<AdjustTypeExtMember> for AdjustTypeExt {
     fn from(member: AdjustTypeExtMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for AdjustTypeExt {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for AdjustTypeExtMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4706,13 +4777,25 @@ impl AdjustTypeExtMember {
 }
 
 impl AdjustTypeExt {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_AdjustTypeExt`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_AdjustTypeExt`.
+    pub fn parse(text: &str) -> Result<AdjustTypeExtMember, ValueError> {
+        officekit_markup_base::member(AdjustTypeExtMember::MEMBERS, text, "ST_AdjustTypeExt")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_AdjustTypeExt`.
     pub fn value(&self) -> Result<AdjustTypeExtMember, ValueError> {
-        officekit_markup_base::member(AdjustTypeExtMember::MEMBERS, &self.0, "ST_AdjustTypeExt")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -5158,21 +5241,42 @@ impl officekit_markup_base::Write for Dxf {
     }
 }
 
-impl AsRef<str> for ExtFeatureType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(ExtFeatureType);
+
+impl Default for ExtFeatureType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for ExtFeatureType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<ExtFeatureTypeMember> for ExtFeatureType {
     fn from(member: ExtFeatureTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for ExtFeatureType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for ExtFeatureTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -5195,13 +5299,25 @@ impl ExtFeatureTypeMember {
 }
 
 impl ExtFeatureType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_ExtFeatureType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_ExtFeatureType`.
+    pub fn parse(text: &str) -> Result<ExtFeatureTypeMember, ValueError> {
+        officekit_markup_base::member(ExtFeatureTypeMember::MEMBERS, text, "ST_ExtFeatureType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_ExtFeatureType`.
     pub fn value(&self) -> Result<ExtFeatureTypeMember, ValueError> {
-        officekit_markup_base::member(ExtFeatureTypeMember::MEMBERS, &self.0, "ST_ExtFeatureType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -5254,21 +5370,42 @@ impl officekit_markup_base::Write for ExtLst {
     }
 }
 
-impl AsRef<str> for ExtSubFeatureType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(ExtSubFeatureType);
+
+impl Default for ExtSubFeatureType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for ExtSubFeatureType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<ExtSubFeatureTypeMember> for ExtSubFeatureType {
     fn from(member: ExtSubFeatureTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for ExtSubFeatureType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for ExtSubFeatureTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -5291,17 +5428,29 @@ impl ExtSubFeatureTypeMember {
 }
 
 impl ExtSubFeatureType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_ExtSubFeatureType`; the text stays stored.
-    pub fn value(&self) -> Result<ExtSubFeatureTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_ExtSubFeatureType`.
+    pub fn parse(text: &str) -> Result<ExtSubFeatureTypeMember, ValueError> {
         officekit_markup_base::member(
             ExtSubFeatureTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_ExtSubFeatureType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_ExtSubFeatureType`.
+    pub fn value(&self) -> Result<ExtSubFeatureTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -5354,21 +5503,42 @@ impl officekit_markup_base::Write for F {
     }
 }
 
-impl AsRef<str> for FeatureType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(FeatureType);
+
+impl Default for FeatureType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for FeatureType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<FeatureTypeMember> for FeatureType {
     fn from(member: FeatureTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for FeatureType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for FeatureTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -5444,31 +5614,64 @@ impl FeatureTypeMember {
 }
 
 impl FeatureType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_FeatureType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_FeatureType`.
+    pub fn parse(text: &str) -> Result<FeatureTypeMember, ValueError> {
+        officekit_markup_base::member(FeatureTypeMember::MEMBERS, text, "ST_FeatureType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_FeatureType`.
     pub fn value(&self) -> Result<FeatureTypeMember, ValueError> {
-        officekit_markup_base::member(FeatureTypeMember::MEMBERS, &self.0, "ST_FeatureType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for FillType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(FillType);
+
+impl Default for FillType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for FillType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<FillTypeMember> for FillType {
     fn from(member: FillTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for FillType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for FillTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -5494,31 +5697,64 @@ impl FillTypeMember {
 }
 
 impl FillType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_FillType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_FillType`.
+    pub fn parse(text: &str) -> Result<FillTypeMember, ValueError> {
+        officekit_markup_base::member(FillTypeMember::MEMBERS, text, "ST_FillType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_FillType`.
     pub fn value(&self) -> Result<FillTypeMember, ValueError> {
-        officekit_markup_base::member(FillTypeMember::MEMBERS, &self.0, "ST_FillType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for FillTypeExt {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(FillTypeExt);
+
+impl Default for FillTypeExt {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for FillTypeExt {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<FillTypeExtMember> for FillTypeExt {
     fn from(member: FillTypeExtMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for FillTypeExt {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for FillTypeExtMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -5541,13 +5777,25 @@ impl FillTypeExtMember {
 }
 
 impl FillTypeExt {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_FillTypeExt`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_FillTypeExt`.
+    pub fn parse(text: &str) -> Result<FillTypeExtMember, ValueError> {
+        officekit_markup_base::member(FillTypeExtMember::MEMBERS, text, "ST_FillTypeExt")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_FillTypeExt`.
     pub fn value(&self) -> Result<FillTypeExtMember, ValueError> {
-        officekit_markup_base::member(FillTypeExtMember::MEMBERS, &self.0, "ST_FillTypeExt")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -6101,21 +6349,42 @@ impl officekit_markup_base::Write for OartAnchor {
     }
 }
 
-impl AsRef<str> for OartAnchorType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(OartAnchorType);
+
+impl Default for OartAnchorType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for OartAnchorType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<OartAnchorTypeMember> for OartAnchorType {
     fn from(member: OartAnchorTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for OartAnchorType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for OartAnchorTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -6141,13 +6410,25 @@ impl OartAnchorTypeMember {
 }
 
 impl OartAnchorType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_OartAnchorType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_OartAnchorType`.
+    pub fn parse(text: &str) -> Result<OartAnchorTypeMember, ValueError> {
+        officekit_markup_base::member(OartAnchorTypeMember::MEMBERS, text, "ST_OartAnchorType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_OartAnchorType`.
     pub fn value(&self) -> Result<OartAnchorTypeMember, ValueError> {
-        officekit_markup_base::member(OartAnchorTypeMember::MEMBERS, &self.0, "ST_OartAnchorType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -6786,21 +7067,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for RevisionContext {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(RevisionContext);
+
+impl Default for RevisionContext {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for RevisionContext {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<RevisionContextMember> for RevisionContext {
     fn from(member: RevisionContextMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for RevisionContext {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for RevisionContextMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -6827,17 +7129,25 @@ impl RevisionContextMember {
 }
 
 impl RevisionContext {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_RevisionContext`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_RevisionContext`.
+    pub fn parse(text: &str) -> Result<RevisionContextMember, ValueError> {
+        officekit_markup_base::member(RevisionContextMember::MEMBERS, text, "ST_RevisionContext")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_RevisionContext`.
     pub fn value(&self) -> Result<RevisionContextMember, ValueError> {
-        officekit_markup_base::member(
-            RevisionContextMember::MEMBERS,
-            &self.0,
-            "ST_RevisionContext",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -7395,21 +7705,42 @@ impl TryFrom<RevisionStreamContent> for RevisionGroupContent {
     }
 }
 
-impl AsRef<str> for RowColVisualOp {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(RowColVisualOp);
+
+impl Default for RowColVisualOp {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for RowColVisualOp {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<RowColVisualOpMember> for RowColVisualOp {
     fn from(member: RowColVisualOpMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for RowColVisualOp {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for RowColVisualOpMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -7436,13 +7767,25 @@ impl RowColVisualOpMember {
 }
 
 impl RowColVisualOp {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_RowColVisualOp`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_RowColVisualOp`.
+    pub fn parse(text: &str) -> Result<RowColVisualOpMember, ValueError> {
+        officekit_markup_base::member(RowColVisualOpMember::MEMBERS, text, "ST_RowColVisualOp")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_RowColVisualOp`.
     pub fn value(&self) -> Result<RowColVisualOpMember, ValueError> {
-        officekit_markup_base::member(RowColVisualOpMember::MEMBERS, &self.0, "ST_RowColVisualOp")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -7501,21 +7844,42 @@ impl officekit_markup_base::Write for RowColVisualOps {
     }
 }
 
-impl AsRef<str> for RwColAction {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(RwColAction);
+
+impl Default for RwColAction {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for RwColAction {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<RwColActionMember> for RwColAction {
     fn from(member: RwColActionMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for RwColAction {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for RwColActionMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -7542,31 +7906,64 @@ impl RwColActionMember {
 }
 
 impl RwColAction {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_RwColAction`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_RwColAction`.
+    pub fn parse(text: &str) -> Result<RwColActionMember, ValueError> {
+        officekit_markup_base::member(RwColActionMember::MEMBERS, text, "ST_RwColAction")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_RwColAction`.
     pub fn value(&self) -> Result<RwColActionMember, ValueError> {
-        officekit_markup_base::member(RwColActionMember::MEMBERS, &self.0, "ST_RwColAction")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for SheetOp {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SheetOp);
+
+impl Default for SheetOp {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SheetOp {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SheetOpMember> for SheetOp {
     fn from(member: SheetOpMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SheetOp {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SheetOpMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -7593,13 +7990,25 @@ impl SheetOpMember {
 }
 
 impl SheetOp {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SheetOp`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_SheetOp`.
+    pub fn parse(text: &str) -> Result<SheetOpMember, ValueError> {
+        officekit_markup_base::member(SheetOpMember::MEMBERS, text, "ST_SheetOp")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SheetOp`.
     pub fn value(&self) -> Result<SheetOpMember, ValueError> {
-        officekit_markup_base::member(SheetOpMember::MEMBERS, &self.0, "ST_SheetOp")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -7942,21 +8351,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for SubFeatureType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SubFeatureType);
+
+impl Default for SubFeatureType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SubFeatureType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SubFeatureTypeMember> for SubFeatureType {
     fn from(member: SubFeatureTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SubFeatureType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SubFeatureTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -7981,13 +8411,25 @@ impl SubFeatureTypeMember {
 }
 
 impl SubFeatureType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SubFeatureType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_SubFeatureType`.
+    pub fn parse(text: &str) -> Result<SubFeatureTypeMember, ValueError> {
+        officekit_markup_base::member(SubFeatureTypeMember::MEMBERS, text, "ST_SubFeatureType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SubFeatureType`.
     pub fn value(&self) -> Result<SubFeatureTypeMember, ValueError> {
-        officekit_markup_base::member(SubFeatureTypeMember::MEMBERS, &self.0, "ST_SubFeatureType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

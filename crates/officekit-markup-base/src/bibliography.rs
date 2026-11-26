@@ -221,7 +221,11 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::Spelling;
 use crate::UserData;
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -928,18 +932,19 @@ pub type Author = AuthorWith<()>;
 impl Eq for AuthorWith<()> {}
 
 /// Bibliographic Data Source Types, the simple type `ST_SourceType` (ECMA-376 Part 1, section
-/// 22.6.3.1), kept as the text the file carried.
+/// 22.6.3.1), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BibliographicDataSourceTypes(pub String);
+pub enum BibliographicDataSourceTypes {
+    /// A member, spelled as the class being written spells it.
+    Member(BibliographicDataSourceTypesMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SourceType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2796,21 +2801,42 @@ impl crate::Write for Author {
     }
 }
 
-impl AsRef<str> for BibliographicDataSourceTypes {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(BibliographicDataSourceTypes);
+
+impl Default for BibliographicDataSourceTypes {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BibliographicDataSourceTypes {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BibliographicDataSourceTypesMember> for BibliographicDataSourceTypes {
     fn from(member: BibliographicDataSourceTypesMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BibliographicDataSourceTypes {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BibliographicDataSourceTypesMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -2854,17 +2880,29 @@ impl BibliographicDataSourceTypesMember {
 }
 
 impl BibliographicDataSourceTypes {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SourceType`; the text stays stored.
-    pub fn value(&self) -> Result<BibliographicDataSourceTypesMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_SourceType`.
+    pub fn parse(text: &str) -> Result<BibliographicDataSourceTypesMember, ValueError> {
         crate::member(
             BibliographicDataSourceTypesMember::MEMBERS,
-            &self.0,
+            text,
             "ST_SourceType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SourceType`.
+    pub fn value(&self) -> Result<BibliographicDataSourceTypesMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

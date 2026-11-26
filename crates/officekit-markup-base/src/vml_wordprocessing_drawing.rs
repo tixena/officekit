@@ -221,7 +221,11 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::Spelling;
 use crate::UserData;
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
 
@@ -293,18 +297,19 @@ pub type AnchorLocationIsLocked = AnchorLocationIsLockedWith<()>;
 impl Eq for AnchorLocationIsLockedWith<()> {}
 
 /// Border Shadow Type, the simple type `ST_BorderShadow` (ECMA-376 Part 4, section 19.3.3.1), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BorderShadowType(pub String);
+pub enum BorderShadowType {
+    /// A member, spelled as the class being written spells it.
+    Member(BorderShadowTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_BorderShadow`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -320,19 +325,20 @@ pub enum BorderShadowTypeMember {
     True,
 }
 
-/// Border Type, the simple type `ST_BorderType` (ECMA-376 Part 4, section 19.3.3.2), kept as the
-/// text the file carried.
+/// Border Type, the simple type `ST_BorderType` (ECMA-376 Part 4, section 19.3.3.2), kept as its
+/// member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BorderType(pub String);
+pub enum BorderType {
+    /// A member, spelled as the class being written spells it.
+    Member(BorderTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_BorderType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -419,18 +425,19 @@ pub type BottomBorder = BottomBorderWith<()>;
 impl Eq for BottomBorderWith<()> {}
 
 /// Horizontal Anchor Type, the simple type `ST_HorizontalAnchor` (ECMA-376 Part 4, section
-/// 19.3.3.3), kept as the text the file carried.
+/// 19.3.3.3), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct HorizontalAnchorType(pub String);
+pub enum HorizontalAnchorType {
+    /// A member, spelled as the class being written spells it.
+    Member(HorizontalAnchorTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_HorizontalAnchor`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -521,18 +528,19 @@ pub type TextWrapping = TextWrappingWith<()>;
 impl Eq for TextWrappingWith<()> {}
 
 /// Text Wrapping Side, the simple type `ST_WrapSide` (ECMA-376 Part 4, section 19.3.3.5), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TextWrappingSide(pub String);
+pub enum TextWrappingSide {
+    /// A member, spelled as the class being written spells it.
+    Member(TextWrappingSideMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_WrapSide`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -549,18 +557,19 @@ pub enum TextWrappingSideMember {
 }
 
 /// Text Wrapping Type, the simple type `ST_WrapType` (ECMA-376 Part 4, section 19.3.3.6), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TextWrappingType(pub String);
+pub enum TextWrappingType {
+    /// A member, spelled as the class being written spells it.
+    Member(TextWrappingTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_WrapType`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -603,18 +612,19 @@ pub type TopBorder = TopBorderWith<()>;
 impl Eq for TopBorderWith<()> {}
 
 /// Vertical Anchor Type, the simple type `ST_VerticalAnchor` (ECMA-376 Part 4, section 19.3.3.4),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalAnchorType(pub String);
+pub enum VerticalAnchorType {
+    /// A member, spelled as the class being written spells it.
+    Member(VerticalAnchorTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_VerticalAnchor`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -675,21 +685,42 @@ impl crate::Write for AnchorLocationIsLocked {
     }
 }
 
-impl AsRef<str> for BorderShadowType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(BorderShadowType);
+
+impl Default for BorderShadowType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BorderShadowType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BorderShadowTypeMember> for BorderShadowType {
     fn from(member: BorderShadowTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BorderShadowType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BorderShadowTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -716,31 +747,64 @@ impl BorderShadowTypeMember {
 }
 
 impl BorderShadowType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_BorderShadow`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_BorderShadow`.
+    pub fn parse(text: &str) -> Result<BorderShadowTypeMember, ValueError> {
+        crate::member(BorderShadowTypeMember::MEMBERS, text, "ST_BorderShadow")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_BorderShadow`.
     pub fn value(&self) -> Result<BorderShadowTypeMember, ValueError> {
-        crate::member(BorderShadowTypeMember::MEMBERS, &self.0, "ST_BorderShadow")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for BorderType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(BorderType);
+
+impl Default for BorderType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BorderType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BorderTypeMember> for BorderType {
     fn from(member: BorderTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BorderType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BorderTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -790,13 +854,25 @@ impl BorderTypeMember {
 }
 
 impl BorderType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_BorderType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_BorderType`.
+    pub fn parse(text: &str) -> Result<BorderTypeMember, ValueError> {
+        crate::member(BorderTypeMember::MEMBERS, text, "ST_BorderType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_BorderType`.
     pub fn value(&self) -> Result<BorderTypeMember, ValueError> {
-        crate::member(BorderTypeMember::MEMBERS, &self.0, "ST_BorderType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -853,21 +929,42 @@ impl crate::Write for BottomBorder {
     }
 }
 
-impl AsRef<str> for HorizontalAnchorType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(HorizontalAnchorType);
+
+impl Default for HorizontalAnchorType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for HorizontalAnchorType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<HorizontalAnchorTypeMember> for HorizontalAnchorType {
     fn from(member: HorizontalAnchorTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for HorizontalAnchorType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for HorizontalAnchorTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -894,17 +991,29 @@ impl HorizontalAnchorTypeMember {
 }
 
 impl HorizontalAnchorType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_HorizontalAnchor`; the text stays stored.
-    pub fn value(&self) -> Result<HorizontalAnchorTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_HorizontalAnchor`.
+    pub fn parse(text: &str) -> Result<HorizontalAnchorTypeMember, ValueError> {
         crate::member(
             HorizontalAnchorTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_HorizontalAnchor",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_HorizontalAnchor`.
+    pub fn value(&self) -> Result<HorizontalAnchorTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -1069,21 +1178,42 @@ impl crate::Write for TextWrapping {
     }
 }
 
-impl AsRef<str> for TextWrappingSide {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(TextWrappingSide);
+
+impl Default for TextWrappingSide {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TextWrappingSide {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TextWrappingSideMember> for TextWrappingSide {
     fn from(member: TextWrappingSideMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TextWrappingSide {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TextWrappingSideMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1110,31 +1240,64 @@ impl TextWrappingSideMember {
 }
 
 impl TextWrappingSide {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_WrapSide`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_WrapSide`.
+    pub fn parse(text: &str) -> Result<TextWrappingSideMember, ValueError> {
+        crate::member(TextWrappingSideMember::MEMBERS, text, "ST_WrapSide")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_WrapSide`.
     pub fn value(&self) -> Result<TextWrappingSideMember, ValueError> {
-        crate::member(TextWrappingSideMember::MEMBERS, &self.0, "ST_WrapSide")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for TextWrappingType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(TextWrappingType);
+
+impl Default for TextWrappingType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TextWrappingType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TextWrappingTypeMember> for TextWrappingType {
     fn from(member: TextWrappingTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TextWrappingType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TextWrappingTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1162,13 +1325,25 @@ impl TextWrappingTypeMember {
 }
 
 impl TextWrappingType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_WrapType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_WrapType`.
+    pub fn parse(text: &str) -> Result<TextWrappingTypeMember, ValueError> {
+        crate::member(TextWrappingTypeMember::MEMBERS, text, "ST_WrapType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_WrapType`.
     pub fn value(&self) -> Result<TextWrappingTypeMember, ValueError> {
-        crate::member(TextWrappingTypeMember::MEMBERS, &self.0, "ST_WrapType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -1225,21 +1400,42 @@ impl crate::Write for TopBorder {
     }
 }
 
-impl AsRef<str> for VerticalAnchorType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(VerticalAnchorType);
+
+impl Default for VerticalAnchorType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for VerticalAnchorType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<VerticalAnchorTypeMember> for VerticalAnchorType {
     fn from(member: VerticalAnchorTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for VerticalAnchorType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for VerticalAnchorTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1266,16 +1462,24 @@ impl VerticalAnchorTypeMember {
 }
 
 impl VerticalAnchorType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_VerticalAnchor`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_VerticalAnchor`.
+    pub fn parse(text: &str) -> Result<VerticalAnchorTypeMember, ValueError> {
+        crate::member(VerticalAnchorTypeMember::MEMBERS, text, "ST_VerticalAnchor")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_VerticalAnchor`.
     pub fn value(&self) -> Result<VerticalAnchorTypeMember, ValueError> {
-        crate::member(
-            VerticalAnchorTypeMember::MEMBERS,
-            &self.0,
-            "ST_VerticalAnchor",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }

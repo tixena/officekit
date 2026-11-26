@@ -1,4 +1,6 @@
 use alloc::collections::BTreeSet;
+use officekit_markup::Spelling;
+use officekit_xml::conformance::ConformanceClass;
 
 use officekit_markup::Descend;
 use officekit_markup::chart::{
@@ -287,7 +289,7 @@ fn item(content: &TextRunContent) -> String {
     } else if let TextRunContent::Break(found) = content {
         format!(
             "br {}",
-            found.r#type.as_ref().map_or("", |kind| kind.0.as_str())
+            found.r#type.as_ref().map_or_else(String::new, spelled)
         )
     } else if let TextRunContent::CarriageReturn(_cr) = content {
         "cr".to_owned()
@@ -325,7 +327,7 @@ fn shape(content: &[ParagraphContent]) -> Vec<String> {
             } else if let ParagraphContent::ProofingErrorAnchor(anchor) = node {
                 format!(
                     "proofErr {}",
-                    anchor.r#type.as_ref().map_or("", |kind| kind.0.as_str())
+                    anchor.r#type.as_ref().map_or_else(String::new, spelled)
                 )
             } else if let ParagraphContent::CommentAnchorRangeStart(start) = node {
                 format!("commentRangeStart {}", ids(start.id.as_ref()))
@@ -1526,4 +1528,12 @@ fn a_workbook_has_its_shared_strings_and_comments_compacted() {
         ))),
         [r#""ab""#]
     );
+}
+
+/// The text of a simple-type value.
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

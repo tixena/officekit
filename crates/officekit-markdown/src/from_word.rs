@@ -22,6 +22,7 @@ use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 use officekit::docx::effective::StyleSheet;
 use officekit::parts::{numbering_definitions, style_definitions};
+use officekit_markup::Spelling as _;
 use officekit_markup::wordprocessing::{
     AnchorForImportedExternalContent, AssociatedOutlineLevel, BlockContent, BreakTypesMember,
     ComplexFieldCharacter, ComplexFieldCharacterType, ComplexFieldCharacterTypeMember,
@@ -34,6 +35,7 @@ use officekit_markup::wordprocessing::{
     StNumberFormat, StNumberFormatMember, Table, TableCell, TableRow, TableRowPropertiesContent,
     TextRun, TextRunContent, TrackedRunContent,
 };
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Element, Node};
 use officekit_xml::mc;
 use officekit_xml::name::Namespace;
@@ -2144,7 +2146,7 @@ fn left_indent(indentation: &ParagraphIndentation) -> Option<i64> {
     match left.value().ok()? {
         SignedMeasurementInTwentiethsOfPointMember::Integer(twips) => Some(twips),
         SignedMeasurementInTwentiethsOfPointMember::UniversalMeasurement(_) | _ => {
-            twips_of(&left.0)
+            twips_of(&left.spelling(ConformanceClass::Transitional))
         }
     }
 }
@@ -2221,10 +2223,12 @@ fn is_rule(properties: Option<&ParagraphProperties>) -> bool {
                 .paragraph_border_below_identical_paragraphs
                 .as_ref()
                 .is_some_and(|bottom| {
-                    bottom
-                        .val
-                        .as_ref()
-                        .is_none_or(|style| !matches!(style.as_ref(), "nil" | "none"))
+                    bottom.val.as_ref().is_none_or(|style| {
+                        !matches!(
+                            &*style.spelling(ConformanceClass::Transitional),
+                            "nil" | "none"
+                        )
+                    })
                 })
                 && borders.left_paragraph_border.is_none()
                 && borders

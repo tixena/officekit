@@ -5,6 +5,8 @@ use crate::parts::kinds::WordprocessingKind;
 use base64::Engine as _;
 use base64::engine::general_purpose::STANDARD;
 #[cfg(feature = "transitional")]
+use officekit_markup::Spelling;
+#[cfg(feature = "transitional")]
 use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue};
 #[cfg(feature = "transitional")]
 use officekit_markup::wordprocessing::{
@@ -57,34 +59,37 @@ fn protection(docx: &Docx) -> Vec<(&'static str, String)> {
     );
     let entry = read.document_editing_restrictions.unwrap_or_default();
     [
-        ("edit", entry.edit.map(|value| value.0)),
-        ("enforcement", entry.enforcement.map(|value| value.0)),
+        ("edit", entry.edit.map(|value| spelled(&value))),
+        (
+            "enforcement",
+            entry.enforcement.map(|value| spelled(&value)),
+        ),
         (
             "cryptProviderType",
-            entry.crypt_provider_type.map(|value| value.0),
+            entry.crypt_provider_type.map(|value| spelled(&value)),
         ),
         (
             "cryptAlgorithmClass",
-            entry.crypt_algorithm_class.map(|value| value.0),
+            entry.crypt_algorithm_class.map(|value| spelled(&value)),
         ),
         (
             "cryptAlgorithmType",
-            entry.crypt_algorithm_type.map(|value| value.0),
+            entry.crypt_algorithm_type.map(|value| spelled(&value)),
         ),
         (
             "cryptAlgorithmSid",
-            entry.crypt_algorithm_sid.map(|value| value.0),
+            entry.crypt_algorithm_sid.map(|value| spelled(&value)),
         ),
         (
             "cryptSpinCount",
-            entry.crypt_spin_count.map(|value| value.0),
+            entry.crypt_spin_count.map(|value| spelled(&value)),
         ),
         ("hash", entry.hash),
         ("salt", entry.salt),
         ("algorithmName", entry.algorithm_name),
         ("hashValue", entry.hash_value),
         ("saltValue", entry.salt_value),
-        ("spinCount", entry.spin_count.map(|value| value.0)),
+        ("spinCount", entry.spin_count.map(|value| spelled(&value))),
     ]
     .into_iter()
     .filter_map(|(attribute, value)| Some((attribute, value?)))
@@ -314,4 +319,13 @@ fn protecting_a_new_document_creates_the_settings_part_with_its_content_type() {
             .content_type_overrides()
             .contains(&(name, document_settings::CONTENT_TYPE.to_owned()))
     );
+}
+
+/// The text of a simple-type value.
+#[cfg(feature = "transitional")]
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

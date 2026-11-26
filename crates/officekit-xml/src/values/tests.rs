@@ -117,3 +117,25 @@ fn leap_years_follow_the_gregorian_rule() {
     assert!(parse::date_time("1900-02-29T00:00:00").is_none());
     assert!(parse::date_time("2024-04-31T00:00:00").is_none());
 }
+
+#[test]
+fn a_date_time_spells_as_it_parses() {
+    for text in [
+        "2026-10-15T09:30:00Z",
+        "2026-10-15T09:30:00.25-04:00",
+        "2026-10-15T09:30:00",
+        "-0044-03-15T12:00:00+01:30",
+    ] {
+        let value = parse::date_time(text).unwrap();
+        assert_eq!(value.to_string(), text);
+    }
+    let value = parse::date_time("2026-10-15T09:30:00.500+00:00").unwrap();
+    assert_eq!(value.to_string(), "2026-10-15T09:30:00.5Z");
+}
+
+#[test]
+fn a_measure_spells_its_number_and_unit() {
+    assert_eq!(Measure::new(MeasureUnit::Points, 2.5).to_string(), "2.5pt");
+    assert_eq!(Measure::new(MeasureUnit::Picas, 12.0).to_string(), "12pc");
+    assert_eq!(parse::measure("-3cm").unwrap().to_string(), "-3cm");
+}

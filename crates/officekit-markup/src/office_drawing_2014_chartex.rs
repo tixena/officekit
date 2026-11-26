@@ -223,9 +223,13 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -1617,18 +1621,19 @@ pub type AxisId = AxisIdWith<()>;
 
 impl Eq for AxisIdWith<()> {}
 
-/// The simple type `ST_AxisUnit`, kept as the text the file carried.
+/// The simple type `ST_AxisUnit`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct AxisUnit(pub String);
+pub enum AxisUnit {
+    /// A member, spelled as the class being written spells it.
+    Member(AxisUnitMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_AxisUnit`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -4754,18 +4759,19 @@ pub type DataLabelHidden = DataLabelHiddenWith<()>;
 
 impl Eq for DataLabelHiddenWith<()> {}
 
-/// The simple type `ST_DataLabelPos`, kept as the text the file carried.
+/// The simple type `ST_DataLabelPos`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct DataLabelPos(pub String);
+pub enum DataLabelPos {
+    /// A member, spelled as the class being written spells it.
+    Member(DataLabelPosMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_DataLabelPos`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5568,18 +5574,19 @@ pub type GeoLocations = GeoLocationsWith<()>;
 
 impl Eq for GeoLocationsWith<()> {}
 
-/// The simple type `ST_GeoMappingLevel`, kept as the text the file carried.
+/// The simple type `ST_GeoMappingLevel`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct GeoMappingLevel(pub String);
+pub enum GeoMappingLevel {
+    /// A member, spelled as the class being written spells it.
+    Member(GeoMappingLevelMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_GeoMappingLevel`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5729,18 +5736,19 @@ pub type GeoPolygons = GeoPolygonsWith<()>;
 
 impl Eq for GeoPolygonsWith<()> {}
 
-/// The simple type `ST_GeoProjectionType`, kept as the text the file carried.
+/// The simple type `ST_GeoProjectionType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct GeoProjectionType(pub String);
+pub enum GeoProjectionType {
+    /// A member, spelled as the class being written spells it.
+    Member(GeoProjectionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_GeoProjectionType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5863,18 +5871,19 @@ pub type Idx = IdxWith<()>;
 
 impl Eq for IdxWith<()> {}
 
-/// The simple type `ST_IntervalClosedSide`, kept as the text the file carried.
+/// The simple type `ST_IntervalClosedSide`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct IntervalClosedSide(pub String);
+pub enum IntervalClosedSide {
+    /// A member, spelled as the class being written spells it.
+    Member(IntervalClosedSideMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_IntervalClosedSide`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6307,18 +6316,19 @@ pub type NumericDimensionContent = NumericDimensionContentWith<()>;
 
 impl Eq for NumericDimensionContentWith<()> {}
 
-/// The simple type `ST_NumericDimensionType`, kept as the text the file carried.
+/// The simple type `ST_NumericDimensionType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct NumericDimensionType(pub String);
+pub enum NumericDimensionType {
+    /// A member, spelled as the class being written spells it.
+    Member(NumericDimensionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_NumericDimensionType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6448,18 +6458,19 @@ pub type PageMargins = PageMarginsWith<()>;
 
 impl Eq for PageMarginsWith<()> {}
 
-/// The simple type `ST_PageOrientation`, kept as the text the file carried.
+/// The simple type `ST_PageOrientation`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PageOrientation(pub String);
+pub enum PageOrientation {
+    /// A member, spelled as the class being written spells it.
+    Member(PageOrientationMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PageOrientation`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6621,18 +6632,19 @@ pub type PlotSurface = PlotSurfaceWith<()>;
 
 impl Eq for PlotSurfaceWith<()> {}
 
-/// The simple type `ST_PosAlign`, kept as the text the file carried.
+/// The simple type `ST_PosAlign`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PosAlign(pub String);
+pub enum PosAlign {
+    /// A member, spelled as the class being written spells it.
+    Member(PosAlignMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PosAlign`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6714,18 +6726,19 @@ pub type PtStringValue = PtStringValueWith<()>;
 
 impl Eq for PtStringValueWith<()> {}
 
-/// The simple type `ST_QuartileMethod`, kept as the text the file carried.
+/// The simple type `ST_QuartileMethod`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct QuartileMethod(pub String);
+pub enum QuartileMethod {
+    /// A member, spelled as the class being written spells it.
+    Member(QuartileMethodMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_QuartileMethod`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6847,18 +6860,19 @@ pub type Series = SeriesWith<()>;
 
 impl Eq for SeriesWith<()> {}
 
-/// The simple type `ST_SeriesLayout`, kept as the text the file carried.
+/// The simple type `ST_SeriesLayout`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SeriesLayout(pub String);
+pub enum SeriesLayout {
+    /// A member, spelled as the class being written spells it.
+    Member(SeriesLayoutMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SeriesLayout`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6904,18 +6918,19 @@ pub type SeriesLayoutPropertiesContent = SeriesLayoutPropertiesContentWith<()>;
 
 impl Eq for SeriesLayoutPropertiesContentWith<()> {}
 
-/// The simple type `ST_SidePos`, kept as the text the file carried.
+/// The simple type `ST_SidePos`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SidePos(pub String);
+pub enum SidePos {
+    /// A member, spelled as the class being written spells it.
+    Member(SidePosMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SidePos`, in alphabetical order. `as_str` gives the text of a
 /// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6966,18 +6981,19 @@ pub type SpPr = SpPrWith<()>;
 
 impl Eq for SpPrWith<()> {}
 
-/// The simple type `ST_EntityType`, kept as the text the file carried.
+/// The simple type `ST_EntityType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct StEntityType(pub String);
+pub enum StEntityType {
+    /// A member, spelled as the class being written spells it.
+    Member(StEntityTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_EntityType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -7009,18 +7025,19 @@ pub enum StEntityTypeMember {
     Unsupported,
 }
 
-/// The simple type `ST_ParentLabelLayout`, kept as the text the file carried.
+/// The simple type `ST_ParentLabelLayout`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct StParentLabelLayout(pub String);
+pub enum StParentLabelLayout {
+    /// A member, spelled as the class being written spells it.
+    Member(StParentLabelLayoutMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_ParentLabelLayout`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -7034,18 +7051,19 @@ pub enum StParentLabelLayoutMember {
     Overlapping,
 }
 
-/// The simple type `ST_RegionLabelLayout`, kept as the text the file carried.
+/// The simple type `ST_RegionLabelLayout`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct StRegionLabelLayout(pub String);
+pub enum StRegionLabelLayout {
+    /// A member, spelled as the class being written spells it.
+    Member(StRegionLabelLayoutMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_RegionLabelLayout`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -7124,18 +7142,19 @@ pub type StringDimensionContent = StringDimensionContentWith<()>;
 
 impl Eq for StringDimensionContentWith<()> {}
 
-/// The simple type `ST_StringDimensionType`, kept as the text the file carried.
+/// The simple type `ST_StringDimensionType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct StringDimensionType(pub String);
+pub enum StringDimensionType {
+    /// A member, spelled as the class being written spells it.
+    Member(StringDimensionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_StringDimensionType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -8733,21 +8752,42 @@ impl officekit_markup_base::Write for AxisId {
     }
 }
 
-impl AsRef<str> for AxisUnit {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(AxisUnit);
+
+impl Default for AxisUnit {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for AxisUnit {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<AxisUnitMember> for AxisUnit {
     fn from(member: AxisUnitMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for AxisUnit {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for AxisUnitMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -8808,13 +8848,25 @@ impl AxisUnitMember {
 }
 
 impl AxisUnit {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_AxisUnit`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_AxisUnit`.
+    pub fn parse(text: &str) -> Result<AxisUnitMember, ValueError> {
+        officekit_markup_base::member(AxisUnitMember::MEMBERS, text, "ST_AxisUnit")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_AxisUnit`.
     pub fn value(&self) -> Result<AxisUnitMember, ValueError> {
-        officekit_markup_base::member(AxisUnitMember::MEMBERS, &self.0, "ST_AxisUnit")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -9900,21 +9952,42 @@ impl officekit_markup_base::Write for DataLabelHidden {
     }
 }
 
-impl AsRef<str> for DataLabelPos {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(DataLabelPos);
+
+impl Default for DataLabelPos {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for DataLabelPos {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<DataLabelPosMember> for DataLabelPos {
     fn from(member: DataLabelPosMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for DataLabelPos {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for DataLabelPosMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -9946,13 +10019,25 @@ impl DataLabelPosMember {
 }
 
 impl DataLabelPos {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_DataLabelPos`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_DataLabelPos`.
+    pub fn parse(text: &str) -> Result<DataLabelPosMember, ValueError> {
+        officekit_markup_base::member(DataLabelPosMember::MEMBERS, text, "ST_DataLabelPos")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_DataLabelPos`.
     pub fn value(&self) -> Result<DataLabelPosMember, ValueError> {
-        officekit_markup_base::member(DataLabelPosMember::MEMBERS, &self.0, "ST_DataLabelPos")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -11792,21 +11877,42 @@ impl officekit_markup_base::Write for GeoLocations {
     }
 }
 
-impl AsRef<str> for GeoMappingLevel {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(GeoMappingLevel);
+
+impl Default for GeoMappingLevel {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for GeoMappingLevel {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<GeoMappingLevelMember> for GeoMappingLevel {
     fn from(member: GeoMappingLevelMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for GeoMappingLevel {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for GeoMappingLevelMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -11848,17 +11954,25 @@ impl GeoMappingLevelMember {
 }
 
 impl GeoMappingLevel {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_GeoMappingLevel`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_GeoMappingLevel`.
+    pub fn parse(text: &str) -> Result<GeoMappingLevelMember, ValueError> {
+        officekit_markup_base::member(GeoMappingLevelMember::MEMBERS, text, "ST_GeoMappingLevel")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_GeoMappingLevel`.
     pub fn value(&self) -> Result<GeoMappingLevelMember, ValueError> {
-        officekit_markup_base::member(
-            GeoMappingLevelMember::MEMBERS,
-            &self.0,
-            "ST_GeoMappingLevel",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -12168,21 +12282,42 @@ impl officekit_markup_base::Write for GeoPolygons {
     }
 }
 
-impl AsRef<str> for GeoProjectionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(GeoProjectionType);
+
+impl Default for GeoProjectionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for GeoProjectionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<GeoProjectionTypeMember> for GeoProjectionType {
     fn from(member: GeoProjectionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for GeoProjectionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for GeoProjectionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -12209,17 +12344,29 @@ impl GeoProjectionTypeMember {
 }
 
 impl GeoProjectionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_GeoProjectionType`; the text stays stored.
-    pub fn value(&self) -> Result<GeoProjectionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_GeoProjectionType`.
+    pub fn parse(text: &str) -> Result<GeoProjectionTypeMember, ValueError> {
         officekit_markup_base::member(
             GeoProjectionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_GeoProjectionType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_GeoProjectionType`.
+    pub fn value(&self) -> Result<GeoProjectionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -12468,21 +12615,42 @@ impl officekit_markup_base::Write for Idx {
     }
 }
 
-impl AsRef<str> for IntervalClosedSide {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(IntervalClosedSide);
+
+impl Default for IntervalClosedSide {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for IntervalClosedSide {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<IntervalClosedSideMember> for IntervalClosedSide {
     fn from(member: IntervalClosedSideMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for IntervalClosedSide {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for IntervalClosedSideMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -12507,17 +12675,29 @@ impl IntervalClosedSideMember {
 }
 
 impl IntervalClosedSide {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_IntervalClosedSide`; the text stays stored.
-    pub fn value(&self) -> Result<IntervalClosedSideMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_IntervalClosedSide`.
+    pub fn parse(text: &str) -> Result<IntervalClosedSideMember, ValueError> {
         officekit_markup_base::member(
             IntervalClosedSideMember::MEMBERS,
-            &self.0,
+            text,
             "ST_IntervalClosedSide",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_IntervalClosedSide`.
+    pub fn value(&self) -> Result<IntervalClosedSideMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -13546,21 +13726,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for NumericDimensionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(NumericDimensionType);
+
+impl Default for NumericDimensionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for NumericDimensionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<NumericDimensionTypeMember> for NumericDimensionType {
     fn from(member: NumericDimensionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for NumericDimensionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for NumericDimensionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -13588,17 +13789,29 @@ impl NumericDimensionTypeMember {
 }
 
 impl NumericDimensionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_NumericDimensionType`; the text stays stored.
-    pub fn value(&self) -> Result<NumericDimensionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_NumericDimensionType`.
+    pub fn parse(text: &str) -> Result<NumericDimensionTypeMember, ValueError> {
         officekit_markup_base::member(
             NumericDimensionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_NumericDimensionType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_NumericDimensionType`.
+    pub fn value(&self) -> Result<NumericDimensionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -13859,21 +14072,42 @@ impl officekit_markup_base::Write for PageMargins {
     }
 }
 
-impl AsRef<str> for PageOrientation {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PageOrientation);
+
+impl Default for PageOrientation {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PageOrientation {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PageOrientationMember> for PageOrientation {
     fn from(member: PageOrientationMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PageOrientation {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PageOrientationMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -13903,17 +14137,25 @@ impl PageOrientationMember {
 }
 
 impl PageOrientation {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PageOrientation`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_PageOrientation`.
+    pub fn parse(text: &str) -> Result<PageOrientationMember, ValueError> {
+        officekit_markup_base::member(PageOrientationMember::MEMBERS, text, "ST_PageOrientation")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PageOrientation`.
     pub fn value(&self) -> Result<PageOrientationMember, ValueError> {
-        officekit_markup_base::member(
-            PageOrientationMember::MEMBERS,
-            &self.0,
-            "ST_PageOrientation",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -14248,21 +14490,42 @@ impl officekit_markup_base::Write for PlotSurface {
     }
 }
 
-impl AsRef<str> for PosAlign {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PosAlign);
+
+impl Default for PosAlign {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PosAlign {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PosAlignMember> for PosAlign {
     fn from(member: PosAlignMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PosAlign {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PosAlignMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14288,13 +14551,25 @@ impl PosAlignMember {
 }
 
 impl PosAlign {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PosAlign`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_PosAlign`.
+    pub fn parse(text: &str) -> Result<PosAlignMember, ValueError> {
+        officekit_markup_base::member(PosAlignMember::MEMBERS, text, "ST_PosAlign")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PosAlign`.
     pub fn value(&self) -> Result<PosAlignMember, ValueError> {
-        officekit_markup_base::member(PosAlignMember::MEMBERS, &self.0, "ST_PosAlign")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -14457,21 +14732,42 @@ impl officekit_markup_base::Write for PtStringValue {
     }
 }
 
-impl AsRef<str> for QuartileMethod {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(QuartileMethod);
+
+impl Default for QuartileMethod {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for QuartileMethod {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<QuartileMethodMember> for QuartileMethod {
     fn from(member: QuartileMethodMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for QuartileMethod {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for QuartileMethodMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14504,13 +14800,25 @@ impl QuartileMethodMember {
 }
 
 impl QuartileMethod {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_QuartileMethod`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_QuartileMethod`.
+    pub fn parse(text: &str) -> Result<QuartileMethodMember, ValueError> {
+        officekit_markup_base::member(QuartileMethodMember::MEMBERS, text, "ST_QuartileMethod")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_QuartileMethod`.
     pub fn value(&self) -> Result<QuartileMethodMember, ValueError> {
-        officekit_markup_base::member(QuartileMethodMember::MEMBERS, &self.0, "ST_QuartileMethod")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -14766,21 +15074,42 @@ impl officekit_markup_base::Write for Series {
     }
 }
 
-impl AsRef<str> for SeriesLayout {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SeriesLayout);
+
+impl Default for SeriesLayout {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SeriesLayout {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SeriesLayoutMember> for SeriesLayout {
     fn from(member: SeriesLayoutMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SeriesLayout {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SeriesLayoutMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14831,13 +15160,25 @@ impl SeriesLayoutMember {
 }
 
 impl SeriesLayout {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SeriesLayout`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_SeriesLayout`.
+    pub fn parse(text: &str) -> Result<SeriesLayoutMember, ValueError> {
+        officekit_markup_base::member(SeriesLayoutMember::MEMBERS, text, "ST_SeriesLayout")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SeriesLayout`.
     pub fn value(&self) -> Result<SeriesLayoutMember, ValueError> {
-        officekit_markup_base::member(SeriesLayoutMember::MEMBERS, &self.0, "ST_SeriesLayout")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -14901,21 +15242,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for SidePos {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SidePos);
+
+impl Default for SidePos {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SidePos {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SidePosMember> for SidePos {
     fn from(member: SidePosMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SidePos {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SidePosMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14942,13 +15304,25 @@ impl SidePosMember {
 }
 
 impl SidePos {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SidePos`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_SidePos`.
+    pub fn parse(text: &str) -> Result<SidePosMember, ValueError> {
+        officekit_markup_base::member(SidePosMember::MEMBERS, text, "ST_SidePos")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SidePos`.
     pub fn value(&self) -> Result<SidePosMember, ValueError> {
-        officekit_markup_base::member(SidePosMember::MEMBERS, &self.0, "ST_SidePos")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -15033,21 +15407,42 @@ impl officekit_markup_base::Write for SpPr {
     }
 }
 
-impl AsRef<str> for StEntityType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(StEntityType);
+
+impl Default for StEntityType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for StEntityType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<StEntityTypeMember> for StEntityType {
     fn from(member: StEntityTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for StEntityType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for StEntityTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -15110,31 +15505,64 @@ impl StEntityTypeMember {
 }
 
 impl StEntityType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_EntityType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_EntityType`.
+    pub fn parse(text: &str) -> Result<StEntityTypeMember, ValueError> {
+        officekit_markup_base::member(StEntityTypeMember::MEMBERS, text, "ST_EntityType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_EntityType`.
     pub fn value(&self) -> Result<StEntityTypeMember, ValueError> {
-        officekit_markup_base::member(StEntityTypeMember::MEMBERS, &self.0, "ST_EntityType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for StParentLabelLayout {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(StParentLabelLayout);
+
+impl Default for StParentLabelLayout {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for StParentLabelLayout {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<StParentLabelLayoutMember> for StParentLabelLayout {
     fn from(member: StParentLabelLayoutMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for StParentLabelLayout {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for StParentLabelLayoutMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -15164,35 +15592,68 @@ impl StParentLabelLayoutMember {
 }
 
 impl StParentLabelLayout {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_ParentLabelLayout`; the text stays stored.
-    pub fn value(&self) -> Result<StParentLabelLayoutMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_ParentLabelLayout`.
+    pub fn parse(text: &str) -> Result<StParentLabelLayoutMember, ValueError> {
         officekit_markup_base::member(
             StParentLabelLayoutMember::MEMBERS,
-            &self.0,
+            text,
             "ST_ParentLabelLayout",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_ParentLabelLayout`.
+    pub fn value(&self) -> Result<StParentLabelLayoutMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for StRegionLabelLayout {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(StRegionLabelLayout);
+
+impl Default for StRegionLabelLayout {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for StRegionLabelLayout {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<StRegionLabelLayoutMember> for StRegionLabelLayout {
     fn from(member: StRegionLabelLayoutMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for StRegionLabelLayout {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for StRegionLabelLayoutMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -15222,17 +15683,29 @@ impl StRegionLabelLayoutMember {
 }
 
 impl StRegionLabelLayout {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_RegionLabelLayout`; the text stays stored.
-    pub fn value(&self) -> Result<StRegionLabelLayoutMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_RegionLabelLayout`.
+    pub fn parse(text: &str) -> Result<StRegionLabelLayoutMember, ValueError> {
         officekit_markup_base::member(
             StRegionLabelLayoutMember::MEMBERS,
-            &self.0,
+            text,
             "ST_RegionLabelLayout",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_RegionLabelLayout`.
+    pub fn value(&self) -> Result<StRegionLabelLayoutMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -15405,21 +15878,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for StringDimensionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(StringDimensionType);
+
+impl Default for StringDimensionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for StringDimensionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<StringDimensionTypeMember> for StringDimensionType {
     fn from(member: StringDimensionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for StringDimensionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for StringDimensionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -15445,17 +15939,29 @@ impl StringDimensionTypeMember {
 }
 
 impl StringDimensionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_StringDimensionType`; the text stays stored.
-    pub fn value(&self) -> Result<StringDimensionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_StringDimensionType`.
+    pub fn parse(text: &str) -> Result<StringDimensionTypeMember, ValueError> {
         officekit_markup_base::member(
             StringDimensionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_StringDimensionType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_StringDimensionType`.
+    pub fn value(&self) -> Result<StringDimensionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

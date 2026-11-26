@@ -221,7 +221,10 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::NamespaceId;
 use officekit_xml::values::ValueError;
@@ -1457,18 +1460,33 @@ impl From<String> for ChartMarkerCoordinateValue {
     }
 }
 
+impl Spelling for ChartMarkerCoordinateValue {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl ChartMarkerCoordinateValue {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_MarkerCoordinate`.
+    pub fn parse(text: &str) -> Result<f64, ValueError> {
+        officekit_markup_base::double(
+            text,
+            &CHART_MARKER_COORDINATE_VALUE_BOUNDS,
+            "ST_MarkerCoordinate",
+        )
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_MarkerCoordinate`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
-        officekit_markup_base::double(
-            &self.0,
-            &CHART_MARKER_COORDINATE_VALUE_BOUNDS,
-            "ST_MarkerCoordinate",
-        )
+        Self::parse(&self.0)
     }
 }
 

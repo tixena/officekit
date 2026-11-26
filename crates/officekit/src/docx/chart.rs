@@ -9,7 +9,9 @@ use alloc::string::{String, ToString as _};
 use alloc::vec::Vec;
 
 use crate::parts::{chart, shared_string_table, worksheet};
+use officekit_markup::Spelling as _;
 use officekit_markup::spreadsheet::{Cell, RichTextInline, RichTextRun, StringItem, Text};
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Attribute, Element, Node};
 use officekit_xml::name::{Namespace, QName};
 use officekit_xml::packaging::error::PackageError;
@@ -408,7 +410,11 @@ fn read_cells(
 
 fn cell_text(cell: &Cell, shared: &[String]) -> Option<String> {
     let value = cell.value.as_ref().map(|value| value.value.as_str());
-    match cell.t.as_ref().map(|kind| kind.0.as_str()) {
+    let kind = cell
+        .t
+        .as_ref()
+        .map(|kind| kind.spelling(ConformanceClass::Transitional));
+    match kind.as_deref() {
         Some("s") => shared.get(value?.trim().parse::<usize>().ok()?).cloned(),
         Some("inlineStr") => cell.rich_text_inline.as_deref().map(inline_text),
         _ => value.map(str::to_owned),

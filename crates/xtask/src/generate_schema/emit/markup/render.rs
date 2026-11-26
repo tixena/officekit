@@ -391,10 +391,17 @@ impl Uses {
     /// The `use` lines, in rustfmt's order.
     #[must_use = "this only returns the value"]
     pub fn text(&self) -> String {
-        // Each line by its path's segments, which rustfmt sorts the lines by.
+        // Each line by its path's segments, which rustfmt sorts the lines by, a path from
+        // `self`, `super` or `crate` before any other.
         let mut lines: Vec<(Vec<&str>, String)> = Vec::new();
         use_lines(&self.paths, &mut lines);
-        lines.sort();
+        let rank = |key: &[&str]| {
+            ["self", "super", "crate"]
+                .iter()
+                .position(|first| key.first() == Some(first))
+                .unwrap_or(3)
+        };
+        lines.sort_by(|left, right| (rank(&left.0), left).cmp(&(rank(&right.0), right)));
         lines.into_iter().map(|(_, line)| line).collect()
     }
 }

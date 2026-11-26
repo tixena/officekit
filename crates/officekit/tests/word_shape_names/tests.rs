@@ -153,6 +153,7 @@ mod whole_file {
 }
 
 use officekit_markup::Read as _;
+use officekit_markup::Spelling as _;
 use officekit_markup::Unknown;
 use officekit_markup::drawing::{AnyElementContent, GeometryContent, GraphicObjectData};
 use officekit_markup::vml::{self, TextBox, TextBoxContent};
@@ -162,6 +163,7 @@ use officekit_markup::wordprocessing_drawing::{
     ShapeNonVisualPropertiesContent, ShapeTextContent, TextualContentsOfShapeTxbx,
     WordprocessingMLDrawingCanvas, WordprocessingMLShape, WordprocessingMLShapeGroup,
 };
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use officekit_xml::name::QName;
 use officekit_xml::write::Scope;
@@ -309,12 +311,15 @@ fn text_box(shape: &WordprocessingMLShape) -> Option<&TextualContentsOfShapeTxbx
 }
 
 /// The preset of a shape's geometry.
-fn preset(shape: &WordprocessingMLShape) -> Option<&str> {
+fn preset(shape: &WordprocessingMLShape) -> Option<String> {
     let GeometryContent::PresetGeometry(geometry) = shape.properties.geometry_content.as_deref()?
     else {
         return None;
     };
-    geometry.prst.as_ref().map(AsRef::as_ref)
+    geometry
+        .prst
+        .as_ref()
+        .map(|found| found.spelling(ConformanceClass::Transitional).into_owned())
 }
 
 /// `shape` with every name it was read with taken off.
@@ -394,7 +399,7 @@ fn a_word_shape_reads_as_the_typed_shape_with_its_geometry_and_text_box() {
         *shape.non_visual_properties_content,
         ShapeNonVisualPropertiesContent::NonVisualDrawingPropertiesForAShape(_)
     ));
-    assert_eq!(preset(&shape), Some("rect"));
+    assert_eq!(preset(&shape).as_deref(), Some("rect"));
     let content = &text_box(&shape).unwrap().rich_text_box_content_container;
     assert!(matches!(
         content.content.as_slice(),

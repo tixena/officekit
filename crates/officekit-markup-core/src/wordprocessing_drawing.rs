@@ -221,7 +221,11 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -1414,18 +1418,19 @@ pub type HorizontalPositioningContent = HorizontalPositioningContentWith<()>;
 impl Eq for HorizontalPositioningContentWith<()> {}
 
 /// Horizontal Relative Positioning, the simple type `ST_RelFromH` (ECMA-376 Part 1, section
-/// 20.4.3.4), kept as the text the file carried.
+/// 20.4.3.4), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct HorizontalRelativePositioning(pub String);
+pub enum HorizontalRelativePositioning {
+    /// A member, spelled as the class being written spells it.
+    Member(HorizontalRelativePositioningMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_RelFromH`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1730,18 +1735,19 @@ pub type RelativeHorizontalAlignment = RelativeHorizontalAlignmentWith<()>;
 impl Eq for RelativeHorizontalAlignmentWith<()> {}
 
 /// Relative Horizontal Alignment Positions, the simple type `ST_AlignH` (ECMA-376 Part 1, section
-/// 20.4.3.1), kept as the text the file carried.
+/// 20.4.3.1), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct RelativeHorizontalAlignmentPositions(pub String);
+pub enum RelativeHorizontalAlignmentPositions {
+    /// A member, spelled as the class being written spells it.
+    Member(RelativeHorizontalAlignmentPositionsMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_AlignH`, in alphabetical order. `as_str` gives the text of a
 /// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1957,18 +1963,19 @@ pub type SquareWrapping = SquareWrappingWith<()>;
 impl Eq for SquareWrappingWith<()> {}
 
 /// Text Wrapping Location, the simple type `ST_WrapText` (ECMA-376 Part 1, section 20.4.3.7), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TextWrappingLocation(pub String);
+pub enum TextWrappingLocation {
+    /// A member, spelled as the class being written spells it.
+    Member(TextWrappingLocationMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_WrapText`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2109,18 +2116,19 @@ pub type TopAndBottomWrapping = TopAndBottomWrappingWith<()>;
 impl Eq for TopAndBottomWrappingWith<()> {}
 
 /// Vertical Alignment Definition, the simple type `ST_AlignV` (ECMA-376 Part 1, section 20.4.3.2),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalAlignmentDefinition(pub String);
+pub enum VerticalAlignmentDefinition {
+    /// A member, spelled as the class being written spells it.
+    Member(VerticalAlignmentDefinitionMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_AlignV`, in alphabetical order. `as_str` gives the text of a
 /// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2185,18 +2193,19 @@ pub type VerticalPositioningContent = VerticalPositioningContentWith<()>;
 impl Eq for VerticalPositioningContentWith<()> {}
 
 /// Vertical Relative Positioning, the simple type `ST_RelFromV` (ECMA-376 Part 1, section
-/// 20.4.3.5), kept as the text the file carried.
+/// 20.4.3.5), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalRelativePositioning(pub String);
+pub enum VerticalRelativePositioning {
+    /// A member, spelled as the class being written spells it.
+    Member(VerticalRelativePositioningMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_RelFromV`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2485,14 +2494,29 @@ impl From<String> for AbsolutePositionOffsetValue {
     }
 }
 
+impl Spelling for AbsolutePositionOffsetValue {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl AbsolutePositionOffsetValue {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_PositionOffset`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, -0x8000_0000, 0x7FFF_FFFF, "ST_PositionOffset")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_PositionOffset`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, -0x8000_0000, 0x7FFF_FFFF, "ST_PositionOffset")
+        Self::parse(&self.0)
     }
 }
 
@@ -2996,14 +3020,29 @@ impl From<String> for DistanceFromText {
     }
 }
 
+impl Spelling for DistanceFromText {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl DistanceFromText {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_WrapDistance`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 0, 0xFFFF_FFFF, "ST_WrapDistance")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_WrapDistance`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 0, 0xFFFF_FFFF, "ST_WrapDistance")
+        Self::parse(&self.0)
     }
 }
 
@@ -3705,21 +3744,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for HorizontalRelativePositioning {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(HorizontalRelativePositioning);
+
+impl Default for HorizontalRelativePositioning {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for HorizontalRelativePositioning {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<HorizontalRelativePositioningMember> for HorizontalRelativePositioning {
     fn from(member: HorizontalRelativePositioningMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for HorizontalRelativePositioning {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for HorizontalRelativePositioningMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -3750,17 +3810,29 @@ impl HorizontalRelativePositioningMember {
 }
 
 impl HorizontalRelativePositioning {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_RelFromH`; the text stays stored.
-    pub fn value(&self) -> Result<HorizontalRelativePositioningMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_RelFromH`.
+    pub fn parse(text: &str) -> Result<HorizontalRelativePositioningMember, ValueError> {
         officekit_markup_base::member(
             HorizontalRelativePositioningMember::MEMBERS,
-            &self.0,
+            text,
             "ST_RelFromH",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_RelFromH`.
+    pub fn value(&self) -> Result<HorizontalRelativePositioningMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -4396,21 +4468,42 @@ impl officekit_markup_base::Write for RelativeHorizontalAlignment {
     }
 }
 
-impl AsRef<str> for RelativeHorizontalAlignmentPositions {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(RelativeHorizontalAlignmentPositions);
+
+impl Default for RelativeHorizontalAlignmentPositions {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for RelativeHorizontalAlignmentPositions {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<RelativeHorizontalAlignmentPositionsMember> for RelativeHorizontalAlignmentPositions {
     fn from(member: RelativeHorizontalAlignmentPositionsMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for RelativeHorizontalAlignmentPositions {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for RelativeHorizontalAlignmentPositionsMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4438,17 +4531,29 @@ impl RelativeHorizontalAlignmentPositionsMember {
 }
 
 impl RelativeHorizontalAlignmentPositions {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_AlignH`; the text stays stored.
-    pub fn value(&self) -> Result<RelativeHorizontalAlignmentPositionsMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_AlignH`.
+    pub fn parse(text: &str) -> Result<RelativeHorizontalAlignmentPositionsMember, ValueError> {
         officekit_markup_base::member(
             RelativeHorizontalAlignmentPositionsMember::MEMBERS,
-            &self.0,
+            text,
             "ST_AlignH",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_AlignH`.
+    pub fn value(&self) -> Result<RelativeHorizontalAlignmentPositionsMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -4948,21 +5053,42 @@ impl officekit_markup_base::Write for SquareWrapping {
     }
 }
 
-impl AsRef<str> for TextWrappingLocation {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TextWrappingLocation);
+
+impl Default for TextWrappingLocation {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TextWrappingLocation {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TextWrappingLocationMember> for TextWrappingLocation {
     fn from(member: TextWrappingLocationMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TextWrappingLocation {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TextWrappingLocationMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4989,13 +5115,25 @@ impl TextWrappingLocationMember {
 }
 
 impl TextWrappingLocation {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_WrapText`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_WrapText`.
+    pub fn parse(text: &str) -> Result<TextWrappingLocationMember, ValueError> {
+        officekit_markup_base::member(TextWrappingLocationMember::MEMBERS, text, "ST_WrapText")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_WrapText`.
     pub fn value(&self) -> Result<TextWrappingLocationMember, ValueError> {
-        officekit_markup_base::member(TextWrappingLocationMember::MEMBERS, &self.0, "ST_WrapText")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -5280,21 +5418,42 @@ impl officekit_markup_base::Write for TopAndBottomWrapping {
     }
 }
 
-impl AsRef<str> for VerticalAlignmentDefinition {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(VerticalAlignmentDefinition);
+
+impl Default for VerticalAlignmentDefinition {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for VerticalAlignmentDefinition {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<VerticalAlignmentDefinitionMember> for VerticalAlignmentDefinition {
     fn from(member: VerticalAlignmentDefinitionMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for VerticalAlignmentDefinition {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for VerticalAlignmentDefinitionMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -5322,17 +5481,29 @@ impl VerticalAlignmentDefinitionMember {
 }
 
 impl VerticalAlignmentDefinition {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_AlignV`; the text stays stored.
-    pub fn value(&self) -> Result<VerticalAlignmentDefinitionMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_AlignV`.
+    pub fn parse(text: &str) -> Result<VerticalAlignmentDefinitionMember, ValueError> {
         officekit_markup_base::member(
             VerticalAlignmentDefinitionMember::MEMBERS,
-            &self.0,
+            text,
             "ST_AlignV",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_AlignV`.
+    pub fn value(&self) -> Result<VerticalAlignmentDefinitionMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -5468,21 +5639,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for VerticalRelativePositioning {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(VerticalRelativePositioning);
+
+impl Default for VerticalRelativePositioning {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for VerticalRelativePositioning {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<VerticalRelativePositioningMember> for VerticalRelativePositioning {
     fn from(member: VerticalRelativePositioningMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for VerticalRelativePositioning {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for VerticalRelativePositioningMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -5513,17 +5705,29 @@ impl VerticalRelativePositioningMember {
 }
 
 impl VerticalRelativePositioning {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_RelFromV`; the text stays stored.
-    pub fn value(&self) -> Result<VerticalRelativePositioningMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_RelFromV`.
+    pub fn parse(text: &str) -> Result<VerticalRelativePositioningMember, ValueError> {
         officekit_markup_base::member(
             VerticalRelativePositioningMember::MEMBERS,
-            &self.0,
+            text,
             "ST_RelFromV",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_RelFromV`.
+    pub fn value(&self) -> Result<VerticalRelativePositioningMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

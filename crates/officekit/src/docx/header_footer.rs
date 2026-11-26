@@ -3,8 +3,11 @@
 #[cfg(test)]
 mod tests;
 
+use alloc::borrow::Cow;
+
 use crate::parts::part_root::{self, PartRoot};
 use crate::parts::{document_settings, footer, header};
+use officekit_markup::Spelling as _;
 use officekit_markup::Unknown;
 use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
@@ -282,21 +285,25 @@ fn paragraph_section<'doc>(
 fn reference(
     item: &mut SectionPropertiesContent,
     which: Which,
-) -> Option<(&mut Option<String>, &str)> {
+) -> Option<(&mut Option<String>, Cow<'_, str>)> {
     match (item, which) {
         (SectionPropertiesContent::HeaderReference(found), Which::Header) => Some((
             &mut found.id,
             found
                 .r#type
                 .as_ref()
-                .map_or("default", |kind| kind.0.as_str()),
+                .map_or(Cow::Borrowed("default"), |kind| {
+                    kind.spelling(ConformanceClass::Transitional)
+                }),
         )),
         (SectionPropertiesContent::FooterReference(found), Which::Footer) => Some((
             &mut found.id,
             found
                 .r#type
                 .as_ref()
-                .map_or("default", |kind| kind.0.as_str()),
+                .map_or(Cow::Borrowed("default"), |kind| {
+                    kind.spelling(ConformanceClass::Transitional)
+                }),
         )),
         _ => None,
     }

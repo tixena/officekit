@@ -51,8 +51,11 @@
 //! - An element read under another name than its node's, as Word's `wps:wsp` for `wp:wsp`, keeps
 //!   that name in `unknown.name`, and the writer gives it back.
 //!
-//! Simple types keep their text as read. Calling `.value()` on a newtype checks it later and
-//! gives a `ValueError` for text that does not fit, so a read never fails inside a node.
+//! Simple types keep what was read. A simple type that lists its values or unions other types
+//! is an enum: its member when the text is that member's canonical spelling, and the text as read
+//! otherwise, so a write gives back every spelling it read. Any other simple type keeps its text.
+//! [`Spelling`] gives the text a value is written as. Calling `.value()` checks a kept text later
+//! and gives a `ValueError` for text that does not fit, so a read never fails inside a node.
 //!
 //! # Hooks
 //!
@@ -124,10 +127,11 @@ mod user_data;
 
 pub use user_data::{UserData, UserDataSlot};
 
+use alloc::borrow::Cow;
 use alloc::collections::VecDeque;
 use alloc::vec;
 use core::cell::Cell;
-use core::fmt::{self, Debug, Formatter};
+use core::fmt::{self, Debug, Display, Formatter, Write as _};
 use core::num::ParseFloatError;
 use core::{mem, slice};
 
@@ -165,6 +169,51 @@ macro_rules! mirror_fields {
         let item = $item;
         Self { $($field: item.$field),+ }
     }};
+}
+
+/// rkyv's `Archive`, `Serialize` and `Deserialize` of a simple type that keeps its member: it
+/// archives as its spelling, the string the type held before it kept a member, and a read
+/// parses that string again.
+#[cfg(feature = "binary-format")]
+#[macro_export]
+macro_rules! archive_as_spelling {
+    ($name:ty) => {
+        impl ::rkyv::Archive for $name {
+            type Archived = ::rkyv::string::ArchivedString;
+            type Resolver = ::rkyv::string::StringResolver;
+
+            fn resolve(&self, resolver: Self::Resolver, out: ::rkyv::Place<Self::Archived>) {
+                ::rkyv::string::ArchivedString::resolve_from_str(
+                    &$crate::archived_spelling(self),
+                    resolver,
+                    out,
+                );
+            }
+        }
+
+        impl<S> ::rkyv::Serialize<S> for $name
+        where
+            S: ::rkyv::rancor::Fallible + ?Sized,
+            S::Error: ::rkyv::rancor::Source,
+            str: ::rkyv::SerializeUnsized<S>,
+        {
+            fn serialize(&self, serializer: &mut S) -> Result<Self::Resolver, S::Error> {
+                ::rkyv::string::ArchivedString::serialize_from_str(
+                    &$crate::archived_spelling(self),
+                    serializer,
+                )
+            }
+        }
+
+        impl<D> ::rkyv::Deserialize<$name, D> for ::rkyv::string::ArchivedString
+        where
+            D: ::rkyv::rancor::Fallible + ?Sized,
+        {
+            fn deserialize(&self, _: &mut D) -> Result<$name, D::Error> {
+                Ok(<$name>::from(self.as_str().to_owned()))
+            }
+        }
+    };
 }
 
 /// The `into_user_data` of an enum too long to write out.
@@ -512,8 +561,9 @@ enum Child<'element> {
 
 /// A declared attribute's field: its text, when it has one.
 pub trait AttributeValue {
-    /// The text to write; `None` leaves the attribute out.
-    fn text(&self) -> Option<&str>;
+    /// The text the writer both classes share writes, Transitional's spelling, which a class's
+    /// rules then respell; `None` leaves the attribute out.
+    fn text(&self) -> Option<Cow<'_, str>>;
 }
 
 /// A declared child's field: one node, boxed, an optional one, or a list.
@@ -523,6 +573,12 @@ pub trait ChildField {
 
     /// Write the field's nodes at their place.
     fn write(&self, writer: &mut Writer<'_, '_>);
+}
+
+/// A value of a simple type, written as text: an attribute's value or an element's simple content.
+pub trait Spelling {
+    /// The text of the value in `class`.
+    fn spelling(&self, class: ConformanceClass) -> Cow<'_, str>;
 }
 
 /// An unsigned number a fixed count of hexadecimal bytes reads into.
@@ -678,10 +734,11 @@ impl<'element> Field<'element> {
 
 impl<T> AttributeValue for Option<T>
 where
-    T: AsRef<str>,
+    T: Spelling,
 {
-    fn text(&self) -> Option<&str> {
-        self.as_ref().map(AsRef::as_ref)
+    fn text(&self) -> Option<Cow<'_, str>> {
+        self.as_ref()
+            .map(|value| value.spelling(ConformanceClass::Transitional))
     }
 }
 
@@ -774,6 +831,12 @@ impl<T> Nodes for Vec<T> {
 
     fn nodes(&self) -> &[T] {
         self.as_slice()
+    }
+}
+
+impl Spelling for String {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(self)
     }
 }
 
@@ -1441,7 +1504,7 @@ impl<'scope, 'node> Writer<'scope, 'node> {
     {
         if let (Some(text), Some(tag)) = (value.text(), self.shape.attributes.get(index)) {
             self.scope
-                .attribute(&mut self.element, tag.0.map(uri), tag.1, text);
+                .attribute(&mut self.element, tag.0.map(uri), tag.1, &text);
         }
     }
 
@@ -1532,11 +1595,11 @@ impl<'scope, 'node> Writer<'scope, 'node> {
     /// Write simple content's text, before the nodes kept after it.
     pub fn text<T>(&mut self, text: &T)
     where
-        T: AsRef<str> + ?Sized,
+        T: Spelling + ?Sized,
     {
-        let value = text.as_ref();
+        let value = text.spelling(ConformanceClass::Transitional);
         if !value.is_empty() {
-            self.children.other(Node::Text(value.to_owned()));
+            self.children.other(Node::Text(value.into_owned()));
         }
     }
 }
@@ -1566,6 +1629,53 @@ pub fn into_user_data_optional<T, U>(
 #[must_use = "this only returns the value"]
 pub fn into_user_data_required<T, U>(item: T, each: fn(T) -> U) -> Box<U> {
     Box::new(each(item))
+}
+
+/// The spelling of `value` an archive holds: Transitional's.
+#[cfg(feature = "binary-format")]
+#[must_use = "this only returns the value"]
+pub fn archived_spelling<T>(value: &T) -> Cow<'_, str>
+where
+    T: Spelling + ?Sized,
+{
+    value.spelling(ConformanceClass::Transitional)
+}
+
+/// Whether `value` is written as exactly `text`; it compares as it formats, with no allocation.
+#[must_use = "this only answers the question"]
+pub fn spells<T>(value: &T, text: &str) -> bool
+where
+    T: Display + ?Sized,
+{
+    struct Rest<'text>(&'text str);
+
+    impl fmt::Write for Rest<'_> {
+        fn write_str(&mut self, s: &str) -> fmt::Result {
+            self.0 = self.0.strip_prefix(s).ok_or(fmt::Error)?;
+            Ok(())
+        }
+    }
+
+    let mut rest = Rest(text);
+    write!(rest, "{value}").is_ok() && rest.0.is_empty()
+}
+
+/// The items of a list, each in its spelling, separated by one space.
+///
+/// # Errors
+///
+/// The formatter's.
+pub fn write_list<T>(formatter: &mut Formatter<'_>, items: &[T]) -> fmt::Result
+where
+    T: Spelling,
+{
+    for (index, item) in items.iter().enumerate() {
+        if index > 0 {
+            formatter.write_char(' ')?;
+        }
+        formatter.write_str(&item.spelling(ConformanceClass::Transitional))?;
+    }
+    Ok(())
 }
 
 /// An enumeration member's value: `ValueError` when the text names none.

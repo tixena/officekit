@@ -1,6 +1,8 @@
 use alloc::boxed::Box;
 use alloc::string::String;
 use alloc::vec::Vec;
+use officekit_markup::Spelling;
+use officekit_xml::conformance::ConformanceClass;
 
 use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::wordprocessing::{
@@ -156,11 +158,11 @@ fn first_row_look(
     look
 }
 
-fn fill(cell: &TableCellProperties) -> Option<&str> {
+fn fill(cell: &TableCellProperties) -> Option<String> {
     cell.paragraph_shading
         .as_deref()
         .and_then(|shading| shading.fill.as_ref())
-        .map(|value| value.0.as_str())
+        .map(spelled)
 }
 
 fn bold(run: &RunProperties) -> Option<bool> {
@@ -178,10 +180,10 @@ fn bold(run: &RunProperties) -> Option<bool> {
     })
 }
 
-fn color(run: &RunProperties) -> Option<&str> {
+fn color(run: &RunProperties) -> Option<String> {
     run.content.iter().find_map(|property| {
         if let RunPropertiesContent::RunContentColor(found) = property {
-            found.val.as_ref().map(|value| value.0.as_str())
+            found.val.as_ref().map(spelled)
         } else {
             None
         }
@@ -270,10 +272,10 @@ fn the_example_of_the_standard_shades_and_bolds_the_first_row() {
     ));
     for column in 0..2 {
         let top = position(0, 3, column, 2);
-        assert_eq!(fill(&format.cell(top, None)), Some("ED1C24"));
+        assert_eq!(fill(&format.cell(top, None)).as_deref(), Some("ED1C24"));
         assert_eq!(bold(&run_at(&sheet, &format, top)), Some(true));
         let next = position(1, 3, column, 2);
-        assert_eq!(fill(&format.cell(next, None)), None);
+        assert_eq!(fill(&format.cell(next, None)).as_deref(), None);
         assert_eq!(bold(&run_at(&sheet, &format, next)), None);
     }
     let properties = format.properties();
@@ -299,7 +301,7 @@ fn first_row_off_or_no_look_takes_the_first_row_format_away() {
     let unlooked = sheet.table(&own_table(Some("TestTableStyle"), None));
     for format in [off, unlooked] {
         let top = position(0, 3, 0, 2);
-        assert_eq!(fill(&format.cell(top, None)), None);
+        assert_eq!(fill(&format.cell(top, None)).as_deref(), None);
         assert_eq!(bold(&run_at(&sheet, &format, top)), None);
     }
 }
@@ -328,8 +330,8 @@ fn a_cell_s_own_margin_wins_over_the_style_s() {
     let top = found
         .paragraph_border_above_identical_paragraphs_tbl_width
         .unwrap();
-    assert_eq!(left.w.map(|value| value.0), Some("200".to_owned()));
-    assert_eq!(top.w.map(|value| value.0), Some("0".to_owned()));
+    assert_eq!(left.w.map(|value| spelled(&value)), Some("200".to_owned()));
+    assert_eq!(top.w.map(|value| spelled(&value)), Some("0".to_owned()));
     assert!(
         cell.unknown
             .is_none_or(|unknown| unknown.children.is_empty())
@@ -353,7 +355,7 @@ fn banded_sheet(rows_in_band: Option<i64>) -> StyleSheet {
 
 fn row_fills(format: &TableFormat) -> Vec<Option<String>> {
     (0..4)
-        .map(|row| fill(&format.cell(position(row, 4, 0, 1), None)).map(str::to_owned))
+        .map(|row| fill(&format.cell(position(row, 4, 0, 1), None)))
         .collect()
 }
 
@@ -397,7 +399,7 @@ fn the_val_bitmask_states_the_settings_its_attributes_leave_out() {
     let sheet = example_sheet();
     let looked = sheet.table(&own_table(Some("TestTableStyle"), Some(first_row)));
     assert_eq!(
-        fill(&looked.cell(position(0, 3, 0, 2), None)),
+        fill(&looked.cell(position(0, 3, 0, 2), None)).as_deref(),
         Some("ED1C24")
     );
 }
@@ -422,9 +424,9 @@ fn later_formats_win_over_earlier_ones() {
         format.formats(corner),
         [WholeTable, Band1Horz, FirstRow, NwCell]
     );
-    assert_eq!(fill(&format.cell(corner, None)), Some("CCCCCC"));
+    assert_eq!(fill(&format.cell(corner, None)).as_deref(), Some("CCCCCC"));
     assert_eq!(
-        fill(&format.cell(position(0, 3, 1, 2), None)),
+        fill(&format.cell(position(0, 3, 1, 2), None)).as_deref(),
         Some("BBBBBB")
     );
 }
@@ -437,9 +439,12 @@ fn a_header_row_takes_the_first_row_format() {
         Some(first_row_look(true, false)),
     ));
     let header = CellPosition::new(1, 3, 0, 2, true);
-    assert_eq!(fill(&format.cell(header, None)), Some("ED1C24"));
+    assert_eq!(fill(&format.cell(header, None)).as_deref(), Some("ED1C24"));
     assert_eq!(bold(&run_at(&sheet, &format, header)), Some(true));
-    assert_eq!(fill(&format.cell(position(2, 3, 0, 2), None)), None);
+    assert_eq!(
+        fill(&format.cell(position(2, 3, 0, 2), None)).as_deref(),
+        None
+    );
 }
 
 #[test]
@@ -455,9 +460,9 @@ fn the_last_column_wins_over_the_last_row() {
     let format = sheet.table(&own_table(Some("Last"), Some(look)));
     let corner = position(2, 3, 1, 2);
     assert_eq!(format.formats(corner), [WholeTable, LastRow, LastCol]);
-    assert_eq!(fill(&format.cell(corner, None)), Some("DDDDDD"));
+    assert_eq!(fill(&format.cell(corner, None)).as_deref(), Some("DDDDDD"));
     assert_eq!(
-        fill(&format.cell(position(2, 3, 0, 2), None)),
+        fill(&format.cell(position(2, 3, 0, 2), None)).as_deref(),
         Some("EEEEEE")
     );
 }
@@ -481,7 +486,7 @@ fn a_style_takes_what_its_parent_states() {
     let format = sheet.table(&own_table(Some("Child"), Some(first_row_look(true, false))));
     let run = run_at(&sheet, &format, position(0, 2, 0, 1));
     assert_eq!(bold(&run), Some(true));
-    assert_eq!(color(&run), Some("00FF00"));
+    assert_eq!(color(&run).as_deref(), Some("00FF00"));
     assert_eq!(
         format.properties().table_borders.as_deref(),
         example_table_properties().table_borders.as_deref()
@@ -733,8 +738,8 @@ fn a_row_s_exception_margin_replaces_that_margin_only() {
         .paragraph_border_above_identical_paragraphs_tbl_width
         .unwrap();
     let start = found.table_cell_leading_edge_border_tbl_width.unwrap();
-    assert_eq!(top.w.map(|value| value.0), Some("288".to_owned()));
-    assert_eq!(start.w.map(|value| value.0), Some("108".to_owned()));
+    assert_eq!(top.w.map(|value| spelled(&value)), Some("288".to_owned()));
+    assert_eq!(start.w.map(|value| spelled(&value)), Some("108".to_owned()));
     assert_eq!(row.preferred_table_width, own.preferred_table_width);
     assert_eq!(row.table_borders, format.properties().table_borders);
 }
@@ -793,9 +798,9 @@ fn a_row_s_exception_look_turns_the_first_row_format_off_for_its_cells() {
     for column in 0..2 {
         let top = position(0, 3, column, 2);
         assert!(!row.formats(top).contains(&FirstRow));
-        assert_eq!(fill(&row.cell(top, None)), None);
+        assert_eq!(fill(&row.cell(top, None)).as_deref(), None);
         assert_eq!(bold(&run_at(&sheet, &row, top)), None);
-        assert_eq!(fill(&format.cell(top, None)), Some("ED1C24"));
+        assert_eq!(fill(&format.cell(top, None)).as_deref(), Some("ED1C24"));
     }
     assert_eq!(
         row.properties()
@@ -815,9 +820,9 @@ fn a_row_s_exception_look_turns_the_first_row_format_on_where_the_table_has_it_o
     let row = format.for_row(Some(&exceptions));
     let top = position(0, 3, 0, 2);
     assert!(row.formats(top).contains(&FirstRow));
-    assert_eq!(fill(&row.cell(top, None)), Some("ED1C24"));
+    assert_eq!(fill(&row.cell(top, None)).as_deref(), Some("ED1C24"));
     assert_eq!(bold(&run_at(&sheet, &row, top)), Some(true));
-    assert_eq!(fill(&format.cell(top, None)), None);
+    assert_eq!(fill(&format.cell(top, None)).as_deref(), None);
 }
 
 /// Whether an on/off property with `val` is on: an absent `w:val` is on (section 17.17.4).
@@ -948,12 +953,12 @@ fn spacing_of(twips: &str) -> PreviousTableProperties {
     table
 }
 
-fn spacing(table: &TableProperties) -> Option<&str> {
+fn spacing(table: &TableProperties) -> Option<String> {
     table
         .table_row_cell_spacing
         .as_deref()
         .and_then(|found| found.w.as_ref())
-        .map(|value| value.0.as_str())
+        .map(spelled)
 }
 
 #[test]
@@ -964,18 +969,18 @@ fn the_first_row_format_s_cell_spacing_holds_in_the_first_row_only() {
         Some(first_row_look(true, false)),
     ));
     assert_eq!(
-        spacing(&format.properties_at(position(0, 3, 0, 2))),
+        spacing(&format.properties_at(position(0, 3, 0, 2))).as_deref(),
         Some("29")
     );
     assert_eq!(
-        spacing(&format.properties_at(position(0, 3, 1, 2))),
+        spacing(&format.properties_at(position(0, 3, 1, 2))).as_deref(),
         Some("29")
     );
     assert_eq!(
-        spacing(&format.properties_at(position(1, 3, 0, 2))),
+        spacing(&format.properties_at(position(1, 3, 0, 2))).as_deref(),
         Some("15")
     );
-    assert_eq!(spacing(&format.properties()), Some("15"));
+    assert_eq!(spacing(&format.properties()).as_deref(), Some("15"));
 
     let unspaced = spaced_sheet(None, spacing_of("29"));
     let without = unspaced.table(&own_table(
@@ -983,12 +988,18 @@ fn the_first_row_format_s_cell_spacing_holds_in_the_first_row_only() {
         Some(first_row_look(true, false)),
     ));
     assert_eq!(
-        spacing(&without.properties_at(position(0, 3, 0, 2))),
+        spacing(&without.properties_at(position(0, 3, 0, 2))).as_deref(),
         Some("29")
     );
-    assert_eq!(spacing(&without.properties_at(position(1, 3, 0, 2))), None);
+    assert_eq!(
+        spacing(&without.properties_at(position(1, 3, 0, 2))).as_deref(),
+        None
+    );
     let header = CellPosition::new(1, 3, 0, 2, true);
-    assert_eq!(spacing(&without.properties_at(header)), Some("29"));
+    assert_eq!(
+        spacing(&without.properties_at(header)).as_deref(),
+        Some("29")
+    );
 }
 
 #[test]
@@ -999,7 +1010,7 @@ fn first_row_off_leaves_the_whole_table_s_cell_spacing_in_the_first_row() {
         Some(first_row_look(false, false)),
     ));
     assert_eq!(
-        spacing(&format.properties_at(position(0, 3, 0, 2))),
+        spacing(&format.properties_at(position(0, 3, 0, 2))).as_deref(),
         Some("15")
     );
 }
@@ -1012,7 +1023,7 @@ fn the_table_s_own_cell_spacing_wins_over_the_first_row_format_s() {
     let format = sheet.table(&own);
     for row in 0..3 {
         assert_eq!(
-            spacing(&format.properties_at(position(row, 3, 0, 2))),
+            spacing(&format.properties_at(position(row, 3, 0, 2))).as_deref(),
             Some("50")
         );
     }
@@ -1143,9 +1154,12 @@ fn a_row_s_exception_cell_spacing_wins_over_the_first_row_format_s() {
     let mut exceptions = TableLevelPropertyExceptions::default();
     exceptions.table_row_cell_spacing = spacing_of("0").table_row_cell_spacing;
     let row = format.for_row(Some(&exceptions));
-    assert_eq!(spacing(&row.properties_at(position(0, 3, 0, 2))), Some("0"));
     assert_eq!(
-        spacing(&format.properties_at(position(0, 3, 0, 2))),
+        spacing(&row.properties_at(position(0, 3, 0, 2))).as_deref(),
+        Some("0")
+    );
+    assert_eq!(
+        spacing(&format.properties_at(position(0, 3, 0, 2))).as_deref(),
         Some("29")
     );
 }
@@ -1634,4 +1648,12 @@ fn cells_inside_a_content_control_and_rows_inside_one_take_their_place_in_the_me
             ],
         ]
     );
+}
+
+/// The text of a simple-type value.
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

@@ -38,6 +38,9 @@ const INTEGERS: [(&str, i128, i128); 13] = [
 /// What every simple type's newtype does.
 const VALUE_NOTE: &str = "`value` checks the text and gives the typed value, or a `ValueError`. A text that is no value stays stored as it was.";
 
+/// What every simple type that keeps its member does.
+const MEMBER_NOTE: &str = "A read keeps the member a text spells as its canonical spelling, and any other text as it was; a write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept text that is no value.";
+
 /// A simple type the generator gives a newtype.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
 #[non_exhaustive]
@@ -347,15 +350,19 @@ pub fn name(
     if !simple.name.starts_with(|c: char| c.is_ascii_uppercase()) {
         bail!("the simple type {local} is named {}", simple.name);
     }
+    let (kept, note) = if simple.has_member() {
+        (
+            "kept as its member or as the text the file carried",
+            MEMBER_NOTE,
+        )
+    } else {
+        ("kept as the text the file carried", VALUE_NOTE)
+    };
     simple.doc = heading.map_or_else(
-        || {
-            format!(
-                "The simple type `{local}`, kept as the text the file carried.\n\n{VALUE_NOTE}"
-            )
-        },
+        || format!("The simple type `{local}`, {kept}.\n\n{note}"),
         |found| {
             format!(
-                "{}, the simple type `{local}` (ECMA-376 Part {}, section {}), kept as the text the file carried.\n\n{VALUE_NOTE}",
+                "{}, the simple type `{local}` (ECMA-376 Part {}, section {}), {kept}.\n\n{note}",
                 found.title, found.part, found.section
             )
         },
@@ -825,49 +832,184 @@ pub fn render(
     simple: &Simple,
     uses: &mut Uses,
 ) -> Result<(String, String, String)> {
-    let mut declared = layout::doc(0, &simple.doc);
-    declared.push_str(&super::archive::attributes(
-        "Clone, Debug, Default, Eq, PartialEq",
-    ));
-    let _ = writeln!(declared, "pub struct {}(pub String);", simple.name);
-    let conversions = format!(
-        "\n{}    fn as_ref(&self) -> &str {{\n        &self.0\n    }}\n}}\n\
-         \n{}    fn from(text: String) -> Self {{\n        Self(text)\n    }}\n}}\n",
-        layout::impl_header("AsRef<str>", &simple.name),
-        layout::impl_header("From<String>", &simple.name)
-    );
+    let runtime = names.runtime();
     uses.add("officekit_xml::values::ValueError");
-    let mut parts = [declared, conversions, String::new()];
-    let [output, body, methods] = value_body(names, simple, uses, &mut parts)?;
-    let [definitions, mut implementations, statics] = parts;
+    uses.add("alloc::borrow::Cow");
+    uses.add("officekit_xml::conformance::ConformanceClass");
+    uses.add(&format!("{runtime}::Spelling"));
+    let mut parts = [String::new(), String::new(), String::new()];
+    let ([output, body, methods], eq) = value_body(names, simple, uses, &mut parts)?;
+    let [mut definitions, mut implementations, statics] = parts;
+    let value = if simple.has_member() {
+        definitions.insert_str(0, &member_declaration(simple, eq));
+        implementations.insert_str(0, &member_conversions(runtime, simple, eq));
+        member_value(simple, &output)
+    } else {
+        definitions.insert_str(0, &string_declaration(simple));
+        implementations.insert_str(0, &string_conversions(simple));
+        string_value(simple, &output)
+    };
     let _ = write!(
         implementations,
-        "\nimpl {} {{\n    /// The value the text spells.\n    ///\n    /// # Errors\n    ///\n    /// `ValueError` when the text is no value of `{}`; the text stays stored.\n",
+        "\nimpl {} {{\n    /// The value `text` spells.\n    ///\n    /// # Errors\n    ///\n    /// `ValueError` when `text` is no value of `{}`.\n",
         simple.name,
         simple.xsd_name()
     );
     implementations.push_str(&layout::signature(
         4,
-        "pub fn value",
-        &["&self".to_owned()],
+        "pub fn parse",
+        &["text: &str".to_owned()],
         &format!("Result<{output}, ValueError>"),
     ));
     implementations.push_str(&body);
-    implementations.push_str("    }\n");
+    implementations.push_str("    }\n\n");
+    implementations.push_str(&value);
     implementations.push_str(&methods);
     implementations.push_str("}\n");
     Ok((definitions, implementations, statics))
 }
 
-/// A newtype's `value`: its output type, its body, and the helper methods
-/// the body calls; it adds to `parts`, the definitions, implementations,
-/// and statics, what its kind needs.
+/// The newtype of a simple type with no member enum: the text the file carried.
+fn string_declaration(simple: &Simple) -> String {
+    let mut out = layout::doc(0, &simple.doc);
+    out.push_str(&super::archive::attributes(
+        "Clone, Debug, Default, Eq, PartialEq",
+    ));
+    let _ = writeln!(out, "pub struct {}(pub String);", simple.name);
+    out
+}
+
+/// A string newtype's `AsRef`, `From` the text, and `Spelling`.
+fn string_conversions(simple: &Simple) -> String {
+    format!(
+        "\n{}    fn as_ref(&self) -> &str {{\n        &self.0\n    }}\n}}\n\
+         \n{}    fn from(text: String) -> Self {{\n        Self(text)\n    }}\n}}\n\
+         \n{}    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {{\n        Cow::Borrowed(&self.0)\n    }}\n}}\n",
+        layout::impl_header("AsRef<str>", &simple.name),
+        layout::impl_header("From<String>", &simple.name),
+        layout::impl_header("Spelling", &simple.name)
+    )
+}
+
+/// A string newtype's `value`: its text parsed.
+fn string_value(simple: &Simple, output: &str) -> String {
+    let mut out = format!(
+        "    /// The value the text spells.\n    ///\n    /// # Errors\n    ///\n    /// `ValueError` when the text is no value of `{}`; the text stays stored.\n",
+        simple.xsd_name()
+    );
+    out.push_str(&layout::signature(
+        4,
+        "pub fn value",
+        &["&self".to_owned()],
+        &format!("Result<{output}, ValueError>"),
+    ));
+    out.push_str("        Self::parse(&self.0)\n    }\n");
+    out
+}
+
+/// The enum of a simple type with a member enum: its member, or a spelling that
+/// is none; `eq` when the member enum is `Eq`.
+fn member_declaration(simple: &Simple, eq: bool) -> String {
+    let mut out = layout::doc(0, &simple.doc);
+    let derives = if eq {
+        "Clone, Debug, Eq, PartialEq"
+    } else {
+        "Clone, Debug"
+    };
+    let _ = writeln!(out, "#[derive({derives})]\n#[non_exhaustive]");
+    let _ = writeln!(out, "pub enum {} {{", simple.name);
+    out.push_str(&layout::doc(
+        4,
+        "A member, spelled as the class being written spells it.",
+    ));
+    let _ = writeln!(out, "    Member({}Member),", simple.name);
+    out.push_str(&layout::doc(4, "Any other spelling, kept as read."));
+    out.push_str("    Spelled(Box<str>),\n}\n");
+    out
+}
+
+/// A member type's archive, `Default`, `From` the text and the member, equality
+/// by spelling when the member enum is not `Eq`, and `Spelling`.
+fn member_conversions(runtime: &str, simple: &Simple, eq: bool) -> String {
+    let name = &simple.name;
+    let mut out = String::from("\n#[cfg(feature = \"binary-format\")]\n");
+    layout::line(
+        "",
+        &Expr::call(
+            &format!("{runtime}::archive_as_spelling!"),
+            vec![Expr::atom(name)],
+        ),
+        ";",
+        &mut out,
+    );
+    let _ = write!(
+        out,
+        "\n{}    fn default() -> Self {{\n        Self::Spelled(Box::default())\n    }}\n}}\n",
+        layout::impl_header("Default", name)
+    );
+    let _ = write!(
+        out,
+        "\n{}    fn from(text: String) -> Self {{\n        match Self::parse(&text) {{\n            Ok(member) if {runtime}::spells(&member, &text) => Self::Member(member),\n            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),\n        }}\n    }}\n}}\n",
+        layout::impl_header("From<String>", name)
+    );
+    let _ = write!(
+        out,
+        "\n{}    fn from(member: {name}Member) -> Self {{\n        Self::Member(member)\n    }}\n}}\n",
+        layout::impl_header(&format!("From<{name}Member>"), name)
+    );
+    if !eq {
+        let _ = write!(
+            out,
+            "\nimpl Eq for {name} {{}}\n\n{}    fn eq(&self, other: &Self) -> bool {{\n        self.spelling(ConformanceClass::Transitional)\n            == other.spelling(ConformanceClass::Transitional)\n    }}\n}}\n",
+            layout::impl_header("PartialEq", name)
+        );
+    }
+    let member = if matches!(simple.kind, Kind::Enumeration(_)) {
+        "Cow::Borrowed(member.as_str())"
+    } else {
+        "Cow::Owned(member.to_string())"
+    };
+    let _ = write!(
+        out,
+        "\n{}    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {{\n        match self {{\n            Self::Member(member) => {member},\n            Self::Spelled(text) => Cow::Borrowed(text),\n        }}\n    }}\n}}\n",
+        layout::impl_header("Spelling", name)
+    );
+    out
+}
+
+/// A member type's `value`: the member it keeps, or its spelling parsed.
+fn member_value(simple: &Simple, output: &str) -> String {
+    let mut out = format!(
+        "    /// The member the value keeps, or the one its spelling spells.\n    ///\n    /// # Errors\n    ///\n    /// `ValueError` when a kept spelling is no value of `{}`.\n",
+        simple.xsd_name()
+    );
+    out.push_str(&layout::signature(
+        4,
+        "pub fn value",
+        &["&self".to_owned()],
+        &format!("Result<{output}, ValueError>"),
+    ));
+    let member = if matches!(simple.kind, Kind::Enumeration(_)) {
+        "Ok(*member)"
+    } else {
+        "Ok(member.clone())"
+    };
+    let _ = write!(
+        out,
+        "        match self {{\n            Self::Member(member) => {member},\n            Self::Spelled(text) => Self::parse(text),\n        }}\n    }}\n"
+    );
+    out
+}
+
+/// A newtype's `parse`: its output type, its body, and the helper methods
+/// the body calls, and whether the member enum is `Eq`; it adds to `parts`,
+/// the definitions, implementations, and statics, what its kind needs.
 fn value_body(
     names: &Names<'_>,
     simple: &Simple,
     uses: &mut Uses,
     parts: &mut [String; 3],
-) -> Result<[String; 3]> {
+) -> Result<([String; 3], bool)> {
     let [definitions, implementations, statics] = parts;
     let runtime = names.runtime();
     let screaming = names::screaming(&simple.name);
@@ -876,7 +1018,7 @@ fn value_body(
     let text_call = |function: &str| {
         Expr::call(
             function,
-            vec![Expr::atom("&self.0"), Expr::Atom(layout::string(&schema))],
+            vec![Expr::atom("text"), Expr::Atom(layout::string(&schema))],
         )
     };
     Ok(match &simple.kind {
@@ -887,11 +1029,11 @@ fn value_body(
                 &format!("{runtime}::member"),
                 vec![
                     Expr::Atom(format!("{member_name}::MEMBERS")),
-                    Expr::atom("&self.0"),
+                    Expr::atom("text"),
                     Expr::Atom(layout::string(&schema)),
                 ],
             );
-            [member_name, expression(&call), String::new()]
+            ([member_name, expression(&call), String::new()], true)
         }
         Kind::OnOff => {
             let _ = write!(
@@ -899,34 +1041,41 @@ fn value_body(
                 "\n{}    fn from(value: bool) -> Self {{\n        Self(value.to_string())\n    }}\n}}\n",
                 layout::impl_header("From<bool>", &simple.name)
             );
-            [
-                "bool".to_owned(),
-                expression(&text_call(&format!("{runtime}::on_off"))),
-                String::new(),
-            ]
+            (
+                [
+                    "bool".to_owned(),
+                    expression(&text_call(&format!("{runtime}::on_off"))),
+                    String::new(),
+                ],
+                true,
+            )
         }
         Kind::Date => {
             uses.add("officekit_xml::values::DateTime");
-            [
-                "DateTime".to_owned(),
-                expression(&text_call(&format!("{runtime}::date_time"))),
-                String::new(),
-            ]
+            (
+                [
+                    "DateTime".to_owned(),
+                    expression(&text_call(&format!("{runtime}::date_time"))),
+                    String::new(),
+                ],
+                true,
+            )
         }
         Kind::Atom(atom) => {
             let (output, call) =
                 atom_call(runtime, atom, [&screaming, &schema], statics, uses, true);
-            [output, expression(&call), String::new()]
+            ([output, expression(&call), String::new()], true)
         }
         Kind::List(item) => {
             let (output, body) = list_value(names, item.as_ref())?;
-            [output, body, String::new()]
+            ([output, body, String::new()], true)
         }
         Kind::Union(members) => {
-            let [definition, body, helpers] =
+            let ([definition, display, body, helpers], eq) =
                 union_text(names, simple, members, [&screaming, &schema], statics, uses)?;
             definitions.push_str(&definition);
-            [member_name, body, helpers]
+            implementations.push_str(&display);
+            ([member_name, body, helpers], eq)
         }
     })
 }
@@ -937,7 +1086,7 @@ fn list_value(names: &Names<'_>, item: Option<&Key>) -> Result<(String, String)>
     let Some(key) = item else {
         return Ok((
             "Vec<String>".to_owned(),
-            "        Ok(parse::list(&self.0).map(str::to_owned).collect())\n".to_owned(),
+            "        Ok(parse::list(text).map(str::to_owned).collect())\n".to_owned(),
         ));
     };
     let found = names
@@ -947,11 +1096,15 @@ fn list_value(names: &Names<'_>, item: Option<&Key>) -> Result<(String, String)>
         .find(|other| &other.key == key)
         .context("a list's item type has no newtype")?;
     let path = names.path(found.module, &found.name);
-    let newtype = names.newtype(found.module, &found.name);
+    let newtype = if found.has_member() {
+        format!("{path}::from")
+    } else {
+        names.newtype(found.module, &found.name)
+    };
     Ok((
         format!("Vec<{path}>"),
         format!(
-            "        let mut items = Vec::new();\n        for item in parse::list(&self.0) {{\n            let found = {newtype}(item.to_owned());\n            found.value()?;\n            items.push(found);\n        }}\n        Ok(items)\n"
+            "        let mut items = Vec::new();\n        for item in parse::list(text) {{\n            let found = {newtype}(item.to_owned());\n            found.value()?;\n            items.push(found);\n        }}\n        Ok(items)\n"
         ),
     ))
 }
@@ -992,15 +1145,14 @@ fn member_enum(simple: &Simple, members: &[Member]) -> String {
     out
 }
 
-/// The member enum's table, `as_str`, and `introduced`, and `From` the member;
+/// The member enum's `Display`, its table, `as_str`, and `introduced`;
 /// `runtime` is the path to the runtime.
 fn member_impls(runtime: &str, simple: &Simple, members: &[Member], uses: &mut Uses) -> String {
     let name = &simple.name;
-    let mut out = String::new();
-    let _ = write!(
-        out,
-        "\n{}    fn from(member: {name}Member) -> Self {{\n        Self(member.as_str().to_owned())\n    }}\n}}\n",
-        layout::impl_header(&format!("From<{name}Member>"), name)
+    uses.add("core::fmt");
+    let mut out = format!(
+        "\n{}    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {{\n        f.write_str(self.as_str())\n    }}\n}}\n",
+        layout::impl_header("fmt::Display", &format!("{name}Member"))
     );
     let _ = writeln!(out, "\nimpl {name}Member {{");
     let entries: Vec<Expr> = members
@@ -1054,7 +1206,7 @@ fn atom_call(
     } else {
         shown
     };
-    let text = Expr::atom("&self.0");
+    let text = Expr::atom("text");
     let name = Expr::Atom(layout::string(schema));
     let call = |function: &str, arguments| Expr::call(&format!("{runtime}::{function}"), arguments);
     let read = match atom {
@@ -1152,9 +1304,10 @@ fn strings(values: &[String]) -> Expr {
     )
 }
 
-/// A union's member enum, its `value` body, and the helper methods that body
-/// calls when it is too long for one function: each member type tried in the
-/// schema's order, the first that matches winning.
+/// A union's member enum, its `Display`, its `parse` body, and the helper
+/// methods that body calls when it is too long for one function: each member
+/// type tried in the schema's order, the first that matches winning. The flag
+/// tells whether the member enum is `Eq`.
 fn union_text(
     names: &Names<'_>,
     simple: &Simple,
@@ -1162,9 +1315,10 @@ fn union_text(
     [screaming, schema]: [&str; 2],
     statics: &mut String,
     uses: &mut Uses,
-) -> Result<[String; 3]> {
+) -> Result<([String; 4], bool)> {
     let member_name = format!("{}Member", simple.name);
     let mut variants: Vec<(String, String)> = Vec::new();
+    let mut spellings: Vec<(String, String, Expr)> = Vec::new();
     let mut trials: Vec<Trial> = Vec::new();
     let mut text_member: Option<String> = None;
     let mut eq = true;
@@ -1185,6 +1339,7 @@ fn union_text(
                     false,
                 );
                 eq &= !matches!(output.as_str(), "f64" | "Measure");
+                spellings.push((member.variant.clone(), output.clone(), atom_spelling(atom)));
                 variants.push((member.variant.clone(), output));
                 if text_member.is_none() {
                     trials.push(Trial {
@@ -1206,21 +1361,25 @@ fn union_text(
                 let (output, borrowed) = owned_type(names, found, uses)?;
                 eq &= !matches!(output.as_str(), "f64" | "Measure")
                     && !matches!(&found.kind, Kind::Union(_));
+                spellings.push((
+                    member.variant.clone(),
+                    output.clone(),
+                    simple_spelling(names.runtime(), found),
+                ));
                 variants.push((member.variant.clone(), output));
                 if text_member.is_none() {
+                    let path = names.path(found.module, &found.name);
                     trials.push(Trial {
-                        test: format!("{binding}.value()"),
+                        test: binding.clone(),
                         binding,
                         owned: if borrowed { ".to_owned()" } else { "" },
-                        read: Expr::call(
-                            &names.newtype(found.module, &found.name),
-                            vec![Expr::atom("self.0.clone()")],
-                        ),
+                        read: Expr::call(&format!("{path}::parse"), vec![Expr::atom("text")]),
                         variant: member.variant.clone(),
                     });
                 }
             }
             MemberValue::Text => {
+                spellings.push((member.variant.clone(), "String".to_owned(), written_text()));
                 variants.push((member.variant.clone(), "String".to_owned()));
                 if text_member.is_none() {
                     text_member = Some(member.variant.clone());
@@ -1235,11 +1394,24 @@ fn union_text(
         &trials,
         text_member.as_deref(),
     );
+    let definition = union_member_enum(simple, &member_name, variants, eq);
+    uses.add("core::fmt");
+    let display = display_text(&member_name, spellings);
+    Ok(([definition, display, body, methods], eq))
+}
+
+/// A union's member enum: one variant per member type, in alphabetical order.
+fn union_member_enum(
+    simple: &Simple,
+    member_name: &str,
+    mut variants: Vec<(String, String)>,
+    eq: bool,
+) -> String {
     variants.sort();
     let mut definition = layout::doc(
         0,
         &format!(
-            "The member types of `{}`, in alphabetical order; `value` tries them in the schema's order.",
+            "The member types of `{}`, in alphabetical order; `parse` tries them in the schema's order.",
             simple.xsd_name()
         ),
     );
@@ -1258,10 +1430,104 @@ fn union_text(
         let _ = writeln!(definition, "    {variant}({output}),");
     }
     definition.push_str("}\n");
-    Ok([definition, body, methods])
+    definition
 }
 
-/// A union's `value` body, and the helper methods it calls when its trials
+/// `f.write_str(value)`: a member that is text, written as it is.
+fn written_text() -> Expr {
+    Expr::call("f.write_str", vec![Expr::atom("value")])
+}
+
+/// `write!(f, format)`.
+fn written(format: &str) -> Expr {
+    Expr::call(
+        "write!",
+        vec![Expr::atom("f"), Expr::Atom(format!("\"{format}\""))],
+    )
+}
+
+/// How an atom's value is written, as `parse` reads it back: hexadecimal in
+/// upper case at its full width, a percentage with its sign.
+fn atom_spelling(atom: &Atom) -> Expr {
+    if let Atom::Hex { bytes } = atom {
+        return written(&format!("{{value:0{}X}}", bytes * 2));
+    }
+    if atom.is_text() {
+        return written_text();
+    }
+    if matches!(
+        atom,
+        Atom::Percentage {
+            patterns: _patterns
+        }
+    ) {
+        return written("{value}%");
+    }
+    written("{value}")
+}
+
+/// How the value of a member type with its own newtype is written.
+fn simple_spelling(runtime: &str, simple: &Simple) -> Expr {
+    match &simple.kind {
+        Kind::Atom(atom) => atom_spelling(atom),
+        Kind::List(_) => Expr::call(
+            &format!("{runtime}::write_list"),
+            vec![Expr::atom("f"), Expr::atom("value")],
+        ),
+        Kind::Date | Kind::Enumeration(_) | Kind::OnOff | Kind::Union(_) => written("{value}"),
+    }
+}
+
+/// A union's member enum's `Display`: each member written as its type spells
+/// it. Members of one type written alike share an arm, as clippy's
+/// `match_same_arms` asks.
+fn display_text(member_name: &str, spellings: Vec<(String, String, Expr)>) -> String {
+    let mut arms: Vec<(Vec<String>, String, Expr)> = Vec::new();
+    for (variant, output, body) in spellings {
+        if let Some(arm) = arms
+            .iter_mut()
+            .find(|(_, shown, written)| *shown == output && *written == body)
+        {
+            arm.0.push(variant);
+        } else {
+            arms.push((vec![variant], output, body));
+        }
+    }
+    let mut out = format!(
+        "\n{}    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {{\n        match self {{\n",
+        layout::impl_header("fmt::Display", member_name)
+    );
+    for (variants, _, body) in &arms {
+        let alternatives: Vec<String> = variants
+            .iter()
+            .map(|variant| format!("Self::{variant}(value)"))
+            .collect();
+        let pattern = alternatives.join(" | ");
+        if 12 + pattern.len() + " => ,".len() + body.one_line().len() <= layout::MAX_WIDTH
+            || alternatives.len() == 1
+        {
+            out.push_str(&layout::arm(12, &Expr::Atom(pattern), body, false));
+        } else {
+            let last = alternatives.len() - 1;
+            for (index, alternative) in alternatives.iter().enumerate() {
+                let lead = if index == 0 { "" } else { "| " };
+                if index == last {
+                    let _ = writeln!(
+                        out,
+                        "            {lead}{alternative} => {},",
+                        body.one_line()
+                    );
+                } else {
+                    let _ = writeln!(out, "            {lead}{alternative}");
+                }
+            }
+        }
+    }
+    out.push_str("        }\n    }\n}\n");
+    out
+}
+
+/// A union's `parse` body, and the helper methods it calls when its trials
 /// take more than `BODY_LINES` lines: each helper tries a run of the member
 /// types and gives `None` when none matches. `runtime` is the path to the
 /// runtime.
@@ -1276,14 +1542,14 @@ fn union_value(
         text_member.map(|variant| {
             let call = Expr::call(
                 &format!("{member_name}::{variant}"),
-                vec![Expr::atom("self.0.clone()")],
+                vec![Expr::atom("text.to_owned()")],
             );
             Expr::call(wrapper, vec![call])
         })
     };
     let invalid = Expr::call(
         &format!("{runtime}::invalid"),
-        vec![Expr::atom("&self.0"), Expr::Atom(layout::string(schema))],
+        vec![Expr::atom("text"), Expr::Atom(layout::string(schema))],
     );
     let mut body = String::new();
     for trial in trials {
@@ -1317,14 +1583,14 @@ fn union_value(
         let number = index + 1;
         let _ = write!(
             methods,
-            "\n    fn value_{number}(&self) -> Option<{member_name}> {{\n{text}    }}\n"
+            "\n    fn value_{number}(text: &str) -> Option<{member_name}> {{\n{text}    }}\n"
         );
         if number > 1 {
-            calls.push(format!(".or_else(|| self.value_{number}())"));
+            calls.push(format!(".or_else(|| Self::value_{number}(text))"));
         }
     }
     calls.push(format!(".ok_or_else(|| {})", invalid.one_line()));
-    [layout::chain(8, "self.value_1()", &calls), methods]
+    [layout::chain(8, "Self::value_1(text)", &calls), methods]
 }
 
 /// One member type's trial: its binding, and the early return of the member

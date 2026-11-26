@@ -3,6 +3,7 @@ use alloc::format;
 use alloc::string::String;
 use alloc::vec::Vec;
 
+use officekit_markup::Spelling;
 use officekit_markup::common_simple_types::{MeasurementInTwentiethsOfAPoint, OnOffValue};
 use officekit_markup::drawing::Theme;
 use officekit_markup::office_word_2010_wordml::ConflictInsTrackChange;
@@ -24,6 +25,7 @@ use officekit_markup::wordprocessing::{
     TableProperties, TableRowProperties, TableRowPropertiesContent,
     TableStyleConditionalFormattingSettingsException, ThemeFont, ThemeFontMember, write,
 };
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Element;
 use officekit_xml::parse::parse;
 use officekit_xml::write::Scope;
@@ -101,20 +103,28 @@ fn toggle_of(run: &RunProperties, name: &str) -> Option<bool> {
     })
 }
 
-fn size(run: &RunProperties) -> Option<&str> {
+/// The text of a simple-type value.
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
+}
+
+fn size(run: &RunProperties) -> Option<String> {
     run.content.iter().find_map(|property| {
         if let RunPropertiesContent::NonComplexScriptFontSize(found) = property {
-            found.val.as_ref().map(|value| value.0.as_str())
+            found.val.as_ref().map(spelled)
         } else {
             None
         }
     })
 }
 
-fn color(run: &RunProperties) -> Option<&str> {
+fn color(run: &RunProperties) -> Option<String> {
     run.content.iter().find_map(|property| {
         if let RunPropertiesContent::RunContentColor(found) = property {
-            found.val.as_ref().map(|value| value.0.as_str())
+            found.val.as_ref().map(spelled)
         } else {
             None
         }
@@ -135,12 +145,12 @@ fn bold(run: &RunProperties) -> Option<bool> {
     toggle_of(run, "b")
 }
 
-fn justification(paragraph: &ParagraphPropertiesPPrGeneral) -> Option<&str> {
+fn justification(paragraph: &ParagraphPropertiesPPrGeneral) -> Option<String> {
     paragraph
         .paragraph_alignment
         .as_ref()
         .and_then(|found| found.val.as_ref())
-        .map(|value| value.0.as_str())
+        .map(spelled)
 }
 
 fn spacing(
@@ -152,12 +162,12 @@ fn spacing(
         .unwrap()
 }
 
-fn stop_positions(paragraph: &ParagraphPropertiesPPrGeneral) -> Vec<&str> {
+fn stop_positions(paragraph: &ParagraphPropertiesPPrGeneral) -> Vec<String> {
     paragraph
         .set_of_custom_tab_stops
         .iter()
         .flat_map(|tabs| &tabs.custom_tab_stop)
-        .filter_map(|stop| stop.pos.as_ref().map(|value| value.0.as_str()))
+        .filter_map(|stop| stop.pos.as_ref().map(spelled))
         .collect()
 }
 
@@ -176,7 +186,7 @@ fn defaults_reach_a_paragraph_that_names_no_style() {
     ));
     let paragraph = styles.paragraph(None);
     assert_eq!(paragraph.style.as_deref(), Some("Normal"));
-    assert_eq!(size(&paragraph.run_properties), Some("24"));
+    assert_eq!(size(&paragraph.run_properties).as_deref(), Some("24"));
 }
 
 #[test]
@@ -188,14 +198,14 @@ fn nearest_style_of_a_chain_of_three_wins() {
     ));
     let named = own_paragraph(r#"<w:pStyle w:val="First"/>"#);
     let paragraph = styles.paragraph(Some(&named));
-    assert_eq!(size(&paragraph.run_properties), Some("20"));
+    assert_eq!(size(&paragraph.run_properties).as_deref(), Some("20"));
     let ancestors = sheet(&format!(
         r#"{NORMAL}
         <w:style w:type="paragraph" w:styleId="BodyText"><w:basedOn w:val="Normal"/><w:rPr><w:sz w:val="24"/></w:rPr></w:style>
         <w:style w:type="paragraph" w:styleId="First"><w:basedOn w:val="BodyText"/></w:style>"#
     ));
     let inherited = ancestors.paragraph(Some(&named));
-    assert_eq!(size(&inherited.run_properties), Some("24"));
+    assert_eq!(size(&inherited.run_properties).as_deref(), Some("24"));
 }
 
 #[test]
@@ -210,14 +220,16 @@ fn a_property_one_level_omits_keeps_the_earlier_value() {
         spacing(&paragraph.properties)
             .before
             .as_ref()
-            .map(|value| value.0.as_str()),
+            .map(spelled)
+            .as_deref(),
         Some("360")
     );
     assert_eq!(
         spacing(&paragraph.properties)
             .after
             .as_ref()
-            .map(|value| value.0.as_str()),
+            .map(spelled)
+            .as_deref(),
         Some("200")
     );
 }
@@ -229,7 +241,10 @@ fn a_property_at_one_level_only_is_kept() {
     ));
     let named = own_paragraph(r#"<w:pStyle w:val="Centered"/>"#);
     let paragraph = styles.paragraph(Some(&named));
-    assert_eq!(justification(&paragraph.properties), Some("center"));
+    assert_eq!(
+        justification(&paragraph.properties).as_deref(),
+        Some("center")
+    );
     assert_eq!(paragraph.style.as_deref(), Some("Centered"));
 }
 
@@ -244,7 +259,8 @@ fn fonts_merge_attribute_by_attribute() {
     assert_eq!(
         fonts(&paragraph.run_properties)
             .and_then(|found| found.ascii_theme.as_ref())
-            .map(|value| value.0.as_str()),
+            .map(spelled)
+            .as_deref(),
         Some("minorHAnsi")
     );
     assert_eq!(
@@ -261,9 +277,9 @@ fn direct_formatting_applies_last() {
     let named = own_paragraph(r#"<w:pStyle w:val="Big"/>"#);
     let paragraph = styles.paragraph(Some(&named));
     let run = styles.run(&paragraph, Some(&own_run(r#"<w:sz w:val="18"/>"#)));
-    assert_eq!(size(&run), Some("18"));
+    assert_eq!(size(&run).as_deref(), Some("18"));
     let plain = styles.run(&paragraph, None);
-    assert_eq!(size(&plain), Some("40"));
+    assert_eq!(size(&plain).as_deref(), Some("40"));
 }
 
 #[test]
@@ -276,7 +292,7 @@ fn character_style_applies_over_the_paragraph_style() {
     let named = own_paragraph(r#"<w:pStyle w:val="Red"/>"#);
     let paragraph = styles.paragraph(Some(&named));
     let run = styles.run(&paragraph, Some(&own_run(r#"<w:rStyle w:val="Green"/>"#)));
-    assert_eq!(color(&run), Some("00FF00"));
+    assert_eq!(color(&run).as_deref(), Some("00FF00"));
 }
 
 fn bold_styles(defaults: &str, paragraph: &str, character: &str) -> StyleSheet {
@@ -404,7 +420,7 @@ fn a_missing_parent_stops_the_chain() {
         .collect();
     assert_eq!(ids, [Some("Orphan")]);
     let paragraph = styles.paragraph(Some(&own_paragraph(r#"<w:pStyle w:val="Orphan"/>"#)));
-    assert_eq!(size(&paragraph.run_properties), Some("30"));
+    assert_eq!(size(&paragraph.run_properties).as_deref(), Some("30"));
     assert_eq!(styles.chain(Some("Gone")).len(), 0);
 }
 
@@ -448,7 +464,8 @@ fn theme_fonts_stay_references() {
     assert_eq!(
         fonts(&run)
             .and_then(|found| found.ascii_theme.as_ref())
-            .map(|value| value.0.as_str()),
+            .map(spelled)
+            .as_deref(),
         Some("minorHAnsi")
     );
 }
@@ -465,17 +482,11 @@ fn a_style_keep_properties_follow_the_default_spacing_in_their_typed_fields() {
     assert!(properties.keep_all_lines_on_one_page.is_some());
     assert!(properties.associated_outline_level.is_some());
     assert_eq!(
-        spacing(&properties)
-            .before
-            .as_ref()
-            .map(|value| value.0.as_str()),
+        spacing(&properties).before.as_ref().map(spelled).as_deref(),
         Some("240")
     );
     assert_eq!(
-        spacing(&properties)
-            .after
-            .as_ref()
-            .map(|value| value.0.as_str()),
+        spacing(&properties).after.as_ref().map(spelled).as_deref(),
         Some("160")
     );
     assert!(
@@ -499,7 +510,7 @@ fn the_own_style_reference_follows_a_style_alignment_in_its_typed_field() {
             .and_then(|style| style.val.as_deref()),
         Some("Centered")
     );
-    assert_eq!(justification(&properties), Some("center"));
+    assert_eq!(justification(&properties).as_deref(), Some("center"));
     assert!(
         properties
             .unknown()
@@ -561,8 +572,8 @@ fn a_run_property_added_after_a_style_revision_keeps_its_typed_field() {
     let named = own_paragraph(r#"<w:pStyle w:val="Tracked"/>"#);
     let paragraph = styles.paragraph(Some(&named));
     let run = styles.run(&paragraph, Some(&own_run(r#"<w:color w:val="FF0000"/>"#)));
-    assert_eq!(size(&run), Some("20"));
-    assert_eq!(color(&run), Some("FF0000"));
+    assert_eq!(size(&run).as_deref(), Some("20"));
+    assert_eq!(color(&run).as_deref(), Some("FF0000"));
     assert!(
         run.unknown()
             .is_none_or(|unknown| unknown.children.is_empty())
@@ -643,7 +654,7 @@ fn effective_mark(styles: &StyleSheet, mark: RunPropertiesForTheParagraphMark) -
 fn the_mark_size_wins_over_the_paragraph_style() {
     let styles = typed_sheet(vec![font_size("22")], vec![]);
     let effective = effective_mark(&styles, mark_of(vec![font_size("48")]));
-    assert_eq!(size(&effective), Some("48"));
+    assert_eq!(size(&effective).as_deref(), Some("48"));
 }
 
 #[test]
@@ -651,7 +662,7 @@ fn a_paragraph_with_no_mark_gives_its_runs_properties() {
     let styles = typed_sheet(vec![font_size("22")], vec![]);
     let paragraph = styles.paragraph(Some(&ParagraphProperties::default()));
     let effective = styles.paragraph_mark(&paragraph, None);
-    assert_eq!(size(&effective), Some("22"));
+    assert_eq!(size(&effective).as_deref(), Some("22"));
     assert_eq!(effective, styles.run(&paragraph, None));
 }
 
@@ -660,7 +671,7 @@ fn the_mark_character_style_gives_its_size() {
     let big = style_of("Big", StyleTypesMember::Character, vec![font_size("40")]);
     let styles = typed_sheet(vec![font_size("22")], vec![big]);
     let effective = effective_mark(&styles, mark_of(vec![character_reference("Big")]));
-    assert_eq!(size(&effective), Some("40"));
+    assert_eq!(size(&effective).as_deref(), Some("40"));
 }
 
 #[test]
@@ -671,7 +682,7 @@ fn the_mark_own_size_wins_over_its_character_style() {
         &styles,
         mark_of(vec![character_reference("Big"), font_size("48")]),
     );
-    assert_eq!(size(&effective), Some("48"));
+    assert_eq!(size(&effective).as_deref(), Some("48"));
 }
 
 #[test]
@@ -708,7 +719,7 @@ fn the_mark_revision_marks_are_left_out() {
     tracked.run_properties_revision = Some(Box::new(ParagraphMarkRunPropertiesRevision::default()));
 
     let effective = effective_mark(&styles, tracked);
-    assert_eq!(size(&effective), Some("48"));
+    assert_eq!(size(&effective).as_deref(), Some("48"));
     assert!(
         effective
             .unknown()
@@ -810,15 +821,13 @@ fn own_of(
 }
 
 /// The left and hanging indentation of `paragraph`.
-fn indents(paragraph: &ParagraphPropertiesPPrGeneral) -> (Option<&str>, Option<&str>) {
+fn indents(paragraph: &ParagraphPropertiesPPrGeneral) -> (Option<String>, Option<String>) {
     let found = paragraph.paragraph_indentation.as_deref();
     (
-        found
-            .and_then(|indent| indent.left.as_ref())
-            .map(|value| value.0.as_str()),
+        found.and_then(|indent| indent.left.as_ref()).map(spelled),
         found
             .and_then(|indent| indent.hanging.as_ref())
-            .map(|value| value.0.as_str()),
+            .map(spelled),
     )
 }
 
@@ -849,7 +858,10 @@ fn the_level_s_indents_go_over_the_style_s_and_under_the_paragraph_s_own() {
     let own = own_of("Indented", Some(numbered(5, Some(0))), None);
     let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&own));
     assert_eq!(level.map(|found| found.ilvl), Some(0));
-    assert_eq!(indents(&paragraph.properties), (Some("720"), Some("360")));
+    assert_eq!(
+        indents(&paragraph.properties),
+        (Some("720".to_owned()), Some("360".to_owned()))
+    );
     let num_id = paragraph
         .properties
         .numbering_definition_instance_reference_num_pr
@@ -860,8 +872,8 @@ fn the_level_s_indents_go_over_the_style_s_and_under_the_paragraph_s_own() {
                 .as_deref()
         })
         .and_then(|found| found.val.as_ref())
-        .map(|value| value.0.as_str());
-    assert_eq!(num_id, Some("5"));
+        .map(spelled);
+    assert_eq!(num_id.as_deref(), Some("5"));
 
     let wider = own_of(
         "Indented",
@@ -869,7 +881,10 @@ fn the_level_s_indents_go_over_the_style_s_and_under_the_paragraph_s_own() {
         Some(indentation("1440", None)),
     );
     let (own_indent, _) = styles.numbered_paragraph(&numbering, Some(&wider));
-    assert_eq!(indents(&own_indent.properties), (Some("1440"), Some("360")));
+    assert_eq!(
+        indents(&own_indent.properties),
+        (Some("1440".to_owned()), Some("360".to_owned()))
+    );
 }
 
 #[test]
@@ -883,7 +898,10 @@ fn numbering_from_the_style_goes_under_the_style_s_indents() {
     let own = own_of("Listed", None, None);
     let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&own));
     assert_eq!(level.map(|found| found.ilvl), Some(0));
-    assert_eq!(indents(&paragraph.properties), (Some("100"), Some("360")));
+    assert_eq!(
+        indents(&paragraph.properties),
+        (Some("100".to_owned()), Some("360".to_owned()))
+    );
 }
 
 #[test]
@@ -904,9 +922,9 @@ fn the_label_takes_the_mark_s_properties_under_the_level_s() {
     let own = own_of("Normal", Some(numbered(5, Some(0))), None);
     let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&own));
     let label = styles.label(&paragraph, Some(&mark), &level.unwrap());
-    assert_eq!(size(&label), Some("48"));
+    assert_eq!(size(&label).as_deref(), Some("48"));
     assert_eq!(bold(&label), Some(true));
-    assert_eq!(color(&label), Some("FF0000"));
+    assert_eq!(color(&label).as_deref(), Some("FF0000"));
 }
 
 fn aligned(alignment: HorizontalAlignmentTypeMember) -> ParagraphPropertiesPPrGeneral {
@@ -977,12 +995,12 @@ fn a_paragraph_in_a_cell_lays_the_table_style_under_the_paragraph_style() {
 
     let named = own_of("Right", None, None);
     let (right, _) = styles.paragraph_in_cell(&table, at, None, Some(&named));
-    assert_eq!(size(&styles.run(&right, None)), Some("18"));
-    assert_eq!(justification(&right.properties), Some("right"));
+    assert_eq!(size(&styles.run(&right, None)).as_deref(), Some("18"));
+    assert_eq!(justification(&right.properties).as_deref(), Some("right"));
 
     let (plain, _) = styles.paragraph_in_cell(&table, at, None, None);
-    assert_eq!(size(&styles.run(&plain, None)), Some("18"));
-    assert_eq!(justification(&plain.properties), Some("center"));
+    assert_eq!(size(&styles.run(&plain, None)).as_deref(), Some("18"));
+    assert_eq!(justification(&plain.properties).as_deref(), Some("center"));
 }
 
 #[test]
@@ -1033,8 +1051,11 @@ fn a_numbered_paragraph_in_a_cell_takes_its_level_as_outside_a_table() {
     let (_, outside) = styles.numbered_paragraph(&numbering, Some(&own));
     assert_eq!(level.as_ref().map(|found| found.ilvl), Some(0));
     assert_eq!(level, outside);
-    assert_eq!(indents(&inside.properties), (Some("720"), Some("360")));
-    assert_eq!(justification(&inside.properties), Some("center"));
+    assert_eq!(
+        indents(&inside.properties),
+        (Some("720".to_owned()), Some("360".to_owned()))
+    );
+    assert_eq!(justification(&inside.properties).as_deref(), Some("center"));
 
     let (unnumbered, none) = styles.paragraph_in_cell(&table, at, None, Some(&own));
     assert_eq!(none, None);
@@ -1333,7 +1354,10 @@ fn an_indentation_still_merges_attribute_by_attribute() {
     let styles = sheet_of(vec![paragraph_style("Indented", indented)]);
     let own = own_of("Indented", None, Some(indentation("200", None)));
     let paragraph = styles.paragraph(Some(&own));
-    assert_eq!(indents(&paragraph.properties), (Some("200"), Some("50")));
+    assert_eq!(
+        indents(&paragraph.properties),
+        (Some("200".to_owned()), Some("50".to_owned()))
+    );
 }
 
 #[test]
@@ -1346,7 +1370,10 @@ fn the_last_default_paragraph_style_is_the_one() {
     assert_eq!(styles.default_paragraph(), Some("B"));
     let paragraph = styles.paragraph(None);
     assert_eq!(paragraph.style.as_deref(), Some("B"));
-    assert_eq!(justification(&paragraph.properties), Some("center"));
+    assert_eq!(
+        justification(&paragraph.properties).as_deref(),
+        Some("center")
+    );
 }
 
 #[test]

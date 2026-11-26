@@ -5,10 +5,12 @@ mod preset;
 #[cfg(test)]
 mod tests;
 
+use officekit_markup::Spelling;
 use officekit_markup::common_simple_types::HexadecimalColorValue;
 use officekit_markup::drawing::{
     ColorContent, ColorTransformContent, PresetColorValueMember, StSchemeColorValMember,
 };
+use officekit_xml::conformance::ConformanceClass;
 
 use super::scheme::ThemeColors;
 use preset::PRESET_COLORS;
@@ -560,7 +562,7 @@ fn rule(change: &ColorTransformContent) -> Option<Rule> {
 /// absent or no value of the type.
 fn share<T>(value: Option<&T>, kind: PercentKind) -> Option<i128>
 where
-    T: AsRef<str>,
+    T: Spelling,
 {
-    Some(kind.thousandths(value?.as_ref())? * SCALE / 100_000)
+    Some(kind.thousandths(&value?.spelling(ConformanceClass::Transitional))? * SCALE / 100_000)
 }

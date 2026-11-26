@@ -3,6 +3,8 @@ use crate::parts::kinds::WordprocessingKind;
 #[cfg(feature = "transitional")]
 use crate::parts::{footer, header};
 #[cfg(feature = "transitional")]
+use officekit_markup::Spelling;
+#[cfg(feature = "transitional")]
 use officekit_markup::common_simple_types::MeasurementInTwentiethsOfAPoint;
 use officekit_markup::wordprocessing::{
     BlockContent, Footer, Header, HeaderOrFooterTypeMember, Paragraph,
@@ -14,7 +16,7 @@ use officekit_markup::wordprocessing::{
     HeaderOrFooterType, HeaderReference, MagnificationSetting, PageSize, ParagraphProperties,
     PercentageMeasurement, SectionPropertiesContent,
 };
-#[cfg(all(feature = "strict", feature = "transitional"))]
+#[cfg(feature = "transitional")]
 use officekit_xml::conformance::ConformanceClass;
 #[cfg(feature = "transitional")]
 use officekit_xml::packaging::error::PackageError;
@@ -251,13 +253,13 @@ fn references(section: &DocumentFinalSectionProperties) -> Vec<(&'static str, St
             if let SectionPropertiesContent::HeaderReference(found) = item {
                 Some((
                     "header",
-                    found.r#type.as_ref().unwrap().0.clone(),
+                    spelled(found.r#type.as_ref().unwrap()),
                     found.id.clone().unwrap(),
                 ))
             } else if let SectionPropertiesContent::FooterReference(found) = item {
                 Some((
                     "footer",
-                    found.r#type.as_ref().unwrap().0.clone(),
+                    spelled(found.r#type.as_ref().unwrap()),
                     found.id.clone().unwrap(),
                 ))
             } else {
@@ -571,4 +573,13 @@ fn a_strict_file_gets_strict_relationship_types_and_namespace() {
         .find(|candidate| candidate.target == Target::Part(part.clone()))
         .unwrap();
     assert_eq!(found.type_uri, RelationshipType::HEADER.strict);
+}
+
+/// The text of a simple-type value.
+#[cfg(feature = "transitional")]
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

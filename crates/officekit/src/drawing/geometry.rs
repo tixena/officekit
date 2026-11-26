@@ -5,12 +5,14 @@ mod presets;
 #[cfg(test)]
 mod tests;
 
+use alloc::borrow::Cow;
 use alloc::collections::BTreeMap;
 
+use officekit_markup::Spelling;
 use officekit_markup::drawing::{
-    AdjustableCoordinateMethods, CustomGeometry, ListOfShapeAdjustValues, ShapeGuide,
-    ShapePathContent, ShapePathPoint,
+    CustomGeometry, ListOfShapeAdjustValues, ShapeGuide, ShapePathContent, ShapePathPoint,
 };
+use officekit_xml::conformance::ConformanceClass;
 
 use presets::PRESETS;
 
@@ -288,16 +290,32 @@ pub fn custom(geometry: &CustomGeometry, width: i64, height: i64) -> Outline {
         .as_deref()
         .map_or_else(Vec::new, |list| named(&list.shape_guide));
     let shape_paths = &geometry.list_of_shape_paths.shape_path;
+    let texts: Vec<Vec<Vec<Cow<'_, str>>>> = shape_paths
+        .iter()
+        .map(|path| path.content.iter().map(step_texts).collect())
+        .collect();
     let commands: Vec<Vec<Command<'_>>> = shape_paths
         .iter()
-        .map(|path| path.content.iter().filter_map(step).collect())
+        .zip(&texts)
+        .map(|(path, steps)| {
+            path.content
+                .iter()
+                .zip(steps)
+                .filter_map(|(content, values)| step(content, values))
+                .collect()
+        })
+        .collect();
+    let fills: Vec<Cow<'_, str>> = shape_paths
+        .iter()
+        .map(|path| path.fill.as_ref().map_or(Cow::Borrowed("norm"), spelled))
         .collect();
     let paths: Vec<PresetPath<'_>> = shape_paths
         .iter()
         .zip(&commands)
-        .map(|(path, steps)| PresetPath {
+        .zip(&fills)
+        .map(|((path, steps), fill)| PresetPath {
             commands: steps,
-            fill: path.fill.as_ref().map_or("norm", |fill| fill.0.as_str()),
+            fill,
             h: path.h.as_ref().map(|h| h.0.as_str()),
             stroke: path
                 .stroke
@@ -306,7 +324,7 @@ pub fn custom(geometry: &CustomGeometry, width: i64, height: i64) -> Outline {
             w: path.w.as_ref().map(|w| w.0.as_str()),
         })
         .collect();
-    let rect = geometry.shape_text_rectangle.as_deref().map(|found| {
+    let rect_texts = geometry.shape_text_rectangle.as_deref().map(|found| {
         [
             found.l.as_ref(),
             found.t.as_ref(),
@@ -315,6 +333,9 @@ pub fn custom(geometry: &CustomGeometry, width: i64, height: i64) -> Outline {
         ]
         .map(text)
     });
+    let rect = rect_texts
+        .as_ref()
+        .map(|edges| edges.each_ref().map(|edge| &**edge));
     let definition = Preset {
         adjust: &adjust,
         guides: &guides,
@@ -638,12 +659,9 @@ fn parameter(ray: i128, (w_r, h_r): (i128, i128)) -> Option<i128> {
 }
 
 /// The `x` and `y` of a typed point, each empty when absent.
-fn place(point: Option<&ShapePathPoint>) -> (&str, &str) {
-    point.map_or(("", ""), |found| {
-        (
-            found.x.as_ref().map_or("", |x| x.0.as_str()),
-            found.y.as_ref().map_or("", |y| y.0.as_str()),
-        )
+fn place(point: Option<&ShapePathPoint>) -> [Cow<'_, str>; 2] {
+    point.map_or([Cow::Borrowed(""), Cow::Borrowed("")], |found| {
+        [text(found.x.as_ref()), text(found.y.as_ref())]
     })
 }
 
@@ -735,40 +753,68 @@ fn square_root(value: i128) -> i128 {
     })
 }
 
-/// A path step of a typed custom geometry; `None` for an element the schemas do not declare.
-fn step(content: &ShapePathContent) -> Option<Command<'_>> {
+/// The spelling of a typed value.
+fn spelled<T>(value: &T) -> Cow<'_, str>
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional)
+}
+
+/// A path step of a typed custom geometry over `texts`, the values `step_texts` gave it; `None`
+/// for an element the schemas do not declare.
+fn step<'text>(content: &ShapePathContent, texts: &'text [Cow<'_, str>]) -> Option<Command<'text>> {
+    let at = |index: usize| texts.get(index).map_or("", |found| &**found);
     match content {
         ShapePathContent::CloseShapePath(_) => Some(Command::Close),
-        ShapePathContent::DrawArcTo(arc_to) => Some(Command::ArcTo {
-            h_r: text(arc_to.h_r.as_ref()),
-            st_ang: arc_to.st_ang.as_ref().map_or("", |angle| angle.0.as_str()),
-            sw_ang: arc_to.sw_ang.as_ref().map_or("", |angle| angle.0.as_str()),
-            w_r: text(arc_to.w_r.as_ref()),
+        ShapePathContent::DrawArcTo(_) => Some(Command::ArcTo {
+            h_r: at(0),
+            st_ang: at(1),
+            sw_ang: at(2),
+            w_r: at(3),
         }),
-        ShapePathContent::DrawCubicBezierCurveTo(curve) => Some(Command::CubicTo(
-            place(curve.shape_path_point.first()),
-            place(curve.shape_path_point.get(1)),
-            place(curve.shape_path_point.get(2)),
+        ShapePathContent::DrawCubicBezierCurveTo(_) => Some(Command::CubicTo(
+            (at(0), at(1)),
+            (at(2), at(3)),
+            (at(4), at(5)),
         )),
-        ShapePathContent::DrawLineTo(line) => {
-            let (x, y) = place(Some(&line.shape_path_point));
-            Some(Command::LineTo(x, y))
+        ShapePathContent::DrawLineTo(_) => Some(Command::LineTo(at(0), at(1))),
+        ShapePathContent::DrawQuadraticBezierCurveTo(_) => {
+            Some(Command::QuadTo((at(0), at(1)), (at(2), at(3))))
         }
-        ShapePathContent::DrawQuadraticBezierCurveTo(curve) => Some(Command::QuadTo(
-            place(curve.shape_path_point.first()),
-            place(curve.shape_path_point.get(1)),
-        )),
-        ShapePathContent::MovePathTo(moved) => {
-            let (x, y) = place(Some(&moved.shape_path_point));
-            Some(Command::MoveTo(x, y))
-        }
+        ShapePathContent::MovePathTo(_) => Some(Command::MoveTo(at(0), at(1))),
         ShapePathContent::Other(_) | _ => None,
     }
 }
 
-/// The text of a coordinate, empty when absent.
-fn text(coordinate: Option<&AdjustableCoordinateMethods>) -> &str {
-    coordinate.map_or("", |found| found.0.as_str())
+/// The values of a path step of a typed custom geometry, each as its text, in the order `step`
+/// reads them: an arc's radii and angles, then each point's `x` and `y`.
+fn step_texts(content: &ShapePathContent) -> Vec<Cow<'_, str>> {
+    match content {
+        ShapePathContent::DrawArcTo(arc_to) => vec![
+            text(arc_to.h_r.as_ref()),
+            text(arc_to.st_ang.as_ref()),
+            text(arc_to.sw_ang.as_ref()),
+            text(arc_to.w_r.as_ref()),
+        ],
+        ShapePathContent::DrawCubicBezierCurveTo(curve) => (0..3)
+            .flat_map(|index| place(curve.shape_path_point.get(index)))
+            .collect(),
+        ShapePathContent::DrawQuadraticBezierCurveTo(curve) => (0..2)
+            .flat_map(|index| place(curve.shape_path_point.get(index)))
+            .collect(),
+        ShapePathContent::DrawLineTo(line) => place(Some(&line.shape_path_point)).into(),
+        ShapePathContent::MovePathTo(moved) => place(Some(&moved.shape_path_point)).into(),
+        ShapePathContent::CloseShapePath(_) | ShapePathContent::Other(_) | _ => Vec::new(),
+    }
+}
+
+/// The text of a typed value, empty when absent.
+fn text<T>(value: Option<&T>) -> Cow<'_, str>
+where
+    T: Spelling,
+{
+    value.map_or(Cow::Borrowed(""), spelled)
 }
 
 /// `outline` turned top to bottom in a frame `height` high: every y replaced by `height - y`.

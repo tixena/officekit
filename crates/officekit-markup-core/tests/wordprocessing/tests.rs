@@ -1,7 +1,9 @@
 use officekit_markup_base::common_simple_types::OnOffValue;
-use officekit_markup_base::generic;
-use officekit_xml::element::Node;
+use officekit_markup_base::{Spelling as _, generic};
+use officekit_xml::conformance::ConformanceClass;
+use officekit_xml::element::{Element, Node};
 use officekit_xml::name::OfficeVersion;
+use officekit_xml::parse::parse;
 use officekit_xml::stream::reader::{PartEvent, PartReader};
 use officekit_xml::values::{DateTime, Measure, MeasureUnit, ValueError};
 use officekit_xml::write::Scope;
@@ -9,10 +11,28 @@ use officekit_xml::write::Scope;
 use officekit_markup_core::spreadsheet::ReferenceSequence;
 use officekit_markup_core::wordprocessing::{
     AnchorForImportedExternalContent, BlockContent, ContentBlockContent, HorizontalAlignmentType,
-    HorizontalAlignmentTypeMember, MeasurementOrPercentageValue,
-    MeasurementOrPercentageValueMember, Paragraph, ParagraphContent,
+    HorizontalAlignmentTypeMember, MeasurementInHalfPoints, MeasurementInHalfPointsMember,
+    MeasurementOrPercentageValue, MeasurementOrPercentageValueMember, Paragraph, ParagraphContent,
     StandardDateAndTimeStorageFormat, Text, TextRun, TextRunContent, read, write,
 };
+
+/// The element `w:{local}` with the one attribute `w:val="{value}"`.
+fn with_val(local: &str, value: &str) -> Element {
+    let xml = format!(
+        "<w:{local} xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" \
+         w:val=\"{value}\"/>"
+    );
+    parse(xml.as_bytes()).unwrap().root
+}
+
+/// The text of `w:val` on `element`.
+fn val(element: &Element) -> Option<&str> {
+    element
+        .attributes
+        .iter()
+        .find(|attribute| attribute.name.local == "val")
+        .map(|attribute| attribute.value.as_str())
+}
 
 #[test]
 fn an_enumeration_reads_its_members_and_keeps_text_it_does_not_know() {
@@ -25,11 +45,65 @@ fn an_enumeration_reads_its_members_and_keeps_text_it_does_not_know() {
         unknown.value(),
         Err(ValueError::new("ST_Jc", "justifyLow".to_owned()))
     );
-    assert_eq!(unknown.0, "justifyLow");
     assert_eq!(
-        HorizontalAlignmentType::from(HorizontalAlignmentTypeMember::ThaiDistribute).0,
+        unknown.spelling(ConformanceClass::Transitional),
+        "justifyLow"
+    );
+    assert_eq!(
+        HorizontalAlignmentType::from(HorizontalAlignmentTypeMember::ThaiDistribute)
+            .spelling(ConformanceClass::Strict),
         "thaiDistribute"
     );
+}
+
+#[test]
+fn an_enumeration_keeps_its_member_and_any_other_spelling_as_read() {
+    assert_eq!(
+        HorizontalAlignmentType::from("center".to_owned()),
+        HorizontalAlignmentType::Member(HorizontalAlignmentTypeMember::Center)
+    );
+    assert_eq!(
+        HorizontalAlignmentType::from("Center".to_owned()),
+        HorizontalAlignmentType::Spelled("Center".into())
+    );
+    for text in ["center", "Center"] {
+        let read = read::paragraph_alignment(&with_val("jc", text));
+        let written = write::paragraph_alignment(&read, &mut Scope::default());
+        assert_eq!(val(&written), Some(text));
+    }
+}
+
+#[test]
+fn a_numeric_member_keeps_its_number_and_any_other_spelling_as_read() {
+    assert_eq!(
+        MeasurementInHalfPoints::from("20".to_owned()),
+        MeasurementInHalfPoints::Member(MeasurementInHalfPointsMember::UnsignedDecimalNumberValue(
+            20
+        ))
+    );
+    assert_eq!(
+        MeasurementInHalfPoints::from("10.5pt".to_owned()),
+        MeasurementInHalfPoints::Member(
+            MeasurementInHalfPointsMember::PositiveUniversalMeasurement(Measure::new(
+                MeasureUnit::Points,
+                10.5
+            ))
+        )
+    );
+    for text in ["020", "+20", "10.50pt", "10pi"] {
+        let kept = MeasurementInHalfPoints::from(text.to_owned());
+        assert_eq!(
+            kept,
+            MeasurementInHalfPoints::Spelled(text.into()),
+            "{text}"
+        );
+        assert!(kept.value().is_ok(), "{text}");
+    }
+    for text in ["20", "020", "10.5pt", "10pi"] {
+        let read = read::non_complex_script_font_size(&with_val("sz", text));
+        let written = write::non_complex_script_font_size(&read, &mut Scope::default());
+        assert_eq!(val(&written), Some(text));
+    }
 }
 
 #[test]

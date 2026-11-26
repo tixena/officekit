@@ -1,3 +1,4 @@
+use officekit_markup::Spelling;
 use officekit_markup::spreadsheet::{Cell, CellType, CellValue, Row, Worksheet};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::error::WriteError;
@@ -50,7 +51,7 @@ fn cells(sheet: &Worksheet) -> Vec<(String, Option<String>, Option<String>, Stri
                 (
                     found.r.clone().unwrap_or_default(),
                     found.s.clone(),
-                    found.t.as_ref().map(|kind| kind.0.clone()),
+                    found.t.as_ref().map(spelled),
                     found
                         .value
                         .as_ref()
@@ -253,7 +254,7 @@ fn date_sheet(date: &str) -> Worksheet {
 }
 
 /// The type and the value of the one cell of `sheet`.
-fn only_cell(sheet: &Worksheet) -> (Option<&str>, &str) {
+fn only_cell(sheet: &Worksheet) -> (Option<String>, &str) {
     let cell = sheet
         .sheet_data
         .row
@@ -261,7 +262,7 @@ fn only_cell(sheet: &Worksheet) -> (Option<&str>, &str) {
         .and_then(|row| row.cell.first())
         .unwrap();
     (
-        cell.t.as_ref().map(|kind| kind.0.as_str()),
+        cell.t.as_ref().map(spelled),
         cell.value.as_ref().map_or("", |value| value.value.as_str()),
     )
 }
@@ -276,7 +277,7 @@ fn a_date_before_the_1900_range_stays_and_is_refused() {
             Vec::new(),
             "{date}"
         );
-        assert_eq!(only_cell(&sheet), (Some("d"), date));
+        assert_eq!(only_cell(&sheet), (Some("d".to_owned()), date));
         assert!(matches!(
             sheet.to_transitional(),
             Err(WriteError::NotInClass {
@@ -315,4 +316,12 @@ fn a_date_cell_warning_reads_as_one_line() {
         warning.to_string(),
         "/xl/worksheets/sheet1.xml A1: the date 2024-01-01T00:00:00 was written as the number 45292"
     );
+}
+
+/// The text of a simple-type value.
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

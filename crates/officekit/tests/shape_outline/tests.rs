@@ -1,8 +1,10 @@
 use officekit::drawing::geometry::{Outline, PathCommand, PathFill, UnknownPreset, custom, preset};
+use officekit_markup::Spelling as _;
 use officekit_markup::drawing::{
     AdjustableCoordinateMethods, CustomGeometry, DrawLineTo, GeometryContent, ListOfShapePaths,
     MovePathTo, PresetGeometry, PresetShapeTypes, ShapePath, ShapePathContent, ShapePathPoint,
 };
+use officekit_xml::conformance::ConformanceClass;
 
 /// The outline of a shape's geometry in a frame of `width` by `height`; a shape that states
 /// none has the rectangle of its frame.
@@ -13,9 +15,12 @@ fn outline_of(
 ) -> Result<Outline, UnknownPreset> {
     match geometry {
         Some(GeometryContent::PresetGeometry(found)) => {
-            let name = found.prst.as_ref().map_or("rect", |value| value.0.as_str());
+            let name = found.prst.as_ref().map_or_else(
+                || "rect".to_owned(),
+                |value| value.spelling(ConformanceClass::Transitional).into_owned(),
+            );
             preset(
-                name,
+                &name,
                 found.list_of_shape_adjust_values.as_deref(),
                 width,
                 height,

@@ -8,8 +8,10 @@
 use core::fmt;
 use core::mem;
 
+use officekit_markup::Spelling as _;
 use officekit_markup::class_rules::{BASE_1900, BASE_1904};
 use officekit_markup::spreadsheet::Worksheet;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::values::DateTime;
 
@@ -76,7 +78,11 @@ pub fn convert_date_cells(
     let mut warnings = Vec::new();
     for row in &mut worksheet.sheet_data.row {
         for cell in &mut row.cell {
-            if cell.t.as_ref().is_none_or(|kind| kind.0 != "d") {
+            if cell
+                .t
+                .as_ref()
+                .is_none_or(|kind| kind.spelling(ConformanceClass::Transitional) != "d")
+            {
                 continue;
             }
             let Some(value) = cell.value.as_mut() else {

@@ -221,7 +221,11 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use crate::Spelling;
 use crate::UserData;
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -595,18 +599,19 @@ pub type Array = ArrayWith<()>;
 impl Eq for ArrayWith<()> {}
 
 /// Array Base Type Simple Type, the simple type `ST_ArrayBaseType` (ECMA-376 Part 1, section
-/// 22.4.3.1), kept as the text the file carried.
+/// 22.4.3.1), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct ArrayBaseTypeSimpleType(pub String);
+pub enum ArrayBaseTypeSimpleType {
+    /// A member, spelled as the class being written spells it.
+    Member(ArrayBaseTypeSimpleTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_ArrayBaseType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1440,18 +1445,19 @@ pub type Vector = VectorWith<()>;
 impl Eq for VectorWith<()> {}
 
 /// Vector Base Type Simple Type, the simple type `ST_VectorBaseType` (ECMA-376 Part 1, section
-/// 22.4.3.4), kept as the text the file carried.
+/// 22.4.3.4), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct VectorBaseTypeSimpleType(pub String);
+pub enum VectorBaseTypeSimpleType {
+    /// A member, spelled as the class being written spells it.
+    Member(VectorBaseTypeSimpleTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_VectorBaseType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1609,21 +1615,42 @@ impl crate::Write for Array {
     }
 }
 
-impl AsRef<str> for ArrayBaseTypeSimpleType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(ArrayBaseTypeSimpleType);
+
+impl Default for ArrayBaseTypeSimpleType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for ArrayBaseTypeSimpleType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<ArrayBaseTypeSimpleTypeMember> for ArrayBaseTypeSimpleType {
     fn from(member: ArrayBaseTypeSimpleTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for ArrayBaseTypeSimpleType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for ArrayBaseTypeSimpleTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1663,17 +1690,29 @@ impl ArrayBaseTypeSimpleTypeMember {
 }
 
 impl ArrayBaseTypeSimpleType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_ArrayBaseType`; the text stays stored.
-    pub fn value(&self) -> Result<ArrayBaseTypeSimpleTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_ArrayBaseType`.
+    pub fn parse(text: &str) -> Result<ArrayBaseTypeSimpleTypeMember, ValueError> {
         crate::member(
             ArrayBaseTypeSimpleTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_ArrayBaseType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_ArrayBaseType`.
+    pub fn value(&self) -> Result<ArrayBaseTypeSimpleTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -2421,14 +2460,29 @@ impl From<String> for CurrencySimpleType {
     }
 }
 
+impl Spelling for CurrencySimpleType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl CurrencySimpleType {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_Cy`.
+    pub fn parse(text: &str) -> Result<&str, ValueError> {
+        crate::text(text, &CURRENCY_SIMPLE_TYPE_FACETS, "ST_Cy")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_Cy`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
-        crate::text(&self.0, &CURRENCY_SIMPLE_TYPE_FACETS, "ST_Cy")
+        Self::parse(&self.0)
     }
 }
 
@@ -2636,14 +2690,29 @@ impl From<String> for ErrorStatusCodeSimpleType {
     }
 }
 
+impl Spelling for ErrorStatusCodeSimpleType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl ErrorStatusCodeSimpleType {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_Error`.
+    pub fn parse(text: &str) -> Result<&str, ValueError> {
+        crate::text(text, &ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS, "ST_Error")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_Error`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
-        crate::text(&self.0, &ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS, "ST_Error")
+        Self::parse(&self.0)
     }
 }
 
@@ -4091,21 +4160,42 @@ impl crate::Write for Vector {
     }
 }
 
-impl AsRef<str> for VectorBaseTypeSimpleType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(VectorBaseTypeSimpleType);
+
+impl Default for VectorBaseTypeSimpleType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for VectorBaseTypeSimpleType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<VectorBaseTypeSimpleTypeMember> for VectorBaseTypeSimpleType {
     fn from(member: VectorBaseTypeSimpleTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for VectorBaseTypeSimpleType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for VectorBaseTypeSimpleTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4148,17 +4238,29 @@ impl VectorBaseTypeSimpleTypeMember {
 }
 
 impl VectorBaseTypeSimpleType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_VectorBaseType`; the text stays stored.
-    pub fn value(&self) -> Result<VectorBaseTypeSimpleTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_VectorBaseType`.
+    pub fn parse(text: &str) -> Result<VectorBaseTypeSimpleTypeMember, ValueError> {
         crate::member(
             VectorBaseTypeSimpleTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_VectorBaseType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_VectorBaseType`.
+    pub fn value(&self) -> Result<VectorBaseTypeSimpleTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

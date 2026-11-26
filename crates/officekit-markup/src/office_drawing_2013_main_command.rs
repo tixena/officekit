@@ -223,9 +223,13 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::drawing;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -1870,18 +1874,19 @@ pub type CNvSpPr = CNvSpPrWith<()>;
 
 impl Eq for CNvSpPrWith<()> {}
 
-/// The simple type `CT_ResourceLinkage`, kept as the text the file carried.
+/// The simple type `CT_ResourceLinkage`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct CTResourceLinkage(pub String);
+pub enum CTResourceLinkage {
+    /// A member, spelled as the class being written spells it.
+    Member(CTResourceLinkageMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `CT_ResourceLinkage`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -7855,21 +7860,42 @@ impl officekit_markup_base::Write for CNvSpPr {
     }
 }
 
-impl AsRef<str> for CTResourceLinkage {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(CTResourceLinkage);
+
+impl Default for CTResourceLinkage {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for CTResourceLinkage {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<CTResourceLinkageMember> for CTResourceLinkage {
     fn from(member: CTResourceLinkageMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for CTResourceLinkage {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for CTResourceLinkageMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -7899,17 +7925,25 @@ impl CTResourceLinkageMember {
 }
 
 impl CTResourceLinkage {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `CT_ResourceLinkage`; the text stays stored.
+    /// `ValueError` when `text` is no value of `CT_ResourceLinkage`.
+    pub fn parse(text: &str) -> Result<CTResourceLinkageMember, ValueError> {
+        officekit_markup_base::member(CTResourceLinkageMember::MEMBERS, text, "CT_ResourceLinkage")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `CT_ResourceLinkage`.
     pub fn value(&self) -> Result<CTResourceLinkageMember, ValueError> {
-        officekit_markup_base::member(
-            CTResourceLinkageMember::MEMBERS,
-            &self.0,
-            "CT_ResourceLinkage",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

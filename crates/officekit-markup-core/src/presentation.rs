@@ -221,8 +221,12 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
 use officekit_markup_base::common_simple_types;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -2989,19 +2993,20 @@ pub type AnimateScale = AnimateScaleWith<()>;
 impl Eq for AnimateScaleWith<()> {}
 
 /// Animation Time, the simple type `ST_TLTimeAnimateValueTime` (ECMA-376 Part 1, section 19.7.39),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug)]
 #[non_exhaustive]
-pub struct AnimationTime(pub String);
-/// The member types of `ST_TLTimeAnimateValueTime`, in alphabetical order; `value` tries them in
+pub enum AnimationTime {
+    /// A member, spelled as the class being written spells it.
+    Member(AnimationTimeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
+/// The member types of `ST_TLTimeAnimateValueTime`, in alphabetical order; `parse` tries them in
 /// the schema's order.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
@@ -3170,18 +3175,19 @@ pub type BackgroundStyleReference = BackgroundStyleReferenceWith<()>;
 impl Eq for BackgroundStyleReferenceWith<()> {}
 
 /// Behavior Accumulate Type, the simple type `ST_TLBehaviorAccumulateType` (ECMA-376 Part 1,
-/// section 19.7.27), kept as the text the file carried.
+/// section 19.7.27), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BehaviorAccumulateType(pub String);
+pub enum BehaviorAccumulateType {
+    /// A member, spelled as the class being written spells it.
+    Member(BehaviorAccumulateTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLBehaviorAccumulateType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3194,18 +3200,19 @@ pub enum BehaviorAccumulateTypeMember {
 }
 
 /// Behavior Additive Type, the simple type `ST_TLBehaviorAdditiveType` (ECMA-376 Part 1, section
-/// 19.7.28), kept as the text the file carried.
+/// 19.7.28), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BehaviorAdditiveType(pub String);
+pub enum BehaviorAdditiveType {
+    /// A member, spelled as the class being written spells it.
+    Member(BehaviorAdditiveTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLBehaviorAdditiveType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3224,18 +3231,19 @@ pub enum BehaviorAdditiveTypeMember {
 }
 
 /// Behavior Override Type, the simple type `ST_TLBehaviorOverrideType` (ECMA-376 Part 1, section
-/// 19.7.29), kept as the text the file carried.
+/// 19.7.29), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BehaviorOverrideType(pub String);
+pub enum BehaviorOverrideType {
+    /// A member, spelled as the class being written spells it.
+    Member(BehaviorOverrideTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLBehaviorOverrideType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3248,18 +3256,19 @@ pub enum BehaviorOverrideTypeMember {
 }
 
 /// Behavior Transform Type, the simple type `ST_TLBehaviorTransformType` (ECMA-376 Part 1, section
-/// 19.7.30), kept as the text the file carried.
+/// 19.7.30), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BehaviorTransformType(pub String);
+pub enum BehaviorTransformType {
+    /// A member, spelled as the class being written spells it.
+    Member(BehaviorTransformTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLBehaviorTransformType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3671,18 +3680,19 @@ pub type CharacterRange = CharacterRangeWith<()>;
 impl Eq for CharacterRangeWith<()> {}
 
 /// Chart Subelement Type, the simple type `ST_TLChartSubelementType` (ECMA-376 Part 1, section
-/// 19.7.31), kept as the text the file carried.
+/// 19.7.31), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct ChartSubelementType(pub String);
+pub enum ChartSubelementType {
+    /// A member, spelled as the class being written spells it.
+    Member(ChartSubelementTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLChartSubelementType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -3906,19 +3916,20 @@ pub type Command = CommandWith<()>;
 
 impl Eq for CommandWith<()> {}
 
-/// Command Type, the simple type `ST_TLCommandType` (ECMA-376 Part 1, section 19.7.32), kept as the
-/// text the file carried.
+/// Command Type, the simple type `ST_TLCommandType` (ECMA-376 Part 1, section 19.7.32), kept as its
+/// member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct CommandType(pub String);
+pub enum CommandType {
+    /// A member, spelled as the class being written spells it.
+    Member(CommandTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLCommandType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -4502,18 +4513,19 @@ pub type CutSlideTransition = CutSlideTransitionWith<()>;
 impl Eq for CutSlideTransitionWith<()> {}
 
 /// Default print output, the simple type `ST_PrintWhat` (ECMA-376 Part 1, section 19.7.12), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct DefaultPrintOutput(pub String);
+pub enum DefaultPrintOutput {
+    /// A member, spelled as the class being written spells it.
+    Member(DefaultPrintOutputMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PrintWhat`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -4540,18 +4552,19 @@ pub enum DefaultPrintOutputMember {
 }
 
 /// Diagram Build Types, the simple type `ST_TLDiagramBuildType` (ECMA-376 Part 1, section 19.7.33),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct DiagramBuildTypes(pub String);
+pub enum DiagramBuildTypes {
+    /// A member, spelled as the class being written spells it.
+    Member(DiagramBuildTypesMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLDiagramBuildType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -4611,19 +4624,20 @@ pub type DiamondSlideTransition = DiamondSlideTransitionWith<()>;
 
 impl Eq for DiamondSlideTransitionWith<()> {}
 
-/// Direction, the simple type `ST_Direction` (ECMA-376 Part 1, section 19.7.2), kept as the text
-/// the file carried.
+/// Direction, the simple type `ST_Direction` (ECMA-376 Part 1, section 19.7.2), kept as its member
+/// or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct Direction(pub String);
+pub enum Direction {
+    /// A member, spelled as the class being written spells it.
+    Member(DirectionMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_Direction`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -4654,18 +4668,19 @@ pub type DissolveSlideTransition = DissolveSlideTransitionWith<()>;
 impl Eq for DissolveSlideTransitionWith<()> {}
 
 /// Embedded Chart Build Type, the simple type `ST_TLOleChartBuildType` (ECMA-376 Part 1, section
-/// 19.7.35), kept as the text the file carried.
+/// 19.7.35), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct EmbeddedChartBuildType(pub String);
+pub enum EmbeddedChartBuildType {
+    /// A member, spelled as the class being written spells it.
+    Member(EmbeddedChartBuildTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLOleChartBuildType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5287,18 +5302,19 @@ pub type HTMLPublishingProperties = HTMLPublishingPropertiesWith<()>;
 impl Eq for HTMLPublishingPropertiesWith<()> {}
 
 /// HTML Slide Navigation Control Colors, the simple type `ST_WebColorType` (ECMA-376 Part 4,
-/// section 16.5.1), kept as the text the file carried.
+/// section 16.5.1), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLSlideNavigationControlColors(pub String);
+pub enum HTMLSlideNavigationControlColors {
+    /// A member, spelled as the class being written spells it.
+    Member(HTMLSlideNavigationControlColorsMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_WebColorType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5319,18 +5335,19 @@ pub enum HTMLSlideNavigationControlColorsMember {
 }
 
 /// HTML/Web Screen Size Target, the simple type `ST_WebScreenSize` (ECMA-376 Part 4, section
-/// 16.5.3), kept as the text the file carried.
+/// 16.5.3), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct HTMLWebScreenSizeTarget(pub String);
+pub enum HTMLWebScreenSizeTarget {
+    /// A member, spelled as the class being written spells it.
+    Member(HTMLWebScreenSizeTargetMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_WebScreenSize`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5463,18 +5480,19 @@ pub type Hsl = HslWith<()>;
 impl Eq for HslWith<()> {}
 
 /// Indefinite Time Declaration, the simple type `ST_TLTimeIndefinite` (ECMA-376 Part 1, section
-/// 19.7.40), kept as the text the file carried.
+/// 19.7.40), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct IndefiniteTimeDeclaration(pub String);
+pub enum IndefiniteTimeDeclaration {
+    /// A member, spelled as the class being written spells it.
+    Member(IndefiniteTimeDeclarationMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTimeIndefinite`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5602,19 +5620,20 @@ pub type IterateContent = IterateContentWith<()>;
 
 impl Eq for IterateContentWith<()> {}
 
-/// Iterate Type, the simple type `ST_IterateType` (ECMA-376 Part 1, section 19.7.4), kept as the
-/// text the file carried.
+/// Iterate Type, the simple type `ST_IterateType` (ECMA-376 Part 1, section 19.7.4), kept as its
+/// member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct IterateType(pub String);
+pub enum IterateType {
+    /// A member, spelled as the class being written spells it.
+    Member(IterateTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_IterateType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -5917,18 +5936,19 @@ pub type ListOfSlideMasterIDs = ListOfSlideMasterIDsWith<()>;
 impl Eq for ListOfSlideMasterIDsWith<()> {}
 
 /// List of View Types, the simple type `ST_ViewType` (ECMA-376 Part 1, section 19.7.55), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct ListOfViewTypes(pub String);
+pub enum ListOfViewTypes {
+    /// A member, spelled as the class being written spells it.
+    Member(ListOfViewTypesMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_ViewType`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6021,18 +6041,19 @@ pub type NewsflashSlideTransition = NewsflashSlideTransitionWith<()>;
 impl Eq for NewsflashSlideTransitionWith<()> {}
 
 /// Next Action Type, the simple type `ST_TLNextActionType` (ECMA-376 Part 1, section 19.7.34), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct NextActionType(pub String);
+pub enum NextActionType {
+    /// A member, spelled as the class being written spells it.
+    Member(NextActionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLNextActionType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6662,18 +6683,20 @@ pub type NotesViewProperties = NotesViewPropertiesWith<()>;
 
 impl Eq for NotesViewPropertiesWith<()> {}
 
-/// The simple type `ST_OleObjectFollowColorScheme`, kept as the text the file carried.
+/// The simple type `ST_OleObjectFollowColorScheme`, kept as its member or as the text the file
+/// carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct OleObjectFollowColorScheme(pub String);
+pub enum OleObjectFollowColorScheme {
+    /// A member, spelled as the class being written spells it.
+    Member(OleObjectFollowColorSchemeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_OleObjectFollowColorScheme`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6713,18 +6736,19 @@ pub type OutlineViewProperties = OutlineViewPropertiesWith<()>;
 impl Eq for OutlineViewPropertiesWith<()> {}
 
 /// Paragraph Build Type, the simple type `ST_TLParaBuildType` (ECMA-376 Part 1, section 19.7.36),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct ParagraphBuildType(pub String);
+pub enum ParagraphBuildType {
+    /// A member, spelled as the class being written spells it.
+    Member(ParagraphBuildTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLParaBuildType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6831,18 +6855,19 @@ pub type PhotoAlbumInformation = PhotoAlbumInformationWith<()>;
 impl Eq for PhotoAlbumInformationWith<()> {}
 
 /// Photo Album Layout Definition, the simple type `ST_PhotoAlbumLayout` (ECMA-376 Part 1, section
-/// 19.7.8), kept as the text the file carried.
+/// 19.7.8), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PhotoAlbumLayoutDefinition(pub String);
+pub enum PhotoAlbumLayoutDefinition {
+    /// A member, spelled as the class being written spells it.
+    Member(PhotoAlbumLayoutDefinitionMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PhotoAlbumLayout`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6865,18 +6890,19 @@ pub enum PhotoAlbumLayoutDefinitionMember {
 }
 
 /// Photo Album Shape for Photo Mask, the simple type `ST_PhotoAlbumFrameShape` (ECMA-376 Part 1,
-/// section 19.7.7), kept as the text the file carried.
+/// section 19.7.7), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PhotoAlbumShapeForPhotoMask(pub String);
+pub enum PhotoAlbumShapeForPhotoMask {
+    /// A member, spelled as the class being written spells it.
+    Member(PhotoAlbumShapeForPhotoMaskMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PhotoAlbumFrameShape`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -6955,18 +6981,19 @@ pub type PictureFill = PictureFillWith<()>;
 impl Eq for PictureFillWith<()> {}
 
 /// Placeholder IDs, the simple type `ST_PlaceholderType` (ECMA-376 Part 1, section 19.7.10), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PlaceholderIDs(pub String);
+pub enum PlaceholderIDs {
+    /// A member, spelled as the class being written spells it.
+    Member(PlaceholderIDsMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PlaceholderType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -7038,18 +7065,19 @@ pub type PlaceholderShape = PlaceholderShapeWith<()>;
 impl Eq for PlaceholderShapeWith<()> {}
 
 /// Placeholder Size, the simple type `ST_PlaceholderSize` (ECMA-376 Part 1, section 19.7.9), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PlaceholderSize(pub String);
+pub enum PlaceholderSize {
+    /// A member, spelled as the class being written spells it.
+    Member(PlaceholderSizeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PlaceholderSize`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -7415,18 +7443,19 @@ pub type PresenterSlideShowMode = PresenterSlideShowModeWith<()>;
 impl Eq for PresenterSlideShowModeWith<()> {}
 
 /// Previous Action Type, the simple type `ST_TLPreviousActionType` (ECMA-376 Part 1, section
-/// 19.7.37), kept as the text the file carried.
+/// 19.7.37), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PreviousActionType(pub String);
+pub enum PreviousActionType {
+    /// A member, spelled as the class being written spells it.
+    Member(PreviousActionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLPreviousActionType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -7459,18 +7488,19 @@ pub type PreviousConditionsList = PreviousConditionsListWith<()>;
 impl Eq for PreviousConditionsListWith<()> {}
 
 /// Print Color Mode, the simple type `ST_PrintColorMode` (ECMA-376 Part 1, section 19.7.11), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct PrintColorMode(pub String);
+pub enum PrintColorMode {
+    /// A member, spelled as the class being written spells it.
+    Member(PrintColorModeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_PrintColorMode`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -8170,18 +8200,19 @@ pub type SlideLayoutId = SlideLayoutIdWith<()>;
 impl Eq for SlideLayoutIdWith<()> {}
 
 /// Slide Layout Type, the simple type `ST_SlideLayoutType` (ECMA-376 Part 1, section 19.7.15), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SlideLayoutType(pub String);
+pub enum SlideLayoutType {
+    /// A member, spelled as the class being written spells it.
+    Member(SlideLayoutTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SlideLayoutType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -8528,18 +8559,19 @@ impl Eq for SlideRangeWith<()> {}
 pub struct SlideSizeCoordinate(pub String);
 
 /// Slide Size Type, the simple type `ST_SlideSizeType` (ECMA-376 Part 1, section 19.7.18), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SlideSizeType(pub String);
+pub enum SlideSizeType {
+    /// A member, spelled as the class being written spells it.
+    Member(SlideSizeTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SlideSizeType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -8955,18 +8987,19 @@ pub type SplitSlideTransition = SplitSlideTransitionWith<()>;
 impl Eq for SplitSlideTransitionWith<()> {}
 
 /// Splitter Bar State, the simple type `ST_SplitterBarState` (ECMA-376 Part 1, section 19.7.19),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SplitterBarState(pub String);
+pub enum SplitterBarState {
+    /// A member, spelled as the class being written spells it.
+    Member(SplitterBarStateMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SplitterBarState`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9133,18 +9166,20 @@ pub type Subshape = SubshapeWith<()>;
 
 impl Eq for SubshapeWith<()> {}
 
-/// The simple type `ST_TLAnimateBehaviorCalcMode`, kept as the text the file carried.
+/// The simple type `ST_TLAnimateBehaviorCalcMode`, kept as its member or as the text the file
+/// carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TLAnimateBehaviorCalcMode(pub String);
+pub enum TLAnimateBehaviorCalcMode {
+    /// A member, spelled as the class being written spells it.
+    Member(TLAnimateBehaviorCalcModeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLAnimateBehaviorCalcMode`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9158,18 +9193,20 @@ pub enum TLAnimateBehaviorCalcModeMember {
     Lin,
 }
 
-/// The simple type `ST_TLAnimateBehaviorValueType`, kept as the text the file carried.
+/// The simple type `ST_TLAnimateBehaviorValueType`, kept as its member or as the text the file
+/// carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TLAnimateBehaviorValueType(pub String);
+pub enum TLAnimateBehaviorValueType {
+    /// A member, spelled as the class being written spells it.
+    Member(TLAnimateBehaviorValueTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLAnimateBehaviorValueType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9183,18 +9220,20 @@ pub enum TLAnimateBehaviorValueTypeMember {
     Str,
 }
 
-/// The simple type `ST_TLAnimateMotionBehaviorOrigin`, kept as the text the file carried.
+/// The simple type `ST_TLAnimateMotionBehaviorOrigin`, kept as its member or as the text the file
+/// carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TLAnimateMotionBehaviorOrigin(pub String);
+pub enum TLAnimateMotionBehaviorOrigin {
+    /// A member, spelled as the class being written spells it.
+    Member(TLAnimateMotionBehaviorOriginMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLAnimateMotionBehaviorOrigin`, in alphabetical order.
 /// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9206,18 +9245,20 @@ pub enum TLAnimateMotionBehaviorOriginMember {
     Parent,
 }
 
-/// The simple type `ST_TLAnimateMotionPathEditMode`, kept as the text the file carried.
+/// The simple type `ST_TLAnimateMotionPathEditMode`, kept as its member or as the text the file
+/// carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TLAnimateMotionPathEditMode(pub String);
+pub enum TLAnimateMotionPathEditMode {
+    /// A member, spelled as the class being written spells it.
+    Member(TLAnimateMotionPathEditModeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLAnimateMotionPathEditMode`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9361,20 +9402,21 @@ pub type TextElementContent = TextElementContentWith<()>;
 
 impl Eq for TextElementContentWith<()> {}
 
-/// Time, the simple type `ST_TLTime` (ECMA-376 Part 1, section 19.7.38), kept as the text the file
-/// carried.
+/// Time, the simple type `ST_TLTime` (ECMA-376 Part 1, section 19.7.38), kept as its member or as
+/// the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct Time(pub String);
-/// The member types of `ST_TLTime`, in alphabetical order; `value` tries them in the schema's
+pub enum Time {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
+/// The member types of `ST_TLTime`, in alphabetical order; `parse` tries them in the schema's
 /// order.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
@@ -9474,18 +9516,19 @@ pub type TimeConditionContent = TimeConditionContentWith<()>;
 impl Eq for TimeConditionContentWith<()> {}
 
 /// Time List Animate Color Direction, the simple type `ST_TLAnimateColorDirection` (ECMA-376 Part
-/// 1, section 19.7.22), kept as the text the file carried.
+/// 1, section 19.7.22), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeListAnimateColorDirection(pub String);
+pub enum TimeListAnimateColorDirection {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeListAnimateColorDirectionMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLAnimateColorDirection`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9498,18 +9541,19 @@ pub enum TimeListAnimateColorDirectionMember {
 }
 
 /// Time List Animate Color Space, the simple type `ST_TLAnimateColorSpace` (ECMA-376 Part 1,
-/// section 19.7.23), kept as the text the file carried.
+/// section 19.7.23), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeListAnimateColorSpace(pub String);
+pub enum TimeListAnimateColorSpace {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeListAnimateColorSpaceMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLAnimateColorSpace`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9522,18 +9566,19 @@ pub enum TimeListAnimateColorSpaceMember {
 }
 
 /// Time List Animate Effect Transition, the simple type `ST_TLAnimateEffectTransition` (ECMA-376
-/// Part 1, section 19.7.24), kept as the text the file carried.
+/// Part 1, section 19.7.24), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeListAnimateEffectTransition(pub String);
+pub enum TimeListAnimateEffectTransition {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeListAnimateEffectTransitionMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLAnimateEffectTransition`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9567,18 +9612,19 @@ pub type TimeNode = TimeNodeWith<()>;
 impl Eq for TimeNodeWith<()> {}
 
 /// Time Node Fill Type, the simple type `ST_TLTimeNodeFillType` (ECMA-376 Part 1, section 19.7.41),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeNodeFillType(pub String);
+pub enum TimeNodeFillType {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeNodeFillTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTimeNodeFillType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9673,18 +9719,19 @@ pub type TimeNodeListContent = TimeNodeListContentWith<()>;
 impl Eq for TimeNodeListContentWith<()> {}
 
 /// Time Node Master Relation, the simple type `ST_TLTimeNodeMasterRelation` (ECMA-376 Part 1,
-/// section 19.7.43), kept as the text the file carried.
+/// section 19.7.43), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeNodeMasterRelation(pub String);
+pub enum TimeNodeMasterRelation {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeNodeMasterRelationMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTimeNodeMasterRelation`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9699,18 +9746,19 @@ pub enum TimeNodeMasterRelationMember {
 }
 
 /// Time Node Preset Class Type, the simple type `ST_TLTimeNodePresetClassType` (ECMA-376 Part 1,
-/// section 19.7.44), kept as the text the file carried.
+/// section 19.7.44), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeNodePresetClassType(pub String);
+pub enum TimeNodePresetClassType {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeNodePresetClassTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTimeNodePresetClassType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9731,18 +9779,19 @@ pub enum TimeNodePresetClassTypeMember {
 }
 
 /// Time Node Restart Type, the simple type `ST_TLTimeNodeRestartType` (ECMA-376 Part 1, section
-/// 19.7.45), kept as the text the file carried.
+/// 19.7.45), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeNodeRestartType(pub String);
+pub enum TimeNodeRestartType {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeNodeRestartTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTimeNodeRestartType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9757,18 +9806,19 @@ pub enum TimeNodeRestartTypeMember {
 }
 
 /// Time Node Sync Type, the simple type `ST_TLTimeNodeSyncType` (ECMA-376 Part 1, section 19.7.46),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeNodeSyncType(pub String);
+pub enum TimeNodeSyncType {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeNodeSyncTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTimeNodeSyncType`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9781,18 +9831,19 @@ pub enum TimeNodeSyncTypeMember {
 }
 
 /// Time Node Type, the simple type `ST_TLTimeNodeType` (ECMA-376 Part 1, section 19.7.47), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TimeNodeType(pub String);
+pub enum TimeNodeType {
+    /// A member, spelled as the class being written spells it.
+    Member(TimeNodeTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTimeNodeType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9897,18 +9948,19 @@ pub type ToTLAnimVariant = ToTLAnimVariantWith<()>;
 impl Eq for ToTLAnimVariantWith<()> {}
 
 /// Transition Corner Direction Type, the simple type `ST_TransitionCornerDirectionType` (ECMA-376
-/// Part 1, section 19.7.50), kept as the text the file carried.
+/// Part 1, section 19.7.50), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionCornerDirectionType(pub String);
+pub enum TransitionCornerDirectionType {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionCornerDirectionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TransitionCornerDirectionType`, in alphabetical order.
 /// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9925,19 +9977,20 @@ pub enum TransitionCornerDirectionTypeMember {
 }
 
 /// Transition Eight Direction, the simple type `ST_TransitionEightDirectionType` (ECMA-376 Part 1,
-/// section 19.7.51), kept as the text the file carried.
+/// section 19.7.51), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionEightDirection(pub String);
-/// The member types of `ST_TransitionEightDirectionType`, in alphabetical order; `value` tries them
+pub enum TransitionEightDirection {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionEightDirectionMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
+/// The member types of `ST_TransitionEightDirectionType`, in alphabetical order; `parse` tries them
 /// in the schema's order.
 #[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
@@ -9949,18 +10002,19 @@ pub enum TransitionEightDirectionMember {
 }
 
 /// Transition In/Out Direction Type, the simple type `ST_TransitionInOutDirectionType` (ECMA-376
-/// Part 1, section 19.7.52), kept as the text the file carried.
+/// Part 1, section 19.7.52), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionInOutDirectionType(pub String);
+pub enum TransitionInOutDirectionType {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionInOutDirectionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TransitionInOutDirectionType`, in alphabetical order.
 /// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -9973,18 +10027,19 @@ pub enum TransitionInOutDirectionTypeMember {
 }
 
 /// Transition Side Direction Type, the simple type `ST_TransitionSideDirectionType` (ECMA-376 Part
-/// 1, section 19.7.53), kept as the text the file carried.
+/// 1, section 19.7.53), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionSideDirectionType(pub String);
+pub enum TransitionSideDirectionType {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionSideDirectionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TransitionSideDirectionType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -10001,18 +10056,19 @@ pub enum TransitionSideDirectionTypeMember {
 }
 
 /// Transition Speed, the simple type `ST_TransitionSpeed` (ECMA-376 Part 1, section 19.7.54), kept
-/// as the text the file carried.
+/// as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionSpeed(pub String);
+pub enum TransitionSpeed {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionSpeedMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TransitionSpeed`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -10027,18 +10083,19 @@ pub enum TransitionSpeedMember {
 }
 
 /// Trigger Event, the simple type `ST_TLTriggerEvent` (ECMA-376 Part 1, section 19.7.48), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TriggerEvent(pub String);
+pub enum TriggerEvent {
+    /// A member, spelled as the class being written spells it.
+    Member(TriggerEventMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTriggerEvent`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -10069,18 +10126,19 @@ pub enum TriggerEventMember {
 }
 
 /// Trigger `RunTime` Node, the simple type `ST_TLTriggerRuntimeNode` (ECMA-376 Part 1, section
-/// 19.7.49), kept as the text the file carried.
+/// 19.7.49), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TriggerRunTimeNode(pub String);
+pub enum TriggerRunTimeNode {
+    /// A member, spelled as the class being written spells it.
+    Member(TriggerRunTimeNodeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TLTriggerRuntimeNode`, in alphabetical order. `as_str` gives
 /// the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -10878,44 +10936,95 @@ impl officekit_markup_base::Write for AnimateScale {
     }
 }
 
-impl AsRef<str> for AnimationTime {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(AnimationTime);
+
+impl Default for AnimationTime {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for AnimationTime {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
+    }
+}
+
+impl From<AnimationTimeMember> for AnimationTime {
+    fn from(member: AnimationTimeMember) -> Self {
+        Self::Member(member)
+    }
+}
+
+impl Eq for AnimationTime {}
+
+impl PartialEq for AnimationTime {
+    fn eq(&self, other: &Self) -> bool {
+        self.spelling(ConformanceClass::Transitional)
+            == other.spelling(ConformanceClass::Transitional)
+    }
+}
+
+impl Spelling for AnimationTime {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Owned(member.to_string()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for AnimationTimeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::StPositiveFixedPercentageDecimal(value) => write!(f, "{value}"),
+            Self::PositiveFixedPercentageValueWithSign(value) => write!(f, "{value}%"),
+            Self::IndefiniteTimeDeclaration(value) => write!(f, "{value}"),
+        }
     }
 }
 
 impl AnimationTime {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeAnimateValueTime`; the text stays stored.
-    pub fn value(&self) -> Result<AnimationTimeMember, ValueError> {
-        let member_1 = super::drawing::StPositiveFixedPercentageDecimal(self.0.clone());
-        if let Ok(value) = member_1.value() {
+    /// `ValueError` when `text` is no value of `ST_TLTimeAnimateValueTime`.
+    pub fn parse(text: &str) -> Result<AnimationTimeMember, ValueError> {
+        let member_1 = super::drawing::StPositiveFixedPercentageDecimal::parse(text);
+        if let Ok(value) = member_1 {
             return Ok(AnimationTimeMember::StPositiveFixedPercentageDecimal(value));
         }
-        let member_2 =
-            common_simple_types::PositiveFixedPercentageValueWithSign::from(self.0.clone());
-        if let Ok(value) = member_2.value() {
+        let member_2 = common_simple_types::PositiveFixedPercentageValueWithSign::parse(text);
+        if let Ok(value) = member_2 {
             return Ok(AnimationTimeMember::PositiveFixedPercentageValueWithSign(
                 value,
             ));
         }
-        let member_3 = IndefiniteTimeDeclaration(self.0.clone());
-        if let Ok(value) = member_3.value() {
+        let member_3 = IndefiniteTimeDeclaration::parse(text);
+        if let Ok(value) = member_3 {
             return Ok(AnimationTimeMember::IndefiniteTimeDeclaration(value));
         }
         Err(officekit_markup_base::invalid(
-            &self.0,
+            text,
             "ST_TLTimeAnimateValueTime",
         ))
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeAnimateValueTime`.
+    pub fn value(&self) -> Result<AnimationTimeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(member.clone()),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -11326,21 +11435,42 @@ impl officekit_markup_base::Write for BackgroundStyleReference {
     }
 }
 
-impl AsRef<str> for BehaviorAccumulateType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(BehaviorAccumulateType);
+
+impl Default for BehaviorAccumulateType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BehaviorAccumulateType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BehaviorAccumulateTypeMember> for BehaviorAccumulateType {
     fn from(member: BehaviorAccumulateTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BehaviorAccumulateType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BehaviorAccumulateTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -11363,35 +11493,68 @@ impl BehaviorAccumulateTypeMember {
 }
 
 impl BehaviorAccumulateType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLBehaviorAccumulateType`; the text stays stored.
-    pub fn value(&self) -> Result<BehaviorAccumulateTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLBehaviorAccumulateType`.
+    pub fn parse(text: &str) -> Result<BehaviorAccumulateTypeMember, ValueError> {
         officekit_markup_base::member(
             BehaviorAccumulateTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLBehaviorAccumulateType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLBehaviorAccumulateType`.
+    pub fn value(&self) -> Result<BehaviorAccumulateTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for BehaviorAdditiveType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(BehaviorAdditiveType);
+
+impl Default for BehaviorAdditiveType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BehaviorAdditiveType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BehaviorAdditiveTypeMember> for BehaviorAdditiveType {
     fn from(member: BehaviorAdditiveTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BehaviorAdditiveType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BehaviorAdditiveTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -11419,35 +11582,68 @@ impl BehaviorAdditiveTypeMember {
 }
 
 impl BehaviorAdditiveType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLBehaviorAdditiveType`; the text stays stored.
-    pub fn value(&self) -> Result<BehaviorAdditiveTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLBehaviorAdditiveType`.
+    pub fn parse(text: &str) -> Result<BehaviorAdditiveTypeMember, ValueError> {
         officekit_markup_base::member(
             BehaviorAdditiveTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLBehaviorAdditiveType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLBehaviorAdditiveType`.
+    pub fn value(&self) -> Result<BehaviorAdditiveTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for BehaviorOverrideType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(BehaviorOverrideType);
+
+impl Default for BehaviorOverrideType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BehaviorOverrideType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BehaviorOverrideTypeMember> for BehaviorOverrideType {
     fn from(member: BehaviorOverrideTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BehaviorOverrideType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BehaviorOverrideTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -11472,35 +11668,68 @@ impl BehaviorOverrideTypeMember {
 }
 
 impl BehaviorOverrideType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLBehaviorOverrideType`; the text stays stored.
-    pub fn value(&self) -> Result<BehaviorOverrideTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLBehaviorOverrideType`.
+    pub fn parse(text: &str) -> Result<BehaviorOverrideTypeMember, ValueError> {
         officekit_markup_base::member(
             BehaviorOverrideTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLBehaviorOverrideType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLBehaviorOverrideType`.
+    pub fn value(&self) -> Result<BehaviorOverrideTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for BehaviorTransformType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(BehaviorTransformType);
+
+impl Default for BehaviorTransformType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BehaviorTransformType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BehaviorTransformTypeMember> for BehaviorTransformType {
     fn from(member: BehaviorTransformTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BehaviorTransformType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BehaviorTransformTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -11523,17 +11752,29 @@ impl BehaviorTransformTypeMember {
 }
 
 impl BehaviorTransformType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLBehaviorTransformType`; the text stays stored.
-    pub fn value(&self) -> Result<BehaviorTransformTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLBehaviorTransformType`.
+    pub fn parse(text: &str) -> Result<BehaviorTransformTypeMember, ValueError> {
         officekit_markup_base::member(
             BehaviorTransformTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLBehaviorTransformType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLBehaviorTransformType`.
+    pub fn value(&self) -> Result<BehaviorTransformTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -11696,14 +11937,29 @@ impl From<String> for BookmarkIDSeed {
     }
 }
 
+impl Spelling for BookmarkIDSeed {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl BookmarkIDSeed {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_BookmarkIdSeed`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 1, 0x7FFF_FFFF, "ST_BookmarkIdSeed")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_BookmarkIdSeed`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 1, 0x7FFF_FFFF, "ST_BookmarkIdSeed")
+        Self::parse(&self.0)
     }
 }
 
@@ -12483,21 +12739,42 @@ impl officekit_markup_base::Write for CharacterRange {
     }
 }
 
-impl AsRef<str> for ChartSubelementType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(ChartSubelementType);
+
+impl Default for ChartSubelementType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for ChartSubelementType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<ChartSubelementTypeMember> for ChartSubelementType {
     fn from(member: ChartSubelementTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for ChartSubelementType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for ChartSubelementTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -12525,17 +12802,29 @@ impl ChartSubelementTypeMember {
 }
 
 impl ChartSubelementType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLChartSubelementType`; the text stays stored.
-    pub fn value(&self) -> Result<ChartSubelementTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLChartSubelementType`.
+    pub fn parse(text: &str) -> Result<ChartSubelementTypeMember, ValueError> {
         officekit_markup_base::member(
             ChartSubelementTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLChartSubelementType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLChartSubelementType`.
+    pub fn value(&self) -> Result<ChartSubelementTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -13008,21 +13297,42 @@ impl officekit_markup_base::Write for Command {
     }
 }
 
-impl AsRef<str> for CommandType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(CommandType);
+
+impl Default for CommandType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for CommandType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<CommandTypeMember> for CommandType {
     fn from(member: CommandTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for CommandType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for CommandTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -13048,13 +13358,25 @@ impl CommandTypeMember {
 }
 
 impl CommandType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLCommandType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_TLCommandType`.
+    pub fn parse(text: &str) -> Result<CommandTypeMember, ValueError> {
+        officekit_markup_base::member(CommandTypeMember::MEMBERS, text, "ST_TLCommandType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLCommandType`.
     pub fn value(&self) -> Result<CommandTypeMember, ValueError> {
-        officekit_markup_base::member(CommandTypeMember::MEMBERS, &self.0, "ST_TLCommandType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -14299,21 +14621,42 @@ impl officekit_markup_base::Write for CutSlideTransition {
     }
 }
 
-impl AsRef<str> for DefaultPrintOutput {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(DefaultPrintOutput);
+
+impl Default for DefaultPrintOutput {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for DefaultPrintOutput {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<DefaultPrintOutputMember> for DefaultPrintOutput {
     fn from(member: DefaultPrintOutputMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for DefaultPrintOutput {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for DefaultPrintOutputMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14345,31 +14688,64 @@ impl DefaultPrintOutputMember {
 }
 
 impl DefaultPrintOutput {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PrintWhat`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_PrintWhat`.
+    pub fn parse(text: &str) -> Result<DefaultPrintOutputMember, ValueError> {
+        officekit_markup_base::member(DefaultPrintOutputMember::MEMBERS, text, "ST_PrintWhat")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PrintWhat`.
     pub fn value(&self) -> Result<DefaultPrintOutputMember, ValueError> {
-        officekit_markup_base::member(DefaultPrintOutputMember::MEMBERS, &self.0, "ST_PrintWhat")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for DiagramBuildTypes {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(DiagramBuildTypes);
+
+impl Default for DiagramBuildTypes {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for DiagramBuildTypes {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<DiagramBuildTypesMember> for DiagramBuildTypes {
     fn from(member: DiagramBuildTypesMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for DiagramBuildTypes {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for DiagramBuildTypesMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14409,17 +14785,29 @@ impl DiagramBuildTypesMember {
 }
 
 impl DiagramBuildTypes {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLDiagramBuildType`; the text stays stored.
-    pub fn value(&self) -> Result<DiagramBuildTypesMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLDiagramBuildType`.
+    pub fn parse(text: &str) -> Result<DiagramBuildTypesMember, ValueError> {
         officekit_markup_base::member(
             DiagramBuildTypesMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLDiagramBuildType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLDiagramBuildType`.
+    pub fn value(&self) -> Result<DiagramBuildTypesMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -14468,21 +14856,42 @@ impl officekit_markup_base::Write for DiamondSlideTransition {
     }
 }
 
-impl AsRef<str> for Direction {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(Direction);
+
+impl Default for Direction {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for Direction {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<DirectionMember> for Direction {
     fn from(member: DirectionMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for Direction {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for DirectionMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14505,13 +14914,25 @@ impl DirectionMember {
 }
 
 impl Direction {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_Direction`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_Direction`.
+    pub fn parse(text: &str) -> Result<DirectionMember, ValueError> {
+        officekit_markup_base::member(DirectionMember::MEMBERS, text, "ST_Direction")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_Direction`.
     pub fn value(&self) -> Result<DirectionMember, ValueError> {
-        officekit_markup_base::member(DirectionMember::MEMBERS, &self.0, "ST_Direction")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -14560,21 +14981,42 @@ impl officekit_markup_base::Write for DissolveSlideTransition {
     }
 }
 
-impl AsRef<str> for EmbeddedChartBuildType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(EmbeddedChartBuildType);
+
+impl Default for EmbeddedChartBuildType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for EmbeddedChartBuildType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<EmbeddedChartBuildTypeMember> for EmbeddedChartBuildType {
     fn from(member: EmbeddedChartBuildTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for EmbeddedChartBuildType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for EmbeddedChartBuildTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -14602,17 +15044,29 @@ impl EmbeddedChartBuildTypeMember {
 }
 
 impl EmbeddedChartBuildType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLOleChartBuildType`; the text stays stored.
-    pub fn value(&self) -> Result<EmbeddedChartBuildTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLOleChartBuildType`.
+    pub fn parse(text: &str) -> Result<EmbeddedChartBuildTypeMember, ValueError> {
         officekit_markup_base::member(
             EmbeddedChartBuildTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLOleChartBuildType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLOleChartBuildType`.
+    pub fn value(&self) -> Result<EmbeddedChartBuildTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -16057,21 +16511,42 @@ impl officekit_markup_base::Write for HTMLPublishingProperties {
     }
 }
 
-impl AsRef<str> for HTMLSlideNavigationControlColors {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(HTMLSlideNavigationControlColors);
+
+impl Default for HTMLSlideNavigationControlColors {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for HTMLSlideNavigationControlColors {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<HTMLSlideNavigationControlColorsMember> for HTMLSlideNavigationControlColors {
     fn from(member: HTMLSlideNavigationControlColorsMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for HTMLSlideNavigationControlColors {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for HTMLSlideNavigationControlColorsMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -16100,35 +16575,68 @@ impl HTMLSlideNavigationControlColorsMember {
 }
 
 impl HTMLSlideNavigationControlColors {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_WebColorType`; the text stays stored.
-    pub fn value(&self) -> Result<HTMLSlideNavigationControlColorsMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_WebColorType`.
+    pub fn parse(text: &str) -> Result<HTMLSlideNavigationControlColorsMember, ValueError> {
         officekit_markup_base::member(
             HTMLSlideNavigationControlColorsMember::MEMBERS,
-            &self.0,
+            text,
             "ST_WebColorType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_WebColorType`.
+    pub fn value(&self) -> Result<HTMLSlideNavigationControlColorsMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for HTMLWebScreenSizeTarget {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(HTMLWebScreenSizeTarget);
+
+impl Default for HTMLWebScreenSizeTarget {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for HTMLWebScreenSizeTarget {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<HTMLWebScreenSizeTargetMember> for HTMLWebScreenSizeTarget {
     fn from(member: HTMLWebScreenSizeTargetMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for HTMLWebScreenSizeTarget {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for HTMLWebScreenSizeTargetMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -16162,17 +16670,29 @@ impl HTMLWebScreenSizeTargetMember {
 }
 
 impl HTMLWebScreenSizeTarget {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_WebScreenSize`; the text stays stored.
-    pub fn value(&self) -> Result<HTMLWebScreenSizeTargetMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_WebScreenSize`.
+    pub fn parse(text: &str) -> Result<HTMLWebScreenSizeTargetMember, ValueError> {
         officekit_markup_base::member(
             HTMLWebScreenSizeTargetMember::MEMBERS,
-            &self.0,
+            text,
             "ST_WebScreenSize",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_WebScreenSize`.
+    pub fn value(&self) -> Result<HTMLWebScreenSizeTargetMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -16403,21 +16923,42 @@ impl officekit_markup_base::Write for Hsl {
     }
 }
 
-impl AsRef<str> for IndefiniteTimeDeclaration {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(IndefiniteTimeDeclaration);
+
+impl Default for IndefiniteTimeDeclaration {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for IndefiniteTimeDeclaration {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<IndefiniteTimeDeclarationMember> for IndefiniteTimeDeclaration {
     fn from(member: IndefiniteTimeDeclarationMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for IndefiniteTimeDeclaration {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for IndefiniteTimeDeclarationMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -16440,17 +16981,29 @@ impl IndefiniteTimeDeclarationMember {
 }
 
 impl IndefiniteTimeDeclaration {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeIndefinite`; the text stays stored.
-    pub fn value(&self) -> Result<IndefiniteTimeDeclarationMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLTimeIndefinite`.
+    pub fn parse(text: &str) -> Result<IndefiniteTimeDeclarationMember, ValueError> {
         officekit_markup_base::member(
             IndefiniteTimeDeclarationMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLTimeIndefinite",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeIndefinite`.
+    pub fn value(&self) -> Result<IndefiniteTimeDeclarationMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -16466,14 +17019,29 @@ impl From<String> for Index {
     }
 }
 
+impl Spelling for Index {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl Index {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_Index`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 0, 0xFFFF_FFFF, "ST_Index")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_Index`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 0, 0xFFFF_FFFF, "ST_Index")
+        Self::parse(&self.0)
     }
 }
 
@@ -16741,21 +17309,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for IterateType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(IterateType);
+
+impl Default for IterateType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for IterateType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<IterateTypeMember> for IterateType {
     fn from(member: IterateTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for IterateType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for IterateTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -16781,13 +17370,25 @@ impl IterateTypeMember {
 }
 
 impl IterateType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_IterateType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_IterateType`.
+    pub fn parse(text: &str) -> Result<IterateTypeMember, ValueError> {
+        officekit_markup_base::member(IterateTypeMember::MEMBERS, text, "ST_IterateType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_IterateType`.
     pub fn value(&self) -> Result<IterateTypeMember, ValueError> {
-        officekit_markup_base::member(IterateTypeMember::MEMBERS, &self.0, "ST_IterateType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -17486,21 +18087,42 @@ impl officekit_markup_base::Write for ListOfSlideMasterIDs {
     }
 }
 
-impl AsRef<str> for ListOfViewTypes {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(ListOfViewTypes);
+
+impl Default for ListOfViewTypes {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for ListOfViewTypes {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<ListOfViewTypesMember> for ListOfViewTypes {
     fn from(member: ListOfViewTypesMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for ListOfViewTypes {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for ListOfViewTypesMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -17531,13 +18153,25 @@ impl ListOfViewTypesMember {
 }
 
 impl ListOfViewTypes {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_ViewType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_ViewType`.
+    pub fn parse(text: &str) -> Result<ListOfViewTypesMember, ValueError> {
+        officekit_markup_base::member(ListOfViewTypesMember::MEMBERS, text, "ST_ViewType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_ViewType`.
     pub fn value(&self) -> Result<ListOfViewTypesMember, ValueError> {
-        officekit_markup_base::member(ListOfViewTypesMember::MEMBERS, &self.0, "ST_ViewType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -17665,21 +18299,42 @@ impl officekit_markup_base::Write for NewsflashSlideTransition {
     }
 }
 
-impl AsRef<str> for NextActionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(NextActionType);
+
+impl Default for NextActionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for NextActionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<NextActionTypeMember> for NextActionType {
     fn from(member: NextActionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for NextActionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for NextActionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -17702,17 +18357,25 @@ impl NextActionTypeMember {
 }
 
 impl NextActionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLNextActionType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_TLNextActionType`.
+    pub fn parse(text: &str) -> Result<NextActionTypeMember, ValueError> {
+        officekit_markup_base::member(NextActionTypeMember::MEMBERS, text, "ST_TLNextActionType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLNextActionType`.
     pub fn value(&self) -> Result<NextActionTypeMember, ValueError> {
-        officekit_markup_base::member(
-            NextActionTypeMember::MEMBERS,
-            &self.0,
-            "ST_TLNextActionType",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -19167,21 +19830,42 @@ impl officekit_markup_base::Write for NotesViewProperties {
     }
 }
 
-impl AsRef<str> for OleObjectFollowColorScheme {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(OleObjectFollowColorScheme);
+
+impl Default for OleObjectFollowColorScheme {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for OleObjectFollowColorScheme {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<OleObjectFollowColorSchemeMember> for OleObjectFollowColorScheme {
     fn from(member: OleObjectFollowColorSchemeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for OleObjectFollowColorScheme {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for OleObjectFollowColorSchemeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -19207,17 +19891,29 @@ impl OleObjectFollowColorSchemeMember {
 }
 
 impl OleObjectFollowColorScheme {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_OleObjectFollowColorScheme`; the text stays stored.
-    pub fn value(&self) -> Result<OleObjectFollowColorSchemeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_OleObjectFollowColorScheme`.
+    pub fn parse(text: &str) -> Result<OleObjectFollowColorSchemeMember, ValueError> {
         officekit_markup_base::member(
             OleObjectFollowColorSchemeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_OleObjectFollowColorScheme",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_OleObjectFollowColorScheme`.
+    pub fn value(&self) -> Result<OleObjectFollowColorSchemeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -19279,21 +19975,42 @@ impl officekit_markup_base::Write for OutlineViewProperties {
     }
 }
 
-impl AsRef<str> for ParagraphBuildType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(ParagraphBuildType);
+
+impl Default for ParagraphBuildType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for ParagraphBuildType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<ParagraphBuildTypeMember> for ParagraphBuildType {
     fn from(member: ParagraphBuildTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for ParagraphBuildType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for ParagraphBuildTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -19320,17 +20037,29 @@ impl ParagraphBuildTypeMember {
 }
 
 impl ParagraphBuildType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLParaBuildType`; the text stays stored.
-    pub fn value(&self) -> Result<ParagraphBuildTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLParaBuildType`.
+    pub fn parse(text: &str) -> Result<ParagraphBuildTypeMember, ValueError> {
         officekit_markup_base::member(
             ParagraphBuildTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLParaBuildType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLParaBuildType`.
+    pub fn value(&self) -> Result<ParagraphBuildTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -19542,21 +20271,42 @@ impl officekit_markup_base::Write for PhotoAlbumInformation {
     }
 }
 
-impl AsRef<str> for PhotoAlbumLayoutDefinition {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PhotoAlbumLayoutDefinition);
+
+impl Default for PhotoAlbumLayoutDefinition {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PhotoAlbumLayoutDefinition {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PhotoAlbumLayoutDefinitionMember> for PhotoAlbumLayoutDefinition {
     fn from(member: PhotoAlbumLayoutDefinitionMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PhotoAlbumLayoutDefinition {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PhotoAlbumLayoutDefinitionMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -19586,35 +20336,68 @@ impl PhotoAlbumLayoutDefinitionMember {
 }
 
 impl PhotoAlbumLayoutDefinition {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PhotoAlbumLayout`; the text stays stored.
-    pub fn value(&self) -> Result<PhotoAlbumLayoutDefinitionMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_PhotoAlbumLayout`.
+    pub fn parse(text: &str) -> Result<PhotoAlbumLayoutDefinitionMember, ValueError> {
         officekit_markup_base::member(
             PhotoAlbumLayoutDefinitionMember::MEMBERS,
-            &self.0,
+            text,
             "ST_PhotoAlbumLayout",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PhotoAlbumLayout`.
+    pub fn value(&self) -> Result<PhotoAlbumLayoutDefinitionMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for PhotoAlbumShapeForPhotoMask {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PhotoAlbumShapeForPhotoMask);
+
+impl Default for PhotoAlbumShapeForPhotoMask {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PhotoAlbumShapeForPhotoMask {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PhotoAlbumShapeForPhotoMaskMember> for PhotoAlbumShapeForPhotoMask {
     fn from(member: PhotoAlbumShapeForPhotoMaskMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PhotoAlbumShapeForPhotoMask {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PhotoAlbumShapeForPhotoMaskMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -19644,17 +20427,29 @@ impl PhotoAlbumShapeForPhotoMaskMember {
 }
 
 impl PhotoAlbumShapeForPhotoMask {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PhotoAlbumFrameShape`; the text stays stored.
-    pub fn value(&self) -> Result<PhotoAlbumShapeForPhotoMaskMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_PhotoAlbumFrameShape`.
+    pub fn parse(text: &str) -> Result<PhotoAlbumShapeForPhotoMaskMember, ValueError> {
         officekit_markup_base::member(
             PhotoAlbumShapeForPhotoMaskMember::MEMBERS,
-            &self.0,
+            text,
             "ST_PhotoAlbumFrameShape",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PhotoAlbumFrameShape`.
+    pub fn value(&self) -> Result<PhotoAlbumShapeForPhotoMaskMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -19786,21 +20581,42 @@ impl officekit_markup_base::Write for PictureFill {
     }
 }
 
-impl AsRef<str> for PlaceholderIDs {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PlaceholderIDs);
+
+impl Default for PlaceholderIDs {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PlaceholderIDs {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PlaceholderIDsMember> for PlaceholderIDs {
     fn from(member: PlaceholderIDsMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PlaceholderIDs {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PlaceholderIDsMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -19839,13 +20655,25 @@ impl PlaceholderIDsMember {
 }
 
 impl PlaceholderIDs {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PlaceholderType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_PlaceholderType`.
+    pub fn parse(text: &str) -> Result<PlaceholderIDsMember, ValueError> {
+        officekit_markup_base::member(PlaceholderIDsMember::MEMBERS, text, "ST_PlaceholderType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PlaceholderType`.
     pub fn value(&self) -> Result<PlaceholderIDsMember, ValueError> {
-        officekit_markup_base::member(PlaceholderIDsMember::MEMBERS, &self.0, "ST_PlaceholderType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -19910,21 +20738,42 @@ impl officekit_markup_base::Write for PlaceholderShape {
     }
 }
 
-impl AsRef<str> for PlaceholderSize {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PlaceholderSize);
+
+impl Default for PlaceholderSize {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PlaceholderSize {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PlaceholderSizeMember> for PlaceholderSize {
     fn from(member: PlaceholderSizeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PlaceholderSize {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PlaceholderSizeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -19950,17 +20799,25 @@ impl PlaceholderSizeMember {
 }
 
 impl PlaceholderSize {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PlaceholderSize`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_PlaceholderSize`.
+    pub fn parse(text: &str) -> Result<PlaceholderSizeMember, ValueError> {
+        officekit_markup_base::member(PlaceholderSizeMember::MEMBERS, text, "ST_PlaceholderSize")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PlaceholderSize`.
     pub fn value(&self) -> Result<PlaceholderSizeMember, ValueError> {
-        officekit_markup_base::member(
-            PlaceholderSizeMember::MEMBERS,
-            &self.0,
-            "ST_PlaceholderSize",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -20723,21 +21580,42 @@ impl officekit_markup_base::Write for PresenterSlideShowMode {
     }
 }
 
-impl AsRef<str> for PreviousActionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PreviousActionType);
+
+impl Default for PreviousActionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PreviousActionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PreviousActionTypeMember> for PreviousActionType {
     fn from(member: PreviousActionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PreviousActionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PreviousActionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -20762,17 +21640,29 @@ impl PreviousActionTypeMember {
 }
 
 impl PreviousActionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLPreviousActionType`; the text stays stored.
-    pub fn value(&self) -> Result<PreviousActionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLPreviousActionType`.
+    pub fn parse(text: &str) -> Result<PreviousActionTypeMember, ValueError> {
         officekit_markup_base::member(
             PreviousActionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLPreviousActionType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLPreviousActionType`.
+    pub fn value(&self) -> Result<PreviousActionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -20825,21 +21715,42 @@ impl officekit_markup_base::Write for PreviousConditionsList {
     }
 }
 
-impl AsRef<str> for PrintColorMode {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(PrintColorMode);
+
+impl Default for PrintColorMode {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for PrintColorMode {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<PrintColorModeMember> for PrintColorMode {
     fn from(member: PrintColorModeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for PrintColorMode {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for PrintColorModeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -20865,13 +21776,25 @@ impl PrintColorModeMember {
 }
 
 impl PrintColorMode {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_PrintColorMode`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_PrintColorMode`.
+    pub fn parse(text: &str) -> Result<PrintColorModeMember, ValueError> {
+        officekit_markup_base::member(PrintColorModeMember::MEMBERS, text, "ST_PrintColorMode")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_PrintColorMode`.
     pub fn value(&self) -> Result<PrintColorModeMember, ValueError> {
-        officekit_markup_base::member(PrintColorModeMember::MEMBERS, &self.0, "ST_PrintColorMode")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -22325,14 +23248,29 @@ impl From<String> for SlideIdentifier {
     }
 }
 
+impl Spelling for SlideIdentifier {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl SlideIdentifier {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_SlideId`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 256, 0x7FFF_FFFF, "ST_SlideId")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_SlideId`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 256, 0x7FFF_FFFF, "ST_SlideId")
+        Self::parse(&self.0)
     }
 }
 
@@ -22432,14 +23370,29 @@ impl From<String> for SlideLayoutID {
     }
 }
 
+impl Spelling for SlideLayoutID {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl SlideLayoutID {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_SlideLayoutId`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 0x8000_0000, 0xFFFF_FFFF, "ST_SlideLayoutId")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_SlideLayoutId`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 0x8000_0000, 0xFFFF_FFFF, "ST_SlideLayoutId")
+        Self::parse(&self.0)
     }
 }
 
@@ -22498,21 +23451,42 @@ impl officekit_markup_base::Write for SlideLayoutId {
     }
 }
 
-impl AsRef<str> for SlideLayoutType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SlideLayoutType);
+
+impl Default for SlideLayoutType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SlideLayoutType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SlideLayoutTypeMember> for SlideLayoutType {
     fn from(member: SlideLayoutTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SlideLayoutType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SlideLayoutTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -22575,17 +23549,25 @@ impl SlideLayoutTypeMember {
 }
 
 impl SlideLayoutType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SlideLayoutType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_SlideLayoutType`.
+    pub fn parse(text: &str) -> Result<SlideLayoutTypeMember, ValueError> {
+        officekit_markup_base::member(SlideLayoutTypeMember::MEMBERS, text, "ST_SlideLayoutType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SlideLayoutType`.
     pub fn value(&self) -> Result<SlideLayoutTypeMember, ValueError> {
-        officekit_markup_base::member(
-            SlideLayoutTypeMember::MEMBERS,
-            &self.0,
-            "ST_SlideLayoutType",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -23189,32 +24171,68 @@ impl From<String> for SlideSizeCoordinate {
     }
 }
 
+impl Spelling for SlideSizeCoordinate {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl SlideSizeCoordinate {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_SlideSizeCoordinate`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 914_400, 51_206_400, "ST_SlideSizeCoordinate")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_SlideSizeCoordinate`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 914_400, 51_206_400, "ST_SlideSizeCoordinate")
+        Self::parse(&self.0)
     }
 }
 
-impl AsRef<str> for SlideSizeType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SlideSizeType);
+
+impl Default for SlideSizeType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SlideSizeType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SlideSizeTypeMember> for SlideSizeType {
     fn from(member: SlideSizeTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SlideSizeType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SlideSizeTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -23253,13 +24271,25 @@ impl SlideSizeTypeMember {
 }
 
 impl SlideSizeType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SlideSizeType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_SlideSizeType`.
+    pub fn parse(text: &str) -> Result<SlideSizeTypeMember, ValueError> {
+        officekit_markup_base::member(SlideSizeTypeMember::MEMBERS, text, "ST_SlideSizeType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SlideSizeType`.
     pub fn value(&self) -> Result<SlideSizeTypeMember, ValueError> {
-        officekit_markup_base::member(SlideSizeTypeMember::MEMBERS, &self.0, "ST_SlideSizeType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -24334,21 +25364,42 @@ impl officekit_markup_base::Write for SplitSlideTransition {
     }
 }
 
-impl AsRef<str> for SplitterBarState {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SplitterBarState);
+
+impl Default for SplitterBarState {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SplitterBarState {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SplitterBarStateMember> for SplitterBarState {
     fn from(member: SplitterBarStateMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SplitterBarState {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SplitterBarStateMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -24374,17 +25425,25 @@ impl SplitterBarStateMember {
 }
 
 impl SplitterBarState {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SplitterBarState`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_SplitterBarState`.
+    pub fn parse(text: &str) -> Result<SplitterBarStateMember, ValueError> {
+        officekit_markup_base::member(SplitterBarStateMember::MEMBERS, text, "ST_SplitterBarState")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SplitterBarState`.
     pub fn value(&self) -> Result<SplitterBarStateMember, ValueError> {
-        officekit_markup_base::member(
-            SplitterBarStateMember::MEMBERS,
-            &self.0,
-            "ST_SplitterBarState",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -24400,14 +25459,29 @@ impl From<String> for StSlideMasterId {
     }
 }
 
+impl Spelling for StSlideMasterId {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl StSlideMasterId {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_SlideMasterId`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 0x8000_0000, 0xFFFF_FFFF, "ST_SlideMasterId")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_SlideMasterId`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 0x8000_0000, 0xFFFF_FFFF, "ST_SlideMasterId")
+        Self::parse(&self.0)
     }
 }
 
@@ -24754,21 +25828,42 @@ impl officekit_markup_base::Write for Subshape {
     }
 }
 
-impl AsRef<str> for TLAnimateBehaviorCalcMode {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TLAnimateBehaviorCalcMode);
+
+impl Default for TLAnimateBehaviorCalcMode {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TLAnimateBehaviorCalcMode {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TLAnimateBehaviorCalcModeMember> for TLAnimateBehaviorCalcMode {
     fn from(member: TLAnimateBehaviorCalcModeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TLAnimateBehaviorCalcMode {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TLAnimateBehaviorCalcModeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -24794,35 +25889,68 @@ impl TLAnimateBehaviorCalcModeMember {
 }
 
 impl TLAnimateBehaviorCalcMode {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLAnimateBehaviorCalcMode`; the text stays stored.
-    pub fn value(&self) -> Result<TLAnimateBehaviorCalcModeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLAnimateBehaviorCalcMode`.
+    pub fn parse(text: &str) -> Result<TLAnimateBehaviorCalcModeMember, ValueError> {
         officekit_markup_base::member(
             TLAnimateBehaviorCalcModeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLAnimateBehaviorCalcMode",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLAnimateBehaviorCalcMode`.
+    pub fn value(&self) -> Result<TLAnimateBehaviorCalcModeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TLAnimateBehaviorValueType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TLAnimateBehaviorValueType);
+
+impl Default for TLAnimateBehaviorValueType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TLAnimateBehaviorValueType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TLAnimateBehaviorValueTypeMember> for TLAnimateBehaviorValueType {
     fn from(member: TLAnimateBehaviorValueTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TLAnimateBehaviorValueType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TLAnimateBehaviorValueTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -24848,35 +25976,68 @@ impl TLAnimateBehaviorValueTypeMember {
 }
 
 impl TLAnimateBehaviorValueType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLAnimateBehaviorValueType`; the text stays stored.
-    pub fn value(&self) -> Result<TLAnimateBehaviorValueTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLAnimateBehaviorValueType`.
+    pub fn parse(text: &str) -> Result<TLAnimateBehaviorValueTypeMember, ValueError> {
         officekit_markup_base::member(
             TLAnimateBehaviorValueTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLAnimateBehaviorValueType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLAnimateBehaviorValueType`.
+    pub fn value(&self) -> Result<TLAnimateBehaviorValueTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TLAnimateMotionBehaviorOrigin {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TLAnimateMotionBehaviorOrigin);
+
+impl Default for TLAnimateMotionBehaviorOrigin {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TLAnimateMotionBehaviorOrigin {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TLAnimateMotionBehaviorOriginMember> for TLAnimateMotionBehaviorOrigin {
     fn from(member: TLAnimateMotionBehaviorOriginMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TLAnimateMotionBehaviorOrigin {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TLAnimateMotionBehaviorOriginMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -24901,35 +26062,68 @@ impl TLAnimateMotionBehaviorOriginMember {
 }
 
 impl TLAnimateMotionBehaviorOrigin {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLAnimateMotionBehaviorOrigin`; the text stays stored.
-    pub fn value(&self) -> Result<TLAnimateMotionBehaviorOriginMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLAnimateMotionBehaviorOrigin`.
+    pub fn parse(text: &str) -> Result<TLAnimateMotionBehaviorOriginMember, ValueError> {
         officekit_markup_base::member(
             TLAnimateMotionBehaviorOriginMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLAnimateMotionBehaviorOrigin",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLAnimateMotionBehaviorOrigin`.
+    pub fn value(&self) -> Result<TLAnimateMotionBehaviorOriginMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TLAnimateMotionPathEditMode {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TLAnimateMotionPathEditMode);
+
+impl Default for TLAnimateMotionPathEditMode {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TLAnimateMotionPathEditMode {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TLAnimateMotionPathEditModeMember> for TLAnimateMotionPathEditMode {
     fn from(member: TLAnimateMotionPathEditModeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TLAnimateMotionPathEditMode {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TLAnimateMotionPathEditModeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -24954,17 +26148,29 @@ impl TLAnimateMotionPathEditModeMember {
 }
 
 impl TLAnimateMotionPathEditMode {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLAnimateMotionPathEditMode`; the text stays stored.
-    pub fn value(&self) -> Result<TLAnimateMotionPathEditModeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLAnimateMotionPathEditMode`.
+    pub fn parse(text: &str) -> Result<TLAnimateMotionPathEditModeMember, ValueError> {
         officekit_markup_base::member(
             TLAnimateMotionPathEditModeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLAnimateMotionPathEditMode",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLAnimateMotionPathEditMode`.
+    pub fn value(&self) -> Result<TLAnimateMotionPathEditModeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -25325,34 +26531,76 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for Time {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(Time);
+
+impl Default for Time {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for Time {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
+    }
+}
+
+impl From<TimeMember> for Time {
+    fn from(member: TimeMember) -> Self {
+        Self::Member(member)
+    }
+}
+
+impl Spelling for Time {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Owned(member.to_string()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::UnsignedInt(value) => write!(f, "{value}"),
+            Self::IndefiniteTimeDeclaration(value) => write!(f, "{value}"),
+        }
     }
 }
 
 impl Time {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTime`; the text stays stored.
-    pub fn value(&self) -> Result<TimeMember, ValueError> {
-        let member_1 = officekit_markup_base::integer(&self.0, 0, 0xFFFF_FFFF, "ST_TLTime");
+    /// `ValueError` when `text` is no value of `ST_TLTime`.
+    pub fn parse(text: &str) -> Result<TimeMember, ValueError> {
+        let member_1 = officekit_markup_base::integer(text, 0, 0xFFFF_FFFF, "ST_TLTime");
         if let Ok(value) = member_1 {
             return Ok(TimeMember::UnsignedInt(value));
         }
-        let member_2 = IndefiniteTimeDeclaration(self.0.clone());
-        if let Ok(value) = member_2.value() {
+        let member_2 = IndefiniteTimeDeclaration::parse(text);
+        if let Ok(value) = member_2 {
             return Ok(TimeMember::IndefiniteTimeDeclaration(value));
         }
-        Err(officekit_markup_base::invalid(&self.0, "ST_TLTime"))
+        Err(officekit_markup_base::invalid(text, "ST_TLTime"))
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTime`.
+    pub fn value(&self) -> Result<TimeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(member.clone()),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -25578,21 +26826,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for TimeListAnimateColorDirection {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeListAnimateColorDirection);
+
+impl Default for TimeListAnimateColorDirection {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeListAnimateColorDirection {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeListAnimateColorDirectionMember> for TimeListAnimateColorDirection {
     fn from(member: TimeListAnimateColorDirectionMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeListAnimateColorDirection {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeListAnimateColorDirectionMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -25615,35 +26884,68 @@ impl TimeListAnimateColorDirectionMember {
 }
 
 impl TimeListAnimateColorDirection {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLAnimateColorDirection`; the text stays stored.
-    pub fn value(&self) -> Result<TimeListAnimateColorDirectionMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLAnimateColorDirection`.
+    pub fn parse(text: &str) -> Result<TimeListAnimateColorDirectionMember, ValueError> {
         officekit_markup_base::member(
             TimeListAnimateColorDirectionMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLAnimateColorDirection",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLAnimateColorDirection`.
+    pub fn value(&self) -> Result<TimeListAnimateColorDirectionMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TimeListAnimateColorSpace {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeListAnimateColorSpace);
+
+impl Default for TimeListAnimateColorSpace {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeListAnimateColorSpace {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeListAnimateColorSpaceMember> for TimeListAnimateColorSpace {
     fn from(member: TimeListAnimateColorSpaceMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeListAnimateColorSpace {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeListAnimateColorSpaceMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -25666,35 +26968,68 @@ impl TimeListAnimateColorSpaceMember {
 }
 
 impl TimeListAnimateColorSpace {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLAnimateColorSpace`; the text stays stored.
-    pub fn value(&self) -> Result<TimeListAnimateColorSpaceMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLAnimateColorSpace`.
+    pub fn parse(text: &str) -> Result<TimeListAnimateColorSpaceMember, ValueError> {
         officekit_markup_base::member(
             TimeListAnimateColorSpaceMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLAnimateColorSpace",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLAnimateColorSpace`.
+    pub fn value(&self) -> Result<TimeListAnimateColorSpaceMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TimeListAnimateEffectTransition {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeListAnimateEffectTransition);
+
+impl Default for TimeListAnimateEffectTransition {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeListAnimateEffectTransition {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeListAnimateEffectTransitionMember> for TimeListAnimateEffectTransition {
     fn from(member: TimeListAnimateEffectTransitionMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeListAnimateEffectTransition {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeListAnimateEffectTransitionMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -25720,17 +27055,29 @@ impl TimeListAnimateEffectTransitionMember {
 }
 
 impl TimeListAnimateEffectTransition {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLAnimateEffectTransition`; the text stays stored.
-    pub fn value(&self) -> Result<TimeListAnimateEffectTransitionMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLAnimateEffectTransition`.
+    pub fn parse(text: &str) -> Result<TimeListAnimateEffectTransitionMember, ValueError> {
         officekit_markup_base::member(
             TimeListAnimateEffectTransitionMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLAnimateEffectTransition",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLAnimateEffectTransition`.
+    pub fn value(&self) -> Result<TimeListAnimateEffectTransitionMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -25783,21 +27130,42 @@ impl officekit_markup_base::Write for TimeNode {
     }
 }
 
-impl AsRef<str> for TimeNodeFillType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeNodeFillType);
+
+impl Default for TimeNodeFillType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeNodeFillType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeNodeFillTypeMember> for TimeNodeFillType {
     fn from(member: TimeNodeFillTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeNodeFillType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeNodeFillTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -25824,17 +27192,29 @@ impl TimeNodeFillTypeMember {
 }
 
 impl TimeNodeFillType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeNodeFillType`; the text stays stored.
-    pub fn value(&self) -> Result<TimeNodeFillTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLTimeNodeFillType`.
+    pub fn parse(text: &str) -> Result<TimeNodeFillTypeMember, ValueError> {
         officekit_markup_base::member(
             TimeNodeFillTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLTimeNodeFillType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeNodeFillType`.
+    pub fn value(&self) -> Result<TimeNodeFillTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -25850,14 +27230,29 @@ impl From<String> for TimeNodeID {
     }
 }
 
+impl Spelling for TimeNodeID {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl TimeNodeID {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_TLTimeNodeID`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        officekit_markup_base::integer(text, 0, 0xFFFF_FFFF, "ST_TLTimeNodeID")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_TLTimeNodeID`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(&self.0, 0, 0xFFFF_FFFF, "ST_TLTimeNodeID")
+        Self::parse(&self.0)
     }
 }
 
@@ -26085,21 +27480,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for TimeNodeMasterRelation {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeNodeMasterRelation);
+
+impl Default for TimeNodeMasterRelation {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeNodeMasterRelation {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeNodeMasterRelationMember> for TimeNodeMasterRelation {
     fn from(member: TimeNodeMasterRelationMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeNodeMasterRelation {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeNodeMasterRelationMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26125,35 +27541,68 @@ impl TimeNodeMasterRelationMember {
 }
 
 impl TimeNodeMasterRelation {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeNodeMasterRelation`; the text stays stored.
-    pub fn value(&self) -> Result<TimeNodeMasterRelationMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLTimeNodeMasterRelation`.
+    pub fn parse(text: &str) -> Result<TimeNodeMasterRelationMember, ValueError> {
         officekit_markup_base::member(
             TimeNodeMasterRelationMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLTimeNodeMasterRelation",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeNodeMasterRelation`.
+    pub fn value(&self) -> Result<TimeNodeMasterRelationMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TimeNodePresetClassType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeNodePresetClassType);
+
+impl Default for TimeNodePresetClassType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeNodePresetClassType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeNodePresetClassTypeMember> for TimeNodePresetClassType {
     fn from(member: TimeNodePresetClassTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeNodePresetClassType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeNodePresetClassTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26182,35 +27631,68 @@ impl TimeNodePresetClassTypeMember {
 }
 
 impl TimeNodePresetClassType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeNodePresetClassType`; the text stays stored.
-    pub fn value(&self) -> Result<TimeNodePresetClassTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLTimeNodePresetClassType`.
+    pub fn parse(text: &str) -> Result<TimeNodePresetClassTypeMember, ValueError> {
         officekit_markup_base::member(
             TimeNodePresetClassTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLTimeNodePresetClassType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeNodePresetClassType`.
+    pub fn value(&self) -> Result<TimeNodePresetClassTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TimeNodeRestartType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeNodeRestartType);
+
+impl Default for TimeNodeRestartType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeNodeRestartType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeNodeRestartTypeMember> for TimeNodeRestartType {
     fn from(member: TimeNodeRestartTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeNodeRestartType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeNodeRestartTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26236,35 +27718,68 @@ impl TimeNodeRestartTypeMember {
 }
 
 impl TimeNodeRestartType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeNodeRestartType`; the text stays stored.
-    pub fn value(&self) -> Result<TimeNodeRestartTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLTimeNodeRestartType`.
+    pub fn parse(text: &str) -> Result<TimeNodeRestartTypeMember, ValueError> {
         officekit_markup_base::member(
             TimeNodeRestartTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLTimeNodeRestartType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeNodeRestartType`.
+    pub fn value(&self) -> Result<TimeNodeRestartTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TimeNodeSyncType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeNodeSyncType);
+
+impl Default for TimeNodeSyncType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeNodeSyncType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeNodeSyncTypeMember> for TimeNodeSyncType {
     fn from(member: TimeNodeSyncTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeNodeSyncType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeNodeSyncTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26289,35 +27804,68 @@ impl TimeNodeSyncTypeMember {
 }
 
 impl TimeNodeSyncType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeNodeSyncType`; the text stays stored.
-    pub fn value(&self) -> Result<TimeNodeSyncTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLTimeNodeSyncType`.
+    pub fn parse(text: &str) -> Result<TimeNodeSyncTypeMember, ValueError> {
         officekit_markup_base::member(
             TimeNodeSyncTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLTimeNodeSyncType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeNodeSyncType`.
+    pub fn value(&self) -> Result<TimeNodeSyncTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TimeNodeType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TimeNodeType);
+
+impl Default for TimeNodeType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TimeNodeType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TimeNodeTypeMember> for TimeNodeType {
     fn from(member: TimeNodeTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TimeNodeType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TimeNodeTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26349,13 +27897,25 @@ impl TimeNodeTypeMember {
 }
 
 impl TimeNodeType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTimeNodeType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_TLTimeNodeType`.
+    pub fn parse(text: &str) -> Result<TimeNodeTypeMember, ValueError> {
+        officekit_markup_base::member(TimeNodeTypeMember::MEMBERS, text, "ST_TLTimeNodeType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTimeNodeType`.
     pub fn value(&self) -> Result<TimeNodeTypeMember, ValueError> {
-        officekit_markup_base::member(TimeNodeTypeMember::MEMBERS, &self.0, "ST_TLTimeNodeType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -26557,21 +28117,42 @@ impl officekit_markup_base::Write for ToTLAnimVariant {
     }
 }
 
-impl AsRef<str> for TransitionCornerDirectionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionCornerDirectionType);
+
+impl Default for TransitionCornerDirectionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionCornerDirectionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TransitionCornerDirectionTypeMember> for TransitionCornerDirectionType {
     fn from(member: TransitionCornerDirectionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionCornerDirectionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionCornerDirectionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26598,71 +28179,146 @@ impl TransitionCornerDirectionTypeMember {
 }
 
 impl TransitionCornerDirectionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionCornerDirectionType`; the text stays stored.
-    pub fn value(&self) -> Result<TransitionCornerDirectionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TransitionCornerDirectionType`.
+    pub fn parse(text: &str) -> Result<TransitionCornerDirectionTypeMember, ValueError> {
         officekit_markup_base::member(
             TransitionCornerDirectionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TransitionCornerDirectionType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionCornerDirectionType`.
+    pub fn value(&self) -> Result<TransitionCornerDirectionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TransitionEightDirection {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionEightDirection);
+
+impl Default for TransitionEightDirection {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionEightDirection {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
+    }
+}
+
+impl From<TransitionEightDirectionMember> for TransitionEightDirection {
+    fn from(member: TransitionEightDirectionMember) -> Self {
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionEightDirection {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Owned(member.to_string()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionEightDirectionMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::TransitionSideDirectionType(value) => write!(f, "{value}"),
+            Self::TransitionCornerDirectionType(value) => write!(f, "{value}"),
+        }
     }
 }
 
 impl TransitionEightDirection {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionEightDirectionType`; the text stays stored.
-    pub fn value(&self) -> Result<TransitionEightDirectionMember, ValueError> {
-        let member_1 = TransitionSideDirectionType(self.0.clone());
-        if let Ok(value) = member_1.value() {
+    /// `ValueError` when `text` is no value of `ST_TransitionEightDirectionType`.
+    pub fn parse(text: &str) -> Result<TransitionEightDirectionMember, ValueError> {
+        let member_1 = TransitionSideDirectionType::parse(text);
+        if let Ok(value) = member_1 {
             return Ok(TransitionEightDirectionMember::TransitionSideDirectionType(
                 value,
             ));
         }
-        let member_2 = TransitionCornerDirectionType(self.0.clone());
-        if let Ok(value) = member_2.value() {
+        let member_2 = TransitionCornerDirectionType::parse(text);
+        if let Ok(value) = member_2 {
             return Ok(TransitionEightDirectionMember::TransitionCornerDirectionType(value));
         }
         Err(officekit_markup_base::invalid(
-            &self.0,
+            text,
             "ST_TransitionEightDirectionType",
         ))
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionEightDirectionType`.
+    pub fn value(&self) -> Result<TransitionEightDirectionMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(member.clone()),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TransitionInOutDirectionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionInOutDirectionType);
+
+impl Default for TransitionInOutDirectionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionInOutDirectionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TransitionInOutDirectionTypeMember> for TransitionInOutDirectionType {
     fn from(member: TransitionInOutDirectionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionInOutDirectionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionInOutDirectionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26685,35 +28341,68 @@ impl TransitionInOutDirectionTypeMember {
 }
 
 impl TransitionInOutDirectionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionInOutDirectionType`; the text stays stored.
-    pub fn value(&self) -> Result<TransitionInOutDirectionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TransitionInOutDirectionType`.
+    pub fn parse(text: &str) -> Result<TransitionInOutDirectionTypeMember, ValueError> {
         officekit_markup_base::member(
             TransitionInOutDirectionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TransitionInOutDirectionType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionInOutDirectionType`.
+    pub fn value(&self) -> Result<TransitionInOutDirectionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TransitionSideDirectionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionSideDirectionType);
+
+impl Default for TransitionSideDirectionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionSideDirectionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TransitionSideDirectionTypeMember> for TransitionSideDirectionType {
     fn from(member: TransitionSideDirectionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionSideDirectionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionSideDirectionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26740,35 +28429,68 @@ impl TransitionSideDirectionTypeMember {
 }
 
 impl TransitionSideDirectionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionSideDirectionType`; the text stays stored.
-    pub fn value(&self) -> Result<TransitionSideDirectionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TransitionSideDirectionType`.
+    pub fn parse(text: &str) -> Result<TransitionSideDirectionTypeMember, ValueError> {
         officekit_markup_base::member(
             TransitionSideDirectionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TransitionSideDirectionType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionSideDirectionType`.
+    pub fn value(&self) -> Result<TransitionSideDirectionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TransitionSpeed {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionSpeed);
+
+impl Default for TransitionSpeed {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionSpeed {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TransitionSpeedMember> for TransitionSpeed {
     fn from(member: TransitionSpeedMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionSpeed {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionSpeedMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26794,35 +28516,64 @@ impl TransitionSpeedMember {
 }
 
 impl TransitionSpeed {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionSpeed`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_TransitionSpeed`.
+    pub fn parse(text: &str) -> Result<TransitionSpeedMember, ValueError> {
+        officekit_markup_base::member(TransitionSpeedMember::MEMBERS, text, "ST_TransitionSpeed")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionSpeed`.
     pub fn value(&self) -> Result<TransitionSpeedMember, ValueError> {
-        officekit_markup_base::member(
-            TransitionSpeedMember::MEMBERS,
-            &self.0,
-            "ST_TransitionSpeed",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for TriggerEvent {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TriggerEvent);
+
+impl Default for TriggerEvent {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TriggerEvent {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TriggerEventMember> for TriggerEvent {
     fn from(member: TriggerEventMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TriggerEvent {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TriggerEventMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26856,31 +28607,64 @@ impl TriggerEventMember {
 }
 
 impl TriggerEvent {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTriggerEvent`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_TLTriggerEvent`.
+    pub fn parse(text: &str) -> Result<TriggerEventMember, ValueError> {
+        officekit_markup_base::member(TriggerEventMember::MEMBERS, text, "ST_TLTriggerEvent")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTriggerEvent`.
     pub fn value(&self) -> Result<TriggerEventMember, ValueError> {
-        officekit_markup_base::member(TriggerEventMember::MEMBERS, &self.0, "ST_TLTriggerEvent")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for TriggerRunTimeNode {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TriggerRunTimeNode);
+
+impl Default for TriggerRunTimeNode {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TriggerRunTimeNode {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TriggerRunTimeNodeMember> for TriggerRunTimeNode {
     fn from(member: TriggerRunTimeNodeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TriggerRunTimeNode {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TriggerRunTimeNodeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -26906,17 +28690,29 @@ impl TriggerRunTimeNodeMember {
 }
 
 impl TriggerRunTimeNode {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TLTriggerRuntimeNode`; the text stays stored.
-    pub fn value(&self) -> Result<TriggerRunTimeNodeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TLTriggerRuntimeNode`.
+    pub fn parse(text: &str) -> Result<TriggerRunTimeNodeMember, ValueError> {
         officekit_markup_base::member(
             TriggerRunTimeNodeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TLTriggerRuntimeNode",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TLTriggerRuntimeNode`.
+    pub fn value(&self) -> Result<TriggerRunTimeNodeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

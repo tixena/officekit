@@ -1,6 +1,8 @@
 #![cfg(feature = "transitional")]
 
 use alloc::collections::BTreeMap;
+use officekit_markup::Spelling;
+use officekit_xml::conformance::ConformanceClass;
 
 use crate::parts::kinds::WordprocessingKind;
 use crate::parts::{
@@ -1268,7 +1270,10 @@ fn missing_styles_come_with_the_styles_they_name_and_defined_ones_stay() {
                 }
             })
         });
-    assert_eq!(normal_size.map(|size| size.0).as_deref(), Some("22"));
+    assert_eq!(
+        normal_size.map(|size| spelled(&size)).as_deref(),
+        Some("22")
+    );
 }
 
 #[test]
@@ -1703,4 +1708,12 @@ fn a_target_without_the_entry_parts_gets_only_the_ones_entries_go_into() {
         numbering_ids(&numbering_of(&target, &numbering_part)),
         (vec!["0".to_owned()], vec![("1".to_owned(), "0".to_owned())])
     );
+}
+
+/// The text of a simple-type value.
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

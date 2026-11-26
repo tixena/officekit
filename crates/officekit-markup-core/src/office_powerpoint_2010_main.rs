@@ -221,7 +221,11 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::values::ValueError;
@@ -1739,18 +1743,20 @@ pub type TracePtLst = TracePtLstWith<()>;
 
 impl Eq for TracePtLstWith<()> {}
 
-/// The simple type `ST_TransitionLeftRightDirectionType`, kept as the text the file carried.
+/// The simple type `ST_TransitionLeftRightDirectionType`, kept as its member or as the text the
+/// file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionLeftRightDirectionType(pub String);
+pub enum TransitionLeftRightDirectionType {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionLeftRightDirectionTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TransitionLeftRightDirectionType`, in alphabetical order.
 /// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1762,18 +1768,19 @@ pub enum TransitionLeftRightDirectionTypeMember {
     R,
 }
 
-/// The simple type `ST_TransitionPattern`, kept as the text the file carried.
+/// The simple type `ST_TransitionPattern`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionPattern(pub String);
+pub enum TransitionPattern {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionPatternMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TransitionPattern`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1785,18 +1792,19 @@ pub enum TransitionPatternMember {
     Hexagon,
 }
 
-/// The simple type `ST_TransitionShredPattern`, kept as the text the file carried.
+/// The simple type `ST_TransitionShredPattern`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct TransitionShredPattern(pub String);
+pub enum TransitionShredPattern {
+    /// A member, spelled as the class being written spells it.
+    Member(TransitionShredPatternMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TransitionShredPattern`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -4536,21 +4544,42 @@ impl officekit_markup_base::Write for TracePtLst {
     }
 }
 
-impl AsRef<str> for TransitionLeftRightDirectionType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionLeftRightDirectionType);
+
+impl Default for TransitionLeftRightDirectionType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionLeftRightDirectionType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TransitionLeftRightDirectionTypeMember> for TransitionLeftRightDirectionType {
     fn from(member: TransitionLeftRightDirectionTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionLeftRightDirectionType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionLeftRightDirectionTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4575,35 +4604,68 @@ impl TransitionLeftRightDirectionTypeMember {
 }
 
 impl TransitionLeftRightDirectionType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionLeftRightDirectionType`; the text stays stored.
-    pub fn value(&self) -> Result<TransitionLeftRightDirectionTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TransitionLeftRightDirectionType`.
+    pub fn parse(text: &str) -> Result<TransitionLeftRightDirectionTypeMember, ValueError> {
         officekit_markup_base::member(
             TransitionLeftRightDirectionTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TransitionLeftRightDirectionType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionLeftRightDirectionType`.
+    pub fn value(&self) -> Result<TransitionLeftRightDirectionTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TransitionPattern {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionPattern);
+
+impl Default for TransitionPattern {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionPattern {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TransitionPatternMember> for TransitionPattern {
     fn from(member: TransitionPatternMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionPattern {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionPatternMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4628,35 +4690,68 @@ impl TransitionPatternMember {
 }
 
 impl TransitionPattern {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionPattern`; the text stays stored.
-    pub fn value(&self) -> Result<TransitionPatternMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TransitionPattern`.
+    pub fn parse(text: &str) -> Result<TransitionPatternMember, ValueError> {
         officekit_markup_base::member(
             TransitionPatternMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TransitionPattern",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionPattern`.
+    pub fn value(&self) -> Result<TransitionPatternMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for TransitionShredPattern {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(TransitionShredPattern);
+
+impl Default for TransitionShredPattern {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for TransitionShredPattern {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<TransitionShredPatternMember> for TransitionShredPattern {
     fn from(member: TransitionShredPatternMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for TransitionShredPattern {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for TransitionShredPatternMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4685,17 +4780,29 @@ impl TransitionShredPatternMember {
 }
 
 impl TransitionShredPattern {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TransitionShredPattern`; the text stays stored.
-    pub fn value(&self) -> Result<TransitionShredPatternMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TransitionShredPattern`.
+    pub fn parse(text: &str) -> Result<TransitionShredPatternMember, ValueError> {
         officekit_markup_base::member(
             TransitionShredPatternMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TransitionShredPattern",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TransitionShredPattern`.
+    pub fn value(&self) -> Result<TransitionShredPatternMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

@@ -1,3 +1,5 @@
+#[cfg(all(feature = "strict", feature = "transitional"))]
+use officekit_markup::Spelling;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
@@ -432,7 +434,7 @@ fn a_strict_date_cell_saved_transitional_becomes_a_number_cell_with_one_warning(
                 (
                     cell.r.as_deref(),
                     cell.s.as_deref(),
-                    cell.t.as_ref().map(|kind| kind.0.as_str()),
+                    cell.t.as_ref().map(spelled),
                     cell.value.as_ref().map(|held| held.value.as_str()),
                 )
             })
@@ -562,4 +564,13 @@ fn strict_refusals_names_a_workbook_s_legacy_password() {
         }]
     );
     xlsx.to_bytes_strict().unwrap_err();
+}
+
+/// The text of a simple-type value.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

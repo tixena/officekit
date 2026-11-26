@@ -223,10 +223,14 @@ mod archive;
 pub mod read;
 pub mod write;
 
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_markup_base::Spelling;
 use officekit_markup_base::UserData;
 use officekit_markup_base::Written;
 use officekit_markup_core::office_spreadsheetml_2009_9_main;
 use officekit_markup_core::spreadsheet;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
 use officekit_xml::stream::writer::PartWriter;
@@ -660,18 +664,19 @@ pub type ArrayData = ArrayDataWith<()>;
 
 impl Eq for ArrayDataWith<()> {}
 
-/// The simple type `ST_ArrayValueType`, kept as the text the file carried.
+/// The simple type `ST_ArrayValueType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct ArrayValueType(pub String);
+pub enum ArrayValueType {
+    /// A member, spelled as the class being written spells it.
+    Member(ArrayValueTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_ArrayValueType`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -1874,18 +1879,19 @@ pub type RichFilterColumnContent = RichFilterColumnContentWith<()>;
 
 impl Eq for RichFilterColumnContentWith<()> {}
 
-/// The simple type `ST_RichFormatPropertyType`, kept as the text the file carried.
+/// The simple type `ST_RichFormatPropertyType`, kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct RichFormatPropertyType(pub String);
+pub enum RichFormatPropertyType {
+    /// A member, spelled as the class being written spells it.
+    Member(RichFormatPropertyTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_RichFormatPropertyType`, in alphabetical order. `as_str`
 /// gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2158,18 +2164,20 @@ pub type SpbStructures = SpbStructuresWith<()>;
 
 impl Eq for SpbStructuresWith<()> {}
 
-/// The simple type `ST_SupportingPropertyBagArrayValueType`, kept as the text the file carried.
+/// The simple type `ST_SupportingPropertyBagArrayValueType`, kept as its member or as the text the
+/// file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SupportingPropertyBagArrayValueType(pub String);
+pub enum SupportingPropertyBagArrayValueType {
+    /// A member, spelled as the class being written spells it.
+    Member(SupportingPropertyBagArrayValueTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SupportingPropertyBagArrayValueType`, in alphabetical order.
 /// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2187,18 +2195,20 @@ pub enum SupportingPropertyBagArrayValueTypeMember {
     Spb,
 }
 
-/// The simple type `ST_SupportingPropertyBagValueType`, kept as the text the file carried.
+/// The simple type `ST_SupportingPropertyBagValueType`, kept as its member or as the text the file
+/// carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct SupportingPropertyBagValueType(pub String);
+pub enum SupportingPropertyBagValueType {
+    /// A member, spelled as the class being written spells it.
+    Member(SupportingPropertyBagValueTypeMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_SupportingPropertyBagValueType`, in alphabetical order.
 /// `as_str` gives the text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -2780,21 +2790,42 @@ impl officekit_markup_base::Write for ArrayData {
     }
 }
 
-impl AsRef<str> for ArrayValueType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(ArrayValueType);
+
+impl Default for ArrayValueType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for ArrayValueType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<ArrayValueTypeMember> for ArrayValueType {
     fn from(member: ArrayValueTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for ArrayValueType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for ArrayValueTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -2824,13 +2855,25 @@ impl ArrayValueTypeMember {
 }
 
 impl ArrayValueType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_ArrayValueType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_ArrayValueType`.
+    pub fn parse(text: &str) -> Result<ArrayValueTypeMember, ValueError> {
+        officekit_markup_base::member(ArrayValueTypeMember::MEMBERS, text, "ST_ArrayValueType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_ArrayValueType`.
     pub fn value(&self) -> Result<ArrayValueTypeMember, ValueError> {
-        officekit_markup_base::member(ArrayValueTypeMember::MEMBERS, &self.0, "ST_ArrayValueType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -3826,21 +3869,42 @@ const _: () = assert!(
     "an arm the generator holds in place takes more than 32 bytes",
 );
 
-impl AsRef<str> for RichFormatPropertyType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(RichFormatPropertyType);
+
+impl Default for RichFormatPropertyType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for RichFormatPropertyType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<RichFormatPropertyTypeMember> for RichFormatPropertyType {
     fn from(member: RichFormatPropertyTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for RichFormatPropertyType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for RichFormatPropertyTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -3867,17 +3931,29 @@ impl RichFormatPropertyTypeMember {
 }
 
 impl RichFormatPropertyType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_RichFormatPropertyType`; the text stays stored.
-    pub fn value(&self) -> Result<RichFormatPropertyTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_RichFormatPropertyType`.
+    pub fn parse(text: &str) -> Result<RichFormatPropertyTypeMember, ValueError> {
         officekit_markup_base::member(
             RichFormatPropertyTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_RichFormatPropertyType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_RichFormatPropertyType`.
+    pub fn value(&self) -> Result<RichFormatPropertyTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -4469,21 +4545,42 @@ impl officekit_markup_base::Write for SpbStructures {
     }
 }
 
-impl AsRef<str> for SupportingPropertyBagArrayValueType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SupportingPropertyBagArrayValueType);
+
+impl Default for SupportingPropertyBagArrayValueType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SupportingPropertyBagArrayValueType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SupportingPropertyBagArrayValueTypeMember> for SupportingPropertyBagArrayValueType {
     fn from(member: SupportingPropertyBagArrayValueTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SupportingPropertyBagArrayValueType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SupportingPropertyBagArrayValueTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4511,35 +4608,68 @@ impl SupportingPropertyBagArrayValueTypeMember {
 }
 
 impl SupportingPropertyBagArrayValueType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SupportingPropertyBagArrayValueType`; the text stays stored.
-    pub fn value(&self) -> Result<SupportingPropertyBagArrayValueTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_SupportingPropertyBagArrayValueType`.
+    pub fn parse(text: &str) -> Result<SupportingPropertyBagArrayValueTypeMember, ValueError> {
         officekit_markup_base::member(
             SupportingPropertyBagArrayValueTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_SupportingPropertyBagArrayValueType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SupportingPropertyBagArrayValueType`.
+    pub fn value(&self) -> Result<SupportingPropertyBagArrayValueTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for SupportingPropertyBagValueType {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+officekit_markup_base::archive_as_spelling!(SupportingPropertyBagValueType);
+
+impl Default for SupportingPropertyBagValueType {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for SupportingPropertyBagValueType {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<SupportingPropertyBagValueTypeMember> for SupportingPropertyBagValueType {
     fn from(member: SupportingPropertyBagValueTypeMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for SupportingPropertyBagValueType {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for SupportingPropertyBagValueTypeMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -4568,17 +4698,29 @@ impl SupportingPropertyBagValueTypeMember {
 }
 
 impl SupportingPropertyBagValueType {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_SupportingPropertyBagValueType`; the text stays stored.
-    pub fn value(&self) -> Result<SupportingPropertyBagValueTypeMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_SupportingPropertyBagValueType`.
+    pub fn parse(text: &str) -> Result<SupportingPropertyBagValueTypeMember, ValueError> {
         officekit_markup_base::member(
             SupportingPropertyBagValueTypeMember::MEMBERS,
-            &self.0,
+            text,
             "ST_SupportingPropertyBagValueType",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_SupportingPropertyBagValueType`.
+    pub fn value(&self) -> Result<SupportingPropertyBagValueTypeMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 

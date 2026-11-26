@@ -219,6 +219,10 @@
 pub mod read;
 pub mod write;
 
+use crate::Spelling;
+use alloc::borrow::Cow;
+use core::fmt;
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::name::OfficeVersion;
 use officekit_xml::values::{Measure, ValueError};
 
@@ -258,19 +262,20 @@ static XML_NAME_FACETS: crate::Facets = crate::Facets {
     patterns: &[],
 };
 
-/// Boolean Value, the simple type `ST_TrueFalse` (ECMA-376 Part 4, section 20.1.2.5), kept as the
-/// text the file carried.
+/// Boolean Value, the simple type `ST_TrueFalse` (ECMA-376 Part 4, section 20.1.2.5), kept as its
+/// member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BooleanValue(pub String);
+pub enum BooleanValue {
+    /// A member, spelled as the class being written spells it.
+    Member(BooleanValueMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TrueFalse`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -287,18 +292,19 @@ pub enum BooleanValueMember {
 }
 
 /// Boolean Value with Blank \[False\] State, the simple type `ST_TrueFalseBlank` (ECMA-376 Part 4,
-/// section 20.1.2.6), kept as the text the file carried.
+/// section 20.1.2.6), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct BooleanValueWithBlankFalseState(pub String);
+pub enum BooleanValueWithBlankFalseState {
+    /// A member, spelled as the class being written spells it.
+    Member(BooleanValueWithBlankFalseStateMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_TrueFalseBlank`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -321,18 +327,19 @@ pub enum BooleanValueWithBlankFalseStateMember {
 }
 
 /// Calendar Types, the simple type `ST_CalendarType` (ECMA-376 Part 1, section 22.9.2.1), kept as
-/// the text the file carried.
+/// its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct CalendarTypes(pub String);
+pub enum CalendarTypes {
+    /// A member, spelled as the class being written spells it.
+    Member(CalendarTypesMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_CalendarType`, in alphabetical order. `as_str` gives the text
 /// of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -369,18 +376,19 @@ pub enum CalendarTypesMember {
 }
 
 /// Cryptographic Algorithm Classes, the simple type `ST_AlgClass` (ECMA-376 Part 4, section
-/// 20.1.2.1), kept as the text the file carried.
+/// 20.1.2.1), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct CryptographicAlgorithmClasses(pub String);
+pub enum CryptographicAlgorithmClasses {
+    /// A member, spelled as the class being written spells it.
+    Member(CryptographicAlgorithmClassesMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_AlgClass`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -393,18 +401,19 @@ pub enum CryptographicAlgorithmClassesMember {
 }
 
 /// Cryptographic Algorithm Types, the simple type `ST_AlgType` (ECMA-376 Part 4, section 20.1.2.2),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct CryptographicAlgorithmTypes(pub String);
+pub enum CryptographicAlgorithmTypes {
+    /// A member, spelled as the class being written spells it.
+    Member(CryptographicAlgorithmTypesMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_AlgType`, in alphabetical order. `as_str` gives the text of a
 /// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -417,18 +426,19 @@ pub enum CryptographicAlgorithmTypesMember {
 }
 
 /// Cryptographic Provider Types, the simple type `ST_CryptProv` (ECMA-376 Part 4, section
-/// 20.1.2.4), kept as the text the file carried.
+/// 20.1.2.4), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct CryptographicProviderTypes(pub String);
+pub enum CryptographicProviderTypes {
+    /// A member, spelled as the class being written spells it.
+    Member(CryptographicProviderTypesMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_CryptProv`, in alphabetical order. `as_str` gives the text of
 /// a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -443,18 +453,19 @@ pub enum CryptographicProviderTypesMember {
 }
 
 /// Document Conformance Class Value, the simple type `ST_ConformanceClass` (ECMA-376 Part 1,
-/// section 22.9.2.2), kept as the text the file carried.
+/// section 22.9.2.2), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct DocumentConformanceClassValue(pub String);
+pub enum DocumentConformanceClassValue {
+    /// A member, spelled as the class being written spells it.
+    Member(DocumentConformanceClassValueMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_ConformanceClass`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -508,18 +519,19 @@ pub struct Guid(pub String);
 pub struct HexadecimalColorValue(pub String);
 
 /// Horizontal Alignment Location, the simple type `ST_XAlign` (ECMA-376 Part 1, section 22.9.2.18),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct HorizontalAlignmentLocation(pub String);
+pub enum HorizontalAlignmentLocation {
+    /// A member, spelled as the class being written spells it.
+    Member(HorizontalAlignmentLocationMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_XAlign`, in alphabetical order. `as_str` gives the text of a
 /// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -538,19 +550,20 @@ pub enum HorizontalAlignmentLocationMember {
 }
 
 /// Measurement in Twentieths of a Point, the simple type `ST_TwipsMeasure` (ECMA-376 Part 1,
-/// section 22.9.2.14), kept as the text the file carried.
+/// section 22.9.2.14), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug)]
 #[non_exhaustive]
-pub struct MeasurementInTwentiethsOfAPoint(pub String);
-/// The member types of `ST_TwipsMeasure`, in alphabetical order; `value` tries them in the schema's
+pub enum MeasurementInTwentiethsOfAPoint {
+    /// A member, spelled as the class being written spells it.
+    Member(MeasurementInTwentiethsOfAPointMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
+/// The member types of `ST_TwipsMeasure`, in alphabetical order; `parse` tries them in the schema's
 /// order.
 #[derive(Clone, Debug, PartialEq)]
 #[non_exhaustive]
@@ -674,18 +687,19 @@ pub struct UniversalMeasurement(pub String);
 pub struct UnsignedDecimalNumberValue(pub String);
 
 /// Vertical Alignment Location, the simple type `ST_YAlign` (ECMA-376 Part 1, section 22.9.2.20),
-/// kept as the text the file carried.
+/// kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalAlignmentLocation(pub String);
+pub enum VerticalAlignmentLocation {
+    /// A member, spelled as the class being written spells it.
+    Member(VerticalAlignmentLocationMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_YAlign`, in alphabetical order. `as_str` gives the text of a
 /// member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -706,18 +720,19 @@ pub enum VerticalAlignmentLocationMember {
 }
 
 /// Vertical Positioning Location, the simple type `ST_VerticalAlignRun` (ECMA-376 Part 1, section
-/// 22.9.2.17), kept as the text the file carried.
+/// 22.9.2.17), kept as its member or as the text the file carried.
 ///
-/// `value` checks the text and gives the typed value, or a `ValueError`. A text that is no value
-/// stays stored as it was.
-#[derive(Clone, Debug, Default, Eq, PartialEq)]
-#[cfg_attr(
-    feature = "binary-format",
-    derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)
-)]
-#[cfg_attr(feature = "binary-format", rkyv(attr(non_exhaustive)))]
+/// A read keeps the member a text spells as its canonical spelling, and any other text as it was; a
+/// write gives each back as it was read. `value` gives the member, or a `ValueError` for a kept
+/// text that is no value.
+#[derive(Clone, Debug, Eq, PartialEq)]
 #[non_exhaustive]
-pub struct VerticalPositioningLocation(pub String);
+pub enum VerticalPositioningLocation {
+    /// A member, spelled as the class being written spells it.
+    Member(VerticalPositioningLocationMember),
+    /// Any other spelling, kept as read.
+    Spelled(Box<str>),
+}
 /// The members of the enumeration `ST_VerticalAlignRun`, in alphabetical order. `as_str` gives the
 /// text of a member.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -745,21 +760,42 @@ pub enum VerticalPositioningLocationMember {
 #[non_exhaustive]
 pub struct XMLName(pub String);
 
-impl AsRef<str> for BooleanValue {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(BooleanValue);
+
+impl Default for BooleanValue {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BooleanValue {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BooleanValueMember> for BooleanValue {
     fn from(member: BooleanValueMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BooleanValue {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BooleanValueMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -786,31 +822,64 @@ impl BooleanValueMember {
 }
 
 impl BooleanValue {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TrueFalse`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_TrueFalse`.
+    pub fn parse(text: &str) -> Result<BooleanValueMember, ValueError> {
+        crate::member(BooleanValueMember::MEMBERS, text, "ST_TrueFalse")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TrueFalse`.
     pub fn value(&self) -> Result<BooleanValueMember, ValueError> {
-        crate::member(BooleanValueMember::MEMBERS, &self.0, "ST_TrueFalse")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for BooleanValueWithBlankFalseState {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(BooleanValueWithBlankFalseState);
+
+impl Default for BooleanValueWithBlankFalseState {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for BooleanValueWithBlankFalseState {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<BooleanValueWithBlankFalseStateMember> for BooleanValueWithBlankFalseState {
     fn from(member: BooleanValueWithBlankFalseStateMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for BooleanValueWithBlankFalseState {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for BooleanValueWithBlankFalseStateMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -840,35 +909,68 @@ impl BooleanValueWithBlankFalseStateMember {
 }
 
 impl BooleanValueWithBlankFalseState {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TrueFalseBlank`; the text stays stored.
-    pub fn value(&self) -> Result<BooleanValueWithBlankFalseStateMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_TrueFalseBlank`.
+    pub fn parse(text: &str) -> Result<BooleanValueWithBlankFalseStateMember, ValueError> {
         crate::member(
             BooleanValueWithBlankFalseStateMember::MEMBERS,
-            &self.0,
+            text,
             "ST_TrueFalseBlank",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TrueFalseBlank`.
+    pub fn value(&self) -> Result<BooleanValueWithBlankFalseStateMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for CalendarTypes {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(CalendarTypes);
+
+impl Default for CalendarTypes {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for CalendarTypes {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<CalendarTypesMember> for CalendarTypes {
     fn from(member: CalendarTypesMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for CalendarTypes {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for CalendarTypesMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -905,31 +1007,64 @@ impl CalendarTypesMember {
 }
 
 impl CalendarTypes {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_CalendarType`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_CalendarType`.
+    pub fn parse(text: &str) -> Result<CalendarTypesMember, ValueError> {
+        crate::member(CalendarTypesMember::MEMBERS, text, "ST_CalendarType")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_CalendarType`.
     pub fn value(&self) -> Result<CalendarTypesMember, ValueError> {
-        crate::member(CalendarTypesMember::MEMBERS, &self.0, "ST_CalendarType")
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for CryptographicAlgorithmClasses {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(CryptographicAlgorithmClasses);
+
+impl Default for CryptographicAlgorithmClasses {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for CryptographicAlgorithmClasses {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<CryptographicAlgorithmClassesMember> for CryptographicAlgorithmClasses {
     fn from(member: CryptographicAlgorithmClassesMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for CryptographicAlgorithmClasses {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for CryptographicAlgorithmClassesMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -952,35 +1087,68 @@ impl CryptographicAlgorithmClassesMember {
 }
 
 impl CryptographicAlgorithmClasses {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_AlgClass`; the text stays stored.
-    pub fn value(&self) -> Result<CryptographicAlgorithmClassesMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_AlgClass`.
+    pub fn parse(text: &str) -> Result<CryptographicAlgorithmClassesMember, ValueError> {
         crate::member(
             CryptographicAlgorithmClassesMember::MEMBERS,
-            &self.0,
+            text,
             "ST_AlgClass",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_AlgClass`.
+    pub fn value(&self) -> Result<CryptographicAlgorithmClassesMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for CryptographicAlgorithmTypes {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(CryptographicAlgorithmTypes);
+
+impl Default for CryptographicAlgorithmTypes {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for CryptographicAlgorithmTypes {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<CryptographicAlgorithmTypesMember> for CryptographicAlgorithmTypes {
     fn from(member: CryptographicAlgorithmTypesMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for CryptographicAlgorithmTypes {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for CryptographicAlgorithmTypesMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1005,35 +1173,68 @@ impl CryptographicAlgorithmTypesMember {
 }
 
 impl CryptographicAlgorithmTypes {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_AlgType`; the text stays stored.
-    pub fn value(&self) -> Result<CryptographicAlgorithmTypesMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_AlgType`.
+    pub fn parse(text: &str) -> Result<CryptographicAlgorithmTypesMember, ValueError> {
         crate::member(
             CryptographicAlgorithmTypesMember::MEMBERS,
-            &self.0,
+            text,
             "ST_AlgType",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_AlgType`.
+    pub fn value(&self) -> Result<CryptographicAlgorithmTypesMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for CryptographicProviderTypes {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(CryptographicProviderTypes);
+
+impl Default for CryptographicProviderTypes {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for CryptographicProviderTypes {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<CryptographicProviderTypesMember> for CryptographicProviderTypes {
     fn from(member: CryptographicProviderTypesMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for CryptographicProviderTypes {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for CryptographicProviderTypesMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1059,35 +1260,68 @@ impl CryptographicProviderTypesMember {
 }
 
 impl CryptographicProviderTypes {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_CryptProv`; the text stays stored.
-    pub fn value(&self) -> Result<CryptographicProviderTypesMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_CryptProv`.
+    pub fn parse(text: &str) -> Result<CryptographicProviderTypesMember, ValueError> {
         crate::member(
             CryptographicProviderTypesMember::MEMBERS,
-            &self.0,
+            text,
             "ST_CryptProv",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_CryptProv`.
+    pub fn value(&self) -> Result<CryptographicProviderTypesMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for DocumentConformanceClassValue {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(DocumentConformanceClassValue);
+
+impl Default for DocumentConformanceClassValue {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for DocumentConformanceClassValue {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<DocumentConformanceClassValueMember> for DocumentConformanceClassValue {
     fn from(member: DocumentConformanceClassValueMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for DocumentConformanceClassValue {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for DocumentConformanceClassValueMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1112,17 +1346,29 @@ impl DocumentConformanceClassValueMember {
 }
 
 impl DocumentConformanceClassValue {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_ConformanceClass`; the text stays stored.
-    pub fn value(&self) -> Result<DocumentConformanceClassValueMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_ConformanceClass`.
+    pub fn parse(text: &str) -> Result<DocumentConformanceClassValueMember, ValueError> {
         crate::member(
             DocumentConformanceClassValueMember::MEMBERS,
-            &self.0,
+            text,
             "ST_ConformanceClass",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_ConformanceClass`.
+    pub fn value(&self) -> Result<DocumentConformanceClassValueMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -1138,18 +1384,33 @@ impl From<String> for FixedPercentageValueWithSign {
     }
 }
 
+impl Spelling for FixedPercentageValueWithSign {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl FixedPercentageValueWithSign {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_FixedPercentage`.
+    pub fn parse(text: &str) -> Result<f64, ValueError> {
+        crate::percentage(
+            text,
+            FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
+            "ST_FixedPercentage",
+        )
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_FixedPercentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
-        crate::percentage(
-            &self.0,
-            FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
-            "ST_FixedPercentage",
-        )
+        Self::parse(&self.0)
     }
 }
 
@@ -1165,14 +1426,29 @@ impl From<String> for Guid {
     }
 }
 
+impl Spelling for Guid {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl Guid {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_Guid`.
+    pub fn parse(text: &str) -> Result<&str, ValueError> {
+        crate::text(text, &GUID_FACETS, "ST_Guid")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_Guid`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
-        crate::text(&self.0, &GUID_FACETS, "ST_Guid")
+        Self::parse(&self.0)
     }
 }
 
@@ -1188,32 +1464,68 @@ impl From<String> for HexadecimalColorValue {
     }
 }
 
+impl Spelling for HexadecimalColorValue {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl HexadecimalColorValue {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_HexColorRGB`.
+    pub fn parse(text: &str) -> Result<u32, ValueError> {
+        crate::hex(text, 3, "ST_HexColorRGB")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_HexColorRGB`; the text stays stored.
     pub fn value(&self) -> Result<u32, ValueError> {
-        crate::hex(&self.0, 3, "ST_HexColorRGB")
+        Self::parse(&self.0)
     }
 }
 
-impl AsRef<str> for HorizontalAlignmentLocation {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(HorizontalAlignmentLocation);
+
+impl Default for HorizontalAlignmentLocation {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for HorizontalAlignmentLocation {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<HorizontalAlignmentLocationMember> for HorizontalAlignmentLocation {
     fn from(member: HorizontalAlignmentLocationMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for HorizontalAlignmentLocation {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for HorizontalAlignmentLocationMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1241,48 +1553,111 @@ impl HorizontalAlignmentLocationMember {
 }
 
 impl HorizontalAlignmentLocation {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_XAlign`; the text stays stored.
-    pub fn value(&self) -> Result<HorizontalAlignmentLocationMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_XAlign`.
+    pub fn parse(text: &str) -> Result<HorizontalAlignmentLocationMember, ValueError> {
         crate::member(
             HorizontalAlignmentLocationMember::MEMBERS,
-            &self.0,
+            text,
             "ST_XAlign",
         )
     }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_XAlign`.
+    pub fn value(&self) -> Result<HorizontalAlignmentLocationMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
+    }
 }
 
-impl AsRef<str> for MeasurementInTwentiethsOfAPoint {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(MeasurementInTwentiethsOfAPoint);
+
+impl Default for MeasurementInTwentiethsOfAPoint {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for MeasurementInTwentiethsOfAPoint {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
+    }
+}
+
+impl From<MeasurementInTwentiethsOfAPointMember> for MeasurementInTwentiethsOfAPoint {
+    fn from(member: MeasurementInTwentiethsOfAPointMember) -> Self {
+        Self::Member(member)
+    }
+}
+
+impl Eq for MeasurementInTwentiethsOfAPoint {}
+
+impl PartialEq for MeasurementInTwentiethsOfAPoint {
+    fn eq(&self, other: &Self) -> bool {
+        self.spelling(ConformanceClass::Transitional)
+            == other.spelling(ConformanceClass::Transitional)
+    }
+}
+
+impl Spelling for MeasurementInTwentiethsOfAPoint {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Owned(member.to_string()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for MeasurementInTwentiethsOfAPointMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::UnsignedDecimalNumberValue(value) => write!(f, "{value}"),
+            Self::PositiveUniversalMeasurement(value) => write!(f, "{value}"),
+        }
     }
 }
 
 impl MeasurementInTwentiethsOfAPoint {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_TwipsMeasure`; the text stays stored.
-    pub fn value(&self) -> Result<MeasurementInTwentiethsOfAPointMember, ValueError> {
-        let member_1 = UnsignedDecimalNumberValue(self.0.clone());
-        if let Ok(value) = member_1.value() {
+    /// `ValueError` when `text` is no value of `ST_TwipsMeasure`.
+    pub fn parse(text: &str) -> Result<MeasurementInTwentiethsOfAPointMember, ValueError> {
+        let member_1 = UnsignedDecimalNumberValue::parse(text);
+        if let Ok(value) = member_1 {
             return Ok(MeasurementInTwentiethsOfAPointMember::UnsignedDecimalNumberValue(value));
         }
-        let member_2 = PositiveUniversalMeasurement(self.0.clone());
-        if let Ok(value) = member_2.value() {
+        let member_2 = PositiveUniversalMeasurement::parse(text);
+        if let Ok(value) = member_2 {
             return Ok(MeasurementInTwentiethsOfAPointMember::PositiveUniversalMeasurement(value));
         }
-        Err(crate::invalid(&self.0, "ST_TwipsMeasure"))
+        Err(crate::invalid(text, "ST_TwipsMeasure"))
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_TwipsMeasure`.
+    pub fn value(&self) -> Result<MeasurementInTwentiethsOfAPointMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(member.clone()),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -1298,6 +1673,12 @@ impl From<String> for OnOffValue {
     }
 }
 
+impl Spelling for OnOffValue {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl From<bool> for OnOffValue {
     fn from(value: bool) -> Self {
         Self(value.to_string())
@@ -1305,13 +1686,22 @@ impl From<bool> for OnOffValue {
 }
 
 impl OnOffValue {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_OnOff`.
+    pub fn parse(text: &str) -> Result<bool, ValueError> {
+        crate::on_off(text, "ST_OnOff")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_OnOff`; the text stays stored.
     pub fn value(&self) -> Result<bool, ValueError> {
-        crate::on_off(&self.0, "ST_OnOff")
+        Self::parse(&self.0)
     }
 }
 
@@ -1327,14 +1717,29 @@ impl From<String> for Panose1Number {
     }
 }
 
+impl Spelling for Panose1Number {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl Panose1Number {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_Panose`.
+    pub fn parse(text: &str) -> Result<&str, ValueError> {
+        crate::text(text, &PANOSE1NUMBER_FACETS, "ST_Panose")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_Panose`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
-        crate::text(&self.0, &PANOSE1NUMBER_FACETS, "ST_Panose")
+        Self::parse(&self.0)
     }
 }
 
@@ -1350,18 +1755,29 @@ impl From<String> for PercentageValueWithSign {
     }
 }
 
+impl Spelling for PercentageValueWithSign {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl PercentageValueWithSign {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_Percentage`.
+    pub fn parse(text: &str) -> Result<f64, ValueError> {
+        crate::percentage(text, PERCENTAGE_VALUE_WITH_SIGN_PATTERNS, "ST_Percentage")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_Percentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
-        crate::percentage(
-            &self.0,
-            PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
-            "ST_Percentage",
-        )
+        Self::parse(&self.0)
     }
 }
 
@@ -1377,18 +1793,33 @@ impl From<String> for PositiveFixedPercentageValueWithSign {
     }
 }
 
+impl Spelling for PositiveFixedPercentageValueWithSign {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl PositiveFixedPercentageValueWithSign {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_PositiveFixedPercentage`.
+    pub fn parse(text: &str) -> Result<f64, ValueError> {
+        crate::percentage(
+            text,
+            POSITIVE_FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
+            "ST_PositiveFixedPercentage",
+        )
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_PositiveFixedPercentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
-        crate::percentage(
-            &self.0,
-            POSITIVE_FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
-            "ST_PositiveFixedPercentage",
-        )
+        Self::parse(&self.0)
     }
 }
 
@@ -1404,18 +1835,33 @@ impl From<String> for PositivePercentageValueWithSign {
     }
 }
 
+impl Spelling for PositivePercentageValueWithSign {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl PositivePercentageValueWithSign {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_PositivePercentage`.
+    pub fn parse(text: &str) -> Result<f64, ValueError> {
+        crate::percentage(
+            text,
+            POSITIVE_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
+            "ST_PositivePercentage",
+        )
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_PositivePercentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
-        crate::percentage(
-            &self.0,
-            POSITIVE_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
-            "ST_PositivePercentage",
-        )
+        Self::parse(&self.0)
     }
 }
 
@@ -1431,18 +1877,33 @@ impl From<String> for PositiveUniversalMeasurement {
     }
 }
 
+impl Spelling for PositiveUniversalMeasurement {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl PositiveUniversalMeasurement {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_PositiveUniversalMeasure`.
+    pub fn parse(text: &str) -> Result<Measure, ValueError> {
+        crate::measure(
+            text,
+            POSITIVE_UNIVERSAL_MEASUREMENT_PATTERNS,
+            "ST_PositiveUniversalMeasure",
+        )
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_PositiveUniversalMeasure`; the text stays stored.
     pub fn value(&self) -> Result<Measure, ValueError> {
-        crate::measure(
-            &self.0,
-            POSITIVE_UNIVERSAL_MEASUREMENT_PATTERNS,
-            "ST_PositiveUniversalMeasure",
-        )
+        Self::parse(&self.0)
     }
 }
 
@@ -1458,18 +1919,29 @@ impl From<String> for UniversalMeasurement {
     }
 }
 
+impl Spelling for UniversalMeasurement {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl UniversalMeasurement {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_UniversalMeasure`.
+    pub fn parse(text: &str) -> Result<Measure, ValueError> {
+        crate::measure(text, UNIVERSAL_MEASUREMENT_PATTERNS, "ST_UniversalMeasure")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_UniversalMeasure`; the text stays stored.
     pub fn value(&self) -> Result<Measure, ValueError> {
-        crate::measure(
-            &self.0,
-            UNIVERSAL_MEASUREMENT_PATTERNS,
-            "ST_UniversalMeasure",
-        )
+        Self::parse(&self.0)
     }
 }
 
@@ -1485,32 +1957,68 @@ impl From<String> for UnsignedDecimalNumberValue {
     }
 }
 
+impl Spelling for UnsignedDecimalNumberValue {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl UnsignedDecimalNumberValue {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_UnsignedDecimalNumber`.
+    pub fn parse(text: &str) -> Result<i64, ValueError> {
+        crate::integer(text, 0, i64::MAX, "ST_UnsignedDecimalNumber")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_UnsignedDecimalNumber`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
-        crate::integer(&self.0, 0, i64::MAX, "ST_UnsignedDecimalNumber")
+        Self::parse(&self.0)
     }
 }
 
-impl AsRef<str> for VerticalAlignmentLocation {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(VerticalAlignmentLocation);
+
+impl Default for VerticalAlignmentLocation {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for VerticalAlignmentLocation {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<VerticalAlignmentLocationMember> for VerticalAlignmentLocation {
     fn from(member: VerticalAlignmentLocationMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for VerticalAlignmentLocation {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for VerticalAlignmentLocationMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1539,35 +2047,64 @@ impl VerticalAlignmentLocationMember {
 }
 
 impl VerticalAlignmentLocation {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_YAlign`; the text stays stored.
+    /// `ValueError` when `text` is no value of `ST_YAlign`.
+    pub fn parse(text: &str) -> Result<VerticalAlignmentLocationMember, ValueError> {
+        crate::member(VerticalAlignmentLocationMember::MEMBERS, text, "ST_YAlign")
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_YAlign`.
     pub fn value(&self) -> Result<VerticalAlignmentLocationMember, ValueError> {
-        crate::member(
-            VerticalAlignmentLocationMember::MEMBERS,
-            &self.0,
-            "ST_YAlign",
-        )
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
-impl AsRef<str> for VerticalPositioningLocation {
-    fn as_ref(&self) -> &str {
-        &self.0
+#[cfg(feature = "binary-format")]
+crate::archive_as_spelling!(VerticalPositioningLocation);
+
+impl Default for VerticalPositioningLocation {
+    fn default() -> Self {
+        Self::Spelled(Box::default())
     }
 }
 
 impl From<String> for VerticalPositioningLocation {
     fn from(text: String) -> Self {
-        Self(text)
+        match Self::parse(&text) {
+            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
+            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        }
     }
 }
 
 impl From<VerticalPositioningLocationMember> for VerticalPositioningLocation {
     fn from(member: VerticalPositioningLocationMember) -> Self {
-        Self(member.as_str().to_owned())
+        Self::Member(member)
+    }
+}
+
+impl Spelling for VerticalPositioningLocation {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        match self {
+            Self::Member(member) => Cow::Borrowed(member.as_str()),
+            Self::Spelled(text) => Cow::Borrowed(text),
+        }
+    }
+}
+
+impl fmt::Display for VerticalPositioningLocationMember {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(self.as_str())
     }
 }
 
@@ -1593,17 +2130,29 @@ impl VerticalPositioningLocationMember {
 }
 
 impl VerticalPositioningLocation {
-    /// The value the text spells.
+    /// The value `text` spells.
     ///
     /// # Errors
     ///
-    /// `ValueError` when the text is no value of `ST_VerticalAlignRun`; the text stays stored.
-    pub fn value(&self) -> Result<VerticalPositioningLocationMember, ValueError> {
+    /// `ValueError` when `text` is no value of `ST_VerticalAlignRun`.
+    pub fn parse(text: &str) -> Result<VerticalPositioningLocationMember, ValueError> {
         crate::member(
             VerticalPositioningLocationMember::MEMBERS,
-            &self.0,
+            text,
             "ST_VerticalAlignRun",
         )
+    }
+
+    /// The member the value keeps, or the one its spelling spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when a kept spelling is no value of `ST_VerticalAlignRun`.
+    pub fn value(&self) -> Result<VerticalPositioningLocationMember, ValueError> {
+        match self {
+            Self::Member(member) => Ok(*member),
+            Self::Spelled(text) => Self::parse(text),
+        }
     }
 }
 
@@ -1619,13 +2168,28 @@ impl From<String> for XMLName {
     }
 }
 
+impl Spelling for XMLName {
+    fn spelling(&self, _class: ConformanceClass) -> Cow<'_, str> {
+        Cow::Borrowed(&self.0)
+    }
+}
+
 impl XMLName {
+    /// The value `text` spells.
+    ///
+    /// # Errors
+    ///
+    /// `ValueError` when `text` is no value of `ST_XmlName`.
+    pub fn parse(text: &str) -> Result<&str, ValueError> {
+        crate::text(text, &XML_NAME_FACETS, "ST_XmlName")
+    }
+
     /// The value the text spells.
     ///
     /// # Errors
     ///
     /// `ValueError` when the text is no value of `ST_XmlName`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
-        crate::text(&self.0, &XML_NAME_FACETS, "ST_XmlName")
+        Self::parse(&self.0)
     }
 }

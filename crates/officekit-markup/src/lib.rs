@@ -139,6 +139,8 @@
 
 #![recursion_limit = "256"]
 
+extern crate alloc;
+
 // The namespace modules, generated in a file of their own: module declarations
 // go before the imports, and `include!` places them where it stands.
 include!("modules.rs");

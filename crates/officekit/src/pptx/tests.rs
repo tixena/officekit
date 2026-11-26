@@ -1,4 +1,5 @@
 use core::slice::from_ref;
+use officekit_markup::Spelling;
 #[cfg(feature = "transitional")]
 use std::path::Path;
 
@@ -204,7 +205,7 @@ fn a_new_presentation_holds_a_master_a_blank_layout_and_a_theme_and_no_slide() {
         slide_layout::load(package, &layout, OpenOptions::default())
             .unwrap()
             .r#type
-            .map(|kind| kind.0),
+            .map(|kind| spelled(&kind)),
         Some("blank".to_owned())
     );
 
@@ -444,4 +445,12 @@ fn strict_refusals_names_a_presentation_s_legacy_verifier() {
         }]
     );
     pptx.to_bytes_strict().unwrap_err();
+}
+
+/// The text of a simple-type value.
+fn spelled<T>(value: &T) -> String
+where
+    T: Spelling,
+{
+    value.spelling(ConformanceClass::Transitional).into_owned()
 }

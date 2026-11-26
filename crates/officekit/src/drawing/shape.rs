@@ -11,13 +11,14 @@ use officekit_markup::drawing::{
     PatternFill, PictureFill, SolidFill, StyleMatrixColumnIndex, TailLineEndStyle,
 };
 use officekit_markup::{
-    chart, chart_drawing, diagram, drawing, office_drawing_2007_8_2_chart,
+    Spelling as _, chart, chart_drawing, diagram, drawing, office_drawing_2007_8_2_chart,
     office_drawing_2008_diagram, office_drawing_2010_picture, office_drawing_2012_chart,
     office_drawing_2012_chart_style, office_drawing_2014_chart, office_drawing_2014_chartex,
     office_drawing_2016_12_diagram, office_drawing_2017_model3d,
     office_word_2010_wordprocessing_shape, picture, presentation, spreadsheet_drawing,
     wordprocessing_drawing,
 };
+use officekit_xml::conformance::ConformanceClass;
 
 use super::color::{Rgba, color, positive_fixed_percentage};
 use super::scheme::ThemeColors;
@@ -216,10 +217,9 @@ fn gradient_fill(gradient: &GradientFill, colors: &ThemeColors, placeholder: Opt
         .flat_map(|list| &list.gradient_stops)
         .map(|stop| GradientStop {
             color: color(&stop.content, colors, placeholder),
-            position: stop
-                .pos
-                .as_ref()
-                .and_then(|pos| positive_fixed_percentage(&pos.0)),
+            position: stop.pos.as_ref().and_then(|pos| {
+                positive_fixed_percentage(&pos.spelling(ConformanceClass::Transitional))
+            }),
         })
         .collect();
     Fill::Gradient {

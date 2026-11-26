@@ -4,6 +4,7 @@
 #[cfg(test)]
 mod tests;
 
+use officekit_markup::Spelling as _;
 use officekit_markup::UserData;
 use officekit_markup::common_simple_types::OnOffValue;
 use officekit_markup::drawing::StSchemeColorValMember;
@@ -26,6 +27,7 @@ use officekit_markup::wordprocessing::{
     ThemeColorMember, TopBorderWith, TopLeftBottomRightDiagonalBorderWith,
     TopRightBottomLeftDiagonalBorderWith, TwoDigitHexadecimalValue,
 };
+use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::values::MeasureUnit;
 
 use crate::drawing::color::{color, word_shade, word_tint};
@@ -323,12 +325,13 @@ impl TableLength {
                 Some(Self::by_unit(unit, number))
             }
             Ok(MeasurementOrPercentageValueMember::PercentageValueWithSign(_)) => text
-                .0
+                .spelling(ConformanceClass::Transitional)
                 .strip_suffix('%')
                 .and_then(|number| scaled(number, 50, 1))
                 .map(Self::Fiftieths),
             Ok(MeasurementOrPercentageValueMember::UniversalMeasurement(measure)) => {
-                universal_twentieths(&text.0, measure.unit).map(Self::Twentieths)
+                universal_twentieths(&text.spelling(ConformanceClass::Transitional), measure.unit)
+                    .map(Self::Twentieths)
             }
             Ok(_) | Err(_) => None,
         };
