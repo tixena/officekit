@@ -1385,3 +1385,30 @@ fn a_default_table_style_after_the_default_paragraph_style_leaves_it() {
     let styles = sheet_of(vec![paragraph, table]);
     assert_eq!(styles.default_paragraph(), Some("A"));
 }
+
+#[test]
+fn a_default_table_style_is_the_default_table() {
+    let mut table = style_of("T", StyleTypesMember::Table, vec![]);
+    table.default = Some(true.into());
+    let styles = sheet_of(vec![table]);
+    assert_eq!(styles.default_table(), Some("T"));
+}
+
+#[test]
+fn a_sheet_with_no_default_table_style_has_no_default_table() {
+    let mut paragraph = paragraph_style("A", ParagraphPropertiesPPrGeneral::default());
+    paragraph.default = Some(true.into());
+    let table = style_of("T", StyleTypesMember::Table, vec![]);
+    let styles = sheet_of(vec![paragraph, table]);
+    assert_eq!(styles.default_table(), None);
+}
+
+#[test]
+fn the_last_default_table_style_is_the_one() {
+    let mut first = style_of("T1", StyleTypesMember::Table, vec![]);
+    first.default = Some(true.into());
+    let mut last = style_of("T2", StyleTypesMember::Table, vec![]);
+    last.default = Some(true.into());
+    let styles = sheet_of(vec![first, last]);
+    assert_eq!(styles.default_table(), Some("T2"));
+}

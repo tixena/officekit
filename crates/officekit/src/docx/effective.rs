@@ -173,6 +173,13 @@ impl StyleSheet {
         self.default_paragraph.as_deref()
     }
 
+    /// The id of the style with `w:default="1"` and `w:type="table"`, the one a table that names
+    /// no style takes; of several, the last wins (section 17.7.4.17).
+    #[must_use = "this only returns the value"]
+    pub fn default_table(&self) -> Option<&str> {
+        self.default_table.as_deref()
+    }
+
     /// The effective properties of a list item's label (ECMA-376 Part 1, section 17.9.24): those
     /// of the paragraph's mark, with the run properties of `level` laid over them.
     #[must_use = "this only returns the value"]
