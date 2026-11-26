@@ -153,7 +153,7 @@ const CHECK_ROOT: &str = "
 /// else what it is instead.
 fn check_root(root: &Element, namespace: NamespaceId, local: &str) -> Result<(), String> {
     let expected = Namespace::Known(namespace);
-    if root.name.namespace == expected && root.name.local == local {
+    if root.name.namespace == expected && &*root.name.local == local {
         return Ok(());
     }
     Err(format!(
@@ -306,7 +306,7 @@ fn root_entry<'roots, T>(
     Ok(roots
         .iter()
         .find(|(namespace, local, _)| {
-            root.namespace == Namespace::Known(*namespace) && root.local == *local
+            root.namespace == Namespace::Known(*namespace) && &*root.local == *local
         })
         .map(|(_, _, entry)| entry))
 }

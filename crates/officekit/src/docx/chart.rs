@@ -6,6 +6,7 @@ mod tests;
 use alloc::collections::BTreeMap;
 use alloc::collections::btree_map::Entry;
 use alloc::string::{String, ToString as _};
+use alloc::sync::Arc;
 use alloc::vec::Vec;
 
 use crate::parts::{chart, shared_string_table, worksheet};
@@ -280,7 +281,7 @@ fn refresh_reference(
         points.retain(|(_, text)| is_number(text));
     }
     let cache_local = if numbers_only { "numCache" } else { "strCache" };
-    let prefix = reference.name.prefix.clone();
+    let prefix = Arc::clone(&reference.name.prefix);
     let cache_at = position(reference, cache_local).unwrap_or_else(|| {
         let at = formula_at + 1;
         reference.children.insert(
@@ -306,7 +307,7 @@ fn all_numbers(points: &[(u64, &String)]) -> bool {
 
 /// `c:numRef` becomes `c:strRef` and its `c:numCache` a `c:strCache`, which has no `c:formatCode`.
 fn to_string_reference(reference: &mut Element) {
-    "strRef".clone_into(&mut reference.name.local);
+    reference.name.local = Arc::from("strRef");
     reference
         .children
         .retain(|node| !matches!(node, Node::Element(child) if is(child, "strCache")));
@@ -314,7 +315,7 @@ fn to_string_reference(reference: &mut Element) {
         if let Node::Element(cache) = node
             && is(cache, "numCache")
         {
-            "strCache".clone_into(&mut cache.name.local);
+            cache.name.local = Arc::from("strCache");
             cache
                 .children
                 .retain(|inner| !matches!(inner, Node::Element(child) if is(child, "formatCode")));
@@ -353,7 +354,7 @@ fn fill_cache(cache: &mut Element, prefix: &str, count: u64, points: &[(u64, &St
 
 fn set_attribute(element: &mut Element, local: &str, value: &str) {
     if let Some(attribute) = element.attributes.iter_mut().find(|attribute| {
-        attribute.name.local == local && attribute.name.namespace == Namespace::None
+        &*attribute.name.local == local && attribute.name.namespace == Namespace::None
     }) {
         value.clone_into(&mut attribute.value);
     } else {
@@ -365,7 +366,7 @@ fn set_attribute(element: &mut Element, local: &str, value: &str) {
 }
 
 fn is(element: &Element, local: &str) -> bool {
-    element.name.local == local && element.name.namespace == Namespace::from_uri(CHART)
+    &*element.name.local == local && element.name.namespace == Namespace::from_uri(CHART)
 }
 
 fn position(element: &Element, local: &str) -> Option<usize> {

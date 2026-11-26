@@ -112,11 +112,14 @@
 //! ));
 //! ```
 
+extern crate alloc;
+
 // The namespace modules, `officekit_strict::<namespace>`, generated in a file of their own.
 include!("modules.rs");
 
 pub mod traversal;
 
+use alloc::sync::Arc;
 use core::cmp::Ordering;
 use core::mem;
 
@@ -515,7 +518,9 @@ fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<
             let unit_value = element
                 .attributes
                 .iter()
-                .find(|found| found.name.local == *unit && Some(&found.name.namespace) == namespace)
+                .find(|found| {
+                    &*found.name.local == *unit && Some(&found.name.namespace) == namespace
+                })
                 .map_or("", |found| found.value.as_str());
             let converted = element.attributes.get(index).and_then(|found| {
                 if unit_value == *percent {
@@ -538,7 +543,7 @@ fn apply(element: &mut Element, attribute: Tag, rule: &AttributeRule) -> Result<
                 return Ok(());
             }
             if let Some(found) = element.attributes.get_mut(index) {
-                (*to).clone_into(&mut found.name.local);
+                found.name.local = Arc::from(*to);
             }
             Ok(())
         }
@@ -699,7 +704,7 @@ fn convert(
     if named(element, WORDPROCESSING_DRAWING, "anchor")
         || named(element, WORDPROCESSING_DRAWING, "inline")
     {
-        let prefix = element.name.prefix.clone();
+        let prefix = Arc::clone(&element.name.prefix);
         word_shape(element, &prefix);
     }
     protection_with_no_password(element);
@@ -877,7 +882,7 @@ fn has_attribute(element: &Element, index: usize, local: &str) -> bool {
         .enumerate()
         .any(|(position, found)| {
             position != index
-                && found.name.local == local
+                && &*found.name.local == local
                 && found.name.namespace == source.name.namespace
         })
 }
@@ -908,7 +913,7 @@ fn holds_only_color(background: &Element, namespace: &Namespace) -> bool {
         && background
             .attributes
             .iter()
-            .all(|found| match found.name.local.as_str() {
+            .all(|found| match &*found.name.local {
                 "id" => true,
                 "filled" => matches!(found.value.as_str(), "t" | "true"),
                 "themeColor" | "themeShade" | "themeTint" => found.name.namespace == *namespace,
@@ -975,7 +980,7 @@ fn loose_vml(element: &Element) -> bool {
 
 /// Whether `element` is `local` in the namespace `uri`.
 fn named(element: &Element, uri: &str, local: &str) -> bool {
-    element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
+    &*element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
 }
 
 /// The prefix the namespace table gives the namespace of `element`; empty for no known namespace.
@@ -1022,7 +1027,7 @@ fn protection_with_no_password(element: &mut Element) {
         element
             .attributes
             .iter()
-            .find(|found| found.name.local == local && found.name.namespace == namespace)
+            .find(|found| &*found.name.local == local && found.name.namespace == namespace)
             .map(|found| found.value.as_str())
     };
     let algorithm = value("cryptAlgorithmSid").map(|sid| {
@@ -1047,19 +1052,18 @@ fn protection_with_no_password(element: &mut Element) {
         ("spinCount", spin_count),
     ];
     element.attributes.retain(|found| {
-        found.name.namespace != namespace
-            || !PROTECTION_ALGORITHM.contains(&found.name.local.as_str())
+        found.name.namespace != namespace || !PROTECTION_ALGORITHM.contains(&&*found.name.local)
     });
     for (local, text) in strict {
         let present = element
             .attributes
             .iter()
-            .any(|found| found.name.local == local && found.name.namespace == namespace);
+            .any(|found| &*found.name.local == local && found.name.namespace == namespace);
         if let (Some(written), false) = (text, present) {
             element.attributes.push(Attribute::new(
                 QName::new(
-                    element.name.prefix.clone(),
-                    local.to_owned(),
+                    Arc::clone(&element.name.prefix),
+                    Arc::from(local),
                     namespace.clone(),
                 ),
                 written,
@@ -1099,7 +1103,7 @@ fn refuse_element(element: &Element) -> Result<(), &'static str> {
     let Namespace::Known(id) = element.name.namespace else {
         return Ok(());
     };
-    let local = element.name.local.as_str();
+    let local = &*element.name.local;
     if let Some((_, locals)) = REFUSED_NAMESPACES
         .iter()
         .find(|(refused, _)| *refused == id)
@@ -1139,14 +1143,14 @@ fn rename_child(element: &mut Element, index: usize, before: &[&str], to: &'stat
     let namespace = child.name.namespace.clone();
     let sibling = |node: &Node, locals: &[&str]| {
         matches!(node, Node::Element(found)
-            if found.name.namespace == namespace && locals.contains(&found.name.local.as_str()))
+            if found.name.namespace == namespace && locals.contains(&&*found.name.local))
     };
     if element.children.iter().any(|node| sibling(node, &[to])) {
         element.children.remove(index);
         return index;
     }
     if let Some(Node::Element(renamed)) = element.children.get_mut(index) {
-        to.clone_into(&mut renamed.name.local);
+        renamed.name.local = Arc::from(to);
     }
     let earlier = element
         .children
@@ -1261,7 +1265,7 @@ fn signed(text: &str) -> (bool, &str) {
 /// Rename the attribute at `index` to `to` and give it `value`.
 fn set(element: &mut Element, index: usize, to: &str, value: &str) {
     if let Some(found) = element.attributes.get_mut(index) {
-        to.clone_into(&mut found.name.local);
+        found.name.local = Arc::from(to);
         value.clone_into(&mut found.value);
     }
 }
@@ -1286,13 +1290,13 @@ fn to_child(element: &mut Element, index: usize, local: &str) {
     let attribute = element.attributes.remove(index);
     let present = element
         .child_elements()
-        .any(|child| child.name.local == local && child.name.namespace == element.name.namespace);
+        .any(|child| &*child.name.local == local && child.name.namespace == element.name.namespace);
     if present {
         return;
     }
     let mut child = Element::new(QName::new(
-        element.name.prefix.clone(),
-        local.to_owned(),
+        Arc::clone(&element.name.prefix),
+        Arc::from(local),
         element.name.namespace.clone(),
     ));
     child.children.push(Node::Text(attribute.value));
@@ -1331,13 +1335,13 @@ fn unpack(
     };
     for (local, on) in values {
         let present = element.attributes.iter().any(|found| {
-            found.name.local == local && found.name.namespace == source.name.namespace
+            &*found.name.local == local && found.name.namespace == source.name.namespace
         });
         if !present {
             element.attributes.push(Attribute::new(
                 QName::new(
-                    source.name.prefix.clone(),
-                    local.to_owned(),
+                    Arc::clone(&source.name.prefix),
+                    Arc::from(local),
                     source.name.namespace.clone(),
                 ),
                 if on { "1" } else { "0" }.to_owned(),
@@ -1401,7 +1405,7 @@ fn wrap_loose_vml(element: &mut Element, scope: &Around<'_>) {
         }
         let mut choice = Element::new(QName::prefixed("mc", "Choice", MARKUP_COMPATIBILITY));
         choice.attributes.push(Attribute::new(
-            QName::new(String::new(), "Requires".to_owned(), Namespace::None),
+            QName::new(Arc::from(""), Arc::from("Requires"), Namespace::None),
             "v".to_owned(),
         ));
         choice.children.push(Node::Element(child));
@@ -1467,35 +1471,35 @@ fn set_conformance(root: &mut Element, conformance: Tag) {
         return;
     }
     let (namespace, attribute_prefix) = conformance.0.map_or_else(
-        || (Namespace::None, String::new()),
+        || (Namespace::None, Arc::from("")),
         |id| (Namespace::Known(id), declared_prefix(root, id)),
     );
     root.attributes.push(Attribute::new(
-        QName::new(attribute_prefix, conformance.1.to_owned(), namespace),
+        QName::new(attribute_prefix, Arc::from(conformance.1), namespace),
         "strict".to_owned(),
     ));
 }
 
 /// A prefix `element` binds to the namespace `id` for an attribute: its own
 /// when not empty, one it declares, else the table's, declared on it.
-fn declared_prefix(element: &mut Element, id: NamespaceId) -> String {
+fn declared_prefix(element: &mut Element, id: NamespaceId) -> Arc<str> {
     let namespace = Namespace::Known(id);
     if element.name.namespace == namespace && !element.name.prefix.is_empty() {
-        return element.name.prefix.clone();
+        return Arc::clone(&element.name.prefix);
     }
     if let Some(found) = element.namespace_declarations.iter().find(|declaration| {
         !declaration.prefix.is_empty() && Namespace::from_uri(&declaration.uri) == namespace
     }) {
-        return found.prefix.clone();
+        return Arc::from(found.prefix.as_str());
     }
-    let table_prefix = prefix(id).to_owned();
+    let table_prefix = prefix(id);
     element
         .namespace_declarations
         .push(NamespaceDeclaration::new(
-            table_prefix.clone(),
+            table_prefix.to_owned(),
             namespace.uri(ConformanceClass::Strict).to_owned(),
         ));
-    table_prefix
+    Arc::from(table_prefix)
 }
 
 /// The id of a namespace the table knows by its Transitional URI.

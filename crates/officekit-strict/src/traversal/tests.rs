@@ -5,6 +5,7 @@ mod presentation;
 mod runtime;
 mod write_through;
 
+use alloc::sync::Arc;
 use core::mem;
 use std::io;
 
@@ -277,7 +278,7 @@ impl wordprocessing::Context for ParagraphForOther {
 impl officekit_markup::Context for Pictures {
     fn element(&mut self, node: &Element) -> Option<Element> {
         self.elements += 1;
-        (node.name.local == "chart").then(|| renamed(node, "graph"))
+        (&*node.name.local == "chart").then(|| renamed(node, "graph"))
     }
 
     fn picture(&mut self) -> Option<&mut dyn picture::Context> {
@@ -330,11 +331,11 @@ impl wordprocessing::Context for Record {
 
 impl officekit_markup::Context for Rename {
     fn element(&mut self, node: &Element) -> Option<Element> {
-        (node.name.local == "a").then(|| renamed(node, "b"))
+        (&*node.name.local == "a").then(|| renamed(node, "b"))
     }
 
     fn write_element(&mut self, node: &Element, out: &mut PartWriter<'_>) -> io::Result<Written> {
-        if node.name.local != "c" {
+        if &*node.name.local != "c" {
             return Ok(Written::No);
         }
         out.empty("x:written", &[])?;
@@ -681,7 +682,7 @@ fn preserved(value: &str) -> Text {
 /// A generic element named `local` in place of `node`.
 fn renamed(node: &Element, local: &str) -> Element {
     let mut element = node.clone();
-    element.name.local = local.to_owned();
+    element.name.local = Arc::from(local);
     element
 }
 

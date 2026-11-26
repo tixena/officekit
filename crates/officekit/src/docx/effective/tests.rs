@@ -1142,7 +1142,7 @@ fn a_kind_the_later_level_does_not_state_keeps_the_earlier_font() {
 fn child_names(element: &Element) -> Vec<String> {
     element
         .child_elements()
-        .map(|child| child.name.local.clone())
+        .map(|child| String::from(&*child.name.local))
         .collect()
 }
 

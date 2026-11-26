@@ -81,14 +81,14 @@ fn versions_are_ordered_by_rank() {
 #[test]
 fn a_prefixed_name_stands_for_its_namespace() {
     let name = QName::prefixed("w", "p", WORDPROCESSING);
-    assert_eq!(name.local, "p");
-    assert_eq!(name.prefix, "w");
+    assert_eq!(&*name.local, "p");
+    assert_eq!(&*name.prefix, "w");
     assert_eq!(name.namespace, Namespace::from_uri(WORDPROCESSING_STRICT));
 }
 
 #[test]
 fn an_unprefixed_name_has_an_empty_prefix() {
     let name = QName::unprefixed("p", "");
-    assert_eq!(name.prefix, "");
+    assert_eq!(&*name.prefix, "");
     assert_eq!(name.namespace, Namespace::None);
 }

@@ -156,7 +156,7 @@ fn root_of(body: &str) -> Element {
 /// The element `node` is when it is the `WordprocessingML` tag `local`.
 fn tag<'node>(node: &'node Node, local: &str) -> Option<&'node Element> {
     if let Node::Element(element) = node
-        && element.name.local == local
+        && &*element.name.local == local
         && element.name.namespace == Namespace::from_uri(W)
     {
         Some(element)
@@ -250,7 +250,7 @@ fn an_unknown_element_between_two_runs_stays_between_them() {
     assert_eq!(paragraph.content.len(), 3);
     assert!(matches!(
         &paragraph.content[1],
-        ParagraphContent::Other(Node::Element(foo)) if foo.name.local == "foo"
+        ParagraphContent::Other(Node::Element(foo)) if &*foo.name.local == "foo"
     ));
     assert_eq!(write(&paragraph), xml);
 }
@@ -466,7 +466,7 @@ fn a_node_read_under_another_name_keeps_it_and_is_written_with_it() {
     let unknown = reader.finish().unwrap();
     let names: Vec<(usize, &str)> = read
         .iter()
-        .map(|(index, name)| (*index, name.local.as_str()))
+        .map(|(index, name)| (*index, &*name.local))
         .collect();
     assert_eq!(
         names,

@@ -64,7 +64,8 @@ fn attribute<'element>(
         .attributes
         .iter()
         .find(|attribute| {
-            attribute.name.local == local && prefix(&attribute.name.namespace) == Some(table_prefix)
+            &*attribute.name.local == local
+                && prefix(&attribute.name.namespace) == Some(table_prefix)
         })
         .map(|attribute| attribute.value.as_str())
 }

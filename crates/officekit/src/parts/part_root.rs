@@ -262,7 +262,7 @@ where
             .unwrap_or_else(|| XmlError::Malformed("no root element".to_owned()));
         return Err(xml(error));
     };
-    if root.element().name.local != R::LOCAL_NAME {
+    if &*root.element().name.local != R::LOCAL_NAME {
         let reason = format!(
             "the root is <{}>, not <{}>",
             root.element().name.local,

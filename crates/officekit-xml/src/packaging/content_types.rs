@@ -76,7 +76,7 @@ impl ContentTypes {
 
     /// Read the entries of a parsed `[Content_Types].xml`.
     pub(crate) fn parse(document: &Document) -> Result<Self, String> {
-        if document.root.name.local != "Types" {
+        if &*document.root.name.local != "Types" {
             return Err(format!(
                 "the root is <{}>, not <Types>",
                 document.root.name.local
@@ -90,7 +90,7 @@ impl ContentTypes {
                     .map(str::to_owned)
                     .ok_or_else(|| format!("a <{}> without {local}", element.name.local))
             };
-            match element.name.local.as_str() {
+            match &*element.name.local {
                 "Default" => types
                     .defaults
                     .push((attribute("Extension")?, attribute("ContentType")?)),

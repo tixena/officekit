@@ -3,6 +3,7 @@
 
 use alloc::collections::BTreeSet;
 use alloc::string::{String, ToString as _};
+use alloc::sync::Arc;
 use alloc::vec::Vec;
 use core::mem;
 
@@ -154,7 +155,7 @@ struct Scan {
 
 /// The count of the elements met so far under one parent, by namespace and local name.
 #[derive(Default)]
-struct Siblings(Vec<(Namespace, String, u32)>);
+struct Siblings(Vec<(Namespace, Arc<str>, u32)>);
 
 /// The second walk over one part: renames the later copies and records them.
 struct Renamer<'run> {
@@ -169,7 +170,7 @@ struct Renamer<'run> {
 
 impl Target {
     fn matches(&self, name: &QName) -> bool {
-        self.local == name.local && self.namespace == name.namespace
+        self.local == &*name.local && self.namespace == name.namespace
     }
 
     fn new(namespace: &str, local: &'static str) -> Self {
@@ -276,12 +277,13 @@ impl Siblings {
         if let Some((_, _, count)) = self
             .0
             .iter_mut()
-            .find(|(namespace, local, _)| *namespace == name.namespace && *local == name.local)
+            .find(|(namespace, local, _)| *namespace == name.namespace && **local == *name.local)
         {
             *count = count.saturating_add(1);
             *count
         } else {
-            self.0.push((name.namespace.clone(), name.local.clone(), 1));
+            self.0
+                .push((name.namespace.clone(), Arc::clone(&name.local), 1));
             1
         }
     }
@@ -294,7 +296,7 @@ impl Renamer<'_> {
                 continue;
             }
             let Some(attribute) = element.attributes.iter_mut().find(|attribute| {
-                attribute.name.local == entry.attribute
+                &*attribute.name.local == entry.attribute
                     && attribute.name.namespace == Namespace::None
             }) else {
                 continue;

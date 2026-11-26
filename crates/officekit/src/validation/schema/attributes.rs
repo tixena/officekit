@@ -190,7 +190,7 @@ fn declared_name(constraint: &AttributeConstraint) -> String {
 
 /// Whether `constraint` is the attribute `name`.
 fn declares(constraint: &AttributeConstraint, name: &QName) -> bool {
-    constraint.name == name.local
+    constraint.name == &*name.local
         && name.namespace
             == constraint
                 .namespace
@@ -253,7 +253,7 @@ fn marked_value(class: &ValueClass, text: &str) -> bool {
 #[must_use = "this only returns the value"]
 pub fn qualified(name: &QName) -> String {
     if name.prefix.is_empty() {
-        name.local.clone()
+        String::from(&*name.local)
     } else {
         format!("{}:{}", name.prefix, name.local)
     }
@@ -365,7 +365,7 @@ fn transitional_only_value(
 /// `mc` attributes of markup compatibility aside.
 fn undeclared(attribute: &Attribute, schema_type: &SchemaType) -> bool {
     let compatibility = is_mc(&attribute.name.namespace)
-        && COMPATIBILITY_ATTRIBUTES.contains(&attribute.name.local.as_str());
+        && COMPATIBILITY_ATTRIBUTES.contains(&&*attribute.name.local);
     !compatibility
         && !schema_type
             .attributes

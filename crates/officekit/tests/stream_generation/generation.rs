@@ -140,7 +140,7 @@ where
 }
 
 fn is_table(element: &Element) -> bool {
-    element.name.local == "tbl" && element.name.namespace == Namespace::from_uri(W)
+    &*element.name.local == "tbl" && element.name.namespace == Namespace::from_uri(W)
 }
 
 fn main() -> Result<PartName, PackageError> {

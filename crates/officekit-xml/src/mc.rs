@@ -66,8 +66,8 @@ fn selected_branch(
     let mut fallback = None;
     for node in block.children {
         if let Node::Element(branch) = node {
-            let is_choice = is_mc(&branch.name.namespace) && branch.name.local == "Choice";
-            let is_fallback = is_mc(&branch.name.namespace) && branch.name.local == "Fallback";
+            let is_choice = is_mc(&branch.name.namespace) && &*branch.name.local == "Choice";
+            let is_fallback = is_mc(&branch.name.namespace) && &*branch.name.local == "Fallback";
             if is_choice && understands_requires(&branch, target, scope) {
                 chosen = Some(branch);
                 break;
@@ -148,7 +148,7 @@ fn context<'context>(
 
 /// Whether `element` is an `mc:AlternateContent` block.
 fn is_alternate_content(element: &Element) -> bool {
-    is_mc(&element.name.namespace) && element.name.local == "AlternateContent"
+    is_mc(&element.name.namespace) && &*element.name.local == "AlternateContent"
 }
 
 /// Whether `namespace` is the markup-compatibility namespace.
@@ -168,7 +168,7 @@ fn mc_attribute<'element>(element: &'element Element, local: &str) -> Option<&'e
     element
         .attributes
         .iter()
-        .find(|attribute| attribute.name.local == local && is_mc(&attribute.name.namespace))
+        .find(|attribute| &*attribute.name.local == local && is_mc(&attribute.name.namespace))
         .map(|attribute| attribute.value.as_str())
 }
 
@@ -199,7 +199,7 @@ fn process_child(
         let processed = inside
             .process_content
             .iter()
-            .any(|(named, local)| named == namespace && *local == element.name.local);
+            .any(|(named, local)| named == namespace && *local == *element.name.local);
         if !processed {
             return Ok(Outcome::Drop);
         }
@@ -327,12 +327,12 @@ pub(crate) fn requires(choice: &Element) -> &str {
 /// The prefixes `element` and its subtree use, in a name, a `Requires` or an `mc` list, that no
 /// declaration among them binds.
 fn used_prefixes(element: &Element) -> BTreeSet<&str> {
-    let mut used = BTreeSet::from([element.name.prefix.as_str()]);
+    let mut used = BTreeSet::from([&*element.name.prefix]);
     for attribute in &element.attributes {
         if !attribute.name.prefix.is_empty() {
-            used.insert(attribute.name.prefix.as_str());
+            used.insert(&*attribute.name.prefix);
         }
-        let local = attribute.name.local.as_str();
+        let local = &*attribute.name.local;
         if is_mc(&attribute.name.namespace) {
             if PREFIX_LISTS.contains(&local) {
                 used.extend(attribute.value.split_whitespace());
@@ -348,7 +348,7 @@ fn used_prefixes(element: &Element) -> BTreeSet<&str> {
             }
         }
     }
-    if is_mc(&element.name.namespace) && element.name.local == "Choice" {
+    if is_mc(&element.name.namespace) && &*element.name.local == "Choice" {
         used.extend(requires(element).split_whitespace());
     }
     for child in element.child_elements() {

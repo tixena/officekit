@@ -105,6 +105,7 @@ pub mod dates;
 #[cfg(feature = "strict")]
 mod spellings;
 
+use alloc::sync::Arc;
 use core::cmp::Ordering;
 use core::mem;
 
@@ -373,7 +374,7 @@ fn apply_back(element: &mut Element, attribute: Tag, rule: &BackRule) {
                 .attributes
                 .iter()
                 .find(|found| {
-                    found.name.local == *unit && Some(&found.name.namespace) == namespace.as_ref()
+                    &*found.name.local == *unit && Some(&found.name.namespace) == namespace.as_ref()
                 })
                 .map_or("", |found| found.value.as_str());
             if unit_value == *percent {
@@ -487,12 +488,12 @@ fn child_attributes(element: &mut Element, rows: &[(Tag, Tag, Tag)]) {
                 .collect();
             let namespace = attribute.0.map_or(Namespace::None, Namespace::Known);
             let prefix = if namespace == Namespace::None {
-                String::new()
+                Arc::from("")
             } else {
                 found.name.prefix
             };
             element.attributes.push(Attribute::new(
-                QName::new(prefix, attribute.1.to_owned(), namespace),
+                QName::new(prefix, Arc::from(attribute.1), namespace),
                 text,
             ));
         }
@@ -547,7 +548,7 @@ fn has_sibling(element: &Element, index: usize, local: &str) -> bool {
         .enumerate()
         .any(|(position, found)| {
             position != index
-                && found.name.local == local
+                && &*found.name.local == local
                 && found.name.namespace == source.name.namespace
         })
 }
@@ -556,7 +557,7 @@ fn has_sibling(element: &Element, index: usize, local: &str) -> bool {
 #[cfg(feature = "strict")]
 fn move_attribute(element: &mut Element, index: usize, to: &str, value: &str) {
     if let Some(found) = element.attributes.get_mut(index) {
-        to.clone_into(&mut found.name.local);
+        found.name.local = Arc::from(to);
         value.clone_into(&mut found.value);
     }
 }
@@ -577,7 +578,7 @@ fn pack(element: &mut Element, attribute: Tag, bits: &Bits) {
         element
             .attributes
             .iter()
-            .find(|found| found.name.local == local && found.name.namespace == namespace)
+            .find(|found| &*found.name.local == local && found.name.namespace == namespace)
     };
     let flags: Vec<&str> = match bits {
         Bits::Characters(names) => names.to_vec(),
@@ -586,7 +587,7 @@ fn pack(element: &mut Element, attribute: Tag, bits: &Bits) {
     let Some(prefix) = flags
         .iter()
         .find_map(|name| flag(name))
-        .map(|found| found.name.prefix.clone())
+        .map(|found| Arc::clone(&found.name.prefix))
     else {
         return;
     };
@@ -607,7 +608,7 @@ fn pack(element: &mut Element, attribute: Tag, bits: &Bits) {
         }
     };
     element.attributes.push(Attribute::new(
-        QName::new(prefix, attribute.1.to_owned(), namespace),
+        QName::new(prefix, Arc::from(attribute.1), namespace),
         value,
     ));
 }
@@ -644,10 +645,10 @@ fn rename_children(element: &mut Element, rows: &[(Tag, Tag, &str)]) {
             continue;
         };
         let taken = element.children.iter().any(|node| {
-            matches!(node, Node::Element(found) if found.name.local == to && found.name.namespace == namespace)
+            matches!(node, Node::Element(found) if &*found.name.local == to && found.name.namespace == namespace)
         });
         if let (false, Some(Node::Element(child))) = (taken, element.children.get_mut(index)) {
-            to.clone_into(&mut child.name.local);
+            child.name.local = Arc::from(to);
         }
     }
 }
@@ -762,7 +763,7 @@ fn holds_word_ml_text(element: &Element) -> bool {
 }
 
 fn named(element: &Element, uri: &str, local: &str) -> bool {
-    element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
+    &*element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
 }
 
 /// What a `w:drawing` in Strict's form must have understood: the namespace of its Word shape,
@@ -824,15 +825,15 @@ fn word_names(element: &mut Element, inherited: WordNamespace, used: &mut Vec<Wo
     if element.name.namespace != Namespace::from_uri(WORDPROCESSING_DRAWING) {
         return;
     }
-    let local = element.name.local.clone();
-    let namespace = match local.as_str() {
+    let local = Arc::clone(&element.name.local);
+    let namespace = match &*local {
         "contentPart" => CONTENT_PART,
         "grpSp" | "wgp" => GROUP,
         "wpc" => CANVAS,
         "wsp" => SHAPE,
         _ => inherited,
     };
-    let inner = if local == "graphicFrame" {
+    let inner = if &*local == "graphicFrame" {
         GROUP
     } else {
         namespace

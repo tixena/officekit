@@ -274,3 +274,35 @@ fn bytes_that_show_no_root_have_no_root_name() {
     assert_eq!(root_name(b"<!DOCTYPE a><a/>"), None);
     assert_eq!(root_name(b"<x:a/>"), None);
 }
+
+#[test]
+fn equal_names_in_one_parse_share_one_allocation() {
+    let xml =
+        "<v:root xmlns:v=\"urn:vendor\"><v:item v:kind=\"a\"/><v:item v:kind=\"b\"/></v:root>";
+    let document = parse(xml.as_bytes()).unwrap();
+    let items: Vec<_> = document.root.child_elements().collect();
+    assert!(Arc::ptr_eq(&items[0].name.local, &items[1].name.local));
+    assert!(Arc::ptr_eq(
+        &items[0].name.prefix,
+        &document.root.name.prefix
+    ));
+    assert!(Arc::ptr_eq(
+        &items[0].attributes[0].name.local,
+        &items[1].attributes[0].name.local
+    ));
+    assert!(Arc::ptr_eq(
+        &items[0].attributes[0].name.prefix,
+        &items[0].name.prefix
+    ));
+}
+
+#[test]
+fn two_parses_give_their_names_apart() {
+    let xml = b"<item/>";
+    let first = parse(xml).unwrap();
+    let second = parse(xml).unwrap();
+    assert!(!Arc::ptr_eq(
+        &first.root.name.local,
+        &second.root.name.local
+    ));
+}

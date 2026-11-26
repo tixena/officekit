@@ -170,7 +170,7 @@ impl<'source> Processed<'source> {
             let processed = inside
                 .process_content
                 .iter()
-                .any(|(named, local)| named == namespace && *local == element.name.local);
+                .any(|(named, local)| named == namespace && *local == *element.name.local);
             if processed {
                 self.open.push(Open {
                     context: inside,

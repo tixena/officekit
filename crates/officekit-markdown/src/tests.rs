@@ -546,7 +546,7 @@ fn descendants<'tree>(
     local: &str,
     found: &mut Vec<&'tree Element>,
 ) {
-    if element.name.local == local && element.name.namespace == Namespace::from_uri(uri) {
+    if &*element.name.local == local && element.name.namespace == Namespace::from_uri(uri) {
         found.push(element);
     }
     for child in element.child_elements() {

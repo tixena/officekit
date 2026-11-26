@@ -277,8 +277,8 @@ fn an_a_ppr_from_an_a_lvl1ppr_writes_as_an_a_ppr() {
             .is_none_or(|unknown| unknown.name.is_none())
     );
     let element = write::text_paragraph_properties(&properties, &mut Scope::default());
-    assert_eq!(element.name.local, "pPr");
-    assert_eq!(element.name.prefix, "a");
+    assert_eq!(&*element.name.local, "pPr");
+    assert_eq!(&*element.name.prefix, "a");
 }
 
 #[test]
@@ -303,7 +303,7 @@ fn an_a_rpr_from_an_a_endpararpr_writes_as_an_a_rpr() {
             .is_none_or(|unknown| unknown.name.is_none())
     );
     let element = write::text_run_properties(&properties, &mut Scope::default());
-    assert_eq!(element.name.local, "rPr");
+    assert_eq!(&*element.name.local, "rPr");
 }
 
 #[test]

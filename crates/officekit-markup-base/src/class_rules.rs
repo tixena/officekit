@@ -54,7 +54,7 @@ pub fn read<T>(element: &Element, tag: Tag, reader: fn(&Element) -> T) -> Result
         },
     );
     let found = if element.name.prefix.is_empty() {
-        element.name.local.clone()
+        String::from(&*element.name.local)
     } else {
         format!("{}:{}", element.name.prefix, element.name.local)
     };

@@ -171,7 +171,7 @@ fn command(element: &Element) -> Result<Command> {
         .child_elements()
         .map(point)
         .collect::<Result<Vec<(String, String)>>>()?;
-    Ok(match (element.name.local.as_str(), points.as_slice()) {
+    Ok(match (&*element.name.local, points.as_slice()) {
         ("arcTo", []) => Command::ArcTo {
             h_r: attribute(element, "hR")?,
             st_ang: attribute(element, "stAng")?,
@@ -222,7 +222,7 @@ fn command_expr(command: &Command) -> Expr {
 fn guides(list: &Element) -> Result<Vec<(String, String)>> {
     list.child_elements()
         .map(|guide| {
-            if guide.name.local != "gd" {
+            if &*guide.name.local != "gd" {
                 bail!("an {} in an {}", guide.name.local, list.name.local);
             }
             let name = attribute(guide, "name")?;
@@ -246,7 +246,7 @@ fn optional_expr(value: Option<&String>) -> Expr {
 
 /// One `a:path`.
 fn path(element: &Element) -> Result<PresetPath> {
-    if element.name.local != "path" {
+    if &*element.name.local != "path" {
         bail!("an {} in a pathLst", element.name.local);
     }
     let stroke = match element.attribute(&Namespace::None, "stroke") {
@@ -286,7 +286,7 @@ fn path_expr(path: &PresetPath) -> Expr {
 
 /// The `x` and `y` of an `a:pt`.
 fn point(element: &Element) -> Result<(String, String)> {
-    if element.name.local != "pt" {
+    if &*element.name.local != "pt" {
         bail!("an {} in a path command", element.name.local);
     }
     Ok((attribute(element, "x")?, attribute(element, "y")?))
@@ -294,13 +294,13 @@ fn point(element: &Element) -> Result<(String, String)> {
 
 /// One child of the root: a preset, named by its element.
 fn preset(element: &Element) -> Result<Preset> {
-    let name = element.name.local.clone();
+    let name = String::from(&*element.name.local);
     let mut found = Preset {
         name: name.clone(),
         ..Preset::default()
     };
     for child in element.child_elements() {
-        match child.name.local.as_str() {
+        match &*child.name.local {
             "ahLst" | "cxnLst" => {}
             "avLst" => found.adjust = guides(child).with_context(|| format!("in {name}"))?,
             "gdLst" => found.guides = guides(child).with_context(|| format!("in {name}"))?,

@@ -1131,7 +1131,7 @@ fn ignorable(unknown: &Unknown) -> Option<&str> {
     unknown
         .attributes
         .iter()
-        .find(|attribute| attribute.name.local == "Ignorable")
+        .find(|attribute| &*attribute.name.local == "Ignorable")
         .map(|attribute| attribute.value.as_str())
 }
 

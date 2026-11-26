@@ -32,8 +32,8 @@ impl Context for DropComments {
 
 impl Visitor for Names {
     fn element(&mut self, node: &Element) -> Descend {
-        self.seen.push(node.name.local.clone());
-        if node.name.local == "c" {
+        self.seen.push(String::from(&*node.name.local));
+        if &*node.name.local == "c" {
             Descend::No
         } else {
             Descend::Yes
@@ -43,7 +43,7 @@ impl Visitor for Names {
 
 impl Context for ReplaceB {
     fn element(&mut self, node: &Element) -> Option<Element> {
-        (node.name.local == "b").then(|| {
+        (&*node.name.local == "b").then(|| {
             let mut replaced = Element::new(QName::prefixed("x", "d", "urn:x"));
             replaced.children.push(Node::Element(node.clone()));
             replaced

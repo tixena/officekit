@@ -2,8 +2,10 @@
 //! `Reader`.
 
 use alloc::borrow::Cow;
+use alloc::sync::Arc;
 use core::fmt::Display;
 use core::mem;
+use std::collections::HashSet;
 
 use quick_xml::events::{BytesDecl, BytesRef, BytesStart, Event};
 use quick_xml::{Reader, XmlVersion};
@@ -24,6 +26,13 @@ const XML_NAMESPACE: &str = "http://www.w3.org/XML/1998/namespace";
 #[derive(Debug, Default)]
 pub(crate) struct Scope {
     frames: Vec<Vec<NamespaceDeclaration>>,
+}
+
+/// The names one read has given out, so that equal names share one allocation; the table goes
+/// with the read.
+#[derive(Debug, Default)]
+pub(crate) struct Names {
+    given: HashSet<Arc<str>>,
 }
 
 /// Where the nodes read so far go: the open elements, and the nodes before and
@@ -60,6 +69,18 @@ impl Builder {
         } else {
             self.prolog.push(node);
         }
+    }
+}
+
+impl Names {
+    /// `name` as an `Arc<str>`, the one given before for an equal name.
+    pub(crate) fn get(&mut self, name: &str) -> Arc<str> {
+        if let Some(given) = self.given.get(name) {
+            return Arc::clone(given);
+        }
+        let made = Arc::<str>::from(name);
+        self.given.insert(Arc::clone(&made));
+        made
     }
 }
 
@@ -168,6 +189,7 @@ pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
     let mut reader = Reader::from_reader(utf8.as_ref());
     reader.config_mut().trim_text(false);
     let mut scope = Scope::default();
+    let mut names = Names::default();
     let mut declaration = None;
     let mut builder = Builder::default();
     let mut text = String::new();
@@ -189,7 +211,7 @@ pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
                 ));
             }
             Event::Empty(start) => {
-                let element = start_element(&start, &mut scope)?;
+                let element = start_element(&start, &mut scope, &mut names)?;
                 scope.pop();
                 builder.close(element)?;
             }
@@ -206,7 +228,11 @@ pub fn parse(bytes: &[u8]) -> Result<Document, XmlError> {
                 content: instruction.content().trim_start().to_owned(),
                 target: instruction.target().to_owned(),
             }),
-            Event::Start(start) => builder.open.push(start_element(&start, &mut scope)?),
+            Event::Start(start) => {
+                builder
+                    .open
+                    .push(start_element(&start, &mut scope, &mut names)?);
+            }
             // Outside the root, text is whitespace kept as written, line endings included.
             Event::Text(content) if builder.open.is_empty() => text.push_str(&content),
             Event::Text(content) => text.push_str(&content.xml10_content()),
@@ -237,7 +263,9 @@ pub fn root_name(bytes: &[u8]) -> Option<QName> {
         match reader.read_event().ok()? {
             Event::DocType(_) | Event::Eof => return None,
             Event::Empty(start) | Event::Start(start) => {
-                return start_element(&start, &mut scope).ok().map(|root| root.name);
+                return start_element(&start, &mut scope, &mut Names::default())
+                    .ok()
+                    .map(|root| root.name);
             }
             Event::CData(_)
             | Event::Comment(_)
@@ -302,8 +330,8 @@ pub(crate) fn split_qualified(name: &str) -> (&str, &str) {
     name.split_once(':').unwrap_or(("", name))
 }
 
-/// Build an element from a start tag, its declarations pushed onto `scope`;
-/// the caller pops them when the element closes.
+/// Build an element from a start tag, its declarations pushed onto `scope` and its names taken
+/// from `names`; the caller pops the declarations when the element closes.
 ///
 /// # Errors
 ///
@@ -312,6 +340,7 @@ pub(crate) fn split_qualified(name: &str) -> (&str, &str) {
 pub(crate) fn start_element(
     start: &BytesStart<'_>,
     scope: &mut Scope,
+    names: &mut Names,
 ) -> Result<Element, XmlError> {
     let mut namespace_declarations = Vec::new();
     let mut qualified_attributes = Vec::new();
@@ -344,9 +373,9 @@ pub(crate) fn start_element(
         None => return Err(XmlError::UndeclaredPrefix(prefix.to_owned())),
     };
     let name = QName {
-        local: local.to_owned(),
+        local: names.get(local),
         namespace,
-        prefix: prefix.to_owned(),
+        prefix: names.get(prefix),
     };
     let mut attributes = Vec::with_capacity(qualified_attributes.len());
     for (key, value) in qualified_attributes {
@@ -361,9 +390,9 @@ pub(crate) fn start_element(
         };
         attributes.push(Attribute {
             name: QName {
-                local: attribute_local.to_owned(),
+                local: names.get(attribute_local),
                 namespace: attribute_namespace,
-                prefix: attribute_prefix.to_owned(),
+                prefix: names.get(attribute_prefix),
             },
             value,
         });

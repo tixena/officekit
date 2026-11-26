@@ -542,7 +542,7 @@ fn holds_name_of_another_type(
     parent
         .children
         .iter()
-        .find(|(own, local, _, _)| *own == namespace && *local == child.name.local)
+        .find(|(own, local, _, _)| *own == namespace && *local == &*child.name.local)
         .and_then(|(_, _, type_id, _)| SCHEMA_TYPES.get(usize::from(*type_id)))
         .is_some_and(|found| found.versions.contains(target))
 }

@@ -629,7 +629,7 @@ fn is_default_table(style: &StyleDefinition) -> bool {
 }
 
 pub(super) fn is_word(element: &Element, local: &str) -> bool {
-    element.name.local == local && element.name.namespace == Namespace::from_uri(WORDPROCESSING)
+    &*element.name.local == local && element.name.namespace == Namespace::from_uri(WORDPROCESSING)
 }
 
 /// The value of the first level, from the style upward, that sets the toggle property `name`.
@@ -680,7 +680,7 @@ fn merge_property(held: &mut Element, over: &Element) {
             {
                 held.attributes.retain(|existing| {
                     existing.name.namespace != namespace
-                        || (existing.name.local != plain && existing.name.local != theme)
+                        || (&*existing.name.local != plain && &*existing.name.local != theme)
                 });
             }
         }
@@ -693,7 +693,7 @@ fn merge_property(held: &mut Element, over: &Element) {
         // continue (Part 1, section 17.4.84; Part 4, section 14.4.13), so `over` replaces it whole.
         let namespace = Namespace::from_uri(WORDPROCESSING);
         held.attributes.retain(|existing| {
-            existing.name.namespace != namespace || existing.name.local != "val"
+            existing.name.namespace != namespace || &*existing.name.local != "val"
         });
     }
     for attribute in &over.attributes {

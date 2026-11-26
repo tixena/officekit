@@ -6,6 +6,7 @@
 mod tests;
 
 use alloc::collections::{BTreeMap, BTreeSet};
+use alloc::sync::Arc;
 
 use crate::parts::{
     endnotes, footnotes, numbering_definitions, style_definitions, wordprocessing_comments,
@@ -437,7 +438,7 @@ impl<'docx> Import<'docx> {
             }
         }
         if is_w(element) {
-            let local = element.name.local.as_str();
+            let local = &*element.name.local;
             if let Some(&(_, attribute_local, space)) =
                 ENTRY_REFERENCES.iter().find(|(name, _, _)| *name == local)
             {
@@ -457,7 +458,7 @@ impl<'docx> Import<'docx> {
             }
         } else if is_drawing(element)
             && let Some(attribute) = element.attributes.iter_mut().find(|attribute| {
-                attribute.name.namespace == Namespace::None && attribute.name.local == "id"
+                attribute.name.namespace == Namespace::None && &*attribute.name.local == "id"
             })
         {
             attribute.value = self.next_drawing.to_string();
@@ -727,16 +728,16 @@ pub fn import_body(
 
 fn is_drawing(element: &Element) -> bool {
     element.name.namespace == Namespace::from_uri(WORDPROCESSING_DRAWING)
-        && element.name.local == "docPr"
+        && &*element.name.local == "docPr"
 }
 
 fn is_ignorable(attribute: &Attribute) -> bool {
-    attribute.name.local == "Ignorable"
+    &*attribute.name.local == "Ignorable"
         && attribute.name.namespace == Namespace::from_uri(MARKUP_COMPATIBILITY)
 }
 
 fn is_range(element: &Element) -> bool {
-    is_w(element) && RANGE_IDS.contains(&element.name.local.as_str())
+    is_w(element) && RANGE_IDS.contains(&&*element.name.local)
 }
 
 fn is_w(element: &Element) -> bool {
@@ -744,7 +745,7 @@ fn is_w(element: &Element) -> bool {
 }
 
 fn is_w_named(element: &Element, local: &str) -> bool {
-    is_w(element) && element.name.local == local
+    is_w(element) && &*element.name.local == local
 }
 
 /// Give a root the source root's namespace declarations whose prefix it lacks, and the prefixes
@@ -803,8 +804,8 @@ fn merge_declarations(
 /// declarations, and the separator entries of the source's footnotes or endnotes.
 fn new_tree(kind: Kind, source_root: &Element) -> Part {
     let mut root = Element::new(QName::new(
-        source_root.name.prefix.clone(),
-        kind.root().to_owned(),
+        Arc::clone(&source_root.name.prefix),
+        Arc::from(kind.root()),
         source_root.name.namespace.clone(),
     ));
     root.namespace_declarations
@@ -845,7 +846,7 @@ fn w_attribute<'element>(
     element
         .attributes
         .iter_mut()
-        .find(|attribute| attribute.name.local == local && attribute.name.namespace == namespace)
+        .find(|attribute| &*attribute.name.local == local && attribute.name.namespace == namespace)
 }
 
 fn w_value<'element>(element: &'element Element, local: &str) -> Option<&'element str> {

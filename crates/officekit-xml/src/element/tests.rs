@@ -36,7 +36,7 @@ fn child_elements_skips_the_other_nodes() {
     let names: Vec<&str> = document
         .root
         .child_elements()
-        .map(|element| element.name.local.as_str())
+        .map(|element| &*element.name.local)
         .collect();
     assert_eq!(names, ["b", "d"]);
 }

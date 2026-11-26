@@ -9,7 +9,7 @@ use quick_xml::Reader;
 use quick_xml::events::Event;
 
 use crate::element::{Element, Node, XmlError};
-use crate::parse::{Scope, malformed, resolve, start_element};
+use crate::parse::{Names, Scope, malformed, resolve, start_element};
 
 #[cfg(test)]
 mod tests;
@@ -54,13 +54,15 @@ pub trait ReadEvents {
 /// everything inside it, as the generic tree.
 ///
 /// It keeps the namespace declarations of the elements started and not ended,
-/// so every element's names resolve, and gives the text between two other
-/// events as one node, references resolved, as [`parse`] does.
+/// so every element's names resolve, gives equal names one shared allocation,
+/// and gives the text between two other events as one node, references
+/// resolved, as [`parse`] does.
 ///
 /// [`parse`]: crate::parse::parse
 pub struct PartReader<R: BufRead> {
     buffer: Vec<u8>,
     depth: usize,
+    names: Names,
     /// The event read past the end of a text node, given next.
     next: Option<PartEvent>,
     reader: Reader<R>,
@@ -78,6 +80,7 @@ impl<R: BufRead> PartReader<R> {
         Self {
             buffer: Vec::new(),
             depth: 0,
+            names: Names::default(),
             next: None,
             reader,
             scope: Scope::default(),
@@ -123,7 +126,7 @@ impl<R: BufRead> PartReader<R> {
                     ));
                 }
                 Event::Empty(start) => {
-                    let element = start_element(&start, &mut self.scope)?;
+                    let element = start_element(&start, &mut self.scope, &mut self.names)?;
                     self.scope.pop();
                     PartEvent::Node(Node::Element(element))
                 }
@@ -147,7 +150,7 @@ impl<R: BufRead> PartReader<R> {
                     target: instruction.target().to_owned(),
                 }),
                 Event::Start(start) => {
-                    let element = start_element(&start, &mut self.scope)?;
+                    let element = start_element(&start, &mut self.scope, &mut self.names)?;
                     self.depth += 1;
                     PartEvent::Start(element)
                 }

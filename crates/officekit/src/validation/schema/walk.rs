@@ -215,7 +215,7 @@ impl<'tree> Walker<'tree, '_> {
         for attribute in &element.attributes {
             if compatibility_attribute(attribute)
                 || (attribute.name.namespace == Namespace::None
-                    && declared == Some(attribute.name.local.as_str()))
+                    && declared == Some(&*attribute.name.local))
             {
                 continue;
             }
@@ -327,7 +327,7 @@ impl<'tree> Walker<'tree, '_> {
                 for attribute in &element.attributes {
                     let declared_here = schema_type.is_some_and(|found| {
                         found.attributes.iter().any(|constraint| {
-                            attribute.name.local == constraint.name
+                            &*attribute.name.local == constraint.name
                                 && constraint.namespace.is_some_and(|id| {
                                     attribute.name.namespace == Namespace::Known(id)
                                 })
@@ -492,7 +492,7 @@ impl<'tree> Walker<'tree, '_> {
     fn process_content(&self, name: &QName) -> bool {
         self.mc.iter().any(|frame| {
             frame.process_content.iter().any(|(namespace, local)| {
-                *namespace == name.namespace && (*local == name.local || local == "*")
+                *namespace == name.namespace && (*local == *name.local || local == "*")
             })
         })
     }
@@ -714,7 +714,7 @@ impl<'tree> Counts<'tree> {
         if let Some(entry) = self
             .seen
             .iter_mut()
-            .find(|(namespace, local, _)| **namespace == name.namespace && *local == name.local)
+            .find(|(namespace, local, _)| **namespace == name.namespace && *local == &*name.local)
         {
             entry.2 += 1;
             entry.2
@@ -727,16 +727,15 @@ impl<'tree> Counts<'tree> {
 
 /// What SDK 3.5.1 makes of `child` in `factory`'s vocabulary.
 fn classify(child: &Element, factory: Factory) -> Kind {
-    let alternate_content = is_mc(&child.name.namespace) && child.name.local == "AlternateContent";
+    let alternate_content =
+        is_mc(&child.name.namespace) && &*child.name.local == "AlternateContent";
     match factory {
-        Factory::AlternateContent if is_mc(&child.name.namespace) => {
-            match child.name.local.as_str() {
-                "AlternateContent" => Kind::AlternateContent,
-                "Choice" => Kind::Choice,
-                "Fallback" => Kind::Fallback,
-                _ => Kind::Unknown,
-            }
-        }
+        Factory::AlternateContent if is_mc(&child.name.namespace) => match &*child.name.local {
+            "AlternateContent" => Kind::AlternateContent,
+            "Choice" => Kind::Choice,
+            "Fallback" => Kind::Fallback,
+            _ => Kind::Unknown,
+        },
         Factory::Typed(parent) => {
             let declared = SCHEMA_TYPES
                 .get(usize::from(parent))
@@ -744,10 +743,9 @@ fn classify(child: &Element, factory: Factory) -> Kind {
                     let Namespace::Known(namespace) = child.name.namespace else {
                         return None;
                     };
-                    parent_type
-                        .children
-                        .iter()
-                        .find(|(own, local, _, _)| *own == namespace && *local == child.name.local)
+                    parent_type.children.iter().find(|(own, local, _, _)| {
+                        *own == namespace && *local == &*child.name.local
+                    })
                 });
             match declared {
                 Some((_, _, type_id, transitional_only)) => {
@@ -766,7 +764,7 @@ fn classify(child: &Element, factory: Factory) -> Kind {
 fn compatibility_attribute(attribute: &Attribute) -> bool {
     is_mc(&attribute.name.namespace)
         && matches!(
-            attribute.name.local.as_str(),
+            &*attribute.name.local,
             "Ignorable"
                 | "MustUnderstand"
                 | "PreserveAttributes"
@@ -780,7 +778,7 @@ fn compatibility_value<'element>(element: &'element Element, local: &str) -> Opt
     element
         .attributes
         .iter()
-        .find(|attribute| attribute.name.local == local && is_mc(&attribute.name.namespace))
+        .find(|attribute| &*attribute.name.local == local && is_mc(&attribute.name.namespace))
         .map(|attribute| attribute.value.as_str())
         .filter(|value| !value.is_empty())
 }
@@ -803,7 +801,7 @@ fn exists_at(type_id: TypeId, target: OfficeVersion) -> bool {
 
 /// Whether `attribute` is `xml:lang` or `xml:space`.
 fn is_xml_lang_or_space(attribute: &Attribute) -> bool {
-    matches!(attribute.name.local.as_str(), "lang" | "space")
+    matches!(&*attribute.name.local, "lang" | "space")
         && namespace_uri(&attribute.name.namespace) == XML_NAMESPACE
 }
 
@@ -843,7 +841,7 @@ fn is_element_of(element: &Element, schema_type: &SchemaType) -> bool {
         .position(|row| row.prefix == prefix)
         .and_then(|index| u8::try_from(index).ok());
     namespace.is_some_and(|id| element.name.namespace == Namespace::Known(id))
-        && element.name.local == local
+        && &*element.name.local == local
 }
 
 /// The step of an element at its place among the siblings of its name.

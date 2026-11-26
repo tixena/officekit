@@ -882,7 +882,7 @@ fn binding_names_the_root(docx: &Docx, item: &PartName) -> bool {
     let address = &root
         .namespace_declarations
         .iter()
-        .find(|declaration| declaration.prefix == root.name.prefix)
+        .find(|declaration| declaration.prefix == *root.name.prefix)
         .unwrap()
         .uri;
     let mappings = paragraphs(docx)

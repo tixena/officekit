@@ -1070,7 +1070,7 @@ impl<'element> Reader<'element> {
     /// it: the first that does, a single position only while it holds no child and an `xsd:all`
     /// list only while it lacks the tag. The unknown nodes waiting before it are queued first.
     fn place(&mut self, element: &Element) -> Option<usize> {
-        let tag = (known(&element.name.namespace), element.name.local.as_str());
+        let tag = (known(&element.name.namespace), &*element.name.local);
         let base = self.shape.attributes.len();
         for (index, slot) in self.shape.slots.iter().enumerate().skip(self.cursor) {
             if !slot.accepts(element) {
@@ -1315,7 +1315,7 @@ impl Item<'_> {
     /// The element's tag as the typed tree matches it; `None` for a namespace the table does not
     /// know.
     #[must_use = "this only returns the value"]
-    pub const fn name(&self) -> Option<(Option<NamespaceId>, &str)> {
+    pub fn name(&self) -> Option<(Option<NamespaceId>, &str)> {
         name(self.element())
     }
 
@@ -1558,7 +1558,7 @@ impl<'scope, 'node> Writer<'scope, 'node> {
             |name| {
                 (
                     name.namespace.uri(ConformanceClass::Transitional),
-                    name.local.as_str(),
+                    &*name.local,
                 )
             },
         );
@@ -1809,7 +1809,7 @@ fn other_name(shape: &Shape, name: QName) -> Option<Box<QName>> {
 
 /// Whether `name` is the tag `tag`.
 fn is_tag(tag: Tag, name: &QName) -> bool {
-    tag.1 == name.local && name.namespace == tag.0.map_or(Namespace::None, Namespace::Known)
+    tag.1 == &*name.local && name.namespace == tag.0.map_or(Namespace::None, Namespace::Known)
 }
 
 /// A universal measure, `2.5cm`, matching one of `patterns`; `None` for text
@@ -1825,7 +1825,7 @@ pub fn measure(text: &str, patterns: &Patterns) -> Option<Measure> {
 /// An element's tag as the typed tree matches it; `None` for a namespace the
 /// table does not know.
 #[must_use = "this only returns the value"]
-pub const fn name(element: &Element) -> Option<(Option<NamespaceId>, &str)> {
+pub fn name(element: &Element) -> Option<(Option<NamespaceId>, &str)> {
     tag_of(&element.name)
 }
 

@@ -920,7 +920,7 @@ fn mutually_exclusive(slots: &Slots<'_>, attributes: &[Slot]) -> Option<Problem>
 
 /// Whether `element` is named `name`.
 fn named(element: &Element, name: ElementName) -> bool {
-    element.name.namespace == Namespace::Known(name.namespace) && element.name.local == name.local
+    element.name.namespace == Namespace::Known(name.namespace) && &*element.name.local == name.local
 }
 
 /// An attribute's value as a number, as SDK 3.5.1 reads one for a range: a

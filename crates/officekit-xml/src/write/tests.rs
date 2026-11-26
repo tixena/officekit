@@ -328,7 +328,7 @@ fn the_cleanup_of_a_word_saved_root_keeps_what_is_used() {
         .map(|declaration| declaration.prefix.as_str())
         .collect();
     assert_eq!(prefixes, ["mc", "r", "wp14", "wp", "w"]);
-    assert_eq!(document.root.attributes[0].name.local, "Ignorable");
+    assert_eq!(&*document.root.attributes[0].name.local, "Ignorable");
     assert_eq!(document.root.attributes[0].value, "wp14");
 }
 

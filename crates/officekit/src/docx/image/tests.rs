@@ -88,14 +88,14 @@ fn docx_with(run: &str, prefix: Option<&str>) -> Docx {
 }
 
 fn picture_run(element: &Element) -> Option<&Element> {
-    if element.name.local == "r" && has_blip(element) {
+    if &*element.name.local == "r" && has_blip(element) {
         return Some(element);
     }
     element.child_elements().find_map(picture_run)
 }
 
 fn has_blip(element: &Element) -> bool {
-    element.name.local == "blip" || element.child_elements().any(has_blip)
+    &*element.name.local == "blip" || element.child_elements().any(has_blip)
 }
 
 fn run_of(docx: &Docx) -> TextRun {
@@ -123,11 +123,11 @@ fn values(root: &Element, element: &str, attribute: &str) -> Vec<String> {
 }
 
 fn collect(root: &Element, element: &str, attribute: &str, found: &mut Vec<String>) {
-    if root.name.local == element {
+    if &*root.name.local == element {
         found.extend(
             root.attributes
                 .iter()
-                .filter(|a| a.name.local == attribute)
+                .filter(|a| &*a.name.local == attribute)
                 .map(|a| a.value.clone()),
         );
     }
@@ -137,7 +137,7 @@ fn collect(root: &Element, element: &str, attribute: &str, found: &mut Vec<Strin
 }
 
 fn first_named<'element>(element: &'element Element, local: &str) -> Option<&'element Element> {
-    if element.name.local == local {
+    if &*element.name.local == local {
         return Some(element);
     }
     element
@@ -352,9 +352,9 @@ fn a_picture_inside_markup_compatibility_is_found_and_fitted() {
     let embed = blip
         .attributes
         .iter()
-        .find(|attribute| attribute.name.local == "embed")
+        .find(|attribute| &*attribute.name.local == "embed")
         .unwrap();
-    assert_eq!(embed.name.prefix, "rel");
+    assert_eq!(&*embed.name.prefix, "rel");
     assert_ne!(embed.value, "rId7");
 }
 
@@ -372,9 +372,9 @@ fn a_blip_naming_nothing_gets_r_declared_where_no_prefix_is_in_scope() {
     let embed = blip
         .attributes
         .iter()
-        .find(|attribute| attribute.name.local == "embed")
+        .find(|attribute| &*attribute.name.local == "embed")
         .unwrap();
-    assert_eq!(embed.name.prefix, "r");
+    assert_eq!(&*embed.name.prefix, "r");
     assert_eq!(embed.name.namespace, Namespace::from_uri(R));
     assert!(
         blip.namespace_declarations

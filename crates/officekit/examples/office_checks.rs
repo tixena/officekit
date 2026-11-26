@@ -584,12 +584,12 @@ fn main() -> Outcome {
 }
 
 fn has_blip(element: &Element) -> bool {
-    element.name.local == "blip" || element.child_elements().any(has_blip)
+    &*element.name.local == "blip" || element.child_elements().any(has_blip)
 }
 
 /// The first `w:r`, in document order, that holds an `a:blip`.
 fn picture_run(element: &mut Element) -> Option<&mut Element> {
-    if element.name.local == "r" && element.name.prefix == "w" && has_blip(element) {
+    if &*element.name.local == "r" && &*element.name.prefix == "w" && has_blip(element) {
         return Some(element);
     }
     element.children.iter_mut().find_map(|node| {
@@ -606,7 +606,7 @@ fn remove_in(element: &mut Element, local: &str) -> usize {
     let before = element.children.len();
     element
         .children
-        .retain(|node| !matches!(node, Node::Element(child) if child.name.local == local));
+        .retain(|node| !matches!(node, Node::Element(child) if &*child.name.local == local));
     let mut removed = before - element.children.len();
     for node in &mut element.children {
         if let Node::Element(child) = node {

@@ -145,7 +145,7 @@ pub(crate) fn next_id(items: &[Relationship]) -> String {
 
 /// Read the relationships of a parsed relationship part, in order.
 pub(crate) fn parse(document: &Document) -> Result<Vec<Relationship>, String> {
-    if document.root.name.local != "Relationships" {
+    if &*document.root.name.local != "Relationships" {
         return Err(format!(
             "the root is <{}>, not <Relationships>",
             document.root.name.local

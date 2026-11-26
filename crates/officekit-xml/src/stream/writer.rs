@@ -1,5 +1,6 @@
 //! `PartWriter`: one part's XML written in order, straight into its sink.
 
+use alloc::sync::Arc;
 use core::mem;
 use std::io::{self, Write};
 
@@ -383,7 +384,7 @@ impl<'sink> PartWriter<'sink> {
                 .scope
                 .uri_of(prefix)
                 .map_or(Namespace::None, Namespace::from_uri);
-            QName::new(prefix.to_owned(), local.to_owned(), namespace)
+            QName::new(Arc::from(prefix), Arc::from(local), namespace)
         });
         self.parents.push(parent);
         Ok(())

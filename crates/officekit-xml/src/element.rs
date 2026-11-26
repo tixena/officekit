@@ -210,7 +210,7 @@ impl Element {
         self.attributes
             .iter()
             .find(|attribute| {
-                attribute.name.local == local && attribute.name.namespace == *namespace
+                &*attribute.name.local == local && attribute.name.namespace == *namespace
             })
             .map(|attribute| attribute.value.as_str())
     }
@@ -247,11 +247,11 @@ impl Element {
     /// Write the address this element's `uri` attribute names in the class's spelling, for
     /// `a:graphicData` and `ds:schemaRef`, the two elements whose `uri` names a namespace.
     fn set_address_class(&mut self, class: ConformanceClass) {
-        let namespace = if self.name.local == "graphicData"
+        let namespace = if &*self.name.local == "graphicData"
             && self.name.namespace == Namespace::from_uri(DRAWING)
         {
             Namespace::None
-        } else if self.name.local == "schemaRef"
+        } else if &*self.name.local == "schemaRef"
             && self.name.namespace == Namespace::from_uri(CUSTOM_XML)
         {
             self.name.namespace.clone()
@@ -261,7 +261,7 @@ impl Element {
         let Some(address) = self
             .attributes
             .iter_mut()
-            .find(|found| found.name.local == "uri" && found.name.namespace == namespace)
+            .find(|found| &*found.name.local == "uri" && found.name.namespace == namespace)
         else {
             return;
         };
@@ -282,13 +282,13 @@ impl Element {
     /// Write the address of a part a class save moves, in a data binding's prefix mappings, in
     /// the class's spelling: the mapping names the namespace its `XPath` finds in that part.
     fn set_binding_class(&mut self, class: ConformanceClass) {
-        if self.name.local != "dataBinding" {
+        if &*self.name.local != "dataBinding" {
             return;
         }
         let Some(mappings) = self
             .attributes
             .iter_mut()
-            .find(|found| found.name.local == "prefixMappings")
+            .find(|found| &*found.name.local == "prefixMappings")
         else {
             return;
         };

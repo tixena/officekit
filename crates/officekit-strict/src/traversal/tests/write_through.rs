@@ -22,7 +22,7 @@ struct ReplaceB;
 
 impl Context for ReplaceB {
     fn element(&mut self, node: &Element) -> Option<Element> {
-        (node.name.local == "b").then(|| {
+        (&*node.name.local == "b").then(|| {
             let mut replaced = Element::new(QName::prefixed("x", "d", "urn:x"));
             replaced.children.push(Node::Element(node.clone()));
             replaced
@@ -30,7 +30,7 @@ impl Context for ReplaceB {
     }
 
     fn write_element(&mut self, node: &Element, out: &mut PartWriter<'_>) -> io::Result<Written> {
-        if node.name.local != "e" {
+        if &*node.name.local != "e" {
             return Ok(Written::No);
         }
         out.empty("x:written", &[])?;

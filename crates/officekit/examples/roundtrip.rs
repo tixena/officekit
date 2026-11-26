@@ -484,7 +484,7 @@ fn root_after_cleanup(document: &Document, out: &mut dyn Write) -> Result<(), Bo
         .root
         .attributes
         .iter()
-        .find(|attribute| attribute.name.prefix == "mc" && attribute.name.local == "Ignorable")
+        .find(|attribute| &*attribute.name.prefix == "mc" && &*attribute.name.local == "Ignorable")
         .map_or_else(
             || "no mc:Ignorable".to_owned(),
             |attribute| format!("mc:Ignorable=\"{}\"", attribute.value),

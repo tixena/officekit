@@ -93,7 +93,7 @@ impl Kind {
 
     /// The kind of `element` when it is a run.
     fn of(element: &Element) -> Option<Self> {
-        if element.name.local != "r" {
+        if &*element.name.local != "r" {
             return None;
         }
         let prefix = table_prefix(&element.name.namespace)?;
@@ -149,9 +149,7 @@ fn canonical(kind: Kind, run: &Element) -> String {
         .iter()
         .filter(|attribute| {
             attribute.name.namespace != Namespace::None
-                || !kind
-                    .ignored_attributes()
-                    .contains(&attribute.name.local.as_str())
+                || !kind.ignored_attributes().contains(&&*attribute.name.local)
         })
         .map(|attribute| {
             format!(
@@ -261,7 +259,7 @@ fn describe(node: &Node) -> String {
 /// Whether `element` is named `local` in the namespace the namespace table
 /// names `prefix`.
 fn is(element: &Element, prefix: &str, local: &str) -> bool {
-    element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
+    &*element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
 }
 
 /// Whether a path names a `.docx`, `.xlsx`, or `.pptx` file.
@@ -344,7 +342,7 @@ fn preserves_space(element: &Element, around: bool) -> bool {
     element
         .attributes
         .iter()
-        .find(|attribute| attribute.name.prefix == "xml" && attribute.name.local == "space")
+        .find(|attribute| &*attribute.name.prefix == "xml" && &*attribute.name.local == "space")
         .map_or(around, |attribute| attribute.value == "preserve")
 }
 
@@ -372,7 +370,7 @@ fn push_text(pieces: &mut Vec<Piece>, text: &str, properties: &str) {
 /// A name as written: `prefix:local`, or `local` with no prefix.
 fn qualified(name: &QName) -> String {
     if name.prefix.is_empty() {
-        name.local.clone()
+        String::from(&*name.local)
     } else {
         format!("{}:{}", name.prefix, name.local)
     }

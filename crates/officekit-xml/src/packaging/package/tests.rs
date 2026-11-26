@@ -789,7 +789,7 @@ fn load_tree_applies_markup_compatibility_as_the_options_say() {
         .unwrap();
     let kept = package.load_tree(&main, OpenOptions::default()).unwrap();
     assert_eq!(
-        kept.root.child_elements().next().unwrap().name.local,
+        &*kept.root.child_elements().next().unwrap().name.local,
         "AlternateContent"
     );
     let options = OpenOptions {
@@ -799,7 +799,7 @@ fn load_tree_applies_markup_compatibility_as_the_options_say() {
     };
     let processed = package.load_tree(&main, options).unwrap();
     assert_eq!(
-        processed.root.child_elements().next().unwrap().name.local,
+        &*processed.root.child_elements().next().unwrap().name.local,
         "t"
     );
 }

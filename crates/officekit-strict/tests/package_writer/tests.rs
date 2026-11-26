@@ -149,7 +149,7 @@ where
 }
 
 fn is_table(element: &Element) -> bool {
-    element.name.local == "tbl" && element.name.namespace == Namespace::from_uri(W)
+    &*element.name.local == "tbl" && element.name.namespace == Namespace::from_uri(W)
 }
 
 fn main() -> PartName {
@@ -346,10 +346,7 @@ fn a_streamed_package_of_1_000_rows_has_data_descriptors_and_opens_with_every_ro
     let document = package.load_tree(&main(), OpenOptions::default()).unwrap();
     let body = document.root.child_elements().next().unwrap();
     let blocks: Vec<&Element> = body.child_elements().collect();
-    let names: Vec<&str> = blocks
-        .iter()
-        .map(|block| block.name.local.as_str())
-        .collect();
+    let names: Vec<&str> = blocks.iter().map(|block| &*block.name.local).collect();
     assert_eq!(names, ["p", "tbl", "p", "sectPr"]);
     let rows: Vec<String> = read::table(blocks[1])
         .content_row_content

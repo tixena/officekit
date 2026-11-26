@@ -163,7 +163,7 @@ pub fn set_picture(
 }
 
 fn is(element: &Element, uri: &str, local: &str) -> bool {
-    element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
+    &*element.name.local == local && element.name.namespace == Namespace::from_uri(uri)
 }
 
 const fn element_mut(node: &mut Node) -> Option<&mut Element> {
@@ -217,11 +217,9 @@ fn find_mut<'element>(
 
 fn set_embed(blip: &mut Element, prefix: &str, id: String) -> Option<String> {
     let namespace = Namespace::from_uri(RELATIONSHIPS);
-    if let Some(attribute) = blip
-        .attributes
-        .iter_mut()
-        .find(|attribute| attribute.name.local == "embed" && attribute.name.namespace == namespace)
-    {
+    if let Some(attribute) = blip.attributes.iter_mut().find(|attribute| {
+        &*attribute.name.local == "embed" && attribute.name.namespace == namespace
+    }) {
         return Some(replace(&mut attribute.value, id));
     }
     blip.attributes.push(Attribute::new(
@@ -233,7 +231,7 @@ fn set_embed(blip: &mut Element, prefix: &str, id: String) -> Option<String> {
 
 fn set(element: &mut Element, local: &str, value: &str) {
     if let Some(attribute) = element.attributes.iter_mut().find(|attribute| {
-        attribute.name.local == local && attribute.name.namespace == Namespace::None
+        &*attribute.name.local == local && attribute.name.namespace == Namespace::None
     }) {
         value.clone_into(&mut attribute.value);
     } else {
@@ -304,7 +302,7 @@ fn prefix_in(element: &Element, namespace: &Namespace) -> Option<String> {
         .attributes
         .iter()
         .find(|attribute| attribute.name.namespace == *namespace)
-        .map(|attribute| attribute.name.prefix.clone())
+        .map(|attribute| String::from(&*attribute.name.prefix))
         .or_else(|| {
             element
                 .namespace_declarations

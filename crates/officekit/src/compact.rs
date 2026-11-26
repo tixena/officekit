@@ -17,6 +17,7 @@ mod comments;
 mod properties;
 
 use alloc::collections::BTreeSet;
+use alloc::sync::Arc;
 use core::mem;
 
 use officekit_xml::element::{Attribute, Element, Node};
@@ -157,7 +158,7 @@ impl Kind {
 
     /// The kind of `element` when it is a run.
     fn of(element: &Element) -> Option<Self> {
-        if element.name.local != "r" {
+        if &*element.name.local != "r" {
             return None;
         }
         let table_prefix = prefix(&element.name.namespace)?;
@@ -354,7 +355,7 @@ pub fn compact_tree(root: &mut Element, comments: Comments) -> PartCompaction {
 /// Whether `element` is named `local` in the namespace the namespace table
 /// names `table_prefix`.
 fn is(element: &Element, table_prefix: &str, local: &str) -> bool {
-    element.name.local == local && prefix(&element.name.namespace) == Some(table_prefix)
+    &*element.name.local == local && prefix(&element.name.namespace) == Some(table_prefix)
 }
 
 /// Join `next` onto `last` when both are text elements of the same name
@@ -367,7 +368,7 @@ fn join(
     last_preserves: bool,
     next_preserves: bool,
 ) -> bool {
-    if !kind.text().contains(&last.name.local.as_str())
+    if !kind.text().contains(&&*last.name.local)
         || prefix(&last.name.namespace) != Some(kind.prefix())
         || last.name.local != next.name.local
         || last.name.namespace != next.name.namespace
@@ -430,7 +431,7 @@ fn keep_space(content: &mut Element, kind: Kind, preserved: bool) {
         .attributes
         .iter()
         .any(|attribute| is_space(&attribute.name));
-    if edged && !own && kind.text().contains(&content.name.local.as_str()) {
+    if edged && !own && kind.text().contains(&&*content.name.local) {
         content.attributes.push(space_attribute(if preserved {
             "preserve"
         } else {
@@ -452,9 +453,9 @@ fn mergeable(run: &Element, kind: Kind) -> bool {
                 continue;
             }
             if prefix(&child.name.namespace) == Some(kind.prefix())
-                && kind.content().contains(&child.name.local.as_str())
+                && kind.content().contains(&&*child.name.local)
             {
-                if child.name.local == "t" {
+                if &*child.name.local == "t" {
                     texts += 1;
                 }
                 continue;
@@ -614,7 +615,7 @@ fn is_package(content_type: &str) -> bool {
 }
 
 fn is_space(name: &QName) -> bool {
-    name.prefix == "xml" && name.local == "space"
+    &*name.prefix == "xml" && &*name.local == "space"
 }
 
 const fn is_xml_whitespace(character: char) -> bool {
@@ -635,8 +636,8 @@ fn is_xml(content_type: &str) -> bool {
 fn space_attribute(value: &str) -> Attribute {
     Attribute::new(
         QName::new(
-            "xml".to_owned(),
-            "space".to_owned(),
+            Arc::from("xml"),
+            Arc::from("space"),
             Namespace::from_uri(XML_NAMESPACE),
         ),
         value.to_owned(),
@@ -676,7 +677,7 @@ fn word_id(element: &Element) -> Option<&str> {
         .attributes
         .iter()
         .find(|attribute| {
-            attribute.name.local == "id" && prefix(&attribute.name.namespace) == Some("w")
+            &*attribute.name.local == "id" && prefix(&attribute.name.namespace) == Some("w")
         })
         .map(|attribute| attribute.value.as_str())
 }

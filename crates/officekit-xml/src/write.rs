@@ -9,6 +9,7 @@ mod bytes;
 
 use alloc::borrow::Cow;
 use alloc::collections::{BTreeMap, BTreeSet};
+use alloc::sync::Arc;
 use std::io;
 
 use quick_xml::Writer;
@@ -95,14 +96,14 @@ impl Scope {
         let declared = uri.unwrap_or_default();
         let namespace = Namespace::from_uri(declared);
         let prefix = if namespace == Namespace::None {
-            String::new()
+            Arc::from("")
         } else {
             self.bound(&namespace, false)
                 .unwrap_or_else(|| self.declare(element, &namespace, declared))
         };
         element.attributes.push(Attribute {
             name: QName {
-                local: local.to_owned(),
+                local: Arc::from(local),
                 namespace,
                 prefix,
             },
@@ -113,9 +114,9 @@ impl Scope {
     /// The innermost prefix bound to `namespace` that no inner declaration
     /// rebinds; `xml` is bound without a declaration. For an element, the
     /// empty prefix of a default namespace counts.
-    fn bound(&self, namespace: &Namespace, element: bool) -> Option<String> {
+    fn bound(&self, namespace: &Namespace, element: bool) -> Option<Arc<str>> {
         if binds(XML_NAMESPACE, namespace) {
-            return Some("xml".to_owned());
+            return Some(Arc::from("xml"));
         }
         let mut seen: Vec<&str> = Vec::new();
         for declaration in self.frames.iter().rev().flatten() {
@@ -124,7 +125,7 @@ impl Scope {
                 continue;
             }
             if (element || !prefix.is_empty()) && binds(&declaration.uri, namespace) {
-                return Some(prefix.to_owned());
+                return Some(Arc::from(prefix));
             }
             seen.push(prefix);
         }
@@ -133,7 +134,7 @@ impl Scope {
 
     /// Declare the table's prefix for `namespace`, as `uri`, on `element` and
     /// in the innermost frame; returns the prefix.
-    fn declare(&mut self, element: &mut Element, namespace: &Namespace, uri: &str) -> String {
+    fn declare(&mut self, element: &mut Element, namespace: &Namespace, uri: &str) -> Arc<str> {
         let prefix = match namespace {
             Namespace::Known(id) => NAMESPACES
                 .get(usize::from(*id))
@@ -149,7 +150,7 @@ impl Scope {
             frame.push(declaration.clone());
         }
         element.namespace_declarations.push(declaration);
-        prefix.to_owned()
+        Arc::from(prefix)
     }
 
     /// An element of the namespace `uri` named `local`, with the node's own
@@ -164,9 +165,9 @@ impl Scope {
         self.frames.push(declarations.to_vec());
         let namespace = Namespace::from_uri(uri);
         let mut element = Element::new(QName {
-            local: local.to_owned(),
+            local: Arc::from(local),
             namespace: namespace.clone(),
-            prefix: String::new(),
+            prefix: Arc::from(""),
         });
         element.namespace_declarations = declarations.to_vec();
         element.name.prefix = self
@@ -385,7 +386,7 @@ fn keep_list(attribute: &mut Attribute, scope: &[Vec<(String, bool)>]) -> bool {
     if !is_mc(&attribute.name.namespace) {
         return true;
     }
-    let local = attribute.name.local.as_str();
+    let local = &*attribute.name.local;
     let qualified = QUALIFIED_LISTS.contains(&local);
     if !qualified && !PREFIX_LISTS.contains(&local) {
         return true;
@@ -436,7 +437,7 @@ fn list_entry_needed(
 /// Whether an `mc` list on `element` names `prefix`.
 fn list_names(element: &Element, prefix: &str) -> bool {
     element.attributes.iter().any(|attribute| {
-        let local = attribute.name.local.as_str();
+        let local = &*attribute.name.local;
         is_mc(&attribute.name.namespace)
             && (PREFIX_LISTS.contains(&local) || QUALIFIED_LISTS.contains(&local))
             && attribute.value.split_whitespace().any(|item| {
@@ -456,7 +457,7 @@ pub fn preserves_space(element: &Element, around: bool) -> bool {
     element
         .attributes
         .iter()
-        .find(|attribute| attribute.name.prefix == "xml" && attribute.name.local == "space")
+        .find(|attribute| &*attribute.name.prefix == "xml" && &*attribute.name.local == "space")
         .map_or(around, |attribute| attribute.value == "preserve")
 }
 
@@ -464,7 +465,7 @@ pub fn preserves_space(element: &Element, around: bool) -> bool {
 #[must_use = "this only returns the value"]
 pub fn qualified(name: &QName) -> String {
     if name.prefix.is_empty() {
-        name.local.clone()
+        String::from(&*name.local)
     } else {
         format!("{}:{}", name.prefix, name.local)
     }
@@ -532,19 +533,19 @@ fn strip_unused(
     index: &mut usize,
     removed: &mut Removed,
     items: &BTreeSet<Namespace>,
-) -> BTreeSet<String> {
+) -> BTreeSet<Arc<str>> {
     let position = *index;
     *index += 1;
-    let mut used = BTreeSet::from([element.name.prefix.clone()]);
+    let mut used = BTreeSet::from([Arc::clone(&element.name.prefix)]);
     used.extend(
         element
             .attributes
             .iter()
             .filter(|attribute| !attribute.name.prefix.is_empty())
-            .map(|attribute| attribute.name.prefix.clone()),
+            .map(|attribute| Arc::clone(&attribute.name.prefix)),
     );
-    if is_mc(&element.name.namespace) && element.name.local == "Choice" {
-        used.extend(requires(element).split_whitespace().map(str::to_owned));
+    if is_mc(&element.name.namespace) && &*element.name.local == "Choice" {
+        used.extend(requires(element).split_whitespace().map(Arc::from));
     }
     for child in &mut element.children {
         if let Node::Element(child_element) = child {
@@ -555,7 +556,7 @@ fn strip_unused(
         .namespace_declarations
         .iter()
         .filter(|declaration| {
-            !used.contains(&declaration.prefix)
+            !used.contains(declaration.prefix.as_str())
                 && !list_entry_needed(element, &declaration.prefix, &declaration.uri, items)
         })
         .map(|declaration| declaration.prefix.clone())
@@ -564,7 +565,7 @@ fn strip_unused(
         .namespace_declarations
         .retain(|declaration| !unused.contains(&declaration.prefix));
     for declaration in &element.namespace_declarations {
-        used.remove(&declaration.prefix);
+        used.remove(declaration.prefix.as_str());
     }
     if !unused.is_empty() {
         removed.insert(position, unused);

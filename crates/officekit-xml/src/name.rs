@@ -50,7 +50,7 @@ pub enum Namespace {
 }
 
 /// A qualified name: the prefix as the part wrote it, and the namespace it
-/// stands for.
+/// stands for. A read gives equal names one shared allocation.
 #[derive(Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(
     feature = "binary-format",
@@ -60,11 +60,11 @@ pub enum Namespace {
 #[non_exhaustive]
 pub struct QName {
     /// The name after the colon.
-    pub local: String,
+    pub local: Arc<str>,
     /// The namespace the prefix stands for.
     pub namespace: Namespace,
     /// The prefix as written; empty when there is none.
-    pub prefix: String,
+    pub prefix: Arc<str>,
 }
 
 impl Namespace {
@@ -117,7 +117,7 @@ impl OfficeVersion {
 impl QName {
     /// A name from its three parts, as they are.
     #[must_use = "this only builds the value"]
-    pub const fn new(prefix: String, local: String, namespace: Namespace) -> Self {
+    pub const fn new(prefix: Arc<str>, local: Arc<str>, namespace: Namespace) -> Self {
         Self {
             local,
             namespace,
@@ -130,9 +130,9 @@ impl QName {
     #[must_use = "this only builds the value"]
     pub fn prefixed(prefix: &str, local: &str, uri: &str) -> Self {
         Self {
-            local: local.to_owned(),
+            local: Arc::from(local),
             namespace: Namespace::from_uri(uri),
-            prefix: prefix.to_owned(),
+            prefix: Arc::from(prefix),
         }
     }
 
@@ -146,8 +146,8 @@ impl QName {
 /// The tag of a name in the namespace table: the namespace id (`None` for no namespace) and the
 /// local name. Returns `None` for a namespace the table does not know.
 #[must_use = "this only returns the value"]
-pub const fn tag_of(name: &QName) -> Option<(Option<NamespaceId>, &str)> {
-    let local = name.local.as_str();
+pub fn tag_of(name: &QName) -> Option<(Option<NamespaceId>, &str)> {
+    let local = &*name.local;
     match name.namespace {
         Namespace::Known(id) => Some((Some(id), local)),
         Namespace::None => Some((None, local)),

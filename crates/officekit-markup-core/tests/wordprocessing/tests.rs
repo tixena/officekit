@@ -30,7 +30,7 @@ fn val(element: &Element) -> Option<&str> {
     element
         .attributes
         .iter()
-        .find(|attribute| attribute.name.local == "val")
+        .find(|attribute| &*attribute.name.local == "val")
         .map(|attribute| attribute.value.as_str())
 }
 
@@ -243,7 +243,7 @@ fn an_item_in_its_generic_form_is_its_element_or_its_other_node() {
     let item = BlockContent::from(Paragraph::default());
     let node = generic(&item);
     let name = if let Node::Element(element) = &node {
-        Some((element.name.prefix.as_str(), element.name.local.as_str()))
+        Some((&*element.name.prefix, &*element.name.local))
     } else {
         None
     };
@@ -263,7 +263,7 @@ fn an_element_a_part_reader_loads_reads_as_a_typed_paragraph() {
     let mut element = None;
     while let Some(event) = reader.read_event().unwrap() {
         if let PartEvent::Start(start) = event
-            && start.name.local == "p"
+            && &*start.name.local == "p"
         {
             element = Some(reader.read_element(start).unwrap());
             break;

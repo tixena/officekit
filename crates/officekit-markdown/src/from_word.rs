@@ -1834,7 +1834,8 @@ fn attribute(element: &Element, prefix: &str, local: &str) -> Option<String> {
         .attributes
         .iter()
         .find(|candidate| {
-            candidate.name.local == local && table_prefix(&candidate.name.namespace) == Some(prefix)
+            &*candidate.name.local == local
+                && table_prefix(&candidate.name.namespace) == Some(prefix)
         })
         .map(|found| found.value.clone())
 }
@@ -1970,7 +1971,7 @@ fn drawings(node: &Node, found: &mut Vec<Drawing>) {
         found.extend(drawing(element));
     } else if is_named(element, "v", "shape") {
         found.extend(vml_picture(element));
-    } else if mc::is_mc(&element.name.namespace) && element.name.local == "AlternateContent" {
+    } else if mc::is_mc(&element.name.namespace) && &*element.name.local == "AlternateContent" {
         for branch in &element.children {
             let before = found.len();
             drawings(branch, found);
@@ -2196,7 +2197,7 @@ fn is_head_row(row: &TableRow) -> bool {
 
 /// Whether `element` is named `local` in the namespace the namespace table names `prefix`.
 fn is_named(element: &Element, prefix: &str, local: &str) -> bool {
-    element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
+    &*element.name.local == local && table_prefix(&element.name.namespace) == Some(prefix)
 }
 
 /// Whether `element` holds a text box's content: `w:txbxContent`; `wne:txbxContent`, which Word
@@ -2477,7 +2478,7 @@ fn text_boxes(node: &Node, boxes: &mut Vec<RichTextBoxContentContainer>) {
     };
     if is_text_box_content(element) {
         boxes.push(officekit_markup::read(element));
-    } else if mc::is_mc(&element.name.namespace) && element.name.local == "AlternateContent" {
+    } else if mc::is_mc(&element.name.namespace) && &*element.name.local == "AlternateContent" {
         for branch in &element.children {
             let before = boxes.len();
             text_boxes(branch, boxes);

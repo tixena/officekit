@@ -1091,7 +1091,7 @@ fn fold_next_run(parent: &mut Element, index: usize) {
         .unwrap()
         .children
         .drain(..)
-        .filter(|node| !matches!(node, Node::Element(child) if child.name.local == "rPr"));
+        .filter(|node| !matches!(node, Node::Element(child) if &*child.name.local == "rPr"));
     as_element(&mut parent.children[index])
         .unwrap()
         .children
@@ -1102,11 +1102,11 @@ fn fold_next_run(parent: &mut Element, index: usize) {
 fn texts_per_run(parent: &Element) -> Vec<usize> {
     parent
         .child_elements()
-        .filter(|child| child.name.local == "r")
+        .filter(|child| &*child.name.local == "r")
         .map(|found| {
             found
                 .child_elements()
-                .filter(|child| child.name.local == "t")
+                .filter(|child| &*child.name.local == "t")
                 .count()
         })
         .collect()

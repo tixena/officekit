@@ -51,7 +51,7 @@
 //! let word = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 //! let xml = format!(r#"<w:p xmlns:w="{word}"><w:r><w:t>Dear Sam,</w:t></w:r></w:p>"#);
 //! let mut document = parse(xml.as_bytes())?;
-//! assert_eq!(document.root.name.local, "p");
+//! assert_eq!(&*document.root.name.local, "p");
 //!
 //! let run = document.root.child_elements().next().ok_or("no run")?;
 //! assert_eq!(run.name, QName::prefixed("w", "r", word));

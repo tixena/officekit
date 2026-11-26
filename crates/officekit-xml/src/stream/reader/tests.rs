@@ -1,3 +1,5 @@
+use alloc::sync::Arc;
+
 use super::{PartEvent, PartReader};
 use crate::element::{Element, Node};
 use crate::name::Namespace;
@@ -27,7 +29,7 @@ fn a_part_reads_forward_and_loads_the_element_it_is_on() {
     let root = started(reader.read_event().unwrap());
     assert_eq!(
         (
-            root.name.local.as_str(),
+            &*root.name.local,
             root.namespace_declarations.len(),
             root.children.len()
         ),
@@ -35,7 +37,7 @@ fn a_part_reads_forward_and_loads_the_element_it_is_on() {
     );
     let body = started(reader.read_event().unwrap());
     assert_eq!(
-        (body.name.local.as_str(), &body.name.namespace),
+        (&*body.name.local, &body.name.namespace),
         ("body", &Namespace::from_uri(W))
     );
     let start = started(reader.read_event().unwrap());
@@ -53,7 +55,7 @@ fn a_part_reads_forward_and_loads_the_element_it_is_on() {
     assert!(matches!(
         reader.read_event().unwrap(),
         Some(PartEvent::Node(Node::Element(section)))
-            if section.name.local == "sectPr" && section.name.namespace == Namespace::from_uri(W)
+            if &*section.name.local == "sectPr" && section.name.namespace == Namespace::from_uri(W)
     ));
     assert_eq!(reader.read_event().unwrap(), Some(PartEvent::End));
     assert_eq!(reader.read_event().unwrap(), Some(PartEvent::End));
@@ -77,7 +79,28 @@ fn the_declaration_of_a_part_is_an_event_followed_by_its_line_break() {
     );
     assert!(matches!(
         reader.read_event().unwrap(),
-        Some(PartEvent::Node(Node::Element(element))) if element.name.local == "a"
+        Some(PartEvent::Node(Node::Element(element))) if &*element.name.local == "a"
     ));
     assert_eq!(reader.read_event().unwrap(), None);
+}
+
+#[test]
+fn equal_names_read_forward_share_one_allocation() {
+    let xml = "<v:root xmlns:v=\"urn:vendor\"><v:item/><v:item><v:item/></v:item></v:root>";
+    let mut reader = PartReader::new(xml.as_bytes());
+    let root = started(reader.read_event().unwrap());
+    let first = match reader.read_event().unwrap() {
+        Some(PartEvent::Node(Node::Element(element))) => Some(element),
+        Some(
+            PartEvent::Declaration(_) | PartEvent::End | PartEvent::Node(_) | PartEvent::Start(_),
+        )
+        | None => None,
+    }
+    .unwrap();
+    let second = started(reader.read_event().unwrap());
+    let loaded = reader.read_element(second).unwrap();
+    let inner = loaded.child_elements().next().unwrap();
+    assert!(Arc::ptr_eq(&first.name.local, &loaded.name.local));
+    assert!(Arc::ptr_eq(&first.name.local, &inner.name.local));
+    assert!(Arc::ptr_eq(&root.name.prefix, &inner.name.prefix));
 }

@@ -284,7 +284,7 @@ where
 
 /// Whether `element` is named `tag`.
 fn named(element: &Element, (namespace, local): Tag) -> bool {
-    element.name.local == local
+    &*element.name.local == local
         && element.name.namespace == namespace.map_or(Namespace::None, Namespace::Known)
 }
 

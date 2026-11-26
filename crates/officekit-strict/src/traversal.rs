@@ -39,7 +39,7 @@
 //!
 //! impl Context for Rename {
 //!     fn element(&mut self, node: &Element) -> Option<Element> {
-//!         (node.name.local == "old").then(|| Element::new(QName::unprefixed("new", "")))
+//!         (&*node.name.local == "old").then(|| Element::new(QName::unprefixed("new", "")))
 //!     }
 //! }
 //!
@@ -67,7 +67,7 @@
 //! let Some(Node::Element(child)) = root.children.first() else {
 //!     panic!("the root keeps its child");
 //! };
-//! assert_eq!(child.name.local, "new");
+//! assert_eq!(&*child.name.local, "new");
 //! ```
 
 // The traversal modules, generated in a file of their own: module declarations
@@ -475,7 +475,7 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
             |name| {
                 (
                     name.namespace.uri(ConformanceClass::Transitional),
-                    name.local.as_str(),
+                    &*name.local,
                 )
             },
         );

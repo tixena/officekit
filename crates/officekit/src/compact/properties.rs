@@ -210,7 +210,7 @@ impl Counted {
     fn counts_attribute(&self, row: Option<&SchemaType>, attribute: &Attribute) -> bool {
         let declared = row.is_some_and(|declaring| {
             declaring.attributes.iter().any(|constraint| {
-                constraint.name == attribute.name.local
+                constraint.name == &*attribute.name.local
                     && constraint
                         .namespace
                         .map_or(Namespace::None, Namespace::Known)
@@ -219,7 +219,7 @@ impl Counted {
         });
         !declared
             || self.attributes.iter().any(|&(listed, local)| {
-                local == attribute.name.local && named(&attribute.name.namespace, listed)
+                local == &*attribute.name.local && named(&attribute.name.namespace, listed)
             })
     }
 
@@ -228,12 +228,12 @@ impl Counted {
     fn counts_child(&self, row: Option<&SchemaType>, child: &Element) -> bool {
         let declared = row.is_some_and(|declaring| {
             declaring.children.iter().any(|&(namespace, local, _, _)| {
-                local == child.name.local && child.name.namespace == Namespace::Known(namespace)
+                local == &*child.name.local && child.name.namespace == Namespace::Known(namespace)
             })
         });
         !declared
             || self.children.iter().any(|&(listed, local)| {
-                local == child.name.local && named(&child.name.namespace, listed)
+                local == &*child.name.local && named(&child.name.namespace, listed)
             })
     }
 
