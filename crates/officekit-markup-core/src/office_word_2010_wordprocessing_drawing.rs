@@ -671,9 +671,9 @@ impl Default for SizeRelFromH {
 
 impl From<String> for SizeRelFromH {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -746,7 +746,7 @@ impl SizeRelFromH {
     ///
     /// `ValueError` when `text` is no value of `ST_SizeRelFromH`.
     pub fn parse(text: &str) -> Result<SizeRelFromHMember, ValueError> {
-        officekit_markup_base::member(SizeRelFromHMember::MEMBERS, text, "ST_SizeRelFromH")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_SizeRelFromH"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -759,6 +759,12 @@ impl SizeRelFromH {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SizeRelFromHMember> {
+        officekit_markup_base::member(SizeRelFromHMember::MEMBERS, text)
     }
 }
 
@@ -773,9 +779,9 @@ impl Default for SizeRelFromV {
 
 impl From<String> for SizeRelFromV {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -848,7 +854,7 @@ impl SizeRelFromV {
     ///
     /// `ValueError` when `text` is no value of `ST_SizeRelFromV`.
     pub fn parse(text: &str) -> Result<SizeRelFromVMember, ValueError> {
-        officekit_markup_base::member(SizeRelFromVMember::MEMBERS, text, "ST_SizeRelFromV")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_SizeRelFromV"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -861,6 +867,12 @@ impl SizeRelFromV {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SizeRelFromVMember> {
+        officekit_markup_base::member(SizeRelFromVMember::MEMBERS, text)
     }
 }
 

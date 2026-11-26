@@ -4555,9 +4555,9 @@ impl Default for TransitionLeftRightDirectionType {
 
 impl From<String> for TransitionLeftRightDirectionType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4610,11 +4610,9 @@ impl TransitionLeftRightDirectionType {
     ///
     /// `ValueError` when `text` is no value of `ST_TransitionLeftRightDirectionType`.
     pub fn parse(text: &str) -> Result<TransitionLeftRightDirectionTypeMember, ValueError> {
-        officekit_markup_base::member(
-            TransitionLeftRightDirectionTypeMember::MEMBERS,
-            text,
-            "ST_TransitionLeftRightDirectionType",
-        )
+        Self::value_of(text).ok_or_else(|| {
+            officekit_markup_base::invalid(text, "ST_TransitionLeftRightDirectionType")
+        })
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4627,6 +4625,12 @@ impl TransitionLeftRightDirectionType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TransitionLeftRightDirectionTypeMember> {
+        officekit_markup_base::member(TransitionLeftRightDirectionTypeMember::MEMBERS, text)
     }
 }
 
@@ -4641,9 +4645,9 @@ impl Default for TransitionPattern {
 
 impl From<String> for TransitionPattern {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4696,11 +4700,8 @@ impl TransitionPattern {
     ///
     /// `ValueError` when `text` is no value of `ST_TransitionPattern`.
     pub fn parse(text: &str) -> Result<TransitionPatternMember, ValueError> {
-        officekit_markup_base::member(
-            TransitionPatternMember::MEMBERS,
-            text,
-            "ST_TransitionPattern",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TransitionPattern"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4713,6 +4714,12 @@ impl TransitionPattern {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TransitionPatternMember> {
+        officekit_markup_base::member(TransitionPatternMember::MEMBERS, text)
     }
 }
 
@@ -4727,9 +4734,9 @@ impl Default for TransitionShredPattern {
 
 impl From<String> for TransitionShredPattern {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4786,11 +4793,8 @@ impl TransitionShredPattern {
     ///
     /// `ValueError` when `text` is no value of `ST_TransitionShredPattern`.
     pub fn parse(text: &str) -> Result<TransitionShredPatternMember, ValueError> {
-        officekit_markup_base::member(
-            TransitionShredPatternMember::MEMBERS,
-            text,
-            "ST_TransitionShredPattern",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TransitionShredPattern"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4803,6 +4807,12 @@ impl TransitionShredPattern {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TransitionShredPatternMember> {
+        officekit_markup_base::member(TransitionShredPatternMember::MEMBERS, text)
     }
 }
 

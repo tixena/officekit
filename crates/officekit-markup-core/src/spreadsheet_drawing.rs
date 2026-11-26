@@ -1877,7 +1877,7 @@ impl ColumnID {
     ///
     /// `ValueError` when `text` is no value of `ST_ColID`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, 0, 0x7FFF_FFFF, "ST_ColID")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_ColID"))
     }
 
     /// The value the text spells.
@@ -1887,6 +1887,12 @@ impl ColumnID {
     /// `ValueError` when the text is no value of `ST_ColID`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, 0, 0x7FFF_FFFF)
     }
 }
 
@@ -3374,9 +3380,9 @@ impl Default for ResizingBehaviors {
 
 impl From<String> for ResizingBehaviors {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -3430,7 +3436,7 @@ impl ResizingBehaviors {
     ///
     /// `ValueError` when `text` is no value of `ST_EditAs`.
     pub fn parse(text: &str) -> Result<ResizingBehaviorsMember, ValueError> {
-        officekit_markup_base::member(ResizingBehaviorsMember::MEMBERS, text, "ST_EditAs")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_EditAs"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -3443,6 +3449,12 @@ impl ResizingBehaviors {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ResizingBehaviorsMember> {
+        officekit_markup_base::member(ResizingBehaviorsMember::MEMBERS, text)
     }
 }
 
@@ -3520,7 +3532,7 @@ impl RowID {
     ///
     /// `ValueError` when `text` is no value of `ST_RowID`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, 0, 0x7FFF_FFFF, "ST_RowID")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_RowID"))
     }
 
     /// The value the text spells.
@@ -3530,6 +3542,12 @@ impl RowID {
     /// `ValueError` when the text is no value of `ST_RowID`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, 0, 0x7FFF_FFFF)
     }
 }
 

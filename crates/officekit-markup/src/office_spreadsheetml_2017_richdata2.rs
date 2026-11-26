@@ -2801,9 +2801,9 @@ impl Default for ArrayValueType {
 
 impl From<String> for ArrayValueType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -2861,7 +2861,8 @@ impl ArrayValueType {
     ///
     /// `ValueError` when `text` is no value of `ST_ArrayValueType`.
     pub fn parse(text: &str) -> Result<ArrayValueTypeMember, ValueError> {
-        officekit_markup_base::member(ArrayValueTypeMember::MEMBERS, text, "ST_ArrayValueType")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_ArrayValueType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -2874,6 +2875,12 @@ impl ArrayValueType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ArrayValueTypeMember> {
+        officekit_markup_base::member(ArrayValueTypeMember::MEMBERS, text)
     }
 }
 
@@ -3880,9 +3887,9 @@ impl Default for RichFormatPropertyType {
 
 impl From<String> for RichFormatPropertyType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -3937,11 +3944,8 @@ impl RichFormatPropertyType {
     ///
     /// `ValueError` when `text` is no value of `ST_RichFormatPropertyType`.
     pub fn parse(text: &str) -> Result<RichFormatPropertyTypeMember, ValueError> {
-        officekit_markup_base::member(
-            RichFormatPropertyTypeMember::MEMBERS,
-            text,
-            "ST_RichFormatPropertyType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_RichFormatPropertyType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -3954,6 +3958,12 @@ impl RichFormatPropertyType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<RichFormatPropertyTypeMember> {
+        officekit_markup_base::member(RichFormatPropertyTypeMember::MEMBERS, text)
     }
 }
 
@@ -4556,9 +4566,9 @@ impl Default for SupportingPropertyBagArrayValueType {
 
 impl From<String> for SupportingPropertyBagArrayValueType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4614,11 +4624,9 @@ impl SupportingPropertyBagArrayValueType {
     ///
     /// `ValueError` when `text` is no value of `ST_SupportingPropertyBagArrayValueType`.
     pub fn parse(text: &str) -> Result<SupportingPropertyBagArrayValueTypeMember, ValueError> {
-        officekit_markup_base::member(
-            SupportingPropertyBagArrayValueTypeMember::MEMBERS,
-            text,
-            "ST_SupportingPropertyBagArrayValueType",
-        )
+        Self::value_of(text).ok_or_else(|| {
+            officekit_markup_base::invalid(text, "ST_SupportingPropertyBagArrayValueType")
+        })
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4631,6 +4639,12 @@ impl SupportingPropertyBagArrayValueType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SupportingPropertyBagArrayValueTypeMember> {
+        officekit_markup_base::member(SupportingPropertyBagArrayValueTypeMember::MEMBERS, text)
     }
 }
 
@@ -4645,9 +4659,9 @@ impl Default for SupportingPropertyBagValueType {
 
 impl From<String> for SupportingPropertyBagValueType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4704,11 +4718,9 @@ impl SupportingPropertyBagValueType {
     ///
     /// `ValueError` when `text` is no value of `ST_SupportingPropertyBagValueType`.
     pub fn parse(text: &str) -> Result<SupportingPropertyBagValueTypeMember, ValueError> {
-        officekit_markup_base::member(
-            SupportingPropertyBagValueTypeMember::MEMBERS,
-            text,
-            "ST_SupportingPropertyBagValueType",
-        )
+        Self::value_of(text).ok_or_else(|| {
+            officekit_markup_base::invalid(text, "ST_SupportingPropertyBagValueType")
+        })
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4721,6 +4733,12 @@ impl SupportingPropertyBagValueType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SupportingPropertyBagValueTypeMember> {
+        officekit_markup_base::member(SupportingPropertyBagValueTypeMember::MEMBERS, text)
     }
 }
 

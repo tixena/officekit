@@ -4306,9 +4306,9 @@ impl Default for GradientFillComputationType {
 
 impl From<String> for GradientFillComputationType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4364,11 +4364,7 @@ impl GradientFillComputationType {
     ///
     /// `ValueError` when `text` is no value of `ST_FillMethod`.
     pub fn parse(text: &str) -> Result<GradientFillComputationTypeMember, ValueError> {
-        officekit_markup_base::member(
-            GradientFillComputationTypeMember::MEMBERS,
-            text,
-            "ST_FillMethod",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FillMethod"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4381,6 +4377,12 @@ impl GradientFillComputationType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<GradientFillComputationTypeMember> {
+        officekit_markup_base::member(GradientFillComputationTypeMember::MEMBERS, text)
     }
 }
 
@@ -4667,9 +4669,9 @@ impl Default for ImageScalingBehavior {
 
 impl From<String> for ImageScalingBehavior {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4723,7 +4725,7 @@ impl ImageScalingBehavior {
     ///
     /// `ValueError` when `text` is no value of `ST_ImageAspect`.
     pub fn parse(text: &str) -> Result<ImageScalingBehaviorMember, ValueError> {
-        officekit_markup_base::member(ImageScalingBehaviorMember::MEMBERS, text, "ST_ImageAspect")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_ImageAspect"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4736,6 +4738,12 @@ impl ImageScalingBehavior {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ImageScalingBehaviorMember> {
+        officekit_markup_base::member(ImageScalingBehaviorMember::MEMBERS, text)
     }
 }
 
@@ -4911,9 +4919,9 @@ impl Default for LineJoinType {
 
 impl From<String> for LineJoinType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4967,7 +4975,8 @@ impl LineJoinType {
     ///
     /// `ValueError` when `text` is no value of `ST_StrokeJoinStyle`.
     pub fn parse(text: &str) -> Result<LineJoinTypeMember, ValueError> {
-        officekit_markup_base::member(LineJoinTypeMember::MEMBERS, text, "ST_StrokeJoinStyle")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_StrokeJoinStyle"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4980,6 +4989,12 @@ impl LineJoinType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<LineJoinTypeMember> {
+        officekit_markup_base::member(LineJoinTypeMember::MEMBERS, text)
     }
 }
 
@@ -6315,9 +6330,9 @@ impl Default for ShadowType {
 
 impl From<String> for ShadowType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -6372,7 +6387,7 @@ impl ShadowType {
     ///
     /// `ValueError` when `text` is no value of `ST_ShadowType`.
     pub fn parse(text: &str) -> Result<ShadowTypeMember, ValueError> {
-        officekit_markup_base::member(ShadowTypeMember::MEMBERS, text, "ST_ShadowType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_ShadowType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -6385,6 +6400,12 @@ impl ShadowType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ShadowTypeMember> {
+        officekit_markup_base::member(ShadowTypeMember::MEMBERS, text)
     }
 }
 
@@ -7497,9 +7518,9 @@ impl Default for ShapeFillType {
 
 impl From<String> for ShapeFillType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -7556,7 +7577,7 @@ impl ShapeFillType {
     ///
     /// `ValueError` when `text` is no value of `ST_FillType`.
     pub fn parse(text: &str) -> Result<ShapeFillTypeMember, ValueError> {
-        officekit_markup_base::member(ShapeFillTypeMember::MEMBERS, text, "ST_FillType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FillType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -7569,6 +7590,12 @@ impl ShapeFillType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ShapeFillTypeMember> {
+        officekit_markup_base::member(ShapeFillTypeMember::MEMBERS, text)
     }
 }
 
@@ -8141,9 +8168,9 @@ impl Default for ShapeGroupingTypes {
 
 impl From<String> for ShapeGroupingTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -8201,7 +8228,7 @@ impl ShapeGroupingTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_EditAs`.
     pub fn parse(text: &str) -> Result<ShapeGroupingTypesMember, ValueError> {
-        officekit_markup_base::member(ShapeGroupingTypesMember::MEMBERS, text, "ST_EditAs")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_EditAs"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -8214,6 +8241,12 @@ impl ShapeGroupingTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ShapeGroupingTypesMember> {
+        officekit_markup_base::member(ShapeGroupingTypesMember::MEMBERS, text)
     }
 }
 
@@ -8586,9 +8619,9 @@ impl Default for StrokeArrowheadLength {
 
 impl From<String> for StrokeArrowheadLength {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -8642,11 +8675,8 @@ impl StrokeArrowheadLength {
     ///
     /// `ValueError` when `text` is no value of `ST_StrokeArrowLength`.
     pub fn parse(text: &str) -> Result<StrokeArrowheadLengthMember, ValueError> {
-        officekit_markup_base::member(
-            StrokeArrowheadLengthMember::MEMBERS,
-            text,
-            "ST_StrokeArrowLength",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_StrokeArrowLength"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -8659,6 +8689,12 @@ impl StrokeArrowheadLength {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StrokeArrowheadLengthMember> {
+        officekit_markup_base::member(StrokeArrowheadLengthMember::MEMBERS, text)
     }
 }
 
@@ -8673,9 +8709,9 @@ impl Default for StrokeArrowheadType {
 
 impl From<String> for StrokeArrowheadType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -8732,11 +8768,8 @@ impl StrokeArrowheadType {
     ///
     /// `ValueError` when `text` is no value of `ST_StrokeArrowType`.
     pub fn parse(text: &str) -> Result<StrokeArrowheadTypeMember, ValueError> {
-        officekit_markup_base::member(
-            StrokeArrowheadTypeMember::MEMBERS,
-            text,
-            "ST_StrokeArrowType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_StrokeArrowType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -8749,6 +8782,12 @@ impl StrokeArrowheadType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StrokeArrowheadTypeMember> {
+        officekit_markup_base::member(StrokeArrowheadTypeMember::MEMBERS, text)
     }
 }
 
@@ -8763,9 +8802,9 @@ impl Default for StrokeArrowheadWidth {
 
 impl From<String> for StrokeArrowheadWidth {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -8819,11 +8858,8 @@ impl StrokeArrowheadWidth {
     ///
     /// `ValueError` when `text` is no value of `ST_StrokeArrowWidth`.
     pub fn parse(text: &str) -> Result<StrokeArrowheadWidthMember, ValueError> {
-        officekit_markup_base::member(
-            StrokeArrowheadWidthMember::MEMBERS,
-            text,
-            "ST_StrokeArrowWidth",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_StrokeArrowWidth"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -8836,6 +8872,12 @@ impl StrokeArrowheadWidth {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StrokeArrowheadWidthMember> {
+        officekit_markup_base::member(StrokeArrowheadWidthMember::MEMBERS, text)
     }
 }
 
@@ -8850,9 +8892,9 @@ impl Default for StrokeEndCapType {
 
 impl From<String> for StrokeEndCapType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -8906,7 +8948,7 @@ impl StrokeEndCapType {
     ///
     /// `ValueError` when `text` is no value of `ST_StrokeEndCap`.
     pub fn parse(text: &str) -> Result<StrokeEndCapTypeMember, ValueError> {
-        officekit_markup_base::member(StrokeEndCapTypeMember::MEMBERS, text, "ST_StrokeEndCap")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_StrokeEndCap"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -8919,6 +8961,12 @@ impl StrokeEndCapType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StrokeEndCapTypeMember> {
+        officekit_markup_base::member(StrokeEndCapTypeMember::MEMBERS, text)
     }
 }
 
@@ -8933,9 +8981,9 @@ impl Default for StrokeLineStyle {
 
 impl From<String> for StrokeLineStyle {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -8991,7 +9039,8 @@ impl StrokeLineStyle {
     ///
     /// `ValueError` when `text` is no value of `ST_StrokeLineStyle`.
     pub fn parse(text: &str) -> Result<StrokeLineStyleMember, ValueError> {
-        officekit_markup_base::member(StrokeLineStyleMember::MEMBERS, text, "ST_StrokeLineStyle")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_StrokeLineStyle"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -9004,6 +9053,12 @@ impl StrokeLineStyle {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StrokeLineStyleMember> {
+        officekit_markup_base::member(StrokeLineStyleMember::MEMBERS, text)
     }
 }
 
@@ -9193,9 +9248,9 @@ impl Default for VMLExtensionHandlingBehaviors {
 
 impl From<String> for VMLExtensionHandlingBehaviors {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -9249,7 +9304,7 @@ impl VMLExtensionHandlingBehaviors {
     ///
     /// `ValueError` when `text` is no value of `ST_Ext`.
     pub fn parse(text: &str) -> Result<VMLExtensionHandlingBehaviorsMember, ValueError> {
-        officekit_markup_base::member(VMLExtensionHandlingBehaviorsMember::MEMBERS, text, "ST_Ext")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Ext"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -9262,5 +9317,11 @@ impl VMLExtensionHandlingBehaviors {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VMLExtensionHandlingBehaviorsMember> {
+        officekit_markup_base::member(VMLExtensionHandlingBehaviorsMember::MEMBERS, text)
     }
 }

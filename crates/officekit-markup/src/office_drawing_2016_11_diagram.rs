@@ -619,9 +619,9 @@ impl Default for STorageType {
 
 impl From<String> for STorageType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -674,7 +674,7 @@ impl STorageType {
     ///
     /// `ValueError` when `text` is no value of `ST_STorageType`.
     pub fn parse(text: &str) -> Result<STorageTypeMember, ValueError> {
-        officekit_markup_base::member(STorageTypeMember::MEMBERS, text, "ST_STorageType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_STorageType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -687,5 +687,11 @@ impl STorageType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<STorageTypeMember> {
+        officekit_markup_base::member(STorageTypeMember::MEMBERS, text)
     }
 }

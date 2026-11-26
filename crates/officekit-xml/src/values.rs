@@ -3,6 +3,7 @@
 pub mod parse;
 
 use core::fmt::{self, Display, Formatter};
+use std::sync::OnceLock;
 
 use regex::Regex;
 
@@ -15,6 +16,14 @@ pub struct ValueError {
     pub simple_type: &'static str,
     /// The stored text that is no value of that type.
     pub text: String,
+}
+
+/// The pattern facets of a simple type, each compiled once, the first time a
+/// value is matched against them.
+#[derive(Debug, Default)]
+pub struct Patterns {
+    compiled: OnceLock<Vec<Regex>>,
+    sources: &'static [&'static str],
 }
 
 /// `xsd:dateTime`: `2026-10-15T09:30:00Z`, `2026-10-15T09:30:00.25-04:00`, or
@@ -156,15 +165,52 @@ impl ValueError {
     }
 }
 
+impl Patterns {
+    /// Whether there are no facets.
+    #[must_use = "this only answers the question"]
+    pub const fn is_empty(&self) -> bool {
+        self.sources.is_empty()
+    }
+
+    /// Whether `value` matches one of the facets whole; a facet the `regex`
+    /// crate cannot compile matches nothing.
+    #[must_use = "this only answers the question"]
+    pub fn matches(&self, value: &str) -> bool {
+        self.compiled
+            .get_or_init(|| {
+                self.sources
+                    .iter()
+                    .filter_map(|pattern| anchored(pattern).ok())
+                    .collect()
+            })
+            .iter()
+            .any(|regex| regex.is_match(value))
+    }
+
+    /// The facets `sources`, none compiled yet.
+    #[must_use = "this only builds the value"]
+    pub const fn new(sources: &'static [&'static str]) -> Self {
+        Self {
+            compiled: OnceLock::new(),
+            sources,
+        }
+    }
+}
+
 /// Whether `value` matches `pattern` whole, as an XML Schema pattern facet
 /// matches: the regular expression anchored at both ends. The pattern is
-/// compiled on each call.
+/// compiled on each call; [`Patterns`] compiles once.
 ///
 /// # Errors
 ///
 /// A pattern the `regex` crate cannot compile.
 pub fn matches_pattern(pattern: &str, value: &str) -> Result<bool, regex::Error> {
-    Ok(Regex::new(&format!("^(?:{pattern})$"))?.is_match(value))
+    Ok(anchored(pattern)?.is_match(value))
+}
+
+/// `pattern` compiled to match a whole text.
+fn anchored(pattern: &str) -> Result<Regex, regex::Error> {
+    Regex::new(&format!("^(?:{pattern})$"))
 }
 
 #[cfg(test)]

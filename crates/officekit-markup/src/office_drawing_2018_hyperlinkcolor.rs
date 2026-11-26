@@ -389,9 +389,9 @@ impl Default for HyperlinkColor {
 
 impl From<String> for HyperlinkColor {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -444,7 +444,8 @@ impl HyperlinkColor {
     ///
     /// `ValueError` when `text` is no value of `ST_HyperlinkColor`.
     pub fn parse(text: &str) -> Result<HyperlinkColorMember, ValueError> {
-        officekit_markup_base::member(HyperlinkColorMember::MEMBERS, text, "ST_HyperlinkColor")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_HyperlinkColor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -457,5 +458,11 @@ impl HyperlinkColor {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HyperlinkColorMember> {
+        officekit_markup_base::member(HyperlinkColorMember::MEMBERS, text)
     }
 }

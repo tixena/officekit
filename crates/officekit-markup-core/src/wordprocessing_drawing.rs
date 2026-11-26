@@ -2507,7 +2507,8 @@ impl AbsolutePositionOffsetValue {
     ///
     /// `ValueError` when `text` is no value of `ST_PositionOffset`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, -0x8000_0000, 0x7FFF_FFFF, "ST_PositionOffset")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_PositionOffset"))
     }
 
     /// The value the text spells.
@@ -2517,6 +2518,12 @@ impl AbsolutePositionOffsetValue {
     /// `ValueError` when the text is no value of `ST_PositionOffset`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, -0x8000_0000, 0x7FFF_FFFF)
     }
 }
 
@@ -3033,7 +3040,7 @@ impl DistanceFromText {
     ///
     /// `ValueError` when `text` is no value of `ST_WrapDistance`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, 0, 0xFFFF_FFFF, "ST_WrapDistance")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_WrapDistance"))
     }
 
     /// The value the text spells.
@@ -3043,6 +3050,12 @@ impl DistanceFromText {
     /// `ValueError` when the text is no value of `ST_WrapDistance`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, 0, 0xFFFF_FFFF)
     }
 }
 
@@ -3755,9 +3768,9 @@ impl Default for HorizontalRelativePositioning {
 
 impl From<String> for HorizontalRelativePositioning {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -3816,11 +3829,7 @@ impl HorizontalRelativePositioning {
     ///
     /// `ValueError` when `text` is no value of `ST_RelFromH`.
     pub fn parse(text: &str) -> Result<HorizontalRelativePositioningMember, ValueError> {
-        officekit_markup_base::member(
-            HorizontalRelativePositioningMember::MEMBERS,
-            text,
-            "ST_RelFromH",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_RelFromH"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -3833,6 +3842,12 @@ impl HorizontalRelativePositioning {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HorizontalRelativePositioningMember> {
+        officekit_markup_base::member(HorizontalRelativePositioningMember::MEMBERS, text)
     }
 }
 
@@ -4479,9 +4494,9 @@ impl Default for RelativeHorizontalAlignmentPositions {
 
 impl From<String> for RelativeHorizontalAlignmentPositions {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4537,11 +4552,7 @@ impl RelativeHorizontalAlignmentPositions {
     ///
     /// `ValueError` when `text` is no value of `ST_AlignH`.
     pub fn parse(text: &str) -> Result<RelativeHorizontalAlignmentPositionsMember, ValueError> {
-        officekit_markup_base::member(
-            RelativeHorizontalAlignmentPositionsMember::MEMBERS,
-            text,
-            "ST_AlignH",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_AlignH"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4554,6 +4565,12 @@ impl RelativeHorizontalAlignmentPositions {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<RelativeHorizontalAlignmentPositionsMember> {
+        officekit_markup_base::member(RelativeHorizontalAlignmentPositionsMember::MEMBERS, text)
     }
 }
 
@@ -5064,9 +5081,9 @@ impl Default for TextWrappingLocation {
 
 impl From<String> for TextWrappingLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -5121,7 +5138,7 @@ impl TextWrappingLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_WrapText`.
     pub fn parse(text: &str) -> Result<TextWrappingLocationMember, ValueError> {
-        officekit_markup_base::member(TextWrappingLocationMember::MEMBERS, text, "ST_WrapText")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_WrapText"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -5134,6 +5151,12 @@ impl TextWrappingLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TextWrappingLocationMember> {
+        officekit_markup_base::member(TextWrappingLocationMember::MEMBERS, text)
     }
 }
 
@@ -5429,9 +5452,9 @@ impl Default for VerticalAlignmentDefinition {
 
 impl From<String> for VerticalAlignmentDefinition {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -5487,11 +5510,7 @@ impl VerticalAlignmentDefinition {
     ///
     /// `ValueError` when `text` is no value of `ST_AlignV`.
     pub fn parse(text: &str) -> Result<VerticalAlignmentDefinitionMember, ValueError> {
-        officekit_markup_base::member(
-            VerticalAlignmentDefinitionMember::MEMBERS,
-            text,
-            "ST_AlignV",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_AlignV"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -5504,6 +5523,12 @@ impl VerticalAlignmentDefinition {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalAlignmentDefinitionMember> {
+        officekit_markup_base::member(VerticalAlignmentDefinitionMember::MEMBERS, text)
     }
 }
 
@@ -5650,9 +5675,9 @@ impl Default for VerticalRelativePositioning {
 
 impl From<String> for VerticalRelativePositioning {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -5711,11 +5736,7 @@ impl VerticalRelativePositioning {
     ///
     /// `ValueError` when `text` is no value of `ST_RelFromV`.
     pub fn parse(text: &str) -> Result<VerticalRelativePositioningMember, ValueError> {
-        officekit_markup_base::member(
-            VerticalRelativePositioningMember::MEMBERS,
-            text,
-            "ST_RelFromV",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_RelFromV"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -5728,6 +5749,12 @@ impl VerticalRelativePositioning {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalRelativePositioningMember> {
+        officekit_markup_base::member(VerticalRelativePositioningMember::MEMBERS, text)
     }
 }
 

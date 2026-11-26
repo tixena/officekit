@@ -838,7 +838,7 @@ pub fn render(
     uses.add("officekit_xml::conformance::ConformanceClass");
     uses.add(&format!("{runtime}::Spelling"));
     let mut parts = [String::new(), String::new(), String::new()];
-    let ([output, body, methods], eq) = value_body(names, simple, uses, &mut parts)?;
+    let ([output, parse, value_of, methods], eq) = value_body(names, simple, uses, &mut parts)?;
     let [mut definitions, mut implementations, statics] = parts;
     let value = if simple.has_member() {
         definitions.insert_str(0, &member_declaration(simple, eq));
@@ -861,11 +861,21 @@ pub fn render(
         &["text: &str".to_owned()],
         &format!("Result<{output}, ValueError>"),
     ));
-    implementations.push_str(&body);
+    implementations.push_str(&parse);
     implementations.push_str("    }\n\n");
     implementations.push_str(&value);
     implementations.push_str(&methods);
-    implementations.push_str("}\n");
+    implementations.push_str(
+        "\n    /// The value `text` spells; `None` when it spells none.\n    #[must_use = \"this only returns the value\"]\n",
+    );
+    implementations.push_str(&layout::signature(
+        4,
+        "pub fn value_of",
+        &["text: &str".to_owned()],
+        &format!("Option<{output}>"),
+    ));
+    implementations.push_str(&value_of);
+    implementations.push_str("    }\n}\n");
     Ok((definitions, implementations, statics))
 }
 
@@ -949,7 +959,7 @@ fn member_conversions(runtime: &str, simple: &Simple, eq: bool) -> String {
     );
     let _ = write!(
         out,
-        "\n{}    fn from(text: String) -> Self {{\n        match Self::parse(&text) {{\n            Ok(member) if {runtime}::spells(&member, &text) => Self::Member(member),\n            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),\n        }}\n    }}\n}}\n",
+        "\n{}    fn from(text: String) -> Self {{\n        match Self::value_of(&text) {{\n            Some(member) if {runtime}::spells(&member, &text) => Self::Member(member),\n            Some(_) | None => Self::Spelled(text.into_boxed_str()),\n        }}\n    }}\n}}\n",
         layout::impl_header("From<String>", name)
     );
     let _ = write!(
@@ -1001,26 +1011,23 @@ fn member_value(simple: &Simple, output: &str) -> String {
     out
 }
 
-/// A newtype's `parse`: its output type, its body, and the helper methods
-/// the body calls, and whether the member enum is `Eq`; it adds to `parts`,
-/// the definitions, implementations, and statics, what its kind needs.
+/// A newtype's `parse` and `value_of`: its output type, the two bodies, and
+/// the helper methods `value_of` calls, and whether the member enum is `Eq`;
+/// it adds to `parts`, the definitions, implementations, and statics, what
+/// its kind needs.
 fn value_body(
     names: &Names<'_>,
     simple: &Simple,
     uses: &mut Uses,
     parts: &mut [String; 3],
-) -> Result<([String; 3], bool)> {
+) -> Result<([String; 4], bool)> {
     let [definitions, implementations, statics] = parts;
     let runtime = names.runtime();
     let screaming = names::screaming(&simple.name);
     let schema = simple.xsd_name().to_owned();
     let member_name = format!("{}Member", simple.name);
-    let text_call = |function: &str| {
-        Expr::call(
-            function,
-            vec![Expr::atom("text"), Expr::Atom(layout::string(&schema))],
-        )
-    };
+    let text_call = |function: &str| Expr::call(function, vec![Expr::atom("text")]);
+    let checked = checked_parse(runtime, &schema);
     Ok(match &simple.kind {
         Kind::Enumeration(members) => {
             definitions.push_str(&member_enum(simple, members));
@@ -1030,10 +1037,12 @@ fn value_body(
                 vec![
                     Expr::Atom(format!("{member_name}::MEMBERS")),
                     Expr::atom("text"),
-                    Expr::Atom(layout::string(&schema)),
                 ],
             );
-            ([member_name, expression(&call), String::new()], true)
+            (
+                [member_name, checked, expression(&call), String::new()],
+                true,
+            )
         }
         Kind::OnOff => {
             let _ = write!(
@@ -1044,6 +1053,7 @@ fn value_body(
             (
                 [
                     "bool".to_owned(),
+                    checked,
                     expression(&text_call(&format!("{runtime}::on_off"))),
                     String::new(),
                 ],
@@ -1055,6 +1065,7 @@ fn value_body(
             (
                 [
                     "DateTime".to_owned(),
+                    checked,
                     expression(&text_call(&format!("{runtime}::date_time"))),
                     String::new(),
                 ],
@@ -1062,22 +1073,34 @@ fn value_body(
             )
         }
         Kind::Atom(atom) => {
-            let (output, call) =
-                atom_call(runtime, atom, [&screaming, &schema], statics, uses, true);
-            ([output, expression(&call), String::new()], true)
+            let (output, call) = atom_call(runtime, atom, &screaming, statics, uses, true);
+            ([output, checked, expression(&call), String::new()], true)
         }
         Kind::List(item) => {
             let (output, body) = list_value(names, item.as_ref())?;
-            ([output, body, String::new()], true)
+            let value_of = "        Self::parse(text).ok()\n".to_owned();
+            ([output, body, value_of, String::new()], true)
         }
         Kind::Union(members) => {
             let ([definition, display, body, helpers], eq) =
-                union_text(names, simple, members, [&screaming, &schema], statics, uses)?;
+                union_text(names, simple, members, &screaming, statics, uses)?;
             definitions.push_str(&definition);
             implementations.push_str(&display);
-            ([member_name, body, helpers], eq)
+            ([member_name, checked, body, helpers], eq)
         }
     })
+}
+
+/// A `parse` body: `value_of`, or the `ValueError` of `schema`, laid out as
+/// rustfmt lays it out: the closure in a block when its call does not fit on
+/// a line of its own.
+fn checked_parse(runtime: &str, schema: &str) -> String {
+    let error = format!("{runtime}::invalid(text, {})", layout::string(schema));
+    let call = format!(".ok_or_else(|| {error})");
+    if 12 + call.len() <= layout::MAX_WIDTH {
+        return layout::chain(8, "Self::value_of(text)", &[call]);
+    }
+    format!("        Self::value_of(text).ok_or_else(|| {{\n            {error}\n        }})\n")
 }
 
 /// A list's `value`: its output type and body, each item read as its
@@ -1192,7 +1215,7 @@ fn member_impls(runtime: &str, simple: &Simple, members: &[Member], uses: &mut U
 fn atom_call(
     runtime: &str,
     atom: &Atom,
-    [screaming, schema]: [&str; 2],
+    screaming: &str,
     statics: &mut String,
     uses: &mut Uses,
     borrowed: bool,
@@ -1207,11 +1230,10 @@ fn atom_call(
         shown
     };
     let text = Expr::atom("text");
-    let name = Expr::Atom(layout::string(schema));
     let call = |function: &str, arguments| Expr::call(&format!("{runtime}::{function}"), arguments);
     let read = match atom {
-        Atom::Boolean => call("boolean", vec![text, name]),
-        Atom::DateTime => call("date_time", vec![text, name]),
+        Atom::Boolean => call("boolean", vec![text]),
+        Atom::DateTime => call("date_time", vec![text]),
         Atom::Double {
             max_exclusive,
             max_inclusive,
@@ -1235,26 +1257,26 @@ fn atom_call(
             );
             let declared = format!("BOUNDS: {runtime}::Bounds");
             let path = static_item(screaming, &declared, &bounds, statics);
-            call("double", vec![text, Expr::Atom(format!("&{path}")), name])
+            call("double", vec![text, Expr::Atom(format!("&{path}"))])
         }
-        Atom::Hex { bytes } => call("hex", vec![text, Expr::Atom(bytes.to_string()), name]),
+        Atom::Hex { bytes } => call("hex", vec![text, Expr::Atom(bytes.to_string())]),
         Atom::Integer { max, min, values } if values.is_empty() => {
             let range = [min, max].map(|bound| Expr::Atom(layout::integer(*bound)));
             let [low, high] = range;
-            call("integer", vec![text, low, high, name])
+            call("integer", vec![text, low, high])
         }
         Atom::Integer {
             max: _max,
             min: _min,
             values,
-        } => call("integer_in", vec![text, strings(values), name]),
+        } => call("integer_in", vec![text, strings(values)]),
         Atom::Measure { patterns } => {
-            let path = static_item(screaming, "PATTERNS: &[&str]", &strings(patterns), statics);
-            call("measure", vec![text, Expr::Atom(path), name])
+            let path = patterns_static(screaming, patterns, statics, uses);
+            call("measure", vec![text, Expr::Atom(format!("&{path}"))])
         }
         Atom::Percentage { patterns } => {
-            let path = static_item(screaming, "PATTERNS: &[&str]", &strings(patterns), statics);
-            call("percentage", vec![text, Expr::Atom(path), name])
+            let path = patterns_static(screaming, patterns, statics, uses);
+            call("percentage", vec![text, Expr::Atom(format!("&{path}"))])
         }
         Atom::Text {
             length,
@@ -1274,12 +1296,12 @@ fn atom_call(
                     ("length".to_owned(), count(length)),
                     ("max_length".to_owned(), count(max_length)),
                     ("min_length".to_owned(), count(min_length)),
-                    ("patterns".to_owned(), strings(patterns)),
+                    ("patterns".to_owned(), compiled_patterns(patterns, uses)),
                 ],
             );
             let declared = format!("FACETS: {runtime}::Facets");
             let path = static_item(screaming, &declared, &facets, statics);
-            call("text", vec![text, Expr::Atom(format!("&{path}")), name])
+            call("text", vec![text, Expr::Atom(format!("&{path}"))])
         }
     };
     (output.to_owned(), read)
@@ -1294,6 +1316,24 @@ fn static_item(screaming: &str, declared: &str, value: &Expr, statics: &mut Stri
     format!("{screaming}_{suffix}")
 }
 
+/// The static of a measure's or a percentage's pattern facets, each compiled
+/// once; returns its name.
+fn patterns_static(
+    screaming: &str,
+    patterns: &[String],
+    statics: &mut String,
+    uses: &mut Uses,
+) -> String {
+    let value = compiled_patterns(patterns, uses);
+    static_item(screaming, "PATTERNS: Patterns", &value, statics)
+}
+
+/// `Patterns::new(&[...])`: the pattern facets, compiled on first use.
+fn compiled_patterns(patterns: &[String], uses: &mut Uses) -> Expr {
+    uses.add("officekit_xml::values::Patterns");
+    Expr::call("Patterns::new", vec![strings(patterns)])
+}
+
 /// An array of string literals.
 fn strings(values: &[String]) -> Expr {
     Expr::Slice(
@@ -1304,7 +1344,7 @@ fn strings(values: &[String]) -> Expr {
     )
 }
 
-/// A union's member enum, its `Display`, its `parse` body, and the helper
+/// A union's member enum, its `Display`, its `value_of` body, and the helper
 /// methods that body calls when it is too long for one function: each member
 /// type tried in the schema's order, the first that matches winning. The flag
 /// tells whether the member enum is `Eq`.
@@ -1312,7 +1352,7 @@ fn union_text(
     names: &Names<'_>,
     simple: &Simple,
     members: &[UnionMember],
-    [screaming, schema]: [&str; 2],
+    screaming: &str,
     statics: &mut String,
     uses: &mut Uses,
 ) -> Result<([String; 4], bool)> {
@@ -1330,14 +1370,8 @@ fn union_text(
         match &member.value {
             MemberValue::Atom(atom) => {
                 let prefix = format!("{screaming}_{}", names::screaming(&member.variant));
-                let (output, call) = atom_call(
-                    names.runtime(),
-                    atom,
-                    [&prefix, schema],
-                    statics,
-                    uses,
-                    false,
-                );
+                let (output, call) =
+                    atom_call(names.runtime(), atom, &prefix, statics, uses, false);
                 eq &= !matches!(output.as_str(), "f64" | "Measure");
                 spellings.push((member.variant.clone(), output.clone(), atom_spelling(atom)));
                 variants.push((member.variant.clone(), output));
@@ -1373,7 +1407,7 @@ fn union_text(
                         test: binding.clone(),
                         binding,
                         owned: if borrowed { ".to_owned()" } else { "" },
-                        read: Expr::call(&format!("{path}::parse"), vec![Expr::atom("text")]),
+                        read: Expr::call(&format!("{path}::value_of"), vec![Expr::atom("text")]),
                         variant: member.variant.clone(),
                     });
                 }
@@ -1387,13 +1421,7 @@ fn union_text(
             }
         }
     }
-    let [body, methods] = union_value(
-        names.runtime(),
-        &member_name,
-        schema,
-        &trials,
-        text_member.as_deref(),
-    );
+    let [body, methods] = union_value(&member_name, &trials, text_member.as_deref());
     let definition = union_member_enum(simple, &member_name, variants, eq);
     uses.add("core::fmt");
     let display = display_text(&member_name, spellings);
@@ -1527,36 +1555,27 @@ fn display_text(member_name: &str, spellings: Vec<(String, String, Expr)>) -> St
     out
 }
 
-/// A union's `parse` body, and the helper methods it calls when its trials
+/// A union's `value_of` body, and the helper methods it calls when its trials
 /// take more than `BODY_LINES` lines: each helper tries a run of the member
-/// types and gives `None` when none matches. `runtime` is the path to the
-/// runtime.
-fn union_value(
-    runtime: &str,
-    member_name: &str,
-    schema: &str,
-    trials: &[Trial],
-    text_member: Option<&str>,
-) -> [String; 2] {
-    let text_item = |wrapper: &str| {
-        text_member.map(|variant| {
+/// types and gives `None` when none matches.
+fn union_value(member_name: &str, trials: &[Trial], text_member: Option<&str>) -> [String; 2] {
+    let end = text_member.map_or_else(
+        || "        None\n".to_owned(),
+        |variant| {
             let call = Expr::call(
                 &format!("{member_name}::{variant}"),
                 vec![Expr::atom("text.to_owned()")],
             );
-            Expr::call(wrapper, vec![call])
-        })
-    };
-    let invalid = Expr::call(
-        &format!("{runtime}::invalid"),
-        vec![Expr::atom("text"), Expr::Atom(layout::string(schema))],
+            let mut out = String::new();
+            layout::line("        ", &Expr::call("Some", vec![call]), "", &mut out);
+            out
+        },
     );
     let mut body = String::new();
     for trial in trials {
-        trial_text(member_name, trial, "Ok", &mut body);
+        trial_text(member_name, trial, &mut body);
     }
-    let last = text_item("Ok").unwrap_or_else(|| Expr::call("Err", vec![invalid.clone()]));
-    layout::line("        ", &last, "", &mut body);
+    body.push_str(&end);
     if body.lines().count() <= BODY_LINES {
         return [body, String::new()];
     }
@@ -1564,18 +1583,14 @@ fn union_value(
     let mut chunk = String::new();
     for trial in trials {
         let mut text = String::new();
-        trial_text(member_name, trial, "Some", &mut text);
+        trial_text(member_name, trial, &mut text);
         if !chunk.is_empty() && chunk.lines().count() + text.lines().count() >= BODY_LINES {
             chunk.push_str("        None\n");
             chunks.push(mem::take(&mut chunk));
         }
         chunk.push_str(&text);
     }
-    if let Some(end) = text_item("Some") {
-        layout::line("        ", &end, "", &mut chunk);
-    } else {
-        chunk.push_str("        None\n");
-    }
+    chunk.push_str(&end);
     chunks.push(chunk);
     let mut methods = String::new();
     let mut calls = Vec::new();
@@ -1589,13 +1604,12 @@ fn union_value(
             calls.push(format!(".or_else(|| Self::value_{number}(text))"));
         }
     }
-    calls.push(format!(".ok_or_else(|| {})", invalid.one_line()));
     [layout::chain(8, "Self::value_1(text)", &calls), methods]
 }
 
 /// One member type's trial: its binding, and the early return of the member
-/// it gives, wrapped in `wrapper` (`Ok` or `Some`).
-fn trial_text(member_name: &str, trial: &Trial, wrapper: &str, body: &mut String) {
+/// it gives.
+fn trial_text(member_name: &str, trial: &Trial, body: &mut String) {
     layout::statement(
         &format!("        let {} = ", trial.binding),
         &trial.read,
@@ -1603,7 +1617,7 @@ fn trial_text(member_name: &str, trial: &Trial, wrapper: &str, body: &mut String
     );
     body.push_str(&layout::if_let(
         8,
-        &Expr::pattern("Ok", "value"),
+        &Expr::pattern("Some", "value"),
         &trial.test,
     ));
     let value = Expr::call(
@@ -1612,7 +1626,7 @@ fn trial_text(member_name: &str, trial: &Trial, wrapper: &str, body: &mut String
     );
     layout::line(
         "            return ",
-        &Expr::call(wrapper, vec![value]),
+        &Expr::call("Some", vec![value]),
         ";",
         body,
     );

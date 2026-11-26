@@ -4,9 +4,11 @@ use core::mem::size_of;
 use std::alloc::System;
 
 use officekit_markup_core::wordprocessing::{
-    MeasurementInHalfPoints, MeasurementInHalfPointsMember, NonComplexScriptFontSize, read,
+    ColorValue, ColorValueMember, MeasurementInHalfPoints, MeasurementInHalfPointsMember,
+    NonComplexScriptFontSize, read,
 };
 use officekit_xml::parse::parse;
+use officekit_xml::values::{Measure, MeasureUnit};
 
 #[global_allocator]
 static ALLOCATOR: Counting = Counting;
@@ -38,6 +40,15 @@ unsafe impl GlobalAlloc for Counting {
     }
 }
 
+/// The allocations `run` makes on this thread, and what it returns.
+fn counted<T>(run: impl FnOnce() -> T) -> (usize, T) {
+    ALLOCATIONS.set(0);
+    COUNTING.set(true);
+    let value = run();
+    COUNTING.set(false);
+    (ALLOCATIONS.get(), value)
+}
+
 #[test]
 fn a_font_size_of_20_keeps_its_number_on_no_heap() {
     assert_eq!(size_of::<MeasurementInHalfPoints>(), 24);
@@ -61,4 +72,39 @@ fn a_font_size_of_20_keeps_its_number_on_no_heap() {
         read::non_complex_script_font_size(&element).val,
         Some(twenty)
     );
+}
+
+#[test]
+fn a_hex_colour_read_by_its_unions_second_member_takes_no_heap() {
+    let text = "FF0000".to_owned();
+    let colour = ColorValueMember::HexadecimalColorValue(0x00FF_0000);
+    let (parsed, member) = counted(|| ColorValue::parse(&text));
+    assert_eq!(parsed, 0);
+    assert_eq!(member, Ok(colour.clone()));
+    let (from_text, value) = counted(|| ColorValue::from(text));
+    assert_eq!(from_text, 0);
+    assert_eq!(value, ColorValue::Member(colour));
+}
+
+#[test]
+fn ten_thousand_measures_compile_their_pattern_once() {
+    let texts: Vec<String> = (0_u32..10_000)
+        .map(|number| format!("{number}.5pt"))
+        .collect();
+    let (first, member) = counted(|| MeasurementInHalfPoints::parse("1.5pt"));
+    assert!(first > 0, "the first value compiles the pattern");
+    assert_eq!(
+        member,
+        Ok(MeasurementInHalfPointsMember::PositiveUniversalMeasurement(
+            Measure::new(MeasureUnit::Points, 1.5)
+        ))
+    );
+    let (rest, matched) = counted(|| {
+        texts
+            .iter()
+            .filter(|text| MeasurementInHalfPoints::parse(text).is_ok())
+            .count()
+    });
+    assert_eq!(rest, 0);
+    assert_eq!(matched, 10_000);
 }

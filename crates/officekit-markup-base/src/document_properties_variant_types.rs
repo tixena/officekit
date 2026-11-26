@@ -228,7 +228,7 @@ use core::fmt;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
-use officekit_xml::values::ValueError;
+use officekit_xml::values::{Patterns, ValueError};
 
 const NS_VT: Option<NamespaceId> = Some(96);
 
@@ -563,14 +563,14 @@ static CURRENCY_SIMPLE_TYPE_FACETS: crate::Facets = crate::Facets {
     length: None,
     max_length: None,
     min_length: None,
-    patterns: &["\\s*[0-9]*\\.[0-9]{4}\\s*"],
+    patterns: Patterns::new(&["\\s*[0-9]*\\.[0-9]{4}\\s*"]),
 };
 
 static ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS: crate::Facets = crate::Facets {
     length: None,
     max_length: None,
     min_length: None,
-    patterns: &["\\s*0x[0-9A-Za-z]{8}\\s*"],
+    patterns: Patterns::new(&["\\s*0x[0-9A-Za-z]{8}\\s*"]),
 };
 
 /// The `vt:array` element, Array (ECMA-376 Part 1, section 22.4.2.1). Its schema type is
@@ -1626,9 +1626,9 @@ impl Default for ArrayBaseTypeSimpleType {
 
 impl From<String> for ArrayBaseTypeSimpleType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1696,11 +1696,7 @@ impl ArrayBaseTypeSimpleType {
     ///
     /// `ValueError` when `text` is no value of `ST_ArrayBaseType`.
     pub fn parse(text: &str) -> Result<ArrayBaseTypeSimpleTypeMember, ValueError> {
-        crate::member(
-            ArrayBaseTypeSimpleTypeMember::MEMBERS,
-            text,
-            "ST_ArrayBaseType",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_ArrayBaseType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1713,6 +1709,12 @@ impl ArrayBaseTypeSimpleType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ArrayBaseTypeSimpleTypeMember> {
+        crate::member(ArrayBaseTypeSimpleTypeMember::MEMBERS, text)
     }
 }
 
@@ -2473,7 +2475,7 @@ impl CurrencySimpleType {
     ///
     /// `ValueError` when `text` is no value of `ST_Cy`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        crate::text(text, &CURRENCY_SIMPLE_TYPE_FACETS, "ST_Cy")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_Cy"))
     }
 
     /// The value the text spells.
@@ -2483,6 +2485,12 @@ impl CurrencySimpleType {
     /// `ValueError` when the text is no value of `ST_Cy`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        crate::text(text, &CURRENCY_SIMPLE_TYPE_FACETS)
     }
 }
 
@@ -2703,7 +2711,7 @@ impl ErrorStatusCodeSimpleType {
     ///
     /// `ValueError` when `text` is no value of `ST_Error`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        crate::text(text, &ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS, "ST_Error")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_Error"))
     }
 
     /// The value the text spells.
@@ -2713,6 +2721,12 @@ impl ErrorStatusCodeSimpleType {
     /// `ValueError` when the text is no value of `ST_Error`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        crate::text(text, &ERROR_STATUS_CODE_SIMPLE_TYPE_FACETS)
     }
 }
 
@@ -4171,9 +4185,9 @@ impl Default for VectorBaseTypeSimpleType {
 
 impl From<String> for VectorBaseTypeSimpleType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -4244,11 +4258,7 @@ impl VectorBaseTypeSimpleType {
     ///
     /// `ValueError` when `text` is no value of `ST_VectorBaseType`.
     pub fn parse(text: &str) -> Result<VectorBaseTypeSimpleTypeMember, ValueError> {
-        crate::member(
-            VectorBaseTypeSimpleTypeMember::MEMBERS,
-            text,
-            "ST_VectorBaseType",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_VectorBaseType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -4261,6 +4271,12 @@ impl VectorBaseTypeSimpleType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VectorBaseTypeSimpleTypeMember> {
+        crate::member(VectorBaseTypeSimpleTypeMember::MEMBERS, text)
     }
 }
 

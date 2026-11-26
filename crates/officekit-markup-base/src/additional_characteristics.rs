@@ -338,9 +338,9 @@ impl Default for CharacteristicRelationshipTypes {
 
 impl From<String> for CharacteristicRelationshipTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -396,11 +396,7 @@ impl CharacteristicRelationshipTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_Relation`.
     pub fn parse(text: &str) -> Result<CharacteristicRelationshipTypesMember, ValueError> {
-        crate::member(
-            CharacteristicRelationshipTypesMember::MEMBERS,
-            text,
-            "ST_Relation",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_Relation"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -413,6 +409,12 @@ impl CharacteristicRelationshipTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CharacteristicRelationshipTypesMember> {
+        crate::member(CharacteristicRelationshipTypesMember::MEMBERS, text)
     }
 }
 

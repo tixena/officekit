@@ -231,7 +231,7 @@ use officekit_markup_base::custom_xml_schema_properties;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::Node;
 use officekit_xml::name::{NamespaceId, OfficeVersion};
-use officekit_xml::values::{DateTime, Measure, ValueError};
+use officekit_xml::values::{DateTime, Measure, Patterns, ValueError};
 
 const NS_M: Option<NamespaceId> = Some(52);
 const NS_O: Option<NamespaceId> = Some(60);
@@ -7604,7 +7604,7 @@ static CONDITIONAL_FORMATTING_BITMASK_FACETS: officekit_markup_base::Facets =
         length: Some(12),
         max_length: None,
         min_length: None,
-        patterns: &["[01]*"],
+        patterns: Patterns::new(&["[01]*"]),
     };
 
 static SCRIPT_SUBROUTINE_NAME_VALUE_FACETS: officekit_markup_base::Facets =
@@ -7612,14 +7612,14 @@ static SCRIPT_SUBROUTINE_NAME_VALUE_FACETS: officekit_markup_base::Facets =
         length: None,
         max_length: Some(33),
         min_length: None,
-        patterns: &[],
+        patterns: Patterns::new(&[]),
     };
 
 static HELP_TEXT_VALUE_FACETS: officekit_markup_base::Facets = officekit_markup_base::Facets {
     length: None,
     max_length: Some(256),
     min_length: None,
-    patterns: &[],
+    patterns: Patterns::new(&[]),
 };
 
 static FORM_FIELD_NAME_VALUE_FACETS: officekit_markup_base::Facets =
@@ -7627,17 +7627,17 @@ static FORM_FIELD_NAME_VALUE_FACETS: officekit_markup_base::Facets =
         length: None,
         max_length: Some(65),
         min_length: None,
-        patterns: &[],
+        patterns: Patterns::new(&[]),
     };
 
 static STATUS_TEXT_VALUE_FACETS: officekit_markup_base::Facets = officekit_markup_base::Facets {
     length: None,
     max_length: Some(140),
     min_length: None,
-    patterns: &[],
+    patterns: Patterns::new(&[]),
 };
 
-static ST_TEXT_SCALE_PERCENT_PATTERNS: &[&str] = &["0*(600|([0-5]?[0-9]?[0-9]))%"];
+static ST_TEXT_SCALE_PERCENT_PATTERNS: Patterns = Patterns::new(&["0*(600|([0-5]?[0-9]?[0-9]))%"]);
 
 /// Absolute Position Tab Alignment, the simple type `ST_PTabAlignment` (ECMA-376 Part 1, section
 /// 17.18.71), kept as its member or as the text the file carried.
@@ -29091,9 +29091,9 @@ impl Default for AbsolutePositionTabAlignment {
 
 impl From<String> for AbsolutePositionTabAlignment {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -29147,11 +29147,7 @@ impl AbsolutePositionTabAlignment {
     ///
     /// `ValueError` when `text` is no value of `ST_PTabAlignment`.
     pub fn parse(text: &str) -> Result<AbsolutePositionTabAlignmentMember, ValueError> {
-        officekit_markup_base::member(
-            AbsolutePositionTabAlignmentMember::MEMBERS,
-            text,
-            "ST_PTabAlignment",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_PTabAlignment"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -29164,6 +29160,12 @@ impl AbsolutePositionTabAlignment {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<AbsolutePositionTabAlignmentMember> {
+        officekit_markup_base::member(AbsolutePositionTabAlignmentMember::MEMBERS, text)
     }
 }
 
@@ -29231,9 +29233,9 @@ impl Default for AbsolutePositionTabLeaderCharacter {
 
 impl From<String> for AbsolutePositionTabLeaderCharacter {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -29289,11 +29291,7 @@ impl AbsolutePositionTabLeaderCharacter {
     ///
     /// `ValueError` when `text` is no value of `ST_PTabLeader`.
     pub fn parse(text: &str) -> Result<AbsolutePositionTabLeaderCharacterMember, ValueError> {
-        officekit_markup_base::member(
-            AbsolutePositionTabLeaderCharacterMember::MEMBERS,
-            text,
-            "ST_PTabLeader",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_PTabLeader"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -29306,6 +29304,12 @@ impl AbsolutePositionTabLeaderCharacter {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<AbsolutePositionTabLeaderCharacterMember> {
+        officekit_markup_base::member(AbsolutePositionTabLeaderCharacterMember::MEMBERS, text)
     }
 }
 
@@ -29320,9 +29324,9 @@ impl Default for AbsolutePositionTabPositioningBase {
 
 impl From<String> for AbsolutePositionTabPositioningBase {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -29375,11 +29379,8 @@ impl AbsolutePositionTabPositioningBase {
     ///
     /// `ValueError` when `text` is no value of `ST_PTabRelativeTo`.
     pub fn parse(text: &str) -> Result<AbsolutePositionTabPositioningBaseMember, ValueError> {
-        officekit_markup_base::member(
-            AbsolutePositionTabPositioningBaseMember::MEMBERS,
-            text,
-            "ST_PTabRelativeTo",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_PTabRelativeTo"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -29392,6 +29393,12 @@ impl AbsolutePositionTabPositioningBase {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<AbsolutePositionTabPositioningBaseMember> {
+        officekit_markup_base::member(AbsolutePositionTabPositioningBaseMember::MEMBERS, text)
     }
 }
 
@@ -30762,9 +30769,9 @@ impl Default for AnimatedTextEffects {
 
 impl From<String> for AnimatedTextEffects {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -30822,7 +30829,7 @@ impl AnimatedTextEffects {
     ///
     /// `ValueError` when `text` is no value of `ST_TextEffect`.
     pub fn parse(text: &str) -> Result<AnimatedTextEffectsMember, ValueError> {
-        officekit_markup_base::member(AnimatedTextEffectsMember::MEMBERS, text, "ST_TextEffect")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TextEffect"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -30835,6 +30842,12 @@ impl AnimatedTextEffects {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<AnimatedTextEffectsMember> {
+        officekit_markup_base::member(AnimatedTextEffectsMember::MEMBERS, text)
     }
 }
 
@@ -31294,9 +31307,9 @@ impl Default for AutomaticCaptionPositioningValues {
 
 impl From<String> for AutomaticCaptionPositioningValues {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -31351,11 +31364,7 @@ impl AutomaticCaptionPositioningValues {
     ///
     /// `ValueError` when `text` is no value of `ST_CaptionPos`.
     pub fn parse(text: &str) -> Result<AutomaticCaptionPositioningValuesMember, ValueError> {
-        officekit_markup_base::member(
-            AutomaticCaptionPositioningValuesMember::MEMBERS,
-            text,
-            "ST_CaptionPos",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_CaptionPos"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -31368,6 +31377,12 @@ impl AutomaticCaptionPositioningValues {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<AutomaticCaptionPositioningValuesMember> {
+        officekit_markup_base::member(AutomaticCaptionPositioningValuesMember::MEMBERS, text)
     }
 }
 
@@ -31821,9 +31836,9 @@ impl Default for BidirectionalDirectionTypes {
 
 impl From<String> for BidirectionalDirectionTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -31874,11 +31889,7 @@ impl BidirectionalDirectionTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_Direction`.
     pub fn parse(text: &str) -> Result<BidirectionalDirectionTypesMember, ValueError> {
-        officekit_markup_base::member(
-            BidirectionalDirectionTypesMember::MEMBERS,
-            text,
-            "ST_Direction",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Direction"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -31891,6 +31902,12 @@ impl BidirectionalDirectionTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<BidirectionalDirectionTypesMember> {
+        officekit_markup_base::member(BidirectionalDirectionTypesMember::MEMBERS, text)
     }
 }
 
@@ -33207,9 +33224,9 @@ impl Default for BorderStyles {
 
 impl From<String> for BorderStyles {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -33453,7 +33470,7 @@ impl BorderStyles {
     ///
     /// `ValueError` when `text` is no value of `ST_Border`.
     pub fn parse(text: &str) -> Result<BorderStylesMember, ValueError> {
-        officekit_markup_base::member(BorderStylesMember::MEMBERS, text, "ST_Border")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Border"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -33466,6 +33483,12 @@ impl BorderStyles {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<BorderStylesMember> {
+        officekit_markup_base::member(BorderStylesMember::MEMBERS, text)
     }
 }
 
@@ -33651,9 +33674,9 @@ impl Default for BreakTypes {
 
 impl From<String> for BreakTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -33707,7 +33730,7 @@ impl BreakTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_BrType`.
     pub fn parse(text: &str) -> Result<BreakTypesMember, ValueError> {
-        officekit_markup_base::member(BreakTypesMember::MEMBERS, text, "ST_BrType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_BrType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -33720,6 +33743,12 @@ impl BreakTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<BreakTypesMember> {
+        officekit_markup_base::member(BreakTypesMember::MEMBERS, text)
     }
 }
 
@@ -34194,9 +34223,9 @@ impl Default for ChapterSeparatorTypes {
 
 impl From<String> for ChapterSeparatorTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -34252,7 +34281,7 @@ impl ChapterSeparatorTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_ChapterSep`.
     pub fn parse(text: &str) -> Result<ChapterSeparatorTypesMember, ValueError> {
-        officekit_markup_base::member(ChapterSeparatorTypesMember::MEMBERS, text, "ST_ChapterSep")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_ChapterSep"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -34265,6 +34294,12 @@ impl ChapterSeparatorTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ChapterSeparatorTypesMember> {
+        officekit_markup_base::member(ChapterSeparatorTypesMember::MEMBERS, text)
     }
 }
 
@@ -34328,9 +34363,9 @@ impl Default for CharacterLevelWhitespaceCompressionSettings {
 
 impl From<String> for CharacterLevelWhitespaceCompressionSettings {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -34392,11 +34427,8 @@ impl CharacterLevelWhitespaceCompressionSettings {
     pub fn parse(
         text: &str,
     ) -> Result<CharacterLevelWhitespaceCompressionSettingsMember, ValueError> {
-        officekit_markup_base::member(
-            CharacterLevelWhitespaceCompressionSettingsMember::MEMBERS,
-            text,
-            "ST_CharacterSpacing",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_CharacterSpacing"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -34409,6 +34441,15 @@ impl CharacterLevelWhitespaceCompressionSettings {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CharacterLevelWhitespaceCompressionSettingsMember> {
+        officekit_markup_base::member(
+            CharacterLevelWhitespaceCompressionSettingsMember::MEMBERS,
+            text,
+        )
     }
 }
 
@@ -34993,9 +35034,9 @@ impl Default for ColorValue {
 
 impl From<String> for ColorValue {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -35031,15 +35072,7 @@ impl ColorValue {
     ///
     /// `ValueError` when `text` is no value of `ST_HexColor`.
     pub fn parse(text: &str) -> Result<ColorValueMember, ValueError> {
-        let member_1 = HexColorAuto::parse(text);
-        if let Ok(value) = member_1 {
-            return Ok(ColorValueMember::HexColorAuto(value));
-        }
-        let member_2 = common_simple_types::HexadecimalColorValue::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(ColorValueMember::HexadecimalColorValue(value));
-        }
-        Err(officekit_markup_base::invalid(text, "ST_HexColor"))
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_HexColor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -35052,6 +35085,20 @@ impl ColorValue {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ColorValueMember> {
+        let member_1 = HexColorAuto::value_of(text);
+        if let Some(value) = member_1 {
+            return Some(ColorValueMember::HexColorAuto(value));
+        }
+        let member_2 = common_simple_types::HexadecimalColorValue::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(ColorValueMember::HexadecimalColorValue(value));
+        }
+        None
     }
 }
 
@@ -35814,9 +35861,9 @@ impl Default for ComplexFieldCharacterType {
 
 impl From<String> for ComplexFieldCharacterType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -35870,11 +35917,7 @@ impl ComplexFieldCharacterType {
     ///
     /// `ValueError` when `text` is no value of `ST_FldCharType`.
     pub fn parse(text: &str) -> Result<ComplexFieldCharacterTypeMember, ValueError> {
-        officekit_markup_base::member(
-            ComplexFieldCharacterTypeMember::MEMBERS,
-            text,
-            "ST_FldCharType",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FldCharType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -35887,6 +35930,12 @@ impl ComplexFieldCharacterType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ComplexFieldCharacterTypeMember> {
+        officekit_markup_base::member(ComplexFieldCharacterTypeMember::MEMBERS, text)
     }
 }
 
@@ -36111,7 +36160,7 @@ impl ConditionalFormattingBitmask {
     ///
     /// `ValueError` when `text` is no value of `ST_Cnf`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        officekit_markup_base::text(text, &CONDITIONAL_FORMATTING_BITMASK_FACETS, "ST_Cnf")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Cnf"))
     }
 
     /// The value the text spells.
@@ -36121,6 +36170,12 @@ impl ConditionalFormattingBitmask {
     /// `ValueError` when the text is no value of `ST_Cnf`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        officekit_markup_base::text(text, &CONDITIONAL_FORMATTING_BITMASK_FACETS)
     }
 }
 
@@ -36135,9 +36190,9 @@ impl Default for ConditionalTableStyleFormattingTypes {
 
 impl From<String> for ConditionalTableStyleFormattingTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -36201,11 +36256,8 @@ impl ConditionalTableStyleFormattingTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_TblStyleOverrideType`.
     pub fn parse(text: &str) -> Result<ConditionalTableStyleFormattingTypesMember, ValueError> {
-        officekit_markup_base::member(
-            ConditionalTableStyleFormattingTypesMember::MEMBERS,
-            text,
-            "ST_TblStyleOverrideType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TblStyleOverrideType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -36218,6 +36270,12 @@ impl ConditionalTableStyleFormattingTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ConditionalTableStyleFormattingTypesMember> {
+        officekit_markup_base::member(ConditionalTableStyleFormattingTypesMember::MEMBERS, text)
     }
 }
 
@@ -38011,9 +38069,9 @@ impl Default for CustomTabStopLeaderCharacter {
 
 impl From<String> for CustomTabStopLeaderCharacter {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -38070,11 +38128,7 @@ impl CustomTabStopLeaderCharacter {
     ///
     /// `ValueError` when `text` is no value of `ST_TabTlc`.
     pub fn parse(text: &str) -> Result<CustomTabStopLeaderCharacterMember, ValueError> {
-        officekit_markup_base::member(
-            CustomTabStopLeaderCharacterMember::MEMBERS,
-            text,
-            "ST_TabTlc",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TabTlc"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -38087,6 +38141,12 @@ impl CustomTabStopLeaderCharacter {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CustomTabStopLeaderCharacterMember> {
+        officekit_markup_base::member(CustomTabStopLeaderCharacterMember::MEMBERS, text)
     }
 }
 
@@ -38101,9 +38161,9 @@ impl Default for CustomTabStopType {
 
 impl From<String> for CustomTabStopType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -38163,7 +38223,7 @@ impl CustomTabStopType {
     ///
     /// `ValueError` when `text` is no value of `ST_TabJc`.
     pub fn parse(text: &str) -> Result<CustomTabStopTypeMember, ValueError> {
-        officekit_markup_base::member(CustomTabStopTypeMember::MEMBERS, text, "ST_TabJc")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TabJc"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -38176,6 +38236,12 @@ impl CustomTabStopType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CustomTabStopTypeMember> {
+        officekit_markup_base::member(CustomTabStopTypeMember::MEMBERS, text)
     }
 }
 
@@ -39572,9 +39638,9 @@ impl Default for DateStorageFormatTypes {
 
 impl From<String> for DateStorageFormatTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -39628,11 +39694,8 @@ impl DateStorageFormatTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_SdtDateMappingType`.
     pub fn parse(text: &str) -> Result<DateStorageFormatTypesMember, ValueError> {
-        officekit_markup_base::member(
-            DateStorageFormatTypesMember::MEMBERS,
-            text,
-            "ST_SdtDateMappingType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_SdtDateMappingType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -39645,6 +39708,12 @@ impl DateStorageFormatTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<DateStorageFormatTypesMember> {
+        officekit_markup_base::member(DateStorageFormatTypesMember::MEMBERS, text)
     }
 }
 
@@ -39738,7 +39807,7 @@ impl DecimalNumberValue {
     ///
     /// `ValueError` when `text` is no value of `ST_DecimalNumber`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, i64::MIN, i64::MAX, "ST_DecimalNumber")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_DecimalNumber"))
     }
 
     /// The value the text spells.
@@ -39748,6 +39817,12 @@ impl DecimalNumberValue {
     /// `ValueError` when the text is no value of `ST_DecimalNumber`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, i64::MIN, i64::MAX)
     }
 }
 
@@ -40682,9 +40757,9 @@ impl Default for DisplacedByCustomXml {
 
 impl From<String> for DisplacedByCustomXml {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -40735,11 +40810,8 @@ impl DisplacedByCustomXml {
     ///
     /// `ValueError` when `text` is no value of `ST_DisplacedByCustomXml`.
     pub fn parse(text: &str) -> Result<DisplacedByCustomXmlMember, ValueError> {
-        officekit_markup_base::member(
-            DisplacedByCustomXmlMember::MEMBERS,
-            text,
-            "ST_DisplacedByCustomXml",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_DisplacedByCustomXml"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -40752,6 +40824,12 @@ impl DisplacedByCustomXml {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<DisplacedByCustomXmlMember> {
+        officekit_markup_base::member(DisplacedByCustomXmlMember::MEMBERS, text)
     }
 }
 
@@ -43587,9 +43665,9 @@ impl Default for DocumentGridTypes {
 
 impl From<String> for DocumentGridTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -43644,7 +43722,7 @@ impl DocumentGridTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_DocGrid`.
     pub fn parse(text: &str) -> Result<DocumentGridTypesMember, ValueError> {
-        officekit_markup_base::member(DocumentGridTypesMember::MEMBERS, text, "ST_DocGrid")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_DocGrid"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -43657,6 +43735,12 @@ impl DocumentGridTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<DocumentGridTypesMember> {
+        officekit_markup_base::member(DocumentGridTypesMember::MEMBERS, text)
     }
 }
 
@@ -43875,9 +43959,9 @@ impl Default for DocumentProtectionTypes {
 
 impl From<String> for DocumentProtectionTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -43933,11 +44017,7 @@ impl DocumentProtectionTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_DocProtect`.
     pub fn parse(text: &str) -> Result<DocumentProtectionTypesMember, ValueError> {
-        officekit_markup_base::member(
-            DocumentProtectionTypesMember::MEMBERS,
-            text,
-            "ST_DocProtect",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_DocProtect"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -43950,6 +44030,12 @@ impl DocumentProtectionTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<DocumentProtectionTypesMember> {
+        officekit_markup_base::member(DocumentProtectionTypesMember::MEMBERS, text)
     }
 }
 
@@ -44104,9 +44190,9 @@ impl Default for DocumentViewValues {
 
 impl From<String> for DocumentViewValues {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -44163,7 +44249,7 @@ impl DocumentViewValues {
     ///
     /// `ValueError` when `text` is no value of `ST_View`.
     pub fn parse(text: &str) -> Result<DocumentViewValuesMember, ValueError> {
-        officekit_markup_base::member(DocumentViewValuesMember::MEMBERS, text, "ST_View")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_View"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -44176,6 +44262,12 @@ impl DocumentViewValues {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<DocumentViewValuesMember> {
+        officekit_markup_base::member(DocumentViewValuesMember::MEMBERS, text)
     }
 }
 
@@ -45259,7 +45351,7 @@ impl EightDigitHexadecimalValue {
     ///
     /// `ValueError` when `text` is no value of `ST_LongHexNumber`.
     pub fn parse(text: &str) -> Result<u32, ValueError> {
-        officekit_markup_base::hex(text, 4, "ST_LongHexNumber")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_LongHexNumber"))
     }
 
     /// The value the text spells.
@@ -45269,6 +45361,12 @@ impl EightDigitHexadecimalValue {
     /// `ValueError` when the text is no value of `ST_LongHexNumber`; the text stays stored.
     pub fn value(&self) -> Result<u32, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<u32> {
+        officekit_markup_base::hex(text, 4)
     }
 }
 
@@ -45642,9 +45740,9 @@ impl Default for EmbeddedObjectRepresentations {
 
 impl From<String> for EmbeddedObjectRepresentations {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -45695,11 +45793,8 @@ impl EmbeddedObjectRepresentations {
     ///
     /// `ValueError` when `text` is no value of `ST_ObjectDrawAspect`.
     pub fn parse(text: &str) -> Result<EmbeddedObjectRepresentationsMember, ValueError> {
-        officekit_markup_base::member(
-            EmbeddedObjectRepresentationsMember::MEMBERS,
-            text,
-            "ST_ObjectDrawAspect",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_ObjectDrawAspect"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -45712,6 +45807,12 @@ impl EmbeddedObjectRepresentations {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<EmbeddedObjectRepresentationsMember> {
+        officekit_markup_base::member(EmbeddedObjectRepresentationsMember::MEMBERS, text)
     }
 }
 
@@ -45726,9 +45827,9 @@ impl Default for EmbeddedObjectUpdateModes {
 
 impl From<String> for EmbeddedObjectUpdateModes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -45781,11 +45882,8 @@ impl EmbeddedObjectUpdateModes {
     ///
     /// `ValueError` when `text` is no value of `ST_ObjectUpdateMode`.
     pub fn parse(text: &str) -> Result<EmbeddedObjectUpdateModesMember, ValueError> {
-        officekit_markup_base::member(
-            EmbeddedObjectUpdateModesMember::MEMBERS,
-            text,
-            "ST_ObjectUpdateMode",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_ObjectUpdateMode"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -45798,6 +45896,12 @@ impl EmbeddedObjectUpdateModes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<EmbeddedObjectUpdateModesMember> {
+        officekit_markup_base::member(EmbeddedObjectUpdateModesMember::MEMBERS, text)
     }
 }
 
@@ -45959,9 +46063,9 @@ impl Default for EmphasisMarkType {
 
 impl From<String> for EmphasisMarkType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -46017,7 +46121,7 @@ impl EmphasisMarkType {
     ///
     /// `ValueError` when `text` is no value of `ST_Em`.
     pub fn parse(text: &str) -> Result<EmphasisMarkTypeMember, ValueError> {
-        officekit_markup_base::member(EmphasisMarkTypeMember::MEMBERS, text, "ST_Em")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Em"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -46030,6 +46134,12 @@ impl EmphasisMarkType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<EmphasisMarkTypeMember> {
+        officekit_markup_base::member(EmphasisMarkTypeMember::MEMBERS, text)
     }
 }
 
@@ -46148,9 +46258,9 @@ impl Default for EndnotePositioningLocation {
 
 impl From<String> for EndnotePositioningLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -46203,7 +46313,7 @@ impl EndnotePositioningLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_EdnPos`.
     pub fn parse(text: &str) -> Result<EndnotePositioningLocationMember, ValueError> {
-        officekit_markup_base::member(EndnotePositioningLocationMember::MEMBERS, text, "ST_EdnPos")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_EdnPos"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -46216,6 +46326,12 @@ impl EndnotePositioningLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<EndnotePositioningLocationMember> {
+        officekit_markup_base::member(EndnotePositioningLocationMember::MEMBERS, text)
     }
 }
 
@@ -46379,9 +46495,9 @@ impl Default for EntryGalleryTypes {
 
 impl From<String> for EntryGalleryTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -46470,7 +46586,8 @@ impl EntryGalleryTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_DocPartGallery`.
     pub fn parse(text: &str) -> Result<EntryGalleryTypesMember, ValueError> {
-        officekit_markup_base::member(EntryGalleryTypesMember::MEMBERS, text, "ST_DocPartGallery")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_DocPartGallery"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -46483,6 +46600,12 @@ impl EntryGalleryTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<EntryGalleryTypesMember> {
+        officekit_markup_base::member(EntryGalleryTypesMember::MEMBERS, text)
     }
 }
 
@@ -47472,9 +47595,9 @@ impl Default for FontFamilyValue {
 
 impl From<String> for FontFamilyValue {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -47531,7 +47654,7 @@ impl FontFamilyValue {
     ///
     /// `ValueError` when `text` is no value of `ST_FontFamily`.
     pub fn parse(text: &str) -> Result<FontFamilyValueMember, ValueError> {
-        officekit_markup_base::member(FontFamilyValueMember::MEMBERS, text, "ST_FontFamily")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FontFamily"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -47544,6 +47667,12 @@ impl FontFamilyValue {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FontFamilyValueMember> {
+        officekit_markup_base::member(FontFamilyValueMember::MEMBERS, text)
     }
 }
 
@@ -47656,9 +47785,9 @@ impl Default for FontPitchValue {
 
 impl From<String> for FontPitchValue {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -47712,7 +47841,7 @@ impl FontPitchValue {
     ///
     /// `ValueError` when `text` is no value of `ST_Pitch`.
     pub fn parse(text: &str) -> Result<FontPitchValueMember, ValueError> {
-        officekit_markup_base::member(FontPitchValueMember::MEMBERS, text, "ST_Pitch")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Pitch"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -47725,6 +47854,12 @@ impl FontPitchValue {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FontPitchValueMember> {
+        officekit_markup_base::member(FontPitchValueMember::MEMBERS, text)
     }
 }
 
@@ -47788,9 +47923,9 @@ impl Default for FontTypeHint {
 
 impl From<String> for FontTypeHint {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -47843,7 +47978,7 @@ impl FontTypeHint {
     ///
     /// `ValueError` when `text` is no value of `ST_Hint`.
     pub fn parse(text: &str) -> Result<FontTypeHintMember, ValueError> {
-        officekit_markup_base::member(FontTypeHintMember::MEMBERS, text, "ST_Hint")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Hint"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -47856,6 +47991,12 @@ impl FontTypeHint {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FontTypeHintMember> {
+        officekit_markup_base::member(FontTypeHintMember::MEMBERS, text)
     }
 }
 
@@ -48123,9 +48264,9 @@ impl Default for FootnoteEndnoteNumberingRestartLocations {
 
 impl From<String> for FootnoteEndnoteNumberingRestartLocations {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -48181,11 +48322,7 @@ impl FootnoteEndnoteNumberingRestartLocations {
     ///
     /// `ValueError` when `text` is no value of `ST_RestartNumber`.
     pub fn parse(text: &str) -> Result<FootnoteEndnoteNumberingRestartLocationsMember, ValueError> {
-        officekit_markup_base::member(
-            FootnoteEndnoteNumberingRestartLocationsMember::MEMBERS,
-            text,
-            "ST_RestartNumber",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_RestartNumber"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -48198,6 +48335,15 @@ impl FootnoteEndnoteNumberingRestartLocations {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FootnoteEndnoteNumberingRestartLocationsMember> {
+        officekit_markup_base::member(
+            FootnoteEndnoteNumberingRestartLocationsMember::MEMBERS,
+            text,
+        )
     }
 }
 
@@ -48257,9 +48403,9 @@ impl Default for FootnoteOrEndnoteType {
 
 impl From<String> for FootnoteOrEndnoteType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -48314,7 +48460,7 @@ impl FootnoteOrEndnoteType {
     ///
     /// `ValueError` when `text` is no value of `ST_FtnEdn`.
     pub fn parse(text: &str) -> Result<FootnoteOrEndnoteTypeMember, ValueError> {
-        officekit_markup_base::member(FootnoteOrEndnoteTypeMember::MEMBERS, text, "ST_FtnEdn")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FtnEdn"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -48327,6 +48473,12 @@ impl FootnoteOrEndnoteType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FootnoteOrEndnoteTypeMember> {
+        officekit_markup_base::member(FootnoteOrEndnoteTypeMember::MEMBERS, text)
     }
 }
 
@@ -48390,9 +48542,9 @@ impl Default for FootnotePositioningLocation {
 
 impl From<String> for FootnotePositioningLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -48447,11 +48599,7 @@ impl FootnotePositioningLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_FtnPos`.
     pub fn parse(text: &str) -> Result<FootnotePositioningLocationMember, ValueError> {
-        officekit_markup_base::member(
-            FootnotePositioningLocationMember::MEMBERS,
-            text,
-            "ST_FtnPos",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FtnPos"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -48464,6 +48612,12 @@ impl FootnotePositioningLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FootnotePositioningLocationMember> {
+        officekit_markup_base::member(FootnotePositioningLocationMember::MEMBERS, text)
     }
 }
 
@@ -48735,7 +48889,7 @@ impl FormFieldNameValue {
     ///
     /// `ValueError` when `text` is no value of `ST_FFName`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        officekit_markup_base::text(text, &FORM_FIELD_NAME_VALUE_FACETS, "ST_FFName")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FFName"))
     }
 
     /// The value the text spells.
@@ -48745,6 +48899,12 @@ impl FormFieldNameValue {
     /// `ValueError` when the text is no value of `ST_FFName`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        officekit_markup_base::text(text, &FORM_FIELD_NAME_VALUE_FACETS)
     }
 }
 
@@ -49006,7 +49166,8 @@ impl FourDigitHexadecimalValue {
     ///
     /// `ValueError` when `text` is no value of `ST_ShortHexNumber`.
     pub fn parse(text: &str) -> Result<u16, ValueError> {
-        officekit_markup_base::hex(text, 2, "ST_ShortHexNumber")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_ShortHexNumber"))
     }
 
     /// The value the text spells.
@@ -49016,6 +49177,12 @@ impl FourDigitHexadecimalValue {
     /// `ValueError` when the text is no value of `ST_ShortHexNumber`; the text stays stored.
     pub fn value(&self) -> Result<u16, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<u16> {
+        officekit_markup_base::hex(text, 2)
     }
 }
 
@@ -49177,9 +49344,9 @@ impl Default for FrameScrollbarVisibility {
 
 impl From<String> for FrameScrollbarVisibility {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -49233,11 +49400,8 @@ impl FrameScrollbarVisibility {
     ///
     /// `ValueError` when `text` is no value of `ST_FrameScrollbar`.
     pub fn parse(text: &str) -> Result<FrameScrollbarVisibilityMember, ValueError> {
-        officekit_markup_base::member(
-            FrameScrollbarVisibilityMember::MEMBERS,
-            text,
-            "ST_FrameScrollbar",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_FrameScrollbar"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -49250,6 +49414,12 @@ impl FrameScrollbarVisibility {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FrameScrollbarVisibilityMember> {
+        officekit_markup_base::member(FrameScrollbarVisibilityMember::MEMBERS, text)
     }
 }
 
@@ -49426,9 +49596,9 @@ impl Default for FramesetLayoutOrder {
 
 impl From<String> for FramesetLayoutOrder {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -49482,7 +49652,7 @@ impl FramesetLayoutOrder {
     ///
     /// `ValueError` when `text` is no value of `ST_FrameLayout`.
     pub fn parse(text: &str) -> Result<FramesetLayoutOrderMember, ValueError> {
-        officekit_markup_base::member(FramesetLayoutOrderMember::MEMBERS, text, "ST_FrameLayout")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FrameLayout"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -49495,6 +49665,12 @@ impl FramesetLayoutOrder {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<FramesetLayoutOrderMember> {
+        officekit_markup_base::member(FramesetLayoutOrderMember::MEMBERS, text)
     }
 }
 
@@ -50701,9 +50877,9 @@ impl Default for HeaderOrFooterType {
 
 impl From<String> for HeaderOrFooterType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -50757,7 +50933,7 @@ impl HeaderOrFooterType {
     ///
     /// `ValueError` when `text` is no value of `ST_HdrFtr`.
     pub fn parse(text: &str) -> Result<HeaderOrFooterTypeMember, ValueError> {
-        officekit_markup_base::member(HeaderOrFooterTypeMember::MEMBERS, text, "ST_HdrFtr")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_HdrFtr"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -50770,6 +50946,12 @@ impl HeaderOrFooterType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HeaderOrFooterTypeMember> {
+        officekit_markup_base::member(HeaderOrFooterTypeMember::MEMBERS, text)
     }
 }
 
@@ -50835,9 +51017,9 @@ impl Default for HeightRule {
 
 impl From<String> for HeightRule {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -50891,7 +51073,7 @@ impl HeightRule {
     ///
     /// `ValueError` when `text` is no value of `ST_HeightRule`.
     pub fn parse(text: &str) -> Result<HeightRuleMember, ValueError> {
-        officekit_markup_base::member(HeightRuleMember::MEMBERS, text, "ST_HeightRule")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_HeightRule"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -50904,6 +51086,12 @@ impl HeightRule {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HeightRuleMember> {
+        officekit_markup_base::member(HeightRuleMember::MEMBERS, text)
     }
 }
 
@@ -50918,9 +51106,9 @@ impl Default for HelpOrStatusTextType {
 
 impl From<String> for HelpOrStatusTextType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -50973,7 +51161,7 @@ impl HelpOrStatusTextType {
     ///
     /// `ValueError` when `text` is no value of `ST_InfoTextType`.
     pub fn parse(text: &str) -> Result<HelpOrStatusTextTypeMember, ValueError> {
-        officekit_markup_base::member(HelpOrStatusTextTypeMember::MEMBERS, text, "ST_InfoTextType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_InfoTextType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -50986,6 +51174,12 @@ impl HelpOrStatusTextType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HelpOrStatusTextTypeMember> {
+        officekit_markup_base::member(HelpOrStatusTextTypeMember::MEMBERS, text)
     }
 }
 
@@ -51014,7 +51208,7 @@ impl HelpTextValue {
     ///
     /// `ValueError` when `text` is no value of `ST_FFHelpTextVal`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        officekit_markup_base::text(text, &HELP_TEXT_VALUE_FACETS, "ST_FFHelpTextVal")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FFHelpTextVal"))
     }
 
     /// The value the text spells.
@@ -51024,6 +51218,12 @@ impl HelpTextValue {
     /// `ValueError` when the text is no value of `ST_FFHelpTextVal`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        officekit_markup_base::text(text, &HELP_TEXT_VALUE_FACETS)
     }
 }
 
@@ -51038,9 +51238,9 @@ impl Default for HexColorAuto {
 
 impl From<String> for HexColorAuto {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -51090,7 +51290,7 @@ impl HexColorAuto {
     ///
     /// `ValueError` when `text` is no value of `ST_HexColorAuto`.
     pub fn parse(text: &str) -> Result<HexColorAutoMember, ValueError> {
-        officekit_markup_base::member(HexColorAutoMember::MEMBERS, text, "ST_HexColorAuto")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_HexColorAuto"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -51103,6 +51303,12 @@ impl HexColorAuto {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HexColorAutoMember> {
+        officekit_markup_base::member(HexColorAutoMember::MEMBERS, text)
     }
 }
 
@@ -51264,9 +51470,9 @@ impl Default for HorizontalAlignmentType {
 
 impl From<String> for HorizontalAlignmentType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -51329,7 +51535,7 @@ impl HorizontalAlignmentType {
     ///
     /// `ValueError` when `text` is no value of `ST_Jc`.
     pub fn parse(text: &str) -> Result<HorizontalAlignmentTypeMember, ValueError> {
-        officekit_markup_base::member(HorizontalAlignmentTypeMember::MEMBERS, text, "ST_Jc")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Jc"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -51342,6 +51548,12 @@ impl HorizontalAlignmentType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HorizontalAlignmentTypeMember> {
+        officekit_markup_base::member(HorizontalAlignmentTypeMember::MEMBERS, text)
     }
 }
 
@@ -51356,9 +51568,9 @@ impl Default for HorizontalAnchorLocation {
 
 impl From<String> for HorizontalAnchorLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -51412,7 +51624,7 @@ impl HorizontalAnchorLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_HAnchor`.
     pub fn parse(text: &str) -> Result<HorizontalAnchorLocationMember, ValueError> {
-        officekit_markup_base::member(HorizontalAnchorLocationMember::MEMBERS, text, "ST_HAnchor")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_HAnchor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -51425,6 +51637,12 @@ impl HorizontalAnchorLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HorizontalAnchorLocationMember> {
+        officekit_markup_base::member(HorizontalAnchorLocationMember::MEMBERS, text)
     }
 }
 
@@ -52740,9 +52958,9 @@ impl Default for InsertionBehaviorTypes {
 
 impl From<String> for InsertionBehaviorTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -52796,11 +53014,8 @@ impl InsertionBehaviorTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_DocPartBehavior`.
     pub fn parse(text: &str) -> Result<InsertionBehaviorTypesMember, ValueError> {
-        officekit_markup_base::member(
-            InsertionBehaviorTypesMember::MEMBERS,
-            text,
-            "ST_DocPartBehavior",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_DocPartBehavior"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -52813,6 +53028,12 @@ impl InsertionBehaviorTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<InsertionBehaviorTypesMember> {
+        officekit_markup_base::member(InsertionBehaviorTypesMember::MEMBERS, text)
     }
 }
 
@@ -53879,9 +54100,9 @@ impl Default for LineBreakTextWrappingRestartLocation {
 
 impl From<String> for LineBreakTextWrappingRestartLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -53936,11 +54157,7 @@ impl LineBreakTextWrappingRestartLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_BrClear`.
     pub fn parse(text: &str) -> Result<LineBreakTextWrappingRestartLocationMember, ValueError> {
-        officekit_markup_base::member(
-            LineBreakTextWrappingRestartLocationMember::MEMBERS,
-            text,
-            "ST_BrClear",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_BrClear"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -53953,6 +54170,12 @@ impl LineBreakTextWrappingRestartLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<LineBreakTextWrappingRestartLocationMember> {
+        officekit_markup_base::member(LineBreakTextWrappingRestartLocationMember::MEMBERS, text)
     }
 }
 
@@ -53967,9 +54190,9 @@ impl Default for LineNumberingRestartPosition {
 
 impl From<String> for LineNumberingRestartPosition {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -54023,11 +54246,8 @@ impl LineNumberingRestartPosition {
     ///
     /// `ValueError` when `text` is no value of `ST_LineNumberRestart`.
     pub fn parse(text: &str) -> Result<LineNumberingRestartPositionMember, ValueError> {
-        officekit_markup_base::member(
-            LineNumberingRestartPositionMember::MEMBERS,
-            text,
-            "ST_LineNumberRestart",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_LineNumberRestart"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -54040,6 +54260,12 @@ impl LineNumberingRestartPosition {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<LineNumberingRestartPositionMember> {
+        officekit_markup_base::member(LineNumberingRestartPositionMember::MEMBERS, text)
     }
 }
 
@@ -54109,9 +54335,9 @@ impl Default for LineSpacingRule {
 
 impl From<String> for LineSpacingRule {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -54165,7 +54391,8 @@ impl LineSpacingRule {
     ///
     /// `ValueError` when `text` is no value of `ST_LineSpacingRule`.
     pub fn parse(text: &str) -> Result<LineSpacingRuleMember, ValueError> {
-        officekit_markup_base::member(LineSpacingRuleMember::MEMBERS, text, "ST_LineSpacingRule")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_LineSpacingRule"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -54178,6 +54405,12 @@ impl LineSpacingRule {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<LineSpacingRuleMember> {
+        officekit_markup_base::member(LineSpacingRuleMember::MEMBERS, text)
     }
 }
 
@@ -54596,9 +54829,9 @@ impl Default for LockingTypes {
 
 impl From<String> for LockingTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -54653,7 +54886,7 @@ impl LockingTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_Lock`.
     pub fn parse(text: &str) -> Result<LockingTypesMember, ValueError> {
-        officekit_markup_base::member(LockingTypesMember::MEMBERS, text, "ST_Lock")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Lock"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -54666,6 +54899,12 @@ impl LockingTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<LockingTypesMember> {
+        officekit_markup_base::member(LockingTypesMember::MEMBERS, text)
     }
 }
 
@@ -54680,9 +54919,9 @@ impl Default for MagnificationPresetValues {
 
 impl From<String> for MagnificationPresetValues {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -54737,7 +54976,7 @@ impl MagnificationPresetValues {
     ///
     /// `ValueError` when `text` is no value of `ST_Zoom`.
     pub fn parse(text: &str) -> Result<MagnificationPresetValuesMember, ValueError> {
-        officekit_markup_base::member(MagnificationPresetValuesMember::MEMBERS, text, "ST_Zoom")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Zoom"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -54750,6 +54989,12 @@ impl MagnificationPresetValues {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MagnificationPresetValuesMember> {
+        officekit_markup_base::member(MagnificationPresetValuesMember::MEMBERS, text)
     }
 }
 
@@ -54864,9 +55109,9 @@ impl Default for MailMergeODSODataSourceTypes {
 
 impl From<String> for MailMergeODSODataSourceTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -54926,11 +55171,8 @@ impl MailMergeODSODataSourceTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_MailMergeSourceType`.
     pub fn parse(text: &str) -> Result<MailMergeODSODataSourceTypesMember, ValueError> {
-        officekit_markup_base::member(
-            MailMergeODSODataSourceTypesMember::MEMBERS,
-            text,
-            "ST_MailMergeSourceType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_MailMergeSourceType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -54943,6 +55185,12 @@ impl MailMergeODSODataSourceTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MailMergeODSODataSourceTypesMember> {
+        officekit_markup_base::member(MailMergeODSODataSourceTypesMember::MEMBERS, text)
     }
 }
 
@@ -55230,7 +55478,8 @@ impl MeasurementInEighthsOfAPoint {
     ///
     /// `ValueError` when `text` is no value of `ST_EighthPointMeasure`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, 0, i64::MAX, "ST_EighthPointMeasure")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_EighthPointMeasure"))
     }
 
     /// The value the text spells.
@@ -55240,6 +55489,12 @@ impl MeasurementInEighthsOfAPoint {
     /// `ValueError` when the text is no value of `ST_EighthPointMeasure`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, 0, i64::MAX)
     }
 }
 
@@ -55254,9 +55509,9 @@ impl Default for MeasurementInHalfPoints {
 
 impl From<String> for MeasurementInHalfPoints {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -55301,19 +55556,7 @@ impl MeasurementInHalfPoints {
     ///
     /// `ValueError` when `text` is no value of `ST_HpsMeasure`.
     pub fn parse(text: &str) -> Result<MeasurementInHalfPointsMember, ValueError> {
-        let member_1 = common_simple_types::UnsignedDecimalNumberValue::parse(text);
-        if let Ok(value) = member_1 {
-            return Ok(MeasurementInHalfPointsMember::UnsignedDecimalNumberValue(
-                value,
-            ));
-        }
-        let member_2 = common_simple_types::PositiveUniversalMeasurement::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(MeasurementInHalfPointsMember::PositiveUniversalMeasurement(
-                value,
-            ));
-        }
-        Err(officekit_markup_base::invalid(text, "ST_HpsMeasure"))
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_HpsMeasure"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -55326,6 +55569,24 @@ impl MeasurementInHalfPoints {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MeasurementInHalfPointsMember> {
+        let member_1 = common_simple_types::UnsignedDecimalNumberValue::value_of(text);
+        if let Some(value) = member_1 {
+            return Some(MeasurementInHalfPointsMember::UnsignedDecimalNumberValue(
+                value,
+            ));
+        }
+        let member_2 = common_simple_types::PositiveUniversalMeasurement::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(MeasurementInHalfPointsMember::PositiveUniversalMeasurement(
+                value,
+            ));
+        }
+        None
     }
 }
 
@@ -55354,7 +55615,7 @@ impl MeasurementInPixels {
     ///
     /// `ValueError` when `text` is no value of `ST_PixelsMeasure`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, 0, i64::MAX, "ST_PixelsMeasure")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_PixelsMeasure"))
     }
 
     /// The value the text spells.
@@ -55364,6 +55625,12 @@ impl MeasurementInPixels {
     /// `ValueError` when the text is no value of `ST_PixelsMeasure`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, 0, i64::MAX)
     }
 }
 
@@ -55392,7 +55659,7 @@ impl MeasurementInPoints {
     ///
     /// `ValueError` when `text` is no value of `ST_PointMeasure`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, 0, i64::MAX, "ST_PointMeasure")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_PointMeasure"))
     }
 
     /// The value the text spells.
@@ -55402,6 +55669,12 @@ impl MeasurementInPoints {
     /// `ValueError` when the text is no value of `ST_PointMeasure`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, 0, i64::MAX)
     }
 }
 
@@ -55416,9 +55689,9 @@ impl Default for MeasurementOrPercentageValue {
 
 impl From<String> for MeasurementOrPercentageValue {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -55464,28 +55737,8 @@ impl MeasurementOrPercentageValue {
     ///
     /// `ValueError` when `text` is no value of `ST_MeasurementOrPercent`.
     pub fn parse(text: &str) -> Result<MeasurementOrPercentageValueMember, ValueError> {
-        let member_1 = PercentageValueWithoutPercentSign::parse(text);
-        if let Ok(value) = member_1 {
-            return Ok(
-                MeasurementOrPercentageValueMember::PercentageValueWithoutPercentSign(value),
-            );
-        }
-        let member_2 = common_simple_types::PercentageValueWithSign::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(MeasurementOrPercentageValueMember::PercentageValueWithSign(
-                value,
-            ));
-        }
-        let member_3 = common_simple_types::UniversalMeasurement::parse(text);
-        if let Ok(value) = member_3 {
-            return Ok(MeasurementOrPercentageValueMember::UniversalMeasurement(
-                value,
-            ));
-        }
-        Err(officekit_markup_base::invalid(
-            text,
-            "ST_MeasurementOrPercent",
-        ))
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_MeasurementOrPercent"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -55498,6 +55751,30 @@ impl MeasurementOrPercentageValue {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MeasurementOrPercentageValueMember> {
+        let member_1 = PercentageValueWithoutPercentSign::value_of(text);
+        if let Some(value) = member_1 {
+            return Some(
+                MeasurementOrPercentageValueMember::PercentageValueWithoutPercentSign(value),
+            );
+        }
+        let member_2 = common_simple_types::PercentageValueWithSign::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(MeasurementOrPercentageValueMember::PercentageValueWithSign(
+                value,
+            ));
+        }
+        let member_3 = common_simple_types::UniversalMeasurement::value_of(text);
+        if let Some(value) = member_3 {
+            return Some(MeasurementOrPercentageValueMember::UniversalMeasurement(
+                value,
+            ));
+        }
+        None
     }
 }
 
@@ -55561,9 +55838,9 @@ impl Default for MergeFieldMappingTypes {
 
 impl From<String> for MergeFieldMappingTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -55616,11 +55893,8 @@ impl MergeFieldMappingTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_MailMergeOdsoFMDFieldType`.
     pub fn parse(text: &str) -> Result<MergeFieldMappingTypesMember, ValueError> {
-        officekit_markup_base::member(
-            MergeFieldMappingTypesMember::MEMBERS,
-            text,
-            "ST_MailMergeOdsoFMDFieldType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_MailMergeOdsoFMDFieldType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -55633,6 +55907,12 @@ impl MergeFieldMappingTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MergeFieldMappingTypesMember> {
+        officekit_markup_base::member(MergeFieldMappingTypesMember::MEMBERS, text)
     }
 }
 
@@ -55647,9 +55927,9 @@ impl Default for MergedCellType {
 
 impl From<String> for MergedCellType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -55702,7 +55982,7 @@ impl MergedCellType {
     ///
     /// `ValueError` when `text` is no value of `ST_Merge`.
     pub fn parse(text: &str) -> Result<MergedCellTypeMember, ValueError> {
-        officekit_markup_base::member(MergedCellTypeMember::MEMBERS, text, "ST_Merge")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Merge"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -55715,6 +55995,12 @@ impl MergedCellType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MergedCellTypeMember> {
+        officekit_markup_base::member(MergedCellTypeMember::MEMBERS, text)
     }
 }
 
@@ -55778,9 +56064,9 @@ impl Default for MergedDocumentDestinationTypes {
 
 impl From<String> for MergedDocumentDestinationTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -55835,11 +56121,7 @@ impl MergedDocumentDestinationTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_MailMergeDest`.
     pub fn parse(text: &str) -> Result<MergedDocumentDestinationTypesMember, ValueError> {
-        officekit_markup_base::member(
-            MergedDocumentDestinationTypesMember::MEMBERS,
-            text,
-            "ST_MailMergeDest",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_MailMergeDest"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -55852,6 +56134,12 @@ impl MergedDocumentDestinationTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MergedDocumentDestinationTypesMember> {
+        officekit_markup_base::member(MergedDocumentDestinationTypesMember::MEMBERS, text)
     }
 }
 
@@ -57029,9 +57317,9 @@ impl Default for NumberingDefinitionType {
 
 impl From<String> for NumberingDefinitionType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -57085,11 +57373,8 @@ impl NumberingDefinitionType {
     ///
     /// `ValueError` when `text` is no value of `ST_MultiLevelType`.
     pub fn parse(text: &str) -> Result<NumberingDefinitionTypeMember, ValueError> {
-        officekit_markup_base::member(
-            NumberingDefinitionTypeMember::MEMBERS,
-            text,
-            "ST_MultiLevelType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_MultiLevelType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -57102,6 +57387,12 @@ impl NumberingDefinitionType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<NumberingDefinitionTypeMember> {
+        officekit_markup_base::member(NumberingDefinitionTypeMember::MEMBERS, text)
     }
 }
 
@@ -58347,9 +58638,9 @@ impl Default for PageBorderDisplayOptions {
 
 impl From<String> for PageBorderDisplayOptions {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -58403,11 +58694,8 @@ impl PageBorderDisplayOptions {
     ///
     /// `ValueError` when `text` is no value of `ST_PageBorderDisplay`.
     pub fn parse(text: &str) -> Result<PageBorderDisplayOptionsMember, ValueError> {
-        officekit_markup_base::member(
-            PageBorderDisplayOptionsMember::MEMBERS,
-            text,
-            "ST_PageBorderDisplay",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_PageBorderDisplay"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -58420,6 +58708,12 @@ impl PageBorderDisplayOptions {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<PageBorderDisplayOptionsMember> {
+        officekit_markup_base::member(PageBorderDisplayOptionsMember::MEMBERS, text)
     }
 }
 
@@ -58532,9 +58826,9 @@ impl Default for PageBorderPositioningBase {
 
 impl From<String> for PageBorderPositioningBase {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -58585,11 +58879,8 @@ impl PageBorderPositioningBase {
     ///
     /// `ValueError` when `text` is no value of `ST_PageBorderOffset`.
     pub fn parse(text: &str) -> Result<PageBorderPositioningBaseMember, ValueError> {
-        officekit_markup_base::member(
-            PageBorderPositioningBaseMember::MEMBERS,
-            text,
-            "ST_PageBorderOffset",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_PageBorderOffset"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -58602,6 +58893,12 @@ impl PageBorderPositioningBase {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<PageBorderPositioningBaseMember> {
+        officekit_markup_base::member(PageBorderPositioningBaseMember::MEMBERS, text)
     }
 }
 
@@ -58616,9 +58913,9 @@ impl Default for PageBorderZOrder {
 
 impl From<String> for PageBorderZOrder {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -58669,7 +58966,8 @@ impl PageBorderZOrder {
     ///
     /// `ValueError` when `text` is no value of `ST_PageBorderZOrder`.
     pub fn parse(text: &str) -> Result<PageBorderZOrderMember, ValueError> {
-        officekit_markup_base::member(PageBorderZOrderMember::MEMBERS, text, "ST_PageBorderZOrder")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_PageBorderZOrder"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -58682,6 +58980,12 @@ impl PageBorderZOrder {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<PageBorderZOrderMember> {
+        officekit_markup_base::member(PageBorderZOrderMember::MEMBERS, text)
     }
 }
 
@@ -58926,9 +59230,9 @@ impl Default for PageOrientation {
 
 impl From<String> for PageOrientation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -58981,7 +59285,8 @@ impl PageOrientation {
     ///
     /// `ValueError` when `text` is no value of `ST_PageOrientation`.
     pub fn parse(text: &str) -> Result<PageOrientationMember, ValueError> {
-        officekit_markup_base::member(PageOrientationMember::MEMBERS, text, "ST_PageOrientation")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_PageOrientation"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -58994,6 +59299,12 @@ impl PageOrientation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<PageOrientationMember> {
+        officekit_markup_base::member(PageOrientationMember::MEMBERS, text)
     }
 }
 
@@ -60797,9 +61108,9 @@ impl Default for PercentageMeasurement {
 
 impl From<String> for PercentageMeasurement {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -60844,18 +61155,8 @@ impl PercentageMeasurement {
     ///
     /// `ValueError` when `text` is no value of `ST_DecimalNumberOrPercent`.
     pub fn parse(text: &str) -> Result<PercentageMeasurementMember, ValueError> {
-        let member_1 = PercentageValueWithoutPercentSign::parse(text);
-        if let Ok(value) = member_1 {
-            return Ok(PercentageMeasurementMember::PercentageValueWithoutPercentSign(value));
-        }
-        let member_2 = common_simple_types::PercentageValueWithSign::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(PercentageMeasurementMember::PercentageValueWithSign(value));
-        }
-        Err(officekit_markup_base::invalid(
-            text,
-            "ST_DecimalNumberOrPercent",
-        ))
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_DecimalNumberOrPercent"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -60868,6 +61169,20 @@ impl PercentageMeasurement {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<PercentageMeasurementMember> {
+        let member_1 = PercentageValueWithoutPercentSign::value_of(text);
+        if let Some(value) = member_1 {
+            return Some(PercentageMeasurementMember::PercentageValueWithoutPercentSign(value));
+        }
+        let member_2 = common_simple_types::PercentageValueWithSign::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(PercentageMeasurementMember::PercentageValueWithSign(value));
+        }
+        None
     }
 }
 
@@ -60945,7 +61260,8 @@ impl PercentageValueWithoutPercentSign {
     ///
     /// `ValueError` when `text` is no value of `ST_UnqualifiedPercentage`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, i64::MIN, i64::MAX, "ST_UnqualifiedPercentage")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_UnqualifiedPercentage"))
     }
 
     /// The value the text spells.
@@ -60955,6 +61271,12 @@ impl PercentageValueWithoutPercentSign {
     /// `ValueError` when the text is no value of `ST_UnqualifiedPercentage`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, i64::MIN, i64::MAX)
     }
 }
 
@@ -63819,9 +64141,9 @@ impl Default for ProofingErrorType {
 
 impl From<String> for ProofingErrorType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -63876,7 +64198,7 @@ impl ProofingErrorType {
     ///
     /// `ValueError` when `text` is no value of `ST_ProofErr`.
     pub fn parse(text: &str) -> Result<ProofingErrorTypeMember, ValueError> {
-        officekit_markup_base::member(ProofingErrorTypeMember::MEMBERS, text, "ST_ProofErr")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_ProofErr"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -63889,6 +64211,12 @@ impl ProofingErrorType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ProofingErrorTypeMember> {
+        officekit_markup_base::member(ProofingErrorTypeMember::MEMBERS, text)
     }
 }
 
@@ -63903,9 +64231,9 @@ impl Default for ProofingStateValues {
 
 impl From<String> for ProofingStateValues {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -63956,7 +64284,7 @@ impl ProofingStateValues {
     ///
     /// `ValueError` when `text` is no value of `ST_Proof`.
     pub fn parse(text: &str) -> Result<ProofingStateValuesMember, ValueError> {
-        officekit_markup_base::member(ProofingStateValuesMember::MEMBERS, text, "ST_Proof")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Proof"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -63969,6 +64297,12 @@ impl ProofingStateValues {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ProofingStateValuesMember> {
+        officekit_markup_base::member(ProofingStateValuesMember::MEMBERS, text)
     }
 }
 
@@ -64489,9 +64823,9 @@ impl Default for RangePermisionEditingGroup {
 
 impl From<String> for RangePermisionEditingGroup {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -64549,7 +64883,7 @@ impl RangePermisionEditingGroup {
     ///
     /// `ValueError` when `text` is no value of `ST_EdGrp`.
     pub fn parse(text: &str) -> Result<RangePermisionEditingGroupMember, ValueError> {
-        officekit_markup_base::member(RangePermisionEditingGroupMember::MEMBERS, text, "ST_EdGrp")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_EdGrp"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -64562,6 +64896,12 @@ impl RangePermisionEditingGroup {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<RangePermisionEditingGroupMember> {
+        officekit_markup_base::member(RangePermisionEditingGroupMember::MEMBERS, text)
     }
 }
 
@@ -67567,7 +67907,7 @@ impl ScriptSubroutineNameValue {
     ///
     /// `ValueError` when `text` is no value of `ST_MacroName`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        officekit_markup_base::text(text, &SCRIPT_SUBROUTINE_NAME_VALUE_FACETS, "ST_MacroName")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_MacroName"))
     }
 
     /// The value the text spells.
@@ -67577,6 +67917,12 @@ impl ScriptSubroutineNameValue {
     /// `ValueError` when the text is no value of `ST_MacroName`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        officekit_markup_base::text(text, &SCRIPT_SUBROUTINE_NAME_VALUE_FACETS)
     }
 }
 
@@ -68036,9 +68382,9 @@ impl Default for ShadingPatterns {
 
 impl From<String> for ShadingPatterns {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -68127,7 +68473,7 @@ impl ShadingPatterns {
     ///
     /// `ValueError` when `text` is no value of `ST_Shd`.
     pub fn parse(text: &str) -> Result<ShadingPatternsMember, ValueError> {
-        officekit_markup_base::member(ShadingPatternsMember::MEMBERS, text, "ST_Shd")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Shd"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -68140,6 +68486,12 @@ impl ShadingPatterns {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ShadingPatternsMember> {
+        officekit_markup_base::member(ShadingPatternsMember::MEMBERS, text)
     }
 }
 
@@ -68301,9 +68653,9 @@ impl Default for SignedMeasurementInHalfPoints {
 
 impl From<String> for SignedMeasurementInHalfPoints {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -68348,18 +68700,8 @@ impl SignedMeasurementInHalfPoints {
     ///
     /// `ValueError` when `text` is no value of `ST_SignedHpsMeasure`.
     pub fn parse(text: &str) -> Result<SignedMeasurementInHalfPointsMember, ValueError> {
-        let member_1 =
-            officekit_markup_base::integer(text, i64::MIN, i64::MAX, "ST_SignedHpsMeasure");
-        if let Ok(value) = member_1 {
-            return Ok(SignedMeasurementInHalfPointsMember::Integer(value));
-        }
-        let member_2 = common_simple_types::UniversalMeasurement::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(SignedMeasurementInHalfPointsMember::UniversalMeasurement(
-                value,
-            ));
-        }
-        Err(officekit_markup_base::invalid(text, "ST_SignedHpsMeasure"))
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_SignedHpsMeasure"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -68372,6 +68714,22 @@ impl SignedMeasurementInHalfPoints {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SignedMeasurementInHalfPointsMember> {
+        let member_1 = officekit_markup_base::integer(text, i64::MIN, i64::MAX);
+        if let Some(value) = member_1 {
+            return Some(SignedMeasurementInHalfPointsMember::Integer(value));
+        }
+        let member_2 = common_simple_types::UniversalMeasurement::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(SignedMeasurementInHalfPointsMember::UniversalMeasurement(
+                value,
+            ));
+        }
+        None
     }
 }
 
@@ -68386,9 +68744,9 @@ impl Default for SignedMeasurementInTwentiethsOfPoint {
 
 impl From<String> for SignedMeasurementInTwentiethsOfPoint {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -68433,19 +68791,8 @@ impl SignedMeasurementInTwentiethsOfPoint {
     ///
     /// `ValueError` when `text` is no value of `ST_SignedTwipsMeasure`.
     pub fn parse(text: &str) -> Result<SignedMeasurementInTwentiethsOfPointMember, ValueError> {
-        let member_1 =
-            officekit_markup_base::integer(text, i64::MIN, i64::MAX, "ST_SignedTwipsMeasure");
-        if let Ok(value) = member_1 {
-            return Ok(SignedMeasurementInTwentiethsOfPointMember::Integer(value));
-        }
-        let member_2 = common_simple_types::UniversalMeasurement::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(SignedMeasurementInTwentiethsOfPointMember::UniversalMeasurement(value));
-        }
-        Err(officekit_markup_base::invalid(
-            text,
-            "ST_SignedTwipsMeasure",
-        ))
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_SignedTwipsMeasure"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -68458,6 +68805,20 @@ impl SignedMeasurementInTwentiethsOfPoint {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SignedMeasurementInTwentiethsOfPointMember> {
+        let member_1 = officekit_markup_base::integer(text, i64::MIN, i64::MAX);
+        if let Some(value) = member_1 {
+            return Some(SignedMeasurementInTwentiethsOfPointMember::Integer(value));
+        }
+        let member_2 = common_simple_types::UniversalMeasurement::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(SignedMeasurementInTwentiethsOfPointMember::UniversalMeasurement(value));
+        }
+        None
     }
 }
 
@@ -69101,9 +69462,9 @@ impl Default for SourceDocumentTypes {
 
 impl From<String> for SourceDocumentTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -69160,11 +69521,8 @@ impl SourceDocumentTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_MailMergeDocType`.
     pub fn parse(text: &str) -> Result<SourceDocumentTypesMember, ValueError> {
-        officekit_markup_base::member(
-            SourceDocumentTypesMember::MEMBERS,
-            text,
-            "ST_MailMergeDocType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_MailMergeDocType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -69177,6 +69535,12 @@ impl SourceDocumentTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SourceDocumentTypesMember> {
+        officekit_markup_base::member(SourceDocumentTypesMember::MEMBERS, text)
     }
 }
 
@@ -69501,9 +69865,9 @@ impl Default for StDocPartType {
 
 impl From<String> for StDocPartType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -69561,7 +69925,7 @@ impl StDocPartType {
     ///
     /// `ValueError` when `text` is no value of `ST_DocPartType`.
     pub fn parse(text: &str) -> Result<StDocPartTypeMember, ValueError> {
-        officekit_markup_base::member(StDocPartTypeMember::MEMBERS, text, "ST_DocPartType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_DocPartType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -69574,6 +69938,12 @@ impl StDocPartType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StDocPartTypeMember> {
+        officekit_markup_base::member(StDocPartTypeMember::MEMBERS, text)
     }
 }
 
@@ -69588,9 +69958,9 @@ impl Default for StLevelSuffix {
 
 impl From<String> for StLevelSuffix {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -69644,7 +70014,7 @@ impl StLevelSuffix {
     ///
     /// `ValueError` when `text` is no value of `ST_LevelSuffix`.
     pub fn parse(text: &str) -> Result<StLevelSuffixMember, ValueError> {
-        officekit_markup_base::member(StLevelSuffixMember::MEMBERS, text, "ST_LevelSuffix")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_LevelSuffix"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -69657,6 +70027,12 @@ impl StLevelSuffix {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StLevelSuffixMember> {
+        officekit_markup_base::member(StLevelSuffixMember::MEMBERS, text)
     }
 }
 
@@ -69671,9 +70047,9 @@ impl Default for StNumberFormat {
 
 impl From<String> for StNumberFormat {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -69823,7 +70199,7 @@ impl StNumberFormat {
     ///
     /// `ValueError` when `text` is no value of `ST_NumberFormat`.
     pub fn parse(text: &str) -> Result<StNumberFormatMember, ValueError> {
-        officekit_markup_base::member(StNumberFormatMember::MEMBERS, text, "ST_NumberFormat")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_NumberFormat"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -69836,6 +70212,12 @@ impl StNumberFormat {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StNumberFormatMember> {
+        officekit_markup_base::member(StNumberFormatMember::MEMBERS, text)
     }
 }
 
@@ -69850,9 +70232,9 @@ impl Default for StRubyAlign {
 
 impl From<String> for StRubyAlign {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -69909,7 +70291,7 @@ impl StRubyAlign {
     ///
     /// `ValueError` when `text` is no value of `ST_RubyAlign`.
     pub fn parse(text: &str) -> Result<StRubyAlignMember, ValueError> {
-        officekit_markup_base::member(StRubyAlignMember::MEMBERS, text, "ST_RubyAlign")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_RubyAlign"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -69922,6 +70304,12 @@ impl StRubyAlign {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StRubyAlignMember> {
+        officekit_markup_base::member(StRubyAlignMember::MEMBERS, text)
     }
 }
 
@@ -69936,9 +70324,9 @@ impl Default for StSectionMark {
 
 impl From<String> for StSectionMark {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -69994,7 +70382,7 @@ impl StSectionMark {
     ///
     /// `ValueError` when `text` is no value of `ST_SectionMark`.
     pub fn parse(text: &str) -> Result<StSectionMarkMember, ValueError> {
-        officekit_markup_base::member(StSectionMarkMember::MEMBERS, text, "ST_SectionMark")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_SectionMark"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -70007,6 +70395,12 @@ impl StSectionMark {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StSectionMarkMember> {
+        officekit_markup_base::member(StSectionMarkMember::MEMBERS, text)
     }
 }
 
@@ -70021,9 +70415,9 @@ impl Default for StTextDirection {
 
 impl From<String> for StTextDirection {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -70086,7 +70480,7 @@ impl StTextDirection {
     ///
     /// `ValueError` when `text` is no value of `ST_TextDirection`.
     pub fn parse(text: &str) -> Result<StTextDirectionMember, ValueError> {
-        officekit_markup_base::member(StTextDirectionMember::MEMBERS, text, "ST_TextDirection")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TextDirection"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -70099,6 +70493,12 @@ impl StTextDirection {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StTextDirectionMember> {
+        officekit_markup_base::member(StTextDirectionMember::MEMBERS, text)
     }
 }
 
@@ -70113,9 +70513,9 @@ impl Default for StTextScale {
 
 impl From<String> for StTextScale {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -70160,15 +70560,7 @@ impl StTextScale {
     ///
     /// `ValueError` when `text` is no value of `ST_TextScale`.
     pub fn parse(text: &str) -> Result<StTextScaleMember, ValueError> {
-        let member_1 = StTextScalePercent::parse(text);
-        if let Ok(value) = member_1 {
-            return Ok(StTextScaleMember::StTextScalePercent(value));
-        }
-        let member_2 = TextExpansionCompressionPercentage::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(StTextScaleMember::TextExpansionCompressionPercentage(value));
-        }
-        Err(officekit_markup_base::invalid(text, "ST_TextScale"))
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TextScale"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -70181,6 +70573,20 @@ impl StTextScale {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StTextScaleMember> {
+        let member_1 = StTextScalePercent::value_of(text);
+        if let Some(value) = member_1 {
+            return Some(StTextScaleMember::StTextScalePercent(value));
+        }
+        let member_2 = TextExpansionCompressionPercentage::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(StTextScaleMember::TextExpansionCompressionPercentage(value));
+        }
+        None
     }
 }
 
@@ -70209,11 +70615,8 @@ impl StTextScalePercent {
     ///
     /// `ValueError` when `text` is no value of `ST_TextScalePercent`.
     pub fn parse(text: &str) -> Result<f64, ValueError> {
-        officekit_markup_base::percentage(
-            text,
-            ST_TEXT_SCALE_PERCENT_PATTERNS,
-            "ST_TextScalePercent",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TextScalePercent"))
     }
 
     /// The value the text spells.
@@ -70223,6 +70626,12 @@ impl StTextScalePercent {
     /// `ValueError` when the text is no value of `ST_TextScalePercent`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<f64> {
+        officekit_markup_base::percentage(text, &ST_TEXT_SCALE_PERCENT_PATTERNS)
     }
 }
 
@@ -70251,7 +70660,7 @@ impl StandardDateAndTimeStorageFormat {
     ///
     /// `ValueError` when `text` is no value of `ST_DateTime`.
     pub fn parse(text: &str) -> Result<DateTime, ValueError> {
-        officekit_markup_base::date_time(text, "ST_DateTime")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_DateTime"))
     }
 
     /// The value the text spells.
@@ -70261,6 +70670,12 @@ impl StandardDateAndTimeStorageFormat {
     /// `ValueError` when the text is no value of `ST_DateTime`; the text stays stored.
     pub fn value(&self) -> Result<DateTime, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<DateTime> {
+        officekit_markup_base::date_time(text)
     }
 }
 
@@ -70387,7 +70802,8 @@ impl StatusTextValue {
     ///
     /// `ValueError` when `text` is no value of `ST_FFStatusTextVal`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        officekit_markup_base::text(text, &STATUS_TEXT_VALUE_FACETS, "ST_FFStatusTextVal")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_FFStatusTextVal"))
     }
 
     /// The value the text spells.
@@ -70397,6 +70813,12 @@ impl StatusTextValue {
     /// `ValueError` when the text is no value of `ST_FFStatusTextVal`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        officekit_markup_base::text(text, &STATUS_TEXT_VALUE_FACETS)
     }
 }
 
@@ -71326,9 +71748,9 @@ impl Default for StyleSortSettings {
 
 impl From<String> for StyleSortSettings {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -71391,7 +71813,7 @@ impl StyleSortSettings {
     ///
     /// `ValueError` when `text` is no value of `ST_StyleSort`.
     pub fn parse(text: &str) -> Result<StyleSortSettingsMember, ValueError> {
-        officekit_markup_base::member(StyleSortSettingsMember::MEMBERS, text, "ST_StyleSort")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_StyleSort"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -71404,6 +71826,12 @@ impl StyleSortSettings {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StyleSortSettingsMember> {
+        officekit_markup_base::member(StyleSortSettingsMember::MEMBERS, text)
     }
 }
 
@@ -71418,9 +71846,9 @@ impl Default for StyleTypes {
 
 impl From<String> for StyleTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -71475,7 +71903,7 @@ impl StyleTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_StyleType`.
     pub fn parse(text: &str) -> Result<StyleTypesMember, ValueError> {
-        officekit_markup_base::member(StyleTypesMember::MEMBERS, text, "ST_StyleType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_StyleType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -71488,6 +71916,12 @@ impl StyleTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<StyleTypesMember> {
+        officekit_markup_base::member(StyleTypesMember::MEMBERS, text)
     }
 }
 
@@ -72340,9 +72774,9 @@ impl Default for TableAlignmentType {
 
 impl From<String> for TableAlignmentType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -72398,7 +72832,7 @@ impl TableAlignmentType {
     ///
     /// `ValueError` when `text` is no value of `ST_JcTable`.
     pub fn parse(text: &str) -> Result<TableAlignmentTypeMember, ValueError> {
-        officekit_markup_base::member(TableAlignmentTypeMember::MEMBERS, text, "ST_JcTable")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_JcTable"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -72411,6 +72845,12 @@ impl TableAlignmentType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TableAlignmentTypeMember> {
+        officekit_markup_base::member(TableAlignmentTypeMember::MEMBERS, text)
     }
 }
 
@@ -73266,9 +73706,9 @@ impl Default for TableCellVerticalMergeRevisionType {
 
 impl From<String> for TableCellVerticalMergeRevisionType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -73319,11 +73759,8 @@ impl TableCellVerticalMergeRevisionType {
     ///
     /// `ValueError` when `text` is no value of `ST_AnnotationVMerge`.
     pub fn parse(text: &str) -> Result<TableCellVerticalMergeRevisionTypeMember, ValueError> {
-        officekit_markup_base::member(
-            TableCellVerticalMergeRevisionTypeMember::MEMBERS,
-            text,
-            "ST_AnnotationVMerge",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_AnnotationVMerge"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -73336,6 +73773,12 @@ impl TableCellVerticalMergeRevisionType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TableCellVerticalMergeRevisionTypeMember> {
+        officekit_markup_base::member(TableCellVerticalMergeRevisionTypeMember::MEMBERS, text)
     }
 }
 
@@ -73735,9 +74178,9 @@ impl Default for TableLayoutType {
 
 impl From<String> for TableLayoutType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -73790,7 +74233,7 @@ impl TableLayoutType {
     ///
     /// `ValueError` when `text` is no value of `ST_TblLayoutType`.
     pub fn parse(text: &str) -> Result<TableLayoutTypeMember, ValueError> {
-        officekit_markup_base::member(TableLayoutTypeMember::MEMBERS, text, "ST_TblLayoutType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TblLayoutType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -73803,6 +74246,12 @@ impl TableLayoutType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TableLayoutTypeMember> {
+        officekit_markup_base::member(TableLayoutTypeMember::MEMBERS, text)
     }
 }
 
@@ -73903,9 +74352,9 @@ impl Default for TableOverlapSetting {
 
 impl From<String> for TableOverlapSetting {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -73958,7 +74407,7 @@ impl TableOverlapSetting {
     ///
     /// `ValueError` when `text` is no value of `ST_TblOverlap`.
     pub fn parse(text: &str) -> Result<TableOverlapSettingMember, ValueError> {
-        officekit_markup_base::member(TableOverlapSettingMember::MEMBERS, text, "ST_TblOverlap")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TblOverlap"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -73971,6 +74420,12 @@ impl TableOverlapSetting {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TableOverlapSettingMember> {
+        officekit_markup_base::member(TableOverlapSettingMember::MEMBERS, text)
     }
 }
 
@@ -74628,9 +75083,9 @@ impl Default for TableWidthUnits {
 
 impl From<String> for TableWidthUnits {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -74685,7 +75140,7 @@ impl TableWidthUnits {
     ///
     /// `ValueError` when `text` is no value of `ST_TblWidth`.
     pub fn parse(text: &str) -> Result<TableWidthUnitsMember, ValueError> {
-        officekit_markup_base::member(TableWidthUnitsMember::MEMBERS, text, "ST_TblWidth")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TblWidth"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -74698,6 +75153,12 @@ impl TableWidthUnits {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TableWidthUnitsMember> {
+        officekit_markup_base::member(TableWidthUnitsMember::MEMBERS, text)
     }
 }
 
@@ -74761,9 +75222,9 @@ impl Default for TargetScreenSizes {
 
 impl From<String> for TargetScreenSizes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -74825,7 +75286,8 @@ impl TargetScreenSizes {
     ///
     /// `ValueError` when `text` is no value of `ST_TargetScreenSz`.
     pub fn parse(text: &str) -> Result<TargetScreenSizesMember, ValueError> {
-        officekit_markup_base::member(TargetScreenSizesMember::MEMBERS, text, "ST_TargetScreenSz")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TargetScreenSz"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -74838,6 +75300,12 @@ impl TargetScreenSizes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TargetScreenSizesMember> {
+        officekit_markup_base::member(TargetScreenSizesMember::MEMBERS, text)
     }
 }
 
@@ -75176,9 +75644,9 @@ impl Default for TextBoxFormFieldTypeValues {
 
 impl From<String> for TextBoxFormFieldTypeValues {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -75235,11 +75703,7 @@ impl TextBoxFormFieldTypeValues {
     ///
     /// `ValueError` when `text` is no value of `ST_FFTextType`.
     pub fn parse(text: &str) -> Result<TextBoxFormFieldTypeValuesMember, ValueError> {
-        officekit_markup_base::member(
-            TextBoxFormFieldTypeValuesMember::MEMBERS,
-            text,
-            "ST_FFTextType",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_FFTextType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -75252,6 +75716,12 @@ impl TextBoxFormFieldTypeValues {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TextBoxFormFieldTypeValuesMember> {
+        officekit_markup_base::member(TextBoxFormFieldTypeValuesMember::MEMBERS, text)
     }
 }
 
@@ -75280,7 +75750,8 @@ impl TextExpansionCompressionPercentage {
     ///
     /// `ValueError` when `text` is no value of `ST_TextScaleDecimal`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        officekit_markup_base::integer(text, 0, 600, "ST_TextScaleDecimal")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TextScaleDecimal"))
     }
 
     /// The value the text spells.
@@ -75290,6 +75761,12 @@ impl TextExpansionCompressionPercentage {
     /// `ValueError` when the text is no value of `ST_TextScaleDecimal`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        officekit_markup_base::integer(text, 0, 600)
     }
 }
 
@@ -75304,9 +75781,9 @@ impl Default for TextFrameDropCapLocation {
 
 impl From<String> for TextFrameDropCapLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -75360,7 +75837,7 @@ impl TextFrameDropCapLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_DropCap`.
     pub fn parse(text: &str) -> Result<TextFrameDropCapLocationMember, ValueError> {
-        officekit_markup_base::member(TextFrameDropCapLocationMember::MEMBERS, text, "ST_DropCap")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_DropCap"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -75373,6 +75850,12 @@ impl TextFrameDropCapLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TextFrameDropCapLocationMember> {
+        officekit_markup_base::member(TextFrameDropCapLocationMember::MEMBERS, text)
     }
 }
 
@@ -75464,9 +75947,9 @@ impl Default for TextHighlightColors {
 
 impl From<String> for TextHighlightColors {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -75534,11 +76017,8 @@ impl TextHighlightColors {
     ///
     /// `ValueError` when `text` is no value of `ST_HighlightColor`.
     pub fn parse(text: &str) -> Result<TextHighlightColorsMember, ValueError> {
-        officekit_markup_base::member(
-            TextHighlightColorsMember::MEMBERS,
-            text,
-            "ST_HighlightColor",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_HighlightColor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -75551,6 +76031,12 @@ impl TextHighlightColors {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TextHighlightColorsMember> {
+        officekit_markup_base::member(TextHighlightColorsMember::MEMBERS, text)
     }
 }
 
@@ -76081,9 +76567,9 @@ impl Default for TextWrappingAroundTextFrameType {
 
 impl From<String> for TextWrappingAroundTextFrameType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -76140,11 +76626,7 @@ impl TextWrappingAroundTextFrameType {
     ///
     /// `ValueError` when `text` is no value of `ST_Wrap`.
     pub fn parse(text: &str) -> Result<TextWrappingAroundTextFrameTypeMember, ValueError> {
-        officekit_markup_base::member(
-            TextWrappingAroundTextFrameTypeMember::MEMBERS,
-            text,
-            "ST_Wrap",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Wrap"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -76157,6 +76639,12 @@ impl TextWrappingAroundTextFrameType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TextWrappingAroundTextFrameTypeMember> {
+        officekit_markup_base::member(TextWrappingAroundTextFrameTypeMember::MEMBERS, text)
     }
 }
 
@@ -76220,9 +76708,9 @@ impl Default for ThemeColor {
 
 impl From<String> for ThemeColor {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -76290,7 +76778,7 @@ impl ThemeColor {
     ///
     /// `ValueError` when `text` is no value of `ST_ThemeColor`.
     pub fn parse(text: &str) -> Result<ThemeColorMember, ValueError> {
-        officekit_markup_base::member(ThemeColorMember::MEMBERS, text, "ST_ThemeColor")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_ThemeColor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -76303,6 +76791,12 @@ impl ThemeColor {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ThemeColorMember> {
+        officekit_markup_base::member(ThemeColorMember::MEMBERS, text)
     }
 }
 
@@ -76388,9 +76882,9 @@ impl Default for ThemeColorReference {
 
 impl From<String> for ThemeColorReference {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -76453,11 +76947,8 @@ impl ThemeColorReference {
     ///
     /// `ValueError` when `text` is no value of `ST_WmlColorSchemeIndex`.
     pub fn parse(text: &str) -> Result<ThemeColorReferenceMember, ValueError> {
-        officekit_markup_base::member(
-            ThemeColorReferenceMember::MEMBERS,
-            text,
-            "ST_WmlColorSchemeIndex",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_WmlColorSchemeIndex"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -76470,6 +76961,12 @@ impl ThemeColorReference {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ThemeColorReferenceMember> {
+        officekit_markup_base::member(ThemeColorReferenceMember::MEMBERS, text)
     }
 }
 
@@ -76484,9 +76981,9 @@ impl Default for ThemeFont {
 
 impl From<String> for ThemeFont {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -76545,7 +77042,7 @@ impl ThemeFont {
     ///
     /// `ValueError` when `text` is no value of `ST_Theme`.
     pub fn parse(text: &str) -> Result<ThemeFontMember, ValueError> {
-        officekit_markup_base::member(ThemeFontMember::MEMBERS, text, "ST_Theme")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Theme"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -76558,6 +77055,12 @@ impl ThemeFont {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<ThemeFontMember> {
+        officekit_markup_base::member(ThemeFontMember::MEMBERS, text)
     }
 }
 
@@ -76625,9 +77128,9 @@ impl Default for TightWrapWithinTextBox {
 
 impl From<String> for TightWrapWithinTextBox {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -76683,11 +77186,8 @@ impl TightWrapWithinTextBox {
     ///
     /// `ValueError` when `text` is no value of `ST_TextboxTightWrap`.
     pub fn parse(text: &str) -> Result<TightWrapWithinTextBoxMember, ValueError> {
-        officekit_markup_base::member(
-            TightWrapWithinTextBoxMember::MEMBERS,
-            text,
-            "ST_TextboxTightWrap",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TextboxTightWrap"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -76700,6 +77200,12 @@ impl TightWrapWithinTextBox {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TightWrapWithinTextBoxMember> {
+        officekit_markup_base::member(TightWrapWithinTextBoxMember::MEMBERS, text)
     }
 }
 
@@ -77886,7 +78392,8 @@ impl TwoDigitHexadecimalValue {
     ///
     /// `ValueError` when `text` is no value of `ST_UcharHexNumber`.
     pub fn parse(text: &str) -> Result<u8, ValueError> {
-        officekit_markup_base::hex(text, 1, "ST_UcharHexNumber")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_UcharHexNumber"))
     }
 
     /// The value the text spells.
@@ -77896,6 +78403,12 @@ impl TwoDigitHexadecimalValue {
     /// `ValueError` when the text is no value of `ST_UcharHexNumber`; the text stays stored.
     pub fn value(&self) -> Result<u8, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<u8> {
+        officekit_markup_base::hex(text, 1)
     }
 }
 
@@ -77910,9 +78423,9 @@ impl Default for TwoLinesEnclosingCharacterType {
 
 impl From<String> for TwoLinesEnclosingCharacterType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -77968,11 +78481,8 @@ impl TwoLinesEnclosingCharacterType {
     ///
     /// `ValueError` when `text` is no value of `ST_CombineBrackets`.
     pub fn parse(text: &str) -> Result<TwoLinesEnclosingCharacterTypeMember, ValueError> {
-        officekit_markup_base::member(
-            TwoLinesEnclosingCharacterTypeMember::MEMBERS,
-            text,
-            "ST_CombineBrackets",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_CombineBrackets"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -77985,6 +78495,12 @@ impl TwoLinesEnclosingCharacterType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TwoLinesEnclosingCharacterTypeMember> {
+        officekit_markup_base::member(TwoLinesEnclosingCharacterTypeMember::MEMBERS, text)
     }
 }
 
@@ -78204,9 +78720,9 @@ impl Default for UnderlinePatterns {
 
 impl From<String> for UnderlinePatterns {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -78275,7 +78791,7 @@ impl UnderlinePatterns {
     ///
     /// `ValueError` when `text` is no value of `ST_Underline`.
     pub fn parse(text: &str) -> Result<UnderlinePatternsMember, ValueError> {
-        officekit_markup_base::member(UnderlinePatternsMember::MEMBERS, text, "ST_Underline")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_Underline"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -78288,6 +78804,12 @@ impl UnderlinePatterns {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<UnderlinePatternsMember> {
+        officekit_markup_base::member(UnderlinePatternsMember::MEMBERS, text)
     }
 }
 
@@ -79242,9 +79764,9 @@ impl Default for VerticalAlignmentType {
 
 impl From<String> for VerticalAlignmentType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -79299,7 +79821,7 @@ impl VerticalAlignmentType {
     ///
     /// `ValueError` when `text` is no value of `ST_VerticalJc`.
     pub fn parse(text: &str) -> Result<VerticalAlignmentTypeMember, ValueError> {
-        officekit_markup_base::member(VerticalAlignmentTypeMember::MEMBERS, text, "ST_VerticalJc")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_VerticalJc"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -79312,6 +79834,12 @@ impl VerticalAlignmentType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalAlignmentTypeMember> {
+        officekit_markup_base::member(VerticalAlignmentTypeMember::MEMBERS, text)
     }
 }
 
@@ -79326,9 +79854,9 @@ impl Default for VerticalAnchorLocation {
 
 impl From<String> for VerticalAnchorLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -79382,7 +79910,7 @@ impl VerticalAnchorLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_VAnchor`.
     pub fn parse(text: &str) -> Result<VerticalAnchorLocationMember, ValueError> {
-        officekit_markup_base::member(VerticalAnchorLocationMember::MEMBERS, text, "ST_VAnchor")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_VAnchor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -79395,6 +79923,12 @@ impl VerticalAnchorLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalAnchorLocationMember> {
+        officekit_markup_base::member(VerticalAnchorLocationMember::MEMBERS, text)
     }
 }
 
@@ -79458,9 +79992,9 @@ impl Default for VerticalTextAlignmentTypes {
 
 impl From<String> for VerticalTextAlignmentTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -79516,11 +80050,7 @@ impl VerticalTextAlignmentTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_TextAlignment`.
     pub fn parse(text: &str) -> Result<VerticalTextAlignmentTypesMember, ValueError> {
-        officekit_markup_base::member(
-            VerticalTextAlignmentTypesMember::MEMBERS,
-            text,
-            "ST_TextAlignment",
-        )
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_TextAlignment"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -79533,6 +80063,12 @@ impl VerticalTextAlignmentTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalTextAlignmentTypesMember> {
+        officekit_markup_base::member(VerticalTextAlignmentTypesMember::MEMBERS, text)
     }
 }
 

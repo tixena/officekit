@@ -1,5 +1,5 @@
 use super::parse;
-use super::{DateTime, Measure, MeasureUnit};
+use super::{DateTime, Measure, MeasureUnit, Patterns};
 
 #[test]
 fn booleans_accept_the_four_xsd_spellings_only() {
@@ -138,4 +138,23 @@ fn a_measure_spells_its_number_and_unit() {
     assert_eq!(Measure::new(MeasureUnit::Points, 2.5).to_string(), "2.5pt");
     assert_eq!(Measure::new(MeasureUnit::Picas, 12.0).to_string(), "12pc");
     assert_eq!(parse::measure("-3cm").unwrap().to_string(), "-3cm");
+}
+
+#[test]
+fn patterns_match_a_whole_text_against_any_facet() {
+    static PATTERNS: Patterns = Patterns::new(&["[0-9]+%", "auto"]);
+    assert!(PATTERNS.matches("50%"));
+    assert!(PATTERNS.matches("auto"));
+    assert!(!PATTERNS.matches("x50%"));
+    assert!(!PATTERNS.matches("autos"));
+    assert!(!PATTERNS.is_empty());
+}
+
+#[test]
+fn a_facet_that_does_not_compile_matches_nothing() {
+    static PATTERNS: Patterns = Patterns::new(&["(", "a"]);
+    assert!(!PATTERNS.matches("("));
+    assert!(PATTERNS.matches("a"));
+    assert!(!Patterns::default().matches(""));
+    assert!(Patterns::default().is_empty());
 }

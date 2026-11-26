@@ -224,42 +224,46 @@ use alloc::borrow::Cow;
 use core::fmt;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::name::OfficeVersion;
-use officekit_xml::values::{Measure, ValueError};
+use officekit_xml::values::{Measure, Patterns, ValueError};
 
-static UNIVERSAL_MEASUREMENT_PATTERNS: &[&str] = &["-?[0-9]+(\\.[0-9]+)?(mm|cm|in|pt|pc|pi)"];
+static UNIVERSAL_MEASUREMENT_PATTERNS: Patterns =
+    Patterns::new(&["-?[0-9]+(\\.[0-9]+)?(mm|cm|in|pt|pc|pi)"]);
 
-static POSITIVE_FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: &[&str] =
-    &["((100)|([0-9][0-9]?))(\\.[0-9][0-9]?)?%"];
+static POSITIVE_FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: Patterns =
+    Patterns::new(&["((100)|([0-9][0-9]?))(\\.[0-9][0-9]?)?%"]);
 
-static POSITIVE_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: &[&str] = &["[0-9]+(\\.[0-9]+)?%"];
+static POSITIVE_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: Patterns =
+    Patterns::new(&["[0-9]+(\\.[0-9]+)?%"]);
 
-static FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: &[&str] =
-    &["-?((100)|([0-9][0-9]?))(\\.[0-9][0-9]?)?%"];
+static FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: Patterns =
+    Patterns::new(&["-?((100)|([0-9][0-9]?))(\\.[0-9][0-9]?)?%"]);
 
-static PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: &[&str] = &["-?[0-9]+(\\.[0-9]+)?%"];
+static PERCENTAGE_VALUE_WITH_SIGN_PATTERNS: Patterns = Patterns::new(&["-?[0-9]+(\\.[0-9]+)?%"]);
 
 static PANOSE1NUMBER_FACETS: crate::Facets = crate::Facets {
     length: Some(10),
     max_length: None,
     min_length: None,
-    patterns: &[],
+    patterns: Patterns::new(&[]),
 };
 
 static GUID_FACETS: crate::Facets = crate::Facets {
     length: None,
     max_length: None,
     min_length: None,
-    patterns: &["\\{[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\}"],
+    patterns: Patterns::new(&[
+        "\\{[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}\\}",
+    ]),
 };
 
-static POSITIVE_UNIVERSAL_MEASUREMENT_PATTERNS: &[&str] =
-    &["[0-9]+(\\.[0-9]+)?(mm|cm|in|pt|pc|pi)"];
+static POSITIVE_UNIVERSAL_MEASUREMENT_PATTERNS: Patterns =
+    Patterns::new(&["[0-9]+(\\.[0-9]+)?(mm|cm|in|pt|pc|pi)"]);
 
 static XML_NAME_FACETS: crate::Facets = crate::Facets {
     length: None,
     max_length: Some(255),
     min_length: Some(1),
-    patterns: &[],
+    patterns: Patterns::new(&[]),
 };
 
 /// Boolean Value, the simple type `ST_TrueFalse` (ECMA-376 Part 4, section 20.1.2.5), kept as its
@@ -771,9 +775,9 @@ impl Default for BooleanValue {
 
 impl From<String> for BooleanValue {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -828,7 +832,7 @@ impl BooleanValue {
     ///
     /// `ValueError` when `text` is no value of `ST_TrueFalse`.
     pub fn parse(text: &str) -> Result<BooleanValueMember, ValueError> {
-        crate::member(BooleanValueMember::MEMBERS, text, "ST_TrueFalse")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_TrueFalse"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -841,6 +845,12 @@ impl BooleanValue {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<BooleanValueMember> {
+        crate::member(BooleanValueMember::MEMBERS, text)
     }
 }
 
@@ -855,9 +865,9 @@ impl Default for BooleanValueWithBlankFalseState {
 
 impl From<String> for BooleanValueWithBlankFalseState {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -915,11 +925,7 @@ impl BooleanValueWithBlankFalseState {
     ///
     /// `ValueError` when `text` is no value of `ST_TrueFalseBlank`.
     pub fn parse(text: &str) -> Result<BooleanValueWithBlankFalseStateMember, ValueError> {
-        crate::member(
-            BooleanValueWithBlankFalseStateMember::MEMBERS,
-            text,
-            "ST_TrueFalseBlank",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_TrueFalseBlank"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -932,6 +938,12 @@ impl BooleanValueWithBlankFalseState {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<BooleanValueWithBlankFalseStateMember> {
+        crate::member(BooleanValueWithBlankFalseStateMember::MEMBERS, text)
     }
 }
 
@@ -946,9 +958,9 @@ impl Default for CalendarTypes {
 
 impl From<String> for CalendarTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1013,7 +1025,7 @@ impl CalendarTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_CalendarType`.
     pub fn parse(text: &str) -> Result<CalendarTypesMember, ValueError> {
-        crate::member(CalendarTypesMember::MEMBERS, text, "ST_CalendarType")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_CalendarType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1026,6 +1038,12 @@ impl CalendarTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CalendarTypesMember> {
+        crate::member(CalendarTypesMember::MEMBERS, text)
     }
 }
 
@@ -1040,9 +1058,9 @@ impl Default for CryptographicAlgorithmClasses {
 
 impl From<String> for CryptographicAlgorithmClasses {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1093,11 +1111,7 @@ impl CryptographicAlgorithmClasses {
     ///
     /// `ValueError` when `text` is no value of `ST_AlgClass`.
     pub fn parse(text: &str) -> Result<CryptographicAlgorithmClassesMember, ValueError> {
-        crate::member(
-            CryptographicAlgorithmClassesMember::MEMBERS,
-            text,
-            "ST_AlgClass",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_AlgClass"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1110,6 +1124,12 @@ impl CryptographicAlgorithmClasses {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CryptographicAlgorithmClassesMember> {
+        crate::member(CryptographicAlgorithmClassesMember::MEMBERS, text)
     }
 }
 
@@ -1124,9 +1144,9 @@ impl Default for CryptographicAlgorithmTypes {
 
 impl From<String> for CryptographicAlgorithmTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1179,11 +1199,7 @@ impl CryptographicAlgorithmTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_AlgType`.
     pub fn parse(text: &str) -> Result<CryptographicAlgorithmTypesMember, ValueError> {
-        crate::member(
-            CryptographicAlgorithmTypesMember::MEMBERS,
-            text,
-            "ST_AlgType",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_AlgType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1196,6 +1212,12 @@ impl CryptographicAlgorithmTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CryptographicAlgorithmTypesMember> {
+        crate::member(CryptographicAlgorithmTypesMember::MEMBERS, text)
     }
 }
 
@@ -1210,9 +1232,9 @@ impl Default for CryptographicProviderTypes {
 
 impl From<String> for CryptographicProviderTypes {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1266,11 +1288,7 @@ impl CryptographicProviderTypes {
     ///
     /// `ValueError` when `text` is no value of `ST_CryptProv`.
     pub fn parse(text: &str) -> Result<CryptographicProviderTypesMember, ValueError> {
-        crate::member(
-            CryptographicProviderTypesMember::MEMBERS,
-            text,
-            "ST_CryptProv",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_CryptProv"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1283,6 +1301,12 @@ impl CryptographicProviderTypes {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CryptographicProviderTypesMember> {
+        crate::member(CryptographicProviderTypesMember::MEMBERS, text)
     }
 }
 
@@ -1297,9 +1321,9 @@ impl Default for DocumentConformanceClassValue {
 
 impl From<String> for DocumentConformanceClassValue {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1352,11 +1376,7 @@ impl DocumentConformanceClassValue {
     ///
     /// `ValueError` when `text` is no value of `ST_ConformanceClass`.
     pub fn parse(text: &str) -> Result<DocumentConformanceClassValueMember, ValueError> {
-        crate::member(
-            DocumentConformanceClassValueMember::MEMBERS,
-            text,
-            "ST_ConformanceClass",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_ConformanceClass"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1369,6 +1389,12 @@ impl DocumentConformanceClassValue {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<DocumentConformanceClassValueMember> {
+        crate::member(DocumentConformanceClassValueMember::MEMBERS, text)
     }
 }
 
@@ -1397,11 +1423,7 @@ impl FixedPercentageValueWithSign {
     ///
     /// `ValueError` when `text` is no value of `ST_FixedPercentage`.
     pub fn parse(text: &str) -> Result<f64, ValueError> {
-        crate::percentage(
-            text,
-            FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
-            "ST_FixedPercentage",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_FixedPercentage"))
     }
 
     /// The value the text spells.
@@ -1411,6 +1433,12 @@ impl FixedPercentageValueWithSign {
     /// `ValueError` when the text is no value of `ST_FixedPercentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<f64> {
+        crate::percentage(text, &FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS)
     }
 }
 
@@ -1439,7 +1467,7 @@ impl Guid {
     ///
     /// `ValueError` when `text` is no value of `ST_Guid`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        crate::text(text, &GUID_FACETS, "ST_Guid")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_Guid"))
     }
 
     /// The value the text spells.
@@ -1449,6 +1477,12 @@ impl Guid {
     /// `ValueError` when the text is no value of `ST_Guid`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        crate::text(text, &GUID_FACETS)
     }
 }
 
@@ -1477,7 +1511,7 @@ impl HexadecimalColorValue {
     ///
     /// `ValueError` when `text` is no value of `ST_HexColorRGB`.
     pub fn parse(text: &str) -> Result<u32, ValueError> {
-        crate::hex(text, 3, "ST_HexColorRGB")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_HexColorRGB"))
     }
 
     /// The value the text spells.
@@ -1487,6 +1521,12 @@ impl HexadecimalColorValue {
     /// `ValueError` when the text is no value of `ST_HexColorRGB`; the text stays stored.
     pub fn value(&self) -> Result<u32, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<u32> {
+        crate::hex(text, 3)
     }
 }
 
@@ -1501,9 +1541,9 @@ impl Default for HorizontalAlignmentLocation {
 
 impl From<String> for HorizontalAlignmentLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1559,11 +1599,7 @@ impl HorizontalAlignmentLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_XAlign`.
     pub fn parse(text: &str) -> Result<HorizontalAlignmentLocationMember, ValueError> {
-        crate::member(
-            HorizontalAlignmentLocationMember::MEMBERS,
-            text,
-            "ST_XAlign",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_XAlign"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1576,6 +1612,12 @@ impl HorizontalAlignmentLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HorizontalAlignmentLocationMember> {
+        crate::member(HorizontalAlignmentLocationMember::MEMBERS, text)
     }
 }
 
@@ -1590,9 +1632,9 @@ impl Default for MeasurementInTwentiethsOfAPoint {
 
 impl From<String> for MeasurementInTwentiethsOfAPoint {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1637,15 +1679,7 @@ impl MeasurementInTwentiethsOfAPoint {
     ///
     /// `ValueError` when `text` is no value of `ST_TwipsMeasure`.
     pub fn parse(text: &str) -> Result<MeasurementInTwentiethsOfAPointMember, ValueError> {
-        let member_1 = UnsignedDecimalNumberValue::parse(text);
-        if let Ok(value) = member_1 {
-            return Ok(MeasurementInTwentiethsOfAPointMember::UnsignedDecimalNumberValue(value));
-        }
-        let member_2 = PositiveUniversalMeasurement::parse(text);
-        if let Ok(value) = member_2 {
-            return Ok(MeasurementInTwentiethsOfAPointMember::PositiveUniversalMeasurement(value));
-        }
-        Err(crate::invalid(text, "ST_TwipsMeasure"))
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_TwipsMeasure"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1658,6 +1692,22 @@ impl MeasurementInTwentiethsOfAPoint {
             Self::Member(member) => Ok(member.clone()),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MeasurementInTwentiethsOfAPointMember> {
+        let member_1 = UnsignedDecimalNumberValue::value_of(text);
+        if let Some(value) = member_1 {
+            return Some(MeasurementInTwentiethsOfAPointMember::UnsignedDecimalNumberValue(value));
+        }
+        let member_2 = PositiveUniversalMeasurement::value_of(text);
+        if let Some(value) = member_2 {
+            return Some(
+                MeasurementInTwentiethsOfAPointMember::PositiveUniversalMeasurement(value),
+            );
+        }
+        None
     }
 }
 
@@ -1692,7 +1742,7 @@ impl OnOffValue {
     ///
     /// `ValueError` when `text` is no value of `ST_OnOff`.
     pub fn parse(text: &str) -> Result<bool, ValueError> {
-        crate::on_off(text, "ST_OnOff")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_OnOff"))
     }
 
     /// The value the text spells.
@@ -1702,6 +1752,12 @@ impl OnOffValue {
     /// `ValueError` when the text is no value of `ST_OnOff`; the text stays stored.
     pub fn value(&self) -> Result<bool, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<bool> {
+        crate::on_off(text)
     }
 }
 
@@ -1730,7 +1786,7 @@ impl Panose1Number {
     ///
     /// `ValueError` when `text` is no value of `ST_Panose`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        crate::text(text, &PANOSE1NUMBER_FACETS, "ST_Panose")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_Panose"))
     }
 
     /// The value the text spells.
@@ -1740,6 +1796,12 @@ impl Panose1Number {
     /// `ValueError` when the text is no value of `ST_Panose`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        crate::text(text, &PANOSE1NUMBER_FACETS)
     }
 }
 
@@ -1768,7 +1830,7 @@ impl PercentageValueWithSign {
     ///
     /// `ValueError` when `text` is no value of `ST_Percentage`.
     pub fn parse(text: &str) -> Result<f64, ValueError> {
-        crate::percentage(text, PERCENTAGE_VALUE_WITH_SIGN_PATTERNS, "ST_Percentage")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_Percentage"))
     }
 
     /// The value the text spells.
@@ -1778,6 +1840,12 @@ impl PercentageValueWithSign {
     /// `ValueError` when the text is no value of `ST_Percentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<f64> {
+        crate::percentage(text, &PERCENTAGE_VALUE_WITH_SIGN_PATTERNS)
     }
 }
 
@@ -1806,11 +1874,7 @@ impl PositiveFixedPercentageValueWithSign {
     ///
     /// `ValueError` when `text` is no value of `ST_PositiveFixedPercentage`.
     pub fn parse(text: &str) -> Result<f64, ValueError> {
-        crate::percentage(
-            text,
-            POSITIVE_FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
-            "ST_PositiveFixedPercentage",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_PositiveFixedPercentage"))
     }
 
     /// The value the text spells.
@@ -1820,6 +1884,12 @@ impl PositiveFixedPercentageValueWithSign {
     /// `ValueError` when the text is no value of `ST_PositiveFixedPercentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<f64> {
+        crate::percentage(text, &POSITIVE_FIXED_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS)
     }
 }
 
@@ -1848,11 +1918,7 @@ impl PositivePercentageValueWithSign {
     ///
     /// `ValueError` when `text` is no value of `ST_PositivePercentage`.
     pub fn parse(text: &str) -> Result<f64, ValueError> {
-        crate::percentage(
-            text,
-            POSITIVE_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS,
-            "ST_PositivePercentage",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_PositivePercentage"))
     }
 
     /// The value the text spells.
@@ -1862,6 +1928,12 @@ impl PositivePercentageValueWithSign {
     /// `ValueError` when the text is no value of `ST_PositivePercentage`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<f64> {
+        crate::percentage(text, &POSITIVE_PERCENTAGE_VALUE_WITH_SIGN_PATTERNS)
     }
 }
 
@@ -1890,11 +1962,7 @@ impl PositiveUniversalMeasurement {
     ///
     /// `ValueError` when `text` is no value of `ST_PositiveUniversalMeasure`.
     pub fn parse(text: &str) -> Result<Measure, ValueError> {
-        crate::measure(
-            text,
-            POSITIVE_UNIVERSAL_MEASUREMENT_PATTERNS,
-            "ST_PositiveUniversalMeasure",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_PositiveUniversalMeasure"))
     }
 
     /// The value the text spells.
@@ -1904,6 +1972,12 @@ impl PositiveUniversalMeasurement {
     /// `ValueError` when the text is no value of `ST_PositiveUniversalMeasure`; the text stays stored.
     pub fn value(&self) -> Result<Measure, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<Measure> {
+        crate::measure(text, &POSITIVE_UNIVERSAL_MEASUREMENT_PATTERNS)
     }
 }
 
@@ -1932,7 +2006,7 @@ impl UniversalMeasurement {
     ///
     /// `ValueError` when `text` is no value of `ST_UniversalMeasure`.
     pub fn parse(text: &str) -> Result<Measure, ValueError> {
-        crate::measure(text, UNIVERSAL_MEASUREMENT_PATTERNS, "ST_UniversalMeasure")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_UniversalMeasure"))
     }
 
     /// The value the text spells.
@@ -1942,6 +2016,12 @@ impl UniversalMeasurement {
     /// `ValueError` when the text is no value of `ST_UniversalMeasure`; the text stays stored.
     pub fn value(&self) -> Result<Measure, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<Measure> {
+        crate::measure(text, &UNIVERSAL_MEASUREMENT_PATTERNS)
     }
 }
 
@@ -1970,7 +2050,7 @@ impl UnsignedDecimalNumberValue {
     ///
     /// `ValueError` when `text` is no value of `ST_UnsignedDecimalNumber`.
     pub fn parse(text: &str) -> Result<i64, ValueError> {
-        crate::integer(text, 0, i64::MAX, "ST_UnsignedDecimalNumber")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_UnsignedDecimalNumber"))
     }
 
     /// The value the text spells.
@@ -1980,6 +2060,12 @@ impl UnsignedDecimalNumberValue {
     /// `ValueError` when the text is no value of `ST_UnsignedDecimalNumber`; the text stays stored.
     pub fn value(&self) -> Result<i64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<i64> {
+        crate::integer(text, 0, i64::MAX)
     }
 }
 
@@ -1994,9 +2080,9 @@ impl Default for VerticalAlignmentLocation {
 
 impl From<String> for VerticalAlignmentLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -2053,7 +2139,7 @@ impl VerticalAlignmentLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_YAlign`.
     pub fn parse(text: &str) -> Result<VerticalAlignmentLocationMember, ValueError> {
-        crate::member(VerticalAlignmentLocationMember::MEMBERS, text, "ST_YAlign")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_YAlign"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -2066,6 +2152,12 @@ impl VerticalAlignmentLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalAlignmentLocationMember> {
+        crate::member(VerticalAlignmentLocationMember::MEMBERS, text)
     }
 }
 
@@ -2080,9 +2172,9 @@ impl Default for VerticalPositioningLocation {
 
 impl From<String> for VerticalPositioningLocation {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -2136,11 +2228,7 @@ impl VerticalPositioningLocation {
     ///
     /// `ValueError` when `text` is no value of `ST_VerticalAlignRun`.
     pub fn parse(text: &str) -> Result<VerticalPositioningLocationMember, ValueError> {
-        crate::member(
-            VerticalPositioningLocationMember::MEMBERS,
-            text,
-            "ST_VerticalAlignRun",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_VerticalAlignRun"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -2153,6 +2241,12 @@ impl VerticalPositioningLocation {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalPositioningLocationMember> {
+        crate::member(VerticalPositioningLocationMember::MEMBERS, text)
     }
 }
 
@@ -2181,7 +2275,7 @@ impl XMLName {
     ///
     /// `ValueError` when `text` is no value of `ST_XmlName`.
     pub fn parse(text: &str) -> Result<&str, ValueError> {
-        crate::text(text, &XML_NAME_FACETS, "ST_XmlName")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_XmlName"))
     }
 
     /// The value the text spells.
@@ -2191,5 +2285,11 @@ impl XMLName {
     /// `ValueError` when the text is no value of `ST_XmlName`; the text stays stored.
     pub fn value(&self) -> Result<&str, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<&str> {
+        crate::text(text, &XML_NAME_FACETS)
     }
 }

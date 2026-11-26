@@ -696,9 +696,9 @@ impl Default for BorderShadowType {
 
 impl From<String> for BorderShadowType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -753,7 +753,7 @@ impl BorderShadowType {
     ///
     /// `ValueError` when `text` is no value of `ST_BorderShadow`.
     pub fn parse(text: &str) -> Result<BorderShadowTypeMember, ValueError> {
-        crate::member(BorderShadowTypeMember::MEMBERS, text, "ST_BorderShadow")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_BorderShadow"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -766,6 +766,12 @@ impl BorderShadowType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<BorderShadowTypeMember> {
+        crate::member(BorderShadowTypeMember::MEMBERS, text)
     }
 }
 
@@ -780,9 +786,9 @@ impl Default for BorderType {
 
 impl From<String> for BorderType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -860,7 +866,7 @@ impl BorderType {
     ///
     /// `ValueError` when `text` is no value of `ST_BorderType`.
     pub fn parse(text: &str) -> Result<BorderTypeMember, ValueError> {
-        crate::member(BorderTypeMember::MEMBERS, text, "ST_BorderType")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_BorderType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -873,6 +879,12 @@ impl BorderType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<BorderTypeMember> {
+        crate::member(BorderTypeMember::MEMBERS, text)
     }
 }
 
@@ -940,9 +952,9 @@ impl Default for HorizontalAnchorType {
 
 impl From<String> for HorizontalAnchorType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -997,11 +1009,7 @@ impl HorizontalAnchorType {
     ///
     /// `ValueError` when `text` is no value of `ST_HorizontalAnchor`.
     pub fn parse(text: &str) -> Result<HorizontalAnchorTypeMember, ValueError> {
-        crate::member(
-            HorizontalAnchorTypeMember::MEMBERS,
-            text,
-            "ST_HorizontalAnchor",
-        )
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_HorizontalAnchor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1014,6 +1022,12 @@ impl HorizontalAnchorType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<HorizontalAnchorTypeMember> {
+        crate::member(HorizontalAnchorTypeMember::MEMBERS, text)
     }
 }
 
@@ -1189,9 +1203,9 @@ impl Default for TextWrappingSide {
 
 impl From<String> for TextWrappingSide {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1246,7 +1260,7 @@ impl TextWrappingSide {
     ///
     /// `ValueError` when `text` is no value of `ST_WrapSide`.
     pub fn parse(text: &str) -> Result<TextWrappingSideMember, ValueError> {
-        crate::member(TextWrappingSideMember::MEMBERS, text, "ST_WrapSide")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_WrapSide"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1259,6 +1273,12 @@ impl TextWrappingSide {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TextWrappingSideMember> {
+        crate::member(TextWrappingSideMember::MEMBERS, text)
     }
 }
 
@@ -1273,9 +1293,9 @@ impl Default for TextWrappingType {
 
 impl From<String> for TextWrappingType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1331,7 +1351,7 @@ impl TextWrappingType {
     ///
     /// `ValueError` when `text` is no value of `ST_WrapType`.
     pub fn parse(text: &str) -> Result<TextWrappingTypeMember, ValueError> {
-        crate::member(TextWrappingTypeMember::MEMBERS, text, "ST_WrapType")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_WrapType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1344,6 +1364,12 @@ impl TextWrappingType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TextWrappingTypeMember> {
+        crate::member(TextWrappingTypeMember::MEMBERS, text)
     }
 }
 
@@ -1411,9 +1437,9 @@ impl Default for VerticalAnchorType {
 
 impl From<String> for VerticalAnchorType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if crate::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if crate::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1468,7 +1494,7 @@ impl VerticalAnchorType {
     ///
     /// `ValueError` when `text` is no value of `ST_VerticalAnchor`.
     pub fn parse(text: &str) -> Result<VerticalAnchorTypeMember, ValueError> {
-        crate::member(VerticalAnchorTypeMember::MEMBERS, text, "ST_VerticalAnchor")
+        Self::value_of(text).ok_or_else(|| crate::invalid(text, "ST_VerticalAnchor"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1481,5 +1507,11 @@ impl VerticalAnchorType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<VerticalAnchorTypeMember> {
+        crate::member(VerticalAnchorTypeMember::MEMBERS, text)
     }
 }

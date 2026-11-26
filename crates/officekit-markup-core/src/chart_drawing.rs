@@ -1473,11 +1473,8 @@ impl ChartMarkerCoordinateValue {
     ///
     /// `ValueError` when `text` is no value of `ST_MarkerCoordinate`.
     pub fn parse(text: &str) -> Result<f64, ValueError> {
-        officekit_markup_base::double(
-            text,
-            &CHART_MARKER_COORDINATE_VALUE_BOUNDS,
-            "ST_MarkerCoordinate",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_MarkerCoordinate"))
     }
 
     /// The value the text spells.
@@ -1487,6 +1484,12 @@ impl ChartMarkerCoordinateValue {
     /// `ValueError` when the text is no value of `ST_MarkerCoordinate`; the text stays stored.
     pub fn value(&self) -> Result<f64, ValueError> {
         Self::parse(&self.0)
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<f64> {
+        officekit_markup_base::double(text, &CHART_MARKER_COORDINATE_VALUE_BOUNDS)
     }
 }
 

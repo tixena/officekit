@@ -939,9 +939,9 @@ impl Default for RichValueFallbackType {
 
 impl From<String> for RichValueFallbackType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -996,11 +996,8 @@ impl RichValueFallbackType {
     ///
     /// `ValueError` when `text` is no value of `ST_RichValueFallbackType`.
     pub fn parse(text: &str) -> Result<RichValueFallbackTypeMember, ValueError> {
-        officekit_markup_base::member(
-            RichValueFallbackTypeMember::MEMBERS,
-            text,
-            "ST_RichValueFallbackType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_RichValueFallbackType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1013,6 +1010,12 @@ impl RichValueFallbackType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<RichValueFallbackTypeMember> {
+        officekit_markup_base::member(RichValueFallbackTypeMember::MEMBERS, text)
     }
 }
 
@@ -1027,9 +1030,9 @@ impl Default for RichValueValueType {
 
 impl From<String> for RichValueValueType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -1088,11 +1091,8 @@ impl RichValueValueType {
     ///
     /// `ValueError` when `text` is no value of `ST_RichValueValueType`.
     pub fn parse(text: &str) -> Result<RichValueValueTypeMember, ValueError> {
-        officekit_markup_base::member(
-            RichValueValueTypeMember::MEMBERS,
-            text,
-            "ST_RichValueValueType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_RichValueValueType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -1105,6 +1105,12 @@ impl RichValueValueType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<RichValueValueTypeMember> {
+        officekit_markup_base::member(RichValueValueTypeMember::MEMBERS, text)
     }
 }
 

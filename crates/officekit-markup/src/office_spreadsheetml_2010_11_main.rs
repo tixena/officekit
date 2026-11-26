@@ -5207,9 +5207,9 @@ impl Default for CalcMemNumberFormat {
 
 impl From<String> for CalcMemNumberFormat {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -5263,11 +5263,8 @@ impl CalcMemNumberFormat {
     ///
     /// `ValueError` when `text` is no value of `ST_CalcMemNumberFormat`.
     pub fn parse(text: &str) -> Result<CalcMemNumberFormatMember, ValueError> {
-        officekit_markup_base::member(
-            CalcMemNumberFormatMember::MEMBERS,
-            text,
-            "ST_CalcMemNumberFormat",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_CalcMemNumberFormat"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -5280,6 +5277,12 @@ impl CalcMemNumberFormat {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<CalcMemNumberFormatMember> {
+        officekit_markup_base::member(CalcMemNumberFormatMember::MEMBERS, text)
     }
 }
 
@@ -6259,9 +6262,9 @@ impl Default for MovingPeriodStep {
 
 impl From<String> for MovingPeriodStep {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -6317,7 +6320,8 @@ impl MovingPeriodStep {
     ///
     /// `ValueError` when `text` is no value of `ST_MovingPeriodStep`.
     pub fn parse(text: &str) -> Result<MovingPeriodStepMember, ValueError> {
-        officekit_markup_base::member(MovingPeriodStepMember::MEMBERS, text, "ST_MovingPeriodStep")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_MovingPeriodStep"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -6330,6 +6334,12 @@ impl MovingPeriodStep {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<MovingPeriodStepMember> {
+        officekit_markup_base::member(MovingPeriodStepMember::MEMBERS, text)
     }
 }
 
@@ -7140,9 +7150,9 @@ impl Default for QuestionFormat {
 
 impl From<String> for QuestionFormat {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -7219,7 +7229,8 @@ impl QuestionFormat {
     ///
     /// `ValueError` when `text` is no value of `ST_QuestionFormat`.
     pub fn parse(text: &str) -> Result<QuestionFormatMember, ValueError> {
-        officekit_markup_base::member(QuestionFormatMember::MEMBERS, text, "ST_QuestionFormat")
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_QuestionFormat"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -7232,6 +7243,12 @@ impl QuestionFormat {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<QuestionFormatMember> {
+        officekit_markup_base::member(QuestionFormatMember::MEMBERS, text)
     }
 }
 
@@ -7295,9 +7312,9 @@ impl Default for QuestionType {
 
 impl From<String> for QuestionType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -7363,7 +7380,7 @@ impl QuestionType {
     ///
     /// `ValueError` when `text` is no value of `ST_QuestionType`.
     pub fn parse(text: &str) -> Result<QuestionTypeMember, ValueError> {
-        officekit_markup_base::member(QuestionTypeMember::MEMBERS, text, "ST_QuestionType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_QuestionType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -7376,6 +7393,12 @@ impl QuestionType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<QuestionTypeMember> {
+        officekit_markup_base::member(QuestionTypeMember::MEMBERS, text)
     }
 }
 
@@ -7541,9 +7564,9 @@ impl Default for SXVCellType {
 
 impl From<String> for SXVCellType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -7600,7 +7623,7 @@ impl SXVCellType {
     ///
     /// `ValueError` when `text` is no value of `ST_SXVCellType`.
     pub fn parse(text: &str) -> Result<SXVCellTypeMember, ValueError> {
-        officekit_markup_base::member(SXVCellTypeMember::MEMBERS, text, "ST_SXVCellType")
+        Self::value_of(text).ok_or_else(|| officekit_markup_base::invalid(text, "ST_SXVCellType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -7613,6 +7636,12 @@ impl SXVCellType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<SXVCellTypeMember> {
+        officekit_markup_base::member(SXVCellTypeMember::MEMBERS, text)
     }
 }
 
@@ -8855,9 +8884,9 @@ impl Default for TimelineStyleType {
 
 impl From<String> for TimelineStyleType {
     fn from(text: String) -> Self {
-        match Self::parse(&text) {
-            Ok(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
-            Ok(_) | Err(_) => Self::Spelled(text.into_boxed_str()),
+        match Self::value_of(&text) {
+            Some(member) if officekit_markup_base::spells(&member, &text) => Self::Member(member),
+            Some(_) | None => Self::Spelled(text.into_boxed_str()),
         }
     }
 }
@@ -8943,11 +8972,8 @@ impl TimelineStyleType {
     ///
     /// `ValueError` when `text` is no value of `ST_TimelineStyleType`.
     pub fn parse(text: &str) -> Result<TimelineStyleTypeMember, ValueError> {
-        officekit_markup_base::member(
-            TimelineStyleTypeMember::MEMBERS,
-            text,
-            "ST_TimelineStyleType",
-        )
+        Self::value_of(text)
+            .ok_or_else(|| officekit_markup_base::invalid(text, "ST_TimelineStyleType"))
     }
 
     /// The member the value keeps, or the one its spelling spells.
@@ -8960,6 +8986,12 @@ impl TimelineStyleType {
             Self::Member(member) => Ok(*member),
             Self::Spelled(text) => Self::parse(text),
         }
+    }
+
+    /// The value `text` spells; `None` when it spells none.
+    #[must_use = "this only returns the value"]
+    pub fn value_of(text: &str) -> Option<TimelineStyleTypeMember> {
+        officekit_markup_base::member(TimelineStyleTypeMember::MEMBERS, text)
     }
 }
 

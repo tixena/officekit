@@ -132,7 +132,6 @@ use alloc::collections::VecDeque;
 use alloc::vec;
 use core::cell::Cell;
 use core::fmt::{self, Debug, Display, Formatter, Write as _};
-use core::num::ParseFloatError;
 use core::{mem, slice};
 
 use officekit_xml::conformance::ConformanceClass;
@@ -140,7 +139,7 @@ use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node, Xml
 use officekit_xml::name::table::NAMESPACES;
 use officekit_xml::name::{Namespace, NamespaceId, OfficeVersion, QName, tag_of};
 use officekit_xml::stream::reader::{PartEvent, ReadEvents};
-use officekit_xml::values::{DateTime, Measure, ValueError, matches_pattern, parse};
+use officekit_xml::values::{DateTime, Measure, Patterns, ValueError, parse};
 use officekit_xml::write::{Scope, is_whitespace_text};
 
 #[cfg(test)]
@@ -298,7 +297,7 @@ pub struct Extra {
 }
 
 /// The length and pattern facets of a string simple type.
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+#[derive(Debug, Default)]
 pub struct Facets {
     /// The exact length, in characters.
     pub length: Option<usize>,
@@ -307,7 +306,7 @@ pub struct Facets {
     /// The fewest characters.
     pub min_length: Option<usize>,
     /// The text matches one of them whole, when there are any.
-    pub patterns: &'static [&'static str],
+    pub patterns: Patterns,
 }
 
 /// One declared attribute or child a typed node's reader is given, in
@@ -1681,16 +1680,9 @@ where
     Ok(())
 }
 
-/// An enumeration member's value: `ValueError` when the text names none.
-///
-/// # Errors
-///
-/// The text names no member.
-pub fn member<M>(
-    members: &Members<M>,
-    text: &str,
-    simple_type: &'static str,
-) -> Result<M, ValueError>
+/// The enumeration member the text names; `None` when it names none.
+#[must_use = "this only returns the value"]
+pub fn member<M>(members: &Members<M>, text: &str) -> Option<M>
 where
     M: Copy,
 {
@@ -1698,7 +1690,6 @@ where
         .iter()
         .find(|(_, spelled, _)| *spelled == text)
         .map(|(found, _, _)| *found)
-        .ok_or_else(|| invalid(text, simple_type))
 }
 
 /// The text a member stands for.
@@ -1726,106 +1717,67 @@ where
         .and_then(|(_, _, version)| *version)
 }
 
-/// `ST_OnOff`: `true`, `1`, `on` are true; `false`, `0`, `off` false.
-///
-/// # Errors
-///
-/// Any other text.
-pub fn on_off(text: &str, simple_type: &'static str) -> Result<bool, ValueError> {
+/// `ST_OnOff`: `true`, `1`, `on` are true; `false`, `0`, `off` false; `None`
+/// for any other text.
+#[must_use = "this only returns the value"]
+pub fn on_off(text: &str) -> Option<bool> {
+    parse::boolean(text).or(match text {
+        "on" => Some(true),
+        "off" => Some(false),
+        _ => None,
+    })
+}
+
+/// `xsd:boolean`; `None` for text that is not one.
+#[must_use = "this only returns the value"]
+pub fn boolean(text: &str) -> Option<bool> {
     parse::boolean(text)
-        .or(match text {
-            "on" => Some(true),
-            "off" => Some(false),
-            _ => None,
-        })
-        .ok_or_else(|| invalid(text, simple_type))
 }
 
-/// `xsd:boolean`.
-///
-/// # Errors
-///
-/// Text that is not one.
-pub fn boolean(text: &str, simple_type: &'static str) -> Result<bool, ValueError> {
-    parse::boolean(text).ok_or_else(|| invalid(text, simple_type))
+/// `xsd:dateTime`; `None` for text that is not one.
+#[must_use = "this only returns the value"]
+pub fn date_time(text: &str) -> Option<DateTime> {
+    parse::date_time(text)
 }
 
-/// `xsd:dateTime`.
-///
-/// # Errors
-///
-/// Text that is not one.
-pub fn date_time(text: &str, simple_type: &'static str) -> Result<DateTime, ValueError> {
-    parse::date_time(text).ok_or_else(|| invalid(text, simple_type))
-}
-
-/// A floating-point number within `bounds`.
-///
-/// # Errors
-///
-/// Text that is no number, or a number out of the bounds.
-pub fn double(text: &str, bounds: &Bounds, simple_type: &'static str) -> Result<f64, ValueError> {
-    let value: f64 = text
-        .parse()
-        .map_err(|_error: ParseFloatError| invalid(text, simple_type))?;
+/// A floating-point number within `bounds`; `None` for text that is no
+/// number, or a number out of the bounds.
+#[must_use = "this only returns the value"]
+pub fn double(text: &str, bounds: &Bounds) -> Option<f64> {
+    let value: f64 = text.parse().ok()?;
     let within = bounds.min_inclusive.is_none_or(|bound| value >= bound)
         && bounds.min_exclusive.is_none_or(|bound| value > bound)
         && bounds.max_inclusive.is_none_or(|bound| value <= bound)
         && bounds.max_exclusive.is_none_or(|bound| value < bound);
-    if within {
-        Ok(value)
-    } else {
-        Err(invalid(text, simple_type))
-    }
+    within.then_some(value)
 }
 
-/// `bytes` hexadecimal bytes as an unsigned number.
-///
-/// # Errors
-///
-/// Text of another length, or with a character that is no hexadecimal digit.
-pub fn hex<T>(text: &str, bytes: usize, simple_type: &'static str) -> Result<T, ValueError>
+/// `bytes` hexadecimal bytes as an unsigned number; `None` for text of
+/// another length, or with a character that is no hexadecimal digit.
+#[must_use = "this only returns the value"]
+pub fn hex<T>(text: &str, bytes: usize) -> Option<T>
 where
     T: Hex,
 {
     let valid = text.len() == bytes * 2 && text.bytes().all(|byte| byte.is_ascii_hexdigit());
-    valid
-        .then(|| T::from_hex(text))
-        .flatten()
-        .ok_or_else(|| invalid(text, simple_type))
+    valid.then(|| T::from_hex(text)).flatten()
 }
 
-/// A whole number from `min` to `max`.
-///
-/// # Errors
-///
-/// Text that is no whole number, or one out of the range.
-pub fn integer(
-    text: &str,
-    min: i64,
-    max: i64,
-    simple_type: &'static str,
-) -> Result<i64, ValueError> {
-    parse::integer(text)
-        .filter(|value| (min..=max).contains(value))
-        .ok_or_else(|| invalid(text, simple_type))
+/// A whole number from `min` to `max`; `None` for text that is no whole
+/// number, or one out of the range.
+#[must_use = "this only returns the value"]
+pub fn integer(text: &str, min: i64, max: i64) -> Option<i64> {
+    parse::integer(text).filter(|value| (min..=max).contains(value))
 }
 
-/// A whole number spelled as one of `values`.
-///
-/// # Errors
-///
-/// Text that is none of them.
-pub fn integer_in(
-    text: &str,
-    values: &[&str],
-    simple_type: &'static str,
-) -> Result<i64, ValueError> {
+/// A whole number spelled as one of `values`; `None` for text that is none
+/// of them.
+#[must_use = "this only returns the value"]
+pub fn integer_in(text: &str, values: &[&str]) -> Option<i64> {
     values
         .contains(&text)
         .then(|| parse::integer(text))
         .flatten()
-        .ok_or_else(|| invalid(text, simple_type))
 }
 
 /// The error of a text that is no value of its simple type.
@@ -1854,22 +1806,14 @@ fn is_tag(tag: Tag, name: &QName) -> bool {
     tag.1 == name.local && name.namespace == tag.0.map_or(Namespace::None, Namespace::Known)
 }
 
-/// A universal measure, `2.5cm`, matching one of `patterns`.
-///
-/// # Errors
-///
-/// Text that matches none of them.
-pub fn measure(
-    text: &str,
-    patterns: &[&str],
-    simple_type: &'static str,
-) -> Result<Measure, ValueError> {
+/// A universal measure, `2.5cm`, matching one of `patterns`; `None` for text
+/// that matches none of them.
+#[must_use = "this only returns the value"]
+pub fn measure(text: &str, patterns: &Patterns) -> Option<Measure> {
     patterns
-        .iter()
-        .any(|pattern| matches_pattern(pattern, text).unwrap_or(false))
+        .matches(text)
         .then(|| parse::measure(text))
         .flatten()
-        .ok_or_else(|| invalid(text, simple_type))
 }
 
 /// An element's tag as the typed tree matches it; `None` for a namespace the
@@ -1879,22 +1823,14 @@ pub const fn name(element: &Element) -> Option<(Option<NamespaceId>, &str)> {
     tag_of(&element.name)
 }
 
-/// A percentage, `50%` being 50.0, matching one of `patterns`.
-///
-/// # Errors
-///
-/// Text that matches none of them.
-pub fn percentage(
-    text: &str,
-    patterns: &[&str],
-    simple_type: &'static str,
-) -> Result<f64, ValueError> {
+/// A percentage, `50%` being 50.0, matching one of `patterns`; `None` for
+/// text that matches none of them.
+#[must_use = "this only returns the value"]
+pub fn percentage(text: &str, patterns: &Patterns) -> Option<f64> {
     patterns
-        .iter()
-        .any(|pattern| matches_pattern(pattern, text).unwrap_or(false))
+        .matches(text)
         .then(|| parse::decimal_with_suffix(text, "%"))
         .flatten()
-        .ok_or_else(|| invalid(text, simple_type))
 }
 
 /// The generic node an item of the typed tree writes as: an arm's element
@@ -1931,30 +1867,16 @@ where
     T::read(element)
 }
 
-/// A string within its length and pattern facets.
-///
-/// # Errors
-///
-/// Text out of the facets.
-pub fn text<'text>(
-    text: &'text str,
-    facets: &Facets,
-    simple_type: &'static str,
-) -> Result<&'text str, ValueError> {
+/// A string within its length and pattern facets; `None` for text out of
+/// them.
+#[must_use = "this only returns the value"]
+pub fn text<'text>(text: &'text str, facets: &Facets) -> Option<&'text str> {
     let length = text.chars().count();
     let within = facets.length.is_none_or(|bound| length == bound)
         && facets.min_length.is_none_or(|bound| length >= bound)
         && facets.max_length.is_none_or(|bound| length <= bound)
-        && (facets.patterns.is_empty()
-            || facets
-                .patterns
-                .iter()
-                .any(|pattern| matches_pattern(pattern, text).unwrap_or(false)));
-    if within {
-        Ok(text)
-    } else {
-        Err(invalid(text, simple_type))
-    }
+        && (facets.patterns.is_empty() || facets.patterns.matches(text));
+    within.then_some(text)
 }
 
 /// The Transitional URI of a namespace id.
