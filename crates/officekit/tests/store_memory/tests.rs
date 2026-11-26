@@ -30,6 +30,15 @@ thread_local! {
 
     /// The most `LIVE` reached since it was last reset.
     static PEAK: Cell<isize> = const { Cell::new(0) };
+
+    /// The `LIVE` above which a rise is counted.
+    static FLOOR: Cell<isize> = const { Cell::new(isize::MAX) };
+
+    /// The rises of `LIVE` above `FLOOR` since it was set.
+    static RISES: Cell<usize> = const { Cell::new(0) };
+
+    /// The most `LIVE` reached in the latest rise above `FLOOR`.
+    static RISE_PEAK: Cell<isize> = const { Cell::new(0) };
 }
 
 /// The system allocator, counting the bytes it holds.
@@ -57,9 +66,18 @@ unsafe impl GlobalAlloc for Counting {
 /// Adds `change` bytes to this thread's count while it counts.
 fn count(change: isize) {
     if COUNTING.get() {
-        let live = LIVE.get().saturating_add(change);
+        let before = LIVE.get();
+        let live = before.saturating_add(change);
         LIVE.set(live);
         PEAK.set(PEAK.get().max(live));
+        let floor = FLOOR.get();
+        if live > floor {
+            if before <= floor {
+                RISES.set(RISES.get().saturating_add(1));
+                RISE_PEAK.set(live);
+            }
+            RISE_PEAK.set(RISE_PEAK.get().max(live));
+        }
     }
 }
 
@@ -181,4 +199,82 @@ fn a_store_over_a_large_part_holds_its_bytes_and_never_its_tree() {
             "{class:?}: peak {peak} bytes, new trees {typed_bytes} and {generic}, old part {old_bytes}"
         );
     }
+}
+
+/// Count each rise of this thread's bytes above `floor` from now on.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+fn watch_rises_above(floor: usize) {
+    FLOOR.set(isize::try_from(floor).unwrap());
+    RISES.set(0);
+    RISE_PEAK.set(0);
+}
+
+/// The rises above the floor so far, and the most bytes the latest one held.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+fn rises() -> (usize, usize) {
+    (RISES.get(), usize::try_from(RISE_PEAK.get()).unwrap())
+}
+
+/// Below the generic tree the Transitional spelling pass parses of a large main part and a copy
+/// of it: the copy the namespace cleanup made of that tree. A save from Strict to Transitional
+/// holds the part's trees twice, once to store the typed root and once to respell the stored
+/// part, and frees them in between; the second rise is the spelling pass.
+#[cfg(all(feature = "strict", feature = "transitional"))]
+#[test]
+fn the_transitional_spelling_pass_holds_less_than_its_tree_and_a_copy_of_it() {
+    use officekit::docx::Docx;
+    use officekit::parts::kinds::WordprocessingKind;
+    use officekit_markup::wordprocessing::{
+        HorizontalAlignmentType, ParagraphAlignment, ParagraphProperties,
+    };
+    use officekit_xml::packaging::package::OpenOptions;
+
+    let mut typed = document(20_000);
+    if let Some(BlockContent::Paragraph(first)) = typed
+        .body
+        .as_mut()
+        .and_then(|body| body.content.first_mut())
+    {
+        let mut alignment = ParagraphAlignment::default();
+        alignment.val = Some(HorizontalAlignmentType::from("left".to_owned()));
+        let mut properties = ParagraphProperties::default();
+        properties.paragraph_alignment = Some(Box::new(alignment));
+        first.properties = Some(Box::new(properties));
+    }
+    let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
+    docx.set_main_document(&typed).unwrap();
+    drop(typed);
+    let strict = Docx::from_bytes(docx.to_bytes_strict().unwrap(), OpenOptions::default()).unwrap();
+    drop(docx);
+    start();
+    let (bytes, _) = strict.to_bytes_transitional().unwrap();
+    let saved = Package::from_bytes(bytes).unwrap();
+    let main = String::from_utf8(saved.part_bytes(&main_part()).unwrap()).unwrap();
+    assert!(
+        main.contains("<w:jc w:val=\"left\"/>"),
+        "the part was respelled"
+    );
+    drop(main);
+    let base = live();
+    let tree = saved.tree_at(&main_part()).unwrap();
+    let generic = live() - base;
+    let copy = tree.clone();
+    let copied = live() - base - generic;
+    drop(copy);
+    drop(tree);
+    drop(saved);
+    let before = live();
+    watch_rises_above(before + generic / 4);
+    strict.to_bytes_transitional().unwrap();
+    let (count, rise_peak) = rises();
+    stop();
+    assert_eq!(
+        count, 2,
+        "one rise to store the typed root, one to respell the part"
+    );
+    let peak = rise_peak - before;
+    assert!(
+        peak < generic + copied,
+        "peak {peak} bytes, generic tree {generic}, its copy {copied}"
+    );
 }

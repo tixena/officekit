@@ -644,7 +644,15 @@ pub(crate) fn spell_tree(
     }
     let mut document = package.tree_at(name)?;
     if spell(&mut document.root, None) {
-        package.store_tree(name, &content_type, &document, options)?;
+        if options.namespace_cleanup {
+            document.root.clean_namespaces();
+        }
+        package.store_tree(
+            name,
+            &content_type,
+            &document,
+            WriteOptions::new(options.layout, false),
+        )?;
     }
     Ok(())
 }
