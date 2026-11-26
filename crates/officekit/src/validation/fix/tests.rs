@@ -10,7 +10,7 @@ use officekit_markup::wordprocessing::{
 use officekit_markup::wordprocessing_drawing::{
     self, DrawingObjectNonVisualProperties, InlineDrawingMLObject,
 };
-use officekit_strict::traversal::Visit as _;
+use officekit_traversal::Visit as _;
 use officekit_xml::element::{Document as XmlDocument, Element};
 use officekit_xml::name::OfficeVersion;
 #[cfg(feature = "transitional")]

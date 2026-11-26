@@ -215,7 +215,7 @@
 //!
 //! The namespace is `http://schemas.openxmlformats.org/officeDocument/2006/custom-properties`. Its prefix, `op`, is the
 //! short name a file gives it in the names of its elements. `Context` replaces nodes,
-//! `Visitor` looks at them, and `officekit_strict::traversal` calls both.
+//! `Visitor` looks at them, and `officekit_traversal` calls both.
 
 #[doc(no_inline)]
 pub use officekit_markup_base::document_properties_custom::*;

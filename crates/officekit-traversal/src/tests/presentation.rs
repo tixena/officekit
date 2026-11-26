@@ -10,7 +10,7 @@ use officekit_xml::parse::parse;
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::{Layout, Scope};
 
-use crate::traversal::{Transform as _, Unchanged, Visit as _, WriteThrough};
+use crate::{Transform as _, Unchanged, Visit as _, WriteThrough};
 
 const P: &str = "http://schemas.openxmlformats.org/presentationml/2006/main";
 

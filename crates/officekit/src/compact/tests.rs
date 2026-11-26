@@ -31,7 +31,7 @@ use officekit_markup::wordprocessing::{
     ReferencedCharacterStyle, RunProperties, RunPropertiesContent, TabCharacter, Text, TextRun,
     TextRunContent, read, write,
 };
-use officekit_strict::traversal::Visit;
+use officekit_traversal::Visit;
 use officekit_xml::element::{Document as XmlDocument, Element, Node};
 #[cfg(feature = "transitional")]
 use officekit_xml::name::OfficeVersion;

@@ -873,10 +873,8 @@ fn part_root_impl(root: &RootText, path: &str) -> String {
     out
 }
 
-/// The `write_part` of a typed module's `impl PartRoot`, behind the Strict feature.
+/// The `write_part` of a typed module's `impl PartRoot`.
 fn write_part_impl(root: &RootText, out: &mut String) {
-    out.push_str("    ");
-    out.push_str(STRICT_ONLY);
     out.push_str(&layout::signature(
         4,
         "fn write_part",
@@ -1549,7 +1547,7 @@ fn uses(root: Option<&RootText>) -> String {
             known.module
         ),
         Some(known) => format!(
-            "use crate::parts::part_root::{{self, PartRoot}};\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_markup::Item;\nuse officekit_markup::{};\n{STRICT_ONLY}use officekit_strict::Strict as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::{{OpenOptions, Package}};\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\n{STRICT_ONLY}use officekit_xml::stream::writer::PartWriter;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
+            "use crate::parts::part_root::{{self, PartRoot}};\n{TRANSITIONAL_ONLY}use crate::transitional::Transitional as _;\nuse officekit_markup::Item;\nuse officekit_markup::{};\n{STRICT_ONLY}use officekit_strict::Strict as _;\nuse officekit_xml::conformance::ConformanceClass;\nuse officekit_xml::element::Element;\nuse officekit_xml::error::WriteError;\nuse officekit_xml::packaging::error::PackageError;\nuse officekit_xml::packaging::package::{{OpenOptions, Package}};\nuse officekit_xml::packaging::part_name::PartName;\nuse officekit_xml::packaging::relationship::RelationshipType;\nuse officekit_xml::stream::writer::PartWriter;\n{SHARED_WRITER}use officekit_xml::write::Scope;\n{EITHER_CLASS}use officekit_xml::write::WriteOptions;\n",
             known.module
         ),
     }

@@ -60,7 +60,7 @@
 //! # Hooks
 //!
 //! [`Descend`] and [`Written`] are the answers of the hooks that `officekit-markup` defines for
-//! every namespace. `officekit_strict::traversal` calls the hooks while it transforms, visits or
+//! every namespace. `officekit_traversal` calls the hooks while it transforms, visits or
 //! streams a tree.
 //!
 //! # Example

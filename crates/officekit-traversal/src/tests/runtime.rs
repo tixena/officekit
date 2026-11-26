@@ -6,7 +6,7 @@ use officekit_xml::element::{Element, Node};
 use officekit_xml::name::QName;
 use officekit_xml::parse::parse;
 
-use crate::traversal::{Rebase, Transform as _, Visit as _};
+use crate::{Rebase, Transform as _, Visit as _};
 
 /// Drops the comment children of every element it is asked about.
 struct DropComments;

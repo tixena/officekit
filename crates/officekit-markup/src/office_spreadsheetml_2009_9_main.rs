@@ -215,7 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2009/9/main`. Its prefix, `x14`, is the
 //! short name a file gives it in the names of its elements. `Context` replaces nodes,
-//! `Visitor` looks at them, and `officekit_strict::traversal` calls both.
+//! `Visitor` looks at them, and `officekit_traversal` calls both.
 
 #[doc(no_inline)]
 pub use officekit_markup_core::office_spreadsheetml_2009_9_main::*;

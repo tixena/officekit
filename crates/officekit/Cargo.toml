@@ -37,8 +37,11 @@ officekit-xml.workspace = true
 # The typed tree: one module per namespace, with readers, writers and hooks
 officekit-markup.workspace = true
 
-# The Strict class, every node's read and write, and the traversals the Strict read of a
-# workbook transforms it with
+# The typed tree's traversals: every part is written through its write-through, and the Strict
+# read of a workbook transforms it
+officekit-traversal.workspace = true
+
+# The Strict class, every node's read and write
 officekit-strict = { workspace = true, optional = true }
 
 # System abstraction (filesystem, env, temp dirs); its zip feature moves a
@@ -62,9 +65,6 @@ base64 = { workspace = true, features = ["alloc"] }
 regex = { workspace = true, features = ["std", "unicode-gencat"] }
 
 [dev-dependencies]
-# The write-through tests and the timing example walk the typed tree
-officekit-strict.workspace = true
-
 # The examples that stream a package into a file write to os-shim's async stream
 futures-io.workspace = true
 

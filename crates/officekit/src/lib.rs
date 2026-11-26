@@ -422,7 +422,8 @@ assert_eq!(rebuilt.kind(), WordprocessingKind::Document);
 //! | --- | --- |
 //! | [`officekit-xml`](https://docs.rs/officekit-xml) | The generic element tree, names and namespaces, the conformance class, markup compatibility, and the part reader and writer. Its `packaging` module holds the zip package: parts, part names, content types, relationships and images. |
 //! | [`officekit-markup`](https://docs.rs/officekit-markup) | The typed tree, one module per namespace. It gathers `officekit-markup-base` and `officekit-markup-core`. |
-//! | [`officekit-strict`](https://docs.rs/officekit-strict) | The Strict class: read and write of every node. Its `traversal` module holds the transforms, visitors and write-through over the typed tree. |
+//! | [`officekit-traversal`](https://docs.rs/officekit-traversal) | The transforms, visitors and write-through over the typed tree. |
+//! | [`officekit-strict`](https://docs.rs/officekit-strict) | The Strict class: read and write of every node. |
 //! | [`officekit-markdown`](https://docs.rs/officekit-markdown) | A Word file from markdown, and markdown from a Word file. |
 //! | `officekit-cli` | The `officekit` command line. It has no library. |
 //!

@@ -4,35 +4,31 @@
 //! [`Package`] and [`store`] writes one back in a conformance class. Every generated part module
 //! calls them with its own root.
 
-#[cfg(feature = "strict")]
-use officekit_markup::Tag;
-use officekit_markup::{Events, Item};
+use officekit_markup::{Events, Item, Tag};
 #[cfg(feature = "strict")]
 use officekit_strict::StrictRules;
-#[cfg(feature = "strict")]
-use officekit_strict::traversal::{Unchanged, WriteThrough};
+use officekit_traversal::{Unchanged, WriteThrough};
 use officekit_xml::conformance::ConformanceClass;
-#[cfg(all(feature = "strict", not(feature = "transitional")))]
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
 use officekit_xml::element::{Attribute, Node};
 use officekit_xml::element::{Element, PartFrame, XmlError};
 use officekit_xml::error::WriteError;
 use officekit_xml::mc::Processed;
-#[cfg(all(feature = "strict", not(feature = "transitional")))]
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
 use officekit_xml::name::NamespaceId;
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{DECLARATION, OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::parse::utf8_of;
 use officekit_xml::stream::buffer::PartBuffer;
-#[cfg(feature = "strict")]
 use officekit_xml::stream::class::ClassRules;
-#[cfg(all(feature = "strict", not(feature = "transitional")))]
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
 use officekit_xml::stream::class::Site;
 use officekit_xml::stream::reader::PartReader;
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::{WriteOptions, clean_namespace_bytes};
 
-#[cfg(all(feature = "strict", feature = "transitional"))]
+#[cfg(feature = "transitional")]
 use crate::transitional::TransitionalRules;
 
 #[cfg(test)]
@@ -152,10 +148,10 @@ pub trait PartRoot: Sized {
 
 /// The rules of a class whose feature is off: the shared writer's nodes, every namespace
 /// declared in the class's URI.
-#[cfg(all(feature = "strict", not(feature = "transitional")))]
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
 struct SharedRules(ConformanceClass);
 
-#[cfg(all(feature = "strict", not(feature = "transitional")))]
+#[cfg(not(all(feature = "strict", feature = "transitional")))]
 impl ClassRules for SharedRules {
     fn convert(&mut self, mut element: Element, _site: &Site<'_>) -> Result<Vec<Node>, WriteError> {
         element.set_class(self.0);
@@ -186,7 +182,6 @@ impl ClassRules for SharedRules {
 ///
 /// [`WriteError::NotInClass`] naming the first content `class` has no form for, and
 /// [`WriteError::Io`] when the sink fails.
-#[cfg(feature = "strict")]
 pub fn write_through<R>(
     root: &R,
     class: ConformanceClass,
@@ -205,28 +200,40 @@ where
 
 /// The rules of `class`; `respell` writes each value in the class's own spelling, which Strict's
 /// rules always do.
-#[cfg(feature = "strict")]
 fn class_rules(
     class: ConformanceClass,
     conformance: Option<Tag>,
     respell: bool,
 ) -> Box<dyn ClassRules> {
     if class == ConformanceClass::Strict {
-        Box::new(StrictRules::new(conformance))
+        strict_rules(conformance)
     } else {
         transitional_rules(conformance, respell)
     }
 }
 
+/// The rules of the Strict class.
+#[cfg(feature = "strict")]
+fn strict_rules(conformance: Option<Tag>) -> Box<dyn ClassRules> {
+    Box::new(StrictRules::new(conformance))
+}
+
+/// The rules of the Strict class with its feature off: the shared writer's nodes, every
+/// namespace declared in the Strict URI.
+#[cfg(not(feature = "strict"))]
+fn strict_rules(_conformance: Option<Tag>) -> Box<dyn ClassRules> {
+    Box::new(SharedRules(ConformanceClass::Strict))
+}
+
 /// The rules of the Transitional class.
-#[cfg(all(feature = "strict", feature = "transitional"))]
+#[cfg(feature = "transitional")]
 fn transitional_rules(conformance: Option<Tag>, respell: bool) -> Box<dyn ClassRules> {
     Box::new(TransitionalRules::new(conformance, respell))
 }
 
 /// The rules of the Transitional class with its feature off: the shared writer's nodes, every
 /// namespace declared in the Transitional URI.
-#[cfg(all(feature = "strict", not(feature = "transitional")))]
+#[cfg(not(feature = "transitional"))]
 fn transitional_rules(_conformance: Option<Tag>, _respell: bool) -> Box<dyn ClassRules> {
     Box::new(SharedRules(ConformanceClass::Transitional))
 }

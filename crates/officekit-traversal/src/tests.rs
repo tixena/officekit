@@ -25,7 +25,7 @@ use officekit_xml::parse::parse;
 use officekit_xml::stream::writer::PartWriter;
 use officekit_xml::write::{Layout, Scope};
 
-use crate::traversal::{Transform as _, Unchanged, Visit, WriteThrough};
+use crate::{Transform as _, Unchanged, Visit, WriteThrough};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 

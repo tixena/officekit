@@ -1,6 +1,5 @@
 //! `officekit-strict` is the Strict conformance class of officekit (ECMA-376 Part 1): it reads
-//! and writes every node of the typed tree in Strict. Its [`traversal`] module holds the typed
-//! tree's traversals: each node's `Transform`, `Visit` and `WriteThrough`.
+//! and writes every node of the typed tree in Strict.
 //!
 //! Office Open XML has two conformance classes. Transitional is what Word, Excel and `PowerPoint`
 //! have always written. Strict is the other form: other namespace URIs, other names for some
@@ -9,7 +8,7 @@
 //!
 //! Most code does not name this crate for its Strict write. The `officekit` crate turns it on with
 //! its feature `strict`, and its `save_strict` and `to_bytes_strict` write a whole file in Strict.
-//! Use this crate to write one node, or one part, in Strict, or to walk a typed tree.
+//! Use this crate to write one node, or one part, in Strict.
 //!
 //! # The [`Strict`] trait
 //!
@@ -116,8 +115,6 @@ extern crate alloc;
 
 // The namespace modules, `officekit_strict::<namespace>`, generated in a file of their own.
 include!("modules.rs");
-
-pub mod traversal;
 
 use alloc::sync::Arc;
 use core::cmp::Ordering;

@@ -215,7 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/spreadsheetml/2021/extlinks2021`. Its prefix, `xxl21`, is the
 //! short name a file gives it in the names of its elements. `Context` replaces nodes,
-//! `Visitor` looks at them, and `officekit_strict::traversal` calls both.
+//! `Visitor` looks at them, and `officekit_traversal` calls both.
 
 #[doc(no_inline)]
 pub use officekit_markup_base::office_spreadsheetml_2021_extlinks2021::*;

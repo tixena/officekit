@@ -9,7 +9,7 @@ use officekit_xml::parse::parse;
 use officekit_xml::stream::writer::{Children, PartWriter};
 use officekit_xml::write::{Layout, Scope};
 
-use crate::traversal::{Place, Transform as _, Unchanged, WriteThrough as _};
+use crate::{Place, Transform as _, Unchanged, WriteThrough as _};
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const WP: &str = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";

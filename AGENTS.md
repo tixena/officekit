@@ -13,7 +13,8 @@ crates/officekit-markup        library: the typed tree, officekit_markup::<names
 crates/officekit-markup-base   library: the runtime and the namespaces the cycle depends on
 crates/officekit-markup-core   library: the namespaces that reference each other in a cycle
 crates/officekit-markup-macros proc-macro: the `#[user_data]` attribute, re-exported as `officekit_markup::user_data`
-crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit); the typed tree's transforms, visitors and write-through (`traversal`)
+crates/officekit-strict        library: the Strict class: read and write of every node (feature `strict` of officekit)
+crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
 crates/officekit-xml           library: element tree, names, values, part reader and writer; the package, part names, content types, relationships, images (`packaging`)
 crates/officekit-cli           CLI binary
 crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never installed
@@ -59,8 +60,8 @@ vml                what ECMA-376 Part 4 writes about VML, for every file type th
   `crates/officekit-markup-base/src` but `lib.rs`, `class_rules.rs`, and the
   unit tests; everything under `crates/officekit-markup-core/src` and
   `crates/officekit-markup/src` but `lib.rs` and the unit tests;
-  everything under `crates/officekit-strict/src` but `lib.rs`, `traversal.rs`
-  and the unit tests; everything under `crates/officekit/src/transitional` but
+  everything under `crates/officekit-strict/src` and `crates/officekit-traversal/src` but
+  `lib.rs` and the unit tests; everything under `crates/officekit/src/transitional` but
   `dates.rs` and the unit tests; `crates/officekit/src/parts.rs` and everything
   under `crates/officekit/src/parts` but `part_root.rs` and the unit tests;
   `crates/officekit/src/validation/generated/` (and `generated.rs`);

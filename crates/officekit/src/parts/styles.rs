@@ -361,7 +361,6 @@ use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};
 use officekit_xml::packaging::part_name::PartName;
 use officekit_xml::packaging::relationship::RelationshipType;
-#[cfg(feature = "strict")]
 use officekit_xml::stream::writer::PartWriter;
 #[cfg(not(all(feature = "strict", feature = "transitional")))]
 use officekit_xml::write::Scope;
@@ -401,7 +400,6 @@ impl PartRoot for spreadsheet::StyleSheet {
         super::tree_in_class(self, class, strict, transitional)
     }
 
-    #[cfg(feature = "strict")]
     fn write_part(
         &self,
         class: ConformanceClass,

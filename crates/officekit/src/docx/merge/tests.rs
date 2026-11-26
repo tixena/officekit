@@ -32,7 +32,7 @@ use officekit_markup::wordprocessing::{
 };
 use officekit_markup::wordprocessing_drawing::{self, InlineDrawingMLObject};
 use officekit_markup::{Descend, Unknown};
-use officekit_strict::traversal::Visit;
+use officekit_traversal::Visit;
 use officekit_xml::element::{Attribute, Document as XmlDocument, Element, NamespaceDeclaration};
 use officekit_xml::name::QName;
 use officekit_xml::packaging::error::PackageError;

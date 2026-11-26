@@ -219,8 +219,8 @@
 /// through which a context opts into that namespace's hooks by returning `Some(self)`. An accessor
 /// answers `None` by default, so a context is never asked about a namespace it did not opt into.
 ///
-/// The `traversal` module of `officekit-strict` calls the hooks: `Transform` asks the tree and list
-/// hooks, and `WriteThrough` asks the write hooks. `read` and `write` never do.
+/// `officekit-traversal` calls the hooks: `Transform` asks the tree and list hooks, and
+/// `WriteThrough` asks the write hooks. `read` and `write` never do.
 pub trait Context {
     /// The `additional_characteristics::Context` hooks. `None` until this opts in by returning
     /// `Some(self)`.
@@ -1188,7 +1188,7 @@ pub trait Context {
 /// through which a visitor opts into that namespace's hooks by returning `Some(self)`. An accessor
 /// answers `None` by default, so a visitor is never shown a namespace it did not opt into.
 ///
-/// The `traversal` module of `officekit-strict` calls the hooks through `Visit`.
+/// `officekit-traversal` calls the hooks through `Visit`.
 pub trait Visitor {
     /// The `additional_characteristics::Visitor` hooks. `None` until this opts in by returning
     /// `Some(self)`.

@@ -10,7 +10,7 @@ use std::io::{self, Write};
 use officekit::parts::{main_document, style_definitions};
 use officekit_markup::wordprocessing::{self, TableRow, Text, read};
 use officekit_markup::{Descend, Written};
-use officekit_strict::traversal::{Visit as _, WriteThrough as _};
+use officekit_traversal::{Visit as _, WriteThrough as _};
 use officekit_xml::element::{Document as Part, Element};
 use officekit_xml::name::Namespace;
 use officekit_xml::packaging::error::PackageError;

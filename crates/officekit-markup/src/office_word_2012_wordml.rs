@@ -215,7 +215,7 @@
 //!
 //! The namespace is `http://schemas.microsoft.com/office/word/2012/wordml`. Its prefix, `w15`, is the
 //! short name a file gives it in the names of its elements. `Context` replaces nodes,
-//! `Visitor` looks at them, and `officekit_strict::traversal` calls both.
+//! `Visitor` looks at them, and `officekit_traversal` calls both.
 
 #[doc(no_inline)]
 pub use officekit_markup_core::office_word_2012_wordml::*;

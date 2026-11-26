@@ -9,7 +9,7 @@ use officekit_markup::wordprocessing::{
     TextRun, TextRunContent, read, write,
 };
 use officekit_markup::{Descend, Written};
-use officekit_strict::traversal::{Visit, WriteThrough as _};
+use officekit_traversal::{Visit, WriteThrough as _};
 use officekit_xml::element::{Document as Part, Element, NamespaceDeclaration};
 use officekit_xml::name::Namespace;
 use officekit_xml::packaging::package::{DECLARATION as XML_DECLARATION, OpenOptions, Package};

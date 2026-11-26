@@ -211,7 +211,7 @@
 // pdftotext version 26.01.0
 // open-xml-sdk 3139fdfd27414548a41555f7848d5728f6e71a42 (v3.5.1)
 // The traversal modules, one per namespace of the typed tree with a node,
-// brought into the `traversal` module with `include!` ahead of its imports.
+// brought into the crate root with `include!` ahead of its imports.
 
 mod additional_characteristics;
 mod bibliography;

@@ -17,7 +17,6 @@ use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
 use super::Transitional;
-#[cfg(feature = "strict")]
 use super::spell;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -335,7 +334,6 @@ fn an_ecma_wsp_under_another_address_stays_as_it_is() {
 }
 
 /// `text` after a save from Strict to Transitional's walk, serialized compact.
-#[cfg(feature = "strict")]
 fn spelled(text: &str) -> String {
     let mut root = element(text);
     spell(&mut root, None);
@@ -345,7 +343,6 @@ fn spelled(text: &str) -> String {
     String::from_utf8(part.to_xml(KEEP)).unwrap()
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_writes_each_kind_of_row_in_transitional_s_spelling() {
     let written = spelled(&format!(
@@ -366,7 +363,6 @@ fn the_walk_back_writes_each_kind_of_row_in_transitional_s_spelling() {
     }
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn a_measure_rounds_half_away_from_zero_and_a_value_it_cannot_read_stays() {
     let written = spelled(&format!(
@@ -393,7 +389,6 @@ fn a_measure_rounds_half_away_from_zero_and_a_value_it_cannot_read_stays() {
     );
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_moves_codes_dates_and_children_back_into_their_attributes() {
     let font = spelled(&format!(
@@ -417,7 +412,6 @@ fn the_walk_back_moves_codes_dates_and_children_back_into_their_attributes() {
     }
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_scopes_a_rule_to_the_parent_that_has_it() {
     let written = spelled(&format!(
@@ -431,7 +425,6 @@ fn the_walk_back_scopes_a_rule_to_the_parent_that_has_it() {
     );
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_converts_percentages_in_text_and_attributes_and_keeps_a_chart_s_numbers() {
     let wp14 = "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing";
@@ -450,7 +443,6 @@ fn the_walk_back_converts_percentages_in_text_and_attributes_and_keeps_a_chart_s
     }
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_leaves_transitional_s_own_spelling_unchanged() {
     let text = format!(
@@ -460,7 +452,6 @@ fn the_walk_back_leaves_transitional_s_own_spelling_unchanged() {
 }
 
 /// The main part `text` holds, read into its typed root and stored in Transitional with `options`.
-#[cfg(feature = "strict")]
 fn stored(text: &str, options: WriteOptions) -> String {
     use crate::parts::main_document;
     use crate::parts::part_root;
@@ -482,7 +473,6 @@ fn stored(text: &str, options: WriteOptions) -> String {
     String::from_utf8(package.part_bytes(&name).unwrap()).unwrap()
 }
 
-#[cfg(feature = "strict")]
 #[test]
 fn a_transitional_store_respells_each_value_only_when_its_options_say() {
     let text = format!(

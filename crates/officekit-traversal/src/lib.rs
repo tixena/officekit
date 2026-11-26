@@ -1,7 +1,7 @@
 //! The traversals of officekit's typed tree: change it, look through it, or write it out.
 //!
 //! The typed tree is `officekit_markup`: one module per Office Open XML namespace, with a struct
-//! for each element and an enum for each list of alternative children. This module gives every
+//! for each element and an enum for each list of alternative children. This crate gives every
 //! struct and enum three ways to be walked.
 //!
 //! - [`Transform`] builds a changed copy of a node. A context decides what changes.
@@ -16,13 +16,13 @@
 //! returns `None`, and the namespace is then left as it is. The generic elements the schemas do
 //! not declare go to `Context::element` and `Visitor::element`.
 //!
-//! The namespace modules of this module hold only the generated implementations of these traits.
-//! This module's root holds the runtime they call: [`Walk`], [`Through`], [`Place`], [`Rebase`], the
+//! The namespace modules of this crate hold only the generated implementations of these traits.
+//! The crate's root holds the runtime they call: [`Walk`], [`Through`], [`Place`], [`Rebase`], the
 //! [`Unchanged`] context, and the functions that ask the hooks. Code that only uses the traversals
 //! does not need those.
 //!
-//! The module needs no feature. It sits above `officekit-markup` and `officekit-xml`, and
-//! `officekit` uses it for Strict saves.
+//! The crate needs no feature. It sits above `officekit-markup` and `officekit-xml`, and
+//! `officekit` writes every typed part through it, in either class.
 //!
 //! # Example
 //!
@@ -31,7 +31,7 @@
 //!
 //! ```
 //! use officekit_markup::{Context, Descend, Visitor};
-//! use officekit_strict::traversal::{Transform, Visit};
+//! use officekit_traversal::{Transform, Visit};
 //! use officekit_xml::element::{Element, Node};
 //! use officekit_xml::name::QName;
 //!
@@ -70,9 +70,11 @@
 //! assert_eq!(&*child.name.local, "new");
 //! ```
 
+extern crate alloc;
+
 // The traversal modules, generated in a file of their own: module declarations
 // go before the imports, and `include!` places them where it stands.
-include!("traversal/modules.rs");
+include!("modules.rs");
 
 use core::iter;
 use std::io;

@@ -4,7 +4,7 @@
 //! the modules' references assigns it, `officekit-markup-base`,
 //! `officekit-markup-core` or `officekit-markup`, with its readers and
 //! writers beside it, and its traversals to
-//! `crates/officekit-strict/src/traversal/<namespace>.rs`, from the schema model
+//! `crates/officekit-traversal/src/<namespace>.rs`, from the schema model
 //! of the Transitional schemas, SDK 3.5.1's extension types and placements, and
 //! the standard's titles. `officekit-markup` has a module for every namespace.
 //!
@@ -44,7 +44,7 @@ use crate::generate_schema::sdk_data::{DataVersion, SdkData, TwinNames};
 mod tests;
 
 /// The folder of the traversal modules, from the workspace root.
-pub const TRAVERSAL_PATH: &str = "crates/officekit-strict/src/traversal";
+pub const TRAVERSAL_PATH: &str = "crates/officekit-traversal/src";
 
 /// The hand-written table of enum names, from the workspace root.
 pub const ENUM_NAMES_PATH: &str = "crates/xtask/data/enum_names.toml";

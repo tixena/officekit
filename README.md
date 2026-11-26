@@ -42,7 +42,8 @@ crates/officekit-markdown      library: a Word file from markdown, and markdown 
 crates/officekit-markup        library: the typed tree, one module per namespace, with readers, writers and hooks
 crates/officekit-markup-base   library: the typed tree's runtime, and the namespaces its cycle depends on
 crates/officekit-markup-core   library: the typed tree's namespaces that reference each other in a cycle
-crates/officekit-strict        library: the Strict class: read and write of every node; the typed tree's transforms, visitors and write-through
+crates/officekit-strict        library: the Strict class: read and write of every node
+crates/officekit-traversal     library: the typed tree's transforms, visitors and write-through
 crates/officekit-xml           library: element tree, names, values, part reader and writer; the package, part names, content types, relationships, images
 crates/officekit-cli           CLI binary
 crates/xtask                   dev tooling (`cargo xtask <subcommand>`), never installed
@@ -187,7 +188,7 @@ just bpublish # build the CLI for this machine's target and add it to the GitHub
 `cargo xtask generate-schema` writes the typed tree into
 `crates/officekit-markup-base/src`, `crates/officekit-markup-core/src` and
 `crates/officekit-markup/src`, its traversals into
-`crates/officekit-strict/src/traversal`, the conformance classes into
+`crates/officekit-traversal/src`, the conformance classes into
 `crates/officekit/src/transitional` and `crates/officekit-strict/src`, the
 part modules into `crates/officekit/src/parts`, the validation tables into
 `crates/officekit/src/validation/generated/`, the name table of

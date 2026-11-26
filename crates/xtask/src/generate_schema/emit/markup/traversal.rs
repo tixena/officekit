@@ -2,7 +2,7 @@
 //! hook traits, `Context` and `Visitor`, and the root accessors, one per
 //! namespace, in `officekit_markup`; every node's `Transform`, `Visit`, and
 //! `WriteThrough`, and each enum's `Item`, in the namespace's module of
-//! `officekit_strict::traversal`.
+//! `officekit_traversal`.
 //!
 //! A struct's hook is its reader's name, its name in snake case; an enum's is
 //! its name without the trailing `Content`, or the full name when that is a
@@ -118,8 +118,8 @@ enum Step {
 }
 
 impl Step {
-    /// The method of `officekit_strict::traversal::Walk` and
-    /// `officekit_strict::traversal::Through` this step calls.
+    /// The method of `officekit_traversal::Walk` and
+    /// `officekit_traversal::Through` this step calls.
     const fn method(self) -> &'static str {
         match self {
             Self::Child => "child",
@@ -157,7 +157,7 @@ pub fn listed(catalog: &Catalog) -> BTreeSet<usize> {
 }
 
 /// Whether a namespace module has a struct or an enum, which its module of
-/// `officekit_strict::traversal` implements the traversals for.
+/// `officekit_traversal` implements the traversals for.
 #[must_use = "this only answers the question"]
 pub fn has_nodes(names: &Names<'_>) -> bool {
     !names.node_functions.is_empty() || !names.enum_functions.is_empty()
@@ -402,7 +402,7 @@ pub fn hooks_text(
         "//! The hooks of the `{}` namespace, `Context` and `Visitor`, beside its typed\n\
          //! tree, re-exported from `{}::{}`.\n//!\n//! The namespace is `{}`. Its prefix, `{}`, is the\n\
          //! short name a file gives it in the names of its elements. `Context` replaces nodes,\n\
-         //! `Visitor` looks at them, and `officekit_strict::traversal` calls both.\n",
+         //! `Visitor` looks at them, and `officekit_traversal` calls both.\n",
         module.prefix,
         home.name(),
         module.name,
@@ -467,7 +467,7 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
          trait.\n\nIt holds the hooks for content the schemas do not declare, and one accessor \
          per namespace, through which a context opts into that namespace's hooks by returning \
          `Some(self)`. An accessor answers `None` by default, so a context is never asked about \
-         a namespace it did not opt into.\n\nThe `traversal` module of `officekit-strict` calls the hooks: \
+         a namespace it did not opt into.\n\n`officekit-traversal` calls the hooks: \
          `Transform` asks the tree and list hooks, and `WriteThrough` asks the write hooks. \
          `read` and `write` never do.",
     ));
@@ -480,7 +480,7 @@ pub fn root_text(catalog: &Catalog, order: &[usize]) -> String {
          trait.\n\nIt holds the hook for content the schemas do not declare, and one accessor \
          per namespace, through which a visitor opts into that namespace's hooks by returning \
          `Some(self)`. An accessor answers `None` by default, so a visitor is never shown a \
-         namespace it did not opt into.\n\nThe `traversal` module of `officekit-strict` calls the hooks \
+         namespace it did not opt into.\n\n`officekit-traversal` calls the hooks \
          through `Visit`.",
     ));
     out.push_str("pub trait Visitor {\n");
@@ -507,7 +507,7 @@ pub fn files(header: &str, catalog: &Catalog, folder: &Path) -> Result<Vec<(Path
     let mut modules = String::from(header);
     modules.push_str(
         "// The traversal modules, one per namespace of the typed tree with a node,\n\
-         // brought into the `traversal` module with `include!` ahead of its imports.\n\n",
+         // brought into the crate root with `include!` ahead of its imports.\n\n",
     );
     for module in &order {
         let names = render::functions(catalog, *module)?;
@@ -525,7 +525,7 @@ pub fn files(header: &str, catalog: &Catalog, folder: &Path) -> Result<Vec<(Path
     Ok(files)
 }
 
-/// The text of a namespace's module of `officekit_strict::traversal`.
+/// The text of a namespace's module of `officekit_traversal`.
 #[must_use = "this only returns the value"]
 pub fn text(header: &str, names: &Names<'_>, listed: &BTreeSet<usize>) -> String {
     let catalog = names.catalog;

@@ -19,7 +19,7 @@ lint:
     cargo fmt --all --check
     # rustfmt does not expand include!, so cargo fmt never reaches the files a
     # crate root includes; rustfmt reaches every module behind each of them.
-    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup/src/root.rs crates/officekit-strict/src/rules.rs crates/officekit-strict/src/traversal/modules.rs crates/officekit/src/transitional/modules.rs crates/officekit/src/transitional/rules.rs crates/officekit/src/validation/generated/*.rs
+    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup/src/root.rs crates/officekit-strict/src/rules.rs crates/officekit/src/transitional/modules.rs crates/officekit/src/transitional/rules.rs crates/officekit/src/validation/generated/*.rs
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
 
 # Format Rust.
@@ -32,7 +32,8 @@ build:
     cargo build --workspace
 
 # Run the test suite, officekit's and officekit-markdown's with every feature on,
-# officekit's with Strict alone, and the CLI's without the binary form. officekit-markup-core builds first and
+# officekit's with Strict alone, officekit's store memory test with Transitional alone, and the
+# CLI's without the binary form. officekit-markup-core builds first and
 # alone. The next line builds the libraries, binaries and examples with the
 # dev-dependencies' features, as the test run resolves them, so `cargo test
 # --workspace` compiles test targets only and no generated crate's library
@@ -44,6 +45,7 @@ test:
     cargo test -p officekit --all-features
     cargo test -p officekit-markdown --all-features
     cargo test -p officekit --no-default-features --features strict
+    cargo test -p officekit --no-default-features --features transitional --test store_memory
     cargo test -p officekit-cli --no-default-features
 
 # The gate for each change: fmt, then clippy, a build and a test run of the
@@ -53,7 +55,7 @@ check:
     cargo fmt --all --check
     # rustfmt does not expand include!, so cargo fmt never reaches the files a
     # crate root includes; rustfmt reaches every module behind each of them.
-    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup/src/root.rs crates/officekit-strict/src/rules.rs crates/officekit-strict/src/traversal/modules.rs crates/officekit/src/transitional/modules.rs crates/officekit/src/transitional/rules.rs crates/officekit/src/validation/generated/*.rs
+    rustfmt --edition 2024 --check crates/*/src/modules.rs crates/officekit-markup/src/root.rs crates/officekit-strict/src/rules.rs crates/officekit/src/transitional/modules.rs crates/officekit/src/transitional/rules.rs crates/officekit/src/validation/generated/*.rs
     find crates -name tests.rs -print0 | xargs -0 rustfmt --edition 2024 --check
     cargo clippy --workspace --all-targets --all-features -- -D warnings
     # One job: officekit-markup-core peaks at 7 GB, and officekit-markup
@@ -83,6 +85,7 @@ docs:
     cargo doc --no-deps -p officekit-markup-base --all-features
     cargo doc --no-deps -p officekit-markup-core
     cargo doc --no-deps -p officekit-markup
+    cargo doc --no-deps -p officekit-traversal
     cargo doc --no-deps -p officekit-strict
     cargo doc --no-deps -p officekit --all-features
     cargo doc --no-deps -p officekit-markdown --all-features

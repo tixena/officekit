@@ -676,6 +676,7 @@ dependencies = [
  "futures-io",
  "officekit-markup",
  "officekit-strict",
+ "officekit-traversal",
  "officekit-xml",
  "os-shim 0.4.1",
  "quick-xml",
@@ -758,6 +759,14 @@ dependencies = [
 
 [[package]]
 name = "officekit-strict"
+version = "0.1.1"
+dependencies = [
+ "officekit-markup",
+ "officekit-xml",
+]
+
+[[package]]
+name = "officekit-traversal"
 version = "0.1.1"
 dependencies = [
  "officekit-markup",

@@ -98,7 +98,7 @@
 //! # Hooks
 //!
 //! A hook is a method with a default body that does nothing. A program implements the ones it
-//! cares about, and `officekit_strict::traversal` calls them while it walks a typed tree. Reading
+//! cares about, and `officekit_traversal` calls them while it walks a typed tree. Reading
 //! and writing a node alone never calls a hook.
 //!
 //! A [`Context`] changes or writes nodes:

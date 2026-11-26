@@ -31,7 +31,7 @@ use officekit_markup::spreadsheet::{SharedStringTable, StyleSheet, Workbook};
 #[cfg(feature = "strict")]
 use officekit_strict::iso_date_time;
 #[cfg(feature = "strict")]
-use officekit_strict::traversal::Transform as _;
+use officekit_traversal::Transform as _;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::packaging::error::PackageError;
 use officekit_xml::packaging::package::{OpenOptions, Package};

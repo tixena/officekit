@@ -151,7 +151,6 @@ pub fn serial_date_time(date: &DateTime, date1904: bool) -> Option<f64> {
 
 /// The serial date-time, in the 1900 date system, of an ISO 8601 date-time's text; `None` when
 /// the text is no date.
-#[cfg(feature = "strict")]
 pub(crate) fn serial_text(text: &str) -> Option<String> {
     cell_date(text, false)
         .and_then(|date| serial_date_time(&date, false))
