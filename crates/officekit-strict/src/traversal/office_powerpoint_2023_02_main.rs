@@ -394,8 +394,12 @@ impl WriteThrough for office_powerpoint_2023_02_main::PhTypeExt {
 }
 
 impl super::Item for office_powerpoint_2023_02_main::PlaceholderTypeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -548,6 +552,7 @@ impl WriteThrough for office_powerpoint_2023_02_main::Type {
             &office_powerpoint_2023_02_main::TYPE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

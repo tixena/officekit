@@ -478,6 +478,7 @@ impl WriteThrough for office_drawing_2014_chartex::Axis {
         );
         through.attribute(0, &self.id);
         through.attribute(1, &self.hidden);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.title_axis_title, ctx)?;
         through.child(&self.units, ctx)?;
@@ -520,8 +521,12 @@ impl WriteThrough for office_drawing_2014_chartex::Axis {
 }
 
 impl super::Item for office_drawing_2014_chartex::AxisContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1017,6 +1022,7 @@ impl WriteThrough for office_drawing_2014_chartex::Binning {
         through.attribute(0, &self.interval_closed);
         through.attribute(1, &self.underflow);
         through.attribute(2, &self.overflow);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1048,8 +1054,12 @@ impl WriteThrough for office_drawing_2014_chartex::Binning {
 }
 
 impl super::Item for office_drawing_2014_chartex::BinningContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -2059,6 +2069,7 @@ impl WriteThrough for office_drawing_2014_chartex::Data {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -2091,16 +2102,20 @@ impl WriteThrough for office_drawing_2014_chartex::Data {
 }
 
 impl super::Item for office_drawing_2014_chartex::DataContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_drawing_2014_chartex(),
             office_drawing_2014_chartex::Context::data_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3001,6 +3016,7 @@ impl WriteThrough for office_drawing_2014_chartex::Ext {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3783,6 +3799,7 @@ impl WriteThrough for office_drawing_2014_chartex::GeoCache {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.provider);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6262,16 +6279,20 @@ impl WriteThrough for office_drawing_2014_chartex::Geography {
 }
 
 impl super::Item for office_drawing_2014_chartex::GeographyCacheContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_drawing_2014_chartex(),
             office_drawing_2014_chartex::Context::geography_cache_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -6648,6 +6669,7 @@ impl WriteThrough for office_drawing_2014_chartex::LayoutPr {
             &office_drawing_2014_chartex::LAYOUT_PR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.parent_label_layout, ctx)?;
         through.child(&self.region_label_layout, ctx)?;
         through.child(&self.visibility_series_element_visibilities, ctx)?;
@@ -7203,6 +7225,7 @@ impl WriteThrough for office_drawing_2014_chartex::Max {
             &office_drawing_2014_chartex::MAX_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7291,6 +7314,7 @@ impl WriteThrough for office_drawing_2014_chartex::MaxColor {
             &office_drawing_2014_chartex::MAX_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7379,6 +7403,7 @@ impl WriteThrough for office_drawing_2014_chartex::Mid {
             &office_drawing_2014_chartex::MID_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7467,6 +7492,7 @@ impl WriteThrough for office_drawing_2014_chartex::MidColor {
             &office_drawing_2014_chartex::MID_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7555,6 +7581,7 @@ impl WriteThrough for office_drawing_2014_chartex::Min {
             &office_drawing_2014_chartex::MIN_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7643,6 +7670,7 @@ impl WriteThrough for office_drawing_2014_chartex::MinColor {
             &office_drawing_2014_chartex::MIN_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7996,6 +8024,7 @@ impl WriteThrough for office_drawing_2014_chartex::NumDim {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8198,16 +8227,20 @@ impl WriteThrough for office_drawing_2014_chartex::Number {
 }
 
 impl super::Item for office_drawing_2014_chartex::NumericDimensionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_drawing_2014_chartex(),
             office_drawing_2014_chartex::Context::numeric_dimension_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -9956,8 +9989,12 @@ impl WriteThrough for office_drawing_2014_chartex::Series {
 }
 
 impl super::Item for office_drawing_2014_chartex::SeriesLayoutPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -10128,6 +10165,9 @@ impl WriteThrough for office_drawing_2014_chartex::SpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -10309,6 +10349,7 @@ impl WriteThrough for office_drawing_2014_chartex::StrDim {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.r#type);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10340,16 +10381,20 @@ impl WriteThrough for office_drawing_2014_chartex::StrDim {
 }
 
 impl super::Item for office_drawing_2014_chartex::StringDimensionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_drawing_2014_chartex(),
             office_drawing_2014_chartex::Context::string_dimension_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -10553,8 +10598,12 @@ impl WriteThrough for office_drawing_2014_chartex::Subtotals {
 }
 
 impl super::Item for office_drawing_2014_chartex::TextContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -10650,8 +10699,12 @@ impl WriteThrough for office_drawing_2014_chartex::TextContent {
 }
 
 impl super::Item for office_drawing_2014_chartex::TextDataContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -11095,6 +11148,7 @@ impl WriteThrough for office_drawing_2014_chartex::Tx {
             &office_drawing_2014_chartex::TX_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -11183,6 +11237,7 @@ impl WriteThrough for office_drawing_2014_chartex::TxData {
             &office_drawing_2014_chartex::TX_DATA_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -11670,8 +11725,12 @@ impl WriteThrough for office_drawing_2014_chartex::ValScaling {
 }
 
 impl super::Item for office_drawing_2014_chartex::ValueColorEndPositionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -11774,8 +11833,12 @@ impl WriteThrough for office_drawing_2014_chartex::ValueColorEndPositionContent 
 }
 
 impl super::Item for office_drawing_2014_chartex::ValueColorMiddlePositionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

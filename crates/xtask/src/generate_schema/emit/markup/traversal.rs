@@ -906,8 +906,8 @@ fn walk(node: &Node, target: &str, prefix: &str, out: &mut String, helpers: &mut
 }
 
 /// The calls of a struct's `write_children_through` that write its
-/// attributes, then its text or children, each on lines at `indent`, reading
-/// the node `from`.
+/// attributes, scan its list and choice fields, then write its text or children, each on lines
+/// at `indent`, reading the node `from`.
 fn through_calls(node: &Node, from: &str, indent: &str) -> Vec<String> {
     let mut texts = Vec::new();
     for (position, attribute) in node.attributes.iter().enumerate() {
@@ -924,6 +924,17 @@ fn through_calls(node: &Node, from: &str, indent: &str) -> Vec<String> {
             &mut text,
         );
         texts.push(text);
+    }
+    for (field, step) in steps(node) {
+        if matches!(step, Step::Choice | Step::Items) {
+            let mut text = String::new();
+            layout::statement(
+                indent,
+                &Expr::call("through.scan", vec![Expr::Atom(format!("&{from}.{field}"))]),
+                &mut text,
+            );
+            texts.push(text);
+        }
     }
     let mut written: Vec<(String, &str)> = Vec::new();
     if let Body::Text(_) = node.body {
@@ -1087,15 +1098,12 @@ fn enum_impls(
     let prefix = bare(hook);
     out.push('\n');
     out.push_str(&layout::impl_header("super::Item", &target));
-    out.push_str("    fn is_declared(&self) -> bool {\n");
-    if found.arms.is_empty() {
-        out.push_str("        false\n    }\n");
-    } else {
-        out.push_str("        !matches!(self, Self::Other(_))\n    }\n");
-    }
+    let other = "    fn other(&self) -> Option<&super::Node> {\n        if let Self::Other(node) = \
+                 self {\n            Some(node)\n        } else {\n            None\n        }\n    \
+                 }\n";
     if list {
         out.push_str(
-            "\n    fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {\n",
+            "    fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {\n",
         );
         layout::line(
             "        ",
@@ -1110,6 +1118,8 @@ fn enum_impls(
             out,
         );
         out.push_str("    }\n\n");
+        out.push_str(other);
+        out.push('\n');
         let mut parameters = vec!["&self".to_owned()];
         parameters.extend(
             WRITE_PARAMETERS
@@ -1135,6 +1145,8 @@ fn enum_impls(
             out,
         );
         out.push_str("    }\n");
+    } else {
+        out.push_str(other);
     }
     out.push_str("}\n\n");
     let arms = arm_list(found);

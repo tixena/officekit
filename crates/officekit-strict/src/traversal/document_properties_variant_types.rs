@@ -282,6 +282,7 @@ impl WriteThrough for document_properties_variant_types::Array {
         through.attribute(0, &self.l_bounds);
         through.attribute(1, &self.u_bounds);
         through.attribute(2, &self.base_type);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -313,16 +314,20 @@ impl WriteThrough for document_properties_variant_types::Array {
 }
 
 impl super::Item for document_properties_variant_types::ArrayContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.document_properties_variant_types(),
             document_properties_variant_types::Context::array_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3238,6 +3243,7 @@ impl WriteThrough for document_properties_variant_types::Variant {
             &document_properties_variant_types::VARIANT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3269,8 +3275,12 @@ impl WriteThrough for document_properties_variant_types::Variant {
 }
 
 impl super::Item for document_properties_variant_types::VariantContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -3414,6 +3424,7 @@ impl WriteThrough for document_properties_variant_types::Vector {
         );
         through.attribute(0, &self.base_type);
         through.attribute(1, &self.size);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3445,16 +3456,20 @@ impl WriteThrough for document_properties_variant_types::Vector {
 }
 
 impl super::Item for document_properties_variant_types::VectorContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.document_properties_variant_types(),
             document_properties_variant_types::Context::vector_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

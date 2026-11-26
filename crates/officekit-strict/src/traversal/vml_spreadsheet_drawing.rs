@@ -365,6 +365,7 @@ impl WriteThrough for vml_spreadsheet_drawing::AttachedObjectData {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.object_type);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -396,16 +397,20 @@ impl WriteThrough for vml_spreadsheet_drawing::AttachedObjectData {
 }
 
 impl super::Item for vml_spreadsheet_drawing::AttachedObjectDataContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.vml_spreadsheet_drawing(),
             vml_spreadsheet_drawing::Context::attached_object_data_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

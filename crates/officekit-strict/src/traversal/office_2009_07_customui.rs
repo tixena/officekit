@@ -281,6 +281,7 @@ impl WriteThrough for office_2009_07_customui::Backstage {
         );
         through.attribute(0, &self.on_show);
         through.attribute(1, &self.on_hide);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -312,16 +313,20 @@ impl WriteThrough for office_2009_07_customui::Backstage {
 }
 
 impl super::Item for office_2009_07_customui::BackstageContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::backstage_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -430,16 +435,20 @@ impl WriteThrough for office_2009_07_customui::BackstageContent {
 }
 
 impl super::Item for office_2009_07_customui::BackstageGroupsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::backstage_groups_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -555,16 +564,20 @@ impl WriteThrough for office_2009_07_customui::BackstageGroupsContent {
 }
 
 impl super::Item for office_2009_07_customui::BackstageMenuGroupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::backstage_menu_group_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -744,6 +757,7 @@ impl WriteThrough for office_2009_07_customui::BottomItems {
             &office_2009_07_customui::BOTTOM_ITEMS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -842,6 +856,7 @@ impl WriteThrough for office_2009_07_customui::BoxBox {
         through.attribute(7, &self.insert_after_q);
         through.attribute(8, &self.insert_before_q);
         through.attribute(9, &self.box_style);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -873,16 +888,20 @@ impl WriteThrough for office_2009_07_customui::BoxBox {
 }
 
 impl super::Item for office_2009_07_customui::BoxContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::box_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1794,6 +1813,7 @@ impl WriteThrough for office_2009_07_customui::ButtonGroup {
         through.attribute(6, &self.insert_before_mso);
         through.attribute(7, &self.insert_after_q);
         through.attribute(8, &self.insert_before_q);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1825,16 +1845,20 @@ impl WriteThrough for office_2009_07_customui::ButtonGroup {
 }
 
 impl super::Item for office_2009_07_customui::ButtonGroupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::button_group_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3088,6 +3112,7 @@ impl WriteThrough for office_2009_07_customui::ContextMenu {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.id_mso);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3119,16 +3144,20 @@ impl WriteThrough for office_2009_07_customui::ContextMenu {
 }
 
 impl super::Item for office_2009_07_customui::ContextMenuContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::context_menu_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -4047,6 +4076,7 @@ impl WriteThrough for office_2009_07_customui::DocumentControls {
             &office_2009_07_customui::DOCUMENT_CONTROLS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4833,6 +4863,7 @@ impl WriteThrough for office_2009_07_customui::FirstColumn {
             &office_2009_07_customui::FIRST_COLUMN_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5324,6 +5355,7 @@ impl WriteThrough for office_2009_07_customui::GroupBox {
         through.attribute(3, &self.expand);
         through.attribute(4, &self.label);
         through.attribute(5, &self.get_label);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5355,16 +5387,20 @@ impl WriteThrough for office_2009_07_customui::GroupBox {
 }
 
 impl super::Item for office_2009_07_customui::GroupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::group_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -5564,16 +5600,20 @@ impl WriteThrough for office_2009_07_customui::GroupContent {
 }
 
 impl super::Item for office_2009_07_customui::GroupControlsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::group_controls_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -5828,6 +5868,7 @@ impl WriteThrough for office_2009_07_customui::GroupGroup {
         through.attribute(20, &self.get_keytip);
         through.attribute(21, &self.auto_scale);
         through.attribute(22, &self.center_vertically);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.dialog_box_launcher, ctx)?;
         through.finish(ctx)
@@ -6504,6 +6545,7 @@ impl WriteThrough for office_2009_07_customui::LayoutContainer {
         through.attribute(3, &self.align);
         through.attribute(4, &self.expand);
         through.attribute(5, &self.layout_children);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6747,16 +6789,20 @@ impl WriteThrough for office_2009_07_customui::MenuBackstageSubMenu {
 }
 
 impl super::Item for office_2009_07_customui::MenuContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::menu_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -6977,6 +7023,7 @@ impl WriteThrough for office_2009_07_customui::MenuGroup {
         through.attribute(3, &self.label);
         through.attribute(4, &self.get_label);
         through.attribute(5, &self.item_size);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7097,6 +7144,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenu {
         through.attribute(29, &self.get_show_label);
         through.attribute(30, &self.show_image);
         through.attribute(31, &self.get_show_image);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7215,6 +7263,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRegular {
         through.attribute(27, &self.get_show_label);
         through.attribute(28, &self.show_image);
         through.attribute(29, &self.get_show_image);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7306,6 +7355,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuRoot {
         through.attribute(0, &self.title);
         through.attribute(1, &self.get_title);
         through.attribute(2, &self.item_size);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7424,6 +7474,7 @@ impl WriteThrough for office_2009_07_customui::MenuMenuWithTitle {
         through.attribute(27, &self.get_show_label);
         through.attribute(28, &self.show_image);
         through.attribute(29, &self.get_show_image);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7643,16 +7694,20 @@ impl WriteThrough for office_2009_07_customui::MenuSeparatorMenuSeparatorNoTitle
 }
 
 impl super::Item for office_2009_07_customui::MenuWithTitleContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::menu_with_title_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -7867,6 +7922,7 @@ impl WriteThrough for office_2009_07_customui::PrimaryItem {
             &office_2009_07_customui::PRIMARY_ITEM_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7898,8 +7954,12 @@ impl WriteThrough for office_2009_07_customui::PrimaryItem {
 }
 
 impl super::Item for office_2009_07_customui::PrimaryItemContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -8086,16 +8146,20 @@ impl WriteThrough for office_2009_07_customui::Qat {
 }
 
 impl super::Item for office_2009_07_customui::QuickAccessToolbarItemsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::quick_access_toolbar_items_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -8459,6 +8523,7 @@ impl WriteThrough for office_2009_07_customui::Ribbon {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.start_from_scratch);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8490,16 +8555,20 @@ impl WriteThrough for office_2009_07_customui::Ribbon {
 }
 
 impl super::Item for office_2009_07_customui::RibbonContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::ribbon_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -8672,6 +8741,7 @@ impl WriteThrough for office_2009_07_customui::SecondColumn {
             &office_2009_07_customui::SECOND_COLUMN_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8853,6 +8923,7 @@ impl WriteThrough for office_2009_07_customui::SharedControls {
             &office_2009_07_customui::SHARED_CONTROLS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8884,16 +8955,20 @@ impl WriteThrough for office_2009_07_customui::SharedControls {
 }
 
 impl super::Item for office_2009_07_customui::SimpleGroupsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_2009_07_customui(),
             office_2009_07_customui::Context::simple_groups_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -9002,8 +9077,12 @@ impl WriteThrough for office_2009_07_customui::SimpleGroupsContent {
 }
 
 impl super::Item for office_2009_07_customui::SplitButtonContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -9177,6 +9256,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButton {
         through.attribute(15, &self.get_keytip);
         through.attribute(16, &self.show_label);
         through.attribute(17, &self.get_show_label);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.menu_menu_regular, ctx)?;
         through.finish(ctx)
@@ -9287,6 +9367,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonRegular {
         through.attribute(13, &self.get_keytip);
         through.attribute(14, &self.show_label);
         through.attribute(15, &self.get_show_label);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.menu_menu_regular, ctx)?;
         through.finish(ctx)
@@ -9398,6 +9479,7 @@ impl WriteThrough for office_2009_07_customui::SplitButtonSplitButtonWithTitle {
         through.attribute(13, &self.get_keytip);
         through.attribute(14, &self.show_label);
         through.attribute(15, &self.get_show_label);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.menu_menu_with_title, ctx)?;
         through.finish(ctx)
@@ -10766,6 +10848,7 @@ impl WriteThrough for office_2009_07_customui::TopItems {
             &office_2009_07_customui::TOP_ITEMS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }

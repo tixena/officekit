@@ -280,6 +280,7 @@ impl WriteThrough for office_word_2018_wordml::Ext {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

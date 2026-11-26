@@ -3266,6 +3266,7 @@ impl WriteThrough for office_drawing_2010_main::HiddenEffects {
             &office_drawing_2010_main::HIDDEN_EFFECTS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3354,6 +3355,7 @@ impl WriteThrough for office_drawing_2010_main::HiddenFill {
             &office_drawing_2010_main::HIDDEN_FILL_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3457,6 +3459,9 @@ impl WriteThrough for office_drawing_2010_main::HiddenLine {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.fill_content);
+        through.scan(&self.dash_content);
+        through.scan(&self.join_content);
         through.choice(&self.fill_content, ctx)?;
         through.choice(&self.dash_content, ctx)?;
         through.choice(&self.join_content, ctx)?;
@@ -3752,6 +3757,7 @@ impl WriteThrough for office_drawing_2010_main::ImgEffect {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.visible);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4220,8 +4226,12 @@ impl WriteThrough for office_drawing_2010_main::NvContentPartPr {
 }
 
 impl super::Item for office_drawing_2010_main::PictureEffectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

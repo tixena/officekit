@@ -493,6 +493,7 @@ impl WriteThrough for spreadsheet::AutoFilterColumn {
         through.attribute(0, &self.col_id);
         through.attribute(1, &self.hidden_button);
         through.attribute(2, &self.show_button);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -524,8 +525,12 @@ impl WriteThrough for spreadsheet::AutoFilterColumn {
 }
 
 impl super::Item for spreadsheet::AutoFilterColumnContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1491,16 +1496,20 @@ impl WriteThrough for spreadsheet::Break {
 }
 
 impl super::Item for spreadsheet::CacheItemContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::cache_item_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -10508,6 +10517,7 @@ impl WriteThrough for spreadsheet::Entries {
         let mut through =
             super::Through::new(out, &spreadsheet::ENTRIES_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.count);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10535,16 +10545,20 @@ impl WriteThrough for spreadsheet::Entries {
 }
 
 impl super::Item for spreadsheet::EntriesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::entries_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -11045,6 +11059,7 @@ impl WriteThrough for spreadsheet::Extension {
         let mut through =
             super::Through::new(out, &spreadsheet::EXTENSION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -11248,8 +11263,12 @@ impl WriteThrough for spreadsheet::ExternalReference {
 }
 
 impl super::Item for spreadsheet::ExternalReferenceContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -11412,6 +11431,7 @@ impl WriteThrough for spreadsheet::ExternalReferenceExternalLink {
             &spreadsheet::EXTERNAL_REFERENCE_EXTERNAL_LINK_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.future_feature_data_storage_area, ctx)?;
         through.finish(ctx)
@@ -12416,6 +12436,7 @@ impl WriteThrough for spreadsheet::Fill {
         }
         let mut through =
             super::Through::new(out, &spreadsheet::FILL_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -12443,8 +12464,12 @@ impl WriteThrough for spreadsheet::Fill {
 }
 
 impl super::Item for spreadsheet::FillContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -13049,6 +13074,7 @@ impl WriteThrough for spreadsheet::Font {
         }
         let mut through =
             super::Through::new(out, &spreadsheet::FONT_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13076,16 +13102,20 @@ impl WriteThrough for spreadsheet::Font {
 }
 
 impl super::Item for spreadsheet::FontContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::font_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -16698,6 +16728,7 @@ impl WriteThrough for spreadsheet::MDXMetadataRecord {
         );
         through.attribute(0, &self.n);
         through.attribute(1, &self.f);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -18065,8 +18096,12 @@ impl WriteThrough for spreadsheet::MetadataTypesCollection {
 }
 
 impl super::Item for spreadsheet::MultidimensionalExpressionMetadataContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -18257,16 +18292,20 @@ impl WriteThrough for spreadsheet::NamedLinks {
 }
 
 impl super::Item for spreadsheet::NestedRevisionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::nested_revision_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -19320,6 +19359,7 @@ impl WriteThrough for spreadsheet::OLAPGroupItems {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.count);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -23667,6 +23707,7 @@ impl WriteThrough for spreadsheet::PivotCacheRecord {
             &spreadsheet::PIVOT_CACHE_RECORD_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -23698,16 +23739,20 @@ impl WriteThrough for spreadsheet::PivotCacheRecord {
 }
 
 impl super::Item for spreadsheet::PivotCacheRecordContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::pivot_cache_record_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -24003,6 +24048,7 @@ impl WriteThrough for spreadsheet::PivotCacheSourceDescription {
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.connection_id);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -24034,8 +24080,12 @@ impl WriteThrough for spreadsheet::PivotCacheSourceDescription {
 }
 
 impl super::Item for spreadsheet::PivotCacheSourceDescriptionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -27493,6 +27543,7 @@ impl WriteThrough for spreadsheet::RevisionCellMove {
         through.attribute(4, &self.source);
         through.attribute(5, &self.destination);
         through.attribute(6, &self.source_sheet_id);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -28257,6 +28308,7 @@ impl WriteThrough for spreadsheet::RevisionRowColumnInsertDelete {
         through.attribute(5, &self.r#ref);
         through.attribute(6, &self.action);
         through.attribute(7, &self.edge);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -28426,6 +28478,7 @@ impl WriteThrough for spreadsheet::Revisions {
         }
         let mut through =
             super::Through::new(out, &spreadsheet::REVISIONS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -28453,16 +28506,20 @@ impl WriteThrough for spreadsheet::Revisions {
 }
 
 impl super::Item for spreadsheet::RevisionsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::revisions_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -29536,6 +29593,7 @@ impl WriteThrough for spreadsheet::RunProperties {
             &spreadsheet::RUN_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -29567,16 +29625,20 @@ impl WriteThrough for spreadsheet::RunProperties {
 }
 
 impl super::Item for spreadsheet::RunPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::run_properties_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -30607,6 +30669,7 @@ impl WriteThrough for spreadsheet::SharedItems {
         through.attribute(11, &self.max_date);
         through.attribute(12, &self.count);
         through.attribute(13, &self.long_text);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -33971,6 +34034,7 @@ impl WriteThrough for spreadsheet::Tables {
         let mut through =
             super::Through::new(out, &spreadsheet::TABLES_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.count);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -33998,16 +34062,20 @@ impl WriteThrough for spreadsheet::Tables {
 }
 
 impl super::Item for spreadsheet::TablesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet(),
             spreadsheet::Context::tables_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -37902,6 +37970,7 @@ impl WriteThrough for spreadsheet::XMLMappingDataBinding {
         through.attribute(2, &self.connection_id);
         through.attribute(3, &self.file_binding_name);
         through.attribute(4, &self.data_binding_load_mode);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -38175,6 +38244,7 @@ impl WriteThrough for spreadsheet::XMLSchema {
         through.attribute(1, &self.schema_ref);
         through.attribute(2, &self.namespace);
         through.attribute(3, &self.schema_language);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

@@ -461,6 +461,7 @@ impl WriteThrough for office_drawing_2016_11_diagram::BuPr {
         );
         through.attribute(0, &self.prefix);
         through.attribute(1, &self.lead_zeros);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

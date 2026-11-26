@@ -801,6 +801,7 @@ impl WriteThrough for office_powerpoint_2022_08_main::Event {
         );
         through.attribute(0, &self.time);
         through.attribute(1, &self.id);
+        through.scan(&self.content);
         through.child(&self.atrbtn, ctx)?;
         through.child(&self.anchr, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -1189,8 +1190,12 @@ impl WriteThrough for office_powerpoint_2022_08_main::TaskDetails {
 }
 
 impl super::Item for office_powerpoint_2022_08_main::TaskHistoryEventContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

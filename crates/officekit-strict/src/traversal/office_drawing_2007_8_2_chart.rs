@@ -1170,6 +1170,9 @@ impl WriteThrough for office_drawing_2007_8_2_chart::SpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;

@@ -761,6 +761,7 @@ impl WriteThrough for office_word_2010_wordprocessing_group::GrpSp {
             &office_word_2010_wordprocessing_group::GRP_SP_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.c_nv_pr, ctx)?;
         through.child(&self.c_nv_grp_sp_pr, ctx)?;
         through.child(&self.pr, ctx)?;
@@ -866,6 +867,8 @@ impl WriteThrough for office_word_2010_wordprocessing_group::GrpSpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_group_transform2d, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -966,6 +969,7 @@ impl WriteThrough for office_word_2010_wordprocessing_group::Wgp {
             &office_word_2010_wordprocessing_group::WGP_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.c_nv_pr, ctx)?;
         through.child(&self.c_nv_grp_sp_pr, ctx)?;
         through.child(&self.grp_sp_pr, ctx)?;
@@ -1001,16 +1005,20 @@ impl WriteThrough for office_word_2010_wordprocessing_group::Wgp {
 }
 
 impl super::Item for office_word_2010_wordprocessing_group::WordprocessingGroupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_word_2010_wordprocessing_group(),
             office_word_2010_wordprocessing_group::Context::wordprocessing_group_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

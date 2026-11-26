@@ -367,6 +367,7 @@ impl WriteThrough for document_properties_extended::ApplicationSpecificFilePrope
             &document_properties_extended::APPLICATION_SPECIFIC_FILE_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -398,12 +399,16 @@ impl WriteThrough for document_properties_extended::ApplicationSpecificFilePrope
 }
 
 impl super::Item for document_properties_extended::ApplicationSpecificFilePropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.document_properties_extended(), document_properties_extended::Context::application_specific_file_properties_content_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

@@ -485,6 +485,7 @@ impl WriteThrough for office_powerpoint_2018_8_main::Cm {
         through.attribute(9, &self.complete);
         through.attribute(10, &self.priority);
         through.attribute(11, &self.title);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.pos, ctx)?;
         through.child(&self.reply_lst, ctx)?;
@@ -608,16 +609,20 @@ impl WriteThrough for office_powerpoint_2018_8_main::CmLst {
 }
 
 impl super::Item for office_powerpoint_2018_8_main::CommentContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_powerpoint_2018_8_main(),
             office_powerpoint_2018_8_main::Context::comment_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

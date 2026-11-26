@@ -280,6 +280,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::AnimEffectMkLst {
             &office_powerpoint_2013_main_command::ANIM_EFFECT_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -371,6 +372,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::AnimEffectParentMkLst
             &office_powerpoint_2013_main_command::ANIM_EFFECT_PARENT_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -460,6 +462,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::CXmlMkLst {
             &office_powerpoint_2013_main_command::C_XML_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -549,6 +552,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::CmAuthorMkLst {
             &office_powerpoint_2013_main_command::CM_AUTHOR_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -637,6 +641,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::CmMkLst {
             &office_powerpoint_2013_main_command::CM_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -726,6 +731,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::CustShowMkLst {
             &office_powerpoint_2013_main_command::CUST_SHOW_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -815,6 +821,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::DesignTagMkLst {
             &office_powerpoint_2013_main_command::DESIGN_TAG_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -987,6 +994,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::DocMkLst {
             &office_powerpoint_2013_main_command::DOC_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1076,6 +1084,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::HandoutMkLst {
             &office_powerpoint_2013_main_command::HANDOUT_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1165,6 +1174,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::NotesMasterMkLst {
             &office_powerpoint_2013_main_command::NOTES_MASTER_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1254,6 +1264,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::NotesMkLst {
             &office_powerpoint_2013_main_command::NOTES_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1343,6 +1354,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::NotesTxtMkLst {
             &office_powerpoint_2013_main_command::NOTES_TXT_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1434,6 +1446,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::SectionLnkObjMkLst {
             &office_powerpoint_2013_main_command::SECTION_LNK_OBJ_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1523,6 +1536,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::SectionMkLst {
             &office_powerpoint_2013_main_command::SECTION_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1612,6 +1626,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::SldBaseMkLst {
             &office_powerpoint_2013_main_command::SLD_BASE_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1701,6 +1716,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::SldLayoutMkLst {
             &office_powerpoint_2013_main_command::SLD_LAYOUT_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1790,6 +1806,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::SldMasterMkLst {
             &office_powerpoint_2013_main_command::SLD_MASTER_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1968,6 +1985,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::SldMkLst {
             &office_powerpoint_2013_main_command::SLD_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.doc_mk, ctx)?;
         through.child(&self.sld_mk, ctx)?;
         through.items(&self.content, ctx)?;
@@ -2059,6 +2077,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::SldPosMkLst {
             &office_powerpoint_2013_main_command::SLD_POS_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2147,6 +2166,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::TagMkLst {
             &office_powerpoint_2013_main_command::TAG_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2236,6 +2256,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::TkAppMkLst {
             &office_powerpoint_2013_main_command::TK_APP_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2324,6 +2345,7 @@ impl WriteThrough for office_powerpoint_2013_main_command::TocMkLst {
             &office_powerpoint_2013_main_command::TOC_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }

@@ -2100,6 +2100,7 @@ impl WriteThrough for office_powerpoint_2010_main::LaserClr {
             &office_powerpoint_2010_main::LASER_CLR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2649,6 +2650,7 @@ impl WriteThrough for office_powerpoint_2010_main::NvPr {
         );
         through.attribute(0, &self.is_photo);
         through.attribute(1, &self.user_drawn);
+        through.scan(&self.content);
         through.child(&self.placeholder_shape, ctx)?;
         through.choice(&self.content, ctx)?;
         through.child(&self.customer_data_list, ctx)?;
@@ -3729,16 +3731,20 @@ impl WriteThrough for office_powerpoint_2010_main::SeekEvt {
 }
 
 impl super::Item for office_powerpoint_2010_main::ShowEventRecordListContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_powerpoint_2010_main(),
             office_powerpoint_2010_main::Context::show_event_record_list_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3939,6 +3945,7 @@ impl WriteThrough for office_powerpoint_2010_main::ShowEvtLst {
             &office_powerpoint_2010_main::SHOW_EVT_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }

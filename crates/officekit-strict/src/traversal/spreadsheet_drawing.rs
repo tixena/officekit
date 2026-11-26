@@ -285,6 +285,7 @@ impl WriteThrough for spreadsheet_drawing::AbsoluteAnchorShapeSize {
             &spreadsheet_drawing::ABSOLUTE_ANCHOR_SHAPE_SIZE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.position, ctx)?;
         through.child(&self.shape_extent, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -1108,6 +1109,7 @@ impl WriteThrough for spreadsheet_drawing::GroupShape {
             &spreadsheet_drawing::GROUP_SHAPE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -1141,16 +1143,20 @@ impl WriteThrough for spreadsheet_drawing::GroupShape {
 }
 
 impl super::Item for spreadsheet_drawing::GroupShapeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet_drawing(),
             spreadsheet_drawing::Context::group_shape_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1356,6 +1362,8 @@ impl WriteThrough for spreadsheet_drawing::GroupShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_group_transform2d, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -2368,8 +2376,12 @@ impl WriteThrough for spreadsheet_drawing::NonVisualPropertiesForAShape {
 }
 
 impl super::Item for spreadsheet_drawing::ObjectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -2557,6 +2569,7 @@ impl WriteThrough for spreadsheet_drawing::OneCellAnchorShapeSize {
             &spreadsheet_drawing::ONE_CELL_ANCHOR_SHAPE_SIZE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.starting_anchor_point, ctx)?;
         through.child(&self.shape_extent, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -2754,6 +2767,7 @@ impl WriteThrough for spreadsheet_drawing::PictureFill {
         );
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
+        through.scan(&self.content);
         through.child(&self.blip, ctx)?;
         through.child(&self.source_rectangle, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -3305,6 +3319,9 @@ impl WriteThrough for spreadsheet_drawing::ShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -3697,6 +3714,7 @@ impl WriteThrough for spreadsheet_drawing::TwoCellAnchorShapeSize {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.edit_as);
+        through.scan(&self.content);
         through.child(&self.starting_anchor_point, ctx)?;
         through.child(&self.ending_anchor_point, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -3788,6 +3806,7 @@ impl WriteThrough for spreadsheet_drawing::WorksheetDrawing {
             &spreadsheet_drawing::WORKSHEET_DRAWING_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3819,16 +3838,20 @@ impl WriteThrough for spreadsheet_drawing::WorksheetDrawing {
 }
 
 impl super::Item for spreadsheet_drawing::WorksheetDrawingContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.spreadsheet_drawing(),
             spreadsheet_drawing::Context::worksheet_drawing_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

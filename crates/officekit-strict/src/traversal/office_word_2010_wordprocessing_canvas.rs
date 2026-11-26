@@ -283,6 +283,8 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::Bg {
             &office_word_2010_wordprocessing_canvas::BG_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
         through.finish(ctx)
@@ -563,6 +565,7 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::Whole {
             &office_word_2010_wordprocessing_canvas::WHOLE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.outline, ctx)?;
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -595,16 +598,20 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::Whole {
 }
 
 impl super::Item for office_word_2010_wordprocessing_canvas::WordprocessingCanvasContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_word_2010_wordprocessing_canvas(),
             office_word_2010_wordprocessing_canvas::Context::wordprocessing_canvas_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -797,6 +804,7 @@ impl WriteThrough for office_word_2010_wordprocessing_canvas::Wpc {
             &office_word_2010_wordprocessing_canvas::WPC_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.bg, ctx)?;
         through.child(&self.whole, ctx)?;
         through.items(&self.content, ctx)?;

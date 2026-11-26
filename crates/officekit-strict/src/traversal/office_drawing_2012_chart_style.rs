@@ -419,6 +419,8 @@ impl WriteThrough for office_drawing_2012_chart_style::BodyPr {
         through.attribute(16, &self.force_aa);
         through.attribute(17, &self.upright);
         through.attribute(18, &self.compat_ln_spc);
+        through.scan(&self.text_autofit_content);
+        through.scan(&self.text3d_content);
         through.child(&self.preset_text_warp, ctx)?;
         through.choice(&self.text_autofit_content, ctx)?;
         through.child(&self.scene3d, ctx)?;
@@ -1020,6 +1022,7 @@ impl WriteThrough for office_drawing_2012_chart_style::ColorStyle {
         );
         through.attribute(0, &self.meth);
         through.attribute(1, &self.id);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.variation, ctx)?;
         through.child(&self.ext_lst, ctx)?;
@@ -2422,6 +2425,10 @@ impl WriteThrough for office_drawing_2012_chart_style::DefRPr {
         through.attribute(16, &self.smt_clean);
         through.attribute(17, &self.smt_id);
         through.attribute(18, &self.bmk);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
+        through.scan(&self.text_underline_line_content);
+        through.scan(&self.text_underline_fill_content);
         through.child(&self.outline, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -2749,6 +2756,7 @@ impl WriteThrough for office_drawing_2012_chart_style::EffectRef {
             &office_drawing_2012_chart_style::EFFECT_REF_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.style_clr, ctx)?;
         through.finish(ctx)
@@ -3040,6 +3048,7 @@ impl WriteThrough for office_drawing_2012_chart_style::FillRef {
             &office_drawing_2012_chart_style::FILL_REF_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.style_clr, ctx)?;
         through.finish(ctx)
@@ -3245,6 +3254,7 @@ impl WriteThrough for office_drawing_2012_chart_style::FontRef {
         );
         through.attribute(0, &self.idx);
         through.attribute(1, &self.mods);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.style_clr, ctx)?;
         through.finish(ctx)
@@ -4071,6 +4081,7 @@ impl WriteThrough for office_drawing_2012_chart_style::LnRef {
             &office_drawing_2012_chart_style::LN_REF_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.style_clr, ctx)?;
         through.finish(ctx)
@@ -4712,6 +4723,9 @@ impl WriteThrough for office_drawing_2012_chart_style::SpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -4808,6 +4822,7 @@ impl WriteThrough for office_drawing_2012_chart_style::StyleClr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5721,6 +5736,7 @@ impl WriteThrough for office_drawing_2012_chart_style::Variation {
             &office_drawing_2012_chart_style::VARIATION_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }

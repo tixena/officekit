@@ -767,16 +767,20 @@ impl WriteThrough for office_drawing_2008_diagram::ExtLst {
 }
 
 impl super::Item for office_drawing_2008_diagram::GroupShapeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_drawing_2008_diagram(),
             office_drawing_2008_diagram::Context::group_shape_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -948,6 +952,7 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSp {
             &office_drawing_2008_diagram::GRP_SP_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.nv_grp_sp_pr, ctx)?;
         through.child(&self.pr, ctx)?;
         through.items(&self.content, ctx)?;
@@ -1051,6 +1056,8 @@ impl WriteThrough for office_drawing_2008_diagram::GrpSpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_group_transform2d, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -1447,6 +1454,9 @@ impl WriteThrough for office_drawing_2008_diagram::SpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -1548,6 +1558,7 @@ impl WriteThrough for office_drawing_2008_diagram::SpTree {
             &office_drawing_2008_diagram::SP_TREE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.nv_grp_sp_pr, ctx)?;
         through.child(&self.grp_sp_pr, ctx)?;
         through.items(&self.content, ctx)?;

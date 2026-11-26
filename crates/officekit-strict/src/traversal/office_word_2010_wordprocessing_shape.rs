@@ -307,6 +307,8 @@ impl WriteThrough for office_word_2010_wordprocessing_shape::BodyPr {
         through.attribute(16, &self.force_aa);
         through.attribute(17, &self.upright);
         through.attribute(18, &self.compat_ln_spc);
+        through.scan(&self.text_autofit_content);
+        through.scan(&self.text3d_content);
         through.child(&self.preset_text_warp, ctx)?;
         through.choice(&self.text_autofit_content, ctx)?;
         through.child(&self.scene3d, ctx)?;
@@ -813,8 +815,12 @@ impl WriteThrough for office_word_2010_wordprocessing_shape::LinkedTxbx {
 }
 
 impl super::Item for office_word_2010_wordprocessing_shape::ShapeNonVisualPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -910,8 +916,12 @@ impl WriteThrough for office_word_2010_wordprocessing_shape::ShapeNonVisualPrope
 }
 
 impl super::Item for office_word_2010_wordprocessing_shape::ShapeTextContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1082,6 +1092,9 @@ impl WriteThrough for office_word_2010_wordprocessing_shape::SpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -1382,6 +1395,8 @@ impl WriteThrough for office_word_2010_wordprocessing_shape::Wsp {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.normal_east_asian_flow);
+        through.scan(&self.shape_non_visual_properties_content);
+        through.scan(&self.shape_text_content);
         through.child(&self.c_nv_pr, ctx)?;
         through.choice(&self.shape_non_visual_properties_content, ctx)?;
         through.child(&self.sp_pr, ctx)?;

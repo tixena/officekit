@@ -838,8 +838,12 @@ impl WriteThrough for chart::AutomaticCategoryAxis {
 }
 
 impl super::Item for chart::AxisCrossingContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -919,8 +923,12 @@ impl WriteThrough for chart::AxisCrossingContent {
 }
 
 impl super::Item for chart::AxisDataSourceContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -2334,6 +2342,7 @@ impl WriteThrough for chart::BubbleSize {
         }
         let mut through =
             super::Through::new(out, &chart::BUBBLE_SIZE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2494,6 +2503,7 @@ impl WriteThrough for chart::CategoryAxisDataCat {
             &chart::CATEGORY_AXIS_DATA_CAT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2620,6 +2630,7 @@ impl WriteThrough for chart::CategoryAxisDataCatAx {
             &chart::CATEGORY_AXIS_DATA_CAT_AX_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.axis_id, ctx)?;
         through.child(&self.scaling, ctx)?;
         through.child(&self.delete, ctx)?;
@@ -3058,6 +3069,7 @@ impl WriteThrough for chart::ChartText {
         }
         let mut through =
             super::Through::new(out, &chart::CHART_TEXT_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3080,8 +3092,12 @@ impl WriteThrough for chart::ChartText {
 }
 
 impl super::Item for chart::ChartTextContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -3765,6 +3781,7 @@ impl WriteThrough for chart::DataLabel {
         }
         let mut through =
             super::Through::new(out, &chart::DATA_LABEL_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.index, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.chart_extensibility, ctx)?;
@@ -3789,12 +3806,16 @@ impl WriteThrough for chart::DataLabel {
 }
 
 impl super::Item for chart::DataLabelContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.chart(), chart::Context::data_label_content_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -4095,6 +4116,7 @@ impl WriteThrough for chart::DataLabels {
         }
         let mut through =
             super::Through::new(out, &chart::DATA_LABELS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.data_label, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.chart_extensibility, ctx)?;
@@ -4119,12 +4141,16 @@ impl WriteThrough for chart::DataLabels {
 }
 
 impl super::Item for chart::DataLabelsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.chart(), chart::Context::data_labels_content_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -4627,6 +4653,7 @@ impl WriteThrough for chart::DateAxis {
         }
         let mut through =
             super::Through::new(out, &chart::DATE_AXIS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.id, ctx)?;
         through.child(&self.scaling, ctx)?;
         through.child(&self.delete, ctx)?;
@@ -5057,6 +5084,7 @@ impl WriteThrough for chart::DisplayUnits {
         }
         let mut through =
             super::Through::new(out, &chart::DISPLAY_UNITS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.label, ctx)?;
         through.child(&self.chart_extensibility, ctx)?;
@@ -5082,8 +5110,12 @@ impl WriteThrough for chart::DisplayUnits {
 }
 
 impl super::Item for chart::DisplayUnitsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -6126,6 +6158,7 @@ impl WriteThrough for chart::Extension {
         let mut through =
             super::Through::new(out, &chart::EXTENSION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8244,6 +8277,7 @@ impl WriteThrough for chart::LegendEntry {
         }
         let mut through =
             super::Through::new(out, &chart::LEGEND_ENTRY_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.index, ctx)?;
         through.choice(&self.content, ctx)?;
         through.child(&self.chart_extensibility, ctx)?;
@@ -8268,8 +8302,12 @@ impl WriteThrough for chart::LegendEntry {
 }
 
 impl super::Item for chart::LegendEntryContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -9703,6 +9741,7 @@ impl WriteThrough for chart::Minus {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &chart::MINUS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10116,8 +10155,12 @@ impl WriteThrough for chart::NumberCache {
 }
 
 impl super::Item for chart::NumberDataSourceContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -12079,6 +12122,8 @@ impl WriteThrough for chart::PlotArea {
         }
         let mut through =
             super::Through::new(out, &chart::PLOT_AREA_SHAPE, self.unknown.as_deref());
+        through.scan(&self.chart_content);
+        through.scan(&self.axis_content);
         through.child(&self.layout, ctx)?;
         through.items(&self.chart_content, ctx)?;
         through.items(&self.axis_content, ctx)?;
@@ -12106,12 +12151,16 @@ impl WriteThrough for chart::PlotArea {
 }
 
 impl super::Item for chart::PlotAreaAxisContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.chart(), chart::Context::plot_area_axis_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -12218,12 +12267,16 @@ impl WriteThrough for chart::PlotAreaAxisContent {
 }
 
 impl super::Item for chart::PlotAreaChartContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.chart(), chart::Context::plot_area_chart_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -12532,6 +12585,7 @@ impl WriteThrough for chart::Plus {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &chart::PLUS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -14137,6 +14191,7 @@ impl WriteThrough for chart::SeriesAxis {
         }
         let mut through =
             super::Through::new(out, &chart::SERIES_AXIS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.id, ctx)?;
         through.child(&self.scaling, ctx)?;
         through.child(&self.delete, ctx)?;
@@ -14282,6 +14337,7 @@ impl WriteThrough for chart::SeriesText {
         }
         let mut through =
             super::Through::new(out, &chart::SERIES_TEXT_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -14304,8 +14360,12 @@ impl WriteThrough for chart::SeriesText {
 }
 
 impl super::Item for chart::SeriesTextContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -14509,6 +14569,9 @@ impl WriteThrough for chart::ShapeProperties {
         let mut through =
             super::Through::new(out, &chart::SHAPE_PROPERTIES_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -17814,6 +17877,7 @@ impl WriteThrough for chart::UserShapes {
         }
         let mut through =
             super::Through::new(out, &chart::USER_SHAPES_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -17918,6 +17982,7 @@ impl WriteThrough for chart::ValueAxis {
         }
         let mut through =
             super::Through::new(out, &chart::VALUE_AXIS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.id, ctx)?;
         through.child(&self.scaling, ctx)?;
         through.child(&self.delete, ctx)?;
@@ -18000,6 +18065,7 @@ impl WriteThrough for chart::Values {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &chart::VALUES_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -18462,6 +18528,7 @@ impl WriteThrough for chart::XValues {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &chart::X_VALUES_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -18586,6 +18653,7 @@ impl WriteThrough for chart::YValues {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &chart::Y_VALUES_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

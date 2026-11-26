@@ -577,6 +577,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::Filter {
         through.attribute(0, &self.col_id);
         through.attribute(1, &self.hidden_button);
         through.attribute(2, &self.show_button);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1145,6 +1146,7 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRule {
         );
         through.attribute(0, &self.col_id);
         through.attribute(1, &self.id);
+        through.scan(&self.content);
         through.child(&self.dxf, ctx)?;
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -1177,8 +1179,12 @@ impl WriteThrough for office_spreadsheetml_2019_namedsheetviews::SortRule {
 }
 
 impl super::Item for office_spreadsheetml_2019_namedsheetviews::SortRuleContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

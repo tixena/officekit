@@ -365,6 +365,7 @@ impl WriteThrough for office_powerpoint_2012_main::Clr {
             &office_powerpoint_2012_main::CLR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

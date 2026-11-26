@@ -4267,6 +4267,7 @@ impl WriteThrough for wordprocessing::BidirectionalEmbeddingLevel {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4356,6 +4357,7 @@ impl WriteThrough for wordprocessing::BidirectionalOverride {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4387,16 +4389,20 @@ impl WriteThrough for wordprocessing::BidirectionalOverride {
 }
 
 impl super::Item for wordprocessing::BlockContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::block_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -4547,6 +4553,7 @@ impl WriteThrough for wordprocessing::BlockLevelCustomXMLElement {
         );
         through.attribute(0, &self.uri);
         through.attribute(1, &self.element);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -4751,6 +4758,7 @@ impl WriteThrough for wordprocessing::BlockLevelStructuredDocumentTagContent {
             &wordprocessing::BLOCK_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5962,6 +5970,7 @@ impl WriteThrough for wordprocessing::CellLevelCustomXMLElement {
         );
         through.attribute(0, &self.uri);
         through.attribute(1, &self.element);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -6166,6 +6175,7 @@ impl WriteThrough for wordprocessing::CellLevelStructuredDocumentTagContent {
             &wordprocessing::CELL_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6197,8 +6207,12 @@ impl WriteThrough for wordprocessing::CellLevelStructuredDocumentTagContent {
 }
 
 impl super::Item for wordprocessing::CellMarkupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -6795,6 +6809,7 @@ impl WriteThrough for wordprocessing::CheckboxFormFieldProperties {
             &wordprocessing::CHECKBOX_FORM_FIELD_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.default_checkbox_form_field_state, ctx)?;
         through.child(&self.checkbox_form_field_state, ctx)?;
@@ -6828,8 +6843,12 @@ impl WriteThrough for wordprocessing::CheckboxFormFieldProperties {
 }
 
 impl super::Item for wordprocessing::CheckboxFormFieldPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -8033,6 +8052,7 @@ impl WriteThrough for wordprocessing::CommentContent {
         through.attribute(2, &self.date);
         through.attribute(3, &self.initials);
         through.attribute(4, &self.date_utc);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8473,6 +8493,7 @@ impl WriteThrough for wordprocessing::ComplexFieldCharacter {
         through.attribute(0, &self.fld_char_type);
         through.attribute(1, &self.fld_lock);
         through.attribute(2, &self.dirty);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8504,8 +8525,12 @@ impl WriteThrough for wordprocessing::ComplexFieldCharacter {
 }
 
 impl super::Item for wordprocessing::ComplexFieldCharacterContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -8949,8 +8974,12 @@ impl WriteThrough for wordprocessing::CompressPunctuationAtStartOfLine {
 }
 
 impl super::Item for wordprocessing::ConflictChangeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -9132,16 +9161,20 @@ impl WriteThrough for wordprocessing::ContentBetweenNumberingSymbolAndText {
 }
 
 impl super::Item for wordprocessing::ContentBlockContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::content_block_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -9239,16 +9272,20 @@ impl WriteThrough for wordprocessing::ContentBlockContent {
 }
 
 impl super::Item for wordprocessing::ContentCellContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::content_cell_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -9431,16 +9468,20 @@ impl WriteThrough for wordprocessing::ContentPart {
 }
 
 impl super::Item for wordprocessing::ContentRowContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::content_row_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -9599,6 +9640,7 @@ impl WriteThrough for wordprocessing::ContentsOfGlossaryDocumentEntry {
             &wordprocessing::CONTENTS_OF_GLOSSARY_DOCUMENT_ENTRY_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.document_final_section_properties, ctx)?;
         through.finish(ctx)
@@ -12896,6 +12938,7 @@ impl WriteThrough for wordprocessing::DefaultPropertiesForVMLObjectsInHeaderAndF
             &wordprocessing::DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_HEADER_AND_FOOTER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -12988,6 +13031,7 @@ impl WriteThrough for wordprocessing::DefaultPropertiesForVMLObjectsInMainDocume
             &wordprocessing::DEFAULT_PROPERTIES_FOR_VML_OBJECTS_IN_MAIN_DOCUMENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13589,6 +13633,7 @@ impl WriteThrough for wordprocessing::DeletedRunContent {
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
         through.attribute(2, &self.date);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -18169,6 +18214,7 @@ impl WriteThrough for wordprocessing::DocumentBackground {
         through.attribute(1, &self.theme_color);
         through.attribute(2, &self.theme_tint);
         through.attribute(3, &self.theme_shade);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.drawingml_object, ctx)?;
         through.finish(ctx)
@@ -18261,6 +18307,7 @@ impl WriteThrough for wordprocessing::DocumentBody {
             &wordprocessing::DOCUMENT_BODY_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.document_final_section_properties, ctx)?;
         through.finish(ctx)
@@ -18790,6 +18837,7 @@ impl WriteThrough for wordprocessing::DocumentFinalSectionProperties {
         through.attribute(1, &self.rsid_del);
         through.attribute(2, &self.rsid_r);
         through.attribute(3, &self.rsid_sect);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.section_wide_footnote_properties, ctx)?;
         through.child(&self.section_wide_endnote_properties, ctx)?;
@@ -20610,6 +20658,7 @@ impl WriteThrough for wordprocessing::DrawingMLObject {
             &wordprocessing::DRAWING_ML_OBJECT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20641,16 +20690,20 @@ impl WriteThrough for wordprocessing::DrawingMLObject {
 }
 
 impl super::Item for wordprocessing::DrawingObjectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::drawing_object_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -21870,6 +21923,8 @@ impl WriteThrough for wordprocessing::EmbeddedObject {
         through.attribute(0, &self.dxa_orig);
         through.attribute(1, &self.dya_orig);
         through.attribute(2, &self.anchor_id);
+        through.scan(&self.vml_element_content);
+        through.scan(&self.content);
         through.items(&self.vml_element_content, ctx)?;
         through.child(&self.drawingml_object, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -21903,8 +21958,12 @@ impl WriteThrough for wordprocessing::EmbeddedObject {
 }
 
 impl super::Item for wordprocessing::EmbeddedObjectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -22417,6 +22476,7 @@ impl WriteThrough for wordprocessing::EndnoteContent {
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.id);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -24773,6 +24833,7 @@ impl WriteThrough for wordprocessing::Footer {
         }
         let mut through =
             super::Through::new(out, &wordprocessing::FOOTER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -25121,6 +25182,7 @@ impl WriteThrough for wordprocessing::FootnoteContent {
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.id);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -25803,6 +25865,7 @@ impl WriteThrough for wordprocessing::FormFieldProperties {
             &wordprocessing::FORM_FIELD_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -25834,16 +25897,20 @@ impl WriteThrough for wordprocessing::FormFieldProperties {
 }
 
 impl super::Item for wordprocessing::FormFieldPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::form_field_properties_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -26362,16 +26429,20 @@ impl WriteThrough for wordprocessing::FrameSize {
 }
 
 impl super::Item for wordprocessing::FramesetDefinitionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::frameset_definition_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -27328,6 +27399,7 @@ impl WriteThrough for wordprocessing::GlossaryDocumentEntryProperties {
             &wordprocessing::GLOSSARY_DOCUMENT_ENTRY_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -27359,16 +27431,20 @@ impl WriteThrough for wordprocessing::GlossaryDocumentEntryProperties {
 }
 
 impl super::Item for wordprocessing::GlossaryDocumentEntryPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::glossary_document_entry_properties_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -28251,6 +28327,7 @@ impl WriteThrough for wordprocessing::Header {
         }
         let mut through =
             super::Through::new(out, &wordprocessing::HEADER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -29028,6 +29105,7 @@ impl WriteThrough for wordprocessing::Hyperlink {
         through.attribute(3, &self.history);
         through.attribute(4, &self.anchor);
         through.attribute(5, &self.id);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -30371,6 +30449,7 @@ impl WriteThrough for wordprocessing::InlineLevelCustomXMLElement {
         );
         through.attribute(0, &self.uri);
         through.attribute(1, &self.element);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -30464,6 +30543,7 @@ impl WriteThrough for wordprocessing::InlineLevelSmartTag {
         );
         through.attribute(0, &self.uri);
         through.attribute(1, &self.element);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -30668,6 +30748,7 @@ impl WriteThrough for wordprocessing::InlineLevelStructuredDocumentTagContent {
             &wordprocessing::INLINE_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -30760,6 +30841,7 @@ impl WriteThrough for wordprocessing::InsertedMathControlCharacter {
         through.attribute(1, &self.author);
         through.attribute(2, &self.date);
         through.attribute(3, &self.date_utc);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -30791,8 +30873,12 @@ impl WriteThrough for wordprocessing::InsertedMathControlCharacter {
 }
 
 impl super::Item for wordprocessing::InsertedMathControlCharacterContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -30948,6 +31034,7 @@ impl WriteThrough for wordprocessing::InsertedRunContent {
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
         through.attribute(2, &self.date);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -34915,6 +35002,7 @@ impl WriteThrough for wordprocessing::MoveDestinationRunContent {
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
         through.attribute(2, &self.date);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -35272,6 +35360,7 @@ impl WriteThrough for wordprocessing::MoveSourceRunContent {
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
         through.attribute(2, &self.date);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -35370,6 +35459,7 @@ impl WriteThrough for wordprocessing::NestedFramesetDefinition {
             &wordprocessing::NESTED_FRAMESET_DEFINITION_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.frame_size, ctx)?;
         through.child(&self.frameset_splitter_properties, ctx)?;
         through.child(&self.frameset_layout, ctx)?;
@@ -39245,6 +39335,7 @@ impl WriteThrough for wordprocessing::Paragraph {
         through.attribute(5, &self.para_id);
         through.attribute(6, &self.text_id);
         through.attribute(7, &self.no_spell_err);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -40143,16 +40234,20 @@ impl WriteThrough for wordprocessing::ParagraphConditionalFormatting {
 }
 
 impl super::Item for wordprocessing::ParagraphContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::paragraph_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -41359,6 +41454,7 @@ impl WriteThrough for wordprocessing::PhoneticGuideBaseText {
             &wordprocessing::PHONETIC_GUIDE_BASE_TEXT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -41476,16 +41572,20 @@ impl WriteThrough for wordprocessing::PhoneticGuideBaseTextFontSize {
 }
 
 impl super::Item for wordprocessing::PhoneticGuideContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::phonetic_guide_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -41749,6 +41849,7 @@ impl WriteThrough for wordprocessing::PhoneticGuideText {
             &wordprocessing::PHONETIC_GUIDE_TEXT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -42009,6 +42110,7 @@ impl WriteThrough for wordprocessing::PictureNumberingSymbolDefinition {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.num_pic_bullet_id);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -42040,8 +42142,12 @@ impl WriteThrough for wordprocessing::PictureNumberingSymbolDefinition {
 }
 
 impl super::Item for wordprocessing::PictureNumberingSymbolDefinitionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -43611,6 +43717,8 @@ impl WriteThrough for wordprocessing::PreviousParagraphMarkRunProperties {
             &wordprocessing::PREVIOUS_PARAGRAPH_MARK_RUN_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.conflict_change_content);
+        through.scan(&self.content);
         through.child(&self.inserted_table_row, ctx)?;
         through.child(&self.deleted_table_row, ctx)?;
         through.child(&self.move_source_paragraph, ctx)?;
@@ -43901,6 +44009,7 @@ impl WriteThrough for wordprocessing::PreviousRunProperties {
             &wordprocessing::PREVIOUS_RUN_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.glow, ctx)?;
         through.child(&self.shadow, ctx)?;
@@ -44211,6 +44320,7 @@ impl WriteThrough for wordprocessing::PreviousTableCellProperties {
             &wordprocessing::PREVIOUS_TABLE_CELL_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.paragraph_conditional_formatting, ctx)?;
         through.child(&self.preferred_table_cell_width, ctx)?;
         through.child(&self.grid_columns_spanned, ctx)?;
@@ -44686,6 +44796,7 @@ impl WriteThrough for wordprocessing::PreviousTableRowProperties {
             &wordprocessing::PREVIOUS_TABLE_ROW_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -45797,16 +45908,20 @@ impl WriteThrough for wordprocessing::RadixPointForFieldCodeEvaluation {
 }
 
 impl super::Item for wordprocessing::RangeMarkupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::range_markup_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -48618,6 +48733,7 @@ impl WriteThrough for wordprocessing::RichTextBoxContentContainer {
             &wordprocessing::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -49324,6 +49440,7 @@ impl WriteThrough for wordprocessing::RowLevelCustomXMLElement {
         );
         through.attribute(0, &self.uri);
         through.attribute(1, &self.element);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -49526,6 +49643,7 @@ impl WriteThrough for wordprocessing::RowLevelStructuredDocumentTagContent {
             &wordprocessing::ROW_LEVEL_STRUCTURED_DOCUMENT_TAG_CONTENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -49822,6 +49940,7 @@ impl WriteThrough for wordprocessing::RunProperties {
             &wordprocessing::RUN_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.glow, ctx)?;
         through.child(&self.shadow, ctx)?;
@@ -49866,16 +49985,20 @@ impl WriteThrough for wordprocessing::RunProperties {
 }
 
 impl super::Item for wordprocessing::RunPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::run_properties_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -50074,6 +50197,8 @@ impl WriteThrough for wordprocessing::RunPropertiesForTheParagraphMark {
             &wordprocessing::RUN_PROPERTIES_FOR_THE_PARAGRAPH_MARK_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.conflict_change_content);
+        through.scan(&self.run_properties_content);
         through.child(&self.inserted_table_row, ctx)?;
         through.child(&self.deleted_table_row, ctx)?;
         through.child(&self.move_source_paragraph, ctx)?;
@@ -50379,16 +50504,20 @@ impl WriteThrough for wordprocessing::ScrollbarDisplayOption {
 }
 
 impl super::Item for wordprocessing::SectionPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::section_properties_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -51384,6 +51513,7 @@ impl WriteThrough for wordprocessing::SimpleField {
         through.attribute(0, &self.instr);
         through.attribute(1, &self.fld_lock);
         through.attribute(2, &self.dirty);
+        through.scan(&self.content);
         through.child(&self.custom_field_data, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -53613,6 +53743,7 @@ impl WriteThrough for wordprocessing::StructuredDocumentTagProperties {
             &wordprocessing::STRUCTURED_DOCUMENT_TAG_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.run_properties, ctx)?;
         through.child(&self.friendly_name, ctx)?;
         through.child(&self.programmatic_tag, ctx)?;
@@ -53660,8 +53791,12 @@ impl WriteThrough for wordprocessing::StructuredDocumentTagProperties {
 }
 
 impl super::Item for wordprocessing::StructuredDocumentTagPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -55687,6 +55822,8 @@ impl WriteThrough for wordprocessing::Table {
         }
         let mut through =
             super::Through::new(out, &wordprocessing::TABLE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.range_markup_content);
+        through.scan(&self.content_row_content);
         through.items(&self.range_markup_content, ctx)?;
         through.child(&self.properties, ctx)?;
         through.child(&self.grid, ctx)?;
@@ -56070,6 +56207,7 @@ impl WriteThrough for wordprocessing::TableCell {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.id);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -56833,6 +56971,7 @@ impl WriteThrough for wordprocessing::TableCellProperties {
             &wordprocessing::TABLE_CELL_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.paragraph_conditional_formatting, ctx)?;
         through.child(&self.preferred_table_cell_width, ctx)?;
         through.child(&self.grid_columns_spanned, ctx)?;
@@ -58135,6 +58274,7 @@ impl WriteThrough for wordprocessing::TableRow {
         through.attribute(3, &self.rsid_tr);
         through.attribute(4, &self.para_id);
         through.attribute(5, &self.text_id);
+        through.scan(&self.content);
         through.child(&self.table_level_property_exceptions, ctx)?;
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -58494,6 +58634,8 @@ impl WriteThrough for wordprocessing::TableRowProperties {
             &wordprocessing::TABLE_ROW_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
+        through.scan(&self.conflict_change_content);
         through.items(&self.content, ctx)?;
         through.child(&self.inserted_table_row, ctx)?;
         through.child(&self.deleted_table_row, ctx)?;
@@ -58529,16 +58671,20 @@ impl WriteThrough for wordprocessing::TableRowProperties {
 }
 
 impl super::Item for wordprocessing::TableRowPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::table_row_properties_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -59664,6 +59810,7 @@ impl WriteThrough for wordprocessing::TextRun {
         through.attribute(0, &self.rsid_r_pr);
         through.attribute(1, &self.rsid_del);
         through.attribute(2, &self.rsid_r);
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.finish(ctx)
@@ -59696,16 +59843,20 @@ impl WriteThrough for wordprocessing::TextRun {
 }
 
 impl super::Item for wordprocessing::TextRunContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::text_run_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -60610,16 +60761,20 @@ impl WriteThrough for wordprocessing::TrackRevisionsToDocument {
 }
 
 impl super::Item for wordprocessing::TrackedRunContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::tracked_run_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -62845,6 +63000,7 @@ impl WriteThrough for wordprocessing::VMLObject {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.anchor_id);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.embedded_video, ctx)?;
         through.child(&self.embedded_control, ctx)?;
@@ -63486,16 +63642,20 @@ impl WriteThrough for wordprocessing::VisuallyRightToLeftTable {
 }
 
 impl super::Item for wordprocessing::VmlElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::vml_element_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -63593,16 +63753,20 @@ impl WriteThrough for wordprocessing::VmlElementContent {
 }
 
 impl super::Item for wordprocessing::VmlOfficeDrawingElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing(),
             wordprocessing::Context::vml_office_drawing_element_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

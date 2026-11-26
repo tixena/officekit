@@ -281,6 +281,7 @@ impl WriteThrough for office_drawing_2021_livefeed::BackgroundProps {
             &office_drawing_2021_livefeed::BACKGROUND_PROPS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.ext_lst, ctx)?;
         through.finish(ctx)
@@ -577,8 +578,12 @@ impl WriteThrough for office_drawing_2021_livefeed::ExtLst {
 }
 
 impl super::Item for office_drawing_2021_livefeed::LiveFeedBackgroundPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

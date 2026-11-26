@@ -2830,6 +2830,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::Data {
             &office_spreadsheetml_2009_9_main::DATA_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7361,8 +7362,12 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::PivotTables {
 }
 
 impl super::Item for office_spreadsheetml_2009_9_main::PivotUserEditContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -8520,8 +8525,12 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::SlicerCache {
 }
 
 impl super::Item for office_spreadsheetml_2009_9_main::SlicerCacheDataContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -10610,6 +10619,7 @@ impl WriteThrough for office_spreadsheetml_2009_9_main::UserEdit {
             &office_spreadsheetml_2009_9_main::USER_EDIT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

@@ -274,6 +274,7 @@ impl WriteThrough for office_2019_extlst::Ext {
         let mut through =
             super::Through::new(out, &office_2019_extlst::EXT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

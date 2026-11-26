@@ -375,6 +375,7 @@ impl WriteThrough for office_spreadsheetml_2014_revision::Body {
             &office_spreadsheetml_2014_revision::BODY_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2034,6 +2035,7 @@ impl WriteThrough for office_spreadsheetml_2014_revision::ObjectState {
             &office_spreadsheetml_2014_revision::OBJECT_STATE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2462,16 +2464,20 @@ impl WriteThrough for office_spreadsheetml_2014_revision::Ref {
 }
 
 impl super::Item for office_spreadsheetml_2014_revision::ReferenceMapContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_spreadsheetml_2014_revision(),
             office_spreadsheetml_2014_revision::Context::reference_map_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2658,6 +2664,7 @@ impl WriteThrough for office_spreadsheetml_2014_revision::Refmap {
             &office_spreadsheetml_2014_revision::REFMAP_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2838,6 +2845,7 @@ impl WriteThrough for office_spreadsheetml_2014_revision::RevStream {
             &office_spreadsheetml_2014_revision::REV_STREAM_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2869,8 +2877,12 @@ impl WriteThrough for office_spreadsheetml_2014_revision::RevStream {
 }
 
 impl super::Item for office_spreadsheetml_2014_revision::RevisionChangeObjectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -2966,16 +2978,20 @@ impl WriteThrough for office_spreadsheetml_2014_revision::RevisionChangeObjectCo
 }
 
 impl super::Item for office_spreadsheetml_2014_revision::RevisionGroupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_spreadsheetml_2014_revision(),
             office_spreadsheetml_2014_revision::Context::revision_group_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3248,8 +3264,12 @@ impl WriteThrough for office_spreadsheetml_2014_revision::RevisionPtr {
 }
 
 impl super::Item for office_spreadsheetml_2014_revision::RevisionStateContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -3366,16 +3386,20 @@ impl WriteThrough for office_spreadsheetml_2014_revision::RevisionStateContent {
 }
 
 impl super::Item for office_spreadsheetml_2014_revision::RevisionStreamContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_spreadsheetml_2014_revision(),
             office_spreadsheetml_2014_revision::Context::revision_stream_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3968,8 +3992,12 @@ impl WriteThrough for office_spreadsheetml_2014_revision::SparklineGroup {
 }
 
 impl super::Item for office_spreadsheetml_2014_revision::StateBasedObjectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -5000,6 +5028,7 @@ impl WriteThrough for office_spreadsheetml_2014_revision::Xrrco {
         through.attribute(2, &self.sh);
         through.attribute(3, &self.uidp);
         through.attribute(4, &self.ctx);
+        through.scan(&self.content);
         through.child(&self.hdr_state_based_header, ctx)?;
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -5392,6 +5421,7 @@ impl WriteThrough for office_spreadsheetml_2014_revision::Xrrg {
         through.attribute(2, &self.sh);
         through.attribute(3, &self.uidp);
         through.attribute(4, &self.ctx);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }

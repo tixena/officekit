@@ -495,6 +495,7 @@ impl WriteThrough for bibliography::Author {
         }
         let mut through =
             super::Through::new(out, &bibliography::AUTHOR_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1504,6 +1505,7 @@ impl WriteThrough for bibliography::ContributorsList {
             &bibliography::CONTRIBUTORS_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1535,16 +1537,20 @@ impl WriteThrough for bibliography::ContributorsList {
 }
 
 impl super::Item for bibliography::ContributorsListContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.bibliography(),
             bibliography::Context::contributors_list_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3564,8 +3570,12 @@ impl WriteThrough for bibliography::NameList {
 }
 
 impl super::Item for bibliography::NameOrCorporateContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -4021,6 +4031,7 @@ impl WriteThrough for bibliography::Performer {
         }
         let mut through =
             super::Through::new(out, &bibliography::PERFORMER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5155,6 +5166,7 @@ impl WriteThrough for bibliography::Source {
         }
         let mut through =
             super::Through::new(out, &bibliography::SOURCE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5182,16 +5194,20 @@ impl WriteThrough for bibliography::Source {
 }
 
 impl super::Item for bibliography::SourceContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.bibliography(),
             bibliography::Context::source_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

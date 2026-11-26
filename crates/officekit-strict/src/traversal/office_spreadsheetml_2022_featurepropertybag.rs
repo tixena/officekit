@@ -280,6 +280,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::A {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.k);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -311,16 +312,20 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::A {
 }
 
 impl super::Item for office_spreadsheetml_2022_featurepropertybag::ArrayFeaturePropertyContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_spreadsheetml_2022_featurepropertybag(),
             office_spreadsheetml_2022_featurepropertybag::Context::array_feature_property_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -692,6 +697,7 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::Bag {
         through.attribute(1, &self.ext_ref);
         through.attribute(2, &self.bag_ext_id);
         through.attribute(3, &self.att);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1825,16 +1831,20 @@ impl WriteThrough for office_spreadsheetml_2022_featurepropertybag::ExtLst {
 }
 
 impl super::Item for office_spreadsheetml_2022_featurepropertybag::FeaturePropertyBagContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_spreadsheetml_2022_featurepropertybag(),
             office_spreadsheetml_2022_featurepropertybag::Context::feature_property_bag_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(

@@ -374,6 +374,7 @@ impl WriteThrough for document_properties_custom::CustomFileProperty {
         through.attribute(1, &self.pid);
         through.attribute(2, &self.name);
         through.attribute(3, &self.link_target);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -405,8 +406,12 @@ impl WriteThrough for document_properties_custom::CustomFileProperty {
 }
 
 impl super::Item for document_properties_custom::CustomFilePropertyContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

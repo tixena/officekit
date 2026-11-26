@@ -288,6 +288,7 @@ impl WriteThrough for office_drawing_2013_main_command::BlipFillBlipFillProperti
         );
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
+        through.scan(&self.content);
         through.child(&self.blip, ctx)?;
         through.child(&self.source_rectangle, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -507,6 +508,8 @@ impl WriteThrough for office_drawing_2013_main_command::BodyPr {
         through.attribute(16, &self.force_aa);
         through.attribute(17, &self.upright);
         through.attribute(18, &self.compat_ln_spc);
+        through.scan(&self.text_autofit_content);
+        through.scan(&self.text3d_content);
         through.child(&self.preset_text_warp, ctx)?;
         through.choice(&self.text_autofit_content, ctx)?;
         through.child(&self.scene3d, ctx)?;
@@ -2003,6 +2006,7 @@ impl WriteThrough for office_drawing_2013_main_command::CxnSpMkLst {
             &office_drawing_2013_main_command::CXN_SP_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2091,6 +2095,7 @@ impl WriteThrough for office_drawing_2013_main_command::DcMkLst {
             &office_drawing_2013_main_command::DC_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2180,6 +2185,7 @@ impl WriteThrough for office_drawing_2013_main_command::DeMasterMkLst {
             &office_drawing_2013_main_command::DE_MASTER_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2268,6 +2274,7 @@ impl WriteThrough for office_drawing_2013_main_command::DeMkLst {
             &office_drawing_2013_main_command::DE_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2440,6 +2447,7 @@ impl WriteThrough for office_drawing_2013_main_command::DeSrcMkLst {
             &office_drawing_2013_main_command::DE_SRC_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2528,6 +2536,7 @@ impl WriteThrough for office_drawing_2013_main_command::DeTgtMkLst {
             &office_drawing_2013_main_command::DE_TGT_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2616,6 +2625,7 @@ impl WriteThrough for office_drawing_2013_main_command::DgMkLst {
             &office_drawing_2013_main_command::DG_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2788,6 +2798,7 @@ impl WriteThrough for office_drawing_2013_main_command::DrSelLst {
             &office_drawing_2013_main_command::DR_SEL_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2877,6 +2888,7 @@ impl WriteThrough for office_drawing_2013_main_command::EditorSelLst {
             &office_drawing_2013_main_command::EDITOR_SEL_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3050,6 +3062,7 @@ impl WriteThrough for office_drawing_2013_main_command::EffectRef {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3646,6 +3659,7 @@ impl WriteThrough for office_drawing_2013_main_command::FillRef {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3735,6 +3749,7 @@ impl WriteThrough for office_drawing_2013_main_command::FontRef {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3995,6 +4010,7 @@ impl WriteThrough for office_drawing_2013_main_command::GraphicFrameMkLst {
             &office_drawing_2013_main_command::GRAPHIC_FRAME_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4084,6 +4100,7 @@ impl WriteThrough for office_drawing_2013_main_command::GraphicParentMkLst {
             &office_drawing_2013_main_command::GRAPHIC_PARENT_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4173,6 +4190,7 @@ impl WriteThrough for office_drawing_2013_main_command::GridColMkLst {
             &office_drawing_2013_main_command::GRID_COL_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4204,16 +4222,20 @@ impl WriteThrough for office_drawing_2013_main_command::GridColMkLst {
 }
 
 impl super::Item for office_drawing_2013_main_command::GroupCommandContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_drawing_2013_main_command(),
             office_drawing_2013_main_command::Context::group_command_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -4427,6 +4449,7 @@ impl WriteThrough for office_drawing_2013_main_command::GrpCmd {
         through.attribute(0, &self.ver_id);
         through.attribute(1, &self.prevent_regroup);
         through.attribute(2, &self.grp_id);
+        through.scan(&self.content);
         through.child(&self.dg_mk_lst, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.grp_sp_pr_group_shape_properties, ctx)?;
@@ -4608,6 +4631,7 @@ impl WriteThrough for office_drawing_2013_main_command::GrpSpMkLst {
             &office_drawing_2013_main_command::GRP_SP_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4711,6 +4735,8 @@ impl WriteThrough for office_drawing_2013_main_command::GrpSpPrGroupShapePropert
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_group_transform2d, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -5262,6 +5288,7 @@ impl WriteThrough for office_drawing_2013_main_command::HlinkMkLst {
             &office_drawing_2013_main_command::HLINK_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5882,6 +5909,7 @@ impl WriteThrough for office_drawing_2013_main_command::InkMkLst {
             &office_drawing_2013_main_command::INK_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6070,6 +6098,9 @@ impl WriteThrough for office_drawing_2013_main_command::LineProps {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -6248,6 +6279,7 @@ impl WriteThrough for office_drawing_2013_main_command::LnRef {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6337,6 +6369,7 @@ impl WriteThrough for office_drawing_2013_main_command::Model3DMkLst {
             &office_drawing_2013_main_command::MODEL3D_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7475,6 +7508,10 @@ impl WriteThrough for office_drawing_2013_main_command::PPr {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -7658,6 +7695,7 @@ impl WriteThrough for office_drawing_2013_main_command::PicMkLst {
             &office_drawing_2013_main_command::PIC_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8258,6 +8296,7 @@ impl WriteThrough for office_drawing_2013_main_command::SpMkLstShapeMonikerList 
             &office_drawing_2013_main_command::SP_MK_LST_SHAPE_MONIKER_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8350,6 +8389,7 @@ impl WriteThrough for office_drawing_2013_main_command::SpMkLstShapePropsMoniker
             &office_drawing_2013_main_command::SP_MK_LST_SHAPE_PROPS_MONIKER_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8572,6 +8612,9 @@ impl WriteThrough for office_drawing_2013_main_command::SpPrShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -9108,6 +9151,7 @@ impl WriteThrough for office_drawing_2013_main_command::SvgBlipMkLst {
             &office_drawing_2013_main_command::SVG_BLIP_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9196,6 +9240,7 @@ impl WriteThrough for office_drawing_2013_main_command::TblMkLst {
             &office_drawing_2013_main_command::TBL_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9284,6 +9329,7 @@ impl WriteThrough for office_drawing_2013_main_command::TcMkLst {
             &office_drawing_2013_main_command::TC_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9372,6 +9418,7 @@ impl WriteThrough for office_drawing_2013_main_command::TrMkLst {
             &office_drawing_2013_main_command::TR_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9461,6 +9508,7 @@ impl WriteThrough for office_drawing_2013_main_command::TxBodyMkLst {
             &office_drawing_2013_main_command::TX_BODY_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9633,6 +9681,7 @@ impl WriteThrough for office_drawing_2013_main_command::TxMkLst {
             &office_drawing_2013_main_command::TX_MK_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9806,6 +9855,7 @@ impl WriteThrough for office_drawing_2013_main_command::ViewSelLst {
             &office_drawing_2013_main_command::VIEW_SEL_LST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }

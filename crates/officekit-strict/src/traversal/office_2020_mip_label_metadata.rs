@@ -280,6 +280,7 @@ impl WriteThrough for office_2020_mip_label_metadata::Ext {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

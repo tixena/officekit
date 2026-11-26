@@ -290,6 +290,7 @@ impl WriteThrough for locked_canvas::LockedCanvasContainer {
             &locked_canvas::LOCKED_CANVAS_CONTAINER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.non_visual_properties_for_a_group_shape, ctx)?;
         through.child(&self.visual_group_shape_properties, ctx)?;
         through.items(&self.content, ctx)?;

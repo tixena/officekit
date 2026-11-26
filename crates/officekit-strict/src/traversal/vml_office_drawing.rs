@@ -1310,6 +1310,7 @@ impl WriteThrough for vml_office_drawing::NewShapeDefaults {
         through.attribute(5, &self.stroke);
         through.attribute(6, &self.strokecolor);
         through.attribute(7, &self.allowincell);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1341,16 +1342,20 @@ impl WriteThrough for vml_office_drawing::NewShapeDefaults {
 }
 
 impl super::Item for vml_office_drawing::NewShapeDefaultsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.vml_office_drawing(),
             vml_office_drawing::Context::new_shape_defaults_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2187,6 +2192,7 @@ impl WriteThrough for vml_office_drawing::ShapeLayoutProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.ext);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2218,16 +2224,20 @@ impl WriteThrough for vml_office_drawing::ShapeLayoutProperties {
 }
 
 impl super::Item for vml_office_drawing::ShapeLayoutPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.vml_office_drawing(),
             vml_office_drawing::Context::shape_layout_properties_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2676,6 +2686,7 @@ impl WriteThrough for vml_office_drawing::StorageForAlternateMathContent {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.content_type);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

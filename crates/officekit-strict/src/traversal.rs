@@ -130,6 +130,8 @@ pub struct Through<'out, 'sink, 'node> {
     place: Place<'node>,
     positions: Positions,
     shape: &'static Shape,
+    /// Whether an `Other` item of a list or choice field is text or CDATA.
+    text_items: bool,
     unknown: &'node Unknown,
 }
 
@@ -158,7 +160,9 @@ pub struct Walk<'node> {
 pub trait Item: Sized {
     /// Whether the item is one of the enum's arms, not its `Other` node.
     #[must_use = "this only answers the question"]
-    fn is_declared(&self) -> bool;
+    fn is_declared(&self) -> bool {
+        self.other().is_none()
+    }
 
     /// The list hook: `Some` puts any number of items, none included, in the
     /// item's place; `None`, the default and the answer for an enum no list
@@ -166,6 +170,10 @@ pub trait Item: Sized {
     fn items(&self, _ctx: &mut dyn Context) -> Option<Vec<Self>> {
         None
     }
+
+    /// The node of the enum's `Other` item; `None` for one of its arms.
+    #[must_use = "this only returns the value"]
+    fn other(&self) -> Option<&Node>;
 
     /// The list write hook: `Written::Yes` means it wrote any number of items,
     /// none included, in the item's place.
@@ -220,6 +228,11 @@ pub trait Visit {
 
 /// Every node type: written straight to a `PartWriter`, each hook asked on
 /// the way.
+///
+/// The pretty layout puts each child of an element on a line of its own unless the node holds
+/// text or CDATA, as the tree's write does. Text a context's write hook writes into an element
+/// whose node holds none gets those line breaks around it; only the nodes the hook writes itself
+/// follow the rule.
 pub trait WriteThrough {
     /// Write this node with its children written through, without asking the
     /// context about this node.
@@ -476,21 +489,22 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
             place: Place::new(kept),
             positions: Positions::default(),
             shape,
+            text_items: false,
             unknown: kept,
         }
     }
 
     /// Hand the start tag to the part writer, which holds it back until the
     /// element's first content, once every attribute is known; `text` tells whether the node's
-    /// simple content is text that is not empty, which with its unknown children says what its
-    /// children are.
+    /// simple content is text that is not empty, which with its scanned items and its unknown
+    /// children says what its children are.
     fn open(&mut self, text: bool) -> io::Result<()> {
         if !self.opened {
             self.opened = true;
             self.element
                 .attributes
                 .extend(self.unknown.attributes.iter().cloned());
-            let children = if text {
+            let children = if text || self.text_items {
                 Children::Text
             } else {
                 Children::of(self.unknown.children.iter().map(|extra| &extra.node))
@@ -498,6 +512,17 @@ impl<'out, 'sink, 'node> Through<'out, 'sink, 'node> {
             self.out.open_node(&mut self.element, children)?;
         }
         Ok(())
+    }
+
+    /// Call for each list and choice field before the first child is written: notes an `Other`
+    /// item that is text or CDATA, around which the pretty layout writes no line breaks.
+    pub fn scan<F>(&mut self, field: &F)
+    where
+        F: Nodes,
+        F::Node: Item,
+    {
+        self.text_items |=
+            Children::of(field.nodes().iter().filter_map(Item::other)) == Children::Text;
     }
 
     /// Write simple content's text, before the nodes kept after it.

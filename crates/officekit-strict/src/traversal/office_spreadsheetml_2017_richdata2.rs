@@ -648,6 +648,7 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::CustomFilters {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.and);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -679,16 +680,20 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::CustomFilters {
 }
 
 impl super::Item for office_spreadsheetml_2017_richdata2::CustomRichFiltersContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_spreadsheetml_2017_richdata2(),
             office_spreadsheetml_2017_richdata2::Context::custom_rich_filters_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1304,6 +1309,7 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::FilterColumn {
             &office_spreadsheetml_2017_richdata2::FILTER_COLUMN_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2044,8 +2050,12 @@ impl WriteThrough for office_spreadsheetml_2017_richdata2::RSty {
 }
 
 impl super::Item for office_spreadsheetml_2017_richdata2::RichFilterColumnContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

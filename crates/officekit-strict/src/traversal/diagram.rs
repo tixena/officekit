@@ -349,6 +349,8 @@ impl WriteThrough for diagram::BackgroundFormatting {
             &diagram::BACKGROUND_FORMATTING_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
         through.finish(ctx)
@@ -2056,6 +2058,7 @@ impl WriteThrough for diagram::EffectColorList {
         );
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2125,6 +2128,7 @@ impl WriteThrough for diagram::Else {
         }
         let mut through = super::Through::new(out, &diagram::ELSE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.name);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2357,6 +2361,7 @@ impl WriteThrough for diagram::FillColorList {
         );
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2434,6 +2439,7 @@ impl WriteThrough for diagram::ForEach {
         through.attribute(5, &self.st);
         through.attribute(6, &self.cnt);
         through.attribute(7, &self.step);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2508,6 +2514,7 @@ impl WriteThrough for diagram::If {
         through.attribute(8, &self.arg);
         through.attribute(9, &self.op);
         through.attribute(10, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2732,12 +2739,16 @@ impl WriteThrough for diagram::LayoutDefinitionHeader {
 }
 
 impl super::Item for diagram::LayoutElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.diagram(), diagram::Context::layout_element_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2929,6 +2940,7 @@ impl WriteThrough for diagram::LayoutNode {
         through.attribute(1, &self.style_lbl);
         through.attribute(2, &self.ch_order);
         through.attribute(3, &self.move_with);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2956,16 +2968,20 @@ impl WriteThrough for diagram::LayoutNode {
 }
 
 impl super::Item for diagram::LayoutNodeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.diagram(),
             diagram::Context::layout_node_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3246,6 +3262,7 @@ impl WriteThrough for diagram::LineColorList {
         );
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4756,6 +4773,9 @@ impl WriteThrough for diagram::ShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -5854,6 +5874,7 @@ impl WriteThrough for diagram::TextEffectColorList {
         );
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5940,6 +5961,7 @@ impl WriteThrough for diagram::TextFillColorList {
         );
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6022,6 +6044,7 @@ impl WriteThrough for diagram::TextLineColorList {
         );
         through.attribute(0, &self.meth);
         through.attribute(1, &self.hue_dir);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6098,6 +6121,7 @@ impl WriteThrough for diagram::TextProperties {
             &diagram::TEXT_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6479,6 +6503,7 @@ impl WriteThrough for diagram::WholeE2OFormatting {
             &diagram::WHOLE_E2O_FORMATTING_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.outline, ctx)?;
         through.choice(&self.content, ctx)?;
         through.finish(ctx)

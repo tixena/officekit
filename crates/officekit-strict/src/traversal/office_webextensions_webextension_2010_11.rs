@@ -915,6 +915,7 @@ impl WriteThrough for office_webextensions_webextension_2010_11::Snapshot {
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
         through.attribute(2, &self.cstate);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.extension_list, ctx)?;
         through.finish(ctx)

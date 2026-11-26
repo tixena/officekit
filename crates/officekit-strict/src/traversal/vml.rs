@@ -319,6 +319,7 @@ impl WriteThrough for vml::ArcSegment {
         through.attribute(52, &self.clip);
         through.attribute(53, &self.start_angle);
         through.attribute(54, &self.end_angle);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -440,6 +441,7 @@ impl WriteThrough for vml::BezierCurve {
         through.attribute(54, &self.control1);
         through.attribute(55, &self.control2);
         through.attribute(56, &self.to);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -733,6 +735,7 @@ impl WriteThrough for vml::ImageFile {
         through.attribute(60, &self.gamma);
         through.attribute(61, &self.grayscale);
         through.attribute(62, &self.bilevel);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -851,6 +854,7 @@ impl WriteThrough for vml::Line {
         through.attribute(52, &self.clip);
         through.attribute(53, &self.from);
         through.attribute(54, &self.to);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1092,6 +1096,7 @@ impl WriteThrough for vml::MultiplePathLine {
         through.attribute(51, &self.cliptowrap);
         through.attribute(52, &self.clip);
         through.attribute(53, &self.points);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1115,16 +1120,20 @@ impl WriteThrough for vml::MultiplePathLine {
 }
 
 impl super::Item for vml::MultiplePathLineContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.vml(),
             vml::Context::multiple_path_line_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1308,6 +1317,7 @@ impl WriteThrough for vml::Oval {
         through.attribute(50, &self.preferrelative);
         through.attribute(51, &self.cliptowrap);
         through.attribute(52, &self.clip);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1424,6 +1434,7 @@ impl WriteThrough for vml::Rectangle {
         through.attribute(50, &self.preferrelative);
         through.attribute(51, &self.cliptowrap);
         through.attribute(52, &self.clip);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1543,6 +1554,7 @@ impl WriteThrough for vml::RoundedRectangle {
         through.attribute(51, &self.cliptowrap);
         through.attribute(52, &self.clip);
         through.attribute(53, &self.arcsize);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1865,6 +1877,7 @@ impl WriteThrough for vml::ShapeDefinition {
         through.attribute(55, &self.path);
         through.attribute(56, &self.gfxdata);
         through.attribute(57, &self.equationxml);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1887,16 +1900,20 @@ impl WriteThrough for vml::ShapeDefinition {
 }
 
 impl super::Item for vml::ShapeDefinitionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.vml(),
             vml::Context::shape_definition_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1982,12 +1999,16 @@ impl WriteThrough for vml::ShapeDefinitionContent {
 }
 
 impl super::Item for vml::ShapeElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.vml(), vml::Context::shape_element_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2253,6 +2274,7 @@ impl WriteThrough for vml::ShapeGroup {
         through.attribute(36, &self.editas);
         through.attribute(37, &self.tableproperties);
         through.attribute(38, &self.tablelimits);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2275,12 +2297,16 @@ impl WriteThrough for vml::ShapeGroup {
 }
 
 impl super::Item for vml::ShapeGroupContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.vml(), vml::Context::shape_group_content_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2609,6 +2635,7 @@ impl WriteThrough for vml::ShapeTemplate {
         through.attribute(53, &self.adj);
         through.attribute(54, &self.path);
         through.attribute(55, &self.master);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.complex, ctx)?;
         through.finish(ctx)
@@ -2739,6 +2766,7 @@ impl WriteThrough for vml::TextBox {
         through.attribute(2, &self.inset);
         through.attribute(3, &self.singleclick);
         through.attribute(4, &self.insetmode);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2761,8 +2789,12 @@ impl WriteThrough for vml::TextBox {
 }
 
 impl super::Item for vml::TextBoxContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 

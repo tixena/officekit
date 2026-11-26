@@ -308,8 +308,12 @@ impl WriteThrough for wordprocessing_drawing::AbsolutePositionOffset {
 }
 
 impl super::Item for wordprocessing_drawing::AnchorContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -529,6 +533,7 @@ impl WriteThrough for wordprocessing_drawing::AnchorForFloatingDrawingMLObject {
         through.attribute(10, &self.allow_overlap);
         through.attribute(11, &self.edit_id);
         through.attribute(12, &self.anchor_id);
+        through.scan(&self.content);
         through.child(&self.simple_positioning_coordinates, ctx)?;
         through.child(&self.horizontal_positioning, ctx)?;
         through.child(&self.vertical_positioning, ctx)?;
@@ -631,6 +636,8 @@ impl WriteThrough for wordprocessing_drawing::BackgroundFormatting {
             &wordprocessing_drawing::BACKGROUND_FORMATTING_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
         through.finish(ctx)
@@ -748,6 +755,8 @@ impl WriteThrough for wordprocessing_drawing::BodyProperties {
         through.attribute(16, &self.force_aa);
         through.attribute(17, &self.upright);
         through.attribute(18, &self.compat_ln_spc);
+        through.scan(&self.text_autofit_content);
+        through.scan(&self.text3d_content);
         through.child(&self.preset_text_warp, ctx)?;
         through.choice(&self.text_autofit_content, ctx)?;
         through.child(&self.scene3d, ctx)?;
@@ -975,16 +984,20 @@ impl WriteThrough for wordprocessing_drawing::ContentPart {
 }
 
 impl super::Item for wordprocessing_drawing::DrawingCanvasContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing_drawing(),
             wordprocessing_drawing::Context::drawing_canvas_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1567,6 +1580,7 @@ impl WriteThrough for wordprocessing_drawing::GroupShape {
             &wordprocessing_drawing::GROUP_SHAPE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_group_shape_drawing_properties, ctx)?;
         through.child(&self.properties, ctx)?;
@@ -1602,16 +1616,20 @@ impl WriteThrough for wordprocessing_drawing::GroupShape {
 }
 
 impl super::Item for wordprocessing_drawing::GroupShapeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.wordprocessing_drawing(),
             wordprocessing_drawing::Context::group_shape_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1810,6 +1828,8 @@ impl WriteThrough for wordprocessing_drawing::GroupShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_group_transform2d, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -1903,6 +1923,7 @@ impl WriteThrough for wordprocessing_drawing::HorizontalPositioning {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.relative_from);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1934,8 +1955,12 @@ impl WriteThrough for wordprocessing_drawing::HorizontalPositioning {
 }
 
 impl super::Item for wordprocessing_drawing::HorizontalPositioningContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -3235,6 +3260,7 @@ impl WriteThrough for wordprocessing_drawing::RichTextBoxContentContainer {
             &wordprocessing_drawing::RICH_TEXT_BOX_CONTENT_CONTAINER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3266,8 +3292,12 @@ impl WriteThrough for wordprocessing_drawing::RichTextBoxContentContainer {
 }
 
 impl super::Item for wordprocessing_drawing::ShapeNonVisualPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -3437,6 +3467,9 @@ impl WriteThrough for wordprocessing_drawing::ShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -3572,8 +3605,12 @@ impl WriteThrough for wordprocessing_drawing::ShapeStyle {
 }
 
 impl super::Item for wordprocessing_drawing::ShapeTextContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -4368,6 +4405,7 @@ impl WriteThrough for wordprocessing_drawing::VerticalPositioning {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.relative_from);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4399,8 +4437,12 @@ impl WriteThrough for wordprocessing_drawing::VerticalPositioning {
 }
 
 impl super::Item for wordprocessing_drawing::VerticalPositioningContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -4562,6 +4604,7 @@ impl WriteThrough for wordprocessing_drawing::WholeE2OFormatting {
             &wordprocessing_drawing::WHOLE_E2O_FORMATTING_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.outline, ctx)?;
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -4660,6 +4703,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLDrawingCanvas {
             &wordprocessing_drawing::WORDPROCESSING_ML_DRAWING_CANVAS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.background_formatting, ctx)?;
         through.child(&self.whole_e2o_formatting, ctx)?;
         through.items(&self.content, ctx)?;
@@ -4766,6 +4810,8 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLShape {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.normal_east_asian_flow);
+        through.scan(&self.non_visual_properties_content);
+        through.scan(&self.text_content);
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.choice(&self.non_visual_properties_content, ctx)?;
         through.child(&self.properties, ctx)?;
@@ -4874,6 +4920,7 @@ impl WriteThrough for wordprocessing_drawing::WordprocessingMLShapeGroup {
             &wordprocessing_drawing::WORDPROCESSING_ML_SHAPE_GROUP_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.non_visual_drawing_properties, ctx)?;
         through.child(&self.non_visual_group_shape_drawing_properties, ctx)?;
         through.child(&self.shape_properties, ctx)?;

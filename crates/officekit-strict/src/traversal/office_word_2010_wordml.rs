@@ -1181,8 +1181,12 @@ impl WriteThrough for office_word_2010_wordml::CntxtAlts {
 }
 
 impl super::Item for office_word_2010_wordml::ColorContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1278,16 +1282,20 @@ impl WriteThrough for office_word_2010_wordml::ColorContent {
 }
 
 impl super::Item for office_word_2010_wordml::ColorTransformContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_word_2010_wordml(),
             office_word_2010_wordml::Context::color_transform_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1513,6 +1521,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictDelRunTrackChange {
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
         through.attribute(2, &self.date);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1693,6 +1702,7 @@ impl WriteThrough for office_word_2010_wordml::ConflictInsRunTrackChange {
         through.attribute(0, &self.id);
         through.attribute(1, &self.author);
         through.attribute(2, &self.date);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2050,6 +2060,7 @@ impl WriteThrough for office_word_2010_wordml::ContourClr {
             &office_word_2010_wordml::CONTOUR_CLR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2921,6 +2932,7 @@ impl WriteThrough for office_word_2010_wordml::ExtrusionClr {
             &office_word_2010_wordml::EXTRUSION_CLR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2952,8 +2964,12 @@ impl WriteThrough for office_word_2010_wordml::ExtrusionClr {
 }
 
 impl super::Item for office_word_2010_wordml::FillPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -3202,6 +3218,7 @@ impl WriteThrough for office_word_2010_wordml::Glow {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.rad);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3292,6 +3309,7 @@ impl WriteThrough for office_word_2010_wordml::GradFill {
             &office_word_2010_wordml::GRAD_FILL_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.gs_lst, ctx)?;
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
@@ -3324,8 +3342,12 @@ impl WriteThrough for office_word_2010_wordml::GradFill {
 }
 
 impl super::Item for office_word_2010_wordml::GradientFillPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -3479,6 +3501,7 @@ impl WriteThrough for office_word_2010_wordml::Gs {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.pos);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3944,8 +3967,12 @@ impl WriteThrough for office_word_2010_wordml::Lin {
 }
 
 impl super::Item for office_word_2010_wordml::LineJoinContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -5673,6 +5700,7 @@ impl WriteThrough for office_word_2010_wordml::SchemeClr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5853,6 +5881,7 @@ impl WriteThrough for office_word_2010_wordml::Shadow {
         through.attribute(5, &self.kx);
         through.attribute(6, &self.ky);
         through.attribute(7, &self.algn);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5941,6 +5970,7 @@ impl WriteThrough for office_word_2010_wordml::SolidFill {
             &office_word_2010_wordml::SOLID_FILL_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6030,6 +6060,7 @@ impl WriteThrough for office_word_2010_wordml::SrgbClr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6292,6 +6323,7 @@ impl WriteThrough for office_word_2010_wordml::TextFill {
             &office_word_2010_wordml::TEXT_FILL_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6389,6 +6421,8 @@ impl WriteThrough for office_word_2010_wordml::TextOutline {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.fill_properties_content, ctx)?;
         through.child(&self.prst_dash, ctx)?;
         through.choice(&self.line_join_content, ctx)?;

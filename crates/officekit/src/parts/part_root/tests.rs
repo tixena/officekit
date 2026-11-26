@@ -679,6 +679,23 @@ fn a_store_in_the_pretty_layout_puts_each_child_of_an_element_on_a_line_of_its_o
     );
 }
 
+#[cfg(feature = "strict")]
+#[test]
+fn a_store_in_the_pretty_layout_writes_text_among_a_lists_items_as_the_tree_does() {
+    let xml = r#"<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>stray<w:p><w:r><w:t>a</w:t></w:r><![CDATA[kept]]></w:p><w:p/></w:body></w:document>"#;
+    let root = Document::from_tree(&parse(xml.as_bytes()).unwrap().root).unwrap();
+    for class in [ConformanceClass::Strict, ConformanceClass::Transitional] {
+        let options = WriteOptions::new(Layout::Pretty, true);
+        let pretty = stored(&root, class, options, store).unwrap();
+        assert!(pretty.contains("<w:body>stray<w:p>"), "{class:?}: {pretty}");
+        assert_eq!(
+            Ok(pretty),
+            stored(&root, class, options, store_tree),
+            "{class:?}"
+        );
+    }
+}
+
 #[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
 fn a_date_cell_is_refused_in_transitional_as_the_tree_refuses_it() {

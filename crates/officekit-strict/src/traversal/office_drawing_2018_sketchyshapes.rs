@@ -717,6 +717,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchStyleProps {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.sd);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.r#type, ctx)?;
         through.child(&self.seed, ctx)?;
@@ -751,8 +752,12 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::LineSketchStyleProps {
 }
 
 impl super::Item for office_drawing_2018_sketchyshapes::LineSketchTypePropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1004,6 +1009,7 @@ impl WriteThrough for office_drawing_2018_sketchyshapes::Type {
             &office_drawing_2018_sketchyshapes::TYPE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

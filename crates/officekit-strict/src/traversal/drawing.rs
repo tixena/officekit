@@ -264,6 +264,7 @@ impl WriteThrough for drawing::Accent1 {
         }
         let mut through =
             super::Through::new(out, &drawing::ACCENT1_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -328,6 +329,7 @@ impl WriteThrough for drawing::Accent2 {
         }
         let mut through =
             super::Through::new(out, &drawing::ACCENT2_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -392,6 +394,7 @@ impl WriteThrough for drawing::Accent3 {
         }
         let mut through =
             super::Through::new(out, &drawing::ACCENT3_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -456,6 +459,7 @@ impl WriteThrough for drawing::Accent4 {
         }
         let mut through =
             super::Through::new(out, &drawing::ACCENT4_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -520,6 +524,7 @@ impl WriteThrough for drawing::Accent5 {
         }
         let mut through =
             super::Through::new(out, &drawing::ACCENT5_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -584,6 +589,7 @@ impl WriteThrough for drawing::Accent6 {
         }
         let mut through =
             super::Through::new(out, &drawing::ACCENT6_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1033,6 +1039,7 @@ impl WriteThrough for drawing::AlphaInverseEffect {
             &drawing::ALPHA_INVERSE_EFFECT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1509,12 +1516,16 @@ impl WriteThrough for drawing::AnchorPoint {
 }
 
 impl super::Item for drawing::AnyElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.drawing(), drawing::Context::any_element_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2305,6 +2316,7 @@ impl WriteThrough for drawing::BackgroundColor {
             &drawing::BACKGROUND_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2389,6 +2401,7 @@ impl WriteThrough for drawing::BackgroundFillStyleList {
             &drawing::BACKGROUND_FILL_STYLE_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2967,6 +2980,7 @@ impl WriteThrough for drawing::Blip {
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
         through.attribute(2, &self.cstate);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.extension_list, ctx)?;
         through.finish(ctx)
@@ -2990,12 +3004,16 @@ impl WriteThrough for drawing::Blip {
 }
 
 impl super::Item for drawing::BlipContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.drawing(), drawing::Context::blip_content_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -3540,6 +3558,8 @@ impl WriteThrough for drawing::BodyProperties {
         through.attribute(16, &self.force_aa);
         through.attribute(17, &self.upright);
         through.attribute(18, &self.compat_ln_spc);
+        through.scan(&self.text_autofit_content);
+        through.scan(&self.text3d_content);
         through.child(&self.preset_text_warp, ctx)?;
         through.choice(&self.text_autofit_content, ctx)?;
         through.child(&self.scene3d, ctx)?;
@@ -3682,6 +3702,7 @@ impl WriteThrough for drawing::BottomBorder {
         }
         let mut through =
             super::Through::new(out, &drawing::BOTTOM_BORDER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3782,6 +3803,9 @@ impl WriteThrough for drawing::BottomBorderLineProperties {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -3892,6 +3916,9 @@ impl WriteThrough for drawing::BottomLeftToTopRightBorderLineProperties {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -4063,8 +4090,12 @@ impl WriteThrough for drawing::BuildDiagram {
 }
 
 impl super::Item for drawing::BuildSubElementsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -4583,6 +4614,7 @@ impl WriteThrough for drawing::ChangeColorFrom {
             &drawing::CHANGE_COLOR_FROM_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -4659,6 +4691,7 @@ impl WriteThrough for drawing::ChangeColorTo {
             &drawing::CHANGE_COLOR_TO_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5212,12 +5245,16 @@ impl WriteThrough for drawing::ColorChangeEffect {
 }
 
 impl super::Item for drawing::ColorContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.drawing(), drawing::Context::color_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -5521,8 +5558,12 @@ impl WriteThrough for drawing::ColorScheme {
 }
 
 impl super::Item for drawing::ColorSchemeMapOverrideContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -5667,6 +5708,7 @@ impl WriteThrough for drawing::ColorSpecified {
             &drawing::COLOR_SPECIFIED_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5694,12 +5736,16 @@ impl WriteThrough for drawing::ColorSpecified {
 }
 
 impl super::Item for drawing::ColorTransformContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.drawing(), drawing::Context::color_transform_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -6384,6 +6430,7 @@ impl WriteThrough for drawing::ContourColor {
         }
         let mut through =
             super::Through::new(out, &drawing::CONTOUR_COLOR_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6454,6 +6501,7 @@ impl WriteThrough for drawing::CustomColor {
         let mut through =
             super::Through::new(out, &drawing::CUSTOM_COLOR_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.name);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6764,6 +6812,7 @@ impl WriteThrough for drawing::Dark1 {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &drawing::DARK1_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6827,6 +6876,7 @@ impl WriteThrough for drawing::Dark2 {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &drawing::DARK2_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7003,6 +7053,10 @@ impl WriteThrough for drawing::DefaultParagraphStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -7151,6 +7205,10 @@ impl WriteThrough for drawing::DefaultTextRunProperties {
         through.attribute(16, &self.smt_clean);
         through.attribute(17, &self.smt_id);
         through.attribute(18, &self.bmk);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
+        through.scan(&self.text_underline_line_content);
+        through.scan(&self.text_underline_fill_content);
         through.child(&self.outline, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -7630,6 +7688,7 @@ impl WriteThrough for drawing::DuotoneEffect {
         }
         let mut through =
             super::Through::new(out, &drawing::DUOTONE_EFFECT_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7774,6 +7833,7 @@ impl WriteThrough for drawing::Effect {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &drawing::EFFECT_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7851,6 +7911,7 @@ impl WriteThrough for drawing::EffectContainerCont {
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.name);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7878,16 +7939,20 @@ impl WriteThrough for drawing::EffectContainerCont {
 }
 
 impl super::Item for drawing::EffectContainerContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.drawing(),
             drawing::Context::effect_container_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -8032,6 +8097,7 @@ impl WriteThrough for drawing::EffectContainerEffectDag {
         );
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.name);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8260,8 +8326,12 @@ impl WriteThrough for drawing::EffectEffectReference {
 }
 
 impl super::Item for drawing::EffectPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -8395,6 +8465,7 @@ impl WriteThrough for drawing::EffectReference {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8469,6 +8540,7 @@ impl WriteThrough for drawing::EffectStyle {
         }
         let mut through =
             super::Through::new(out, &drawing::EFFECT_STYLE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.scene3d, ctx)?;
         through.child(&self.apply_3d_shape_properties, ctx)?;
@@ -8682,6 +8754,10 @@ impl WriteThrough for drawing::EndParagraphRunProperties {
         through.attribute(16, &self.smt_clean);
         through.attribute(17, &self.smt_id);
         through.attribute(18, &self.bmk);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
+        through.scan(&self.text_underline_line_content);
+        through.scan(&self.text_underline_fill_content);
         through.child(&self.outline, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -8769,6 +8845,7 @@ impl WriteThrough for drawing::Extension {
         let mut through =
             super::Through::new(out, &drawing::EXTENSION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9145,6 +9222,7 @@ impl WriteThrough for drawing::ExtrusionColor {
             &drawing::EXTRUSION_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9213,6 +9291,7 @@ impl WriteThrough for drawing::Fill {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &drawing::FILL_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9284,6 +9363,7 @@ impl WriteThrough for drawing::FillFillEffect {
             &drawing::FILL_FILL_EFFECT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9311,8 +9391,12 @@ impl WriteThrough for drawing::FillFillEffect {
 }
 
 impl super::Item for drawing::FillModeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -9446,6 +9530,7 @@ impl WriteThrough for drawing::FillOverlayEffect {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.blend);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9473,12 +9558,16 @@ impl WriteThrough for drawing::FillOverlayEffect {
 }
 
 impl super::Item for drawing::FillPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.drawing(), drawing::Context::fill_properties_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -9717,6 +9806,7 @@ impl WriteThrough for drawing::FillReference {
         let mut through =
             super::Through::new(out, &drawing::FILL_REFERENCE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -9793,6 +9883,7 @@ impl WriteThrough for drawing::FillStyleList {
             &drawing::FILL_STYLE_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10251,6 +10342,7 @@ impl WriteThrough for drawing::FollowedHyperlink {
             &drawing::FOLLOWED_HYPERLINK_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10476,6 +10568,7 @@ impl WriteThrough for drawing::FontReference {
         let mut through =
             super::Through::new(out, &drawing::FONT_REFERENCE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10628,6 +10721,7 @@ impl WriteThrough for drawing::ForegroundColor {
             &drawing::FOREGROUND_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10795,8 +10889,12 @@ impl WriteThrough for drawing::Gamma {
 }
 
 impl super::Item for drawing::GeometryContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -10918,6 +11016,7 @@ impl WriteThrough for drawing::GlowEffect {
         let mut through =
             super::Through::new(out, &drawing::GLOW_EFFECT_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.rad);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -10995,6 +11094,7 @@ impl WriteThrough for drawing::GradientFill {
             super::Through::new(out, &drawing::GRADIENT_FILL_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.flip);
         through.attribute(1, &self.rot_with_shape);
+        through.scan(&self.content);
         through.child(&self.gradient_stop_list, ctx)?;
         through.choice(&self.content, ctx)?;
         through.child(&self.tile_rectangle, ctx)?;
@@ -11024,8 +11124,12 @@ impl WriteThrough for drawing::GradientFill {
 }
 
 impl super::Item for drawing::GradientFillContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -11237,6 +11341,7 @@ impl WriteThrough for drawing::GradientStops {
         let mut through =
             super::Through::new(out, &drawing::GRADIENT_STOPS_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.pos);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -11264,8 +11369,12 @@ impl WriteThrough for drawing::GradientStops {
 }
 
 impl super::Item for drawing::GraphicElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -11639,6 +11748,7 @@ impl WriteThrough for drawing::GraphicObjectData {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -12106,6 +12216,7 @@ impl WriteThrough for drawing::GroupShape {
         }
         let mut through =
             super::Through::new(out, &drawing::GROUP_SHAPE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.visual_group_shape_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -12136,16 +12247,20 @@ impl WriteThrough for drawing::GroupShape {
 }
 
 impl super::Item for drawing::GroupShapeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.drawing(),
             drawing::Context::group_shape_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -12580,6 +12695,7 @@ impl WriteThrough for drawing::HighlightColor {
             &drawing::HIGHLIGHT_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -12929,6 +13045,7 @@ impl WriteThrough for drawing::HueSaturationLuminanceColorModel {
         through.attribute(0, &self.hue);
         through.attribute(1, &self.sat);
         through.attribute(2, &self.lum);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13089,6 +13206,7 @@ impl WriteThrough for drawing::Hyperlink {
         }
         let mut through =
             super::Through::new(out, &drawing::HYPERLINK_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13333,6 +13451,7 @@ impl WriteThrough for drawing::InnerShadowEffect {
         through.attribute(0, &self.blur_rad);
         through.attribute(1, &self.dist);
         through.attribute(2, &self.dir);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13417,6 +13536,7 @@ impl WriteThrough for drawing::InsideHorizontalBorder {
             &drawing::INSIDE_HORIZONTAL_BORDER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13505,6 +13625,7 @@ impl WriteThrough for drawing::InsideVerticalBorder {
             &drawing::INSIDE_VERTICAL_BORDER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13909,6 +14030,7 @@ impl WriteThrough for drawing::LeftBorder {
         }
         let mut through =
             super::Through::new(out, &drawing::LEFT_BORDER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -14009,6 +14131,9 @@ impl WriteThrough for drawing::LeftBorderLineProperties {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -14086,6 +14211,7 @@ impl WriteThrough for drawing::Light1 {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &drawing::LIGHT1_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -14149,6 +14275,7 @@ impl WriteThrough for drawing::Light2 {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &drawing::LIGHT2_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -14238,8 +14365,12 @@ impl WriteThrough for drawing::LightRig {
 }
 
 impl super::Item for drawing::LineDashContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -14400,8 +14531,12 @@ impl WriteThrough for drawing::LineDefault {
 }
 
 impl super::Item for drawing::LineFillContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -14646,8 +14781,12 @@ impl WriteThrough for drawing::LineJoinBevel {
 }
 
 impl super::Item for drawing::LineJoinContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -14778,6 +14917,7 @@ impl WriteThrough for drawing::LineReference {
         let mut through =
             super::Through::new(out, &drawing::LINE_REFERENCE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -14847,6 +14987,7 @@ impl WriteThrough for drawing::LineSpacing {
         }
         let mut through =
             super::Through::new(out, &drawing::LINE_SPACING_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -15115,6 +15256,10 @@ impl WriteThrough for drawing::ListLevel1TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -15238,6 +15383,10 @@ impl WriteThrough for drawing::ListLevel2TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -15361,6 +15510,10 @@ impl WriteThrough for drawing::ListLevel3TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -15484,6 +15637,10 @@ impl WriteThrough for drawing::ListLevel4TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -15607,6 +15764,10 @@ impl WriteThrough for drawing::ListLevel5TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -15730,6 +15891,10 @@ impl WriteThrough for drawing::ListLevel6TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -15853,6 +16018,10 @@ impl WriteThrough for drawing::ListLevel7TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -15976,6 +16145,10 @@ impl WriteThrough for drawing::ListLevel8TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -16099,6 +16272,10 @@ impl WriteThrough for drawing::ListLevel9TextStyle {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -16192,6 +16369,7 @@ impl WriteThrough for drawing::ListOfShapeAdjustHandles {
             &drawing::LIST_OF_SHAPE_ADJUST_HANDLES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -19116,6 +19294,7 @@ impl WriteThrough for drawing::OuterShadowEffect {
         through.attribute(6, &self.ky);
         through.attribute(7, &self.algn);
         through.attribute(8, &self.rot_with_shape);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -19201,6 +19380,9 @@ impl WriteThrough for drawing::Outline {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -19667,6 +19849,7 @@ impl WriteThrough for drawing::PictureFill {
             super::Through::new(out, &drawing::PICTURE_FILL_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
+        through.scan(&self.content);
         through.child(&self.blip, ctx)?;
         through.child(&self.source_rectangle, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -19907,6 +20090,7 @@ impl WriteThrough for drawing::PresetColor {
         let mut through =
             super::Through::new(out, &drawing::PRESET_COLOR_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20124,6 +20308,7 @@ impl WriteThrough for drawing::PresetShadow {
         through.attribute(0, &self.prst);
         through.attribute(1, &self.dist);
         through.attribute(2, &self.dir);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20369,6 +20554,7 @@ impl WriteThrough for drawing::RGBColorModelHexVariant {
         );
         through.attribute(0, &self.val);
         through.attribute(1, &self.legacy_spreadsheet_color_index);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20460,6 +20646,7 @@ impl WriteThrough for drawing::RGBColorModelPercentageVariant {
         through.attribute(0, &self.r);
         through.attribute(1, &self.g);
         through.attribute(2, &self.b);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20894,6 +21081,7 @@ impl WriteThrough for drawing::RightBorder {
         }
         let mut through =
             super::Through::new(out, &drawing::RIGHT_BORDER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20994,6 +21182,9 @@ impl WriteThrough for drawing::RightBorderLineProperties {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -21566,6 +21757,7 @@ impl WriteThrough for drawing::SchemeColor {
         let mut through =
             super::Through::new(out, &drawing::SCHEME_COLOR_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -21729,16 +21921,20 @@ impl WriteThrough for drawing::Shape {
 }
 
 impl super::Item for drawing::ShapeAdjustHandlesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.drawing(),
             drawing::Context::shape_adjust_handles_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -22263,6 +22459,7 @@ impl WriteThrough for drawing::ShapePath {
         through.attribute(2, &self.fill);
         through.attribute(3, &self.stroke);
         through.attribute(4, &self.extrusion_ok);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -22286,16 +22483,20 @@ impl WriteThrough for drawing::ShapePath {
 }
 
 impl super::Item for drawing::ShapePathContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.drawing(),
             drawing::Context::shape_path_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -22650,6 +22851,9 @@ impl WriteThrough for drawing::ShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -23054,6 +23258,7 @@ impl WriteThrough for drawing::SolidColorReplacement {
             &drawing::SOLID_COLOR_REPLACEMENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -23127,6 +23332,7 @@ impl WriteThrough for drawing::SolidFill {
         }
         let mut through =
             super::Through::new(out, &drawing::SOLID_FILL_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -23416,6 +23622,7 @@ impl WriteThrough for drawing::SpaceAfter {
         }
         let mut through =
             super::Through::new(out, &drawing::SPACE_AFTER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -23485,6 +23692,7 @@ impl WriteThrough for drawing::SpaceBefore {
         }
         let mut through =
             super::Through::new(out, &drawing::SPACE_BEFORE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -23894,6 +24102,7 @@ impl WriteThrough for drawing::SystemColor {
             super::Through::new(out, &drawing::SYSTEM_COLOR_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.val);
         through.attribute(1, &self.last_clr);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -24168,6 +24377,8 @@ impl WriteThrough for drawing::TableBackground {
             &drawing::TABLE_BACKGROUND_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.themeable_fill_style_content);
+        through.scan(&self.effect_content);
         through.choice(&self.themeable_fill_style_content, ctx)?;
         through.choice(&self.effect_content, ctx)?;
         through.finish(ctx)
@@ -24196,8 +24407,12 @@ impl WriteThrough for drawing::TableBackground {
 }
 
 impl super::Item for drawing::TableBackgroundEffectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -24578,6 +24793,7 @@ impl WriteThrough for drawing::TableCellProperties {
         through.attribute(5, &self.anchor);
         through.attribute(6, &self.anchor_ctr);
         through.attribute(7, &self.horz_overflow);
+        through.scan(&self.content);
         through.child(&self.left_border_line_properties, ctx)?;
         through.child(&self.right_border_line_properties, ctx)?;
         through.child(&self.top_border_line_properties, ctx)?;
@@ -24668,6 +24884,7 @@ impl WriteThrough for drawing::TableCellStyle {
             &drawing::TABLE_CELL_STYLE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.table_cell_borders, ctx)?;
         through.choice(&self.content, ctx)?;
         through.child(&self.cell_3_d, ctx)?;
@@ -24756,6 +24973,8 @@ impl WriteThrough for drawing::TableCellTextStyle {
         );
         through.attribute(0, &self.b);
         through.attribute(1, &self.i);
+        through.scan(&self.font_content);
+        through.scan(&self.color_content);
         through.choice(&self.font_content, ctx)?;
         through.choice(&self.color_content, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -24785,8 +25004,12 @@ impl WriteThrough for drawing::TableCellTextStyle {
 }
 
 impl super::Item for drawing::TableCellTextStyleFontContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -25088,6 +25311,9 @@ impl WriteThrough for drawing::TableProperties {
         through.attribute(4, &self.last_col);
         through.attribute(5, &self.band_row);
         through.attribute(6, &self.band_col);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
+        through.scan(&self.style_content);
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
         through.choice(&self.style_content, ctx)?;
@@ -25118,8 +25344,12 @@ impl WriteThrough for drawing::TableProperties {
 }
 
 impl super::Item for drawing::TablePropertiesStyleContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -25745,8 +25975,12 @@ impl WriteThrough for drawing::TailLineEndStyle {
 }
 
 impl super::Item for drawing::Text3DContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -25825,8 +26059,12 @@ impl WriteThrough for drawing::Text3DContent {
 }
 
 impl super::Item for drawing::TextAutofitContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -25917,8 +26155,12 @@ impl WriteThrough for drawing::TextAutofitContent {
 }
 
 impl super::Item for drawing::TextBulletColorContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -26002,8 +26244,12 @@ impl WriteThrough for drawing::TextBulletColorContent {
 }
 
 impl super::Item for drawing::TextBulletContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -26101,8 +26347,12 @@ impl WriteThrough for drawing::TextBulletContent {
 }
 
 impl super::Item for drawing::TextBulletSizeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -26193,8 +26443,12 @@ impl WriteThrough for drawing::TextBulletSizeContent {
 }
 
 impl super::Item for drawing::TextBulletTypefaceContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -26722,6 +26976,10 @@ impl WriteThrough for drawing::TextParagraphProperties {
         through.attribute(8, &self.font_algn);
         through.attribute(9, &self.latin_ln_brk);
         through.attribute(10, &self.hanging_punct);
+        through.scan(&self.text_bullet_color_content);
+        through.scan(&self.text_bullet_size_content);
+        through.scan(&self.text_bullet_typeface_content);
+        through.scan(&self.text_bullet_content);
         through.child(&self.line_spacing, ctx)?;
         through.child(&self.space_before, ctx)?;
         through.child(&self.space_after, ctx)?;
@@ -26817,6 +27075,7 @@ impl WriteThrough for drawing::TextParagraphs {
             &drawing::TEXT_PARAGRAPHS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.text_paragraph_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.end_paragraph_run_properties, ctx)?;
@@ -26846,16 +27105,20 @@ impl WriteThrough for drawing::TextParagraphs {
 }
 
 impl super::Item for drawing::TextParagraphsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.drawing(),
             drawing::Context::text_paragraphs_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -27149,6 +27412,10 @@ impl WriteThrough for drawing::TextRunProperties {
         through.attribute(16, &self.smt_clean);
         through.attribute(17, &self.smt_id);
         through.attribute(18, &self.bmk);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
+        through.scan(&self.text_underline_line_content);
+        through.scan(&self.text_underline_fill_content);
         through.child(&self.outline, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -27235,6 +27502,7 @@ impl WriteThrough for drawing::TextShape {
         }
         let mut through =
             super::Through::new(out, &drawing::TEXT_SHAPE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.text_body, ctx)?;
         through.choice(&self.content, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -27260,8 +27528,12 @@ impl WriteThrough for drawing::TextShape {
 }
 
 impl super::Item for drawing::TextShapeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -27349,8 +27621,12 @@ impl WriteThrough for drawing::TextShapeContent {
 }
 
 impl super::Item for drawing::TextSpacingContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -27500,8 +27776,12 @@ impl WriteThrough for drawing::TextString {
 }
 
 impl super::Item for drawing::TextUnderlineFillContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -27589,8 +27869,12 @@ impl WriteThrough for drawing::TextUnderlineFillContent {
 }
 
 impl super::Item for drawing::TextUnderlineLineContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -27977,8 +28261,12 @@ impl WriteThrough for drawing::ThemeOverride {
 }
 
 impl super::Item for drawing::ThemeableFillStyleContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -28066,8 +28354,12 @@ impl WriteThrough for drawing::ThemeableFillStyleContent {
 }
 
 impl super::Item for drawing::ThemeableLineStyleContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -28523,6 +28815,7 @@ impl WriteThrough for drawing::TopBorder {
         }
         let mut through =
             super::Through::new(out, &drawing::TOP_BORDER_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -28619,6 +28912,9 @@ impl WriteThrough for drawing::TopBorderLineProperties {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -28712,6 +29008,7 @@ impl WriteThrough for drawing::TopLeftToBottomRightBorder {
             &drawing::TOP_LEFT_TO_BOTTOM_RIGHT_BORDER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -28817,6 +29114,9 @@ impl WriteThrough for drawing::TopLeftToBottomRightBorderLineProperties {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -28910,6 +29210,7 @@ impl WriteThrough for drawing::TopRightToBottomLeftBorder {
             &drawing::TOP_RIGHT_TO_BOTTOM_LEFT_BORDER_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -29062,6 +29363,7 @@ impl WriteThrough for drawing::UnderlineFill {
         }
         let mut through =
             super::Through::new(out, &drawing::UNDERLINE_FILL_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -29322,6 +29624,9 @@ impl WriteThrough for drawing::UnderlineStroke {
         through.attribute(1, &self.cap);
         through.attribute(2, &self.cmpd);
         through.attribute(3, &self.algn);
+        through.scan(&self.line_fill_content);
+        through.scan(&self.line_dash_content);
+        through.scan(&self.line_join_content);
         through.choice(&self.line_fill_content, ctx)?;
         through.choice(&self.line_dash_content, ctx)?;
         through.choice(&self.line_join_content, ctx)?;
@@ -29717,6 +30022,8 @@ impl WriteThrough for drawing::VisualGroupShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_group_transform2d, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;

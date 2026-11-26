@@ -1309,8 +1309,12 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::DataModel {
 }
 
 impl super::Item for office_spreadsheetml_2010_11_main::DatabaseSourceContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -2518,6 +2522,7 @@ impl WriteThrough for office_spreadsheetml_2010_11_main::OledbPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.connection);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

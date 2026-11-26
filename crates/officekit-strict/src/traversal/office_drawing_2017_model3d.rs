@@ -465,6 +465,7 @@ impl WriteThrough for office_drawing_2017_model3d::Blip {
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
         through.attribute(2, &self.cstate);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.child(&self.extension_list, ctx)?;
         through.finish(ctx)
@@ -563,6 +564,7 @@ impl WriteThrough for office_drawing_2017_model3d::Camera {
             &office_drawing_2017_model3d::CAMERA_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.pos, ctx)?;
         through.child(&self.up, ctx)?;
         through.child(&self.look_at, ctx)?;
@@ -655,6 +657,7 @@ impl WriteThrough for office_drawing_2017_model3d::Clr {
             &office_drawing_2017_model3d::CLR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -847,6 +850,7 @@ impl WriteThrough for office_drawing_2017_model3d::Ext {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1400,8 +1404,12 @@ impl WriteThrough for office_drawing_2017_model3d::MeterPerModelUnit {
 }
 
 impl super::Item for office_drawing_2017_model3d::Model3DCameraContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1497,8 +1505,12 @@ impl WriteThrough for office_drawing_2017_model3d::Model3DCameraContent {
 }
 
 impl super::Item for office_drawing_2017_model3d::Model3DExtensionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1606,16 +1618,20 @@ impl WriteThrough for office_drawing_2017_model3d::Model3DExtensionContent {
 }
 
 impl super::Item for office_drawing_2017_model3d::Model3DLightContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.office_drawing_2017_model3d(),
             office_drawing_2017_model3d::Context::model3d_light_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -1738,8 +1754,12 @@ impl WriteThrough for office_drawing_2017_model3d::Model3DLightContent {
 }
 
 impl super::Item for office_drawing_2017_model3d::Model3DViewportContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1911,6 +1931,8 @@ impl WriteThrough for office_drawing_2017_model3d::Model3d {
         );
         through.attribute(0, &self.embed);
         through.attribute(1, &self.link);
+        through.scan(&self.viewport_content);
+        through.scan(&self.light_content);
         through.child(&self.sp_pr, ctx)?;
         through.child(&self.camera, ctx)?;
         through.child(&self.trans, ctx)?;
@@ -2929,6 +2951,9 @@ impl WriteThrough for office_drawing_2017_model3d::SpPr {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;

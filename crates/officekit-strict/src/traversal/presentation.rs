@@ -543,8 +543,12 @@ impl WriteThrough for presentation::AnimateColorBehavior {
 }
 
 impl super::Item for presentation::AnimateColorByContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1031,8 +1035,12 @@ impl WriteThrough for presentation::AnimateScale {
 }
 
 impl super::Item for presentation::AnimationVariantContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -1533,6 +1541,8 @@ impl WriteThrough for presentation::BackgroundProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.shade_to_title);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
         through.child(&self.extension_list, ctx)?;
@@ -1624,6 +1634,7 @@ impl WriteThrough for presentation::BackgroundStyleReference {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.idx);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2401,6 +2412,7 @@ impl WriteThrough for presentation::BuildGraphics {
         through.attribute(0, &self.spid);
         through.attribute(1, &self.grp_id);
         through.attribute(2, &self.ui_expand);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2432,8 +2444,12 @@ impl WriteThrough for presentation::BuildGraphics {
 }
 
 impl super::Item for presentation::BuildGraphicsContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -2582,6 +2598,7 @@ impl WriteThrough for presentation::BuildList {
             &presentation::BUILD_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2609,16 +2626,20 @@ impl WriteThrough for presentation::BuildList {
 }
 
 impl super::Item for presentation::BuildListContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.presentation(),
             presentation::Context::build_list_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -2896,6 +2917,7 @@ impl WriteThrough for presentation::BuildSubElements {
             &presentation::BUILD_SUB_ELEMENTS_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -2969,6 +2991,7 @@ impl WriteThrough for presentation::By {
         }
         let mut through =
             super::Through::new(out, &presentation::BY_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3302,6 +3325,7 @@ impl WriteThrough for presentation::ChildrenTimeNodeList {
             &presentation::CHILDREN_TIME_NODE_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3464,6 +3488,7 @@ impl WriteThrough for presentation::ColorMRU {
         }
         let mut through =
             super::Through::new(out, &presentation::COLOR_MRU_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3648,6 +3673,7 @@ impl WriteThrough for presentation::ColorSchemeMapOverride {
             &presentation::COLOR_SCHEME_MAP_OVERRIDE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -3732,6 +3758,7 @@ impl WriteThrough for presentation::ColorValue {
             &presentation::COLOR_VALUE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -5019,6 +5046,7 @@ impl WriteThrough for presentation::Condition {
             super::Through::new(out, &presentation::CONDITION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.evt);
         through.attribute(1, &self.delay);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6463,8 +6491,12 @@ impl WriteThrough for presentation::EmbeddedFontName {
 }
 
 impl super::Item for presentation::EmbeddedObjectContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -6715,6 +6747,7 @@ impl WriteThrough for presentation::EmbeddedObjectsAndControls {
         through.attribute(4, &self.img_w);
         through.attribute(5, &self.img_h);
         through.attribute(6, &self.prog_id);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.picture, ctx)?;
         through.finish(ctx)
@@ -6884,6 +6917,7 @@ impl WriteThrough for presentation::EndSync {
             super::Through::new(out, &presentation::END_SYNC_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.evt);
         through.attribute(1, &self.delay);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7034,6 +7068,7 @@ impl WriteThrough for presentation::Extension {
         let mut through =
             super::Through::new(out, &presentation::EXTENSION_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.uri);
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7458,6 +7493,7 @@ impl WriteThrough for presentation::FromColor {
             &presentation::FROM_COLOR_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7632,6 +7668,7 @@ impl WriteThrough for presentation::GraphicElement {
             &presentation::GRAPHIC_ELEMENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -7916,6 +7953,7 @@ impl WriteThrough for presentation::GroupShape {
             &presentation::GROUP_SHAPE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.non_visual_properties, ctx)?;
         through.child(&self.properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -7946,16 +7984,20 @@ impl WriteThrough for presentation::GroupShape {
 }
 
 impl super::Item for presentation::GroupShapeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.presentation(),
             presentation::Context::group_shape_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -8161,6 +8203,8 @@ impl WriteThrough for presentation::GroupShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_group_transform2d, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
         through.choice(&self.effect_properties_content, ctx)?;
@@ -8259,6 +8303,7 @@ impl WriteThrough for presentation::HTMLPublishingProperties {
         through.attribute(1, &self.target);
         through.attribute(2, &self.title);
         through.attribute(3, &self.id);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.extension_list, ctx)?;
         through.finish(ctx)
@@ -8924,6 +8969,7 @@ impl WriteThrough for presentation::Iterate {
             super::Through::new(out, &presentation::ITERATE_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.r#type);
         through.attribute(1, &self.backwards);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -8951,8 +8997,12 @@ impl WriteThrough for presentation::Iterate {
 }
 
 impl super::Item for presentation::IterateContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -11196,6 +11246,7 @@ impl WriteThrough for presentation::NonVisualProperties {
         );
         through.attribute(0, &self.is_photo);
         through.attribute(1, &self.user_drawn);
+        through.scan(&self.content);
         through.child(&self.placeholder_shape, ctx)?;
         through.choice(&self.content, ctx)?;
         through.child(&self.customer_data_list, ctx)?;
@@ -11230,8 +11281,12 @@ impl WriteThrough for presentation::NonVisualProperties {
 }
 
 impl super::Item for presentation::NonVisualPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -13154,6 +13209,7 @@ impl WriteThrough for presentation::PenColorForSlideShow {
             &presentation::PEN_COLOR_FOR_SLIDE_SHOW_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -13426,6 +13482,7 @@ impl WriteThrough for presentation::PictureFill {
         );
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
+        through.scan(&self.content);
         through.child(&self.blip, ctx)?;
         through.child(&self.source_rectangle, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -14463,6 +14520,8 @@ impl WriteThrough for presentation::PresentationWideShowProperties {
         through.attribute(1, &self.show_narration);
         through.attribute(2, &self.show_animation);
         through.attribute(3, &self.use_timings);
+        through.scan(&self.show_type_content);
+        through.scan(&self.slide_list_content);
         through.choice(&self.show_type_content, ctx)?;
         through.choice(&self.slide_list_content, ctx)?;
         through.child(&self.pen_color_for_slide_show, ctx)?;
@@ -15101,6 +15160,7 @@ impl WriteThrough for presentation::Progress {
         }
         let mut through =
             super::Through::new(out, &presentation::PROGRESS_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -16144,6 +16204,9 @@ impl WriteThrough for presentation::ShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
@@ -16329,6 +16392,7 @@ impl WriteThrough for presentation::ShapeTarget {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.spid);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -16360,8 +16424,12 @@ impl WriteThrough for presentation::ShapeTarget {
 }
 
 impl super::Item for presentation::ShapeTargetContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -16640,6 +16708,7 @@ impl WriteThrough for presentation::ShapeTree {
             &presentation::SHAPE_TREE_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.child(&self.non_visual_properties_for_a_group_shape, ctx)?;
         through.child(&self.group_shape_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -16670,8 +16739,12 @@ impl WriteThrough for presentation::ShapeTree {
 }
 
 impl super::Item for presentation::ShowTypeContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -16824,6 +16897,7 @@ impl WriteThrough for presentation::SlideBackground {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -16855,8 +16929,12 @@ impl WriteThrough for presentation::SlideBackground {
 }
 
 impl super::Item for presentation::SlideBackgroundContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -17237,8 +17315,12 @@ impl WriteThrough for presentation::SlideLayoutId {
 }
 
 impl super::Item for presentation::SlideListContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -18469,8 +18551,12 @@ impl WriteThrough for presentation::SlideTimingInformation {
 }
 
 impl super::Item for presentation::SlideTransitionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -18628,6 +18714,7 @@ impl WriteThrough for presentation::SlideTransitionForASlideLayout {
         through.attribute(1, &self.adv_click);
         through.attribute(2, &self.adv_tm);
         through.attribute(3, &self.dur);
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.child(&self.sound_action, ctx)?;
         through.child(&self.extension_list_with_modification_flag, ctx)?;
@@ -18953,6 +19040,7 @@ impl WriteThrough for presentation::SoundAction {
             &presentation::SOUND_ACTION_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -18984,8 +19072,12 @@ impl WriteThrough for presentation::SoundAction {
 }
 
 impl super::Item for presentation::SoundActionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -19741,6 +19833,7 @@ impl WriteThrough for presentation::SubTimeNodesList {
             &presentation::SUB_TIME_NODES_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -19900,6 +19993,7 @@ impl WriteThrough for presentation::TargetElement {
             &presentation::TARGET_ELEMENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -19931,8 +20025,12 @@ impl WriteThrough for presentation::TargetElement {
 }
 
 impl super::Item for presentation::TargetElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -20284,6 +20382,7 @@ impl WriteThrough for presentation::TextElement {
             &presentation::TEXT_ELEMENT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20315,8 +20414,12 @@ impl WriteThrough for presentation::TextElement {
 }
 
 impl super::Item for presentation::TextElementContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -20676,8 +20779,12 @@ impl WriteThrough for presentation::TimeAnimatedValueList {
 }
 
 impl super::Item for presentation::TimeConditionContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -20908,6 +21015,7 @@ impl WriteThrough for presentation::TimeNodeList {
             &presentation::TIME_NODE_LIST_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -20939,16 +21047,20 @@ impl WriteThrough for presentation::TimeNodeList {
 }
 
 impl super::Item for presentation::TimeNodeListContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.presentation(),
             presentation::Context::time_node_list_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -21337,6 +21449,7 @@ impl WriteThrough for presentation::ToColor {
         }
         let mut through =
             super::Through::new(out, &presentation::TO_COLOR_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -21425,6 +21538,7 @@ impl WriteThrough for presentation::ToTLAnimVariant {
             &presentation::TO_TL_ANIM_VARIANT_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -21498,6 +21612,7 @@ impl WriteThrough for presentation::Value {
         }
         let mut through =
             super::Through::new(out, &presentation::VALUE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }

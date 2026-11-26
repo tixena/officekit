@@ -1909,6 +1909,7 @@ impl WriteThrough for math::ControlProperties {
             &math::CONTROL_PROPERTIES_SHAPE,
             self.unknown.as_deref(),
         );
+        through.scan(&self.content);
         through.choice(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -1936,8 +1937,12 @@ impl WriteThrough for math::ControlProperties {
 }
 
 impl super::Item for math::ControlPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -2152,6 +2157,7 @@ impl WriteThrough for math::Degree {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &math::DEGREE_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -2636,6 +2642,7 @@ impl WriteThrough for math::Denominator {
         }
         let mut through =
             super::Through::new(out, &math::DENOMINATOR_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -2768,6 +2775,7 @@ impl WriteThrough for math::E {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &math::E_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -3136,6 +3144,7 @@ impl WriteThrough for math::FunctionName {
         }
         let mut through =
             super::Through::new(out, &math::FUNCTION_NAME_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -4228,6 +4237,7 @@ impl WriteThrough for math::Limit {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &math::LIMIT_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -4611,6 +4621,7 @@ impl WriteThrough for math::MathProperties {
         }
         let mut through =
             super::Through::new(out, &math::MATH_PROPERTIES_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.math_font, ctx)?;
         through.child(&self.break_on_binary_operators, ctx)?;
         through.child(&self.break_on_binary_subtraction, ctx)?;
@@ -4648,8 +4659,12 @@ impl WriteThrough for math::MathProperties {
 }
 
 impl super::Item for math::MathPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 }
 
@@ -6071,6 +6086,7 @@ impl WriteThrough for math::Numerator {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &math::NUMERATOR_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -6210,6 +6226,7 @@ impl WriteThrough for math::OfficeMath {
         }
         let mut through =
             super::Through::new(out, &math::OFFICE_MATH_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.items(&self.content, ctx)?;
         through.finish(ctx)
     }
@@ -6232,12 +6249,16 @@ impl WriteThrough for math::OfficeMath {
 }
 
 impl super::Item for math::OfficeMathContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.math(), math::Context::office_math_content_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -7852,6 +7873,7 @@ impl WriteThrough for math::Run {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &math::RUN_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.properties, ctx)?;
         through.child(&self.w_properties, ctx)?;
         through.items(&self.content, ctx)?;
@@ -7876,12 +7898,16 @@ impl WriteThrough for math::Run {
 }
 
 impl super::Item for math::RunContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(ctx.math(), math::Context::run_content_items, self)
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -8010,6 +8036,7 @@ impl WriteThrough for math::RunProperties {
         }
         let mut through =
             super::Through::new(out, &math::RUN_PROPERTIES_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.literal, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.r#break, ctx)?;
@@ -8035,16 +8062,20 @@ impl WriteThrough for math::RunProperties {
 }
 
 impl super::Item for math::RunPropertiesContent {
-    fn is_declared(&self) -> bool {
-        !matches!(self, Self::Other(_))
-    }
-
     fn items(&self, ctx: &mut dyn officekit_markup::Context) -> Option<Vec<Self>> {
         super::ask(
             ctx.math(),
             math::Context::run_properties_content_items,
             self,
         )
+    }
+
+    fn other(&self) -> Option<&super::Node> {
+        if let Self::Other(node) = self {
+            Some(node)
+        } else {
+            None
+        }
     }
 
     fn write_items(
@@ -8436,6 +8467,7 @@ impl WriteThrough for math::Sub {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &math::SUB_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;
@@ -8887,6 +8919,7 @@ impl WriteThrough for math::Sup {
             return out.converted(element);
         }
         let mut through = super::Through::new(out, &math::SUP_SHAPE, self.unknown.as_deref());
+        through.scan(&self.content);
         through.child(&self.argument_properties, ctx)?;
         through.items(&self.content, ctx)?;
         through.child(&self.control_properties, ctx)?;

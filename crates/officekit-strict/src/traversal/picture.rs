@@ -635,6 +635,7 @@ impl WriteThrough for picture::PictureFill {
             super::Through::new(out, &picture::PICTURE_FILL_SHAPE, self.unknown.as_deref());
         through.attribute(0, &self.dpi);
         through.attribute(1, &self.rot_with_shape);
+        through.scan(&self.content);
         through.child(&self.blip, ctx)?;
         through.child(&self.source_rectangle, ctx)?;
         through.choice(&self.content, ctx)?;
@@ -730,6 +731,9 @@ impl WriteThrough for picture::ShapeProperties {
             self.unknown.as_deref(),
         );
         through.attribute(0, &self.bw_mode);
+        through.scan(&self.geometry_content);
+        through.scan(&self.fill_properties_content);
+        through.scan(&self.effect_properties_content);
         through.child(&self.xfrm_transform2d, ctx)?;
         through.choice(&self.geometry_content, ctx)?;
         through.choice(&self.fill_properties_content, ctx)?;
