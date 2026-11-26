@@ -836,3 +836,21 @@ fn a_root_naming_children_strict_refuses_gives_the_bytes_and_the_refusals_of_the
         );
     }
 }
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_vml_picture_bullet_gives_the_drawing_of_the_tree() {
+    use officekit_markup::wordprocessing::NumberingDefinitions;
+
+    const W: &str = "xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"";
+    let numbering = strict_outcome::<NumberingDefinitions>(&format!(
+        "<w:numbering {W}><w:numPicBullet w:numPicBulletId=\"2\"><w:pict><v:shape style=\"width:9pt;height:9pt\"><v:imagedata r:id=\"rId1\"/></v:shape></w:pict></w:numPicBullet><w:abstractNum w:abstractNumId=\"0\"/></w:numbering>"
+    ));
+    assert!(
+        numbering.contains(
+            "<wp:extent cx=\"114300\" cy=\"114300\"/><wp:docPr id=\"3\" name=\"Picture 3\"/>"
+        ) && numbering.contains("<a:blip r:embed=\"rId1\"/>")
+            && !numbering.contains("w:pict"),
+        "{numbering}"
+    );
+}

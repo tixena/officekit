@@ -32,6 +32,8 @@
 //! - The children in [`REMOVED_CHILDREN`] are removed: settings Word's own Strict files leave
 //!   out, and a list level's `w:legacy`.
 //! - A `w:font` drops a `w:charset` holding `01` or `02`, which Part 4 gives no name.
+//! - A picture bullet's VML, a `w:pict` of one `v:shape` holding one `v:imagedata`, becomes a
+//!   `w:drawing` of an inline `DrawingML` picture of the same image and size.
 //! - The text of the `wp14` relative sizes and positions, a bare number counting thousandths of a
 //!   percent, becomes a percentage, as Word writes it in Strict.
 //! - A serial date-time becomes an ISO 8601 text (see [`iso_date_time`]), a character-set code
@@ -141,8 +143,21 @@ const DAY: i128 = 86_400_000;
 const MAX_PLACES: u32 = 9;
 
 const DRAWING: &str = "http://schemas.openxmlformats.org/drawingml/2006/main";
+
+/// The EMUs in one of each unit a length of a VML style takes.
+const EMU_PER_UNIT: [(&str, u128); 6] = [
+    ("cm", 360_000),
+    ("in", 914_400),
+    ("mm", 36_000),
+    ("pc", 152_400),
+    ("pt", 12_700),
+    ("px", 9_525),
+];
+
 const MARKUP_COMPATIBILITY: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
 const OFFICE: &str = "urn:schemas-microsoft-com:office:office";
+const PICTURE: &str = "http://schemas.openxmlformats.org/drawingml/2006/picture";
+const RELATIONSHIPS: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 const WORDPROCESSING: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const WORDPROCESSING_DRAWING: &str =
     "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing";
@@ -356,6 +371,7 @@ impl StrictRules {
             (word, "background"),
             (word, "documentProtection"),
             (word, "font"),
+            (word, "numPicBullet"),
             (word, "r"),
             (word, "writeProtection"),
         ];
@@ -646,6 +662,7 @@ const fn civil_from_days(days: i64) -> (i64, i64, i64) {
 fn convert_children(element: &mut Element, scope: &mut Around<'_>, found: &mut Vec<Refusal>) {
     unwrap_word_shapes(element);
     wrap_loose_vml(element, scope);
+    picture_bullet(element, scope);
     let rules = officekit_markup::name(element).map_or(&[][..], |owner| rules_of(CHILDREN, owner));
     let rule_of = |child: &Element| {
         rules
@@ -850,6 +867,44 @@ fn decimal(negative: bool, magnitude: u128, divisor: u128, places: Option<u32>) 
     })
 }
 
+/// The element `prefix:local` in the namespace `uri`, with the unprefixed `attributes` and the
+/// `children`.
+fn drawing_element(
+    prefix: &str,
+    local: &str,
+    uri: &str,
+    attributes: &[(&str, &str)],
+    children: Vec<Element>,
+) -> Element {
+    let mut element = Element::new(QName::prefixed(prefix, local, uri));
+    element.attributes = attributes
+        .iter()
+        .map(|(name, value)| Attribute::new(QName::unprefixed(name, ""), (*value).to_owned()))
+        .collect();
+    element.children = children.into_iter().map(Node::Element).collect();
+    element
+}
+
+/// A length of a VML style in EMU, rounded half up: a decimal number and a unit of
+/// `EMU_PER_UNIT`. `None` for any other text.
+fn emu(text: &str) -> Option<u64> {
+    let (number, per_unit) = EMU_PER_UNIT
+        .iter()
+        .find_map(|(unit, per_unit)| Some((text.strip_suffix(unit)?.trim_end(), *per_unit)))?;
+    let (whole, fraction) = number.split_once('.').unwrap_or((number, ""));
+    let digits = format!("{whole}{fraction}");
+    if digits.is_empty() || !digits.bytes().all(|byte| byte.is_ascii_digit()) {
+        return None;
+    }
+    let divisor = 10_u128.checked_pow(u32::try_from(fraction.len()).ok()?)?;
+    let scaled = digits.parse::<u128>().ok()?.checked_mul(per_unit)?;
+    let mut quotient = scaled / divisor;
+    if scaled % divisor >= divisor - divisor / 2 {
+        quotient += 1;
+    }
+    u64::try_from(quotient).ok()
+}
+
 /// A `w:font` drops a `w:charset` holding a code Part 4 gives no name and no `w:characterSet`,
 /// as Word does for a symbol font. `FF` has no name either, and stays for the rules to refuse.
 fn font_without_character_set(element: &mut Element) {
@@ -924,6 +979,103 @@ fn holds_word_shape(element: &Element) -> bool {
         && element
             .attribute(&Namespace::None, "uri")
             .is_some_and(|uri| WORD_SHAPE_URIS.contains(&uri))
+}
+
+/// The inline `DrawingML` picture of the image `relationship`, `width` by `height` EMU, as Word
+/// writes a picture bullet: drawing `id`, named `Picture {id}`.
+fn inline_picture(id: u32, relationship: String, width: &str, height: &str) -> Element {
+    let name = format!("Picture {id}");
+    let size = [("cx", width), ("cy", height)];
+    let mut blip = drawing_element("a", "blip", DRAWING, &[], Vec::new());
+    blip.attributes.push(Attribute::new(
+        QName::prefixed("r", "embed", RELATIONSHIPS),
+        relationship,
+    ));
+    let stretch = drawing_element(
+        "a",
+        "stretch",
+        DRAWING,
+        &[],
+        vec![drawing_element("a", "fillRect", DRAWING, &[], Vec::new())],
+    );
+    let transform = drawing_element(
+        "a",
+        "xfrm",
+        DRAWING,
+        &[],
+        vec![
+            drawing_element("a", "off", DRAWING, &[("x", "0"), ("y", "0")], Vec::new()),
+            drawing_element("a", "ext", DRAWING, &size, Vec::new()),
+        ],
+    );
+    let geometry = drawing_element(
+        "a",
+        "prstGeom",
+        DRAWING,
+        &[("prst", "rect")],
+        vec![drawing_element("a", "avLst", DRAWING, &[], Vec::new())],
+    );
+    let picture = drawing_element(
+        "pic",
+        "pic",
+        PICTURE,
+        &[],
+        vec![
+            drawing_element(
+                "pic",
+                "nvPicPr",
+                PICTURE,
+                &[],
+                vec![
+                    drawing_element(
+                        "pic",
+                        "cNvPr",
+                        PICTURE,
+                        &[("id", "0"), ("name", &name)],
+                        Vec::new(),
+                    ),
+                    drawing_element("pic", "cNvPicPr", PICTURE, &[], Vec::new()),
+                ],
+            ),
+            drawing_element("pic", "blipFill", PICTURE, &[], vec![blip, stretch]),
+            drawing_element("pic", "spPr", PICTURE, &[], vec![transform, geometry]),
+        ],
+    );
+    let graphic = drawing_element(
+        "a",
+        "graphic",
+        DRAWING,
+        &[],
+        vec![drawing_element(
+            "a",
+            "graphicData",
+            DRAWING,
+            &[("uri", PICTURE)],
+            vec![picture],
+        )],
+    );
+    drawing_element(
+        "wp",
+        "inline",
+        WORDPROCESSING_DRAWING,
+        &[
+            ("distT", "0"),
+            ("distB", "0"),
+            ("distL", "0"),
+            ("distR", "0"),
+        ],
+        vec![
+            drawing_element("wp", "extent", WORDPROCESSING_DRAWING, &size, Vec::new()),
+            drawing_element(
+                "wp",
+                "docPr",
+                WORDPROCESSING_DRAWING,
+                &[("id", &id.to_string()), ("name", &name)],
+                Vec::new(),
+            ),
+            graphic,
+        ],
+    )
 }
 
 /// The ISO 8601 date-time of a serial date-time's text, to the millisecond.
@@ -1003,6 +1155,58 @@ fn percentage(text: &str, per_percent: u32, places: Option<u32>) -> Option<Strin
     let (negative, magnitude) = whole_number(text)?;
     let number = decimal(negative, magnitude, u128::from(per_percent), places)?;
     Some(format!("{number}%"))
+}
+
+/// The `w:pict` of the picture bullet `element`, when it holds one `v:shape` holding one
+/// `v:imagedata`, becomes a `w:drawing` of an inline `DrawingML` picture of the same image and
+/// size, the bullet's one form in Strict (ECMA-376 Part 1, 17.9.20). Any other `w:pict` stays for
+/// the rules to refuse.
+fn picture_bullet(element: &mut Element, scope: &Around<'_>) {
+    if !named(element, WORDPROCESSING, "numPicBullet") {
+        return;
+    }
+    let namespace = element.name.namespace.clone();
+    let Some(id) = element
+        .attribute(&namespace, "numPicBulletId")
+        .and_then(|text| text.parse::<u32>().ok())
+        .and_then(|number| number.checked_add(1))
+    else {
+        return;
+    };
+    let declarations = undeclared(
+        element,
+        scope,
+        &[
+            ("wp", WORDPROCESSING_DRAWING),
+            ("a", DRAWING),
+            ("pic", PICTURE),
+            ("r", RELATIONSHIPS),
+        ],
+    );
+    let prefix = Arc::clone(&element.name.prefix);
+    for node in &mut element.children {
+        let Node::Element(child) = node else {
+            continue;
+        };
+        if !named(child, WORDPROCESSING, "pict") {
+            continue;
+        }
+        if let Some((relationship, width, height)) = vml_picture(child) {
+            let mut drawing = Element::new(QName::new(
+                Arc::clone(&prefix),
+                Arc::from("drawing"),
+                namespace.clone(),
+            ));
+            drawing.namespace_declarations.clone_from(&declarations);
+            drawing.children.push(Node::Element(inline_picture(
+                id,
+                relationship,
+                &width.to_string(),
+                &height.to_string(),
+            )));
+            *child = drawing;
+        }
+    }
 }
 
 /// The prefix the namespace table gives a namespace.
@@ -1348,6 +1552,23 @@ fn unpack(
     Ok(())
 }
 
+/// The declarations of each of `namespaces`, a prefix and a URI, that neither `element` nor
+/// `scope` binds.
+fn undeclared(
+    element: &Element,
+    scope: &Around<'_>,
+    namespaces: &[(&str, &str)],
+) -> Vec<NamespaceDeclaration> {
+    namespaces
+        .iter()
+        .filter(|(prefix, uri)| {
+            bound_uri(element, scope, prefix)
+                .is_none_or(|bound| Namespace::from_uri(bound) != Namespace::from_uri(uri))
+        })
+        .map(|(prefix, uri)| NamespaceDeclaration::new((*prefix).to_owned(), (*uri).to_owned()))
+        .collect()
+}
+
 /// Put, in place of each `mc:AlternateContent` child whose Choice holds Word's shape, that
 /// Choice's content, so the shape is written as ECMA's and the VML fallback goes.
 fn unwrap_word_shapes(element: &mut Element) {
@@ -1383,14 +1604,7 @@ fn wrap_loose_vml(element: &mut Element, scope: &Around<'_>) {
     {
         return;
     }
-    let declarations: Vec<NamespaceDeclaration> = [("mc", MARKUP_COMPATIBILITY), ("v", VML)]
-        .into_iter()
-        .filter(|(prefix, uri)| {
-            bound_uri(element, scope, prefix)
-                .is_none_or(|bound| Namespace::from_uri(bound) != Namespace::from_uri(uri))
-        })
-        .map(|(prefix, uri)| NamespaceDeclaration::new(prefix.to_owned(), uri.to_owned()))
-        .collect();
+    let declarations = undeclared(element, scope, &[("mc", MARKUP_COMPATIBILITY), ("v", VML)]);
     for node in mem::take(&mut element.children) {
         let Node::Element(child) = node else {
             element.children.push(node);
@@ -1415,6 +1629,36 @@ fn wrap_loose_vml(element: &mut Element, scope: &Around<'_>) {
         block.children.push(Node::Element(choice));
         element.children.push(Node::Element(block));
     }
+}
+
+/// The image relationship and the width and height in EMU of the VML `w:pict` `picture` when,
+/// besides any `v:shapetype`, it holds one `v:shape` holding one `v:imagedata` and nothing else,
+/// its size in the shape's style.
+fn vml_picture(picture: &Element) -> Option<(String, u64, u64)> {
+    let mut shapes = picture
+        .child_elements()
+        .filter(|child| !named(child, VML, "shapetype"));
+    let shape = shapes.next().filter(|shape| named(shape, VML, "shape"))?;
+    let mut content = shape.child_elements();
+    let image = content
+        .next()
+        .filter(|image| named(image, VML, "imagedata"))?;
+    if shapes.next().is_some() || content.next().is_some() {
+        return None;
+    }
+    let relationship = image.attribute(&Namespace::from_uri(RELATIONSHIPS), "id")?;
+    let style = shape.attribute(&Namespace::None, "style")?;
+    let length = |property: &str| {
+        style.split(';').find_map(|declaration| {
+            let (name, value) = declaration.split_once(':')?;
+            if name.trim().eq_ignore_ascii_case(property) {
+                emu(value.trim())
+            } else {
+                None
+            }
+        })
+    };
+    Some((relationship.to_owned(), length("width")?, length("height")?))
 }
 
 /// A bare whole number's sign and magnitude: optional sign, digits only.

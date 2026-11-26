@@ -29,10 +29,10 @@ use officekit_markup::wordprocessing::{
     EmbeddedObjectContent, EmbeddedObjectUpdateModes, FontFamily, FontFamilyValue,
     FourDigitHexadecimalValue, FramesetSplitterProperties, HorizontalAlignmentType,
     HorizontalAlignmentTypeMember, LeftParagraphBorder, LegacyNumberingLevelProperties,
-    LinkedObjectProperties, NumberingLevelOverrideDefinition, Paragraph, ParagraphAlignment,
-    ParagraphConditionalFormatting, ParagraphContent, ParagraphIndentation, ParagraphProperties,
-    PreferredTableWidth, PropertiesForASingleFont, RightParagraphBorder, RunProperties,
-    SignedMeasurementInTwentiethsOfPoint, SuggestedSorting, TableCellBorders,
+    LinkedObjectProperties, NumberingDefinitions, NumberingLevelOverrideDefinition, Paragraph,
+    ParagraphAlignment, ParagraphConditionalFormatting, ParagraphContent, ParagraphIndentation,
+    ParagraphProperties, PreferredTableWidth, PropertiesForASingleFont, RightParagraphBorder,
+    RunProperties, SignedMeasurementInTwentiethsOfPoint, SuggestedSorting, TableCellBorders,
     TableCellLeadingEdgeBorder, TableStyleConditionalFormattingSettingsException, Text as WordText,
     TextRun, TextRunContent, TwoDigitHexadecimalValue, VMLObject, VmlElementContent,
     VmlOfficeDrawingElementContent, WebPageSettings, WriteProtection, write,
@@ -53,6 +53,9 @@ const A_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/main";
 const CS: &str = "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
 const MC: &str = "http://schemas.openxmlformats.org/markup-compatibility/2006";
 const P: &str = "http://schemas.openxmlformats.org/presentationml/2006/main";
+const PIC_STRICT: &str = "http://purl.oclc.org/ooxml/drawingml/picture";
+const R: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+const R_STRICT: &str = "http://purl.oclc.org/ooxml/officeDocument/relationships";
 const V: &str = "urn:schemas-microsoft-com:vml";
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
@@ -362,17 +365,58 @@ fn an_object_holding_no_vml_stays_in_the_run() {
     );
 }
 
+/// A numbering part of one picture bullet holding `picture`, as Word writes it in Transitional.
+fn picture_bullet(picture: &str) -> String {
+    format!(
+        "<w:numbering xmlns:w=\"{{w}}\" xmlns:v=\"{{v}}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"{R}\"><w:numPicBullet w:numPicBulletId=\"0\"><w:pict>{picture}</w:pict></w:numPicBullet></w:numbering>"
+    )
+}
+
 #[test]
-fn a_vml_picture_bullet_stays_refused() {
+fn a_vml_picture_bullet_becomes_an_inline_drawingml_picture() {
+    let shape = "<v:shapetype id=\"_x0000_t75\" coordsize=\"21600,21600\" o:spt=\"75\"><v:path o:connecttype=\"rect\"/></v:shapetype><v:shape id=\"_x0000_i1025\" style=\"width:11.25pt;height:0.5in\" o:bullet=\"t\" type=\"#_x0000_t75\"><v:imagedata o:title=\"msoBB3E\" r:id=\"rId1\"/></v:shape>";
     assert_eq!(
-        refusals(element(
-            "<w:numbering xmlns:w=\"{w}\" xmlns:v=\"{v}\"><w:numPicBullet w:numPicBulletId=\"0\"><w:pict><v:shape/></w:pict></w:numPicBullet></w:numbering>"
-        )),
-        [Refusal {
-            prefix: "w",
-            tag: "pict"
-        }]
+        strict::<NumberingDefinitions>(&picture_bullet(shape)),
+        format!(
+            "<w:numbering xmlns:w=\"{W_STRICT}\" xmlns:v=\"{V}\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"{R_STRICT}\"><w:numPicBullet w:numPicBulletId=\"0\"><w:drawing xmlns:wp=\"{WP_STRICT}\" xmlns:a=\"{A_STRICT}\" xmlns:pic=\"{PIC_STRICT}\"><wp:inline distT=\"0\" distB=\"0\" distL=\"0\" distR=\"0\"><wp:extent cx=\"142875\" cy=\"457200\"/><wp:docPr id=\"1\" name=\"Picture 1\"/><a:graphic><a:graphicData uri=\"{PIC_STRICT}\"><pic:pic><pic:nvPicPr><pic:cNvPr id=\"0\" name=\"Picture 1\"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed=\"rId1\"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x=\"0\" y=\"0\"/><a:ext cx=\"142875\" cy=\"457200\"/></a:xfrm><a:prstGeom prst=\"rect\"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:numPicBullet></w:numbering>"
+        )
     );
+}
+
+#[test]
+fn a_vml_picture_bullet_of_any_other_content_stays_refused() {
+    let image = "<v:imagedata r:id=\"rId1\"/>";
+    let size = "style=\"width:9pt;height:9pt\"";
+    let cases = [
+        ("no image", format!("<v:shape {size}/>")),
+        ("no size", format!("<v:shape>{image}</v:shape>")),
+        (
+            "a size of no unit",
+            format!("<v:shape style=\"width:9;height:9\">{image}</v:shape>"),
+        ),
+        (
+            "two shapes",
+            format!("<v:shape {size}>{image}</v:shape><v:shape {size}>{image}</v:shape>"),
+        ),
+        (
+            "more than the image",
+            format!("<v:shape {size}>{image}<v:stroke/></v:shape>"),
+        ),
+        (
+            "no relationship",
+            format!("<v:shape {size}><v:imagedata o:relid=\"rId1\"/></v:shape>"),
+        ),
+    ];
+    for (case, picture) in cases {
+        assert_eq!(
+            refusals(element(&picture_bullet(&picture))),
+            [Refusal {
+                prefix: "w",
+                tag: "pict"
+            }],
+            "{case}"
+        );
+    }
 }
 
 #[test]
