@@ -2888,7 +2888,7 @@ impl super::Transform for office_spreadsheetml_2014_revision::RevisionChangeObje
         if let Self::Body(arm) = self {
             Self::Body(arm.transform(ctx))
         } else if let Self::Link(arm) = self {
-            Self::Link(arm.transform(ctx))
+            Self::Link(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -3265,9 +3265,9 @@ impl super::Transform for office_spreadsheetml_2014_revision::RevisionStateConte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::FreezePanes(arm) = self {
-            Self::FreezePanes(arm.transform(ctx))
+            Self::FreezePanes(Box::new(arm.transform(ctx)))
         } else if let Self::HideUnhideSheet(arm) = self {
-            Self::HideUnhideSheet(arm.transform(ctx))
+            Self::HideUnhideSheet(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outlines(arm) = self {
@@ -3987,7 +3987,7 @@ impl super::Transform for office_spreadsheetml_2014_revision::StateBasedObjectCo
         if let Self::AutoFilter(arm) = self {
             Self::AutoFilter(Box::new(arm.transform(ctx)))
         } else if let Self::Comments(arm) = self {
-            Self::Comments(arm.transform(ctx))
+            Self::Comments(Box::new(arm.transform(ctx)))
         } else if let Self::DataValidation(arm) = self {
             Self::DataValidation(Box::new(arm.transform(ctx)))
         } else if let Self::Hyperlink(arm) = self {

@@ -4101,8 +4101,8 @@ impl<X: UserData> From<TriggerEvtWith<X>> for ShowEventRecordListContentWith<X> 
 }
 
 const _: () = assert!(
-    size_of::<ShowEventRecordListContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ShowEventRecordListContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ShowEvtLstWith<X> {

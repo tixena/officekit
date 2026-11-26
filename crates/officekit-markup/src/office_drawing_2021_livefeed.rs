@@ -953,8 +953,8 @@ impl<X: UserData> From<RemovedWith<X>> for LiveFeedBackgroundPropertiesContentWi
 }
 
 const _: () = assert!(
-    size_of::<LiveFeedBackgroundPropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<LiveFeedBackgroundPropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> LiveFeedPropsWith<X> {

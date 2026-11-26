@@ -2753,9 +2753,9 @@ impl Eq for DataModelWith<()> {}
 #[non_exhaustive]
 pub enum DatabaseSourceContentWith<X: UserData> {
     /// The element `x15:dbCommand`, a `DbCommand`.
-    DbCommand(DbCommandWith<X>),
+    DbCommand(Box<DbCommandWith<X>>),
     /// The element `x15:dbTables`, a `DbTables`.
-    DbTables(DbTablesWith<X>),
+    DbTables(Box<DbTablesWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -5587,8 +5587,12 @@ impl<X: UserData> DatabaseSourceContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::DbCommand(node) => DatabaseSourceContentWith::DbCommand(node.into_user_data()),
-            Self::DbTables(node) => DatabaseSourceContentWith::DbTables(node.into_user_data()),
+            Self::DbCommand(node) => {
+                DatabaseSourceContentWith::DbCommand(Box::new((*node).into_user_data()))
+            }
+            Self::DbTables(node) => {
+                DatabaseSourceContentWith::DbTables(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => DatabaseSourceContentWith::Other(node),
         }
     }
@@ -5596,7 +5600,7 @@ impl<X: UserData> DatabaseSourceContentWith<X> {
 
 impl<X: UserData> Default for DatabaseSourceContentWith<X> {
     fn default() -> Self {
-        Self::DbCommand(DbCommandWith::default())
+        Self::DbCommand(Box::default())
     }
 }
 
@@ -5607,8 +5611,8 @@ impl officekit_markup_base::Read for DatabaseSourceContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X15, "dbCommand")) => Self::DbCommand(item.read()),
-            Some((NS_X15, "dbTables")) => Self::DbTables(item.read()),
+            Some((NS_X15, "dbCommand")) => Self::DbCommand(Box::new(item.read())),
+            Some((NS_X15, "dbTables")) => Self::DbTables(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -5626,19 +5630,19 @@ impl officekit_markup_base::Write for DatabaseSourceContent {
 
 impl<X: UserData> From<DbCommandWith<X>> for DatabaseSourceContentWith<X> {
     fn from(arm: DbCommandWith<X>) -> Self {
-        Self::DbCommand(arm)
+        Self::DbCommand(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<DbTablesWith<X>> for DatabaseSourceContentWith<X> {
     fn from(arm: DbTablesWith<X>) -> Self {
-        Self::DbTables(arm)
+        Self::DbTables(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<DatabaseSourceContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<DatabaseSourceContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> DbCommandWith<X> {

@@ -1951,13 +1951,13 @@ impl super::Transform for wordprocessing_drawing::HorizontalPositioningContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AbsolutePositionOffset(arm) = self {
-            Self::AbsolutePositionOffset(arm.transform(ctx))
+            Self::AbsolutePositionOffset(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PctPosHOffset(arm) = self {
-            Self::PctPosHOffset(arm.transform(ctx))
+            Self::PctPosHOffset(Box::new(arm.transform(ctx)))
         } else if let Self::RelativeHorizontalAlignment(arm) = self {
-            Self::RelativeHorizontalAlignment(arm.transform(ctx))
+            Self::RelativeHorizontalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -4416,13 +4416,13 @@ impl super::Transform for wordprocessing_drawing::VerticalPositioningContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AbsolutePositionOffset(arm) = self {
-            Self::AbsolutePositionOffset(arm.transform(ctx))
+            Self::AbsolutePositionOffset(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PctPosVOffset(arm) = self {
-            Self::PctPosVOffset(arm.transform(ctx))
+            Self::PctPosVOffset(Box::new(arm.transform(ctx)))
         } else if let Self::RelativeVerticalAlignment(arm) = self {
-            Self::RelativeVerticalAlignment(arm.transform(ctx))
+            Self::RelativeVerticalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

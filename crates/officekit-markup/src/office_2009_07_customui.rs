@@ -8445,13 +8445,13 @@ impl Eq for RibbonWith<()> {}
 #[non_exhaustive]
 pub enum RibbonContentWith<X: UserData> {
     /// The element `mso14:contextualTabs`, a `ContextualTabs`.
-    ContextualTabs(ContextualTabsWith<X>),
+    ContextualTabs(Box<ContextualTabsWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `mso14:qat`, a `Qat`.
-    Qat(QatWith<X>),
+    Qat(Box<QatWith<X>>),
     /// The element `mso14:tabs`, a `Tabs`.
-    Tabs(TabsWith<X>),
+    Tabs(Box<TabsWith<X>>),
 }
 
 /// [`RibbonContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -10369,8 +10369,8 @@ impl<X: UserData> From<TabBackstageTabWith<X>> for BackstageContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<BackstageContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<BackstageContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> BackstageGroupsContentWith<X> {
@@ -10440,8 +10440,8 @@ impl<X: UserData> From<TaskGroupWith<X>> for BackstageGroupsContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<BackstageGroupsContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<BackstageGroupsContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl From<SimpleGroupsContent> for BackstageGroupsContent {
@@ -10561,8 +10561,8 @@ impl<X: UserData> From<ToggleButtonBackstageMenuToggleButtonWith<X>>
 }
 
 const _: () = assert!(
-    size_of::<BackstageMenuGroupContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<BackstageMenuGroupContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> BottomItemsWith<X> {
@@ -10873,8 +10873,8 @@ impl<X: UserData> From<ToggleButtonToggleButtonWith<X>> for BoxContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<BoxContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<BoxContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]
@@ -11742,8 +11742,8 @@ impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for ButtonGroupCo
 }
 
 const _: () = assert!(
-    size_of::<ButtonGroupContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ButtonGroupContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ButtonVisibleButtonWith<X> {
@@ -12784,8 +12784,8 @@ impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for ContextMenuCo
 }
 
 const _: () = assert!(
-    size_of::<ContextMenuContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ContextMenuContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ContextMenusWith<X> {
@@ -14914,8 +14914,8 @@ impl<X: UserData> From<ToggleButtonToggleButtonWith<X>> for GroupContentWith<X> 
 }
 
 const _: () = assert!(
-    size_of::<GroupContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<GroupContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl From<BoxContent> for GroupContent {
@@ -15134,8 +15134,8 @@ impl<X: UserData> From<RadioGroupWith<X>> for GroupControlsContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<GroupControlsContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<GroupControlsContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> GroupGroupWith<X> {
@@ -16220,8 +16220,8 @@ impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for MenuContentWi
 }
 
 const _: () = assert!(
-    size_of::<MenuContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<MenuContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> MenuGroupWith<X> {
@@ -16958,8 +16958,8 @@ impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for MenuWithTitle
 }
 
 const _: () = assert!(
-    size_of::<MenuWithTitleContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<MenuWithTitleContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> PrimaryItemWith<X> {
@@ -17075,8 +17075,8 @@ impl<X: UserData> From<MenuBackstagePrimaryMenuWith<X>> for PrimaryItemContentWi
 }
 
 const _: () = assert!(
-    size_of::<PrimaryItemContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<PrimaryItemContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> QatWith<X> {
@@ -17203,8 +17203,8 @@ impl<X: UserData> From<SeparatorWith<X>> for QuickAccessToolbarItemsContentWith<
 }
 
 const _: () = assert!(
-    size_of::<QuickAccessToolbarItemsContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<QuickAccessToolbarItemsContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> RadioButtonWith<X> {
@@ -17400,10 +17400,12 @@ impl<X: UserData> RibbonContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::ContextualTabs(node) => RibbonContentWith::ContextualTabs(node.into_user_data()),
+            Self::ContextualTabs(node) => {
+                RibbonContentWith::ContextualTabs(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => RibbonContentWith::Other(node),
-            Self::Qat(node) => RibbonContentWith::Qat(node.into_user_data()),
-            Self::Tabs(node) => RibbonContentWith::Tabs(node.into_user_data()),
+            Self::Qat(node) => RibbonContentWith::Qat(Box::new((*node).into_user_data())),
+            Self::Tabs(node) => RibbonContentWith::Tabs(Box::new((*node).into_user_data())),
         }
     }
 }
@@ -17415,9 +17417,9 @@ impl officekit_markup_base::Read for RibbonContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(item.read()),
-            Some((NS_MSO14, "qat")) => Self::Qat(item.read()),
-            Some((NS_MSO14, "tabs")) => Self::Tabs(item.read()),
+            Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(Box::new(item.read())),
+            Some((NS_MSO14, "qat")) => Self::Qat(Box::new(item.read())),
+            Some((NS_MSO14, "tabs")) => Self::Tabs(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -17436,25 +17438,25 @@ impl officekit_markup_base::Write for RibbonContent {
 
 impl<X: UserData> From<ContextualTabsWith<X>> for RibbonContentWith<X> {
     fn from(arm: ContextualTabsWith<X>) -> Self {
-        Self::ContextualTabs(arm)
+        Self::ContextualTabs(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<QatWith<X>> for RibbonContentWith<X> {
     fn from(arm: QatWith<X>) -> Self {
-        Self::Qat(arm)
+        Self::Qat(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<TabsWith<X>> for RibbonContentWith<X> {
     fn from(arm: TabsWith<X>) -> Self {
-        Self::Tabs(arm)
+        Self::Tabs(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<RibbonContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<RibbonContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> SecondColumnWith<X> {
@@ -17676,8 +17678,8 @@ impl<X: UserData> From<TaskGroupWith<X>> for SimpleGroupsContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<SimpleGroupsContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<SimpleGroupsContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]
@@ -17828,8 +17830,8 @@ impl<X: UserData> From<ToggleButtonVisibleToggleButtonWith<X>> for SplitButtonCo
 }
 
 const _: () = assert!(
-    size_of::<SplitButtonContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<SplitButtonContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> SplitButtonSplitButtonWith<X> {

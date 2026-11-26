@@ -1326,9 +1326,9 @@ impl super::Transform for office_spreadsheetml_2010_11_main::DatabaseSourceConte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::DbCommand(arm) = self {
-            Self::DbCommand(arm.transform(ctx))
+            Self::DbCommand(Box::new(arm.transform(ctx)))
         } else if let Self::DbTables(arm) = self {
-            Self::DbTables(arm.transform(ctx))
+            Self::DbTables(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {

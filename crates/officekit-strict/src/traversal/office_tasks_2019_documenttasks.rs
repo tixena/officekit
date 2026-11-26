@@ -1470,13 +1470,13 @@ impl super::Transform for office_tasks_2019_documenttasks::TaskHistoryEventConte
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Priority(arm) = self {
-            Self::Priority(arm.transform(ctx))
+            Self::Priority(Box::new(arm.transform(ctx)))
         } else if let Self::Progress(arm) = self {
-            Self::Progress(arm.transform(ctx))
+            Self::Progress(Box::new(arm.transform(ctx)))
         } else if let Self::Schedule(arm) = self {
             Self::Schedule(Box::new(arm.transform(ctx)))
         } else if let Self::SetTitle(arm) = self {
-            Self::SetTitle(arm.transform(ctx))
+            Self::SetTitle(Box::new(arm.transform(ctx)))
         } else if let Self::Unassign(arm) = self {
             Self::Unassign(arm.transform(ctx))
         } else if let Self::UnassignAll(arm) = self {
@@ -1484,7 +1484,7 @@ impl super::Transform for office_tasks_2019_documenttasks::TaskHistoryEventConte
         } else if let Self::Undelete(arm) = self {
             Self::Undelete(arm.transform(ctx))
         } else if let Self::Undo(arm) = self {
-            Self::Undo(arm.transform(ctx))
+            Self::Undo(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

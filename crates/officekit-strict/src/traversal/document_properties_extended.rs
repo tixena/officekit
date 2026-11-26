@@ -2744,7 +2744,7 @@ fn transform_application_specific_file_properties_content_1(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             document_properties_extended::ApplicationSpecificFilePropertiesContent::ApplicationName(
                 node,
@@ -2753,12 +2753,12 @@ fn transform_application_specific_file_properties_content_1(
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::ApplicationVersion(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::ApplicationVersion(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::CharactersWithSpaces(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::CharactersWithSpaces(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::DigitalSignature(arm) = item
@@ -2768,7 +2768,7 @@ fn transform_application_specific_file_properties_content_1(
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::DocumentSecurity(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::DocumentSecurity(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::HeadingPairs(
@@ -2795,19 +2795,19 @@ fn transform_application_specific_file_properties_content_1(
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::HyperlinksChanged(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::HyperlinksChanged(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::IntendedFormatOfPresentation(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::IntendedFormatOfPresentation(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::LinksUpToDate(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             document_properties_extended::ApplicationSpecificFilePropertiesContent::LinksUpToDate(
                 node,
@@ -2818,7 +2818,7 @@ fn transform_application_specific_file_properties_content_1(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             document_properties_extended::ApplicationSpecificFilePropertiesContent::NameOfCompany(
                 node,
@@ -2834,14 +2834,14 @@ fn transform_application_specific_file_properties_content_2(
 ) -> Option<document_properties_extended::ApplicationSpecificFilePropertiesContent> {
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::NameOfDocumentTemplate(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::NameOfDocumentTemplate(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::NameOfManager(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             document_properties_extended::ApplicationSpecificFilePropertiesContent::NameOfManager(
                 node,
@@ -2850,14 +2850,14 @@ fn transform_application_specific_file_properties_content_2(
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::NumberOfHiddenSlides(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::NumberOfHiddenSlides(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::NumberOfLines(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             document_properties_extended::ApplicationSpecificFilePropertiesContent::NumberOfLines(
                 node,
@@ -2866,7 +2866,7 @@ fn transform_application_specific_file_properties_content_2(
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::NumberOfSlidesContainingNotes(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::NumberOfSlidesContainingNotes(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::PartTitles(arm) =
@@ -2881,14 +2881,14 @@ fn transform_application_specific_file_properties_content_2(
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::RelativeHyperlinkBase(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::RelativeHyperlinkBase(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::SharedDocument(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             document_properties_extended::ApplicationSpecificFilePropertiesContent::SharedDocument(
                 node,
@@ -2897,27 +2897,27 @@ fn transform_application_specific_file_properties_content_2(
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::SlidesMetadataElement(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::SlidesMetadataElement(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::ThumbnailDisplayMode(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::ThumbnailDisplayMode(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalEditTimeMetadataElement(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalEditTimeMetadataElement(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfCharacters(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfCharacters(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfMultimediaClips(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfMultimediaClips(node));
     }
     None
@@ -2929,18 +2929,18 @@ fn transform_application_specific_file_properties_content_3(
 ) -> Option<document_properties_extended::ApplicationSpecificFilePropertiesContent> {
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfPages(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfPages(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfParagraphs(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_extended::ApplicationSpecificFilePropertiesContent::TotalNumberOfParagraphs(node));
     }
     if let document_properties_extended::ApplicationSpecificFilePropertiesContent::WordCount(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             document_properties_extended::ApplicationSpecificFilePropertiesContent::WordCount(node),
         );

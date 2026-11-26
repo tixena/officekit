@@ -896,13 +896,13 @@ pub enum TaskHistoryEventContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `p228:pcntCmplt`, a `PcntCmplt`.
-    PcntCmplt(PcntCmpltWith<X>),
+    PcntCmplt(Box<PcntCmpltWith<X>>),
     /// The element `p228:title`, a `Title`.
-    Title(TitleWith<X>),
+    Title(Box<TitleWith<X>>),
     /// The element `p228:unasgnAll`, a `UnasgnAll`.
     UnasgnAll(UnasgnAllWith<X>),
     /// The element `p228:undo`, a `Undo`.
-    Undo(UndoWith<X>),
+    Undo(Box<UndoWith<X>>),
     /// The element `p228:unknown`, a `Unknown`.
     Unknown(UnknownWith<X>),
 }
@@ -1656,10 +1656,16 @@ impl<X: UserData> TaskHistoryEventContentWith<X> {
                 TaskHistoryEventContentWith::Date(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TaskHistoryEventContentWith::Other(node),
-            Self::PcntCmplt(node) => TaskHistoryEventContentWith::PcntCmplt(node.into_user_data()),
-            Self::Title(node) => TaskHistoryEventContentWith::Title(node.into_user_data()),
+            Self::PcntCmplt(node) => {
+                TaskHistoryEventContentWith::PcntCmplt(Box::new((*node).into_user_data()))
+            }
+            Self::Title(node) => {
+                TaskHistoryEventContentWith::Title(Box::new((*node).into_user_data()))
+            }
             Self::UnasgnAll(node) => TaskHistoryEventContentWith::UnasgnAll(node.into_user_data()),
-            Self::Undo(node) => TaskHistoryEventContentWith::Undo(node.into_user_data()),
+            Self::Undo(node) => {
+                TaskHistoryEventContentWith::Undo(Box::new((*node).into_user_data()))
+            }
             Self::Unknown(node) => TaskHistoryEventContentWith::Unknown(node.into_user_data()),
         }
     }
@@ -1675,10 +1681,10 @@ impl officekit_markup_base::Read for TaskHistoryEventContent {
             Some((NS_P228, "add")) => Self::Add(item.read()),
             Some((NS_P228, "asgn")) => Self::Asgn(item.read()),
             Some((NS_P228, "date")) => Self::Date(Box::new(item.read())),
-            Some((NS_P228, "pcntCmplt")) => Self::PcntCmplt(item.read()),
-            Some((NS_P228, "title")) => Self::Title(item.read()),
+            Some((NS_P228, "pcntCmplt")) => Self::PcntCmplt(Box::new(item.read())),
+            Some((NS_P228, "title")) => Self::Title(Box::new(item.read())),
             Some((NS_P228, "unasgnAll")) => Self::UnasgnAll(item.read()),
-            Some((NS_P228, "undo")) => Self::Undo(item.read()),
+            Some((NS_P228, "undo")) => Self::Undo(Box::new(item.read())),
             Some((NS_P228, "unknown")) => Self::Unknown(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -1721,13 +1727,13 @@ impl<X: UserData> From<DateWith<X>> for TaskHistoryEventContentWith<X> {
 
 impl<X: UserData> From<PcntCmpltWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: PcntCmpltWith<X>) -> Self {
-        Self::PcntCmplt(arm)
+        Self::PcntCmplt(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<TitleWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: TitleWith<X>) -> Self {
-        Self::Title(arm)
+        Self::Title(Box::new(arm))
     }
 }
 
@@ -1739,7 +1745,7 @@ impl<X: UserData> From<UnasgnAllWith<X>> for TaskHistoryEventContentWith<X> {
 
 impl<X: UserData> From<UndoWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UndoWith<X>) -> Self {
-        Self::Undo(arm)
+        Self::Undo(Box::new(arm))
     }
 }
 
@@ -1750,8 +1756,8 @@ impl<X: UserData> From<UnknownWith<X>> for TaskHistoryEventContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<TaskHistoryEventContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<TaskHistoryEventContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> TitleWith<X> {

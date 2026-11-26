@@ -1760,7 +1760,7 @@ impl Eq for NvContentPartPrWith<()> {}
 #[non_exhaustive]
 pub enum PictureEffectContentWith<X: UserData> {
     /// The element `a14:artisticBlur`, a `ArtisticBlur`.
-    ArtisticBlur(ArtisticBlurWith<X>),
+    ArtisticBlur(Box<ArtisticBlurWith<X>>),
     /// The element `a14:artisticCement`, a `ArtisticCement`.
     ArtisticCement(Box<ArtisticCementWith<X>>),
     /// The element `a14:artisticChalkSketch`, a `ArtisticChalkSketch`.
@@ -1808,13 +1808,13 @@ pub enum PictureEffectContentWith<X: UserData> {
     /// The element `a14:brightnessContrast`, a `BrightnessContrast`.
     BrightnessContrast(Box<BrightnessContrastWith<X>>),
     /// The element `a14:colorTemperature`, a `ColorTemperature`.
-    ColorTemperature(ColorTemperatureWith<X>),
+    ColorTemperature(Box<ColorTemperatureWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `a14:saturation`, a `Saturation`.
-    Saturation(SaturationWith<X>),
+    Saturation(Box<SaturationWith<X>>),
     /// The element `a14:sharpenSoften`, a `SharpenSoften`.
-    SharpenSoften(SharpenSoftenWith<X>),
+    SharpenSoften(Box<SharpenSoftenWith<X>>),
 }
 
 /// [`PictureEffectContentWith`] of the tree a read gives, where no node holds anything in
@@ -4356,16 +4356,16 @@ impl<X: UserData> PictureEffectContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, PictureEffectContentWith;
             plain [
-                ArtisticBlur, ColorTemperature, Saturation, SharpenSoften,
             ]
             boxed [
-                ArtisticCement, ArtisticChalkSketch, ArtisticCrisscrossEtching, ArtisticCutout,
-                ArtisticFilmGrain, ArtisticGlass, ArtisticGlowDiffused, ArtisticGlowEdges,
-                ArtisticLightScreen, ArtisticLineDrawing, ArtisticMarker, ArtisticMosiaicBubbles,
-                ArtisticPaintBrush, ArtisticPaintStrokes, ArtisticPastelsSmooth,
-                ArtisticPencilGrayscale, ArtisticPencilSketch, ArtisticPhotocopy,
-                ArtisticPlasticWrap, ArtisticTexturizer, ArtisticWatercolorSponge,
-                BackgroundRemoval, BrightnessContrast,
+                ArtisticBlur, ArtisticCement, ArtisticChalkSketch, ArtisticCrisscrossEtching,
+                ArtisticCutout, ArtisticFilmGrain, ArtisticGlass, ArtisticGlowDiffused,
+                ArtisticGlowEdges, ArtisticLightScreen, ArtisticLineDrawing, ArtisticMarker,
+                ArtisticMosiaicBubbles, ArtisticPaintBrush, ArtisticPaintStrokes,
+                ArtisticPastelsSmooth, ArtisticPencilGrayscale, ArtisticPencilSketch,
+                ArtisticPhotocopy, ArtisticPlasticWrap, ArtisticTexturizer,
+                ArtisticWatercolorSponge, BackgroundRemoval, BrightnessContrast, ColorTemperature,
+                Saturation, SharpenSoften,
             ]
         )
     }
@@ -4373,7 +4373,7 @@ impl<X: UserData> PictureEffectContentWith<X> {
 
 impl<X: UserData> Default for PictureEffectContentWith<X> {
     fn default() -> Self {
-        Self::ArtisticBlur(ArtisticBlurWith::default())
+        Self::ArtisticBlur(Box::default())
     }
 }
 
@@ -4384,7 +4384,7 @@ impl officekit_markup_base::Read for PictureEffectContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A14, "artisticBlur")) => Self::ArtisticBlur(item.read()),
+            Some((NS_A14, "artisticBlur")) => Self::ArtisticBlur(Box::new(item.read())),
             Some((NS_A14, "artisticCement")) => Self::ArtisticCement(Box::new(item.read())),
             Some((NS_A14, "artisticChalkSketch")) => {
                 Self::ArtisticChalkSketch(Box::new(item.read()))
@@ -4432,9 +4432,9 @@ impl officekit_markup_base::Read for PictureEffectContent {
             }
             Some((NS_A14, "backgroundRemoval")) => Self::BackgroundRemoval(Box::new(item.read())),
             Some((NS_A14, "brightnessContrast")) => Self::BrightnessContrast(Box::new(item.read())),
-            Some((NS_A14, "colorTemperature")) => Self::ColorTemperature(item.read()),
-            Some((NS_A14, "saturation")) => Self::Saturation(item.read()),
-            Some((NS_A14, "sharpenSoften")) => Self::SharpenSoften(item.read()),
+            Some((NS_A14, "colorTemperature")) => Self::ColorTemperature(Box::new(item.read())),
+            Some((NS_A14, "saturation")) => Self::Saturation(Box::new(item.read())),
+            Some((NS_A14, "sharpenSoften")) => Self::SharpenSoften(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -4477,7 +4477,7 @@ impl officekit_markup_base::Write for PictureEffectContent {
 
 impl<X: UserData> From<ArtisticBlurWith<X>> for PictureEffectContentWith<X> {
     fn from(arm: ArtisticBlurWith<X>) -> Self {
-        Self::ArtisticBlur(arm)
+        Self::ArtisticBlur(Box::new(arm))
     }
 }
 
@@ -4621,25 +4621,25 @@ impl<X: UserData> From<BrightnessContrastWith<X>> for PictureEffectContentWith<X
 
 impl<X: UserData> From<ColorTemperatureWith<X>> for PictureEffectContentWith<X> {
     fn from(arm: ColorTemperatureWith<X>) -> Self {
-        Self::ColorTemperature(arm)
+        Self::ColorTemperature(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<SaturationWith<X>> for PictureEffectContentWith<X> {
     fn from(arm: SaturationWith<X>) -> Self {
-        Self::Saturation(arm)
+        Self::Saturation(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<SharpenSoftenWith<X>> for PictureEffectContentWith<X> {
     fn from(arm: SharpenSoftenWith<X>) -> Self {
-        Self::SharpenSoften(arm)
+        Self::SharpenSoften(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<PictureEffectContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<PictureEffectContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> SaturationWith<X> {

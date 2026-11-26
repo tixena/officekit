@@ -1232,10 +1232,10 @@ pub enum MultiplePathLineContent {
     LineStrokeSettings(Box<super::LineStrokeSettings>),
     Other(Box<Node>),
     RightBorder(Box<vml_wordprocessing_drawing::RightBorder>),
-    SetOfFormulas(super::SetOfFormulas),
-    SetOfHandles(super::SetOfHandles),
+    SetOfFormulas(Box<super::SetOfFormulas>),
+    SetOfHandles(Box<super::SetOfHandles>),
     ShadowEffect(Box<super::ShadowEffect>),
-    ShapeClippingPath(super::super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(Box<super::super::vml_office_drawing::ShapeClippingPath>),
     ShapeFillProperties(Box<super::ShapeFillProperties>),
     ShapePath(Box<super::ShapePath>),
     ShapeProtections(Box<super::super::vml_office_drawing::ShapeProtections>),
@@ -1244,7 +1244,7 @@ pub enum MultiplePathLineContent {
     TextLayoutPath(Box<super::TextLayoutPath>),
     TextWrapping(Box<vml_wordprocessing_drawing::TextWrapping>),
     TopBorder(Box<vml_wordprocessing_drawing::TopBorder>),
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramText>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1267,22 +1267,22 @@ pub enum ShapeDefinitionContent {
     LineStrokeSettings(Box<super::LineStrokeSettings>),
     Other(Box<Node>),
     RightBorder(Box<vml_wordprocessing_drawing::RightBorder>),
-    SetOfFormulas(super::SetOfFormulas),
-    SetOfHandles(super::SetOfHandles),
+    SetOfFormulas(Box<super::SetOfFormulas>),
+    SetOfHandles(Box<super::SetOfHandles>),
     ShadowEffect(Box<super::ShadowEffect>),
-    ShapeClippingPath(super::super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(Box<super::super::vml_office_drawing::ShapeClippingPath>),
     ShapeFillProperties(Box<super::ShapeFillProperties>),
     ShapePath(Box<super::ShapePath>),
     ShapeProtections(Box<super::super::vml_office_drawing::ShapeProtections>),
     SkewTransform(Box<super::super::vml_office_drawing::SkewTransform>),
     StorageForAlternateMathContent(
-        #[rkyv(omit_bounds)] super::super::vml_office_drawing::StorageForAlternateMathContent,
+        #[rkyv(omit_bounds)] Box<super::super::vml_office_drawing::StorageForAlternateMathContent>,
     ),
     TextBox(#[rkyv(omit_bounds)] Box<super::TextBox>),
     TextLayoutPath(Box<super::TextLayoutPath>),
     TextWrapping(Box<vml_wordprocessing_drawing::TextWrapping>),
     TopBorder(Box<vml_wordprocessing_drawing::TopBorder>),
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramText>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1303,10 +1303,10 @@ pub enum ShapeElementContent {
     LineStrokeSettings(Box<super::LineStrokeSettings>),
     Other(Box<Node>),
     RightBorder(Box<vml_wordprocessing_drawing::RightBorder>),
-    SetOfFormulas(super::SetOfFormulas),
-    SetOfHandles(super::SetOfHandles),
+    SetOfFormulas(Box<super::SetOfFormulas>),
+    SetOfHandles(Box<super::SetOfHandles>),
     ShadowEffect(Box<super::ShadowEffect>),
-    ShapeClippingPath(super::super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(Box<super::super::vml_office_drawing::ShapeClippingPath>),
     ShapeFillProperties(Box<super::ShapeFillProperties>),
     ShapePath(Box<super::ShapePath>),
     ShapeProtections(Box<super::super::vml_office_drawing::ShapeProtections>),
@@ -1315,7 +1315,7 @@ pub enum ShapeElementContent {
     TextLayoutPath(Box<super::TextLayoutPath>),
     TextWrapping(Box<vml_wordprocessing_drawing::TextWrapping>),
     TopBorder(Box<vml_wordprocessing_drawing::TopBorder>),
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramText>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1344,10 +1344,10 @@ pub enum ShapeGroupContent {
     Rectangle(#[rkyv(omit_bounds)] Box<super::Rectangle>),
     RightBorder(Box<vml_wordprocessing_drawing::RightBorder>),
     RoundedRectangle(#[rkyv(omit_bounds)] Box<super::RoundedRectangle>),
-    SetOfFormulas(super::SetOfFormulas),
-    SetOfHandles(super::SetOfHandles),
+    SetOfFormulas(Box<super::SetOfFormulas>),
+    SetOfHandles(Box<super::SetOfHandles>),
     ShadowEffect(Box<super::ShadowEffect>),
-    ShapeClippingPath(super::super::vml_office_drawing::ShapeClippingPath),
+    ShapeClippingPath(Box<super::super::vml_office_drawing::ShapeClippingPath>),
     ShapeDefinition(#[rkyv(omit_bounds)] Box<super::ShapeDefinition>),
     ShapeFillProperties(Box<super::ShapeFillProperties>),
     ShapeGroup(#[rkyv(omit_bounds)] Box<super::ShapeGroup>),
@@ -1360,7 +1360,7 @@ pub enum ShapeGroupContent {
     TextWrapping(Box<vml_wordprocessing_drawing::TextWrapping>),
     TopBorder(Box<vml_wordprocessing_drawing::TopBorder>),
     VMLDiagram(Box<super::super::vml_office_drawing::VMLDiagram>),
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramText>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1372,7 +1372,7 @@ pub enum ShapeGroupContent {
 pub enum TextBoxContent {
     Other(Box<Node>),
     RichTextBoxContentContainer(
-        #[rkyv(omit_bounds)] super::super::wordprocessing::RichTextBoxContentContainer,
+        #[rkyv(omit_bounds)] Box<super::super::wordprocessing::RichTextBoxContentContainer>,
     ),
 }
 

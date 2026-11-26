@@ -16,10 +16,15 @@ use crate::generate_schema::model::{Content, Method, Name, Particle, ParticleKin
 use crate::generate_schema::sdk_data::DataParticle;
 
 /// The most bytes an arm holds its struct in place; a larger struct is boxed.
-pub const INLINE_BYTES: usize = 32;
+pub const INLINE_BYTES: usize = 16;
 
-/// The most bytes an enum of the tree a read gives takes: an inline arm and the tag.
-pub const ENUM_BYTES: usize = INLINE_BYTES + 8;
+/// The most bytes an enum of the tree a read gives takes: an inline arm or a
+/// box, and the tag.
+pub const ENUM_BYTES: usize = if INLINE_BYTES > size_of::<Box<u8>>() {
+    INLINE_BYTES
+} else {
+    size_of::<Box<u8>>()
+} + 8;
 
 /// One entry of a flattened choice: an element's tag and type, or a wildcard.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -631,7 +636,9 @@ pub fn arm_impls(names: &Names<'_>, found: &EnumDef) -> String {
             "assert!",
             vec![
                 Expr::Atom(format!("size_of::<{}>() <= {ENUM_BYTES}", found.name)),
-                Expr::atom("\"an arm the generator holds in place takes more than 32 bytes\""),
+                Expr::Atom(format!(
+                    "\"an arm the generator holds in place takes more than {INLINE_BYTES} bytes\""
+                )),
             ],
         ),
         &mut out,

@@ -549,7 +549,7 @@ impl super::Transform for spreadsheet::AutoFilterColumnContent {
         } else if let Self::FilterCriteria(arm) = self {
             Self::FilterCriteria(Box::new(arm.transform(ctx)))
         } else if let Self::FutureFeatureDataStorageArea(arm) = self {
-            Self::FutureFeatureDataStorageArea(arm.transform(ctx))
+            Self::FutureFeatureDataStorageArea(Box::new(arm.transform(ctx)))
         } else if let Self::IconFilter(arm) = self {
             Self::IconFilter(Box::new(arm.transform(ctx)))
         } else if let Self::OfficeSpreadsheetml20099MainCustomFilters(arm) = self {
@@ -13110,37 +13110,37 @@ impl super::Transform for spreadsheet::FontContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Bold(arm) = self {
-            Self::Bold(arm.transform(ctx))
+            Self::Bold(Box::new(arm.transform(ctx)))
         } else if let Self::CharacterSet(arm) = self {
-            Self::CharacterSet(arm.transform(ctx))
+            Self::CharacterSet(Box::new(arm.transform(ctx)))
         } else if let Self::Condense(arm) = self {
-            Self::Condense(arm.transform(ctx))
+            Self::Condense(Box::new(arm.transform(ctx)))
         } else if let Self::DataBarColor(arm) = self {
             Self::DataBarColor(Box::new(arm.transform(ctx)))
         } else if let Self::Extend(arm) = self {
-            Self::Extend(arm.transform(ctx))
+            Self::Extend(Box::new(arm.transform(ctx)))
         } else if let Self::FontFamily(arm) = self {
-            Self::FontFamily(arm.transform(ctx))
+            Self::FontFamily(Box::new(arm.transform(ctx)))
         } else if let Self::FontName(arm) = self {
-            Self::FontName(arm.transform(ctx))
+            Self::FontName(Box::new(arm.transform(ctx)))
         } else if let Self::FontSize(arm) = self {
-            Self::FontSize(arm.transform(ctx))
+            Self::FontSize(Box::new(arm.transform(ctx)))
         } else if let Self::Italic(arm) = self {
-            Self::Italic(arm.transform(ctx))
+            Self::Italic(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outline(arm) = self {
-            Self::Outline(arm.transform(ctx))
+            Self::Outline(Box::new(arm.transform(ctx)))
         } else if let Self::Scheme(arm) = self {
-            Self::Scheme(arm.transform(ctx))
+            Self::Scheme(Box::new(arm.transform(ctx)))
         } else if let Self::Shadow(arm) = self {
-            Self::Shadow(arm.transform(ctx))
+            Self::Shadow(Box::new(arm.transform(ctx)))
         } else if let Self::StrikeThrough(arm) = self {
-            Self::StrikeThrough(arm.transform(ctx))
+            Self::StrikeThrough(Box::new(arm.transform(ctx)))
         } else if let Self::Underline(arm) = self {
-            Self::Underline(arm.transform(ctx))
+            Self::Underline(Box::new(arm.transform(ctx)))
         } else if let Self::VerticalAlignment(arm) = self {
-            Self::VerticalAlignment(arm.transform(ctx))
+            Self::VerticalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -23750,7 +23750,7 @@ impl super::Transform for spreadsheet::PivotCacheRecordContent {
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SharedItemsIndex(arm) = self {
-            Self::SharedItemsIndex(arm.transform(ctx))
+            Self::SharedItemsIndex(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -24053,7 +24053,7 @@ impl super::Transform for spreadsheet::PivotCacheSourceDescriptionContent {
         if let Self::ConsolidationSource(arm) = self {
             Self::ConsolidationSource(Box::new(arm.transform(ctx)))
         } else if let Self::FutureFeatureDataStorageArea(arm) = self {
-            Self::FutureFeatureDataStorageArea(arm.transform(ctx))
+            Self::FutureFeatureDataStorageArea(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::WorksheetPivotCacheSource(arm) = self {
@@ -29605,37 +29605,37 @@ impl super::Transform for spreadsheet::RunPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Bold(arm) = self {
-            Self::Bold(arm.transform(ctx))
+            Self::Bold(Box::new(arm.transform(ctx)))
         } else if let Self::CharacterSet(arm) = self {
-            Self::CharacterSet(arm.transform(ctx))
+            Self::CharacterSet(Box::new(arm.transform(ctx)))
         } else if let Self::Condense(arm) = self {
-            Self::Condense(arm.transform(ctx))
+            Self::Condense(Box::new(arm.transform(ctx)))
         } else if let Self::DataBarColor(arm) = self {
             Self::DataBarColor(Box::new(arm.transform(ctx)))
         } else if let Self::Extend(arm) = self {
-            Self::Extend(arm.transform(ctx))
+            Self::Extend(Box::new(arm.transform(ctx)))
         } else if let Self::FontFamilyIntProperty(arm) = self {
-            Self::FontFamilyIntProperty(arm.transform(ctx))
+            Self::FontFamilyIntProperty(Box::new(arm.transform(ctx)))
         } else if let Self::FontRFont(arm) = self {
-            Self::FontRFont(arm.transform(ctx))
+            Self::FontRFont(Box::new(arm.transform(ctx)))
         } else if let Self::FontSize(arm) = self {
-            Self::FontSize(arm.transform(ctx))
+            Self::FontSize(Box::new(arm.transform(ctx)))
         } else if let Self::Italic(arm) = self {
-            Self::Italic(arm.transform(ctx))
+            Self::Italic(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outline(arm) = self {
-            Self::Outline(arm.transform(ctx))
+            Self::Outline(Box::new(arm.transform(ctx)))
         } else if let Self::Scheme(arm) = self {
-            Self::Scheme(arm.transform(ctx))
+            Self::Scheme(Box::new(arm.transform(ctx)))
         } else if let Self::Shadow(arm) = self {
-            Self::Shadow(arm.transform(ctx))
+            Self::Shadow(Box::new(arm.transform(ctx)))
         } else if let Self::StrikeThrough(arm) = self {
-            Self::StrikeThrough(arm.transform(ctx))
+            Self::StrikeThrough(Box::new(arm.transform(ctx)))
         } else if let Self::Underline(arm) = self {
-            Self::Underline(arm.transform(ctx))
+            Self::Underline(Box::new(arm.transform(ctx)))
         } else if let Self::VerticalAlignment(arm) = self {
-            Self::VerticalAlignment(arm.transform(ctx))
+            Self::VerticalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -34036,13 +34036,13 @@ impl super::Transform for spreadsheet::TablesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CharacterValueXStringElement(arm) = self {
-            Self::CharacterValueXStringElement(arm.transform(ctx))
+            Self::CharacterValueXStringElement(Box::new(arm.transform(ctx)))
         } else if let Self::NoValueTableMissing(arm) = self {
             Self::NoValueTableMissing(arm.transform(ctx))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SharedItemsIndex(arm) = self {
-            Self::SharedItemsIndex(arm.transform(ctx))
+            Self::SharedItemsIndex(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

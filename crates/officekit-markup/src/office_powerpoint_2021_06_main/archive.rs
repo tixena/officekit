@@ -384,12 +384,12 @@ pub enum TaskHistoryEventContent {
     Asgn(super::Asgn),
     Date(Box<super::Date>),
     Other(Box<Node>),
-    PcntCmplt(super::PcntCmplt),
-    Pri(super::Pri),
-    Title(super::Title),
+    PcntCmplt(Box<super::PcntCmplt>),
+    Pri(Box<super::Pri>),
+    Title(Box<super::Title>),
     UnAsgn(super::UnAsgn),
     UnasgnAll(super::UnasgnAll),
-    Undo(super::Undo),
+    Undo(Box<super::Undo>),
     Unknown(super::Unknown),
 }
 

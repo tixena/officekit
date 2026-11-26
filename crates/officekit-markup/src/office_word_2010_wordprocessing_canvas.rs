@@ -947,8 +947,8 @@ impl<X: UserData> From<super::office_word_2010_wordprocessing_shape::WspWith<X>>
 }
 
 const _: () = assert!(
-    size_of::<WordprocessingCanvasContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<WordprocessingCanvasContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> WpcWith<X> {

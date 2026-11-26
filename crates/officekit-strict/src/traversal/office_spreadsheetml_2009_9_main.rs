@@ -7380,7 +7380,7 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotUserEditContent
         if let Self::EditValue(arm) = self {
             Self::EditValue(Box::new(arm.transform(ctx)))
         } else if let Self::F(arm) = self {
-            Self::F(arm.transform(ctx))
+            Self::F(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {

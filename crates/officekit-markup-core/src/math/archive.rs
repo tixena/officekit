@@ -1624,8 +1624,8 @@ pub enum ControlPropertiesContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum MathPropertiesContent {
     Other(Box<Node>),
-    WrapIndent(super::WrapIndent),
-    WrapRight(super::WrapRight),
+    WrapIndent(Box<super::WrapIndent>),
+    WrapRight(Box<super::WrapRight>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1635,13 +1635,13 @@ pub enum MathPropertiesContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum OfficeMathContent {
-    Accent(#[rkyv(omit_bounds)] super::Accent),
+    Accent(#[rkyv(omit_bounds)] Box<super::Accent>),
     ArrayObject(#[rkyv(omit_bounds)] Box<super::ArrayObject>),
-    Bar(#[rkyv(omit_bounds)] super::Bar),
+    Bar(#[rkyv(omit_bounds)] Box<super::Bar>),
     BookmarkEnd(Box<super::super::wordprocessing::BookmarkEnd>),
     BookmarkStart(Box<super::super::wordprocessing::BookmarkStart>),
-    BorderBoxObject(#[rkyv(omit_bounds)] super::BorderBoxObject),
-    BoxObject(#[rkyv(omit_bounds)] super::BoxObject),
+    BorderBoxObject(#[rkyv(omit_bounds)] Box<super::BorderBoxObject>),
+    BoxObject(#[rkyv(omit_bounds)] Box<super::BoxObject>),
     CommentAnchorRangeEnd(Box<super::super::wordprocessing::CommentAnchorRangeEnd>),
     CommentAnchorRangeStart(Box<super::super::wordprocessing::CommentAnchorRangeStart>),
     ConflictDelRunTrackChange(
@@ -1650,33 +1650,33 @@ pub enum OfficeMathContent {
     ConflictInsRunTrackChange(
         #[rkyv(omit_bounds)] Box<super::super::office_word_2010_wordml::ConflictInsRunTrackChange>,
     ),
-    CustomXMLMarkupDeletionEnd(super::super::wordprocessing::CustomXMLMarkupDeletionEnd),
+    CustomXMLMarkupDeletionEnd(Box<super::super::wordprocessing::CustomXMLMarkupDeletionEnd>),
     CustomXMLMarkupDeletionStart(Box<super::super::wordprocessing::CustomXMLMarkupDeletionStart>),
-    CustomXMLMarkupInsertionEnd(super::super::wordprocessing::CustomXMLMarkupInsertionEnd),
+    CustomXMLMarkupInsertionEnd(Box<super::super::wordprocessing::CustomXMLMarkupInsertionEnd>),
     CustomXMLMarkupInsertionStart(Box<super::super::wordprocessing::CustomXMLMarkupInsertionStart>),
-    CustomXMLMarkupMoveSourceEnd(super::super::wordprocessing::CustomXMLMarkupMoveSourceEnd),
+    CustomXMLMarkupMoveSourceEnd(Box<super::super::wordprocessing::CustomXMLMarkupMoveSourceEnd>),
     CustomXMLMarkupMoveSourceStart(
         Box<super::super::wordprocessing::CustomXMLMarkupMoveSourceStart>,
     ),
     CustomXmlConflictDelRangeEnd(
-        super::super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd,
+        Box<super::super::office_word_2010_wordml::CustomXmlConflictDelRangeEnd>,
     ),
     CustomXmlConflictDelRangeStart(
         Box<super::super::office_word_2010_wordml::CustomXmlConflictDelRangeStart>,
     ),
     CustomXmlConflictInsRangeEnd(
-        super::super::office_word_2010_wordml::CustomXmlConflictInsRangeEnd,
+        Box<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeEnd>,
     ),
     CustomXmlConflictInsRangeStart(
         Box<super::super::office_word_2010_wordml::CustomXmlConflictInsRangeStart>,
     ),
-    CustomXmlMoveToRangeEnd(super::super::wordprocessing::CustomXmlMoveToRangeEnd),
+    CustomXmlMoveToRangeEnd(Box<super::super::wordprocessing::CustomXmlMoveToRangeEnd>),
     CustomXmlMoveToRangeStart(Box<super::super::wordprocessing::CustomXmlMoveToRangeStart>),
     DeletedRunContent(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::DeletedRunContent>),
     DelimiterObject(#[rkyv(omit_bounds)] Box<super::DelimiterObject>),
-    FractionObject(#[rkyv(omit_bounds)] super::FractionObject),
-    FunctionApplyObject(#[rkyv(omit_bounds)] super::FunctionApplyObject),
-    GroupCharacterObject(#[rkyv(omit_bounds)] super::GroupCharacterObject),
+    FractionObject(#[rkyv(omit_bounds)] Box<super::FractionObject>),
+    FunctionApplyObject(#[rkyv(omit_bounds)] Box<super::FunctionApplyObject>),
+    GroupCharacterObject(#[rkyv(omit_bounds)] Box<super::GroupCharacterObject>),
     Hyperlink(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::Hyperlink>),
     InlineLevelCustomXMLElement(
         #[rkyv(omit_bounds)] Box<super::super::wordprocessing::InlineLevelCustomXMLElement>,
@@ -1688,7 +1688,7 @@ pub enum OfficeMathContent {
         #[rkyv(omit_bounds)] Box<super::super::wordprocessing::InlineLevelStructuredDocumentTag>,
     ),
     InsertedRunContent(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::InsertedRunContent>),
-    LowerLimitObject(#[rkyv(omit_bounds)] super::LowerLimitObject),
+    LowerLimitObject(#[rkyv(omit_bounds)] Box<super::LowerLimitObject>),
     MatrixObject(#[rkyv(omit_bounds)] Box<super::MatrixObject>),
     MoveDestinationLocationContainerEnd(
         Box<super::super::wordprocessing::MoveDestinationLocationContainerEnd>,
@@ -1709,21 +1709,21 @@ pub enum OfficeMathContent {
         #[rkyv(omit_bounds)] Box<super::super::wordprocessing::MoveSourceRunContent>,
     ),
     Nary(#[rkyv(omit_bounds)] Box<super::Nary>),
-    OfficeMath(#[rkyv(omit_bounds)] super::OfficeMath),
+    OfficeMath(#[rkyv(omit_bounds)] Box<super::OfficeMath>),
     OfficeMathParagraph(#[rkyv(omit_bounds)] Box<super::OfficeMathParagraph>),
     Other(Box<Node>),
-    PhantomObject(#[rkyv(omit_bounds)] super::PhantomObject),
+    PhantomObject(#[rkyv(omit_bounds)] Box<super::PhantomObject>),
     PreSubSuperscriptObject(#[rkyv(omit_bounds)] Box<super::PreSubSuperscriptObject>),
-    ProofingErrorAnchor(super::super::wordprocessing::ProofingErrorAnchor),
-    RadicalObject(#[rkyv(omit_bounds)] super::RadicalObject),
+    ProofingErrorAnchor(Box<super::super::wordprocessing::ProofingErrorAnchor>),
+    RadicalObject(#[rkyv(omit_bounds)] Box<super::RadicalObject>),
     RangePermissionEnd(Box<super::super::wordprocessing::RangePermissionEnd>),
     RangePermissionStart(Box<super::super::wordprocessing::RangePermissionStart>),
     Run(#[rkyv(omit_bounds)] Box<super::Run>),
     SimpleField(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::SimpleField>),
     SubSuperscriptObject(#[rkyv(omit_bounds)] Box<super::SubSuperscriptObject>),
-    SubscriptObject(#[rkyv(omit_bounds)] super::SubscriptObject),
-    SuperscriptObject(#[rkyv(omit_bounds)] super::SuperscriptObject),
-    UpperLimitObject(#[rkyv(omit_bounds)] super::UpperLimitObject),
+    SubscriptObject(#[rkyv(omit_bounds)] Box<super::SubscriptObject>),
+    SuperscriptObject(#[rkyv(omit_bounds)] Box<super::SuperscriptObject>),
+    UpperLimitObject(#[rkyv(omit_bounds)] Box<super::UpperLimitObject>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1736,10 +1736,10 @@ pub enum RunContent {
     AbsolutePositionTabCharacter(Box<super::super::wordprocessing::AbsolutePositionTabCharacter>),
     Break(Box<super::super::wordprocessing::Break>),
     CarriageReturn(super::super::wordprocessing::CarriageReturn),
-    CommentContentReferenceMark(super::super::wordprocessing::CommentContentReferenceMark),
+    CommentContentReferenceMark(Box<super::super::wordprocessing::CommentContentReferenceMark>),
     CommentInformationBlock(super::super::wordprocessing::CommentInformationBlock),
     ComplexFieldCharacter(Box<super::super::wordprocessing::ComplexFieldCharacter>),
-    ContentPart(super::super::wordprocessing::ContentPart),
+    ContentPart(Box<super::super::wordprocessing::ContentPart>),
     ContinuationSeparatorMark(super::super::wordprocessing::ContinuationSeparatorMark),
     DateBlockLongDayFormat(super::super::wordprocessing::DateBlockLongDayFormat),
     DateBlockLongMonthFormat(super::super::wordprocessing::DateBlockLongMonthFormat),
@@ -1749,7 +1749,7 @@ pub enum RunContent {
     DateBlockShortYearFormat(super::super::wordprocessing::DateBlockShortYearFormat),
     DeletedFieldCode(Box<super::super::wordprocessing::DeletedFieldCode>),
     DeletedText(Box<super::super::wordprocessing::DeletedText>),
-    DrawingMLObject(#[rkyv(omit_bounds)] super::super::wordprocessing::DrawingMLObject),
+    DrawingMLObject(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::DrawingMLObject>),
     EmbeddedObject(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::EmbeddedObject>),
     EndnoteReference(Box<super::super::wordprocessing::EndnoteReference>),
     EndnoteReferenceMark(super::super::wordprocessing::EndnoteReferenceMark),
@@ -1761,7 +1761,7 @@ pub enum RunContent {
     OptionalHyphenCharacter(super::super::wordprocessing::OptionalHyphenCharacter),
     Other(Box<Node>),
     PageNumberBlock(super::super::wordprocessing::PageNumberBlock),
-    PhoneticGuide(#[rkyv(omit_bounds)] super::super::wordprocessing::PhoneticGuide),
+    PhoneticGuide(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::PhoneticGuide>),
     PositionOfLastCalculatedPageBreak(
         super::super::wordprocessing::PositionOfLastCalculatedPageBreak,
     ),
@@ -1776,10 +1776,10 @@ pub enum RunContent {
 #[rkyv(remote = super::RunPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RunPropertiesContent {
-    NormalText(super::NormalText),
+    NormalText(Box<super::NormalText>),
     Other(Box<Node>),
-    Script(super::Script),
-    Sty(super::Sty),
+    Script(Box<super::Script>),
+    Sty(Box<super::Sty>),
 }
 
 impl From<AccentMirror> for super::Accent {

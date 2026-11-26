@@ -1111,7 +1111,7 @@ pub enum ColorTransformContentWith<X: UserData> {
     /// The element `w14:alpha`, a `Alpha`.
     Alpha(AlphaWith<X>),
     /// The element `w14:hueMod`, a `HueMod`.
-    HueMod(HueModWith<X>),
+    HueMod(Box<HueModWith<X>>),
     /// The element `w14:lum`, a `Lum`.
     Lum(LumWith<X>),
     /// The element `w14:lumMod`, a `LumMod`.
@@ -1546,7 +1546,7 @@ impl Eq for ExtrusionClrWith<()> {}
 #[non_exhaustive]
 pub enum FillPropertiesContentWith<X: UserData> {
     /// The element `w14:gradFill`, a `GradFill`.
-    GradFill(GradFillWith<X>),
+    GradFill(Box<GradFillWith<X>>),
     /// The element `w14:noFill`, a `NoFill`.
     NoFill(NoFillWith<X>),
     /// An element or node the schemas do not declare at this position.
@@ -1924,7 +1924,7 @@ pub enum LineJoinContentWith<X: UserData> {
     /// The element `w14:bevel`, a `Bevel`.
     Bevel(BevelWith<X>),
     /// The element `w14:miter`, a `Miter`.
-    Miter(MiterWith<X>),
+    Miter(Box<MiterWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `w14:round`, a `Round`.
@@ -3714,8 +3714,8 @@ impl<X: UserData> From<SrgbClrWith<X>> for ColorContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<ColorContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ColorContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ColorTransformContentWith<X> {
@@ -3727,7 +3727,9 @@ impl<X: UserData> ColorTransformContentWith<X> {
     {
         match self {
             Self::Alpha(node) => ColorTransformContentWith::Alpha(node.into_user_data()),
-            Self::HueMod(node) => ColorTransformContentWith::HueMod(node.into_user_data()),
+            Self::HueMod(node) => {
+                ColorTransformContentWith::HueMod(Box::new((*node).into_user_data()))
+            }
             Self::Lum(node) => ColorTransformContentWith::Lum(node.into_user_data()),
             Self::LumMod(node) => ColorTransformContentWith::LumMod(node.into_user_data()),
             Self::LumOff(node) => ColorTransformContentWith::LumOff(node.into_user_data()),
@@ -3749,7 +3751,7 @@ impl officekit_markup_base::Read for ColorTransformContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_W14, "alpha")) => Self::Alpha(item.read()),
-            Some((NS_W14, "hueMod")) => Self::HueMod(item.read()),
+            Some((NS_W14, "hueMod")) => Self::HueMod(Box::new(item.read())),
             Some((NS_W14, "lum")) => Self::Lum(item.read()),
             Some((NS_W14, "lumMod")) => Self::LumMod(item.read()),
             Some((NS_W14, "lumOff")) => Self::LumOff(item.read()),
@@ -3789,7 +3791,7 @@ impl<X: UserData> From<AlphaWith<X>> for ColorTransformContentWith<X> {
 
 impl<X: UserData> From<HueModWith<X>> for ColorTransformContentWith<X> {
     fn from(arm: HueModWith<X>) -> Self {
-        Self::HueMod(arm)
+        Self::HueMod(Box::new(arm))
     }
 }
 
@@ -3842,8 +3844,8 @@ impl<X: UserData> From<TintWith<X>> for ColorTransformContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<ColorTransformContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ColorTransformContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]
@@ -4820,7 +4822,9 @@ impl<X: UserData> FillPropertiesContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::GradFill(node) => FillPropertiesContentWith::GradFill(node.into_user_data()),
+            Self::GradFill(node) => {
+                FillPropertiesContentWith::GradFill(Box::new((*node).into_user_data()))
+            }
             Self::NoFill(node) => FillPropertiesContentWith::NoFill(node.into_user_data()),
             Self::Other(node) => FillPropertiesContentWith::Other(node),
             Self::SolidFill(node) => FillPropertiesContentWith::SolidFill(node.into_user_data()),
@@ -4835,7 +4839,7 @@ impl officekit_markup_base::Read for FillPropertiesContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W14, "gradFill")) => Self::GradFill(item.read()),
+            Some((NS_W14, "gradFill")) => Self::GradFill(Box::new(item.read())),
             Some((NS_W14, "noFill")) => Self::NoFill(item.read()),
             Some((NS_W14, "solidFill")) => Self::SolidFill(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
@@ -4856,7 +4860,7 @@ impl officekit_markup_base::Write for FillPropertiesContent {
 
 impl<X: UserData> From<GradFillWith<X>> for FillPropertiesContentWith<X> {
     fn from(arm: GradFillWith<X>) -> Self {
-        Self::GradFill(arm)
+        Self::GradFill(Box::new(arm))
     }
 }
 
@@ -4873,8 +4877,8 @@ impl<X: UserData> From<SolidFillWith<X>> for FillPropertiesContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<FillPropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<FillPropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> FillToRectWith<X> {
@@ -5094,8 +5098,8 @@ impl<X: UserData> From<PathWith<X>> for GradientFillPropertiesContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<GradientFillPropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<GradientFillPropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> GsWith<X> {
@@ -5763,7 +5767,7 @@ impl<X: UserData> LineJoinContentWith<X> {
     {
         match self {
             Self::Bevel(node) => LineJoinContentWith::Bevel(node.into_user_data()),
-            Self::Miter(node) => LineJoinContentWith::Miter(node.into_user_data()),
+            Self::Miter(node) => LineJoinContentWith::Miter(Box::new((*node).into_user_data())),
             Self::Other(node) => LineJoinContentWith::Other(node),
             Self::Round(node) => LineJoinContentWith::Round(node.into_user_data()),
         }
@@ -5778,7 +5782,7 @@ impl officekit_markup_base::Read for LineJoinContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_W14, "bevel")) => Self::Bevel(item.read()),
-            Some((NS_W14, "miter")) => Self::Miter(item.read()),
+            Some((NS_W14, "miter")) => Self::Miter(Box::new(item.read())),
             Some((NS_W14, "round")) => Self::Round(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -5804,7 +5808,7 @@ impl<X: UserData> From<BevelWith<X>> for LineJoinContentWith<X> {
 
 impl<X: UserData> From<MiterWith<X>> for LineJoinContentWith<X> {
     fn from(arm: MiterWith<X>) -> Self {
-        Self::Miter(arm)
+        Self::Miter(Box::new(arm))
     }
 }
 
@@ -5815,8 +5819,8 @@ impl<X: UserData> From<RoundWith<X>> for LineJoinContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<LineJoinContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<LineJoinContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> LumWith<X> {

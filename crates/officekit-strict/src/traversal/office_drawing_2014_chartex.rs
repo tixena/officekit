@@ -537,7 +537,7 @@ impl super::Transform for office_drawing_2014_chartex::AxisContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CatScaling(arm) = self {
-            Self::CatScaling(arm.transform(ctx))
+            Self::CatScaling(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ValScaling(arm) = self {
@@ -1065,9 +1065,9 @@ impl super::Transform for office_drawing_2014_chartex::BinningContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BinCount(arm) = self {
-            Self::BinCount(arm.transform(ctx))
+            Self::BinCount(Box::new(arm.transform(ctx)))
         } else if let Self::BinSize(arm) = self {
-            Self::BinSize(arm.transform(ctx))
+            Self::BinSize(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -6300,7 +6300,7 @@ impl super::Transform for office_drawing_2014_chartex::GeographyCacheContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Binary(arm) = self {
-            Self::Binary(arm.transform(ctx))
+            Self::Binary(Box::new(arm.transform(ctx)))
         } else if let Self::Clear(arm) = self {
             Self::Clear(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
@@ -8236,11 +8236,11 @@ impl super::Transform for office_drawing_2014_chartex::NumericDimensionContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::F(arm) = self {
-            Self::F(arm.transform(ctx))
+            Self::F(Box::new(arm.transform(ctx)))
         } else if let Self::LvlNumericLevel(arm) = self {
             Self::LvlNumericLevel(Box::new(arm.transform(ctx)))
         } else if let Self::Nf(arm) = self {
-            Self::Nf(arm.transform(ctx))
+            Self::Nf(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -10378,11 +10378,11 @@ impl super::Transform for office_drawing_2014_chartex::StringDimensionContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::F(arm) = self {
-            Self::F(arm.transform(ctx))
+            Self::F(Box::new(arm.transform(ctx)))
         } else if let Self::LvlStringLevel(arm) = self {
             Self::LvlStringLevel(Box::new(arm.transform(ctx)))
         } else if let Self::Nf(arm) = self {
-            Self::Nf(arm.transform(ctx))
+            Self::Nf(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -10667,11 +10667,11 @@ impl super::Transform for office_drawing_2014_chartex::TextDataContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::F(arm) = self {
-            Self::F(arm.transform(ctx))
+            Self::F(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::V(arm) = self {
-            Self::V(arm.transform(ctx))
+            Self::V(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -11689,11 +11689,11 @@ impl super::Transform for office_drawing_2014_chartex::ValueColorEndPositionCont
         if let Self::ExtremeValue(arm) = self {
             Self::ExtremeValue(arm.transform(ctx))
         } else if let Self::Number(arm) = self {
-            Self::Number(arm.transform(ctx))
+            Self::Number(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Percent(arm) = self {
-            Self::Percent(arm.transform(ctx))
+            Self::Percent(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -11791,11 +11791,11 @@ impl super::Transform for office_drawing_2014_chartex::ValueColorMiddlePositionC
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Number(arm) = self {
-            Self::Number(arm.transform(ctx))
+            Self::Number(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Percent(arm) = self {
-            Self::Percent(arm.transform(ctx))
+            Self::Percent(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

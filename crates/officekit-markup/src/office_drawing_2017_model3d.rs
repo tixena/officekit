@@ -1846,11 +1846,11 @@ impl Eq for MeterPerModelUnitWith<()> {}
 #[non_exhaustive]
 pub enum Model3DCameraContentWith<X: UserData> {
     /// The element `am3d:orthographic`, a `Orthographic`.
-    Orthographic(OrthographicWith<X>),
+    Orthographic(Box<OrthographicWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `am3d:perspective`, a `Perspective`.
-    Perspective(PerspectiveWith<X>),
+    Perspective(Box<PerspectiveWith<X>>),
 }
 
 /// [`Model3DCameraContentWith`] of the tree a read gives, where no node holds anything in
@@ -1875,7 +1875,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
     /// The element `ap:Properties`, a `ApplicationSpecificFileProperties`.
     ApplicationSpecificFileProperties(
-        document_properties_extended::ApplicationSpecificFilePropertiesWith<X>,
+        Box<document_properties_extended::ApplicationSpecificFilePropertiesWith<X>>,
     ),
     /// The element `v:arc`, a `ArcSegment`.
     ArcSegment(Box<vml::ArcSegmentWith<X>>),
@@ -1884,27 +1884,27 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
     AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(document_properties_variant_types::BasicStringWith<X>),
+    BasicString(Box<document_properties_variant_types::BasicStringWith<X>>),
     /// The element `v:curve`, a `BezierCurve`.
     BezierCurve(Box<vml::BezierCurveWith<X>>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(document_properties_variant_types::BinaryBlobWith<X>),
+    BinaryBlob(Box<document_properties_variant_types::BinaryBlobWith<X>>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(document_properties_variant_types::BinaryBlobObjectWith<X>),
+    BinaryBlobObject(Box<document_properties_variant_types::BinaryBlobObjectWith<X>>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(document_properties_variant_types::BinaryStorageWith<X>),
+    BinaryStorage(Box<document_properties_variant_types::BinaryStorageWith<X>>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(document_properties_variant_types::BinaryStorageObjectWith<X>),
+    BinaryStorageObject(Box<document_properties_variant_types::BinaryStorageObjectWith<X>>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(document_properties_variant_types::BinaryStreamWith<X>),
+    BinaryStream(Box<document_properties_variant_types::BinaryStreamWith<X>>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(document_properties_variant_types::BinaryStreamObjectWith<X>),
+    BinaryStreamObject(Box<document_properties_variant_types::BinaryStreamObjectWith<X>>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
     BinaryVersionedStream(Box<document_properties_variant_types::BinaryVersionedStreamWith<X>>),
     /// The element `a:blip`, a `Blip`.
     Blip(Box<drawing::BlipWith<X>>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(document_properties_variant_types::BooleanWith<X>),
+    Boolean(Box<document_properties_variant_types::BooleanWith<X>>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
     BottomBorder(Box<vml_wordprocessing_drawing::BottomBorderWith<X>>),
     /// The element `x:calcChain`, a `CalculationChainInfo`.
@@ -1916,37 +1916,37 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `c:chartSpace`, a `ChartSpace`.
     ChartSpace(Box<chart::ChartSpaceWith<X>>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(document_properties_variant_types::ClassIDWith<X>),
+    ClassID(Box<document_properties_variant_types::ClassIDWith<X>>),
     /// The element `dgm:colorsDefHdr`, a `ColorTransformDefinitionHeader`.
     ColorTransformDefinitionHeader(Box<diagram::ColorTransformDefinitionHeaderWith<X>>),
     /// The element `dgm:colorsDef`, a `ColorTransformDefinitions`.
     ColorTransformDefinitions(Box<diagram::ColorTransformDefinitionsWith<X>>),
     /// The element `dgm:colorsDefHdrLst`, a `ColorTransformHeaderList`.
-    ColorTransformHeaderList(diagram::ColorTransformHeaderListWith<X>),
+    ColorTransformHeaderList(Box<diagram::ColorTransformHeaderListWith<X>>),
     /// The element `p:cmLst`, a `CommentList`.
-    CommentList(presentation::CommentListWith<X>),
+    CommentList(Box<presentation::CommentListWith<X>>),
     /// The element `x:comments`, a `Comments`.
-    Comments(spreadsheet::CommentsWith<X>),
+    Comments(Box<spreadsheet::CommentsWith<X>>),
     /// The element `w:comments`, a `CommentsCollection`.
-    CommentsCollection(wordprocessing::CommentsCollectionWith<X>),
+    CommentsCollection(Box<wordprocessing::CommentsCollectionWith<X>>),
     /// The element `o:complex`, a `Complex`.
-    Complex(vml_office_drawing::ComplexWith<X>),
+    Complex(Box<vml_office_drawing::ComplexWith<X>>),
     /// The element `x:connections`, a `Connections`.
-    Connections(spreadsheet::ConnectionsWith<X>),
+    Connections(Box<spreadsheet::ConnectionsWith<X>>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(document_properties_variant_types::CurrencyWith<X>),
+    Currency(Box<document_properties_variant_types::CurrencyWith<X>>),
     /// The element `op:Properties`, a `CustomFileProperties`.
-    CustomFileProperties(document_properties_custom::CustomFilePropertiesWith<X>),
+    CustomFileProperties(Box<document_properties_custom::CustomFilePropertiesWith<X>>),
     /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
-    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataPropertiesWith<X>),
+    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataPropertiesWith<X>>),
     /// The element `dgm:dataModel`, a `DataModel`.
     DataModel(Box<diagram::DataModelWith<X>>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(document_properties_variant_types::DateAndTimeWith<X>),
+    DateAndTime(Box<document_properties_variant_types::DateAndTimeWith<X>>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(document_properties_variant_types::DecimalWith<X>),
+    Decimal(Box<document_properties_variant_types::DecimalWith<X>>),
     /// The element `dgm:layoutDefHdrLst`, a `DiagramLayoutHeaderList`.
-    DiagramLayoutHeaderList(diagram::DiagramLayoutHeaderListWith<X>),
+    DiagramLayoutHeaderList(Box<diagram::DiagramLayoutHeaderListWith<X>>),
     /// The element `x:dialogsheet`, a `DialogSheet`.
     DialogSheet(Box<spreadsheet::DialogSheetWith<X>>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
@@ -1956,9 +1956,9 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `v:background`, a `DocumentBackground`.
     DocumentBackground(Box<vml::DocumentBackgroundWith<X>>),
     /// The element `w:endnotes`, a `DocumentEndnotes`.
-    DocumentEndnotes(wordprocessing::DocumentEndnotesWith<X>),
+    DocumentEndnotes(Box<wordprocessing::DocumentEndnotesWith<X>>),
     /// The element `w:footnotes`, a `DocumentFootnotes`.
-    DocumentFootnotes(wordprocessing::DocumentFootnotesWith<X>),
+    DocumentFootnotes(Box<wordprocessing::DocumentFootnotesWith<X>>),
     /// The element `w:settings`, a `DocumentSettings`.
     DocumentSettings(Box<wordprocessing::DocumentSettingsWith<X>>),
     /// The element `a:tbl`, a `Table`.
@@ -1967,7 +1967,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     EmbedAnim(Box<super::office_drawing_2018_animation_model3d::EmbedAnimWith<X>>),
     /// The element `sl:schemaLibrary`, a `EmbeddedCustomXMLSchemaSupplementaryData`.
     EmbeddedCustomXMLSchemaSupplementaryData(
-        custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>,
+        Box<custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>>,
     ),
     /// The element `o:OLEObject`, a `EmbeddedOLEObject`.
     EmbeddedOLEObject(Box<vml_office_drawing::EmbeddedOLEObjectWith<X>>),
@@ -1978,41 +1978,43 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `xdr:to`, a `EndingAnchorPoint`.
     EndingAnchorPoint(Box<spreadsheet_drawing::EndingAnchorPointWith<X>>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(document_properties_variant_types::ErrorStatusCodeWith<X>),
+    ErrorStatusCode(Box<document_properties_variant_types::ErrorStatusCodeWith<X>>),
     /// The element `dgm:relIds`, a `ExplicitRelationshipsToDiagramParts`.
     ExplicitRelationshipsToDiagramParts(Box<diagram::ExplicitRelationshipsToDiagramPartsWith<X>>),
     /// The element `x:externalLink`, a `ExternalReferenceExternalLink`.
-    ExternalReferenceExternalLink(spreadsheet::ExternalReferenceExternalLinkWith<X>),
+    ExternalReferenceExternalLink(Box<spreadsheet::ExternalReferenceExternalLinkWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
     Extrusion(Box<vml_office_drawing::ExtrusionWith<X>>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(document_properties_variant_types::FileTimeWith<X>),
+    FileTime(Box<document_properties_variant_types::FileTimeWith<X>>),
     /// The element `w:fonts`, a `FontTableRootElement`.
-    FontTableRootElement(wordprocessing::FontTableRootElementWith<X>),
+    FontTableRootElement(Box<wordprocessing::FontTableRootElementWith<X>>),
     /// The element `w:ftr`, a `Footer`.
-    Footer(wordprocessing::FooterWith<X>),
+    Footer(Box<wordprocessing::FooterWith<X>>),
     /// The element `w:glossaryDocument`, a `GlossaryDocumentRootElement`.
-    GlossaryDocumentRootElement(wordprocessing::GlossaryDocumentRootElementWith<X>),
+    GlossaryDocumentRootElement(Box<wordprocessing::GlossaryDocumentRootElementWith<X>>),
     /// The element `a:graphic`, a `GraphicObject`.
     GraphicObject(drawing::GraphicObjectWith<X>),
     /// The element `p:handoutMaster`, a `HandoutMaster`.
     HandoutMaster(Box<presentation::HandoutMasterWith<X>>),
     /// The element `w:hdr`, a `Header`.
-    Header(wordprocessing::HeaderWith<X>),
+    Header(Box<wordprocessing::HeaderWith<X>>),
     /// The element `vt:i1`, a `I1`.
-    I1(document_properties_variant_types::I1With<X>),
+    I1(Box<document_properties_variant_types::I1With<X>>),
     /// The element `vt:i2`, a `I2`.
-    I2(document_properties_variant_types::I2With<X>),
+    I2(Box<document_properties_variant_types::I2With<X>>),
     /// The element `vt:i4`, a `I4`.
-    I4(document_properties_variant_types::I4With<X>),
+    I4(Box<document_properties_variant_types::I4With<X>>),
     /// The element `vt:i8`, a `I8`.
-    I8(document_properties_variant_types::I8With<X>),
+    I8(Box<document_properties_variant_types::I8With<X>>),
     /// The element `v:imagedata`, a `ImageData`.
     ImageData(Box<vml::ImageDataWith<X>>),
     /// The element `v:image`, a `ImageFile`.
     ImageFile(Box<vml::ImageFileWith<X>>),
     /// The element `w:recipients`, a `InclusionExclusionDataForDataSource`.
-    InclusionExclusionDataForDataSource(wordprocessing::InclusionExclusionDataForDataSourceWith<X>),
+    InclusionExclusionDataForDataSource(
+        Box<wordprocessing::InclusionExclusionDataForDataSourceWith<X>>,
+    ),
     /// The element `o:ink`, a `Ink`.
     Ink(Box<vml_office_drawing::InkWith<X>>),
     /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
@@ -2020,7 +2022,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `wp:inline`, a `InlineDrawingMLObject`.
     InlineDrawingMLObject(Box<wordprocessing_drawing::InlineDrawingMLObjectWith<X>>),
     /// The element `vt:int`, a `Integer`.
-    Integer(document_properties_variant_types::IntegerWith<X>),
+    Integer(Box<document_properties_variant_types::IntegerWith<X>>),
     /// The element `dgm:layoutDef`, a `LayoutDefinition`.
     LayoutDefinition(Box<diagram::LayoutDefinitionWith<X>>),
     /// The element `dgm:layoutDefHdr`, a `LayoutDefinitionHeader`.
@@ -2032,15 +2034,15 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `v:stroke`, a `LineStrokeSettings`.
     LineStrokeSettings(Box<vml::LineStrokeSettingsWith<X>>),
     /// The element `p:cmAuthorLst`, a `ListOfCommentAuthors`.
-    ListOfCommentAuthors(presentation::ListOfCommentAuthorsWith<X>),
+    ListOfCommentAuthors(Box<presentation::ListOfCommentAuthorsWith<X>>),
     /// The element `dgm:styleDefHdrLst`, a `ListOfStyleDefinitionHeaders`.
-    ListOfStyleDefinitionHeaders(diagram::ListOfStyleDefinitionHeadersWith<X>),
+    ListOfStyleDefinitionHeaders(Box<diagram::ListOfStyleDefinitionHeadersWith<X>>),
     /// The element `lc:lockedCanvas`, a `LockedCanvasContainer`.
     LockedCanvasContainer(Box<locked_canvas::LockedCanvasContainerWith<X>>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(document_properties_variant_types::LpstrWith<X>),
+    Lpstr(Box<document_properties_variant_types::LpstrWith<X>>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(document_properties_variant_types::LpwstrWith<X>),
+    Lpwstr(Box<document_properties_variant_types::LpwstrWith<X>>),
     /// The element `m:mathPr`, a `MathProperties`.
     MathProperties(Box<math::MathPropertiesWith<X>>),
     /// The element `x:metadata`, a `Metadata`.
@@ -2058,7 +2060,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `w:numbering`, a `NumberingDefinitions`.
     NumberingDefinitions(Box<wordprocessing::NumberingDefinitionsWith<X>>),
     /// The element `m:oMath`, a `OfficeMath`.
-    OfficeMath(math::OfficeMathWith<X>),
+    OfficeMath(Box<math::OfficeMathWith<X>>),
     /// The element `m:oMathPara`, a `OfficeMathParagraph`.
     OfficeMathParagraph(Box<math::OfficeMathParagraphWith<X>>),
     /// An element or node the schemas do not declare at this position.
@@ -2084,39 +2086,39 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `p:viewPr`, a `PresentationWideViewProperties`.
     PresentationWideViewProperties(Box<presentation::PresentationWideViewPropertiesWith<X>>),
     /// The element `p:tagLst`, a `ProgrammableTabList`.
-    ProgrammableTabList(presentation::ProgrammableTabListWith<X>),
+    ProgrammableTabList(Box<presentation::ProgrammableTabListWith<X>>),
     /// The element `x:queryTable`, a `QueryTable`.
     QueryTable(Box<spreadsheet::QueryTableWith<X>>),
     /// The element `vt:r4`, a `R4`.
-    R4(document_properties_variant_types::R4With<X>),
+    R4(Box<document_properties_variant_types::R4With<X>>),
     /// The element `vt:r8`, a `R8`.
-    R8(document_properties_variant_types::R8With<X>),
+    R8(Box<document_properties_variant_types::R8With<X>>),
     /// The element `v:rect`, a `Rectangle`.
     Rectangle(Box<vml::RectangleWith<X>>),
     /// The element `c:chart`, a `ReferenceToChartPart`.
-    ReferenceToChartPart(chart::ReferenceToChartPartWith<X>),
+    ReferenceToChartPart(Box<chart::ReferenceToChartPartWith<X>>),
     /// The element `x:headers`, a `RevisionHeaders`.
     RevisionHeaders(Box<spreadsheet::RevisionHeadersWith<X>>),
     /// The element `x:revisions`, a `Revisions`.
-    Revisions(spreadsheet::RevisionsWith<X>),
+    Revisions(Box<spreadsheet::RevisionsWith<X>>),
     /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
-    RichTextBoxContentContainer(wordprocessing::RichTextBoxContentContainerWith<X>),
+    RichTextBoxContentContainer(Box<wordprocessing::RichTextBoxContentContainerWith<X>>),
     /// The element `w10:borderright`, a `RightBorder`.
     RightBorder(Box<vml_wordprocessing_drawing::RightBorderWith<X>>),
     /// The element `v:roundrect`, a `RoundedRectangle`.
     RoundedRectangle(Box<vml::RoundedRectangleWith<X>>),
     /// The element `ac:additionalCharacteristics`, a `SetOfAdditionalCharacteristics`.
     SetOfAdditionalCharacteristics(
-        additional_characteristics::SetOfAdditionalCharacteristicsWith<X>,
+        Box<additional_characteristics::SetOfAdditionalCharacteristicsWith<X>>,
     ),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(vml::SetOfFormulasWith<X>),
+    SetOfFormulas(Box<vml::SetOfFormulasWith<X>>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(vml::SetOfHandlesWith<X>),
+    SetOfHandles(Box<vml::SetOfHandlesWith<X>>),
     /// The element `v:shadow`, a `ShadowEffect`.
     ShadowEffect(Box<vml::ShadowEffectWith<X>>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(vml_office_drawing::ShapeClippingPathWith<X>),
+    ShapeClippingPath(Box<vml_office_drawing::ShapeClippingPathWith<X>>),
     /// The element `v:shape`, a `ShapeDefinition`.
     ShapeDefinition(Box<vml::ShapeDefinitionWith<X>>),
     /// The element `o:fill`, a `ShapeFillExtendedProperties`.
@@ -2136,7 +2138,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `x:sst`, a `SharedStringTable`.
     SharedStringTable(Box<spreadsheet::SharedStringTableWith<X>>),
     /// The element `x:singleXmlCells`, a `SingleCells`.
-    SingleCells(spreadsheet::SingleCellsWith<X>),
+    SingleCells(Box<spreadsheet::SingleCellsWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
     SkewTransform(Box<vml_office_drawing::SkewTransformWith<X>>),
     /// The element `p:sldLayout`, a `SlideLayout`.
@@ -2152,7 +2154,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `xdr:from`, a `StartingAnchorPoint`.
     StartingAnchorPoint(Box<spreadsheet_drawing::StartingAnchorPointWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
-    StorageForAlternateMathContent(vml_office_drawing::StorageForAlternateMathContentWith<X>),
+    StorageForAlternateMathContent(Box<vml_office_drawing::StorageForAlternateMathContentWith<X>>),
     /// The element `dgm:styleDef`, a `StyleDefinition`.
     StyleDefinition(Box<diagram::StyleDefinitionWith<X>>),
     /// The element `dgm:styleDefHdr`, a `StyleDefinitionHeader`.
@@ -2184,27 +2186,27 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `a:themeManager`, a `ThemeManager`.
     ThemeManager(drawing::ThemeManagerWith<X>),
     /// The element `a:themeOverride`, a `ThemeOverride`.
-    ThemeOverride(drawing::ThemeOverrideWith<X>),
+    ThemeOverride(Box<drawing::ThemeOverrideWith<X>>),
     /// The element `w10:bordertop`, a `TopBorder`.
     TopBorder(Box<vml_wordprocessing_drawing::TopBorderWith<X>>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(document_properties_variant_types::Ui1With<X>),
+    Ui1(Box<document_properties_variant_types::Ui1With<X>>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(document_properties_variant_types::Ui2With<X>),
+    Ui2(Box<document_properties_variant_types::Ui2With<X>>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(document_properties_variant_types::Ui4With<X>),
+    Ui4(Box<document_properties_variant_types::Ui4With<X>>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(document_properties_variant_types::Ui8With<X>),
+    Ui8(Box<document_properties_variant_types::Ui8With<X>>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(document_properties_variant_types::UnsignedIntegerWith<X>),
+    UnsignedInteger(Box<document_properties_variant_types::UnsignedIntegerWith<X>>),
     /// The element `x:users`, a `UserList`.
     UserList(Box<spreadsheet::UserListWith<X>>),
     /// The element `c:userShapes`, a `UserShapes`.
-    UserShapes(chart::UserShapesWith<X>),
+    UserShapes(Box<chart::UserShapesWith<X>>),
     /// The element `o:diagram`, a `VMLDiagram`.
     VMLDiagram(Box<vml_office_drawing::VMLDiagramWith<X>>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramTextWith<X>>),
     /// The element `vt:variant`, a `Variant`.
     Variant(document_properties_variant_types::VariantWith<X>),
     /// The element `vt:vector`, a `Vector`.
@@ -2228,7 +2230,7 @@ pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `x:worksheet`, a `Worksheet`.
     Worksheet(Box<spreadsheet::WorksheetWith<X>>),
     /// The element `xdr:wsDr`, a `WorksheetDrawing`.
-    WorksheetDrawing(spreadsheet_drawing::WorksheetDrawingWith<X>),
+    WorksheetDrawing(Box<spreadsheet_drawing::WorksheetDrawingWith<X>>),
     /// The element `x:MapInfo`, a `XMLMappingMapInfo`.
     XMLMappingMapInfo(Box<spreadsheet::XMLMappingMapInfoWith<X>>),
 }
@@ -2274,7 +2276,7 @@ impl Eq for Model3DLightContentWith<()> {}
 #[non_exhaustive]
 pub enum Model3DViewportContentWith<X: UserData> {
     /// The element `am3d:objViewport`, a `ObjViewport`.
-    ObjViewport(ObjViewportWith<X>),
+    ObjViewport(Box<ObjViewportWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `am3d:winViewport`, a `WinViewport`.
@@ -3720,17 +3722,19 @@ impl<X: UserData> Model3DCameraContentWith<X> {
     {
         match self {
             Self::Orthographic(node) => {
-                Model3DCameraContentWith::Orthographic(node.into_user_data())
+                Model3DCameraContentWith::Orthographic(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => Model3DCameraContentWith::Other(node),
-            Self::Perspective(node) => Model3DCameraContentWith::Perspective(node.into_user_data()),
+            Self::Perspective(node) => {
+                Model3DCameraContentWith::Perspective(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for Model3DCameraContentWith<X> {
     fn default() -> Self {
-        Self::Orthographic(OrthographicWith::default())
+        Self::Orthographic(Box::default())
     }
 }
 
@@ -3741,8 +3745,8 @@ impl officekit_markup_base::Read for Model3DCameraContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_AM3D, "orthographic")) => Self::Orthographic(item.read()),
-            Some((NS_AM3D, "perspective")) => Self::Perspective(item.read()),
+            Some((NS_AM3D, "orthographic")) => Self::Orthographic(Box::new(item.read())),
+            Some((NS_AM3D, "perspective")) => Self::Perspective(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3760,19 +3764,19 @@ impl officekit_markup_base::Write for Model3DCameraContent {
 
 impl<X: UserData> From<OrthographicWith<X>> for Model3DCameraContentWith<X> {
     fn from(arm: OrthographicWith<X>) -> Self {
-        Self::Orthographic(arm)
+        Self::Orthographic(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<PerspectiveWith<X>> for Model3DCameraContentWith<X> {
     fn from(arm: PerspectiveWith<X>) -> Self {
-        Self::Perspective(arm)
+        Self::Perspective(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<Model3DCameraContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<Model3DCameraContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> Model3DExtensionContentWith<X> {
@@ -3784,47 +3788,48 @@ impl<X: UserData> Model3DExtensionContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, Model3DExtensionContentWith;
             plain [
-                AnchorLocationIsLocked, ApplicationSpecificFileProperties, BasicString, BinaryBlob,
-                BinaryBlobObject, BinaryStorage, BinaryStorageObject, BinaryStream,
-                BinaryStreamObject, Boolean, ClassID, ColorTransformHeaderList, CommentList,
-                Comments, CommentsCollection, Complex, Connections, Currency, CustomFileProperties,
-                CustomXMLDataProperties, DateAndTime, Decimal, DiagramLayoutHeaderList,
-                DocumentEndnotes, DocumentFootnotes, EmbeddedCustomXMLSchemaSupplementaryData,
-                Empty, ErrorStatusCode, ExternalReferenceExternalLink, FileTime,
-                FontTableRootElement, Footer, GlossaryDocumentRootElement, GraphicObject, Header,
-                I1, I2, I4, I8, InclusionExclusionDataForDataSource, InkAnnotationFlag, Integer,
-                ListOfCommentAuthors, ListOfStyleDefinitionHeaders, Lpstr, Lpwstr, Null, OfficeMath,
-                ProgrammableTabList, R4, R8, ReferenceToChartPart, Revisions,
-                RichTextBoxContentContainer, SetOfAdditionalCharacteristics, SetOfFormulas,
-                SetOfHandles, ShapeClippingPath, SingleCells, StorageForAlternateMathContent,
-                ThemeManager, ThemeOverride, Ui1, Ui2, Ui4, Ui8, UnsignedInteger, UserShapes,
-                VMLDiagramText, Variant, WorksheetDrawing,
+                AnchorLocationIsLocked, Empty, GraphicObject, InkAnnotationFlag, Null, ThemeManager,
+                Variant,
             ]
             boxed [
-                AnchorForFloatingDrawingMLObject, ArcSegment, Array, AttachedObjectData,
-                BezierCurve, BinaryVersionedStream, Blip, BottomBorder, CalculationChainInfo,
-                Callout, ChartSheet, ChartSpace, ColorTransformDefinitionHeader,
-                ColorTransformDefinitions, DataModel, DialogSheet, DigitalSignatureLine, Document,
-                DocumentBackground, DocumentSettings, DrawingTable, EmbedAnim, EmbeddedOLEObject,
-                EmbeddedObjectsAndControls, EndingAnchorPoint, ExplicitRelationshipsToDiagramParts,
-                Extrusion, HandoutMaster, ImageData, ImageFile, Ink, InlineDrawingMLObject,
-                LayoutDefinition, LayoutDefinitionHeader, LeftBorder, Line, LineStrokeSettings,
-                LockedCanvasContainer, MathProperties, Metadata, MultiplePathLine, NewShapeDefaults,
-                NotesMaster, NotesSlide, NumberingDefinitions, OfficeMathParagraph, Oval, Picture,
+                AnchorForFloatingDrawingMLObject, ApplicationSpecificFileProperties, ArcSegment,
+                Array, AttachedObjectData, BasicString, BezierCurve, BinaryBlob, BinaryBlobObject,
+                BinaryStorage, BinaryStorageObject, BinaryStream, BinaryStreamObject,
+                BinaryVersionedStream, Blip, Boolean, BottomBorder, CalculationChainInfo, Callout,
+                ChartSheet, ChartSpace, ClassID, ColorTransformDefinitionHeader,
+                ColorTransformDefinitions, ColorTransformHeaderList, CommentList, Comments,
+                CommentsCollection, Complex, Connections, Currency, CustomFileProperties,
+                CustomXMLDataProperties, DataModel, DateAndTime, Decimal, DiagramLayoutHeaderList,
+                DialogSheet, DigitalSignatureLine, Document, DocumentBackground, DocumentEndnotes,
+                DocumentFootnotes, DocumentSettings, DrawingTable, EmbedAnim,
+                EmbeddedCustomXMLSchemaSupplementaryData, EmbeddedOLEObject,
+                EmbeddedObjectsAndControls, EndingAnchorPoint, ErrorStatusCode,
+                ExplicitRelationshipsToDiagramParts, ExternalReferenceExternalLink, Extrusion,
+                FileTime, FontTableRootElement, Footer, GlossaryDocumentRootElement, HandoutMaster,
+                Header, I1, I2, I4, I8, ImageData, ImageFile, InclusionExclusionDataForDataSource,
+                Ink, InlineDrawingMLObject, Integer, LayoutDefinition, LayoutDefinitionHeader,
+                LeftBorder, Line, LineStrokeSettings, ListOfCommentAuthors,
+                ListOfStyleDefinitionHeaders, LockedCanvasContainer, Lpstr, Lpwstr, MathProperties,
+                Metadata, MultiplePathLine, NewShapeDefaults, NotesMaster, NotesSlide,
+                NumberingDefinitions, OfficeMath, OfficeMathParagraph, Oval, Picture,
                 PivotCacheDefinition, PivotCacheRecords, PivotTableDefinition, PosterFrame,
                 Presentation, PresentationSlideSlide, PresentationWideProperties,
-                PresentationWideViewProperties, QueryTable, Rectangle, RevisionHeaders, RightBorder,
-                RoundedRectangle, ShadowEffect, ShapeDefinition, ShapeFillExtendedProperties,
-                ShapeFillProperties, ShapeGroup, ShapeLayoutProperties, ShapePath, ShapeProtections,
-                ShapeTemplate, SharedStringTable, SkewTransform, SlideLayout, SlideMaster,
-                SlideSynchronizationProperties, Sources, SpreadsheetTable, StartingAnchorPoint,
+                PresentationWideViewProperties, ProgrammableTabList, QueryTable, R4, R8, Rectangle,
+                ReferenceToChartPart, RevisionHeaders, Revisions, RichTextBoxContentContainer,
+                RightBorder, RoundedRectangle, SetOfAdditionalCharacteristics, SetOfFormulas,
+                SetOfHandles, ShadowEffect, ShapeClippingPath, ShapeDefinition,
+                ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup, ShapeLayoutProperties,
+                ShapePath, ShapeProtections, ShapeTemplate, SharedStringTable, SingleCells,
+                SkewTransform, SlideLayout, SlideMaster, SlideSynchronizationProperties, Sources,
+                SpreadsheetTable, StartingAnchorPoint, StorageForAlternateMathContent,
                 StyleDefinition, StyleDefinitionHeader, StyleDefinitions, StyleSheet,
                 TableStyleList, TextBox, TextBoxBottomStroke, TextBoxInteriorStroke,
                 TextBoxLeftStroke, TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath,
-                TextWrapping, Theme, TopBorder, UserList, VMLDiagram, Vector, VideoFromFile,
+                TextWrapping, Theme, ThemeOverride, TopBorder, Ui1, Ui2, Ui4, Ui8, UnsignedInteger,
+                UserList, UserShapes, VMLDiagram, VMLDiagramText, Vector, VideoFromFile,
                 VolatileDependencyTypes, WebPageSettings, WordprocessingMLDrawingCanvas,
                 WordprocessingMLShape, WordprocessingMLShapeGroup, Workbook, Worksheet,
-                XMLMappingMapInfo,
+                WorksheetDrawing, XMLMappingMapInfo,
             ]
         )
     }
@@ -3883,7 +3888,7 @@ impl<X: UserData> From<document_properties_extended::ApplicationSpecificFileProp
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_extended::ApplicationSpecificFilePropertiesWith<X>) -> Self {
-        Self::ApplicationSpecificFileProperties(arm)
+        Self::ApplicationSpecificFileProperties(Box::new(arm))
     }
 }
 
@@ -3913,7 +3918,7 @@ impl<X: UserData> From<document_properties_variant_types::BasicStringWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BasicStringWith<X>) -> Self {
-        Self::BasicString(arm)
+        Self::BasicString(Box::new(arm))
     }
 }
 
@@ -3927,7 +3932,7 @@ impl<X: UserData> From<document_properties_variant_types::BinaryBlobWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BinaryBlobWith<X>) -> Self {
-        Self::BinaryBlob(arm)
+        Self::BinaryBlob(Box::new(arm))
     }
 }
 
@@ -3935,7 +3940,7 @@ impl<X: UserData> From<document_properties_variant_types::BinaryBlobObjectWith<X
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BinaryBlobObjectWith<X>) -> Self {
-        Self::BinaryBlobObject(arm)
+        Self::BinaryBlobObject(Box::new(arm))
     }
 }
 
@@ -3943,7 +3948,7 @@ impl<X: UserData> From<document_properties_variant_types::BinaryStorageWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BinaryStorageWith<X>) -> Self {
-        Self::BinaryStorage(arm)
+        Self::BinaryStorage(Box::new(arm))
     }
 }
 
@@ -3951,7 +3956,7 @@ impl<X: UserData> From<document_properties_variant_types::BinaryStorageObjectWit
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BinaryStorageObjectWith<X>) -> Self {
-        Self::BinaryStorageObject(arm)
+        Self::BinaryStorageObject(Box::new(arm))
     }
 }
 
@@ -3959,7 +3964,7 @@ impl<X: UserData> From<document_properties_variant_types::BinaryStreamWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BinaryStreamWith<X>) -> Self {
-        Self::BinaryStream(arm)
+        Self::BinaryStream(Box::new(arm))
     }
 }
 
@@ -3967,7 +3972,7 @@ impl<X: UserData> From<document_properties_variant_types::BinaryStreamObjectWith
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BinaryStreamObjectWith<X>) -> Self {
-        Self::BinaryStreamObject(arm)
+        Self::BinaryStreamObject(Box::new(arm))
     }
 }
 
@@ -3989,7 +3994,7 @@ impl<X: UserData> From<document_properties_variant_types::BooleanWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::BooleanWith<X>) -> Self {
-        Self::Boolean(arm)
+        Self::Boolean(Box::new(arm))
     }
 }
 
@@ -4031,7 +4036,7 @@ impl<X: UserData> From<document_properties_variant_types::ClassIDWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::ClassIDWith<X>) -> Self {
-        Self::ClassID(arm)
+        Self::ClassID(Box::new(arm))
     }
 }
 
@@ -4055,19 +4060,19 @@ impl<X: UserData> From<diagram::ColorTransformHeaderListWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: diagram::ColorTransformHeaderListWith<X>) -> Self {
-        Self::ColorTransformHeaderList(arm)
+        Self::ColorTransformHeaderList(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<presentation::CommentListWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: presentation::CommentListWith<X>) -> Self {
-        Self::CommentList(arm)
+        Self::CommentList(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<spreadsheet::CommentsWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: spreadsheet::CommentsWith<X>) -> Self {
-        Self::Comments(arm)
+        Self::Comments(Box::new(arm))
     }
 }
 
@@ -4075,19 +4080,19 @@ impl<X: UserData> From<wordprocessing::CommentsCollectionWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: wordprocessing::CommentsCollectionWith<X>) -> Self {
-        Self::CommentsCollection(arm)
+        Self::CommentsCollection(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<vml_office_drawing::ComplexWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: vml_office_drawing::ComplexWith<X>) -> Self {
-        Self::Complex(arm)
+        Self::Complex(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<spreadsheet::ConnectionsWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: spreadsheet::ConnectionsWith<X>) -> Self {
-        Self::Connections(arm)
+        Self::Connections(Box::new(arm))
     }
 }
 
@@ -4095,7 +4100,7 @@ impl<X: UserData> From<document_properties_variant_types::CurrencyWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::CurrencyWith<X>) -> Self {
-        Self::Currency(arm)
+        Self::Currency(Box::new(arm))
     }
 }
 
@@ -4103,7 +4108,7 @@ impl<X: UserData> From<document_properties_custom::CustomFilePropertiesWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_custom::CustomFilePropertiesWith<X>) -> Self {
-        Self::CustomFileProperties(arm)
+        Self::CustomFileProperties(Box::new(arm))
     }
 }
 
@@ -4111,7 +4116,7 @@ impl<X: UserData> From<custom_xml_data_properties::CustomXMLDataPropertiesWith<X
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: custom_xml_data_properties::CustomXMLDataPropertiesWith<X>) -> Self {
-        Self::CustomXMLDataProperties(arm)
+        Self::CustomXMLDataProperties(Box::new(arm))
     }
 }
 
@@ -4125,7 +4130,7 @@ impl<X: UserData> From<document_properties_variant_types::DateAndTimeWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::DateAndTimeWith<X>) -> Self {
-        Self::DateAndTime(arm)
+        Self::DateAndTime(Box::new(arm))
     }
 }
 
@@ -4133,13 +4138,13 @@ impl<X: UserData> From<document_properties_variant_types::DecimalWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::DecimalWith<X>) -> Self {
-        Self::Decimal(arm)
+        Self::Decimal(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<diagram::DiagramLayoutHeaderListWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: diagram::DiagramLayoutHeaderListWith<X>) -> Self {
-        Self::DiagramLayoutHeaderList(arm)
+        Self::DiagramLayoutHeaderList(Box::new(arm))
     }
 }
 
@@ -4171,7 +4176,7 @@ impl<X: UserData> From<vml::DocumentBackgroundWith<X>> for Model3DExtensionConte
 
 impl<X: UserData> From<wordprocessing::DocumentEndnotesWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: wordprocessing::DocumentEndnotesWith<X>) -> Self {
-        Self::DocumentEndnotes(arm)
+        Self::DocumentEndnotes(Box::new(arm))
     }
 }
 
@@ -4179,7 +4184,7 @@ impl<X: UserData> From<wordprocessing::DocumentFootnotesWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: wordprocessing::DocumentFootnotesWith<X>) -> Self {
-        Self::DocumentFootnotes(arm)
+        Self::DocumentFootnotes(Box::new(arm))
     }
 }
 
@@ -4210,7 +4215,7 @@ impl<X: UserData>
     fn from(
         arm: custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>,
     ) -> Self {
-        Self::EmbeddedCustomXMLSchemaSupplementaryData(arm)
+        Self::EmbeddedCustomXMLSchemaSupplementaryData(Box::new(arm))
     }
 }
 
@@ -4250,7 +4255,7 @@ impl<X: UserData> From<document_properties_variant_types::ErrorStatusCodeWith<X>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::ErrorStatusCodeWith<X>) -> Self {
-        Self::ErrorStatusCode(arm)
+        Self::ErrorStatusCode(Box::new(arm))
     }
 }
 
@@ -4266,7 +4271,7 @@ impl<X: UserData> From<spreadsheet::ExternalReferenceExternalLinkWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: spreadsheet::ExternalReferenceExternalLinkWith<X>) -> Self {
-        Self::ExternalReferenceExternalLink(arm)
+        Self::ExternalReferenceExternalLink(Box::new(arm))
     }
 }
 
@@ -4280,7 +4285,7 @@ impl<X: UserData> From<document_properties_variant_types::FileTimeWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::FileTimeWith<X>) -> Self {
-        Self::FileTime(arm)
+        Self::FileTime(Box::new(arm))
     }
 }
 
@@ -4288,13 +4293,13 @@ impl<X: UserData> From<wordprocessing::FontTableRootElementWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: wordprocessing::FontTableRootElementWith<X>) -> Self {
-        Self::FontTableRootElement(arm)
+        Self::FontTableRootElement(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<wordprocessing::FooterWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: wordprocessing::FooterWith<X>) -> Self {
-        Self::Footer(arm)
+        Self::Footer(Box::new(arm))
     }
 }
 
@@ -4302,7 +4307,7 @@ impl<X: UserData> From<wordprocessing::GlossaryDocumentRootElementWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: wordprocessing::GlossaryDocumentRootElementWith<X>) -> Self {
-        Self::GlossaryDocumentRootElement(arm)
+        Self::GlossaryDocumentRootElement(Box::new(arm))
     }
 }
 
@@ -4320,7 +4325,7 @@ impl<X: UserData> From<presentation::HandoutMasterWith<X>> for Model3DExtensionC
 
 impl<X: UserData> From<wordprocessing::HeaderWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: wordprocessing::HeaderWith<X>) -> Self {
-        Self::Header(arm)
+        Self::Header(Box::new(arm))
     }
 }
 
@@ -4328,7 +4333,7 @@ impl<X: UserData> From<document_properties_variant_types::I1With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::I1With<X>) -> Self {
-        Self::I1(arm)
+        Self::I1(Box::new(arm))
     }
 }
 
@@ -4336,7 +4341,7 @@ impl<X: UserData> From<document_properties_variant_types::I2With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::I2With<X>) -> Self {
-        Self::I2(arm)
+        Self::I2(Box::new(arm))
     }
 }
 
@@ -4344,7 +4349,7 @@ impl<X: UserData> From<document_properties_variant_types::I4With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::I4With<X>) -> Self {
-        Self::I4(arm)
+        Self::I4(Box::new(arm))
     }
 }
 
@@ -4352,7 +4357,7 @@ impl<X: UserData> From<document_properties_variant_types::I8With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::I8With<X>) -> Self {
-        Self::I8(arm)
+        Self::I8(Box::new(arm))
     }
 }
 
@@ -4372,7 +4377,7 @@ impl<X: UserData> From<wordprocessing::InclusionExclusionDataForDataSourceWith<X
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: wordprocessing::InclusionExclusionDataForDataSourceWith<X>) -> Self {
-        Self::InclusionExclusionDataForDataSource(arm)
+        Self::InclusionExclusionDataForDataSource(Box::new(arm))
     }
 }
 
@@ -4402,7 +4407,7 @@ impl<X: UserData> From<document_properties_variant_types::IntegerWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::IntegerWith<X>) -> Self {
-        Self::Integer(arm)
+        Self::Integer(Box::new(arm))
     }
 }
 
@@ -4442,7 +4447,7 @@ impl<X: UserData> From<presentation::ListOfCommentAuthorsWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: presentation::ListOfCommentAuthorsWith<X>) -> Self {
-        Self::ListOfCommentAuthors(arm)
+        Self::ListOfCommentAuthors(Box::new(arm))
     }
 }
 
@@ -4450,7 +4455,7 @@ impl<X: UserData> From<diagram::ListOfStyleDefinitionHeadersWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: diagram::ListOfStyleDefinitionHeadersWith<X>) -> Self {
-        Self::ListOfStyleDefinitionHeaders(arm)
+        Self::ListOfStyleDefinitionHeaders(Box::new(arm))
     }
 }
 
@@ -4466,7 +4471,7 @@ impl<X: UserData> From<document_properties_variant_types::LpstrWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::LpstrWith<X>) -> Self {
-        Self::Lpstr(arm)
+        Self::Lpstr(Box::new(arm))
     }
 }
 
@@ -4474,7 +4479,7 @@ impl<X: UserData> From<document_properties_variant_types::LpwstrWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::LpwstrWith<X>) -> Self {
-        Self::Lpwstr(arm)
+        Self::Lpwstr(Box::new(arm))
     }
 }
 
@@ -4534,7 +4539,7 @@ impl<X: UserData> From<wordprocessing::NumberingDefinitionsWith<X>>
 
 impl<X: UserData> From<math::OfficeMathWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: math::OfficeMathWith<X>) -> Self {
-        Self::OfficeMath(arm)
+        Self::OfficeMath(Box::new(arm))
     }
 }
 
@@ -4620,7 +4625,7 @@ impl<X: UserData> From<presentation::ProgrammableTabListWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: presentation::ProgrammableTabListWith<X>) -> Self {
-        Self::ProgrammableTabList(arm)
+        Self::ProgrammableTabList(Box::new(arm))
     }
 }
 
@@ -4634,7 +4639,7 @@ impl<X: UserData> From<document_properties_variant_types::R4With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::R4With<X>) -> Self {
-        Self::R4(arm)
+        Self::R4(Box::new(arm))
     }
 }
 
@@ -4642,7 +4647,7 @@ impl<X: UserData> From<document_properties_variant_types::R8With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::R8With<X>) -> Self {
-        Self::R8(arm)
+        Self::R8(Box::new(arm))
     }
 }
 
@@ -4654,7 +4659,7 @@ impl<X: UserData> From<vml::RectangleWith<X>> for Model3DExtensionContentWith<X>
 
 impl<X: UserData> From<chart::ReferenceToChartPartWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: chart::ReferenceToChartPartWith<X>) -> Self {
-        Self::ReferenceToChartPart(arm)
+        Self::ReferenceToChartPart(Box::new(arm))
     }
 }
 
@@ -4666,7 +4671,7 @@ impl<X: UserData> From<spreadsheet::RevisionHeadersWith<X>> for Model3DExtension
 
 impl<X: UserData> From<spreadsheet::RevisionsWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: spreadsheet::RevisionsWith<X>) -> Self {
-        Self::Revisions(arm)
+        Self::Revisions(Box::new(arm))
     }
 }
 
@@ -4674,7 +4679,7 @@ impl<X: UserData> From<wordprocessing::RichTextBoxContentContainerWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: wordprocessing::RichTextBoxContentContainerWith<X>) -> Self {
-        Self::RichTextBoxContentContainer(arm)
+        Self::RichTextBoxContentContainer(Box::new(arm))
     }
 }
 
@@ -4696,19 +4701,19 @@ impl<X: UserData> From<additional_characteristics::SetOfAdditionalCharacteristic
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: additional_characteristics::SetOfAdditionalCharacteristicsWith<X>) -> Self {
-        Self::SetOfAdditionalCharacteristics(arm)
+        Self::SetOfAdditionalCharacteristics(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<vml::SetOfFormulasWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: vml::SetOfFormulasWith<X>) -> Self {
-        Self::SetOfFormulas(arm)
+        Self::SetOfFormulas(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<vml::SetOfHandlesWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: vml::SetOfHandlesWith<X>) -> Self {
-        Self::SetOfHandles(arm)
+        Self::SetOfHandles(Box::new(arm))
     }
 }
 
@@ -4722,7 +4727,7 @@ impl<X: UserData> From<vml_office_drawing::ShapeClippingPathWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: vml_office_drawing::ShapeClippingPathWith<X>) -> Self {
-        Self::ShapeClippingPath(arm)
+        Self::ShapeClippingPath(Box::new(arm))
     }
 }
 
@@ -4788,7 +4793,7 @@ impl<X: UserData> From<spreadsheet::SharedStringTableWith<X>> for Model3DExtensi
 
 impl<X: UserData> From<spreadsheet::SingleCellsWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: spreadsheet::SingleCellsWith<X>) -> Self {
-        Self::SingleCells(arm)
+        Self::SingleCells(Box::new(arm))
     }
 }
 
@@ -4844,7 +4849,7 @@ impl<X: UserData> From<vml_office_drawing::StorageForAlternateMathContentWith<X>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
-        Self::StorageForAlternateMathContent(arm)
+        Self::StorageForAlternateMathContent(Box::new(arm))
     }
 }
 
@@ -4952,7 +4957,7 @@ impl<X: UserData> From<drawing::ThemeManagerWith<X>> for Model3DExtensionContent
 
 impl<X: UserData> From<drawing::ThemeOverrideWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: drawing::ThemeOverrideWith<X>) -> Self {
-        Self::ThemeOverride(arm)
+        Self::ThemeOverride(Box::new(arm))
     }
 }
 
@@ -4968,7 +4973,7 @@ impl<X: UserData> From<document_properties_variant_types::Ui1With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::Ui1With<X>) -> Self {
-        Self::Ui1(arm)
+        Self::Ui1(Box::new(arm))
     }
 }
 
@@ -4976,7 +4981,7 @@ impl<X: UserData> From<document_properties_variant_types::Ui2With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::Ui2With<X>) -> Self {
-        Self::Ui2(arm)
+        Self::Ui2(Box::new(arm))
     }
 }
 
@@ -4984,7 +4989,7 @@ impl<X: UserData> From<document_properties_variant_types::Ui4With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::Ui4With<X>) -> Self {
-        Self::Ui4(arm)
+        Self::Ui4(Box::new(arm))
     }
 }
 
@@ -4992,7 +4997,7 @@ impl<X: UserData> From<document_properties_variant_types::Ui8With<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::Ui8With<X>) -> Self {
-        Self::Ui8(arm)
+        Self::Ui8(Box::new(arm))
     }
 }
 
@@ -5000,7 +5005,7 @@ impl<X: UserData> From<document_properties_variant_types::UnsignedIntegerWith<X>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: document_properties_variant_types::UnsignedIntegerWith<X>) -> Self {
-        Self::UnsignedInteger(arm)
+        Self::UnsignedInteger(Box::new(arm))
     }
 }
 
@@ -5012,7 +5017,7 @@ impl<X: UserData> From<spreadsheet::UserListWith<X>> for Model3DExtensionContent
 
 impl<X: UserData> From<chart::UserShapesWith<X>> for Model3DExtensionContentWith<X> {
     fn from(arm: chart::UserShapesWith<X>) -> Self {
-        Self::UserShapes(arm)
+        Self::UserShapes(Box::new(arm))
     }
 }
 
@@ -5026,7 +5031,7 @@ impl<X: UserData> From<vml_presentation_drawing::VMLDiagramTextWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: vml_presentation_drawing::VMLDiagramTextWith<X>) -> Self {
-        Self::VMLDiagramText(arm)
+        Self::VMLDiagramText(Box::new(arm))
     }
 }
 
@@ -5106,7 +5111,7 @@ impl<X: UserData> From<spreadsheet_drawing::WorksheetDrawingWith<X>>
     for Model3DExtensionContentWith<X>
 {
     fn from(arm: spreadsheet_drawing::WorksheetDrawingWith<X>) -> Self {
-        Self::WorksheetDrawing(arm)
+        Self::WorksheetDrawing(Box::new(arm))
     }
 }
 
@@ -5117,8 +5122,8 @@ impl<X: UserData> From<spreadsheet::XMLMappingMapInfoWith<X>> for Model3DExtensi
 }
 
 const _: () = assert!(
-    size_of::<Model3DExtensionContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<Model3DExtensionContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl From<vml::ShapeElementContent> for Model3DExtensionContent {
@@ -5852,8 +5857,8 @@ impl<X: UserData> From<UnkLightWith<X>> for Model3DLightContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<Model3DLightContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<Model3DLightContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> Model3DViewportContentWith<X> {
@@ -5865,7 +5870,7 @@ impl<X: UserData> Model3DViewportContentWith<X> {
     {
         match self {
             Self::ObjViewport(node) => {
-                Model3DViewportContentWith::ObjViewport(node.into_user_data())
+                Model3DViewportContentWith::ObjViewport(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => Model3DViewportContentWith::Other(node),
             Self::WinViewport(node) => {
@@ -5877,7 +5882,7 @@ impl<X: UserData> Model3DViewportContentWith<X> {
 
 impl<X: UserData> Default for Model3DViewportContentWith<X> {
     fn default() -> Self {
-        Self::ObjViewport(ObjViewportWith::default())
+        Self::ObjViewport(Box::default())
     }
 }
 
@@ -5888,7 +5893,7 @@ impl officekit_markup_base::Read for Model3DViewportContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_AM3D, "objViewport")) => Self::ObjViewport(item.read()),
+            Some((NS_AM3D, "objViewport")) => Self::ObjViewport(Box::new(item.read())),
             Some((NS_AM3D, "winViewport")) => Self::WinViewport(item.read()),
             _ => Self::Other(Box::new(item.into_node())),
         }
@@ -5907,7 +5912,7 @@ impl officekit_markup_base::Write for Model3DViewportContent {
 
 impl<X: UserData> From<ObjViewportWith<X>> for Model3DViewportContentWith<X> {
     fn from(arm: ObjViewportWith<X>) -> Self {
-        Self::ObjViewport(arm)
+        Self::ObjViewport(Box::new(arm))
     }
 }
 
@@ -5918,8 +5923,8 @@ impl<X: UserData> From<WinViewportWith<X>> for Model3DViewportContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<Model3DViewportContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<Model3DViewportContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> Model3dWith<X> {
@@ -7118,26 +7123,30 @@ fn read_model3d_extension_1(item: officekit_markup_base::Item<'_>) -> Model3DExt
             Model3DExtensionContent::AnchorLocationIsLocked(item.read())
         }
         Some((NS_AP, "Properties")) => {
-            Model3DExtensionContent::ApplicationSpecificFileProperties(item.read())
+            Model3DExtensionContent::ApplicationSpecificFileProperties(Box::new(item.read()))
         }
         Some((NS_V, "arc")) => Model3DExtensionContent::ArcSegment(Box::new(item.read())),
         Some((NS_VT, "array")) => Model3DExtensionContent::Array(Box::new(item.read())),
         Some((NS_XVML, "ClientData")) => {
             Model3DExtensionContent::AttachedObjectData(Box::new(item.read()))
         }
-        Some((NS_VT, "bstr")) => Model3DExtensionContent::BasicString(item.read()),
+        Some((NS_VT, "bstr")) => Model3DExtensionContent::BasicString(Box::new(item.read())),
         Some((NS_V, "curve")) => Model3DExtensionContent::BezierCurve(Box::new(item.read())),
-        Some((NS_VT, "blob")) => Model3DExtensionContent::BinaryBlob(item.read()),
-        Some((NS_VT, "oblob")) => Model3DExtensionContent::BinaryBlobObject(item.read()),
-        Some((NS_VT, "storage")) => Model3DExtensionContent::BinaryStorage(item.read()),
-        Some((NS_VT, "ostorage")) => Model3DExtensionContent::BinaryStorageObject(item.read()),
-        Some((NS_VT, "stream")) => Model3DExtensionContent::BinaryStream(item.read()),
-        Some((NS_VT, "ostream")) => Model3DExtensionContent::BinaryStreamObject(item.read()),
+        Some((NS_VT, "blob")) => Model3DExtensionContent::BinaryBlob(Box::new(item.read())),
+        Some((NS_VT, "oblob")) => Model3DExtensionContent::BinaryBlobObject(Box::new(item.read())),
+        Some((NS_VT, "storage")) => Model3DExtensionContent::BinaryStorage(Box::new(item.read())),
+        Some((NS_VT, "ostorage")) => {
+            Model3DExtensionContent::BinaryStorageObject(Box::new(item.read()))
+        }
+        Some((NS_VT, "stream")) => Model3DExtensionContent::BinaryStream(Box::new(item.read())),
+        Some((NS_VT, "ostream")) => {
+            Model3DExtensionContent::BinaryStreamObject(Box::new(item.read()))
+        }
         Some((NS_VT, "vstream")) => {
             Model3DExtensionContent::BinaryVersionedStream(Box::new(item.read()))
         }
         Some((NS_A, "blip")) => Model3DExtensionContent::Blip(Box::new(item.read())),
-        Some((NS_VT, "bool")) => Model3DExtensionContent::Boolean(item.read()),
+        Some((NS_VT, "bool")) => Model3DExtensionContent::Boolean(Box::new(item.read())),
         Some((NS_W10, "borderbottom")) => {
             Model3DExtensionContent::BottomBorder(Box::new(item.read()))
         }
@@ -7147,7 +7156,7 @@ fn read_model3d_extension_1(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_O, "callout")) => Model3DExtensionContent::Callout(Box::new(item.read())),
         Some((NS_X, "chartsheet")) => Model3DExtensionContent::ChartSheet(Box::new(item.read())),
         Some((NS_C, "chartSpace")) => Model3DExtensionContent::ChartSpace(Box::new(item.read())),
-        Some((NS_VT, "clsid")) => Model3DExtensionContent::ClassID(item.read()),
+        Some((NS_VT, "clsid")) => Model3DExtensionContent::ClassID(Box::new(item.read())),
         Some((NS_DGM, "colorsDefHdr")) => {
             Model3DExtensionContent::ColorTransformDefinitionHeader(Box::new(item.read()))
         }
@@ -7155,23 +7164,27 @@ fn read_model3d_extension_1(item: officekit_markup_base::Item<'_>) -> Model3DExt
             Model3DExtensionContent::ColorTransformDefinitions(Box::new(item.read()))
         }
         Some((NS_DGM, "colorsDefHdrLst")) => {
-            Model3DExtensionContent::ColorTransformHeaderList(item.read())
+            Model3DExtensionContent::ColorTransformHeaderList(Box::new(item.read()))
         }
-        Some((NS_P, "cmLst")) => Model3DExtensionContent::CommentList(item.read()),
-        Some((NS_X, "comments")) => Model3DExtensionContent::Comments(item.read()),
-        Some((NS_W, "comments")) => Model3DExtensionContent::CommentsCollection(item.read()),
-        Some((NS_O, "complex")) => Model3DExtensionContent::Complex(item.read()),
-        Some((NS_X, "connections")) => Model3DExtensionContent::Connections(item.read()),
-        Some((NS_VT, "cy")) => Model3DExtensionContent::Currency(item.read()),
-        Some((NS_OP, "Properties")) => Model3DExtensionContent::CustomFileProperties(item.read()),
+        Some((NS_P, "cmLst")) => Model3DExtensionContent::CommentList(Box::new(item.read())),
+        Some((NS_X, "comments")) => Model3DExtensionContent::Comments(Box::new(item.read())),
+        Some((NS_W, "comments")) => {
+            Model3DExtensionContent::CommentsCollection(Box::new(item.read()))
+        }
+        Some((NS_O, "complex")) => Model3DExtensionContent::Complex(Box::new(item.read())),
+        Some((NS_X, "connections")) => Model3DExtensionContent::Connections(Box::new(item.read())),
+        Some((NS_VT, "cy")) => Model3DExtensionContent::Currency(Box::new(item.read())),
+        Some((NS_OP, "Properties")) => {
+            Model3DExtensionContent::CustomFileProperties(Box::new(item.read()))
+        }
         Some((NS_DS, "datastoreItem")) => {
-            Model3DExtensionContent::CustomXMLDataProperties(item.read())
+            Model3DExtensionContent::CustomXMLDataProperties(Box::new(item.read()))
         }
         Some((NS_DGM, "dataModel")) => Model3DExtensionContent::DataModel(Box::new(item.read())),
-        Some((NS_VT, "date")) => Model3DExtensionContent::DateAndTime(item.read()),
-        Some((NS_VT, "decimal")) => Model3DExtensionContent::Decimal(item.read()),
+        Some((NS_VT, "date")) => Model3DExtensionContent::DateAndTime(Box::new(item.read())),
+        Some((NS_VT, "decimal")) => Model3DExtensionContent::Decimal(Box::new(item.read())),
         Some((NS_DGM, "layoutDefHdrLst")) => {
-            Model3DExtensionContent::DiagramLayoutHeaderList(item.read())
+            Model3DExtensionContent::DiagramLayoutHeaderList(Box::new(item.read()))
         }
         Some((NS_X, "dialogsheet")) => Model3DExtensionContent::DialogSheet(Box::new(item.read())),
         Some((NS_O, "signatureline")) => {
@@ -7187,8 +7200,12 @@ fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_V, "background")) => {
             Model3DExtensionContent::DocumentBackground(Box::new(item.read()))
         }
-        Some((NS_W, "endnotes")) => Model3DExtensionContent::DocumentEndnotes(item.read()),
-        Some((NS_W, "footnotes")) => Model3DExtensionContent::DocumentFootnotes(item.read()),
+        Some((NS_W, "endnotes")) => {
+            Model3DExtensionContent::DocumentEndnotes(Box::new(item.read()))
+        }
+        Some((NS_W, "footnotes")) => {
+            Model3DExtensionContent::DocumentFootnotes(Box::new(item.read()))
+        }
         Some((NS_W, "settings")) => {
             Model3DExtensionContent::DocumentSettings(Box::new(item.read()))
         }
@@ -7197,7 +7214,7 @@ fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExt
             Model3DExtensionContent::EmbedAnim(Box::new(item.read()))
         }
         Some((NS_SL, "schemaLibrary")) => {
-            Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(item.read())
+            Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(Box::new(item.read()))
         }
         Some((NS_O, "OLEObject")) => {
             Model3DExtensionContent::EmbeddedOLEObject(Box::new(item.read()))
@@ -7207,40 +7224,42 @@ fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExt
         }
         Some((NS_VT, "empty")) => Model3DExtensionContent::Empty(item.read()),
         Some((NS_XDR, "to")) => Model3DExtensionContent::EndingAnchorPoint(Box::new(item.read())),
-        Some((NS_VT, "error")) => Model3DExtensionContent::ErrorStatusCode(item.read()),
+        Some((NS_VT, "error")) => Model3DExtensionContent::ErrorStatusCode(Box::new(item.read())),
         Some((NS_DGM, "relIds")) => {
             Model3DExtensionContent::ExplicitRelationshipsToDiagramParts(Box::new(item.read()))
         }
         Some((NS_X, "externalLink")) => {
-            Model3DExtensionContent::ExternalReferenceExternalLink(item.read())
+            Model3DExtensionContent::ExternalReferenceExternalLink(Box::new(item.read()))
         }
         Some((NS_O, "extrusion")) => Model3DExtensionContent::Extrusion(Box::new(item.read())),
-        Some((NS_VT, "filetime")) => Model3DExtensionContent::FileTime(item.read()),
-        Some((NS_W, "fonts")) => Model3DExtensionContent::FontTableRootElement(item.read()),
-        Some((NS_W, "ftr")) => Model3DExtensionContent::Footer(item.read()),
+        Some((NS_VT, "filetime")) => Model3DExtensionContent::FileTime(Box::new(item.read())),
+        Some((NS_W, "fonts")) => {
+            Model3DExtensionContent::FontTableRootElement(Box::new(item.read()))
+        }
+        Some((NS_W, "ftr")) => Model3DExtensionContent::Footer(Box::new(item.read())),
         Some((NS_W, "glossaryDocument")) => {
-            Model3DExtensionContent::GlossaryDocumentRootElement(item.read())
+            Model3DExtensionContent::GlossaryDocumentRootElement(Box::new(item.read()))
         }
         Some((NS_A, "graphic")) => Model3DExtensionContent::GraphicObject(item.read()),
         Some((NS_P, "handoutMaster")) => {
             Model3DExtensionContent::HandoutMaster(Box::new(item.read()))
         }
-        Some((NS_W, "hdr")) => Model3DExtensionContent::Header(item.read()),
-        Some((NS_VT, "i1")) => Model3DExtensionContent::I1(item.read()),
-        Some((NS_VT, "i2")) => Model3DExtensionContent::I2(item.read()),
-        Some((NS_VT, "i4")) => Model3DExtensionContent::I4(item.read()),
-        Some((NS_VT, "i8")) => Model3DExtensionContent::I8(item.read()),
+        Some((NS_W, "hdr")) => Model3DExtensionContent::Header(Box::new(item.read())),
+        Some((NS_VT, "i1")) => Model3DExtensionContent::I1(Box::new(item.read())),
+        Some((NS_VT, "i2")) => Model3DExtensionContent::I2(Box::new(item.read())),
+        Some((NS_VT, "i4")) => Model3DExtensionContent::I4(Box::new(item.read())),
+        Some((NS_VT, "i8")) => Model3DExtensionContent::I8(Box::new(item.read())),
         Some((NS_V, "imagedata")) => Model3DExtensionContent::ImageData(Box::new(item.read())),
         Some((NS_V, "image")) => Model3DExtensionContent::ImageFile(Box::new(item.read())),
         Some((NS_W, "recipients")) => {
-            Model3DExtensionContent::InclusionExclusionDataForDataSource(item.read())
+            Model3DExtensionContent::InclusionExclusionDataForDataSource(Box::new(item.read()))
         }
         Some((NS_O, "ink")) => Model3DExtensionContent::Ink(Box::new(item.read())),
         Some((NS_PVML, "iscomment")) => Model3DExtensionContent::InkAnnotationFlag(item.read()),
         Some((NS_WP, "inline")) => {
             Model3DExtensionContent::InlineDrawingMLObject(Box::new(item.read()))
         }
-        Some((NS_VT, "int")) => Model3DExtensionContent::Integer(item.read()),
+        Some((NS_VT, "int")) => Model3DExtensionContent::Integer(Box::new(item.read())),
         Some((NS_DGM, "layoutDef")) => {
             Model3DExtensionContent::LayoutDefinition(Box::new(item.read()))
         }
@@ -7252,7 +7271,9 @@ fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_V, "stroke")) => {
             Model3DExtensionContent::LineStrokeSettings(Box::new(item.read()))
         }
-        Some((NS_P, "cmAuthorLst")) => Model3DExtensionContent::ListOfCommentAuthors(item.read()),
+        Some((NS_P, "cmAuthorLst")) => {
+            Model3DExtensionContent::ListOfCommentAuthors(Box::new(item.read()))
+        }
         _ => read_model3d_extension_3(item),
     }
 }
@@ -7260,13 +7281,13 @@ fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExt
 fn read_model3d_extension_3(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
     match item.name() {
         Some((NS_DGM, "styleDefHdrLst")) => {
-            Model3DExtensionContent::ListOfStyleDefinitionHeaders(item.read())
+            Model3DExtensionContent::ListOfStyleDefinitionHeaders(Box::new(item.read()))
         }
         Some((NS_LC, "lockedCanvas")) => {
             Model3DExtensionContent::LockedCanvasContainer(Box::new(item.read()))
         }
-        Some((NS_VT, "lpstr")) => Model3DExtensionContent::Lpstr(item.read()),
-        Some((NS_VT, "lpwstr")) => Model3DExtensionContent::Lpwstr(item.read()),
+        Some((NS_VT, "lpstr")) => Model3DExtensionContent::Lpstr(Box::new(item.read())),
+        Some((NS_VT, "lpwstr")) => Model3DExtensionContent::Lpwstr(Box::new(item.read())),
         Some((NS_M, "mathPr")) => Model3DExtensionContent::MathProperties(Box::new(item.read())),
         Some((NS_X, "metadata")) => Model3DExtensionContent::Metadata(Box::new(item.read())),
         Some((NS_V, "polyline")) => {
@@ -7281,7 +7302,7 @@ fn read_model3d_extension_3(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_W, "numbering")) => {
             Model3DExtensionContent::NumberingDefinitions(Box::new(item.read()))
         }
-        Some((NS_M, "oMath")) => Model3DExtensionContent::OfficeMath(item.read()),
+        Some((NS_M, "oMath")) => Model3DExtensionContent::OfficeMath(Box::new(item.read())),
         Some((NS_M, "oMathPara")) => {
             Model3DExtensionContent::OfficeMathParagraph(Box::new(item.read()))
         }
@@ -7311,16 +7332,20 @@ fn read_model3d_extension_3(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_P, "viewPr")) => {
             Model3DExtensionContent::PresentationWideViewProperties(Box::new(item.read()))
         }
-        Some((NS_P, "tagLst")) => Model3DExtensionContent::ProgrammableTabList(item.read()),
+        Some((NS_P, "tagLst")) => {
+            Model3DExtensionContent::ProgrammableTabList(Box::new(item.read()))
+        }
         Some((NS_X, "queryTable")) => Model3DExtensionContent::QueryTable(Box::new(item.read())),
-        Some((NS_VT, "r4")) => Model3DExtensionContent::R4(item.read()),
-        Some((NS_VT, "r8")) => Model3DExtensionContent::R8(item.read()),
+        Some((NS_VT, "r4")) => Model3DExtensionContent::R4(Box::new(item.read())),
+        Some((NS_VT, "r8")) => Model3DExtensionContent::R8(Box::new(item.read())),
         Some((NS_V, "rect")) => Model3DExtensionContent::Rectangle(Box::new(item.read())),
-        Some((NS_C, "chart")) => Model3DExtensionContent::ReferenceToChartPart(item.read()),
+        Some((NS_C, "chart")) => {
+            Model3DExtensionContent::ReferenceToChartPart(Box::new(item.read()))
+        }
         Some((NS_X, "headers")) => Model3DExtensionContent::RevisionHeaders(Box::new(item.read())),
-        Some((NS_X, "revisions")) => Model3DExtensionContent::Revisions(item.read()),
+        Some((NS_X, "revisions")) => Model3DExtensionContent::Revisions(Box::new(item.read())),
         Some((NS_W, "txbxContent")) => {
-            Model3DExtensionContent::RichTextBoxContentContainer(item.read())
+            Model3DExtensionContent::RichTextBoxContentContainer(Box::new(item.read()))
         }
         Some((NS_W10, "borderright")) => {
             Model3DExtensionContent::RightBorder(Box::new(item.read()))
@@ -7329,12 +7354,14 @@ fn read_model3d_extension_3(item: officekit_markup_base::Item<'_>) -> Model3DExt
             Model3DExtensionContent::RoundedRectangle(Box::new(item.read()))
         }
         Some((NS_AC, "additionalCharacteristics")) => {
-            Model3DExtensionContent::SetOfAdditionalCharacteristics(item.read())
+            Model3DExtensionContent::SetOfAdditionalCharacteristics(Box::new(item.read()))
         }
-        Some((NS_V, "formulas")) => Model3DExtensionContent::SetOfFormulas(item.read()),
-        Some((NS_V, "handles")) => Model3DExtensionContent::SetOfHandles(item.read()),
+        Some((NS_V, "formulas")) => Model3DExtensionContent::SetOfFormulas(Box::new(item.read())),
+        Some((NS_V, "handles")) => Model3DExtensionContent::SetOfHandles(Box::new(item.read())),
         Some((NS_V, "shadow")) => Model3DExtensionContent::ShadowEffect(Box::new(item.read())),
-        Some((NS_O, "clippath")) => Model3DExtensionContent::ShapeClippingPath(item.read()),
+        Some((NS_O, "clippath")) => {
+            Model3DExtensionContent::ShapeClippingPath(Box::new(item.read()))
+        }
         _ => read_model3d_extension_4(item),
     }
 }
@@ -7354,7 +7381,9 @@ fn read_model3d_extension_4(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_O, "lock")) => Model3DExtensionContent::ShapeProtections(Box::new(item.read())),
         Some((NS_V, "shapetype")) => Model3DExtensionContent::ShapeTemplate(Box::new(item.read())),
         Some((NS_X, "sst")) => Model3DExtensionContent::SharedStringTable(Box::new(item.read())),
-        Some((NS_X, "singleXmlCells")) => Model3DExtensionContent::SingleCells(item.read()),
+        Some((NS_X, "singleXmlCells")) => {
+            Model3DExtensionContent::SingleCells(Box::new(item.read()))
+        }
         Some((NS_O, "skew")) => Model3DExtensionContent::SkewTransform(Box::new(item.read())),
         Some((NS_P, "sldLayout")) => Model3DExtensionContent::SlideLayout(Box::new(item.read())),
         Some((NS_P, "sldMaster")) => Model3DExtensionContent::SlideMaster(Box::new(item.read())),
@@ -7367,7 +7396,7 @@ fn read_model3d_extension_4(item: officekit_markup_base::Item<'_>) -> Model3DExt
             Model3DExtensionContent::StartingAnchorPoint(Box::new(item.read()))
         }
         Some((NS_O, "equationxml")) => {
-            Model3DExtensionContent::StorageForAlternateMathContent(item.read())
+            Model3DExtensionContent::StorageForAlternateMathContent(Box::new(item.read()))
         }
         Some((NS_DGM, "styleDef")) => {
             Model3DExtensionContent::StyleDefinition(Box::new(item.read()))
@@ -7394,13 +7423,15 @@ fn read_model3d_extension_4(item: officekit_markup_base::Item<'_>) -> Model3DExt
         Some((NS_W10, "wrap")) => Model3DExtensionContent::TextWrapping(Box::new(item.read())),
         Some((NS_A, "theme")) => Model3DExtensionContent::Theme(Box::new(item.read())),
         Some((NS_A, "themeManager")) => Model3DExtensionContent::ThemeManager(item.read()),
-        Some((NS_A, "themeOverride")) => Model3DExtensionContent::ThemeOverride(item.read()),
+        Some((NS_A, "themeOverride")) => {
+            Model3DExtensionContent::ThemeOverride(Box::new(item.read()))
+        }
         Some((NS_W10, "bordertop")) => Model3DExtensionContent::TopBorder(Box::new(item.read())),
-        Some((NS_VT, "ui1")) => Model3DExtensionContent::Ui1(item.read()),
-        Some((NS_VT, "ui2")) => Model3DExtensionContent::Ui2(item.read()),
-        Some((NS_VT, "ui4")) => Model3DExtensionContent::Ui4(item.read()),
-        Some((NS_VT, "ui8")) => Model3DExtensionContent::Ui8(item.read()),
-        Some((NS_VT, "uint")) => Model3DExtensionContent::UnsignedInteger(item.read()),
+        Some((NS_VT, "ui1")) => Model3DExtensionContent::Ui1(Box::new(item.read())),
+        Some((NS_VT, "ui2")) => Model3DExtensionContent::Ui2(Box::new(item.read())),
+        Some((NS_VT, "ui4")) => Model3DExtensionContent::Ui4(Box::new(item.read())),
+        Some((NS_VT, "ui8")) => Model3DExtensionContent::Ui8(Box::new(item.read())),
+        Some((NS_VT, "uint")) => Model3DExtensionContent::UnsignedInteger(Box::new(item.read())),
         _ => read_model3d_extension_5(item),
     }
 }
@@ -7408,9 +7439,11 @@ fn read_model3d_extension_4(item: officekit_markup_base::Item<'_>) -> Model3DExt
 fn read_model3d_extension_5(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
     match item.name() {
         Some((NS_X, "users")) => Model3DExtensionContent::UserList(Box::new(item.read())),
-        Some((NS_C, "userShapes")) => Model3DExtensionContent::UserShapes(item.read()),
+        Some((NS_C, "userShapes")) => Model3DExtensionContent::UserShapes(Box::new(item.read())),
         Some((NS_O, "diagram")) => Model3DExtensionContent::VMLDiagram(Box::new(item.read())),
-        Some((NS_PVML, "textdata")) => Model3DExtensionContent::VMLDiagramText(item.read()),
+        Some((NS_PVML, "textdata")) => {
+            Model3DExtensionContent::VMLDiagramText(Box::new(item.read()))
+        }
         Some((NS_VT, "variant")) => Model3DExtensionContent::Variant(item.read()),
         Some((NS_VT, "vector")) => Model3DExtensionContent::Vector(Box::new(item.read())),
         Some((NS_A, "videoFile")) => Model3DExtensionContent::VideoFromFile(Box::new(item.read())),
@@ -7431,7 +7464,7 @@ fn read_model3d_extension_5(item: officekit_markup_base::Item<'_>) -> Model3DExt
         }
         Some((NS_X, "workbook")) => Model3DExtensionContent::Workbook(Box::new(item.read())),
         Some((NS_X, "worksheet")) => Model3DExtensionContent::Worksheet(Box::new(item.read())),
-        Some((NS_XDR, "wsDr")) => Model3DExtensionContent::WorksheetDrawing(item.read()),
+        Some((NS_XDR, "wsDr")) => Model3DExtensionContent::WorksheetDrawing(Box::new(item.read())),
         Some((NS_X, "MapInfo")) => {
             Model3DExtensionContent::XMLMappingMapInfo(Box::new(item.read()))
         }

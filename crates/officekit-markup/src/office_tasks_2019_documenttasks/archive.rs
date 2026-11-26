@@ -402,14 +402,14 @@ pub enum TaskHistoryEventContent {
     Create(super::Create),
     Delete(super::Delete),
     Other(Box<Node>),
-    Priority(super::Priority),
-    Progress(super::Progress),
+    Priority(Box<super::Priority>),
+    Progress(Box<super::Progress>),
     Schedule(Box<super::Schedule>),
-    SetTitle(super::SetTitle),
+    SetTitle(Box<super::SetTitle>),
     Unassign(super::Unassign),
     UnassignAll(super::UnassignAll),
     Undelete(super::Undelete),
-    Undo(super::Undo),
+    Undo(Box<super::Undo>),
 }
 
 impl From<AnchorMirror> for super::Anchor {

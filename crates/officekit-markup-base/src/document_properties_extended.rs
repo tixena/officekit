@@ -508,61 +508,61 @@ impl Eq for ApplicationSpecificFilePropertiesWith<()> {}
 #[non_exhaustive]
 pub enum ApplicationSpecificFilePropertiesContentWith<X: UserData> {
     /// The element `ap:Application`, a `ApplicationName`.
-    ApplicationName(ApplicationNameWith<X>),
+    ApplicationName(Box<ApplicationNameWith<X>>),
     /// The element `ap:AppVersion`, a `ApplicationVersion`.
-    ApplicationVersion(ApplicationVersionWith<X>),
+    ApplicationVersion(Box<ApplicationVersionWith<X>>),
     /// The element `ap:CharactersWithSpaces`, a `CharactersWithSpaces`.
-    CharactersWithSpaces(CharactersWithSpacesWith<X>),
+    CharactersWithSpaces(Box<CharactersWithSpacesWith<X>>),
     /// The element `ap:DigSig`, a `DigitalSignature`.
     DigitalSignature(DigitalSignatureWith<X>),
     /// The element `ap:DocSecurity`, a `DocumentSecurity`.
-    DocumentSecurity(DocumentSecurityWith<X>),
+    DocumentSecurity(Box<DocumentSecurityWith<X>>),
     /// The element `ap:HeadingPairs`, a `HeadingPairs`.
     HeadingPairs(HeadingPairsWith<X>),
     /// The element `ap:HLinks`, a `HyperlinkList`.
     HyperlinkList(HyperlinkListWith<X>),
     /// The element `ap:HyperlinksChanged`, a `HyperlinksChanged`.
-    HyperlinksChanged(HyperlinksChangedWith<X>),
+    HyperlinksChanged(Box<HyperlinksChangedWith<X>>),
     /// The element `ap:PresentationFormat`, a `IntendedFormatOfPresentation`.
-    IntendedFormatOfPresentation(IntendedFormatOfPresentationWith<X>),
+    IntendedFormatOfPresentation(Box<IntendedFormatOfPresentationWith<X>>),
     /// The element `ap:LinksUpToDate`, a `LinksUpToDate`.
-    LinksUpToDate(LinksUpToDateWith<X>),
+    LinksUpToDate(Box<LinksUpToDateWith<X>>),
     /// The element `ap:Company`, a `NameOfCompany`.
-    NameOfCompany(NameOfCompanyWith<X>),
+    NameOfCompany(Box<NameOfCompanyWith<X>>),
     /// The element `ap:Template`, a `NameOfDocumentTemplate`.
-    NameOfDocumentTemplate(NameOfDocumentTemplateWith<X>),
+    NameOfDocumentTemplate(Box<NameOfDocumentTemplateWith<X>>),
     /// The element `ap:Manager`, a `NameOfManager`.
-    NameOfManager(NameOfManagerWith<X>),
+    NameOfManager(Box<NameOfManagerWith<X>>),
     /// The element `ap:HiddenSlides`, a `NumberOfHiddenSlides`.
-    NumberOfHiddenSlides(NumberOfHiddenSlidesWith<X>),
+    NumberOfHiddenSlides(Box<NumberOfHiddenSlidesWith<X>>),
     /// The element `ap:Lines`, a `NumberOfLines`.
-    NumberOfLines(NumberOfLinesWith<X>),
+    NumberOfLines(Box<NumberOfLinesWith<X>>),
     /// The element `ap:Notes`, a `NumberOfSlidesContainingNotes`.
-    NumberOfSlidesContainingNotes(NumberOfSlidesContainingNotesWith<X>),
+    NumberOfSlidesContainingNotes(Box<NumberOfSlidesContainingNotesWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `ap:TitlesOfParts`, a `PartTitles`.
     PartTitles(PartTitlesWith<X>),
     /// The element `ap:HyperlinkBase`, a `RelativeHyperlinkBase`.
-    RelativeHyperlinkBase(RelativeHyperlinkBaseWith<X>),
+    RelativeHyperlinkBase(Box<RelativeHyperlinkBaseWith<X>>),
     /// The element `ap:SharedDoc`, a `SharedDocument`.
-    SharedDocument(SharedDocumentWith<X>),
+    SharedDocument(Box<SharedDocumentWith<X>>),
     /// The element `ap:Slides`, a `SlidesMetadataElement`.
-    SlidesMetadataElement(SlidesMetadataElementWith<X>),
+    SlidesMetadataElement(Box<SlidesMetadataElementWith<X>>),
     /// The element `ap:ScaleCrop`, a `ThumbnailDisplayMode`.
-    ThumbnailDisplayMode(ThumbnailDisplayModeWith<X>),
+    ThumbnailDisplayMode(Box<ThumbnailDisplayModeWith<X>>),
     /// The element `ap:TotalTime`, a `TotalEditTimeMetadataElement`.
-    TotalEditTimeMetadataElement(TotalEditTimeMetadataElementWith<X>),
+    TotalEditTimeMetadataElement(Box<TotalEditTimeMetadataElementWith<X>>),
     /// The element `ap:Characters`, a `TotalNumberOfCharacters`.
-    TotalNumberOfCharacters(TotalNumberOfCharactersWith<X>),
+    TotalNumberOfCharacters(Box<TotalNumberOfCharactersWith<X>>),
     /// The element `ap:MMClips`, a `TotalNumberOfMultimediaClips`.
-    TotalNumberOfMultimediaClips(TotalNumberOfMultimediaClipsWith<X>),
+    TotalNumberOfMultimediaClips(Box<TotalNumberOfMultimediaClipsWith<X>>),
     /// The element `ap:Pages`, a `TotalNumberOfPages`.
-    TotalNumberOfPages(TotalNumberOfPagesWith<X>),
+    TotalNumberOfPages(Box<TotalNumberOfPagesWith<X>>),
     /// The element `ap:Paragraphs`, a `TotalNumberOfParagraphs`.
-    TotalNumberOfParagraphs(TotalNumberOfParagraphsWith<X>),
+    TotalNumberOfParagraphs(Box<TotalNumberOfParagraphsWith<X>>),
     /// The element `ap:Words`, a `WordCount`.
-    WordCount(WordCountWith<X>),
+    WordCount(Box<WordCountWith<X>>),
 }
 
 /// [`ApplicationSpecificFilePropertiesContentWith`] of the tree a read gives, where no node holds
@@ -1202,16 +1202,16 @@ impl<X: UserData> ApplicationSpecificFilePropertiesContentWith<X> {
     {
         crate::into_user_data_match!(self, ApplicationSpecificFilePropertiesContentWith;
             plain [
-                ApplicationName, ApplicationVersion, CharactersWithSpaces, DigitalSignature,
-                DocumentSecurity, HeadingPairs, HyperlinkList, HyperlinksChanged,
-                IntendedFormatOfPresentation, LinksUpToDate, NameOfCompany, NameOfDocumentTemplate,
-                NameOfManager, NumberOfHiddenSlides, NumberOfLines, NumberOfSlidesContainingNotes,
-                PartTitles, RelativeHyperlinkBase, SharedDocument, SlidesMetadataElement,
-                ThumbnailDisplayMode, TotalEditTimeMetadataElement, TotalNumberOfCharacters,
-                TotalNumberOfMultimediaClips, TotalNumberOfPages, TotalNumberOfParagraphs,
-                WordCount,
+                DigitalSignature, HeadingPairs, HyperlinkList, PartTitles,
             ]
             boxed [
+                ApplicationName, ApplicationVersion, CharactersWithSpaces, DocumentSecurity,
+                HyperlinksChanged, IntendedFormatOfPresentation, LinksUpToDate, NameOfCompany,
+                NameOfDocumentTemplate, NameOfManager, NumberOfHiddenSlides, NumberOfLines,
+                NumberOfSlidesContainingNotes, RelativeHyperlinkBase, SharedDocument,
+                SlidesMetadataElement, ThumbnailDisplayMode, TotalEditTimeMetadataElement,
+                TotalNumberOfCharacters, TotalNumberOfMultimediaClips, TotalNumberOfPages,
+                TotalNumberOfParagraphs, WordCount,
             ]
         )
     }
@@ -1224,33 +1224,37 @@ impl crate::Read for ApplicationSpecificFilePropertiesContent {
 
     fn read_item(item: crate::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_AP, "Application")) => Self::ApplicationName(item.read()),
-            Some((NS_AP, "AppVersion")) => Self::ApplicationVersion(item.read()),
-            Some((NS_AP, "CharactersWithSpaces")) => Self::CharactersWithSpaces(item.read()),
+            Some((NS_AP, "Application")) => Self::ApplicationName(Box::new(item.read())),
+            Some((NS_AP, "AppVersion")) => Self::ApplicationVersion(Box::new(item.read())),
+            Some((NS_AP, "CharactersWithSpaces")) => {
+                Self::CharactersWithSpaces(Box::new(item.read()))
+            }
             Some((NS_AP, "DigSig")) => Self::DigitalSignature(item.read()),
-            Some((NS_AP, "DocSecurity")) => Self::DocumentSecurity(item.read()),
+            Some((NS_AP, "DocSecurity")) => Self::DocumentSecurity(Box::new(item.read())),
             Some((NS_AP, "HeadingPairs")) => Self::HeadingPairs(item.read()),
             Some((NS_AP, "HLinks")) => Self::HyperlinkList(item.read()),
-            Some((NS_AP, "HyperlinksChanged")) => Self::HyperlinksChanged(item.read()),
-            Some((NS_AP, "PresentationFormat")) => Self::IntendedFormatOfPresentation(item.read()),
-            Some((NS_AP, "LinksUpToDate")) => Self::LinksUpToDate(item.read()),
-            Some((NS_AP, "Company")) => Self::NameOfCompany(item.read()),
-            Some((NS_AP, "Template")) => Self::NameOfDocumentTemplate(item.read()),
-            Some((NS_AP, "Manager")) => Self::NameOfManager(item.read()),
-            Some((NS_AP, "HiddenSlides")) => Self::NumberOfHiddenSlides(item.read()),
-            Some((NS_AP, "Lines")) => Self::NumberOfLines(item.read()),
-            Some((NS_AP, "Notes")) => Self::NumberOfSlidesContainingNotes(item.read()),
+            Some((NS_AP, "HyperlinksChanged")) => Self::HyperlinksChanged(Box::new(item.read())),
+            Some((NS_AP, "PresentationFormat")) => {
+                Self::IntendedFormatOfPresentation(Box::new(item.read()))
+            }
+            Some((NS_AP, "LinksUpToDate")) => Self::LinksUpToDate(Box::new(item.read())),
+            Some((NS_AP, "Company")) => Self::NameOfCompany(Box::new(item.read())),
+            Some((NS_AP, "Template")) => Self::NameOfDocumentTemplate(Box::new(item.read())),
+            Some((NS_AP, "Manager")) => Self::NameOfManager(Box::new(item.read())),
+            Some((NS_AP, "HiddenSlides")) => Self::NumberOfHiddenSlides(Box::new(item.read())),
+            Some((NS_AP, "Lines")) => Self::NumberOfLines(Box::new(item.read())),
+            Some((NS_AP, "Notes")) => Self::NumberOfSlidesContainingNotes(Box::new(item.read())),
             Some((NS_AP, "TitlesOfParts")) => Self::PartTitles(item.read()),
-            Some((NS_AP, "HyperlinkBase")) => Self::RelativeHyperlinkBase(item.read()),
-            Some((NS_AP, "SharedDoc")) => Self::SharedDocument(item.read()),
-            Some((NS_AP, "Slides")) => Self::SlidesMetadataElement(item.read()),
-            Some((NS_AP, "ScaleCrop")) => Self::ThumbnailDisplayMode(item.read()),
-            Some((NS_AP, "TotalTime")) => Self::TotalEditTimeMetadataElement(item.read()),
-            Some((NS_AP, "Characters")) => Self::TotalNumberOfCharacters(item.read()),
-            Some((NS_AP, "MMClips")) => Self::TotalNumberOfMultimediaClips(item.read()),
-            Some((NS_AP, "Pages")) => Self::TotalNumberOfPages(item.read()),
-            Some((NS_AP, "Paragraphs")) => Self::TotalNumberOfParagraphs(item.read()),
-            Some((NS_AP, "Words")) => Self::WordCount(item.read()),
+            Some((NS_AP, "HyperlinkBase")) => Self::RelativeHyperlinkBase(Box::new(item.read())),
+            Some((NS_AP, "SharedDoc")) => Self::SharedDocument(Box::new(item.read())),
+            Some((NS_AP, "Slides")) => Self::SlidesMetadataElement(Box::new(item.read())),
+            Some((NS_AP, "ScaleCrop")) => Self::ThumbnailDisplayMode(Box::new(item.read())),
+            Some((NS_AP, "TotalTime")) => Self::TotalEditTimeMetadataElement(Box::new(item.read())),
+            Some((NS_AP, "Characters")) => Self::TotalNumberOfCharacters(Box::new(item.read())),
+            Some((NS_AP, "MMClips")) => Self::TotalNumberOfMultimediaClips(Box::new(item.read())),
+            Some((NS_AP, "Pages")) => Self::TotalNumberOfPages(Box::new(item.read())),
+            Some((NS_AP, "Paragraphs")) => Self::TotalNumberOfParagraphs(Box::new(item.read())),
+            Some((NS_AP, "Words")) => Self::WordCount(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -1293,7 +1297,7 @@ impl crate::Write for ApplicationSpecificFilePropertiesContent {
 
 impl<X: UserData> From<ApplicationNameWith<X>> for ApplicationSpecificFilePropertiesContentWith<X> {
     fn from(arm: ApplicationNameWith<X>) -> Self {
-        Self::ApplicationName(arm)
+        Self::ApplicationName(Box::new(arm))
     }
 }
 
@@ -1301,7 +1305,7 @@ impl<X: UserData> From<ApplicationVersionWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: ApplicationVersionWith<X>) -> Self {
-        Self::ApplicationVersion(arm)
+        Self::ApplicationVersion(Box::new(arm))
     }
 }
 
@@ -1309,7 +1313,7 @@ impl<X: UserData> From<CharactersWithSpacesWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: CharactersWithSpacesWith<X>) -> Self {
-        Self::CharactersWithSpaces(arm)
+        Self::CharactersWithSpaces(Box::new(arm))
     }
 }
 
@@ -1325,7 +1329,7 @@ impl<X: UserData> From<DocumentSecurityWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: DocumentSecurityWith<X>) -> Self {
-        Self::DocumentSecurity(arm)
+        Self::DocumentSecurity(Box::new(arm))
     }
 }
 
@@ -1345,7 +1349,7 @@ impl<X: UserData> From<HyperlinksChangedWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: HyperlinksChangedWith<X>) -> Self {
-        Self::HyperlinksChanged(arm)
+        Self::HyperlinksChanged(Box::new(arm))
     }
 }
 
@@ -1353,19 +1357,19 @@ impl<X: UserData> From<IntendedFormatOfPresentationWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: IntendedFormatOfPresentationWith<X>) -> Self {
-        Self::IntendedFormatOfPresentation(arm)
+        Self::IntendedFormatOfPresentation(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<LinksUpToDateWith<X>> for ApplicationSpecificFilePropertiesContentWith<X> {
     fn from(arm: LinksUpToDateWith<X>) -> Self {
-        Self::LinksUpToDate(arm)
+        Self::LinksUpToDate(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<NameOfCompanyWith<X>> for ApplicationSpecificFilePropertiesContentWith<X> {
     fn from(arm: NameOfCompanyWith<X>) -> Self {
-        Self::NameOfCompany(arm)
+        Self::NameOfCompany(Box::new(arm))
     }
 }
 
@@ -1373,13 +1377,13 @@ impl<X: UserData> From<NameOfDocumentTemplateWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: NameOfDocumentTemplateWith<X>) -> Self {
-        Self::NameOfDocumentTemplate(arm)
+        Self::NameOfDocumentTemplate(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<NameOfManagerWith<X>> for ApplicationSpecificFilePropertiesContentWith<X> {
     fn from(arm: NameOfManagerWith<X>) -> Self {
-        Self::NameOfManager(arm)
+        Self::NameOfManager(Box::new(arm))
     }
 }
 
@@ -1387,13 +1391,13 @@ impl<X: UserData> From<NumberOfHiddenSlidesWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: NumberOfHiddenSlidesWith<X>) -> Self {
-        Self::NumberOfHiddenSlides(arm)
+        Self::NumberOfHiddenSlides(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<NumberOfLinesWith<X>> for ApplicationSpecificFilePropertiesContentWith<X> {
     fn from(arm: NumberOfLinesWith<X>) -> Self {
-        Self::NumberOfLines(arm)
+        Self::NumberOfLines(Box::new(arm))
     }
 }
 
@@ -1401,7 +1405,7 @@ impl<X: UserData> From<NumberOfSlidesContainingNotesWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: NumberOfSlidesContainingNotesWith<X>) -> Self {
-        Self::NumberOfSlidesContainingNotes(arm)
+        Self::NumberOfSlidesContainingNotes(Box::new(arm))
     }
 }
 
@@ -1415,13 +1419,13 @@ impl<X: UserData> From<RelativeHyperlinkBaseWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: RelativeHyperlinkBaseWith<X>) -> Self {
-        Self::RelativeHyperlinkBase(arm)
+        Self::RelativeHyperlinkBase(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<SharedDocumentWith<X>> for ApplicationSpecificFilePropertiesContentWith<X> {
     fn from(arm: SharedDocumentWith<X>) -> Self {
-        Self::SharedDocument(arm)
+        Self::SharedDocument(Box::new(arm))
     }
 }
 
@@ -1429,7 +1433,7 @@ impl<X: UserData> From<SlidesMetadataElementWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: SlidesMetadataElementWith<X>) -> Self {
-        Self::SlidesMetadataElement(arm)
+        Self::SlidesMetadataElement(Box::new(arm))
     }
 }
 
@@ -1437,7 +1441,7 @@ impl<X: UserData> From<ThumbnailDisplayModeWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: ThumbnailDisplayModeWith<X>) -> Self {
-        Self::ThumbnailDisplayMode(arm)
+        Self::ThumbnailDisplayMode(Box::new(arm))
     }
 }
 
@@ -1445,7 +1449,7 @@ impl<X: UserData> From<TotalEditTimeMetadataElementWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: TotalEditTimeMetadataElementWith<X>) -> Self {
-        Self::TotalEditTimeMetadataElement(arm)
+        Self::TotalEditTimeMetadataElement(Box::new(arm))
     }
 }
 
@@ -1453,7 +1457,7 @@ impl<X: UserData> From<TotalNumberOfCharactersWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: TotalNumberOfCharactersWith<X>) -> Self {
-        Self::TotalNumberOfCharacters(arm)
+        Self::TotalNumberOfCharacters(Box::new(arm))
     }
 }
 
@@ -1461,7 +1465,7 @@ impl<X: UserData> From<TotalNumberOfMultimediaClipsWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: TotalNumberOfMultimediaClipsWith<X>) -> Self {
-        Self::TotalNumberOfMultimediaClips(arm)
+        Self::TotalNumberOfMultimediaClips(Box::new(arm))
     }
 }
 
@@ -1469,7 +1473,7 @@ impl<X: UserData> From<TotalNumberOfPagesWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: TotalNumberOfPagesWith<X>) -> Self {
-        Self::TotalNumberOfPages(arm)
+        Self::TotalNumberOfPages(Box::new(arm))
     }
 }
 
@@ -1477,19 +1481,19 @@ impl<X: UserData> From<TotalNumberOfParagraphsWith<X>>
     for ApplicationSpecificFilePropertiesContentWith<X>
 {
     fn from(arm: TotalNumberOfParagraphsWith<X>) -> Self {
-        Self::TotalNumberOfParagraphs(arm)
+        Self::TotalNumberOfParagraphs(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<WordCountWith<X>> for ApplicationSpecificFilePropertiesContentWith<X> {
     fn from(arm: WordCountWith<X>) -> Self {
-        Self::WordCount(arm)
+        Self::WordCount(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<ApplicationSpecificFilePropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ApplicationSpecificFilePropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ApplicationVersionWith<X> {

@@ -4253,8 +4253,8 @@ impl<X: UserData> From<UIDefaultColorsWith<X>> for NewShapeDefaultsContentWith<X
 }
 
 const _: () = assert!(
-    size_of::<NewShapeDefaultsContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<NewShapeDefaultsContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]
@@ -5280,8 +5280,8 @@ impl<X: UserData> From<ShapeIDMapWith<X>> for ShapeLayoutPropertiesContentWith<X
 }
 
 const _: () = assert!(
-    size_of::<ShapeLayoutPropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ShapeLayoutPropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ShapeProtectionsWith<X> {

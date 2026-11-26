@@ -1121,8 +1121,8 @@ impl<X: UserData> From<LineSketchScribbleWith<X>> for LineSketchTypePropertiesCo
 }
 
 const _: () = assert!(
-    size_of::<LineSketchTypePropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<LineSketchTypePropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> SeedWith<X> {

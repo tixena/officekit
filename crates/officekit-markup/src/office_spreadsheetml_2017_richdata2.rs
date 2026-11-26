@@ -1518,7 +1518,7 @@ pub enum CustomRichFiltersContentWith<X: UserData> {
     /// The element `xlrd2:customFilter`, a `CustomFilter`.
     CustomFilter(Box<CustomFilterWith<X>>),
     /// The element `xlrd2:extLst`, a `ExtLst`.
-    ExtLst(ExtLstWith<X>),
+    ExtLst(Box<ExtLstWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -1864,7 +1864,7 @@ pub enum RichFilterColumnContentWith<X: UserData> {
     /// The element `xlrd2:dynamicFilter`, a `DynamicFilter`.
     DynamicFilter(Box<DynamicFilterWith<X>>),
     /// The element `xlrd2:extLst`, a `ExtLst`.
-    ExtLst(ExtLstWith<X>),
+    ExtLst(Box<ExtLstWith<X>>),
     /// The element `xlrd2:filters`, a `Filters`.
     Filters(Box<FiltersWith<X>>),
     /// An element or node the schemas do not declare at this position.
@@ -3001,7 +3001,9 @@ impl<X: UserData> CustomRichFiltersContentWith<X> {
             Self::CustomFilter(node) => {
                 CustomRichFiltersContentWith::CustomFilter(Box::new((*node).into_user_data()))
             }
-            Self::ExtLst(node) => CustomRichFiltersContentWith::ExtLst(node.into_user_data()),
+            Self::ExtLst(node) => {
+                CustomRichFiltersContentWith::ExtLst(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => CustomRichFiltersContentWith::Other(node),
         }
     }
@@ -3015,7 +3017,7 @@ impl officekit_markup_base::Read for CustomRichFiltersContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_XLRD2, "customFilter")) => Self::CustomFilter(Box::new(item.read())),
-            Some((NS_XLRD2, "extLst")) => Self::ExtLst(item.read()),
+            Some((NS_XLRD2, "extLst")) => Self::ExtLst(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3039,13 +3041,13 @@ impl<X: UserData> From<CustomFilterWith<X>> for CustomRichFiltersContentWith<X> 
 
 impl<X: UserData> From<ExtLstWith<X>> for CustomRichFiltersContentWith<X> {
     fn from(arm: ExtLstWith<X>) -> Self {
-        Self::ExtLst(arm)
+        Self::ExtLst(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<CustomRichFiltersContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<CustomRichFiltersContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> DateGroupItemWith<X> {
@@ -3799,7 +3801,9 @@ impl<X: UserData> RichFilterColumnContentWith<X> {
             Self::DynamicFilter(node) => {
                 RichFilterColumnContentWith::DynamicFilter(Box::new((*node).into_user_data()))
             }
-            Self::ExtLst(node) => RichFilterColumnContentWith::ExtLst(node.into_user_data()),
+            Self::ExtLst(node) => {
+                RichFilterColumnContentWith::ExtLst(Box::new((*node).into_user_data()))
+            }
             Self::Filters(node) => {
                 RichFilterColumnContentWith::Filters(Box::new((*node).into_user_data()))
             }
@@ -3820,7 +3824,7 @@ impl officekit_markup_base::Read for RichFilterColumnContent {
         match item.name() {
             Some((NS_XLRD2, "customFilters")) => Self::CustomFilters(Box::new(item.read())),
             Some((NS_XLRD2, "dynamicFilter")) => Self::DynamicFilter(Box::new(item.read())),
-            Some((NS_XLRD2, "extLst")) => Self::ExtLst(item.read()),
+            Some((NS_XLRD2, "extLst")) => Self::ExtLst(Box::new(item.read())),
             Some((NS_XLRD2, "filters")) => Self::Filters(Box::new(item.read())),
             Some((NS_XLRD2, "top10")) => Self::Top10(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
@@ -3855,7 +3859,7 @@ impl<X: UserData> From<DynamicFilterWith<X>> for RichFilterColumnContentWith<X> 
 
 impl<X: UserData> From<ExtLstWith<X>> for RichFilterColumnContentWith<X> {
     fn from(arm: ExtLstWith<X>) -> Self {
-        Self::ExtLst(arm)
+        Self::ExtLst(Box::new(arm))
     }
 }
 
@@ -3872,8 +3876,8 @@ impl<X: UserData> From<Top10With<X>> for RichFilterColumnContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<RichFilterColumnContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<RichFilterColumnContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]

@@ -4744,7 +4744,7 @@ fn transform_picture_effect_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2010_main::PictureEffectContent> {
     if let office_drawing_2010_main::PictureEffectContent::ArtisticBlur(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticBlur(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticCement(arm) = item {
@@ -4851,17 +4851,17 @@ fn transform_picture_effect_2(
         return Some(office_drawing_2010_main::PictureEffectContent::BrightnessContrast(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ColorTemperature(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ColorTemperature(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::Saturation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::Saturation(
             node,
         ));
     }
     if let office_drawing_2010_main::PictureEffectContent::SharpenSoften(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::SharpenSoften(node));
     }
     None

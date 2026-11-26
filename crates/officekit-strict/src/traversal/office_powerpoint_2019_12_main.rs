@@ -1299,17 +1299,17 @@ impl super::Transform for office_powerpoint_2019_12_main::TaskHistoryEventConten
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PcntCmplt(arm) = self {
-            Self::PcntCmplt(arm.transform(ctx))
+            Self::PcntCmplt(Box::new(arm.transform(ctx)))
         } else if let Self::Pri(arm) = self {
-            Self::Pri(arm.transform(ctx))
+            Self::Pri(Box::new(arm.transform(ctx)))
         } else if let Self::Title(arm) = self {
-            Self::Title(arm.transform(ctx))
+            Self::Title(Box::new(arm.transform(ctx)))
         } else if let Self::UnAsgn(arm) = self {
             Self::UnAsgn(arm.transform(ctx))
         } else if let Self::UnasgnAll(arm) = self {
             Self::UnasgnAll(arm.transform(ctx))
         } else if let Self::Undo(arm) = self {
-            Self::Undo(arm.transform(ctx))
+            Self::Undo(Box::new(arm.transform(ctx)))
         } else if let Self::Unknown(arm) = self {
             Self::Unknown(arm.transform(ctx))
         } else {

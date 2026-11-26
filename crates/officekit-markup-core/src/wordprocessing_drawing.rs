@@ -1402,13 +1402,13 @@ impl Eq for HorizontalPositioningWith<()> {}
 #[non_exhaustive]
 pub enum HorizontalPositioningContentWith<X: UserData> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
+    AbsolutePositionOffset(Box<AbsolutePositionOffsetWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `wp14:pctPosHOffset`, a `PctPosHOffset`.
-    PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>),
+    PctPosHOffset(Box<super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>>),
     /// The element `wp:align`, a `RelativeHorizontalAlignment`.
-    RelativeHorizontalAlignment(RelativeHorizontalAlignmentWith<X>),
+    RelativeHorizontalAlignment(Box<RelativeHorizontalAlignmentWith<X>>),
 }
 
 /// [`HorizontalPositioningContentWith`] of the tree a read gives, where no node holds anything in
@@ -2177,13 +2177,13 @@ impl Eq for VerticalPositioningWith<()> {}
 #[non_exhaustive]
 pub enum VerticalPositioningContentWith<X: UserData> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
+    AbsolutePositionOffset(Box<AbsolutePositionOffsetWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `wp14:pctPosVOffset`, a `PctPosVOffset`.
-    PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>),
+    PctPosVOffset(Box<super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>>),
     /// The element `wp:align`, a `RelativeVerticalAlignment`.
-    RelativeVerticalAlignment(RelativeVerticalAlignmentWith<X>),
+    RelativeVerticalAlignment(Box<RelativeVerticalAlignmentWith<X>>),
 }
 
 /// [`VerticalPositioningContentWith`] of the tree a read gives, where no node holds anything in
@@ -2620,8 +2620,8 @@ impl<X: UserData> From<TopAndBottomWrappingWith<X>> for AnchorContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<AnchorContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<AnchorContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> AnchorForFloatingDrawingMLObjectWith<X> {
@@ -3156,8 +3156,8 @@ impl<X: UserData> From<WordprocessingMLShapeGroupWith<X>> for DrawingCanvasConte
 }
 
 const _: () = assert!(
-    size_of::<DrawingCanvasContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<DrawingCanvasContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> DrawingObjectNonVisualPropertiesWith<X> {
@@ -3552,8 +3552,8 @@ impl<X: UserData> From<WordprocessingMLShapeWith<X>> for GroupShapeContentWith<X
 }
 
 const _: () = assert!(
-    size_of::<GroupShapeContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<GroupShapeContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> GroupShapePropertiesWith<X> {
@@ -3687,14 +3687,18 @@ impl<X: UserData> HorizontalPositioningContentWith<X> {
     {
         match self {
             Self::AbsolutePositionOffset(node) => {
-                HorizontalPositioningContentWith::AbsolutePositionOffset(node.into_user_data())
+                HorizontalPositioningContentWith::AbsolutePositionOffset(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => HorizontalPositioningContentWith::Other(node),
             Self::PctPosHOffset(node) => {
-                HorizontalPositioningContentWith::PctPosHOffset(node.into_user_data())
+                HorizontalPositioningContentWith::PctPosHOffset(Box::new((*node).into_user_data()))
             }
             Self::RelativeHorizontalAlignment(node) => {
-                HorizontalPositioningContentWith::RelativeHorizontalAlignment(node.into_user_data())
+                HorizontalPositioningContentWith::RelativeHorizontalAlignment(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -3702,7 +3706,7 @@ impl<X: UserData> HorizontalPositioningContentWith<X> {
 
 impl<X: UserData> Default for HorizontalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
+        Self::AbsolutePositionOffset(Box::default())
     }
 }
 
@@ -3713,9 +3717,9 @@ impl officekit_markup_base::Read for HorizontalPositioningContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(item.read()),
-            Some((NS_WP14, "pctPosHOffset")) => Self::PctPosHOffset(item.read()),
-            Some((NS_WP, "align")) => Self::RelativeHorizontalAlignment(item.read()),
+            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(Box::new(item.read())),
+            Some((NS_WP14, "pctPosHOffset")) => Self::PctPosHOffset(Box::new(item.read())),
+            Some((NS_WP, "align")) => Self::RelativeHorizontalAlignment(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -3734,7 +3738,7 @@ impl officekit_markup_base::Write for HorizontalPositioningContent {
 
 impl<X: UserData> From<AbsolutePositionOffsetWith<X>> for HorizontalPositioningContentWith<X> {
     fn from(arm: AbsolutePositionOffsetWith<X>) -> Self {
-        Self::AbsolutePositionOffset(arm)
+        Self::AbsolutePositionOffset(Box::new(arm))
     }
 }
 
@@ -3742,19 +3746,19 @@ impl<X: UserData> From<super::office_word_2010_wordprocessing_drawing::PctPosHOf
     for HorizontalPositioningContentWith<X>
 {
     fn from(arm: super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>) -> Self {
-        Self::PctPosHOffset(arm)
+        Self::PctPosHOffset(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<RelativeHorizontalAlignmentWith<X>> for HorizontalPositioningContentWith<X> {
     fn from(arm: RelativeHorizontalAlignmentWith<X>) -> Self {
-        Self::RelativeHorizontalAlignment(arm)
+        Self::RelativeHorizontalAlignment(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<HorizontalPositioningContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<HorizontalPositioningContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]
@@ -4746,8 +4750,8 @@ impl<X: UserData> From<NonVisualDrawingPropertiesForAShapeWith<X>>
 }
 
 const _: () = assert!(
-    size_of::<ShapeNonVisualPropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ShapeNonVisualPropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ShapePropertiesWith<X> {
@@ -4954,8 +4958,8 @@ impl<X: UserData> From<TextualContentsOfShapeTxbxWith<X>> for ShapeTextContentWi
 }
 
 const _: () = assert!(
-    size_of::<ShapeTextContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ShapeTextContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> SimplePositioningCoordinatesWith<X> {
@@ -5594,14 +5598,18 @@ impl<X: UserData> VerticalPositioningContentWith<X> {
     {
         match self {
             Self::AbsolutePositionOffset(node) => {
-                VerticalPositioningContentWith::AbsolutePositionOffset(node.into_user_data())
+                VerticalPositioningContentWith::AbsolutePositionOffset(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => VerticalPositioningContentWith::Other(node),
             Self::PctPosVOffset(node) => {
-                VerticalPositioningContentWith::PctPosVOffset(node.into_user_data())
+                VerticalPositioningContentWith::PctPosVOffset(Box::new((*node).into_user_data()))
             }
             Self::RelativeVerticalAlignment(node) => {
-                VerticalPositioningContentWith::RelativeVerticalAlignment(node.into_user_data())
+                VerticalPositioningContentWith::RelativeVerticalAlignment(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -5609,7 +5617,7 @@ impl<X: UserData> VerticalPositioningContentWith<X> {
 
 impl<X: UserData> Default for VerticalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
+        Self::AbsolutePositionOffset(Box::default())
     }
 }
 
@@ -5620,9 +5628,9 @@ impl officekit_markup_base::Read for VerticalPositioningContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(item.read()),
-            Some((NS_WP14, "pctPosVOffset")) => Self::PctPosVOffset(item.read()),
-            Some((NS_WP, "align")) => Self::RelativeVerticalAlignment(item.read()),
+            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(Box::new(item.read())),
+            Some((NS_WP14, "pctPosVOffset")) => Self::PctPosVOffset(Box::new(item.read())),
+            Some((NS_WP, "align")) => Self::RelativeVerticalAlignment(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -5641,7 +5649,7 @@ impl officekit_markup_base::Write for VerticalPositioningContent {
 
 impl<X: UserData> From<AbsolutePositionOffsetWith<X>> for VerticalPositioningContentWith<X> {
     fn from(arm: AbsolutePositionOffsetWith<X>) -> Self {
-        Self::AbsolutePositionOffset(arm)
+        Self::AbsolutePositionOffset(Box::new(arm))
     }
 }
 
@@ -5649,19 +5657,19 @@ impl<X: UserData> From<super::office_word_2010_wordprocessing_drawing::PctPosVOf
     for VerticalPositioningContentWith<X>
 {
     fn from(arm: super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>) -> Self {
-        Self::PctPosVOffset(arm)
+        Self::PctPosVOffset(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<RelativeVerticalAlignmentWith<X>> for VerticalPositioningContentWith<X> {
     fn from(arm: RelativeVerticalAlignmentWith<X>) -> Self {
-        Self::RelativeVerticalAlignment(arm)
+        Self::RelativeVerticalAlignment(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<VerticalPositioningContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<VerticalPositioningContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]

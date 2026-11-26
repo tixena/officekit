@@ -1226,7 +1226,7 @@ pub enum ObjectContentWith<X: UserData> {
     /// The element `xdr:cxnSp`, a `ConnectionShape`.
     ConnectionShape(Box<ConnectionShapeWith<X>>),
     /// The element `xdr:contentPart`, a `ContentPart`.
-    ContentPart(ContentPartWith<X>),
+    ContentPart(Box<ContentPartWith<X>>),
     /// The element `xdr:graphicFrame`, a `GraphicFrame`.
     GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `xdr:grpSp`, a `GroupShape`.
@@ -2389,8 +2389,8 @@ impl<X: UserData> From<ShapeWith<X>> for GroupShapeContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<GroupShapeContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<GroupShapeContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> GroupShapePropertiesWith<X> {
@@ -3034,7 +3034,9 @@ impl<X: UserData> ObjectContentWith<X> {
             Self::ConnectionShape(node) => {
                 ObjectContentWith::ConnectionShape(Box::new((*node).into_user_data()))
             }
-            Self::ContentPart(node) => ObjectContentWith::ContentPart(node.into_user_data()),
+            Self::ContentPart(node) => {
+                ObjectContentWith::ContentPart(Box::new((*node).into_user_data()))
+            }
             Self::GraphicFrame(node) => {
                 ObjectContentWith::GraphicFrame(Box::new((*node).into_user_data()))
             }
@@ -3062,7 +3064,7 @@ impl officekit_markup_base::Read for ObjectContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(Box::new(item.read())),
-            Some((NS_XDR, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_XDR, "contentPart")) => Self::ContentPart(Box::new(item.read())),
             Some((NS_XDR, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
             Some((NS_XDR, "grpSp")) => Self::GroupShape(Box::new(item.read())),
             Some((NS_XDR, "pic")) => Self::Picture(Box::new(item.read())),
@@ -3094,7 +3096,7 @@ impl<X: UserData> From<ConnectionShapeWith<X>> for ObjectContentWith<X> {
 
 impl<X: UserData> From<ContentPartWith<X>> for ObjectContentWith<X> {
     fn from(arm: ContentPartWith<X>) -> Self {
-        Self::ContentPart(arm)
+        Self::ContentPart(Box::new(arm))
     }
 }
 
@@ -3123,8 +3125,8 @@ impl<X: UserData> From<ShapeWith<X>> for ObjectContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<ObjectContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ObjectContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> OneCellAnchorShapeSizeWith<X> {
@@ -4165,8 +4167,8 @@ impl<X: UserData> From<TwoCellAnchorShapeSizeWith<X>> for WorksheetDrawingConten
 }
 
 const _: () = assert!(
-    size_of::<WorksheetDrawingContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<WorksheetDrawingContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> XfrmWith<X> {

@@ -1495,8 +1495,8 @@ impl<X: UserData> From<CNvSpPrWith<X>> for ShapeNonVisualPropertiesContentWith<X
 }
 
 const _: () = assert!(
-    size_of::<ShapeNonVisualPropertiesContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ShapeNonVisualPropertiesContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> ShapeTextContentWith<X> {
@@ -1553,8 +1553,8 @@ impl<X: UserData> From<TxbxWith<X>> for ShapeTextContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<ShapeTextContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ShapeTextContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> SpPrWith<X> {

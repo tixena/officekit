@@ -2766,9 +2766,9 @@ impl super::Transform for diagram::LayoutElementContent {
         } else if let Self::ChooseElement(arm) = self {
             Self::ChooseElement(Box::new(arm.transform(ctx)))
         } else if let Self::ConstraintList(arm) = self {
-            Self::ConstraintList(arm.transform(ctx))
+            Self::ConstraintList(Box::new(arm.transform(ctx)))
         } else if let Self::ExtensionList(arm) = self {
-            Self::ExtensionList(arm.transform(ctx))
+            Self::ExtensionList(Box::new(arm.transform(ctx)))
         } else if let Self::ForEach(arm) = self {
             Self::ForEach(Box::new(arm.transform(ctx)))
         } else if let Self::LayoutNode(arm) = self {
@@ -2778,7 +2778,7 @@ impl super::Transform for diagram::LayoutElementContent {
         } else if let Self::PresentationOf(arm) = self {
             Self::PresentationOf(Box::new(arm.transform(ctx)))
         } else if let Self::RuleList(arm) = self {
-            Self::RuleList(arm.transform(ctx))
+            Self::RuleList(Box::new(arm.transform(ctx)))
         } else if let Self::Shape(arm) = self {
             Self::Shape(Box::new(arm.transform(ctx)))
         } else {
@@ -2994,9 +2994,9 @@ impl super::Transform for diagram::LayoutNodeContent {
         } else if let Self::ChooseElement(arm) = self {
             Self::ChooseElement(Box::new(arm.transform(ctx)))
         } else if let Self::ConstraintList(arm) = self {
-            Self::ConstraintList(arm.transform(ctx))
+            Self::ConstraintList(Box::new(arm.transform(ctx)))
         } else if let Self::ExtensionList(arm) = self {
-            Self::ExtensionList(arm.transform(ctx))
+            Self::ExtensionList(Box::new(arm.transform(ctx)))
         } else if let Self::ForEach(arm) = self {
             Self::ForEach(Box::new(arm.transform(ctx)))
         } else if let Self::LayoutNode(arm) = self {
@@ -3006,7 +3006,7 @@ impl super::Transform for diagram::LayoutNodeContent {
         } else if let Self::PresentationOf(arm) = self {
             Self::PresentationOf(Box::new(arm.transform(ctx)))
         } else if let Self::RuleList(arm) = self {
-            Self::RuleList(arm.transform(ctx))
+            Self::RuleList(Box::new(arm.transform(ctx)))
         } else if let Self::Shape(arm) = self {
             Self::Shape(Box::new(arm.transform(ctx)))
         } else if let Self::VariableList(arm) = self {

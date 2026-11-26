@@ -1070,13 +1070,13 @@ pub enum TaskHistoryEventContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `t:Priority`, a `Priority`.
-    Priority(PriorityWith<X>),
+    Priority(Box<PriorityWith<X>>),
     /// The element `t:Progress`, a `Progress`.
-    Progress(ProgressWith<X>),
+    Progress(Box<ProgressWith<X>>),
     /// The element `t:Schedule`, a `Schedule`.
     Schedule(Box<ScheduleWith<X>>),
     /// The element `t:SetTitle`, a `SetTitle`.
-    SetTitle(SetTitleWith<X>),
+    SetTitle(Box<SetTitleWith<X>>),
     /// The element `t:Unassign`, a `Unassign`.
     Unassign(UnassignWith<X>),
     /// The element `t:UnassignAll`, a `UnassignAll`.
@@ -1084,7 +1084,7 @@ pub enum TaskHistoryEventContentWith<X: UserData> {
     /// The element `t:Undelete`, a `Undelete`.
     Undelete(UndeleteWith<X>),
     /// The element `t:Undo`, a `Undo`.
-    Undo(UndoWith<X>),
+    Undo(Box<UndoWith<X>>),
 }
 
 /// [`TaskHistoryEventContentWith`] of the tree a read gives, where no node holds anything in
@@ -2018,18 +2018,26 @@ impl<X: UserData> TaskHistoryEventContentWith<X> {
             Self::Create(node) => TaskHistoryEventContentWith::Create(node.into_user_data()),
             Self::Delete(node) => TaskHistoryEventContentWith::Delete(node.into_user_data()),
             Self::Other(node) => TaskHistoryEventContentWith::Other(node),
-            Self::Priority(node) => TaskHistoryEventContentWith::Priority(node.into_user_data()),
-            Self::Progress(node) => TaskHistoryEventContentWith::Progress(node.into_user_data()),
+            Self::Priority(node) => {
+                TaskHistoryEventContentWith::Priority(Box::new((*node).into_user_data()))
+            }
+            Self::Progress(node) => {
+                TaskHistoryEventContentWith::Progress(Box::new((*node).into_user_data()))
+            }
             Self::Schedule(node) => {
                 TaskHistoryEventContentWith::Schedule(Box::new((*node).into_user_data()))
             }
-            Self::SetTitle(node) => TaskHistoryEventContentWith::SetTitle(node.into_user_data()),
+            Self::SetTitle(node) => {
+                TaskHistoryEventContentWith::SetTitle(Box::new((*node).into_user_data()))
+            }
             Self::Unassign(node) => TaskHistoryEventContentWith::Unassign(node.into_user_data()),
             Self::UnassignAll(node) => {
                 TaskHistoryEventContentWith::UnassignAll(node.into_user_data())
             }
             Self::Undelete(node) => TaskHistoryEventContentWith::Undelete(node.into_user_data()),
-            Self::Undo(node) => TaskHistoryEventContentWith::Undo(node.into_user_data()),
+            Self::Undo(node) => {
+                TaskHistoryEventContentWith::Undo(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
@@ -2044,14 +2052,14 @@ impl officekit_markup_base::Read for TaskHistoryEventContent {
             Some((NS_T, "Assign")) => Self::Assign(item.read()),
             Some((NS_T, "Create")) => Self::Create(item.read()),
             Some((NS_T, "Delete")) => Self::Delete(item.read()),
-            Some((NS_T, "Priority")) => Self::Priority(item.read()),
-            Some((NS_T, "Progress")) => Self::Progress(item.read()),
+            Some((NS_T, "Priority")) => Self::Priority(Box::new(item.read())),
+            Some((NS_T, "Progress")) => Self::Progress(Box::new(item.read())),
             Some((NS_T, "Schedule")) => Self::Schedule(Box::new(item.read())),
-            Some((NS_T, "SetTitle")) => Self::SetTitle(item.read()),
+            Some((NS_T, "SetTitle")) => Self::SetTitle(Box::new(item.read())),
             Some((NS_T, "Unassign")) => Self::Unassign(item.read()),
             Some((NS_T, "UnassignAll")) => Self::UnassignAll(item.read()),
             Some((NS_T, "Undelete")) => Self::Undelete(item.read()),
-            Some((NS_T, "Undo")) => Self::Undo(item.read()),
+            Some((NS_T, "Undo")) => Self::Undo(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -2096,13 +2104,13 @@ impl<X: UserData> From<DeleteWith<X>> for TaskHistoryEventContentWith<X> {
 
 impl<X: UserData> From<PriorityWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: PriorityWith<X>) -> Self {
-        Self::Priority(arm)
+        Self::Priority(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<ProgressWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: ProgressWith<X>) -> Self {
-        Self::Progress(arm)
+        Self::Progress(Box::new(arm))
     }
 }
 
@@ -2114,7 +2122,7 @@ impl<X: UserData> From<ScheduleWith<X>> for TaskHistoryEventContentWith<X> {
 
 impl<X: UserData> From<SetTitleWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: SetTitleWith<X>) -> Self {
-        Self::SetTitle(arm)
+        Self::SetTitle(Box::new(arm))
     }
 }
 
@@ -2138,13 +2146,13 @@ impl<X: UserData> From<UndeleteWith<X>> for TaskHistoryEventContentWith<X> {
 
 impl<X: UserData> From<UndoWith<X>> for TaskHistoryEventContentWith<X> {
     fn from(arm: UndoWith<X>) -> Self {
-        Self::Undo(arm)
+        Self::Undo(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<TaskHistoryEventContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<TaskHistoryEventContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> TasksWith<X> {

@@ -654,8 +654,8 @@ impl<X: UserData> From<UnknownWith<X>> for PlaceholderTypeContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<PlaceholderTypeContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<PlaceholderTypeContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> TypeWith<X> {

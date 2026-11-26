@@ -65,7 +65,7 @@ fn a_node_holds_its_unknown_content_behind_one_pointer() {
 }
 
 #[test]
-fn every_content_enum_of_wordprocessing_takes_at_most_40_bytes() {
+fn every_content_enum_of_wordprocessing_takes_at_most_24_bytes() {
     use crate::wordprocessing::{
         BlockContent, CellMarkupContent, CheckboxFormFieldPropertiesContent,
         ComplexFieldCharacterContent, ConflictChangeContent, ContentBlockContent,
@@ -105,8 +105,8 @@ fn every_content_enum_of_wordprocessing_takes_at_most_40_bytes() {
         size_of::<VmlElementContent>(),
         size_of::<VmlOfficeDrawingElementContent>(),
     ];
-    assert!(sizes.iter().all(|size| *size <= 40), "{sizes:?}");
-    assert!(size_of::<RunPropertiesContent>() <= 40);
+    assert!(sizes.iter().all(|size| *size <= 24), "{sizes:?}");
+    assert!(size_of::<RunPropertiesContent>() <= 24);
 }
 
 #[test]

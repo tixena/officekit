@@ -351,39 +351,39 @@ impl super::Transform for document_properties_variant_types::ArrayContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BasicString(arm) = self {
-            Self::BasicString(arm.transform(ctx))
+            Self::BasicString(Box::new(arm.transform(ctx)))
         } else if let Self::Boolean(arm) = self {
-            Self::Boolean(arm.transform(ctx))
+            Self::Boolean(Box::new(arm.transform(ctx)))
         } else if let Self::Currency(arm) = self {
-            Self::Currency(arm.transform(ctx))
+            Self::Currency(Box::new(arm.transform(ctx)))
         } else if let Self::DateAndTime(arm) = self {
-            Self::DateAndTime(arm.transform(ctx))
+            Self::DateAndTime(Box::new(arm.transform(ctx)))
         } else if let Self::Decimal(arm) = self {
-            Self::Decimal(arm.transform(ctx))
+            Self::Decimal(Box::new(arm.transform(ctx)))
         } else if let Self::ErrorStatusCode(arm) = self {
-            Self::ErrorStatusCode(arm.transform(ctx))
+            Self::ErrorStatusCode(Box::new(arm.transform(ctx)))
         } else if let Self::I1(arm) = self {
-            Self::I1(arm.transform(ctx))
+            Self::I1(Box::new(arm.transform(ctx)))
         } else if let Self::I2(arm) = self {
-            Self::I2(arm.transform(ctx))
+            Self::I2(Box::new(arm.transform(ctx)))
         } else if let Self::I4(arm) = self {
-            Self::I4(arm.transform(ctx))
+            Self::I4(Box::new(arm.transform(ctx)))
         } else if let Self::Integer(arm) = self {
-            Self::Integer(arm.transform(ctx))
+            Self::Integer(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::R4(arm) = self {
-            Self::R4(arm.transform(ctx))
+            Self::R4(Box::new(arm.transform(ctx)))
         } else if let Self::R8(arm) = self {
-            Self::R8(arm.transform(ctx))
+            Self::R8(Box::new(arm.transform(ctx)))
         } else if let Self::Ui1(arm) = self {
-            Self::Ui1(arm.transform(ctx))
+            Self::Ui1(Box::new(arm.transform(ctx)))
         } else if let Self::Ui2(arm) = self {
-            Self::Ui2(arm.transform(ctx))
+            Self::Ui2(Box::new(arm.transform(ctx)))
         } else if let Self::Ui4(arm) = self {
-            Self::Ui4(arm.transform(ctx))
+            Self::Ui4(Box::new(arm.transform(ctx)))
         } else if let Self::UnsignedInteger(arm) = self {
-            Self::UnsignedInteger(arm.transform(ctx))
+            Self::UnsignedInteger(Box::new(arm.transform(ctx)))
         } else if let Self::Variant(arm) = self {
             Self::Variant(arm.transform(ctx))
         } else {
@@ -3560,31 +3560,31 @@ fn transform_variant_content_1(
         ));
     }
     if let document_properties_variant_types::VariantContent::BasicString(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::BasicString(node));
     }
     if let document_properties_variant_types::VariantContent::BinaryBlob(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::BinaryBlob(node));
     }
     if let document_properties_variant_types::VariantContent::BinaryBlobObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::BinaryBlobObject(node));
     }
     if let document_properties_variant_types::VariantContent::BinaryStorage(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::BinaryStorage(node));
     }
     if let document_properties_variant_types::VariantContent::BinaryStorageObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::BinaryStorageObject(node));
     }
     if let document_properties_variant_types::VariantContent::BinaryStream(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::BinaryStream(node));
     }
     if let document_properties_variant_types::VariantContent::BinaryStreamObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::BinaryStreamObject(node));
     }
     if let document_properties_variant_types::VariantContent::BinaryVersionedStream(arm) = item {
@@ -3594,29 +3594,29 @@ fn transform_variant_content_1(
         );
     }
     if let document_properties_variant_types::VariantContent::Boolean(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Boolean(
             node,
         ));
     }
     if let document_properties_variant_types::VariantContent::ClassID(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::ClassID(
             node,
         ));
     }
     if let document_properties_variant_types::VariantContent::Currency(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Currency(
             node,
         ));
     }
     if let document_properties_variant_types::VariantContent::DateAndTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::DateAndTime(node));
     }
     if let document_properties_variant_types::VariantContent::Decimal(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Decimal(
             node,
         ));
@@ -3628,17 +3628,17 @@ fn transform_variant_content_1(
         ));
     }
     if let document_properties_variant_types::VariantContent::ErrorStatusCode(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::ErrorStatusCode(node));
     }
     if let document_properties_variant_types::VariantContent::FileTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::FileTime(
             node,
         ));
     }
     if let document_properties_variant_types::VariantContent::I1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::I1(node));
     }
     None
@@ -3649,31 +3649,31 @@ fn transform_variant_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<document_properties_variant_types::VariantContent> {
     if let document_properties_variant_types::VariantContent::I2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::I2(node));
     }
     if let document_properties_variant_types::VariantContent::I4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::I4(node));
     }
     if let document_properties_variant_types::VariantContent::I8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::I8(node));
     }
     if let document_properties_variant_types::VariantContent::Integer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Integer(
             node,
         ));
     }
     if let document_properties_variant_types::VariantContent::Lpstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Lpstr(
             node,
         ));
     }
     if let document_properties_variant_types::VariantContent::Lpwstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Lpwstr(
             node,
         ));
@@ -3685,31 +3685,31 @@ fn transform_variant_content_2(
         ));
     }
     if let document_properties_variant_types::VariantContent::R4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::R4(node));
     }
     if let document_properties_variant_types::VariantContent::R8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::R8(node));
     }
     if let document_properties_variant_types::VariantContent::Ui1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Ui1(node));
     }
     if let document_properties_variant_types::VariantContent::Ui2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Ui2(node));
     }
     if let document_properties_variant_types::VariantContent::Ui4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Ui4(node));
     }
     if let document_properties_variant_types::VariantContent::Ui8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::Ui8(node));
     }
     if let document_properties_variant_types::VariantContent::UnsignedInteger(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VariantContent::UnsignedInteger(node));
     }
     if let document_properties_variant_types::VariantContent::Variant(arm) = item {
@@ -3964,91 +3964,91 @@ fn transform_vector_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<document_properties_variant_types::VectorContent> {
     if let document_properties_variant_types::VectorContent::BasicString(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::BasicString(node));
     }
     if let document_properties_variant_types::VectorContent::Boolean(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Boolean(
             node,
         ));
     }
     if let document_properties_variant_types::VectorContent::ClassID(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::ClassID(
             node,
         ));
     }
     if let document_properties_variant_types::VectorContent::Currency(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Currency(
             node,
         ));
     }
     if let document_properties_variant_types::VectorContent::DateAndTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::DateAndTime(node));
     }
     if let document_properties_variant_types::VectorContent::ErrorStatusCode(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::ErrorStatusCode(node));
     }
     if let document_properties_variant_types::VectorContent::FileTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::FileTime(
             node,
         ));
     }
     if let document_properties_variant_types::VectorContent::I1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::I1(node));
     }
     if let document_properties_variant_types::VectorContent::I2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::I2(node));
     }
     if let document_properties_variant_types::VectorContent::I4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::I4(node));
     }
     if let document_properties_variant_types::VectorContent::I8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::I8(node));
     }
     if let document_properties_variant_types::VectorContent::Lpstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Lpstr(
             node,
         ));
     }
     if let document_properties_variant_types::VectorContent::Lpwstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Lpwstr(
             node,
         ));
     }
     if let document_properties_variant_types::VectorContent::R4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::R4(node));
     }
     if let document_properties_variant_types::VectorContent::R8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::R8(node));
     }
     if let document_properties_variant_types::VectorContent::Ui1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Ui1(node));
     }
     if let document_properties_variant_types::VectorContent::Ui2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Ui2(node));
     }
     if let document_properties_variant_types::VectorContent::Ui4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Ui4(node));
     }
     if let document_properties_variant_types::VectorContent::Ui8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(document_properties_variant_types::VectorContent::Ui8(node));
     }
     None

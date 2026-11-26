@@ -646,25 +646,25 @@ impl super::Transform for office_powerpoint_2018_8_main::CommentContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::DeMkLst(arm) = self {
-            Self::DeMkLst(arm.transform(ctx))
+            Self::DeMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::GridColMkLst(arm) = self {
-            Self::GridColMkLst(arm.transform(ctx))
+            Self::GridColMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SldLayoutMkLst(arm) = self {
-            Self::SldLayoutMkLst(arm.transform(ctx))
+            Self::SldLayoutMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::SldMasterMkLst(arm) = self {
-            Self::SldMasterMkLst(arm.transform(ctx))
+            Self::SldMasterMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::SldMkLst(arm) = self {
             Self::SldMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::TcMkLst(arm) = self {
-            Self::TcMkLst(arm.transform(ctx))
+            Self::TcMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::TrMkLst(arm) = self {
-            Self::TrMkLst(arm.transform(ctx))
+            Self::TrMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::TxBodyMkLst(arm) = self {
-            Self::TxBodyMkLst(arm.transform(ctx))
+            Self::TxBodyMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::TxMkLst(arm) = self {
-            Self::TxMkLst(arm.transform(ctx))
+            Self::TxMkLst(Box::new(arm.transform(ctx)))
         } else if let Self::UnknownAnchor(arm) = self {
             Self::UnknownAnchor(arm.transform(ctx))
         } else {

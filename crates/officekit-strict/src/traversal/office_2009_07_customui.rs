@@ -8528,13 +8528,13 @@ impl super::Transform for office_2009_07_customui::RibbonContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ContextualTabs(arm) = self {
-            Self::ContextualTabs(arm.transform(ctx))
+            Self::ContextualTabs(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Qat(arm) = self {
-            Self::Qat(arm.transform(ctx))
+            Self::Qat(Box::new(arm.transform(ctx)))
         } else if let Self::Tabs(arm) = self {
-            Self::Tabs(arm.transform(ctx))
+            Self::Tabs(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

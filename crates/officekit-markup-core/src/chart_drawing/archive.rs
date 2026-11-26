@@ -702,9 +702,9 @@ pub enum ObjectContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum UserShapesContent {
-    AbsoluteAnchorShapeSize(#[rkyv(omit_bounds)] super::AbsoluteAnchorShapeSize),
+    AbsoluteAnchorShapeSize(#[rkyv(omit_bounds)] Box<super::AbsoluteAnchorShapeSize>),
     Other(Box<Node>),
-    RelativeAnchorShapeSize(#[rkyv(omit_bounds)] super::RelativeAnchorShapeSize),
+    RelativeAnchorShapeSize(#[rkyv(omit_bounds)] Box<super::RelativeAnchorShapeSize>),
 }
 
 impl From<AbsoluteAnchorShapeSizeMirror> for super::AbsoluteAnchorShapeSize {

@@ -4663,9 +4663,9 @@ impl super::Transform for math::MathPropertiesContent {
         if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::WrapIndent(arm) = self {
-            Self::WrapIndent(arm.transform(ctx))
+            Self::WrapIndent(Box::new(arm.transform(ctx)))
         } else if let Self::WrapRight(arm) = self {
-            Self::WrapRight(arm.transform(ctx))
+            Self::WrapRight(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -8069,13 +8069,13 @@ impl super::Transform for math::RunPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::NormalText(arm) = self {
-            Self::NormalText(arm.transform(ctx))
+            Self::NormalText(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Script(arm) = self {
-            Self::Script(arm.transform(ctx))
+            Self::Script(Box::new(arm.transform(ctx)))
         } else if let Self::Sty(arm) = self {
-            Self::Sty(arm.transform(ctx))
+            Self::Sty(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -9688,7 +9688,7 @@ fn transform_office_math_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<math::OfficeMathContent> {
     if let math::OfficeMathContent::Accent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::Accent(node));
     }
     if let math::OfficeMathContent::ArrayObject(arm) = item {
@@ -9696,7 +9696,7 @@ fn transform_office_math_content_1(
         return Some(math::OfficeMathContent::ArrayObject(node));
     }
     if let math::OfficeMathContent::Bar(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::Bar(node));
     }
     if let math::OfficeMathContent::BookmarkEnd(arm) = item {
@@ -9708,11 +9708,11 @@ fn transform_office_math_content_1(
         return Some(math::OfficeMathContent::BookmarkStart(node));
     }
     if let math::OfficeMathContent::BorderBoxObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::BorderBoxObject(node));
     }
     if let math::OfficeMathContent::BoxObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::BoxObject(node));
     }
     if let math::OfficeMathContent::CommentAnchorRangeEnd(arm) = item {
@@ -9732,7 +9732,7 @@ fn transform_office_math_content_1(
         return Some(math::OfficeMathContent::ConflictInsRunTrackChange(node));
     }
     if let math::OfficeMathContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let math::OfficeMathContent::CustomXMLMarkupDeletionStart(arm) = item {
@@ -9740,7 +9740,7 @@ fn transform_office_math_content_1(
         return Some(math::OfficeMathContent::CustomXMLMarkupDeletionStart(node));
     }
     if let math::OfficeMathContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let math::OfficeMathContent::CustomXMLMarkupInsertionStart(arm) = item {
@@ -9748,7 +9748,7 @@ fn transform_office_math_content_1(
         return Some(math::OfficeMathContent::CustomXMLMarkupInsertionStart(node));
     }
     if let math::OfficeMathContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let math::OfficeMathContent::CustomXMLMarkupMoveSourceStart(arm) = item {
@@ -9758,7 +9758,7 @@ fn transform_office_math_content_1(
         ));
     }
     if let math::OfficeMathContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::CustomXmlConflictDelRangeEnd(node));
     }
     if let math::OfficeMathContent::CustomXmlConflictDelRangeStart(arm) = item {
@@ -9768,7 +9768,7 @@ fn transform_office_math_content_1(
         ));
     }
     if let math::OfficeMathContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::CustomXmlConflictInsRangeEnd(node));
     }
     None
@@ -9785,7 +9785,7 @@ fn transform_office_math_content_2(
         ));
     }
     if let math::OfficeMathContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::CustomXmlMoveToRangeEnd(node));
     }
     if let math::OfficeMathContent::CustomXmlMoveToRangeStart(arm) = item {
@@ -9801,15 +9801,15 @@ fn transform_office_math_content_2(
         return Some(math::OfficeMathContent::DelimiterObject(node));
     }
     if let math::OfficeMathContent::FractionObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::FractionObject(node));
     }
     if let math::OfficeMathContent::FunctionApplyObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::FunctionApplyObject(node));
     }
     if let math::OfficeMathContent::GroupCharacterObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::GroupCharacterObject(node));
     }
     if let math::OfficeMathContent::Hyperlink(arm) = item {
@@ -9835,7 +9835,7 @@ fn transform_office_math_content_2(
         return Some(math::OfficeMathContent::InsertedRunContent(node));
     }
     if let math::OfficeMathContent::LowerLimitObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::LowerLimitObject(node));
     }
     if let math::OfficeMathContent::MatrixObject(arm) = item {
@@ -9882,7 +9882,7 @@ fn transform_office_math_content_3(
         return Some(math::OfficeMathContent::Nary(node));
     }
     if let math::OfficeMathContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::OfficeMath(node));
     }
     if let math::OfficeMathContent::OfficeMathParagraph(arm) = item {
@@ -9890,7 +9890,7 @@ fn transform_office_math_content_3(
         return Some(math::OfficeMathContent::OfficeMathParagraph(node));
     }
     if let math::OfficeMathContent::PhantomObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::PhantomObject(node));
     }
     if let math::OfficeMathContent::PreSubSuperscriptObject(arm) = item {
@@ -9898,11 +9898,11 @@ fn transform_office_math_content_3(
         return Some(math::OfficeMathContent::PreSubSuperscriptObject(node));
     }
     if let math::OfficeMathContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::ProofingErrorAnchor(node));
     }
     if let math::OfficeMathContent::RadicalObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::RadicalObject(node));
     }
     if let math::OfficeMathContent::RangePermissionEnd(arm) = item {
@@ -9926,15 +9926,15 @@ fn transform_office_math_content_3(
         return Some(math::OfficeMathContent::SubSuperscriptObject(node));
     }
     if let math::OfficeMathContent::SubscriptObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::SubscriptObject(node));
     }
     if let math::OfficeMathContent::SuperscriptObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::SuperscriptObject(node));
     }
     if let math::OfficeMathContent::UpperLimitObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::OfficeMathContent::UpperLimitObject(node));
     }
     None
@@ -10335,7 +10335,7 @@ fn transform_run_content_1(
         return Some(math::RunContent::CarriageReturn(node));
     }
     if let math::RunContent::CommentContentReferenceMark(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::RunContent::CommentContentReferenceMark(node));
     }
     if let math::RunContent::CommentInformationBlock(arm) = item {
@@ -10347,7 +10347,7 @@ fn transform_run_content_1(
         return Some(math::RunContent::ComplexFieldCharacter(node));
     }
     if let math::RunContent::ContentPart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::RunContent::ContentPart(node));
     }
     if let math::RunContent::ContinuationSeparatorMark(arm) = item {
@@ -10387,7 +10387,7 @@ fn transform_run_content_1(
         return Some(math::RunContent::DeletedText(node));
     }
     if let math::RunContent::DrawingMLObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::RunContent::DrawingMLObject(node));
     }
     if let math::RunContent::EmbeddedObject(arm) = item {
@@ -10438,7 +10438,7 @@ fn transform_run_content_2(
         return Some(math::RunContent::PageNumberBlock(node));
     }
     if let math::RunContent::PhoneticGuide(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(math::RunContent::PhoneticGuide(node));
     }
     if let math::RunContent::PositionOfLastCalculatedPageBreak(arm) = item {

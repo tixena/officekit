@@ -1318,7 +1318,7 @@ impl super::Transform for office_word_2010_wordml::ColorTransformContent {
         if let Self::Alpha(arm) = self {
             Self::Alpha(arm.transform(ctx))
         } else if let Self::HueMod(arm) = self {
-            Self::HueMod(arm.transform(ctx))
+            Self::HueMod(Box::new(arm.transform(ctx)))
         } else if let Self::Lum(arm) = self {
             Self::Lum(arm.transform(ctx))
         } else if let Self::LumMod(arm) = self {
@@ -2969,7 +2969,7 @@ impl super::Transform for office_word_2010_wordml::FillPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::GradFill(arm) = self {
-            Self::GradFill(arm.transform(ctx))
+            Self::GradFill(Box::new(arm.transform(ctx)))
         } else if let Self::NoFill(arm) = self {
             Self::NoFill(arm.transform(ctx))
         } else if let Self::Other(node) = self {
@@ -3963,7 +3963,7 @@ impl super::Transform for office_word_2010_wordml::LineJoinContent {
         if let Self::Bevel(arm) = self {
             Self::Bevel(arm.transform(ctx))
         } else if let Self::Miter(arm) = self {
-            Self::Miter(arm.transform(ctx))
+            Self::Miter(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Round(arm) = self {

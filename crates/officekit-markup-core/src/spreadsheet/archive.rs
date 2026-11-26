@@ -6296,7 +6296,7 @@ pub enum AutoFilterColumnContent {
     CustomFilters(Box<super::CustomFilters>),
     DynamicFilter(Box<super::DynamicFilter>),
     FilterCriteria(Box<super::FilterCriteria>),
-    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] super::FutureFeatureDataStorageArea),
+    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] Box<super::FutureFeatureDataStorageArea>),
     IconFilter(Box<super::IconFilter>),
     OfficeSpreadsheetml20099MainCustomFilters(
         Box<super::super::office_spreadsheetml_2009_9_main::CustomFilters>,
@@ -6355,22 +6355,22 @@ pub enum FillContent {
 #[rkyv(remote = super::FontContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FontContent {
-    Bold(super::Bold),
-    CharacterSet(super::CharacterSet),
-    Condense(super::Condense),
+    Bold(Box<super::Bold>),
+    CharacterSet(Box<super::CharacterSet>),
+    Condense(Box<super::Condense>),
     DataBarColor(Box<super::DataBarColor>),
-    Extend(super::Extend),
-    FontFamily(super::FontFamily),
-    FontName(super::FontName),
-    FontSize(super::FontSize),
-    Italic(super::Italic),
+    Extend(Box<super::Extend>),
+    FontFamily(Box<super::FontFamily>),
+    FontName(Box<super::FontName>),
+    FontSize(Box<super::FontSize>),
+    Italic(Box<super::Italic>),
     Other(Box<Node>),
-    Outline(super::Outline),
-    Scheme(super::Scheme),
-    Shadow(super::Shadow),
-    StrikeThrough(super::StrikeThrough),
-    Underline(super::Underline),
-    VerticalAlignment(super::VerticalAlignment),
+    Outline(Box<super::Outline>),
+    Scheme(Box<super::Scheme>),
+    Shadow(Box<super::Shadow>),
+    StrikeThrough(Box<super::StrikeThrough>),
+    Underline(Box<super::Underline>),
+    VerticalAlignment(Box<super::VerticalAlignment>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6408,7 +6408,7 @@ pub enum PivotCacheRecordContent {
     NoValue(Box<super::NoValue>),
     Numeric(Box<super::Numeric>),
     Other(Box<Node>),
-    SharedItemsIndex(super::SharedItemsIndex),
+    SharedItemsIndex(Box<super::SharedItemsIndex>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6419,7 +6419,7 @@ pub enum PivotCacheRecordContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum PivotCacheSourceDescriptionContent {
     ConsolidationSource(Box<super::ConsolidationSource>),
-    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] super::FutureFeatureDataStorageArea),
+    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] Box<super::FutureFeatureDataStorageArea>),
     Other(Box<Node>),
     WorksheetPivotCacheSource(Box<super::WorksheetPivotCacheSource>),
 }
@@ -6450,32 +6450,32 @@ pub enum RevisionsContent {
 #[rkyv(remote = super::RunPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RunPropertiesContent {
-    Bold(super::Bold),
-    CharacterSet(super::CharacterSet),
-    Condense(super::Condense),
+    Bold(Box<super::Bold>),
+    CharacterSet(Box<super::CharacterSet>),
+    Condense(Box<super::Condense>),
     DataBarColor(Box<super::DataBarColor>),
-    Extend(super::Extend),
-    FontFamilyIntProperty(super::FontFamilyIntProperty),
-    FontRFont(super::FontRFont),
-    FontSize(super::FontSize),
-    Italic(super::Italic),
+    Extend(Box<super::Extend>),
+    FontFamilyIntProperty(Box<super::FontFamilyIntProperty>),
+    FontRFont(Box<super::FontRFont>),
+    FontSize(Box<super::FontSize>),
+    Italic(Box<super::Italic>),
     Other(Box<Node>),
-    Outline(super::Outline),
-    Scheme(super::Scheme),
-    Shadow(super::Shadow),
-    StrikeThrough(super::StrikeThrough),
-    Underline(super::Underline),
-    VerticalAlignment(super::VerticalAlignment),
+    Outline(Box<super::Outline>),
+    Scheme(Box<super::Scheme>),
+    Shadow(Box<super::Shadow>),
+    StrikeThrough(Box<super::StrikeThrough>),
+    Underline(Box<super::Underline>),
+    VerticalAlignment(Box<super::VerticalAlignment>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TablesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TablesContent {
-    CharacterValueXStringElement(super::CharacterValueXStringElement),
+    CharacterValueXStringElement(Box<super::CharacterValueXStringElement>),
     NoValueTableMissing(super::NoValueTableMissing),
     Other(Box<Node>),
-    SharedItemsIndex(super::SharedItemsIndex),
+    SharedItemsIndex(Box<super::SharedItemsIndex>),
 }
 
 impl From<AlignmentMirror> for super::Alignment {

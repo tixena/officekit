@@ -1650,8 +1650,8 @@ impl<X: UserData> From<SpWith<X>> for GroupShapeContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<GroupShapeContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<GroupShapeContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> GrpSpWith<X> {

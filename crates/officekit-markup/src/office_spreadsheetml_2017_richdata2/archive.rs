@@ -620,7 +620,7 @@ pub struct VSupportingPropertyBagValueMirror {
 #[rkyv(attr(non_exhaustive))]
 pub enum CustomRichFiltersContent {
     CustomFilter(Box<super::CustomFilter>),
-    ExtLst(super::ExtLst),
+    ExtLst(Box<super::ExtLst>),
     Other(Box<Node>),
 }
 
@@ -630,7 +630,7 @@ pub enum CustomRichFiltersContent {
 pub enum RichFilterColumnContent {
     CustomFilters(Box<super::CustomFilters>),
     DynamicFilter(Box<super::DynamicFilter>),
-    ExtLst(super::ExtLst),
+    ExtLst(Box<super::ExtLst>),
     Filters(Box<super::Filters>),
     Other(Box<Node>),
     Top10(Box<super::Top10>),

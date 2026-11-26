@@ -3267,7 +3267,7 @@ pub enum RevisionChangeObjectContentWith<X: UserData> {
     /// The element `xr:body`, a `Body`.
     Body(BodyWith<X>),
     /// The element `xr:link`, a `Link`.
-    Link(LinkWith<X>),
+    Link(Box<LinkWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
 }
@@ -3381,9 +3381,9 @@ impl Eq for RevisionPtrWith<()> {}
 #[non_exhaustive]
 pub enum RevisionStateContentWith<X: UserData> {
     /// The element `xr:freezePanes`, a `FreezePanes`.
-    FreezePanes(FreezePanesWith<X>),
+    FreezePanes(Box<FreezePanesWith<X>>),
     /// The element `xr:hideUnhideSheet`, a `HideUnhideSheet`.
-    HideUnhideSheet(HideUnhideSheetWith<X>),
+    HideUnhideSheet(Box<HideUnhideSheetWith<X>>),
     /// An element or node the schemas do not declare at this position.
     Other(Box<Node>),
     /// The element `xr:outlines`, a `Outlines`.
@@ -3689,7 +3689,7 @@ pub enum StateBasedObjectContentWith<X: UserData> {
     /// The element `xr:autoFilter`, a `AutoFilter`.
     AutoFilter(Box<AutoFilterWith<X>>),
     /// The element `xr:comments`, a `Comments`.
-    Comments(CommentsWith<X>),
+    Comments(Box<CommentsWith<X>>),
     /// The element `xr:dataValidation`, a `DataValidation`.
     DataValidation(Box<DataValidationWith<X>>),
     /// The element `xr:hyperlink`, a `Hyperlink`.
@@ -6891,8 +6891,8 @@ impl<X: UserData> From<TestWith<X>> for ReferenceMapContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<ReferenceMapContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<ReferenceMapContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> RefmapWith<X> {
@@ -7061,7 +7061,9 @@ impl<X: UserData> RevisionChangeObjectContentWith<X> {
     {
         match self {
             Self::Body(node) => RevisionChangeObjectContentWith::Body(node.into_user_data()),
-            Self::Link(node) => RevisionChangeObjectContentWith::Link(node.into_user_data()),
+            Self::Link(node) => {
+                RevisionChangeObjectContentWith::Link(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => RevisionChangeObjectContentWith::Other(node),
         }
     }
@@ -7081,7 +7083,7 @@ impl officekit_markup_base::Read for RevisionChangeObjectContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_XR, "body")) => Self::Body(item.read()),
-            Some((NS_XR, "link")) => Self::Link(item.read()),
+            Some((NS_XR, "link")) => Self::Link(Box::new(item.read())),
             _ => Self::Other(Box::new(item.into_node())),
         }
     }
@@ -7105,13 +7107,13 @@ impl<X: UserData> From<BodyWith<X>> for RevisionChangeObjectContentWith<X> {
 
 impl<X: UserData> From<LinkWith<X>> for RevisionChangeObjectContentWith<X> {
     fn from(arm: LinkWith<X>) -> Self {
-        Self::Link(arm)
+        Self::Link(Box::new(arm))
     }
 }
 
 const _: () = assert!(
-    size_of::<RevisionChangeObjectContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<RevisionChangeObjectContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]
@@ -7376,8 +7378,8 @@ impl<X: UserData> From<XrrrcWith<X>> for RevisionGroupContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<RevisionGroupContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<RevisionGroupContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> RevisionPtrWith<X> {
@@ -7439,9 +7441,11 @@ impl<X: UserData> RevisionStateContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::FreezePanes(node) => RevisionStateContentWith::FreezePanes(node.into_user_data()),
+            Self::FreezePanes(node) => {
+                RevisionStateContentWith::FreezePanes(Box::new((*node).into_user_data()))
+            }
             Self::HideUnhideSheet(node) => {
-                RevisionStateContentWith::HideUnhideSheet(node.into_user_data())
+                RevisionStateContentWith::HideUnhideSheet(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => RevisionStateContentWith::Other(node),
             Self::Outlines(node) => {
@@ -7459,7 +7463,7 @@ impl<X: UserData> RevisionStateContentWith<X> {
 
 impl<X: UserData> Default for RevisionStateContentWith<X> {
     fn default() -> Self {
-        Self::FreezePanes(FreezePanesWith::default())
+        Self::FreezePanes(Box::default())
     }
 }
 
@@ -7470,8 +7474,8 @@ impl officekit_markup_base::Read for RevisionStateContent {
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "freezePanes")) => Self::FreezePanes(item.read()),
-            Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(item.read()),
+            Some((NS_XR, "freezePanes")) => Self::FreezePanes(Box::new(item.read())),
+            Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(Box::new(item.read())),
             Some((NS_XR, "outlines")) => Self::Outlines(Box::new(item.read())),
             Some((NS_XR, "rowColVisualOps")) => Self::RowColVisualOps(Box::new(item.read())),
             Some((NS_XR, "showGridlinesHeadings")) => {
@@ -7497,13 +7501,13 @@ impl officekit_markup_base::Write for RevisionStateContent {
 
 impl<X: UserData> From<FreezePanesWith<X>> for RevisionStateContentWith<X> {
     fn from(arm: FreezePanesWith<X>) -> Self {
-        Self::FreezePanes(arm)
+        Self::FreezePanes(Box::new(arm))
     }
 }
 
 impl<X: UserData> From<HideUnhideSheetWith<X>> for RevisionStateContentWith<X> {
     fn from(arm: HideUnhideSheetWith<X>) -> Self {
-        Self::HideUnhideSheet(arm)
+        Self::HideUnhideSheet(Box::new(arm))
     }
 }
 
@@ -7526,8 +7530,8 @@ impl<X: UserData> From<ShowGridlinesHeadingsWith<X>> for RevisionStateContentWit
 }
 
 const _: () = assert!(
-    size_of::<RevisionStateContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<RevisionStateContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> RevisionStreamContentWith<X> {
@@ -7710,8 +7714,8 @@ impl<X: UserData> From<XrrrcWith<X>> for RevisionStreamContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<RevisionStreamContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<RevisionStreamContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl From<RevisionGroupContent> for RevisionStreamContent {
@@ -8325,7 +8329,9 @@ impl<X: UserData> StateBasedObjectContentWith<X> {
             Self::AutoFilter(node) => {
                 StateBasedObjectContentWith::AutoFilter(Box::new((*node).into_user_data()))
             }
-            Self::Comments(node) => StateBasedObjectContentWith::Comments(node.into_user_data()),
+            Self::Comments(node) => {
+                StateBasedObjectContentWith::Comments(Box::new((*node).into_user_data()))
+            }
             Self::DataValidation(node) => {
                 StateBasedObjectContentWith::DataValidation(Box::new((*node).into_user_data()))
             }
@@ -8357,7 +8363,7 @@ impl officekit_markup_base::Read for StateBasedObjectContent {
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_XR, "autoFilter")) => Self::AutoFilter(Box::new(item.read())),
-            Some((NS_XR, "comments")) => Self::Comments(item.read()),
+            Some((NS_XR, "comments")) => Self::Comments(Box::new(item.read())),
             Some((NS_XR, "dataValidation")) => Self::DataValidation(Box::new(item.read())),
             Some((NS_XR, "hyperlink")) => Self::Hyperlink(Box::new(item.read())),
             Some((NS_XR, "pivotTableDefinition")) => {
@@ -8391,7 +8397,7 @@ impl<X: UserData> From<AutoFilterWith<X>> for StateBasedObjectContentWith<X> {
 
 impl<X: UserData> From<CommentsWith<X>> for StateBasedObjectContentWith<X> {
     fn from(arm: CommentsWith<X>) -> Self {
-        Self::Comments(arm)
+        Self::Comments(Box::new(arm))
     }
 }
 
@@ -8420,8 +8426,8 @@ impl<X: UserData> From<SparklineGroupWith<X>> for StateBasedObjectContentWith<X>
 }
 
 const _: () = assert!(
-    size_of::<StateBasedObjectContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<StateBasedObjectContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 #[cfg(feature = "binary-format")]

@@ -560,8 +560,8 @@ fn an_arm_larger_than_the_inline_bytes_is_boxed_built_from_its_struct_and_bounde
         "impl<X: UserData> From<FirstWith<X>> for PickContentWith<X> {\n    \
          fn from(arm: FirstWith<X>) -> Self {\n        \
          Self::First(Box::new(arm))\n    }\n}\n",
-        "const _: () = assert!(\n    size_of::<PickContent>() <= 40,\n    \
-         \"an arm the generator holds in place takes more than 32 bytes\",\n);\n",
+        "const _: () = assert!(\n    size_of::<PickContent>() <= 24,\n    \
+         \"an arm the generator holds in place takes more than 16 bytes\",\n);\n",
     ] {
         assert!(text.contains(expected), "{expected} is not in\n{text}");
     }

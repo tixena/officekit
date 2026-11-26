@@ -851,9 +851,9 @@ impl super::Transform for chart::AxisCrossingContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Crosses(arm) = self {
-            Self::Crosses(arm.transform(ctx))
+            Self::Crosses(Box::new(arm.transform(ctx)))
         } else if let Self::CrossingValue(arm) = self {
-            Self::CrossingValue(arm.transform(ctx))
+            Self::CrossingValue(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -932,17 +932,17 @@ impl super::Transform for chart::AxisDataSourceContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::MultiLevelStringReference(arm) = self {
-            Self::MultiLevelStringReference(arm.transform(ctx))
+            Self::MultiLevelStringReference(Box::new(arm.transform(ctx)))
         } else if let Self::NumberLiteral(arm) = self {
             Self::NumberLiteral(Box::new(arm.transform(ctx)))
         } else if let Self::NumberReference(arm) = self {
-            Self::NumberReference(arm.transform(ctx))
+            Self::NumberReference(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::StringLiteral(arm) = self {
             Self::StringLiteral(Box::new(arm.transform(ctx)))
         } else if let Self::StringReference(arm) = self {
-            Self::StringReference(arm.transform(ctx))
+            Self::StringReference(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3097,7 +3097,7 @@ impl super::Transform for chart::ChartTextContent {
         } else if let Self::RichText(arm) = self {
             Self::RichText(Box::new(arm.transform(ctx)))
         } else if let Self::StringReference(arm) = self {
-            Self::StringReference(arm.transform(ctx))
+            Self::StringReference(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3821,31 +3821,31 @@ impl super::Transform for chart::DataLabelContent {
         if let Self::ChartText(arm) = self {
             Self::ChartText(arm.transform(ctx))
         } else if let Self::DataLabelPosition(arm) = self {
-            Self::DataLabelPosition(arm.transform(ctx))
+            Self::DataLabelPosition(Box::new(arm.transform(ctx)))
         } else if let Self::Delete(arm) = self {
-            Self::Delete(arm.transform(ctx))
+            Self::Delete(Box::new(arm.transform(ctx)))
         } else if let Self::Layout(arm) = self {
-            Self::Layout(arm.transform(ctx))
+            Self::Layout(Box::new(arm.transform(ctx)))
         } else if let Self::NumberFormat(arm) = self {
             Self::NumberFormat(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Separator(arm) = self {
-            Self::Separator(arm.transform(ctx))
+            Self::Separator(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeProperties(arm) = self {
             Self::ShapeProperties(Box::new(arm.transform(ctx)))
         } else if let Self::ShowBubbleSize(arm) = self {
-            Self::ShowBubbleSize(arm.transform(ctx))
+            Self::ShowBubbleSize(Box::new(arm.transform(ctx)))
         } else if let Self::ShowCategoryName(arm) = self {
-            Self::ShowCategoryName(arm.transform(ctx))
+            Self::ShowCategoryName(Box::new(arm.transform(ctx)))
         } else if let Self::ShowLegendKey(arm) = self {
-            Self::ShowLegendKey(arm.transform(ctx))
+            Self::ShowLegendKey(Box::new(arm.transform(ctx)))
         } else if let Self::ShowPercent(arm) = self {
-            Self::ShowPercent(arm.transform(ctx))
+            Self::ShowPercent(Box::new(arm.transform(ctx)))
         } else if let Self::ShowSeriesName(arm) = self {
-            Self::ShowSeriesName(arm.transform(ctx))
+            Self::ShowSeriesName(Box::new(arm.transform(ctx)))
         } else if let Self::ShowValue(arm) = self {
-            Self::ShowValue(arm.transform(ctx))
+            Self::ShowValue(Box::new(arm.transform(ctx)))
         } else if let Self::TextProperties(arm) = self {
             Self::TextProperties(Box::new(arm.transform(ctx)))
         } else {
@@ -4149,9 +4149,9 @@ impl super::Transform for chart::DataLabelsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::DataLabelPosition(arm) = self {
-            Self::DataLabelPosition(arm.transform(ctx))
+            Self::DataLabelPosition(Box::new(arm.transform(ctx)))
         } else if let Self::Delete(arm) = self {
-            Self::Delete(arm.transform(ctx))
+            Self::Delete(Box::new(arm.transform(ctx)))
         } else if let Self::LeaderLines(arm) = self {
             Self::LeaderLines(arm.transform(ctx))
         } else if let Self::NumberFormat(arm) = self {
@@ -4159,23 +4159,23 @@ impl super::Transform for chart::DataLabelsContent {
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Separator(arm) = self {
-            Self::Separator(arm.transform(ctx))
+            Self::Separator(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeProperties(arm) = self {
             Self::ShapeProperties(Box::new(arm.transform(ctx)))
         } else if let Self::ShowBubbleSize(arm) = self {
-            Self::ShowBubbleSize(arm.transform(ctx))
+            Self::ShowBubbleSize(Box::new(arm.transform(ctx)))
         } else if let Self::ShowCategoryName(arm) = self {
-            Self::ShowCategoryName(arm.transform(ctx))
+            Self::ShowCategoryName(Box::new(arm.transform(ctx)))
         } else if let Self::ShowLeaderLines(arm) = self {
-            Self::ShowLeaderLines(arm.transform(ctx))
+            Self::ShowLeaderLines(Box::new(arm.transform(ctx)))
         } else if let Self::ShowLegendKey(arm) = self {
-            Self::ShowLegendKey(arm.transform(ctx))
+            Self::ShowLegendKey(Box::new(arm.transform(ctx)))
         } else if let Self::ShowPercent(arm) = self {
-            Self::ShowPercent(arm.transform(ctx))
+            Self::ShowPercent(Box::new(arm.transform(ctx)))
         } else if let Self::ShowSeriesName(arm) = self {
-            Self::ShowSeriesName(arm.transform(ctx))
+            Self::ShowSeriesName(Box::new(arm.transform(ctx)))
         } else if let Self::ShowValue(arm) = self {
-            Self::ShowValue(arm.transform(ctx))
+            Self::ShowValue(Box::new(arm.transform(ctx)))
         } else if let Self::TextProperties(arm) = self {
             Self::TextProperties(Box::new(arm.transform(ctx)))
         } else {
@@ -5095,9 +5095,9 @@ impl super::Transform for chart::DisplayUnitsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BuiltInDisplayUnitValue(arm) = self {
-            Self::BuiltInDisplayUnitValue(arm.transform(ctx))
+            Self::BuiltInDisplayUnitValue(Box::new(arm.transform(ctx)))
         } else if let Self::CustomDisplayUnit(arm) = self {
-            Self::CustomDisplayUnit(arm.transform(ctx))
+            Self::CustomDisplayUnit(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -8281,7 +8281,7 @@ impl super::Transform for chart::LegendEntryContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Delete(arm) = self {
-            Self::Delete(arm.transform(ctx))
+            Self::Delete(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TextProperties(arm) = self {
@@ -10131,7 +10131,7 @@ impl super::Transform for chart::NumberDataSourceContent {
         if let Self::NumberLiteral(arm) = self {
             Self::NumberLiteral(Box::new(arm.transform(ctx)))
         } else if let Self::NumberReference(arm) = self {
-            Self::NumberReference(arm.transform(ctx))
+            Self::NumberReference(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else {
@@ -14317,11 +14317,11 @@ impl super::Transform for chart::SeriesTextContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::NumericValue(arm) = self {
-            Self::NumericValue(arm.transform(ctx))
+            Self::NumericValue(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
             Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::StringReference(arm) = self {
-            Self::StringReference(arm.transform(ctx))
+            Self::StringReference(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

@@ -906,7 +906,7 @@ pub enum ColorContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum ColorTransformContent {
     Alpha(super::Alpha),
-    HueMod(super::HueMod),
+    HueMod(Box<super::HueMod>),
     Lum(super::Lum),
     LumMod(super::LumMod),
     LumOff(super::LumOff),
@@ -922,7 +922,7 @@ pub enum ColorTransformContent {
 #[rkyv(remote = super::FillPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FillPropertiesContent {
-    GradFill(super::GradFill),
+    GradFill(Box<super::GradFill>),
     NoFill(super::NoFill),
     Other(Box<Node>),
     SolidFill(super::SolidFill),
@@ -942,7 +942,7 @@ pub enum GradientFillPropertiesContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum LineJoinContent {
     Bevel(super::Bevel),
-    Miter(super::Miter),
+    Miter(Box<super::Miter>),
     Other(Box<Node>),
     Round(super::Round),
 }

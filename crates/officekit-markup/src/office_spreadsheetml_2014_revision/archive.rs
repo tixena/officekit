@@ -995,7 +995,7 @@ pub enum ReferenceMapContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionChangeObjectContent {
     Body(super::Body),
-    Link(super::Link),
+    Link(Box<super::Link>),
     Other(Box<Node>),
 }
 
@@ -1023,8 +1023,8 @@ pub enum RevisionGroupContent {
 #[rkyv(remote = super::RevisionStateContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionStateContent {
-    FreezePanes(super::FreezePanes),
-    HideUnhideSheet(super::HideUnhideSheet),
+    FreezePanes(Box<super::FreezePanes>),
+    HideUnhideSheet(Box<super::HideUnhideSheet>),
     Other(Box<Node>),
     Outlines(Box<super::Outlines>),
     RowColVisualOps(Box<super::RowColVisualOps>),
@@ -1057,7 +1057,7 @@ pub enum RevisionStreamContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum StateBasedObjectContent {
     AutoFilter(Box<super::AutoFilter>),
-    Comments(super::Comments),
+    Comments(Box<super::Comments>),
     DataValidation(Box<super::DataValidation>),
     Hyperlink(Box<super::Hyperlink>),
     Other(Box<Node>),

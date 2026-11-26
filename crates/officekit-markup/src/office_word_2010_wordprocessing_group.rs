@@ -1481,8 +1481,8 @@ impl<X: UserData> From<super::office_word_2010_wordprocessing_shape::WspWith<X>>
 }
 
 const _: () = assert!(
-    size_of::<WordprocessingGroupContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<WordprocessingGroupContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> XfrmWith<X> {

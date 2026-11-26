@@ -9457,8 +9457,8 @@ impl<X: UserData> From<SpMkWith<X>> for GroupCommandContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<GroupCommandContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<GroupCommandContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> GrpCmdWith<X> {

@@ -1663,8 +1663,8 @@ impl<X: UserData> From<SortConditionWith<X>> for SortRuleContentWith<X> {
 }
 
 const _: () = assert!(
-    size_of::<SortRuleContent>() <= 40,
-    "an arm the generator holds in place takes more than 32 bytes",
+    size_of::<SortRuleContent>() <= 24,
+    "an arm the generator holds in place takes more than 16 bytes",
 );
 
 impl<X: UserData> SortRulesWith<X> {
