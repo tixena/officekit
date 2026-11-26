@@ -805,11 +805,11 @@ impl super::Transform for office_drawing_2008_diagram::GroupShapeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::GrpSp(arm) = self {
-            Self::GrpSp(arm.transform(ctx))
+            Self::GrpSp(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Sp(arm) = self {
-            Self::Sp(arm.transform(ctx))
+            Self::Sp(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

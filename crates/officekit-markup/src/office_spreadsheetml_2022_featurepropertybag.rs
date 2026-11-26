@@ -575,19 +575,19 @@ impl Eq for AWith<()> {}
 #[non_exhaustive]
 pub enum ArrayFeaturePropertyContentWith<X: UserData> {
     /// The element `xfpb:b`, a `BBoolean`.
-    BBoolean(BBooleanWith<X>),
+    BBoolean(Box<BBooleanWith<X>>),
     /// The element `xfpb:bagId`, a `BagIdUnsignedInt`.
-    BagIdUnsignedInt(BagIdUnsignedIntWith<X>),
+    BagIdUnsignedInt(Box<BagIdUnsignedIntWith<X>>),
     /// The element `xfpb:d`, a `DDouble`.
-    DDouble(DDoubleWith<X>),
+    DDouble(Box<DDoubleWith<X>>),
     /// The element `xfpb:i`, a `IInteger`.
-    IInteger(IIntegerWith<X>),
+    IInteger(Box<IIntegerWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xfpb:rel`, a `RelString`.
-    RelString(RelStringWith<X>),
+    RelString(Box<RelStringWith<X>>),
     /// The element `xfpb:s`, a `SString`.
-    SString(SStringWith<X>),
+    SString(Box<SStringWith<X>>),
 }
 
 /// [`ArrayFeaturePropertyContentWith`] of the tree a read gives, where no node holds anything in
@@ -1658,21 +1658,21 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub enum FeaturePropertyBagContentWith<X: UserData> {
     /// The element `xfpb:a`, a `A`.
-    A(AWith<X>),
+    A(Box<AWith<X>>),
     /// The element `xfpb:b`, a `BBoolFeatureProperty`.
-    BBoolFeatureProperty(BBoolFeaturePropertyWith<X>),
+    BBoolFeatureProperty(Box<BBoolFeaturePropertyWith<X>>),
     /// The element `xfpb:bagId`, a `BagIdBagFeatureProperty`.
-    BagIdBagFeatureProperty(BagIdBagFeaturePropertyWith<X>),
+    BagIdBagFeatureProperty(Box<BagIdBagFeaturePropertyWith<X>>),
     /// The element `xfpb:d`, a `DDecimalFeatureProperty`.
-    DDecimalFeatureProperty(DDecimalFeaturePropertyWith<X>),
+    DDecimalFeatureProperty(Box<DDecimalFeaturePropertyWith<X>>),
     /// The element `xfpb:i`, a `IIntFeatureProperty`.
-    IIntFeatureProperty(IIntFeaturePropertyWith<X>),
+    IIntFeatureProperty(Box<IIntFeaturePropertyWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xfpb:rel`, a `RelRelFeatureProperty`.
-    RelRelFeatureProperty(RelRelFeaturePropertyWith<X>),
+    RelRelFeatureProperty(Box<RelRelFeaturePropertyWith<X>>),
     /// The element `xfpb:s`, a `SStringFeatureProperty`.
-    SStringFeatureProperty(SStringFeaturePropertyWith<X>),
+    SStringFeatureProperty(Box<SStringFeaturePropertyWith<X>>),
 }
 
 /// [`FeaturePropertyBagContentWith`] of the tree a read gives, where no node holds anything in
@@ -2304,38 +2304,42 @@ impl<X: UserData> ArrayFeaturePropertyContentWith<X> {
     {
         match self {
             Self::BBoolean(node) => {
-                ArrayFeaturePropertyContentWith::BBoolean(node.into_user_data())
+                ArrayFeaturePropertyContentWith::BBoolean(Box::new((*node).into_user_data()))
             }
-            Self::BagIdUnsignedInt(node) => {
-                ArrayFeaturePropertyContentWith::BagIdUnsignedInt(node.into_user_data())
+            Self::BagIdUnsignedInt(node) => ArrayFeaturePropertyContentWith::BagIdUnsignedInt(
+                Box::new((*node).into_user_data()),
+            ),
+            Self::DDouble(node) => {
+                ArrayFeaturePropertyContentWith::DDouble(Box::new((*node).into_user_data()))
             }
-            Self::DDouble(node) => ArrayFeaturePropertyContentWith::DDouble(node.into_user_data()),
             Self::IInteger(node) => {
-                ArrayFeaturePropertyContentWith::IInteger(node.into_user_data())
+                ArrayFeaturePropertyContentWith::IInteger(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ArrayFeaturePropertyContentWith::Other(node),
             Self::RelString(node) => {
-                ArrayFeaturePropertyContentWith::RelString(node.into_user_data())
+                ArrayFeaturePropertyContentWith::RelString(Box::new((*node).into_user_data()))
             }
-            Self::SString(node) => ArrayFeaturePropertyContentWith::SString(node.into_user_data()),
+            Self::SString(node) => {
+                ArrayFeaturePropertyContentWith::SString(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for ArrayFeaturePropertyContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XFPB, "b")) => Self::BBoolean(item.read()),
-            Some((NS_XFPB, "bagId")) => Self::BagIdUnsignedInt(item.read()),
-            Some((NS_XFPB, "d")) => Self::DDouble(item.read()),
-            Some((NS_XFPB, "i")) => Self::IInteger(item.read()),
-            Some((NS_XFPB, "rel")) => Self::RelString(item.read()),
-            Some((NS_XFPB, "s")) => Self::SString(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XFPB, "b")) => Self::BBoolean(Box::new(item.read())),
+            Some((NS_XFPB, "bagId")) => Self::BagIdUnsignedInt(Box::new(item.read())),
+            Some((NS_XFPB, "d")) => Self::DDouble(Box::new(item.read())),
+            Some((NS_XFPB, "i")) => Self::IInteger(Box::new(item.read())),
+            Some((NS_XFPB, "rel")) => Self::RelString(Box::new(item.read())),
+            Some((NS_XFPB, "s")) => Self::SString(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -2347,12 +2351,53 @@ impl officekit_markup_base::Write for ArrayFeaturePropertyContent {
             Self::BagIdUnsignedInt(arm) => arm.write_into(writer),
             Self::DDouble(arm) => arm.write_into(writer),
             Self::IInteger(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RelString(arm) => arm.write_into(writer),
             Self::SString(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<BBooleanWith<X>> for ArrayFeaturePropertyContentWith<X> {
+    fn from(arm: BBooleanWith<X>) -> Self {
+        Self::BBoolean(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BagIdUnsignedIntWith<X>> for ArrayFeaturePropertyContentWith<X> {
+    fn from(arm: BagIdUnsignedIntWith<X>) -> Self {
+        Self::BagIdUnsignedInt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DDoubleWith<X>> for ArrayFeaturePropertyContentWith<X> {
+    fn from(arm: DDoubleWith<X>) -> Self {
+        Self::DDouble(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<IIntegerWith<X>> for ArrayFeaturePropertyContentWith<X> {
+    fn from(arm: IIntegerWith<X>) -> Self {
+        Self::IInteger(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RelStringWith<X>> for ArrayFeaturePropertyContentWith<X> {
+    fn from(arm: RelStringWith<X>) -> Self {
+        Self::RelString(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SStringWith<X>> for ArrayFeaturePropertyContentWith<X> {
+    fn from(arm: SStringWith<X>) -> Self {
+        Self::SString(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ArrayFeaturePropertyContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> BBoolFeaturePropertyWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -3153,25 +3198,35 @@ impl<X: UserData> FeaturePropertyBagContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::A(node) => FeaturePropertyBagContentWith::A(node.into_user_data()),
+            Self::A(node) => FeaturePropertyBagContentWith::A(Box::new((*node).into_user_data())),
             Self::BBoolFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::BBoolFeatureProperty(node.into_user_data())
+                FeaturePropertyBagContentWith::BBoolFeatureProperty(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::BagIdBagFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::BagIdBagFeatureProperty(node.into_user_data())
+                FeaturePropertyBagContentWith::BagIdBagFeatureProperty(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::DDecimalFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::DDecimalFeatureProperty(node.into_user_data())
+                FeaturePropertyBagContentWith::DDecimalFeatureProperty(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
-            Self::IIntFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::IIntFeatureProperty(node.into_user_data())
-            }
+            Self::IIntFeatureProperty(node) => FeaturePropertyBagContentWith::IIntFeatureProperty(
+                Box::new((*node).into_user_data()),
+            ),
             Self::Other(node) => FeaturePropertyBagContentWith::Other(node),
             Self::RelRelFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::RelRelFeatureProperty(node.into_user_data())
+                FeaturePropertyBagContentWith::RelRelFeatureProperty(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::SStringFeatureProperty(node) => {
-                FeaturePropertyBagContentWith::SStringFeatureProperty(node.into_user_data())
+                FeaturePropertyBagContentWith::SStringFeatureProperty(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -3179,19 +3234,19 @@ impl<X: UserData> FeaturePropertyBagContentWith<X> {
 
 impl officekit_markup_base::Read for FeaturePropertyBagContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XFPB, "a")) => Self::A(item.read()),
-            Some((NS_XFPB, "b")) => Self::BBoolFeatureProperty(item.read()),
-            Some((NS_XFPB, "bagId")) => Self::BagIdBagFeatureProperty(item.read()),
-            Some((NS_XFPB, "d")) => Self::DDecimalFeatureProperty(item.read()),
-            Some((NS_XFPB, "i")) => Self::IIntFeatureProperty(item.read()),
-            Some((NS_XFPB, "rel")) => Self::RelRelFeatureProperty(item.read()),
-            Some((NS_XFPB, "s")) => Self::SStringFeatureProperty(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XFPB, "a")) => Self::A(Box::new(item.read())),
+            Some((NS_XFPB, "b")) => Self::BBoolFeatureProperty(Box::new(item.read())),
+            Some((NS_XFPB, "bagId")) => Self::BagIdBagFeatureProperty(Box::new(item.read())),
+            Some((NS_XFPB, "d")) => Self::DDecimalFeatureProperty(Box::new(item.read())),
+            Some((NS_XFPB, "i")) => Self::IIntFeatureProperty(Box::new(item.read())),
+            Some((NS_XFPB, "rel")) => Self::RelRelFeatureProperty(Box::new(item.read())),
+            Some((NS_XFPB, "s")) => Self::SStringFeatureProperty(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3204,12 +3259,59 @@ impl officekit_markup_base::Write for FeaturePropertyBagContent {
             Self::BagIdBagFeatureProperty(arm) => arm.write_into(writer),
             Self::DDecimalFeatureProperty(arm) => arm.write_into(writer),
             Self::IIntFeatureProperty(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RelRelFeatureProperty(arm) => arm.write_into(writer),
             Self::SStringFeatureProperty(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AWith<X>> for FeaturePropertyBagContentWith<X> {
+    fn from(arm: AWith<X>) -> Self {
+        Self::A(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BBoolFeaturePropertyWith<X>> for FeaturePropertyBagContentWith<X> {
+    fn from(arm: BBoolFeaturePropertyWith<X>) -> Self {
+        Self::BBoolFeatureProperty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BagIdBagFeaturePropertyWith<X>> for FeaturePropertyBagContentWith<X> {
+    fn from(arm: BagIdBagFeaturePropertyWith<X>) -> Self {
+        Self::BagIdBagFeatureProperty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DDecimalFeaturePropertyWith<X>> for FeaturePropertyBagContentWith<X> {
+    fn from(arm: DDecimalFeaturePropertyWith<X>) -> Self {
+        Self::DDecimalFeatureProperty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<IIntFeaturePropertyWith<X>> for FeaturePropertyBagContentWith<X> {
+    fn from(arm: IIntFeaturePropertyWith<X>) -> Self {
+        Self::IIntFeatureProperty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RelRelFeaturePropertyWith<X>> for FeaturePropertyBagContentWith<X> {
+    fn from(arm: RelRelFeaturePropertyWith<X>) -> Self {
+        Self::RelRelFeatureProperty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SStringFeaturePropertyWith<X>> for FeaturePropertyBagContentWith<X> {
+    fn from(arm: SStringFeaturePropertyWith<X>) -> Self {
+        Self::SStringFeatureProperty(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<FeaturePropertyBagContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> FeaturePropertyBagsWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

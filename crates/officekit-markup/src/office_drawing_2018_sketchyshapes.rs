@@ -624,15 +624,15 @@ impl Eq for LineSketchStylePropsWith<()> {}
 #[non_exhaustive]
 pub enum LineSketchTypePropertiesContentWith<X: UserData> {
     /// The element `ask:lineSketchCurved`, a `LineSketchCurved`.
-    LineSketchCurved(LineSketchCurvedWith<X>),
+    LineSketchCurved(Box<LineSketchCurvedWith<X>>),
     /// The element `ask:lineSketchFreehand`, a `LineSketchFreehand`.
-    LineSketchFreehand(LineSketchFreehandWith<X>),
+    LineSketchFreehand(Box<LineSketchFreehandWith<X>>),
     /// The element `ask:lineSketchNone`, a `LineSketchNone`.
-    LineSketchNone(LineSketchNoneWith<X>),
+    LineSketchNone(Box<LineSketchNoneWith<X>>),
     /// The element `ask:lineSketchScribble`, a `LineSketchScribble`.
-    LineSketchScribble(LineSketchScribbleWith<X>),
+    LineSketchScribble(Box<LineSketchScribbleWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`LineSketchTypePropertiesContentWith`] of the tree a read gives, where no node holds anything
@@ -1051,17 +1051,21 @@ impl<X: UserData> LineSketchTypePropertiesContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::LineSketchCurved(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchCurved(node.into_user_data())
-            }
+            Self::LineSketchCurved(node) => LineSketchTypePropertiesContentWith::LineSketchCurved(
+                Box::new((*node).into_user_data()),
+            ),
             Self::LineSketchFreehand(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchFreehand(node.into_user_data())
+                LineSketchTypePropertiesContentWith::LineSketchFreehand(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
-            Self::LineSketchNone(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchNone(node.into_user_data())
-            }
+            Self::LineSketchNone(node) => LineSketchTypePropertiesContentWith::LineSketchNone(
+                Box::new((*node).into_user_data()),
+            ),
             Self::LineSketchScribble(node) => {
-                LineSketchTypePropertiesContentWith::LineSketchScribble(node.into_user_data())
+                LineSketchTypePropertiesContentWith::LineSketchScribble(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => LineSketchTypePropertiesContentWith::Other(node),
         }
@@ -1070,16 +1074,16 @@ impl<X: UserData> LineSketchTypePropertiesContentWith<X> {
 
 impl officekit_markup_base::Read for LineSketchTypePropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_ASK, "lineSketchCurved")) => Self::LineSketchCurved(item.read()),
-            Some((NS_ASK, "lineSketchFreehand")) => Self::LineSketchFreehand(item.read()),
-            Some((NS_ASK, "lineSketchNone")) => Self::LineSketchNone(item.read()),
-            Some((NS_ASK, "lineSketchScribble")) => Self::LineSketchScribble(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_ASK, "lineSketchCurved")) => Self::LineSketchCurved(Box::new(item.read())),
+            Some((NS_ASK, "lineSketchFreehand")) => Self::LineSketchFreehand(Box::new(item.read())),
+            Some((NS_ASK, "lineSketchNone")) => Self::LineSketchNone(Box::new(item.read())),
+            Some((NS_ASK, "lineSketchScribble")) => Self::LineSketchScribble(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -1091,10 +1095,39 @@ impl officekit_markup_base::Write for LineSketchTypePropertiesContent {
             Self::LineSketchFreehand(arm) => arm.write_into(writer),
             Self::LineSketchNone(arm) => arm.write_into(writer),
             Self::LineSketchScribble(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<LineSketchCurvedWith<X>> for LineSketchTypePropertiesContentWith<X> {
+    fn from(arm: LineSketchCurvedWith<X>) -> Self {
+        Self::LineSketchCurved(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineSketchFreehandWith<X>> for LineSketchTypePropertiesContentWith<X> {
+    fn from(arm: LineSketchFreehandWith<X>) -> Self {
+        Self::LineSketchFreehand(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineSketchNoneWith<X>> for LineSketchTypePropertiesContentWith<X> {
+    fn from(arm: LineSketchNoneWith<X>) -> Self {
+        Self::LineSketchNone(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineSketchScribbleWith<X>> for LineSketchTypePropertiesContentWith<X> {
+    fn from(arm: LineSketchScribbleWith<X>) -> Self {
+        Self::LineSketchScribble(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<LineSketchTypePropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SeedWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

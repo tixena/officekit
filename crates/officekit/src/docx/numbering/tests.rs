@@ -587,7 +587,7 @@ fn in_language(
     let mut languages = LanguagesForRunContent::default();
     languages.val = Some(language.to_owned());
     let mut properties = RunProperties::default();
-    properties.content = Vec::from([RunPropertiesContent::LanguagesForRunContent(languages)]);
+    properties.content = Vec::from([RunPropertiesContent::from(languages)]);
     definition.run_properties = Some(Box::new(properties));
     definition
 }

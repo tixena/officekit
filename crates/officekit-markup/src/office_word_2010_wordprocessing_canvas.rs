@@ -588,17 +588,17 @@ impl Eq for WholeWith<()> {}
 #[non_exhaustive]
 pub enum WordprocessingCanvasContentWith<X: UserData> {
     /// The element `w14:contentPart`, a `ContentPart`.
-    ContentPart(office_word_2010_wordml::ContentPartWith<X>),
+    ContentPart(Box<office_word_2010_wordml::ContentPartWith<X>>),
     /// The element `wpc:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrameWith<X>),
+    GraphicFrame(Box<GraphicFrameWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `pic:pic`, a `Picture`.
-    Picture(picture::PictureWith<X>),
+    Picture(Box<picture::PictureWith<X>>),
     /// The element `wpg:wgp`, a `Wgp`.
-    Wgp(super::office_word_2010_wordprocessing_group::WgpWith<X>),
+    Wgp(Box<super::office_word_2010_wordprocessing_group::WgpWith<X>>),
     /// The element `wps:wsp`, a `Wsp`.
-    Wsp(super::office_word_2010_wordprocessing_shape::WspWith<X>),
+    Wsp(Box<super::office_word_2010_wordprocessing_shape::WspWith<X>>),
 }
 
 /// [`WordprocessingCanvasContentWith`] of the tree a read gives, where no node holds anything in
@@ -861,32 +861,38 @@ impl<X: UserData> WordprocessingCanvasContentWith<X> {
     {
         match self {
             Self::ContentPart(node) => {
-                WordprocessingCanvasContentWith::ContentPart(node.into_user_data())
+                WordprocessingCanvasContentWith::ContentPart(Box::new((*node).into_user_data()))
             }
             Self::GraphicFrame(node) => {
-                WordprocessingCanvasContentWith::GraphicFrame(node.into_user_data())
+                WordprocessingCanvasContentWith::GraphicFrame(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => WordprocessingCanvasContentWith::Other(node),
-            Self::Picture(node) => WordprocessingCanvasContentWith::Picture(node.into_user_data()),
-            Self::Wgp(node) => WordprocessingCanvasContentWith::Wgp(node.into_user_data()),
-            Self::Wsp(node) => WordprocessingCanvasContentWith::Wsp(node.into_user_data()),
+            Self::Picture(node) => {
+                WordprocessingCanvasContentWith::Picture(Box::new((*node).into_user_data()))
+            }
+            Self::Wgp(node) => {
+                WordprocessingCanvasContentWith::Wgp(Box::new((*node).into_user_data()))
+            }
+            Self::Wsp(node) => {
+                WordprocessingCanvasContentWith::Wsp(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for WordprocessingCanvasContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W14, "contentPart")) => Self::ContentPart(item.read()),
-            Some((NS_WPC, "graphicFrame")) => Self::GraphicFrame(item.read()),
-            Some((NS_PIC, "pic")) => Self::Picture(item.read()),
-            Some((NS_WPG, "wgp")) => Self::Wgp(item.read()),
-            Some((NS_WPS, "wsp")) => Self::Wsp(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_W14, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_WPC, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
+            Some((NS_PIC, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_WPG, "wgp")) => Self::Wgp(Box::new(item.read())),
+            Some((NS_WPS, "wsp")) => Self::Wsp(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -896,13 +902,54 @@ impl officekit_markup_base::Write for WordprocessingCanvasContent {
         match self {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicFrame(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Wgp(arm) => arm.write_into(writer),
             Self::Wsp(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<office_word_2010_wordml::ContentPartWith<X>>
+    for WordprocessingCanvasContentWith<X>
+{
+    fn from(arm: office_word_2010_wordml::ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameWith<X>> for WordprocessingCanvasContentWith<X> {
+    fn from(arm: GraphicFrameWith<X>) -> Self {
+        Self::GraphicFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<picture::PictureWith<X>> for WordprocessingCanvasContentWith<X> {
+    fn from(arm: picture::PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_word_2010_wordprocessing_group::WgpWith<X>>
+    for WordprocessingCanvasContentWith<X>
+{
+    fn from(arm: super::office_word_2010_wordprocessing_group::WgpWith<X>) -> Self {
+        Self::Wgp(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_word_2010_wordprocessing_shape::WspWith<X>>
+    for WordprocessingCanvasContentWith<X>
+{
+    fn from(arm: super::office_word_2010_wordprocessing_shape::WspWith<X>) -> Self {
+        Self::Wsp(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<WordprocessingCanvasContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> WpcWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

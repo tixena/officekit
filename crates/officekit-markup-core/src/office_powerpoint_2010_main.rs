@@ -1536,21 +1536,21 @@ impl Eq for SeekEvtWith<()> {}
 #[non_exhaustive]
 pub enum ShowEventRecordListContentWith<X: UserData> {
     /// The element `p14:nullEvt`, a `NullEvt`.
-    NullEvt(NullEvtWith<X>),
+    NullEvt(Box<NullEvtWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p14:pauseEvt`, a `PauseEvt`.
-    PauseEvt(PauseEvtWith<X>),
+    PauseEvt(Box<PauseEvtWith<X>>),
     /// The element `p14:playEvt`, a `PlayEvt`.
-    PlayEvt(PlayEvtWith<X>),
+    PlayEvt(Box<PlayEvtWith<X>>),
     /// The element `p14:resumeEvt`, a `ResumeEvt`.
-    ResumeEvt(ResumeEvtWith<X>),
+    ResumeEvt(Box<ResumeEvtWith<X>>),
     /// The element `p14:seekEvt`, a `SeekEvt`.
-    SeekEvt(SeekEvtWith<X>),
+    SeekEvt(Box<SeekEvtWith<X>>),
     /// The element `p14:stopEvt`, a `StopEvt`.
-    StopEvt(StopEvtWith<X>),
+    StopEvt(Box<StopEvtWith<X>>),
     /// The element `p14:triggerEvt`, a `TriggerEvt`.
-    TriggerEvt(TriggerEvtWith<X>),
+    TriggerEvt(Box<TriggerEvtWith<X>>),
 }
 
 /// [`ShowEventRecordListContentWith`] of the tree a read gives, where no node holds anything in
@@ -3996,17 +3996,27 @@ impl<X: UserData> ShowEventRecordListContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::NullEvt(node) => ShowEventRecordListContentWith::NullEvt(node.into_user_data()),
-            Self::Other(node) => ShowEventRecordListContentWith::Other(node),
-            Self::PauseEvt(node) => ShowEventRecordListContentWith::PauseEvt(node.into_user_data()),
-            Self::PlayEvt(node) => ShowEventRecordListContentWith::PlayEvt(node.into_user_data()),
-            Self::ResumeEvt(node) => {
-                ShowEventRecordListContentWith::ResumeEvt(node.into_user_data())
+            Self::NullEvt(node) => {
+                ShowEventRecordListContentWith::NullEvt(Box::new((*node).into_user_data()))
             }
-            Self::SeekEvt(node) => ShowEventRecordListContentWith::SeekEvt(node.into_user_data()),
-            Self::StopEvt(node) => ShowEventRecordListContentWith::StopEvt(node.into_user_data()),
+            Self::Other(node) => ShowEventRecordListContentWith::Other(node),
+            Self::PauseEvt(node) => {
+                ShowEventRecordListContentWith::PauseEvt(Box::new((*node).into_user_data()))
+            }
+            Self::PlayEvt(node) => {
+                ShowEventRecordListContentWith::PlayEvt(Box::new((*node).into_user_data()))
+            }
+            Self::ResumeEvt(node) => {
+                ShowEventRecordListContentWith::ResumeEvt(Box::new((*node).into_user_data()))
+            }
+            Self::SeekEvt(node) => {
+                ShowEventRecordListContentWith::SeekEvt(Box::new((*node).into_user_data()))
+            }
+            Self::StopEvt(node) => {
+                ShowEventRecordListContentWith::StopEvt(Box::new((*node).into_user_data()))
+            }
             Self::TriggerEvt(node) => {
-                ShowEventRecordListContentWith::TriggerEvt(node.into_user_data())
+                ShowEventRecordListContentWith::TriggerEvt(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -4014,19 +4024,19 @@ impl<X: UserData> ShowEventRecordListContentWith<X> {
 
 impl officekit_markup_base::Read for ShowEventRecordListContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P14, "nullEvt")) => Self::NullEvt(item.read()),
-            Some((NS_P14, "pauseEvt")) => Self::PauseEvt(item.read()),
-            Some((NS_P14, "playEvt")) => Self::PlayEvt(item.read()),
-            Some((NS_P14, "resumeEvt")) => Self::ResumeEvt(item.read()),
-            Some((NS_P14, "seekEvt")) => Self::SeekEvt(item.read()),
-            Some((NS_P14, "stopEvt")) => Self::StopEvt(item.read()),
-            Some((NS_P14, "triggerEvt")) => Self::TriggerEvt(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P14, "nullEvt")) => Self::NullEvt(Box::new(item.read())),
+            Some((NS_P14, "pauseEvt")) => Self::PauseEvt(Box::new(item.read())),
+            Some((NS_P14, "playEvt")) => Self::PlayEvt(Box::new(item.read())),
+            Some((NS_P14, "resumeEvt")) => Self::ResumeEvt(Box::new(item.read())),
+            Some((NS_P14, "seekEvt")) => Self::SeekEvt(Box::new(item.read())),
+            Some((NS_P14, "stopEvt")) => Self::StopEvt(Box::new(item.read())),
+            Some((NS_P14, "triggerEvt")) => Self::TriggerEvt(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -4035,7 +4045,7 @@ impl officekit_markup_base::Write for ShowEventRecordListContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::NullEvt(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PauseEvt(arm) => arm.write_into(writer),
             Self::PlayEvt(arm) => arm.write_into(writer),
             Self::ResumeEvt(arm) => arm.write_into(writer),
@@ -4045,6 +4055,53 @@ impl officekit_markup_base::Write for ShowEventRecordListContent {
         }
     }
 }
+
+impl<X: UserData> From<NullEvtWith<X>> for ShowEventRecordListContentWith<X> {
+    fn from(arm: NullEvtWith<X>) -> Self {
+        Self::NullEvt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PauseEvtWith<X>> for ShowEventRecordListContentWith<X> {
+    fn from(arm: PauseEvtWith<X>) -> Self {
+        Self::PauseEvt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PlayEvtWith<X>> for ShowEventRecordListContentWith<X> {
+    fn from(arm: PlayEvtWith<X>) -> Self {
+        Self::PlayEvt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ResumeEvtWith<X>> for ShowEventRecordListContentWith<X> {
+    fn from(arm: ResumeEvtWith<X>) -> Self {
+        Self::ResumeEvt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SeekEvtWith<X>> for ShowEventRecordListContentWith<X> {
+    fn from(arm: SeekEvtWith<X>) -> Self {
+        Self::SeekEvt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<StopEvtWith<X>> for ShowEventRecordListContentWith<X> {
+    fn from(arm: StopEvtWith<X>) -> Self {
+        Self::StopEvt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TriggerEvtWith<X>> for ShowEventRecordListContentWith<X> {
+    fn from(arm: TriggerEvtWith<X>) -> Self {
+        Self::TriggerEvt(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShowEventRecordListContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShowEvtLstWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

@@ -131,12 +131,11 @@ fn a_date_reads_its_zone_and_fraction() {
 
 #[test]
 fn the_block_enums_convert_and_refuse_an_alt_chunk() {
-    let paragraph = ContentBlockContent::Paragraph(Paragraph::default());
+    let paragraph = ContentBlockContent::from(Paragraph::default());
     let block = BlockContent::from(paragraph.clone());
-    assert_eq!(block, BlockContent::Paragraph(Paragraph::default()));
+    assert_eq!(block, BlockContent::from(Paragraph::default()));
     assert_eq!(ContentBlockContent::try_from(block), Ok(paragraph));
-    let chunk =
-        BlockContent::AnchorForImportedExternalContent(AnchorForImportedExternalContent::default());
+    let chunk = BlockContent::from(AnchorForImportedExternalContent::default());
     assert_eq!(ContentBlockContent::try_from(chunk.clone()), Err(chunk));
 }
 
@@ -145,9 +144,9 @@ fn a_paragraph_built_from_default_writes_and_reads_back() {
     let mut text = Text::default();
     text.value = "Hola".to_owned();
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::Text(text)];
+    run.content = vec![TextRunContent::from(text)];
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::TextRun(run)];
+    paragraph.content = vec![ParagraphContent::from(run)];
     paragraph.para_id = Some("1A2B3C4D".to_owned());
     let element = write::paragraph(&paragraph, &mut Scope::default());
     // The writer declares the prefixes its element uses, and the reader keeps
@@ -167,7 +166,7 @@ fn a_paragraph_built_from_default_writes_and_reads_back() {
 
 #[test]
 fn an_item_in_its_generic_form_is_its_element_or_its_other_node() {
-    let item = BlockContent::Paragraph(Paragraph::default());
+    let item = BlockContent::from(Paragraph::default());
     let node = generic(&item);
     let name = if let Node::Element(element) = &node {
         Some((element.name.prefix.as_str(), element.name.local.as_str()))
@@ -175,7 +174,7 @@ fn an_item_in_its_generic_form_is_its_element_or_its_other_node() {
         None
     };
     assert_eq!(name, Some(("w", "p")));
-    let other = BlockContent::Other(Node::Comment("kept".to_owned()));
+    let other = BlockContent::Other(Box::new(Node::Comment("kept".to_owned())));
     assert_eq!(generic(&other), Node::Comment("kept".to_owned()));
 }
 

@@ -96,7 +96,7 @@ fn filtered() -> AutoFilterSettings {
     dynamic.max_val = Some("46309".to_owned());
     let mut column = AutoFilterColumn::default();
     column.col_id = Some("0".to_owned());
-    column.content = Some(Box::new(AutoFilterColumnContent::DynamicFilter(dynamic)));
+    column.content = Some(Box::new(AutoFilterColumnContent::from(dynamic)));
     let mut settings = AutoFilterSettings::default();
     settings.r#ref = Some("A1:A3".to_owned());
     settings.autofilter_column = vec![column];
@@ -177,9 +177,7 @@ fn pivot_cache() -> PivotCacheDefinition {
     definition.record_count = Some("0".to_owned());
     let description = &mut definition.pivotcache_source_description;
     description.r#type = Some(PivotCacheType::from("worksheet".to_owned()));
-    description.content = Some(Box::new(
-        PivotCacheSourceDescriptionContent::WorksheetPivotCacheSource(source),
-    ));
+    description.content = Some(Box::new(PivotCacheSourceDescriptionContent::from(source)));
     definition.pivotcache_fields.count = Some("1".to_owned());
     definition.pivotcache_fields.pivotcache_field = vec![field];
     definition

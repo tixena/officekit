@@ -23,7 +23,7 @@ mod whole_file {
     /// A main document whose one paragraph shows `shape` in the line of text.
     fn document_with(shape: WordprocessingMLShape) -> Document {
         let mut data = GraphicObjectData::default();
-        data.content = vec![AnyElementContent::WordprocessingMLShape(shape)];
+        data.content = vec![AnyElementContent::from(shape)];
         data.uri = Some(WPS.to_owned());
         let mut graphic = GraphicObject::default();
         graphic.data = Box::new(data);
@@ -38,13 +38,13 @@ mod whole_file {
         inline.drawing_object_size = Box::new(size);
         inline.graphic_object = Box::new(graphic);
         let mut drawing = DrawingMLObject::default();
-        drawing.content = vec![DrawingObjectContent::InlineDrawingMLObject(inline)];
+        drawing.content = vec![DrawingObjectContent::from(inline)];
         let mut run = TextRun::default();
-        run.content = vec![TextRunContent::DrawingMLObject(drawing)];
+        run.content = vec![TextRunContent::from(drawing)];
         let mut paragraph = Paragraph::default();
-        paragraph.content = vec![ParagraphContent::TextRun(run)];
+        paragraph.content = vec![ParagraphContent::from(run)];
         let mut body = DocumentBody::default();
-        body.content = vec![BlockContent::Paragraph(paragraph)];
+        body.content = vec![BlockContent::from(paragraph)];
         let mut document = Document::default();
         document.body = Some(Box::new(body));
         document
@@ -259,7 +259,7 @@ fn shape_of(items: Vec<AnyElementContent>) -> Option<WordprocessingMLShape> {
     let Ok([AnyElementContent::WordprocessingMLShape(shape)]) = <[_; 1]>::try_from(items) else {
         return None;
     };
-    Some(shape)
+    Some(*shape)
 }
 
 /// The group a list of one item holds.
@@ -268,7 +268,7 @@ fn group_of(items: Vec<AnyElementContent>) -> Option<WordprocessingMLShapeGroup>
     else {
         return None;
     };
-    Some(group)
+    Some(*group)
 }
 
 /// The canvas a list of one item holds.
@@ -277,7 +277,7 @@ fn canvas_of(items: Vec<AnyElementContent>) -> Option<WordprocessingMLDrawingCan
     else {
         return None;
     };
-    Some(canvas)
+    Some(*canvas)
 }
 
 /// The inner group of a group that holds a shape, then that group.
@@ -347,17 +347,12 @@ fn unnamed(unknown: Option<Box<Unknown>>) -> Option<Box<Unknown>> {
 /// A shape built in code with a text box holding one paragraph, under the standard's names.
 fn standard_shape() -> WordprocessingMLShape {
     let mut found = TextualContentsOfShapeTxbx::default();
-    found.rich_text_box_content_container.content =
-        vec![BlockContent::Paragraph(Paragraph::default())];
+    found.rich_text_box_content_container.content = vec![BlockContent::from(Paragraph::default())];
     let mut shape = WordprocessingMLShape::default();
-    shape.non_visual_properties_content = Box::new(
-        ShapeNonVisualPropertiesContent::NonVisualDrawingPropertiesForAShape(
-            NonVisualDrawingPropertiesForAShape::default(),
-        ),
-    );
-    shape.text_content = Some(Box::new(ShapeTextContent::TextualContentsOfShapeTxbx(
-        found,
-    )));
+    shape.non_visual_properties_content = Box::new(ShapeNonVisualPropertiesContent::from(
+        NonVisualDrawingPropertiesForAShape::default(),
+    ));
+    shape.text_content = Some(Box::new(ShapeTextContent::from(found)));
     shape
 }
 

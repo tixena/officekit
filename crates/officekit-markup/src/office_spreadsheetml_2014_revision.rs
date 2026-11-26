@@ -3158,17 +3158,17 @@ impl Eq for RefWith<()> {}
 #[non_exhaustive]
 pub enum ReferenceMapContentWith<X: UserData> {
     /// The element `xr:future`, a `Future`.
-    Future(FutureWith<X>),
+    Future(Box<FutureWith<X>>),
     /// The element `xr:oartAnchor`, a `OartAnchor`.
-    OartAnchor(OartAnchorWith<X>),
+    OartAnchor(Box<OartAnchorWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xr:ref`, a `Ref`.
-    Ref(RefWith<X>),
+    Ref(Box<RefWith<X>>),
     /// The element `xr:sheetUid`, a `SheetUid`.
-    SheetUid(SheetUidWith<X>),
+    SheetUid(Box<SheetUidWith<X>>),
     /// The element `xr:test`, a `Test`.
-    Test(TestWith<X>),
+    Test(Box<TestWith<X>>),
 }
 
 /// [`ReferenceMapContentWith`] of the tree a read gives, where no node holds anything in
@@ -3253,11 +3253,11 @@ impl Eq for RevStreamWith<()> {}
 #[non_exhaustive]
 pub enum RevisionChangeObjectContentWith<X: UserData> {
     /// The element `xr:body`, a `Body`.
-    Body(BodyWith<X>),
+    Body(Box<BodyWith<X>>),
     /// The element `xr:link`, a `Link`.
-    Link(LinkWith<X>),
+    Link(Box<LinkWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`RevisionChangeObjectContentWith`] of the tree a read gives, where no node holds anything in
@@ -3302,33 +3302,33 @@ pub enum RevisionContextMember {
 #[non_exhaustive]
 pub enum RevisionGroupContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xr:xrrDefName`, a `XrrDefName`.
-    XrrDefName(XrrDefNameWith<X>),
+    XrrDefName(Box<XrrDefNameWith<X>>),
     /// The element `xr:xrrList`, a `XrrList`.
-    XrrList(XrrListWith<X>),
+    XrrList(Box<XrrListWith<X>>),
     /// The element `xr:xrrListExpR`, a `XrrListExpR`.
-    XrrListExpR(XrrListExpRWith<X>),
+    XrrListExpR(Box<XrrListExpRWith<X>>),
     /// The element `xr:xrrSheet`, a `XrrSheet`.
-    XrrSheet(XrrSheetWith<X>),
+    XrrSheet(Box<XrrSheetWith<X>>),
     /// The element `xr:xrrTrim`, a `XrrTrim`.
-    XrrTrim(XrrTrimWith<X>),
+    XrrTrim(Box<XrrTrimWith<X>>),
     /// The element `xr:xrrUspt`, a `XrrUspt`.
-    XrrUspt(XrrUsptWith<X>),
+    XrrUspt(Box<XrrUsptWith<X>>),
     /// The element `xr:xrrc`, a `Xrrc`.
-    Xrrc(XrrcWith<X>),
+    Xrrc(Box<XrrcWith<X>>),
     /// The element `xr:xrrco`, a `Xrrco`.
-    Xrrco(XrrcoWith<X>),
+    Xrrco(Box<XrrcoWith<X>>),
     /// The element `xr:xrrdo`, a `Xrrdo`.
-    Xrrdo(XrrdoWith<X>),
+    Xrrdo(Box<XrrdoWith<X>>),
     /// The element `xr:xrrf`, a `Xrrf`.
-    Xrrf(XrrfWith<X>),
+    Xrrf(Box<XrrfWith<X>>),
     /// The element `xr:xrrftr`, a `Xrrftr`.
-    Xrrftr(XrrftrWith<X>),
+    Xrrftr(Box<XrrftrWith<X>>),
     /// The element `xr:xrrm`, a `Xrrm`.
-    Xrrm(XrrmWith<X>),
+    Xrrm(Box<XrrmWith<X>>),
     /// The element `xr:xrrrc`, a `Xrrrc`.
-    Xrrrc(XrrrcWith<X>),
+    Xrrrc(Box<XrrrcWith<X>>),
 }
 
 /// [`RevisionGroupContentWith`] of the tree a read gives, where no node holds anything in
@@ -3368,17 +3368,17 @@ impl Eq for RevisionPtrWith<()> {}
 #[non_exhaustive]
 pub enum RevisionStateContentWith<X: UserData> {
     /// The element `xr:freezePanes`, a `FreezePanes`.
-    FreezePanes(FreezePanesWith<X>),
+    FreezePanes(Box<FreezePanesWith<X>>),
     /// The element `xr:hideUnhideSheet`, a `HideUnhideSheet`.
-    HideUnhideSheet(HideUnhideSheetWith<X>),
+    HideUnhideSheet(Box<HideUnhideSheetWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xr:outlines`, a `Outlines`.
-    Outlines(OutlinesWith<X>),
+    Outlines(Box<OutlinesWith<X>>),
     /// The element `xr:rowColVisualOps`, a `RowColVisualOps`.
-    RowColVisualOps(RowColVisualOpsWith<X>),
+    RowColVisualOps(Box<RowColVisualOpsWith<X>>),
     /// The element `xr:showGridlinesHeadings`, a `ShowGridlinesHeadings`.
-    ShowGridlinesHeadings(ShowGridlinesHeadingsWith<X>),
+    ShowGridlinesHeadings(Box<ShowGridlinesHeadingsWith<X>>),
 }
 
 /// [`RevisionStateContentWith`] of the tree a read gives, where no node holds anything in
@@ -3396,35 +3396,35 @@ impl Eq for RevisionStateContentWith<()> {}
 #[non_exhaustive]
 pub enum RevisionStreamContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xr:xrrDefName`, a `XrrDefName`.
-    XrrDefName(XrrDefNameWith<X>),
+    XrrDefName(Box<XrrDefNameWith<X>>),
     /// The element `xr:xrrList`, a `XrrList`.
-    XrrList(XrrListWith<X>),
+    XrrList(Box<XrrListWith<X>>),
     /// The element `xr:xrrListExpR`, a `XrrListExpR`.
-    XrrListExpR(XrrListExpRWith<X>),
+    XrrListExpR(Box<XrrListExpRWith<X>>),
     /// The element `xr:xrrSheet`, a `XrrSheet`.
-    XrrSheet(XrrSheetWith<X>),
+    XrrSheet(Box<XrrSheetWith<X>>),
     /// The element `xr:xrrTrim`, a `XrrTrim`.
-    XrrTrim(XrrTrimWith<X>),
+    XrrTrim(Box<XrrTrimWith<X>>),
     /// The element `xr:xrrUspt`, a `XrrUspt`.
-    XrrUspt(XrrUsptWith<X>),
+    XrrUspt(Box<XrrUsptWith<X>>),
     /// The element `xr:xrrc`, a `Xrrc`.
-    Xrrc(XrrcWith<X>),
+    Xrrc(Box<XrrcWith<X>>),
     /// The element `xr:xrrco`, a `Xrrco`.
-    Xrrco(XrrcoWith<X>),
+    Xrrco(Box<XrrcoWith<X>>),
     /// The element `xr:xrrdo`, a `Xrrdo`.
-    Xrrdo(XrrdoWith<X>),
+    Xrrdo(Box<XrrdoWith<X>>),
     /// The element `xr:xrrf`, a `Xrrf`.
-    Xrrf(XrrfWith<X>),
+    Xrrf(Box<XrrfWith<X>>),
     /// The element `xr:xrrftr`, a `Xrrftr`.
-    Xrrftr(XrrftrWith<X>),
+    Xrrftr(Box<XrrftrWith<X>>),
     /// The element `xr:xrrg`, a `Xrrg`.
-    Xrrg(XrrgWith<X>),
+    Xrrg(Box<XrrgWith<X>>),
     /// The element `xr:xrrm`, a `Xrrm`.
-    Xrrm(XrrmWith<X>),
+    Xrrm(Box<XrrmWith<X>>),
     /// The element `xr:xrrrc`, a `Xrrrc`.
-    Xrrrc(XrrrcWith<X>),
+    Xrrrc(Box<XrrrcWith<X>>),
 }
 
 /// [`RevisionStreamContentWith`] of the tree a read gives, where no node holds anything in
@@ -3671,19 +3671,19 @@ impl Eq for SparklineGroupWith<()> {}
 #[non_exhaustive]
 pub enum StateBasedObjectContentWith<X: UserData> {
     /// The element `xr:autoFilter`, a `AutoFilter`.
-    AutoFilter(AutoFilterWith<X>),
+    AutoFilter(Box<AutoFilterWith<X>>),
     /// The element `xr:comments`, a `Comments`.
-    Comments(CommentsWith<X>),
+    Comments(Box<CommentsWith<X>>),
     /// The element `xr:dataValidation`, a `DataValidation`.
-    DataValidation(DataValidationWith<X>),
+    DataValidation(Box<DataValidationWith<X>>),
     /// The element `xr:hyperlink`, a `Hyperlink`.
-    Hyperlink(HyperlinkWith<X>),
+    Hyperlink(Box<HyperlinkWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xr:pivotTableDefinition`, a `PivotTableDefinition`.
     PivotTableDefinition(Box<PivotTableDefinitionWith<X>>),
     /// The element `xr:sparklineGroup`, a `SparklineGroup`.
-    SparklineGroup(SparklineGroupWith<X>),
+    SparklineGroup(Box<SparklineGroupWith<X>>),
 }
 
 /// [`StateBasedObjectContentWith`] of the tree a read gives, where no node holds anything in
@@ -6488,29 +6488,35 @@ impl<X: UserData> ReferenceMapContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Future(node) => ReferenceMapContentWith::Future(node.into_user_data()),
-            Self::OartAnchor(node) => ReferenceMapContentWith::OartAnchor(node.into_user_data()),
+            Self::Future(node) => {
+                ReferenceMapContentWith::Future(Box::new((*node).into_user_data()))
+            }
+            Self::OartAnchor(node) => {
+                ReferenceMapContentWith::OartAnchor(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => ReferenceMapContentWith::Other(node),
-            Self::Ref(node) => ReferenceMapContentWith::Ref(node.into_user_data()),
-            Self::SheetUid(node) => ReferenceMapContentWith::SheetUid(node.into_user_data()),
-            Self::Test(node) => ReferenceMapContentWith::Test(node.into_user_data()),
+            Self::Ref(node) => ReferenceMapContentWith::Ref(Box::new((*node).into_user_data())),
+            Self::SheetUid(node) => {
+                ReferenceMapContentWith::SheetUid(Box::new((*node).into_user_data()))
+            }
+            Self::Test(node) => ReferenceMapContentWith::Test(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for ReferenceMapContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "future")) => Self::Future(item.read()),
-            Some((NS_XR, "oartAnchor")) => Self::OartAnchor(item.read()),
-            Some((NS_XR, "ref")) => Self::Ref(item.read()),
-            Some((NS_XR, "sheetUid")) => Self::SheetUid(item.read()),
-            Some((NS_XR, "test")) => Self::Test(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XR, "future")) => Self::Future(Box::new(item.read())),
+            Some((NS_XR, "oartAnchor")) => Self::OartAnchor(Box::new(item.read())),
+            Some((NS_XR, "ref")) => Self::Ref(Box::new(item.read())),
+            Some((NS_XR, "sheetUid")) => Self::SheetUid(Box::new(item.read())),
+            Some((NS_XR, "test")) => Self::Test(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -6520,13 +6526,48 @@ impl officekit_markup_base::Write for ReferenceMapContent {
         match self {
             Self::Future(arm) => arm.write_into(writer),
             Self::OartAnchor(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Ref(arm) => arm.write_into(writer),
             Self::SheetUid(arm) => arm.write_into(writer),
             Self::Test(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<FutureWith<X>> for ReferenceMapContentWith<X> {
+    fn from(arm: FutureWith<X>) -> Self {
+        Self::Future(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OartAnchorWith<X>> for ReferenceMapContentWith<X> {
+    fn from(arm: OartAnchorWith<X>) -> Self {
+        Self::OartAnchor(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RefWith<X>> for ReferenceMapContentWith<X> {
+    fn from(arm: RefWith<X>) -> Self {
+        Self::Ref(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SheetUidWith<X>> for ReferenceMapContentWith<X> {
+    fn from(arm: SheetUidWith<X>) -> Self {
+        Self::SheetUid(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TestWith<X>> for ReferenceMapContentWith<X> {
+    fn from(arm: TestWith<X>) -> Self {
+        Self::Test(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ReferenceMapContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> RefmapWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -6693,8 +6734,12 @@ impl<X: UserData> RevisionChangeObjectContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Body(node) => RevisionChangeObjectContentWith::Body(node.into_user_data()),
-            Self::Link(node) => RevisionChangeObjectContentWith::Link(node.into_user_data()),
+            Self::Body(node) => {
+                RevisionChangeObjectContentWith::Body(Box::new((*node).into_user_data()))
+            }
+            Self::Link(node) => {
+                RevisionChangeObjectContentWith::Link(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => RevisionChangeObjectContentWith::Other(node),
         }
     }
@@ -6702,20 +6747,20 @@ impl<X: UserData> RevisionChangeObjectContentWith<X> {
 
 impl<X: UserData> Default for RevisionChangeObjectContentWith<X> {
     fn default() -> Self {
-        Self::Body(BodyWith::default())
+        Self::Body(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for RevisionChangeObjectContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "body")) => Self::Body(item.read()),
-            Some((NS_XR, "link")) => Self::Link(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XR, "body")) => Self::Body(Box::new(item.read())),
+            Some((NS_XR, "link")) => Self::Link(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -6725,10 +6770,27 @@ impl officekit_markup_base::Write for RevisionChangeObjectContent {
         match self {
             Self::Body(arm) => arm.write_into(writer),
             Self::Link(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<BodyWith<X>> for RevisionChangeObjectContentWith<X> {
+    fn from(arm: BodyWith<X>) -> Self {
+        Self::Body(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LinkWith<X>> for RevisionChangeObjectContentWith<X> {
+    fn from(arm: LinkWith<X>) -> Self {
+        Self::Link(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RevisionChangeObjectContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for RevisionContext {
     fn as_ref(&self) -> &str {
@@ -6794,44 +6856,64 @@ impl<X: UserData> RevisionGroupContentWith<X> {
     {
         match self {
             Self::Other(node) => RevisionGroupContentWith::Other(node),
-            Self::XrrDefName(node) => RevisionGroupContentWith::XrrDefName(node.into_user_data()),
-            Self::XrrList(node) => RevisionGroupContentWith::XrrList(node.into_user_data()),
-            Self::XrrListExpR(node) => RevisionGroupContentWith::XrrListExpR(node.into_user_data()),
-            Self::XrrSheet(node) => RevisionGroupContentWith::XrrSheet(node.into_user_data()),
-            Self::XrrTrim(node) => RevisionGroupContentWith::XrrTrim(node.into_user_data()),
-            Self::XrrUspt(node) => RevisionGroupContentWith::XrrUspt(node.into_user_data()),
-            Self::Xrrc(node) => RevisionGroupContentWith::Xrrc(node.into_user_data()),
-            Self::Xrrco(node) => RevisionGroupContentWith::Xrrco(node.into_user_data()),
-            Self::Xrrdo(node) => RevisionGroupContentWith::Xrrdo(node.into_user_data()),
-            Self::Xrrf(node) => RevisionGroupContentWith::Xrrf(node.into_user_data()),
-            Self::Xrrftr(node) => RevisionGroupContentWith::Xrrftr(node.into_user_data()),
-            Self::Xrrm(node) => RevisionGroupContentWith::Xrrm(node.into_user_data()),
-            Self::Xrrrc(node) => RevisionGroupContentWith::Xrrrc(node.into_user_data()),
+            Self::XrrDefName(node) => {
+                RevisionGroupContentWith::XrrDefName(Box::new((*node).into_user_data()))
+            }
+            Self::XrrList(node) => {
+                RevisionGroupContentWith::XrrList(Box::new((*node).into_user_data()))
+            }
+            Self::XrrListExpR(node) => {
+                RevisionGroupContentWith::XrrListExpR(Box::new((*node).into_user_data()))
+            }
+            Self::XrrSheet(node) => {
+                RevisionGroupContentWith::XrrSheet(Box::new((*node).into_user_data()))
+            }
+            Self::XrrTrim(node) => {
+                RevisionGroupContentWith::XrrTrim(Box::new((*node).into_user_data()))
+            }
+            Self::XrrUspt(node) => {
+                RevisionGroupContentWith::XrrUspt(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrc(node) => RevisionGroupContentWith::Xrrc(Box::new((*node).into_user_data())),
+            Self::Xrrco(node) => {
+                RevisionGroupContentWith::Xrrco(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrdo(node) => {
+                RevisionGroupContentWith::Xrrdo(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrf(node) => RevisionGroupContentWith::Xrrf(Box::new((*node).into_user_data())),
+            Self::Xrrftr(node) => {
+                RevisionGroupContentWith::Xrrftr(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrm(node) => RevisionGroupContentWith::Xrrm(Box::new((*node).into_user_data())),
+            Self::Xrrrc(node) => {
+                RevisionGroupContentWith::Xrrrc(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for RevisionGroupContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(item.read()),
-            Some((NS_XR, "xrrList")) => Self::XrrList(item.read()),
-            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(item.read()),
-            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(item.read()),
-            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(item.read()),
-            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(item.read()),
-            Some((NS_XR, "xrrc")) => Self::Xrrc(item.read()),
-            Some((NS_XR, "xrrco")) => Self::Xrrco(item.read()),
-            Some((NS_XR, "xrrdo")) => Self::Xrrdo(item.read()),
-            Some((NS_XR, "xrrf")) => Self::Xrrf(item.read()),
-            Some((NS_XR, "xrrftr")) => Self::Xrrftr(item.read()),
-            Some((NS_XR, "xrrm")) => Self::Xrrm(item.read()),
-            Some((NS_XR, "xrrrc")) => Self::Xrrrc(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(Box::new(item.read())),
+            Some((NS_XR, "xrrList")) => Self::XrrList(Box::new(item.read())),
+            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(Box::new(item.read())),
+            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(Box::new(item.read())),
+            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(Box::new(item.read())),
+            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(Box::new(item.read())),
+            Some((NS_XR, "xrrc")) => Self::Xrrc(Box::new(item.read())),
+            Some((NS_XR, "xrrco")) => Self::Xrrco(Box::new(item.read())),
+            Some((NS_XR, "xrrdo")) => Self::Xrrdo(Box::new(item.read())),
+            Some((NS_XR, "xrrf")) => Self::Xrrf(Box::new(item.read())),
+            Some((NS_XR, "xrrftr")) => Self::Xrrftr(Box::new(item.read())),
+            Some((NS_XR, "xrrm")) => Self::Xrrm(Box::new(item.read())),
+            Some((NS_XR, "xrrrc")) => Self::Xrrrc(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -6839,7 +6921,7 @@ impl officekit_markup_base::Read for RevisionGroupContent {
 impl officekit_markup_base::Write for RevisionGroupContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::XrrDefName(arm) => arm.write_into(writer),
             Self::XrrList(arm) => arm.write_into(writer),
             Self::XrrListExpR(arm) => arm.write_into(writer),
@@ -6856,6 +6938,89 @@ impl officekit_markup_base::Write for RevisionGroupContent {
         }
     }
 }
+
+impl<X: UserData> From<XrrDefNameWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrDefNameWith<X>) -> Self {
+        Self::XrrDefName(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrListWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrListWith<X>) -> Self {
+        Self::XrrList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrListExpRWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrListExpRWith<X>) -> Self {
+        Self::XrrListExpR(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrSheetWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrSheetWith<X>) -> Self {
+        Self::XrrSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrTrimWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrTrimWith<X>) -> Self {
+        Self::XrrTrim(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrUsptWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrUsptWith<X>) -> Self {
+        Self::XrrUspt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrcWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrcWith<X>) -> Self {
+        Self::Xrrc(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrcoWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrcoWith<X>) -> Self {
+        Self::Xrrco(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrdoWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrdoWith<X>) -> Self {
+        Self::Xrrdo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrfWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrfWith<X>) -> Self {
+        Self::Xrrf(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrftrWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrftrWith<X>) -> Self {
+        Self::Xrrftr(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrmWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrmWith<X>) -> Self {
+        Self::Xrrm(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrrcWith<X>> for RevisionGroupContentWith<X> {
+    fn from(arm: XrrrcWith<X>) -> Self {
+        Self::Xrrrc(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RevisionGroupContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> RevisionPtrWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -6916,17 +7081,21 @@ impl<X: UserData> RevisionStateContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::FreezePanes(node) => RevisionStateContentWith::FreezePanes(node.into_user_data()),
+            Self::FreezePanes(node) => {
+                RevisionStateContentWith::FreezePanes(Box::new((*node).into_user_data()))
+            }
             Self::HideUnhideSheet(node) => {
-                RevisionStateContentWith::HideUnhideSheet(node.into_user_data())
+                RevisionStateContentWith::HideUnhideSheet(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => RevisionStateContentWith::Other(node),
-            Self::Outlines(node) => RevisionStateContentWith::Outlines(node.into_user_data()),
+            Self::Outlines(node) => {
+                RevisionStateContentWith::Outlines(Box::new((*node).into_user_data()))
+            }
             Self::RowColVisualOps(node) => {
-                RevisionStateContentWith::RowColVisualOps(node.into_user_data())
+                RevisionStateContentWith::RowColVisualOps(Box::new((*node).into_user_data()))
             }
             Self::ShowGridlinesHeadings(node) => {
-                RevisionStateContentWith::ShowGridlinesHeadings(node.into_user_data())
+                RevisionStateContentWith::ShowGridlinesHeadings(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -6934,23 +7103,25 @@ impl<X: UserData> RevisionStateContentWith<X> {
 
 impl<X: UserData> Default for RevisionStateContentWith<X> {
     fn default() -> Self {
-        Self::FreezePanes(FreezePanesWith::default())
+        Self::FreezePanes(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for RevisionStateContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "freezePanes")) => Self::FreezePanes(item.read()),
-            Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(item.read()),
-            Some((NS_XR, "outlines")) => Self::Outlines(item.read()),
-            Some((NS_XR, "rowColVisualOps")) => Self::RowColVisualOps(item.read()),
-            Some((NS_XR, "showGridlinesHeadings")) => Self::ShowGridlinesHeadings(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XR, "freezePanes")) => Self::FreezePanes(Box::new(item.read())),
+            Some((NS_XR, "hideUnhideSheet")) => Self::HideUnhideSheet(Box::new(item.read())),
+            Some((NS_XR, "outlines")) => Self::Outlines(Box::new(item.read())),
+            Some((NS_XR, "rowColVisualOps")) => Self::RowColVisualOps(Box::new(item.read())),
+            Some((NS_XR, "showGridlinesHeadings")) => {
+                Self::ShowGridlinesHeadings(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -6960,13 +7131,48 @@ impl officekit_markup_base::Write for RevisionStateContent {
         match self {
             Self::FreezePanes(arm) => arm.write_into(writer),
             Self::HideUnhideSheet(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Outlines(arm) => arm.write_into(writer),
             Self::RowColVisualOps(arm) => arm.write_into(writer),
             Self::ShowGridlinesHeadings(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<FreezePanesWith<X>> for RevisionStateContentWith<X> {
+    fn from(arm: FreezePanesWith<X>) -> Self {
+        Self::FreezePanes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HideUnhideSheetWith<X>> for RevisionStateContentWith<X> {
+    fn from(arm: HideUnhideSheetWith<X>) -> Self {
+        Self::HideUnhideSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OutlinesWith<X>> for RevisionStateContentWith<X> {
+    fn from(arm: OutlinesWith<X>) -> Self {
+        Self::Outlines(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RowColVisualOpsWith<X>> for RevisionStateContentWith<X> {
+    fn from(arm: RowColVisualOpsWith<X>) -> Self {
+        Self::RowColVisualOps(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShowGridlinesHeadingsWith<X>> for RevisionStateContentWith<X> {
+    fn from(arm: ShowGridlinesHeadingsWith<X>) -> Self {
+        Self::ShowGridlinesHeadings(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RevisionStateContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> RevisionStreamContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -6977,48 +7183,66 @@ impl<X: UserData> RevisionStreamContentWith<X> {
     {
         match self {
             Self::Other(node) => RevisionStreamContentWith::Other(node),
-            Self::XrrDefName(node) => RevisionStreamContentWith::XrrDefName(node.into_user_data()),
-            Self::XrrList(node) => RevisionStreamContentWith::XrrList(node.into_user_data()),
-            Self::XrrListExpR(node) => {
-                RevisionStreamContentWith::XrrListExpR(node.into_user_data())
+            Self::XrrDefName(node) => {
+                RevisionStreamContentWith::XrrDefName(Box::new((*node).into_user_data()))
             }
-            Self::XrrSheet(node) => RevisionStreamContentWith::XrrSheet(node.into_user_data()),
-            Self::XrrTrim(node) => RevisionStreamContentWith::XrrTrim(node.into_user_data()),
-            Self::XrrUspt(node) => RevisionStreamContentWith::XrrUspt(node.into_user_data()),
-            Self::Xrrc(node) => RevisionStreamContentWith::Xrrc(node.into_user_data()),
-            Self::Xrrco(node) => RevisionStreamContentWith::Xrrco(node.into_user_data()),
-            Self::Xrrdo(node) => RevisionStreamContentWith::Xrrdo(node.into_user_data()),
-            Self::Xrrf(node) => RevisionStreamContentWith::Xrrf(node.into_user_data()),
-            Self::Xrrftr(node) => RevisionStreamContentWith::Xrrftr(node.into_user_data()),
-            Self::Xrrg(node) => RevisionStreamContentWith::Xrrg(node.into_user_data()),
-            Self::Xrrm(node) => RevisionStreamContentWith::Xrrm(node.into_user_data()),
-            Self::Xrrrc(node) => RevisionStreamContentWith::Xrrrc(node.into_user_data()),
+            Self::XrrList(node) => {
+                RevisionStreamContentWith::XrrList(Box::new((*node).into_user_data()))
+            }
+            Self::XrrListExpR(node) => {
+                RevisionStreamContentWith::XrrListExpR(Box::new((*node).into_user_data()))
+            }
+            Self::XrrSheet(node) => {
+                RevisionStreamContentWith::XrrSheet(Box::new((*node).into_user_data()))
+            }
+            Self::XrrTrim(node) => {
+                RevisionStreamContentWith::XrrTrim(Box::new((*node).into_user_data()))
+            }
+            Self::XrrUspt(node) => {
+                RevisionStreamContentWith::XrrUspt(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrc(node) => RevisionStreamContentWith::Xrrc(Box::new((*node).into_user_data())),
+            Self::Xrrco(node) => {
+                RevisionStreamContentWith::Xrrco(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrdo(node) => {
+                RevisionStreamContentWith::Xrrdo(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrf(node) => RevisionStreamContentWith::Xrrf(Box::new((*node).into_user_data())),
+            Self::Xrrftr(node) => {
+                RevisionStreamContentWith::Xrrftr(Box::new((*node).into_user_data()))
+            }
+            Self::Xrrg(node) => RevisionStreamContentWith::Xrrg(Box::new((*node).into_user_data())),
+            Self::Xrrm(node) => RevisionStreamContentWith::Xrrm(Box::new((*node).into_user_data())),
+            Self::Xrrrc(node) => {
+                RevisionStreamContentWith::Xrrrc(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for RevisionStreamContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(item.read()),
-            Some((NS_XR, "xrrList")) => Self::XrrList(item.read()),
-            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(item.read()),
-            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(item.read()),
-            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(item.read()),
-            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(item.read()),
-            Some((NS_XR, "xrrc")) => Self::Xrrc(item.read()),
-            Some((NS_XR, "xrrco")) => Self::Xrrco(item.read()),
-            Some((NS_XR, "xrrdo")) => Self::Xrrdo(item.read()),
-            Some((NS_XR, "xrrf")) => Self::Xrrf(item.read()),
-            Some((NS_XR, "xrrftr")) => Self::Xrrftr(item.read()),
-            Some((NS_XR, "xrrg")) => Self::Xrrg(item.read()),
-            Some((NS_XR, "xrrm")) => Self::Xrrm(item.read()),
-            Some((NS_XR, "xrrrc")) => Self::Xrrrc(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XR, "xrrDefName")) => Self::XrrDefName(Box::new(item.read())),
+            Some((NS_XR, "xrrList")) => Self::XrrList(Box::new(item.read())),
+            Some((NS_XR, "xrrListExpR")) => Self::XrrListExpR(Box::new(item.read())),
+            Some((NS_XR, "xrrSheet")) => Self::XrrSheet(Box::new(item.read())),
+            Some((NS_XR, "xrrTrim")) => Self::XrrTrim(Box::new(item.read())),
+            Some((NS_XR, "xrrUspt")) => Self::XrrUspt(Box::new(item.read())),
+            Some((NS_XR, "xrrc")) => Self::Xrrc(Box::new(item.read())),
+            Some((NS_XR, "xrrco")) => Self::Xrrco(Box::new(item.read())),
+            Some((NS_XR, "xrrdo")) => Self::Xrrdo(Box::new(item.read())),
+            Some((NS_XR, "xrrf")) => Self::Xrrf(Box::new(item.read())),
+            Some((NS_XR, "xrrftr")) => Self::Xrrftr(Box::new(item.read())),
+            Some((NS_XR, "xrrg")) => Self::Xrrg(Box::new(item.read())),
+            Some((NS_XR, "xrrm")) => Self::Xrrm(Box::new(item.read())),
+            Some((NS_XR, "xrrrc")) => Self::Xrrrc(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -7026,7 +7250,7 @@ impl officekit_markup_base::Read for RevisionStreamContent {
 impl officekit_markup_base::Write for RevisionStreamContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::XrrDefName(arm) => arm.write_into(writer),
             Self::XrrList(arm) => arm.write_into(writer),
             Self::XrrListExpR(arm) => arm.write_into(writer),
@@ -7044,6 +7268,95 @@ impl officekit_markup_base::Write for RevisionStreamContent {
         }
     }
 }
+
+impl<X: UserData> From<XrrDefNameWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrDefNameWith<X>) -> Self {
+        Self::XrrDefName(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrListWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrListWith<X>) -> Self {
+        Self::XrrList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrListExpRWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrListExpRWith<X>) -> Self {
+        Self::XrrListExpR(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrSheetWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrSheetWith<X>) -> Self {
+        Self::XrrSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrTrimWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrTrimWith<X>) -> Self {
+        Self::XrrTrim(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrUsptWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrUsptWith<X>) -> Self {
+        Self::XrrUspt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrcWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrcWith<X>) -> Self {
+        Self::Xrrc(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrcoWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrcoWith<X>) -> Self {
+        Self::Xrrco(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrdoWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrdoWith<X>) -> Self {
+        Self::Xrrdo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrfWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrfWith<X>) -> Self {
+        Self::Xrrf(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrftrWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrftrWith<X>) -> Self {
+        Self::Xrrftr(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrgWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrgWith<X>) -> Self {
+        Self::Xrrg(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrmWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrmWith<X>) -> Self {
+        Self::Xrrm(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XrrrcWith<X>> for RevisionStreamContentWith<X> {
+    fn from(arm: XrrrcWith<X>) -> Self {
+        Self::Xrrrc(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RevisionStreamContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<RevisionGroupContent> for RevisionStreamContent {
     fn from(item: RevisionGroupContent) -> Self {
@@ -7536,19 +7849,23 @@ impl<X: UserData> StateBasedObjectContentWith<X> {
     {
         match self {
             Self::AutoFilter(node) => {
-                StateBasedObjectContentWith::AutoFilter(node.into_user_data())
+                StateBasedObjectContentWith::AutoFilter(Box::new((*node).into_user_data()))
             }
-            Self::Comments(node) => StateBasedObjectContentWith::Comments(node.into_user_data()),
+            Self::Comments(node) => {
+                StateBasedObjectContentWith::Comments(Box::new((*node).into_user_data()))
+            }
             Self::DataValidation(node) => {
-                StateBasedObjectContentWith::DataValidation(node.into_user_data())
+                StateBasedObjectContentWith::DataValidation(Box::new((*node).into_user_data()))
             }
-            Self::Hyperlink(node) => StateBasedObjectContentWith::Hyperlink(node.into_user_data()),
+            Self::Hyperlink(node) => {
+                StateBasedObjectContentWith::Hyperlink(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => StateBasedObjectContentWith::Other(node),
             Self::PivotTableDefinition(node) => StateBasedObjectContentWith::PivotTableDefinition(
                 Box::new((*node).into_user_data()),
             ),
             Self::SparklineGroup(node) => {
-                StateBasedObjectContentWith::SparklineGroup(node.into_user_data())
+                StateBasedObjectContentWith::SparklineGroup(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -7556,26 +7873,26 @@ impl<X: UserData> StateBasedObjectContentWith<X> {
 
 impl<X: UserData> Default for StateBasedObjectContentWith<X> {
     fn default() -> Self {
-        Self::AutoFilter(AutoFilterWith::default())
+        Self::AutoFilter(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for StateBasedObjectContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XR, "autoFilter")) => Self::AutoFilter(item.read()),
-            Some((NS_XR, "comments")) => Self::Comments(item.read()),
-            Some((NS_XR, "dataValidation")) => Self::DataValidation(item.read()),
-            Some((NS_XR, "hyperlink")) => Self::Hyperlink(item.read()),
+            Some((NS_XR, "autoFilter")) => Self::AutoFilter(Box::new(item.read())),
+            Some((NS_XR, "comments")) => Self::Comments(Box::new(item.read())),
+            Some((NS_XR, "dataValidation")) => Self::DataValidation(Box::new(item.read())),
+            Some((NS_XR, "hyperlink")) => Self::Hyperlink(Box::new(item.read())),
             Some((NS_XR, "pivotTableDefinition")) => {
                 Self::PivotTableDefinition(Box::new(item.read()))
             }
-            Some((NS_XR, "sparklineGroup")) => Self::SparklineGroup(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XR, "sparklineGroup")) => Self::SparklineGroup(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -7587,12 +7904,53 @@ impl officekit_markup_base::Write for StateBasedObjectContent {
             Self::Comments(arm) => arm.write_into(writer),
             Self::DataValidation(arm) => arm.write_into(writer),
             Self::Hyperlink(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PivotTableDefinition(arm) => arm.write_into(writer),
             Self::SparklineGroup(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AutoFilterWith<X>> for StateBasedObjectContentWith<X> {
+    fn from(arm: AutoFilterWith<X>) -> Self {
+        Self::AutoFilter(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CommentsWith<X>> for StateBasedObjectContentWith<X> {
+    fn from(arm: CommentsWith<X>) -> Self {
+        Self::Comments(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DataValidationWith<X>> for StateBasedObjectContentWith<X> {
+    fn from(arm: DataValidationWith<X>) -> Self {
+        Self::DataValidation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HyperlinkWith<X>> for StateBasedObjectContentWith<X> {
+    fn from(arm: HyperlinkWith<X>) -> Self {
+        Self::Hyperlink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PivotTableDefinitionWith<X>> for StateBasedObjectContentWith<X> {
+    fn from(arm: PivotTableDefinitionWith<X>) -> Self {
+        Self::PivotTableDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SparklineGroupWith<X>> for StateBasedObjectContentWith<X> {
+    fn from(arm: SparklineGroupWith<X>) -> Self {
+        Self::SparklineGroup(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<StateBasedObjectContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for SubFeatureType {
     fn as_ref(&self) -> &str {

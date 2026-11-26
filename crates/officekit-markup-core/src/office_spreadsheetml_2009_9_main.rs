@@ -3959,11 +3959,11 @@ impl Eq for PivotTablesWith<()> {}
 #[non_exhaustive]
 pub enum PivotUserEditContentWith<X: UserData> {
     /// The element `x14:editValue`, a `EditValue`.
-    EditValue(EditValueWith<X>),
+    EditValue(Box<EditValueWith<X>>),
     /// The element `xne:f`, a `F`.
-    F(office_excel_2006_main::FWith<X>),
+    F(Box<office_excel_2006_main::FWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`PivotUserEditContentWith`] of the tree a read gives, where no node holds anything in
@@ -4292,11 +4292,11 @@ pub enum SlicerCacheCrossFilterMember {
 #[non_exhaustive]
 pub enum SlicerCacheDataContentWith<X: UserData> {
     /// The element `x14:olap`, a `Olap`.
-    Olap(OlapWith<X>),
+    Olap(Box<OlapWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x14:tabular`, a `Tabular`.
-    Tabular(TabularWith<X>),
+    Tabular(Box<TabularWith<X>>),
 }
 
 /// [`SlicerCacheDataContentWith`] of the tree a read gives, where no node holds anything in
@@ -10396,8 +10396,10 @@ impl<X: UserData> PivotUserEditContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::EditValue(node) => PivotUserEditContentWith::EditValue(node.into_user_data()),
-            Self::F(node) => PivotUserEditContentWith::F(node.into_user_data()),
+            Self::EditValue(node) => {
+                PivotUserEditContentWith::EditValue(Box::new((*node).into_user_data()))
+            }
+            Self::F(node) => PivotUserEditContentWith::F(Box::new((*node).into_user_data())),
             Self::Other(node) => PivotUserEditContentWith::Other(node),
         }
     }
@@ -10405,20 +10407,20 @@ impl<X: UserData> PivotUserEditContentWith<X> {
 
 impl<X: UserData> Default for PivotUserEditContentWith<X> {
     fn default() -> Self {
-        Self::EditValue(EditValueWith::default())
+        Self::EditValue(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for PivotUserEditContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X14, "editValue")) => Self::EditValue(item.read()),
-            Some((NS_XNE, "f")) => Self::F(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X14, "editValue")) => Self::EditValue(Box::new(item.read())),
+            Some((NS_XNE, "f")) => Self::F(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -10428,10 +10430,27 @@ impl officekit_markup_base::Write for PivotUserEditContent {
         match self {
             Self::EditValue(arm) => arm.write_into(writer),
             Self::F(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<EditValueWith<X>> for PivotUserEditContentWith<X> {
+    fn from(arm: EditValueWith<X>) -> Self {
+        Self::EditValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<office_excel_2006_main::FWith<X>> for PivotUserEditContentWith<X> {
+    fn from(arm: office_excel_2006_main::FWith<X>) -> Self {
+        Self::F(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<PivotUserEditContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ProtectedRangeWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -11169,29 +11188,33 @@ impl<X: UserData> SlicerCacheDataContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Olap(node) => SlicerCacheDataContentWith::Olap(node.into_user_data()),
+            Self::Olap(node) => {
+                SlicerCacheDataContentWith::Olap(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => SlicerCacheDataContentWith::Other(node),
-            Self::Tabular(node) => SlicerCacheDataContentWith::Tabular(node.into_user_data()),
+            Self::Tabular(node) => {
+                SlicerCacheDataContentWith::Tabular(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for SlicerCacheDataContentWith<X> {
     fn default() -> Self {
-        Self::Olap(OlapWith::default())
+        Self::Olap(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for SlicerCacheDataContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X14, "olap")) => Self::Olap(item.read()),
-            Some((NS_X14, "tabular")) => Self::Tabular(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X14, "olap")) => Self::Olap(Box::new(item.read())),
+            Some((NS_X14, "tabular")) => Self::Tabular(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -11200,11 +11223,28 @@ impl officekit_markup_base::Write for SlicerCacheDataContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::Olap(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Tabular(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<OlapWith<X>> for SlicerCacheDataContentWith<X> {
+    fn from(arm: OlapWith<X>) -> Self {
+        Self::Olap(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TabularWith<X>> for SlicerCacheDataContentWith<X> {
+    fn from(arm: TabularWith<X>) -> Self {
+        Self::Tabular(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SlicerCacheDataContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SlicerCacheDefinitionWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

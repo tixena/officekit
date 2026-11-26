@@ -135,8 +135,8 @@ fn in_run(content: TextRunContent) -> BlockContent {
     let mut run = TextRun::default();
     run.content = vec![content];
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::TextRun(run)];
-    BlockContent::Paragraph(paragraph)
+    paragraph.content = vec![ParagraphContent::from(run)];
+    BlockContent::from(paragraph)
 }
 
 /// A paragraph holding an inline drawing whose `wp:docPr` has `id`.
@@ -147,29 +147,29 @@ fn doc_pr(id: &str) -> BlockContent {
     let mut inline = InlineDrawingMLObject::default();
     inline.drawing_object_non_visual_properties = Box::new(properties);
     let mut drawing = DrawingMLObject::default();
-    drawing.content = vec![DrawingObjectContent::InlineDrawingMLObject(inline)];
-    in_run(TextRunContent::DrawingMLObject(drawing))
+    drawing.content = vec![DrawingObjectContent::from(inline)];
+    in_run(TextRunContent::from(drawing))
 }
 
 /// A paragraph holding a VML picture of `shape`.
 fn picture(shape: VmlElementContent) -> BlockContent {
     let mut picture = VMLObject::default();
     picture.content = vec![shape];
-    in_run(TextRunContent::VMLObject(picture))
+    in_run(TextRunContent::from(picture))
 }
 
 /// A paragraph holding a VML rectangle of `id`.
 fn rect(id: &str) -> BlockContent {
     let mut rectangle = Rectangle::default();
     rectangle.id = Some(id.to_owned());
-    picture(VmlElementContent::Rectangle(rectangle))
+    picture(VmlElementContent::from(rectangle))
 }
 
 /// A paragraph holding a VML shape of `id`.
 fn shape(id: &str) -> BlockContent {
     let mut definition = ShapeDefinition::default();
     definition.id = Some(id.to_owned());
-    picture(VmlElementContent::ShapeDefinition(definition))
+    picture(VmlElementContent::from(definition))
 }
 
 /// The part text of `root`, after the declaration Office writes.
@@ -264,12 +264,12 @@ fn a_referenced_id_is_not_renamed() {
     let mut ole = EmbeddedOLEObject::default();
     ole.shape_id = Some("_x0000_i1025".to_owned());
     let mut object = EmbeddedObject::default();
-    object.vml_element_content = vec![VmlElementContent::EmbeddedOLEObject(ole)];
+    object.vml_element_content = vec![VmlElementContent::from(ole)];
     let mut package = typed_package(
         vec![
             shape("_x0000_i1025"),
             shape("_x0000_i1025"),
-            in_run(TextRunContent::EmbeddedObject(object)),
+            in_run(TextRunContent::from(object)),
         ],
         None,
     );
@@ -288,11 +288,11 @@ fn an_id_outside_the_list_is_not_renamed() {
         let mut start = BookmarkStart::default();
         start.id = Some(DecimalNumberValue::from("0".to_owned()));
         start.name = Some(name.to_owned());
-        ParagraphContent::BookmarkStart(start)
+        ParagraphContent::from(start)
     };
     let mut paragraph = Paragraph::default();
     paragraph.content = vec![bookmark("a"), bookmark("b")];
-    let mut package = typed_package(vec![BlockContent::Paragraph(paragraph)], None);
+    let mut package = typed_package(vec![BlockContent::from(paragraph)], None);
     let validation = Validator::new(VERSION)
         .validate_fixing(&mut package, Fix::Trivial)
         .unwrap();

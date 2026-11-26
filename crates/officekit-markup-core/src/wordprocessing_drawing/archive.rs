@@ -932,12 +932,12 @@ pub struct XfrmMirror {
 #[rkyv(remote = super::AnchorContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum AnchorContent {
-    NoTextWrapping(super::NoTextWrapping),
-    Other(Node),
-    SquareWrapping(super::SquareWrapping),
-    ThroughWrapping(super::ThroughWrapping),
-    TightWrapping(super::TightWrapping),
-    TopAndBottomWrapping(super::TopAndBottomWrapping),
+    NoTextWrapping(Box<super::NoTextWrapping>),
+    Other(Box<Node>),
+    SquareWrapping(Box<super::SquareWrapping>),
+    ThroughWrapping(Box<super::ThroughWrapping>),
+    TightWrapping(Box<super::TightWrapping>),
+    TopAndBottomWrapping(Box<super::TopAndBottomWrapping>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -947,12 +947,12 @@ pub enum AnchorContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum DrawingCanvasContent {
-    ContentPart(#[rkyv(omit_bounds)] super::ContentPart),
-    GraphicalObjectContainer(#[rkyv(omit_bounds)] super::GraphicalObjectContainer),
-    Other(Node),
-    Picture(#[rkyv(omit_bounds)] super::super::picture::Picture),
-    WordprocessingMLShape(#[rkyv(omit_bounds)] super::WordprocessingMLShape),
-    WordprocessingMLShapeGroup(#[rkyv(omit_bounds)] super::WordprocessingMLShapeGroup),
+    ContentPart(#[rkyv(omit_bounds)] Box<super::ContentPart>),
+    GraphicalObjectContainer(#[rkyv(omit_bounds)] Box<super::GraphicalObjectContainer>),
+    Other(Box<Node>),
+    Picture(#[rkyv(omit_bounds)] Box<super::super::picture::Picture>),
+    WordprocessingMLShape(#[rkyv(omit_bounds)] Box<super::WordprocessingMLShape>),
+    WordprocessingMLShapeGroup(#[rkyv(omit_bounds)] Box<super::WordprocessingMLShapeGroup>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -962,22 +962,22 @@ pub enum DrawingCanvasContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupShapeContent {
-    ContentPart(#[rkyv(omit_bounds)] super::ContentPart),
-    GraphicalObjectContainer(#[rkyv(omit_bounds)] super::GraphicalObjectContainer),
-    GroupShape(#[rkyv(omit_bounds)] super::GroupShape),
-    Other(Node),
-    Picture(#[rkyv(omit_bounds)] super::super::picture::Picture),
-    WordprocessingMLShape(#[rkyv(omit_bounds)] super::WordprocessingMLShape),
+    ContentPart(#[rkyv(omit_bounds)] Box<super::ContentPart>),
+    GraphicalObjectContainer(#[rkyv(omit_bounds)] Box<super::GraphicalObjectContainer>),
+    GroupShape(#[rkyv(omit_bounds)] Box<super::GroupShape>),
+    Other(Box<Node>),
+    Picture(#[rkyv(omit_bounds)] Box<super::super::picture::Picture>),
+    WordprocessingMLShape(#[rkyv(omit_bounds)] Box<super::WordprocessingMLShape>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::HorizontalPositioningContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum HorizontalPositioningContent {
-    AbsolutePositionOffset(super::AbsolutePositionOffset),
-    Other(Node),
-    PctPosHOffset(super::super::office_word_2010_wordprocessing_drawing::PctPosHOffset),
-    RelativeHorizontalAlignment(super::RelativeHorizontalAlignment),
+    AbsolutePositionOffset(Box<super::AbsolutePositionOffset>),
+    Other(Box<Node>),
+    PctPosHOffset(Box<super::super::office_word_2010_wordprocessing_drawing::PctPosHOffset>),
+    RelativeHorizontalAlignment(Box<super::RelativeHorizontalAlignment>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -988,12 +988,12 @@ pub enum HorizontalPositioningContent {
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeNonVisualPropertiesContent {
     NonVisualConnectorShapeDrawingProperties(
-        #[rkyv(omit_bounds)] super::NonVisualConnectorShapeDrawingProperties,
+        #[rkyv(omit_bounds)] Box<super::NonVisualConnectorShapeDrawingProperties>,
     ),
     NonVisualDrawingPropertiesForAShape(
-        #[rkyv(omit_bounds)] super::NonVisualDrawingPropertiesForAShape,
+        #[rkyv(omit_bounds)] Box<super::NonVisualDrawingPropertiesForAShape>,
     ),
-    Other(Node),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1003,19 +1003,21 @@ pub enum ShapeNonVisualPropertiesContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeTextContent {
-    Other(Node),
-    TextualContentsOfShapeLinkedTxbx(#[rkyv(omit_bounds)] super::TextualContentsOfShapeLinkedTxbx),
-    TextualContentsOfShapeTxbx(#[rkyv(omit_bounds)] super::TextualContentsOfShapeTxbx),
+    Other(Box<Node>),
+    TextualContentsOfShapeLinkedTxbx(
+        #[rkyv(omit_bounds)] Box<super::TextualContentsOfShapeLinkedTxbx>,
+    ),
+    TextualContentsOfShapeTxbx(#[rkyv(omit_bounds)] Box<super::TextualContentsOfShapeTxbx>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::VerticalPositioningContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum VerticalPositioningContent {
-    AbsolutePositionOffset(super::AbsolutePositionOffset),
-    Other(Node),
-    PctPosVOffset(super::super::office_word_2010_wordprocessing_drawing::PctPosVOffset),
-    RelativeVerticalAlignment(super::RelativeVerticalAlignment),
+    AbsolutePositionOffset(Box<super::AbsolutePositionOffset>),
+    Other(Box<Node>),
+    PctPosVOffset(Box<super::super::office_word_2010_wordprocessing_drawing::PctPosVOffset>),
+    RelativeVerticalAlignment(Box<super::RelativeVerticalAlignment>),
 }
 
 impl From<AbsolutePositionOffsetMirror> for super::AbsolutePositionOffset {

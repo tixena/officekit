@@ -365,9 +365,9 @@ pub struct SortRulesMirror {
 #[rkyv(remote = super::SortRuleContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SortRuleContent {
-    Other(Node),
-    RichSortCondition(super::RichSortCondition),
-    SortCondition(super::SortCondition),
+    Other(Box<Node>),
+    RichSortCondition(Box<super::RichSortCondition>),
+    SortCondition(Box<super::SortCondition>),
 }
 
 impl From<ColumnFilterMirror> for super::ColumnFilter {

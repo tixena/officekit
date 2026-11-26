@@ -345,12 +345,12 @@ pub struct XfrmMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum WordprocessingGroupContent {
-    ContentPart(office_word_2010_wordml::ContentPart),
-    GraphicFrame(super::GraphicFrame),
-    GrpSp(#[rkyv(omit_bounds)] super::GrpSp),
-    Other(Node),
-    Picture(picture::Picture),
-    Wsp(super::super::office_word_2010_wordprocessing_shape::Wsp),
+    ContentPart(Box<office_word_2010_wordml::ContentPart>),
+    GraphicFrame(Box<super::GraphicFrame>),
+    GrpSp(#[rkyv(omit_bounds)] Box<super::GrpSp>),
+    Other(Box<Node>),
+    Picture(Box<picture::Picture>),
+    Wsp(Box<super::super::office_word_2010_wordprocessing_shape::Wsp>),
 }
 
 impl From<CNvFrPrMirror> for super::CNvFrPr {

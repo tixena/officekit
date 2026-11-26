@@ -18,7 +18,7 @@
 //! assert_eq!(format.number_format, "General");
 //! let font = format.font.or(formats.normal_font()).map(FontProperties::from).unwrap_or_default();
 //! let mut run = RunProperties::default();
-//! run.content.push(RunPropertiesContent::Bold(Bold::default()));
+//! run.content.push(RunPropertiesContent::from(Bold::default()));
 //! assert_eq!(FontProperties::from(&run).over(&font).bold, Some(true));
 //! # Ok(())
 //! # }

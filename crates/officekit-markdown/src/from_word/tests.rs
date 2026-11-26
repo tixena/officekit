@@ -199,7 +199,7 @@ fn arky(docx: &Docx) -> Document {
 fn block(content: Vec<ParagraphContent>) -> BlockContent {
     let mut paragraph = wordprocessing::Paragraph::default();
     paragraph.content = content;
-    BlockContent::Paragraph(paragraph)
+    BlockContent::from(paragraph)
 }
 
 /// The text `value` of a run, its spaces kept.
@@ -207,23 +207,21 @@ fn characters(value: &str) -> TextRunContent {
     let mut characters = wordprocessing::Text::default();
     characters.space = Some("preserve".to_owned());
     characters.value = value.to_owned();
-    TextRunContent::Text(characters)
+    TextRunContent::from(characters)
 }
 
 /// A run holding a complex field's character of `kind`: `begin`, `separate` or `end`.
 fn field_character(kind: &str) -> TextRun {
     let mut character = ComplexFieldCharacter::default();
     character.fld_char_type = Some(ComplexFieldCharacterType::from(kind.to_owned()));
-    run_holding(alloc::vec![TextRunContent::ComplexFieldCharacter(
-        character
-    )])
+    run_holding(alloc::vec![TextRunContent::from(character)])
 }
 
 /// A run of `value` in bold.
 fn bold_run(value: &str) -> TextRun {
     marked(
         value,
-        alloc::vec![RunPropertiesContent::Bold(Bold::default())],
+        alloc::vec![RunPropertiesContent::from(Bold::default())],
     )
 }
 
@@ -391,7 +389,7 @@ fn paragraph(style: &str, runs: Vec<TextRun>) -> BlockContent {
 
 /// A paragraph of no style holding `runs`.
 fn plain(runs: Vec<TextRun>) -> BlockContent {
-    block(runs.into_iter().map(ParagraphContent::TextRun).collect())
+    block(runs.into_iter().map(ParagraphContent::from).collect())
 }
 
 /// A run of `value`, its text's spaces kept.
@@ -427,7 +425,7 @@ fn style_reference(style: &str) -> ReferencedParagraphStyle {
 /// A paragraph with `properties` holding `runs`.
 fn styled_by(properties: ParagraphProperties, runs: Vec<TextRun>) -> BlockContent {
     let BlockContent::Paragraph(mut paragraph) = plain(runs) else {
-        return BlockContent::Paragraph(wordprocessing::Paragraph::default());
+        return BlockContent::from(wordprocessing::Paragraph::default());
     };
     paragraph.properties = Some(Box::new(properties));
     BlockContent::Paragraph(paragraph)
@@ -473,7 +471,7 @@ fn styles() -> StyleDefinitions {
         normal,
         with_marks(
             based_on(style("paragraph", "Ttulo1", "heading 1"), "Normal"),
-            alloc::vec![RunPropertiesContent::Bold(Bold::default())],
+            alloc::vec![RunPropertiesContent::from(Bold::default())],
         ),
         with_paragraph(style("paragraph", "Heading2", "heading 2"), outline),
         style("paragraph", "Heading3", "heading 3"),
@@ -482,8 +480,8 @@ fn styles() -> StyleDefinitions {
         with_marks(
             style("paragraph", "Strongly", "Strongly"),
             alloc::vec![
-                RunPropertiesContent::Bold(Bold::default()),
-                RunPropertiesContent::Italics(Italics::default()),
+                RunPropertiesContent::from(Bold::default()),
+                RunPropertiesContent::from(Italics::default()),
             ],
         ),
         style("paragraph", "HTMLPreformatted", "HTML Preformatted"),
@@ -493,11 +491,11 @@ fn styles() -> StyleDefinitions {
         style("character", "HTMLCode", "HTML Code"),
         with_marks(
             style("character", "Emphatic", "Emphatic"),
-            alloc::vec![RunPropertiesContent::Italics(Italics::default())],
+            alloc::vec![RunPropertiesContent::from(Italics::default())],
         ),
         with_marks(
             style("character", "Mono", "Mono"),
-            alloc::vec![RunPropertiesContent::RunFonts(fonts)],
+            alloc::vec![RunPropertiesContent::from(fonts)],
         ),
     ];
     definitions
@@ -506,9 +504,9 @@ fn styles() -> StyleDefinitions {
 /// A table of `rows`, its first `head` rows marked as head rows.
 fn table(head: usize, rows: Vec<wordprocessing::TableRow>) -> BlockContent {
     let mut built = wordprocessing::Table::default();
-    built.content_row_content = rows.into_iter().map(ContentRowContent::TableRow).collect();
+    built.content_row_content = rows.into_iter().map(ContentRowContent::from).collect();
     built.repeat_header_rows(head);
-    BlockContent::Table(built)
+    BlockContent::from(built)
 }
 
 /// A table cell holding `blocks`.
@@ -521,10 +519,7 @@ fn table_cell(blocks: Vec<BlockContent>) -> wordprocessing::TableCell {
 /// A table row of `cells`.
 fn table_row(cells: Vec<wordprocessing::TableCell>) -> wordprocessing::TableRow {
     let mut row = wordprocessing::TableRow::default();
-    row.content = cells
-        .into_iter()
-        .map(ContentCellContent::TableCell)
-        .collect();
+    row.content = cells.into_iter().map(ContentCellContent::from).collect();
     row
 }
 
@@ -538,7 +533,7 @@ fn anchored(anchor: &str, value: &str) -> ParagraphContent {
     let mut hyperlink = Hyperlink::default();
     hyperlink.anchor = Some(anchor.to_owned());
     hyperlink.content = alloc::vec![text_run(value)];
-    ParagraphContent::Hyperlink(hyperlink)
+    ParagraphContent::from(hyperlink)
 }
 
 /// The runs of a complex field of `instruction` whose result is the run of `shown`.
@@ -548,13 +543,13 @@ fn complex_field(instruction: &str, shown: &str) -> Vec<ParagraphContent> {
     code.value = instruction.to_owned();
     [
         field_character("begin"),
-        run_holding(alloc::vec![TextRunContent::FieldCode(code)]),
+        run_holding(alloc::vec![TextRunContent::from(code)]),
         field_character("separate"),
         run(shown),
         field_character("end"),
     ]
     .into_iter()
-    .map(ParagraphContent::TextRun)
+    .map(ParagraphContent::from)
     .collect()
 }
 
@@ -562,21 +557,19 @@ fn complex_field(instruction: &str, shown: &str) -> Vec<ParagraphContent> {
 fn pict(alt: &str, id: &str) -> TextRun {
     let mut object = VMLObject::default();
     object.content = alloc::vec![vml_picture(alt, id)];
-    run_holding(alloc::vec![TextRunContent::VMLObject(object)])
+    run_holding(alloc::vec![TextRunContent::from(object)])
 }
 
 /// A run holding a one-inch inline picture from `source`, of the drawing id `id` and the alt text
 /// `descr`.
 fn picture(source: PictureSource<'_>, id: u32, descr: &str) -> TextRun {
-    run_holding(alloc::vec![TextRunContent::DrawingMLObject(
-        inline_picture(
-            source,
-            id,
-            &format!("Picture {id}"),
-            Some(descr),
-            (914_400, 914_400),
-        )
-    )])
+    run_holding(alloc::vec![TextRunContent::from(inline_picture(
+        source,
+        id,
+        &format!("Picture {id}"),
+        Some(descr),
+        (914_400, 914_400),
+    ))])
 }
 
 /// A simple field of `instruction` whose result is the run of `shown`.
@@ -584,12 +577,12 @@ fn simple_field(instruction: &str, shown: &str) -> ParagraphContent {
     let mut field = SimpleField::default();
     field.content = alloc::vec![text_run(shown)];
     field.instr = Some(instruction.to_owned());
-    ParagraphContent::SimpleField(field)
+    ParagraphContent::from(field)
 }
 
 /// The run of `value` as paragraph content.
 fn text_run(value: &str) -> ParagraphContent {
-    ParagraphContent::TextRun(run(value))
+    ParagraphContent::from(run(value))
 }
 
 /// A VML `v:shape` of the alt text `alt` whose `v:imagedata` names the relationship `id`.
@@ -598,8 +591,8 @@ fn vml_picture(alt: &str, id: &str) -> VmlElementContent {
     data.r_id = Some(id.to_owned());
     let mut shape = ShapeDefinition::default();
     shape.alt = Some(alt.to_owned());
-    shape.content = alloc::vec![ShapeDefinitionContent::ImageData(data)];
-    VmlElementContent::ShapeDefinition(shape)
+    shape.content = alloc::vec![ShapeDefinitionContent::from(data)];
+    VmlElementContent::from(shape)
 }
 
 /// A new Word document whose body holds `blocks` and whose styles part holds [`styles`].
@@ -735,7 +728,7 @@ fn word_xml(body: &str) -> Docx {
 #[test]
 fn the_design_sample_writes_its_markdown_and_no_media_folder() {
     let address = run_holding(alloc::vec![
-        TextRunContent::Break(Break::default()),
+        TextRunContent::from(Break::default()),
         characters("Calle 5")
     ]);
     let document = word(alloc::vec![
@@ -863,7 +856,7 @@ fn a_level_7_heading_is_a_bold_paragraph_of_the_open_section() {
 fn a_heading_with_no_text_gives_nothing_and_a_line_break_in_a_heading_is_a_space() {
     let broken = run_holding(alloc::vec![
         characters("a"),
-        TextRunContent::Break(Break::default()),
+        TextRunContent::from(Break::default()),
         characters("b"),
     ]);
     let docx = word(alloc::vec![
@@ -909,8 +902,8 @@ fn a_run_both_bold_and_italic_is_emphasis_holding_strong() {
     let docx = word(alloc::vec![plain(alloc::vec![marked(
         "x",
         alloc::vec![
-            RunPropertiesContent::Bold(Bold::default()),
-            RunPropertiesContent::Italics(Italics::default()),
+            RunPropertiesContent::from(Bold::default()),
+            RunPropertiesContent::from(Italics::default()),
         ],
     )])]);
     let both = Inline::Emphasis(Emphasis::new(alloc::vec![strong(alloc::vec![text("x")])]));
@@ -926,7 +919,7 @@ fn character_styles_and_code_fonts_mark_runs_and_a_paragraph_style_does_not() {
     let character_style = |id: &str| {
         let mut reference = ReferencedCharacterStyle::default();
         reference.val = Some(id.to_owned());
-        RunPropertiesContent::ReferencedCharacterStyle(reference)
+        RunPropertiesContent::from(reference)
     };
     let mut consolas = RunFonts::default();
     consolas.ascii = Some("Consolas".to_owned());
@@ -937,12 +930,12 @@ fn character_styles_and_code_fonts_mark_runs_and_a_paragraph_style_does_not() {
             marked("says", alloc::vec![character_style("Emphatic")]),
             run(" "),
             marked("a", alloc::vec![character_style("HTMLCode")]),
-            marked(" ", alloc::vec![RunPropertiesContent::RunFonts(consolas)]),
+            marked(" ", alloc::vec![RunPropertiesContent::from(consolas)]),
             marked(
                 "b",
                 alloc::vec![
                     character_style("Mono"),
-                    RunPropertiesContent::Bold(not_bold)
+                    RunPropertiesContent::from(not_bold)
                 ],
             ),
         ]),
@@ -957,7 +950,7 @@ fn inserted_text_stays_deleted_text_goes_and_a_field_gives_its_shown_text() {
         |id: usize, runs: Vec<TextRun>| -> (Option<DecimalNumberValue>, Vec<TrackedRunContent>) {
             (
                 Some(decimal(id)),
-                runs.into_iter().map(TrackedRunContent::TextRun).collect(),
+                runs.into_iter().map(TrackedRunContent::from).collect(),
             )
         };
     let mut inserted = InsertedRunContent::default();
@@ -968,7 +961,7 @@ fn inserted_text_stays_deleted_text_goes_and_a_field_gives_its_shown_text() {
     let mut deleted = DeletedRunContent::default();
     (deleted.id, deleted.content) = tracked(
         2,
-        alloc::vec![run_holding(alloc::vec![TextRunContent::DeletedText(old)])],
+        alloc::vec![run_holding(alloc::vec![TextRunContent::from(old)])],
     );
     deleted.author = Some("a".to_owned());
     let mut instruction = FieldCode::default();
@@ -976,7 +969,7 @@ fn inserted_text_stays_deleted_text_goes_and_a_field_gives_its_shown_text() {
     instruction.value = r#" DATE \@ "d/M/yyyy" "#.to_owned();
     let mut simple = SimpleField::default();
     simple.instr = Some(" AUTHOR ".to_owned());
-    simple.content = alloc::vec![ParagraphContent::TextRun(run("Ana"))];
+    simple.content = alloc::vec![ParagraphContent::from(run("Ana"))];
     let mut moved_from = MoveSourceRunContent::default();
     (moved_from.id, moved_from.content) = tracked(3, alloc::vec![run("gone")]);
     moved_from.author = Some("a".to_owned());
@@ -984,21 +977,19 @@ fn inserted_text_stays_deleted_text_goes_and_a_field_gives_its_shown_text() {
     (moved_to.id, moved_to.content) = tracked(4, alloc::vec![run(".")]);
     moved_to.author = Some("a".to_owned());
     let docx = word(alloc::vec![block(alloc::vec![
-        ParagraphContent::TextRun(run("Kept ")),
-        ParagraphContent::InsertedRunContent(inserted),
-        ParagraphContent::DeletedRunContent(deleted),
-        ParagraphContent::TextRun(run(" on ")),
-        ParagraphContent::TextRun(field_character("begin")),
-        ParagraphContent::TextRun(run_holding(alloc::vec![TextRunContent::FieldCode(
-            instruction
-        )])),
-        ParagraphContent::TextRun(field_character("separate")),
-        ParagraphContent::TextRun(run("19/10/2026")),
-        ParagraphContent::TextRun(field_character("end")),
-        ParagraphContent::TextRun(run(" by ")),
-        ParagraphContent::SimpleField(simple),
-        ParagraphContent::MoveSourceRunContent(moved_from),
-        ParagraphContent::MoveDestinationRunContent(moved_to),
+        ParagraphContent::from(run("Kept ")),
+        ParagraphContent::from(inserted),
+        ParagraphContent::from(deleted),
+        ParagraphContent::from(run(" on ")),
+        ParagraphContent::from(field_character("begin")),
+        ParagraphContent::from(run_holding(alloc::vec![TextRunContent::from(instruction)])),
+        ParagraphContent::from(field_character("separate")),
+        ParagraphContent::from(run("19/10/2026")),
+        ParagraphContent::from(field_character("end")),
+        ParagraphContent::from(run(" by ")),
+        ParagraphContent::from(simple),
+        ParagraphContent::from(moved_from),
+        ParagraphContent::from(moved_to),
     ])]);
     assert_eq!(markdown(&docx), "Kept new on 19/10/2026 by Ana.\n");
 }
@@ -1030,19 +1021,19 @@ fn tabs_and_text_wrapping_breaks_stay_and_a_page_break_goes() {
     let typed_break = |kind: &str| {
         let mut found = Break::default();
         found.r#type = Some(BreakTypes::from(kind.to_owned()));
-        TextRunContent::Break(found)
+        TextRunContent::from(found)
     };
     let docx = word(alloc::vec![plain(alloc::vec![run_holding(alloc::vec![
         characters("a"),
-        TextRunContent::TabCharacter(TabCharacter::default()),
+        TextRunContent::from(TabCharacter::default()),
         characters("b"),
-        TextRunContent::CarriageReturn(CarriageReturn::default()),
+        TextRunContent::from(CarriageReturn::default()),
         characters("c"),
         typed_break("page"),
         characters("d"),
         typed_break("textWrapping"),
         characters("e"),
-        TextRunContent::Break(Break::default()),
+        TextRunContent::from(Break::default()),
     ])])]);
     assert_eq!(
         arky(&docx).body.sections,
@@ -1078,30 +1069,28 @@ fn an_empty_paragraph_gives_nothing_and_one_with_a_bottom_border_alone_a_themati
 #[test]
 fn content_controls_smart_tags_and_custom_xml_give_their_content() {
     let mut inner_content = InlineLevelStructuredDocumentTagContent::default();
-    inner_content.content = alloc::vec![ParagraphContent::TextRun(run("b"))];
+    inner_content.content = alloc::vec![ParagraphContent::from(run("b"))];
     let mut inner = InlineLevelStructuredDocumentTag::default();
     inner.content = Some(Box::new(inner_content));
     let mut smart_tag = InlineLevelSmartTag::default();
-    smart_tag.content = alloc::vec![ParagraphContent::TextRun(run(" c"))];
+    smart_tag.content = alloc::vec![ParagraphContent::from(run(" c"))];
     smart_tag.element = Some(XMLName::from("e".to_owned()));
     smart_tag.uri = Some("u".to_owned());
     let mut custom = InlineLevelCustomXMLElement::default();
-    custom.content = alloc::vec![ParagraphContent::TextRun(run(" d"))];
+    custom.content = alloc::vec![ParagraphContent::from(run(" d"))];
     custom.element = Some(XMLName::from("f".to_owned()));
     let mut held = wordprocessing::Paragraph::default();
     held.content = alloc::vec![
-        ParagraphContent::TextRun(run("a ")),
-        ParagraphContent::InlineLevelStructuredDocumentTag(inner),
-        ParagraphContent::InlineLevelSmartTag(smart_tag),
-        ParagraphContent::InlineLevelCustomXMLElement(custom),
+        ParagraphContent::from(run("a ")),
+        ParagraphContent::from(inner),
+        ParagraphContent::from(smart_tag),
+        ParagraphContent::from(custom),
     ];
     let mut outer_content = BlockLevelStructuredDocumentTagContent::default();
-    outer_content.content = alloc::vec![ContentBlockContent::Paragraph(held)];
+    outer_content.content = alloc::vec![ContentBlockContent::from(held)];
     let mut outer = BlockLevelStructuredDocumentTag::default();
     outer.content = Some(Box::new(outer_content));
-    let docx = word(alloc::vec![BlockContent::BlockLevelStructuredDocumentTag(
-        outer
-    )]);
+    let docx = word(alloc::vec![BlockContent::from(outer)]);
     assert_eq!(markdown(&docx), "a b c d\n");
 }
 
@@ -1184,15 +1173,13 @@ fn an_inline_picture_built_through_the_model_exports_with_its_alt_text() {
         &RelationshipType::IMAGE,
         PNG,
     );
-    let picture = run_holding(alloc::vec![TextRunContent::DrawingMLObject(
-        inline_picture(
-            PictureSource::Embedded(&id),
-            1,
-            "Picture 1",
-            Some("Logo"),
-            (914_400, 914_400),
-        )
-    )]);
+    let picture = run_holding(alloc::vec![TextRunContent::from(inline_picture(
+        PictureSource::Embedded(&id),
+        1,
+        "Picture 1",
+        Some("Logo"),
+        (914_400, 914_400),
+    ))]);
     let result = exported(
         &fixture.body(alloc::vec![plain(alloc::vec![picture])]),
         MarkdownOptions::default(),
@@ -1211,12 +1198,12 @@ fn an_equation_gives_its_text() {
     let mut solution = MathText::default();
     solution.value = "x=1".to_owned();
     let mut math_run = MathRun::default();
-    math_run.content = alloc::vec![MathRunContent::Text(solution)];
+    math_run.content = alloc::vec![MathRunContent::from(solution)];
     let mut equation = OfficeMath::default();
-    equation.content = alloc::vec![OfficeMathContent::Run(math_run)];
+    equation.content = alloc::vec![OfficeMathContent::from(math_run)];
     let docx = word(alloc::vec![block(alloc::vec![
-        ParagraphContent::TextRun(run("Solve ")),
-        ParagraphContent::OfficeMath(equation),
+        ParagraphContent::from(run("Solve ")),
+        ParagraphContent::from(equation),
     ])]);
     assert_eq!(markdown(&docx), "Solve x=1\n");
 }
@@ -1238,8 +1225,8 @@ fn to_arky_leaves_the_main_part_as_it_was() {
 fn a_table_cell_is_converted_by_the_same_rules_and_a_hyperlink_is_a_link() {
     let mut hyperlink = Hyperlink::default();
     hyperlink.anchor = Some("x".to_owned());
-    hyperlink.content = alloc::vec![ParagraphContent::TextRun(run("right"))];
-    let linked = block(alloc::vec![ParagraphContent::Hyperlink(hyperlink)]);
+    hyperlink.content = alloc::vec![ParagraphContent::from(run("right"))];
+    let linked = block(alloc::vec![ParagraphContent::from(hyperlink)]);
     let docx = word(alloc::vec![table(
         0,
         alloc::vec![table_row(alloc::vec![
@@ -1280,7 +1267,7 @@ fn sample() -> Docx {
         ),
         block(alloc::vec![
             text_run("See "),
-            ParagraphContent::Hyperlink(dashboard),
+            ParagraphContent::from(dashboard),
             text_run("."),
         ]),
         plain(alloc::vec![picture(
@@ -1810,14 +1797,14 @@ fn a_hyperlink_inside_a_hyperlink_joins_its_text_and_bold_inside_a_link_is_link_
     let mut outer = Hyperlink::default();
     outer.content = alloc::vec![
         text_run("a "),
-        ParagraphContent::TextRun(bold_run("b")),
-        ParagraphContent::Hyperlink(nested),
+        ParagraphContent::from(bold_run("b")),
+        ParagraphContent::from(nested),
     ];
     outer.id = Some(fixture.external("https://outer.example", &RelationshipType::HYPERLINK));
     outer.tooltip = Some("Tip".to_owned());
-    let docx = fixture.body(alloc::vec![block(alloc::vec![
-        ParagraphContent::Hyperlink(outer)
-    ])]);
+    let docx = fixture.body(alloc::vec![block(alloc::vec![ParagraphContent::from(
+        outer
+    )])]);
     let expected = Inline::Link(Link::new(
         LinkForm::Markdown,
         "https://outer.example".to_owned(),
@@ -1971,7 +1958,7 @@ fn an_alt_chunk_naming_an_html_part_is_an_html_block_of_its_body() {
     ));
     let docx = fixture.body(alloc::vec![
         paragraph("Normal", alloc::vec![run("before")]),
-        BlockContent::AnchorForImportedExternalContent(chunk),
+        BlockContent::from(chunk),
     ]);
     assert_eq!(
         arky(&docx).body.sections,
@@ -2043,9 +2030,9 @@ fn a_vml_picture_in_a_pict_or_an_object_is_an_image_with_the_shape_s_alt_text() 
     object.vml_element_content = alloc::vec![vml_picture("Sheet", &id)];
     let docx = fixture.body(alloc::vec![
         plain(alloc::vec![pict("Company logo", &id)]),
-        plain(alloc::vec![run_holding(alloc::vec![
-            TextRunContent::EmbeddedObject(object)
-        ])]),
+        plain(alloc::vec![run_holding(alloc::vec![TextRunContent::from(
+            object
+        )])]),
     ]);
     let result = exported(&docx, MarkdownOptions::default());
     assert_eq!(result.images, [("image1.png".to_owned(), PNG.to_vec())]);

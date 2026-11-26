@@ -1007,9 +1007,9 @@ pub struct XMirror {
 #[rkyv(remote = super::DatabaseSourceContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum DatabaseSourceContent {
-    DbCommand(super::DbCommand),
-    DbTables(super::DbTables),
-    Other(Node),
+    DbCommand(Box<super::DbCommand>),
+    DbTables(Box<super::DbTables>),
+    Other(Box<Node>),
 }
 
 impl From<ActiveTabTopLevelEntityMirror> for super::ActiveTabTopLevelEntity {

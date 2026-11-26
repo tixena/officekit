@@ -174,27 +174,27 @@ fn word(blocks: Vec<BlockContent>, parts: &[(&str, &str, &str, String)]) -> Pack
 fn paragraph_with(properties: ParagraphProperties) -> BlockContent {
     let mut paragraph = Paragraph::default();
     paragraph.properties = Some(Box::new(properties));
-    BlockContent::Paragraph(paragraph)
+    BlockContent::from(paragraph)
 }
 
 /// A paragraph holding `content`.
 fn paragraph_of(content: Vec<ParagraphContent>) -> BlockContent {
     let mut paragraph = Paragraph::default();
     paragraph.content = content;
-    BlockContent::Paragraph(paragraph)
+    BlockContent::from(paragraph)
 }
 
 /// A run holding `content`.
 fn run_of(content: TextRunContent) -> ParagraphContent {
     let mut run = TextRun::default();
     run.content = vec![content];
-    ParagraphContent::TextRun(run)
+    ParagraphContent::from(run)
 }
 
 /// A Word document of an empty paragraph whose settings part holds `settings`.
 fn with_settings(settings: &DocumentSettings) -> Package {
     word(
-        vec![BlockContent::Paragraph(Paragraph::default())],
+        vec![BlockContent::from(Paragraph::default())],
         &[(
             "/word/settings.xml",
             SETTINGS,
@@ -329,10 +329,7 @@ fn a_value_out_of_range_is_outside_the_constraint() {
     identified.para_id = Some("80000001".to_owned());
     identified.text_id = Some("7FFFFFFF".to_owned());
     let package = word(
-        vec![
-            paragraph_with(properties),
-            BlockContent::Paragraph(identified),
-        ],
+        vec![paragraph_with(properties), BlockContent::from(identified)],
         &[],
     );
     assert_eq!(
@@ -390,7 +387,7 @@ fn a_bookmark_id_held_twice_is_reported_once_on_the_last() {
         let mut start = BookmarkStart::default();
         start.id = Some(number(id));
         start.name = Some(name.to_owned());
-        paragraph_of(vec![ParagraphContent::BookmarkStart(start)])
+        paragraph_of(vec![ParagraphContent::from(start)])
     };
     let package = word(
         vec![bookmark("1", "a"), bookmark("1", "b"), bookmark("2", "c")],
@@ -409,7 +406,7 @@ fn a_bookmark_id_held_twice_is_reported_once_on_the_last() {
 fn a_footnote_reference_to_a_missing_footnote_is_reported() {
     let footnote = |id: &str| {
         let mut footnote = FootnoteContent::default();
-        footnote.content = vec![BlockContent::Paragraph(Paragraph::default())];
+        footnote.content = vec![BlockContent::from(Paragraph::default())];
         footnote.id = Some(number(id));
         footnote
     };
@@ -418,7 +415,7 @@ fn a_footnote_reference_to_a_missing_footnote_is_reported() {
     let reference = |id: &str| {
         let mut reference = FootnoteReference::default();
         reference.id = Some(number(id));
-        run_of(TextRunContent::FootnoteReference(reference))
+        run_of(TextRunContent::from(reference))
     };
     let package = word(
         vec![paragraph_of(vec![reference("9"), reference("0")])],
@@ -443,10 +440,10 @@ fn an_id_naming_no_relationship_is_reported() {
     let mut text = Text::default();
     text.value = "x".to_owned();
     let mut hyperlink = Hyperlink::default();
-    hyperlink.content = vec![run_of(TextRunContent::Text(text))];
+    hyperlink.content = vec![run_of(TextRunContent::from(text))];
     hyperlink.id = Some("rId99".to_owned());
     let package = word(
-        vec![paragraph_of(vec![ParagraphContent::Hyperlink(hyperlink)])],
+        vec![paragraph_of(vec![ParagraphContent::from(hyperlink)])],
         &[],
     );
     assert_eq!(
@@ -483,14 +480,14 @@ fn a_relationship_whose_target_names_no_part_hides_no_other_id() {
 #[test]
 fn a_header_reference_naming_a_footer_relationship_is_reported() {
     let mut footer = Footer::default();
-    footer.content = vec![BlockContent::Paragraph(Paragraph::default())];
+    footer.content = vec![BlockContent::from(Paragraph::default())];
     let mut header = Header::default();
-    header.content = vec![BlockContent::Paragraph(Paragraph::default())];
+    header.content = vec![BlockContent::from(Paragraph::default())];
     let reference = |kind: &str, id: &str| {
         let mut reference = HeaderReference::default();
         reference.id = Some(id.to_owned());
         reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
-        SectionPropertiesContent::HeaderReference(reference)
+        SectionPropertiesContent::from(reference)
     };
     let mut section = DocumentFinalSectionProperties::default();
     section.content = vec![reference("default", "rId1"), reference("first", "rId2")];
@@ -530,16 +527,16 @@ fn a_required_attribute_left_out_cannot_be_omitted() {
     let mut column = GridColumnDefinition::default();
     column.w = Some(MeasurementInTwentiethsOfAPoint::from("10".to_owned()));
     let mut cell = TableCell::default();
-    cell.content = vec![BlockContent::Paragraph(Paragraph::default())];
+    cell.content = vec![BlockContent::from(Paragraph::default())];
     let mut row = TableRow::default();
-    row.content = vec![ContentCellContent::TableCell(cell)];
+    row.content = vec![ContentCellContent::from(cell)];
     let mut table = WordTable::default();
-    table.content_row_content = vec![ContentRowContent::TableRow(row)];
+    table.content_row_content = vec![ContentRowContent::from(row)];
     table.grid.column_definition = vec![column];
     table.properties.table_cell_margin_exceptions = Some(Box::new(margins));
     assert_eq!(
         semantic(
-            &word(vec![BlockContent::Table(table)], &[]),
+            &word(vec![BlockContent::from(table)], &[]),
             OfficeVersion::Office2010
         ),
         [(

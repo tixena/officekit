@@ -4946,220 +4946,236 @@ pub struct XfrmTransform2DMirror {
 #[rkyv(attr(non_exhaustive))]
 pub enum AnyElementContent {
     AnchorForFloatingDrawingMLObject(
-        #[rkyv(omit_bounds)] super::super::wordprocessing_drawing::AnchorForFloatingDrawingMLObject,
+        #[rkyv(omit_bounds)]
+        Box<super::super::wordprocessing_drawing::AnchorForFloatingDrawingMLObject>,
     ),
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLocked),
+    AnchorLocationIsLocked(Box<vml_wordprocessing_drawing::AnchorLocationIsLocked>),
     ApplicationSpecificFileProperties(
-        document_properties_extended::ApplicationSpecificFileProperties,
+        Box<document_properties_extended::ApplicationSpecificFileProperties>,
     ),
-    ArcSegment(#[rkyv(omit_bounds)] super::super::vml::ArcSegment),
-    Array(document_properties_variant_types::Array),
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectData),
-    BasicString(document_properties_variant_types::BasicString),
-    BezierCurve(#[rkyv(omit_bounds)] super::super::vml::BezierCurve),
-    BinaryBlob(document_properties_variant_types::BinaryBlob),
-    BinaryBlobObject(document_properties_variant_types::BinaryBlobObject),
-    BinaryStorage(document_properties_variant_types::BinaryStorage),
-    BinaryStorageObject(document_properties_variant_types::BinaryStorageObject),
-    BinaryStream(document_properties_variant_types::BinaryStream),
-    BinaryStreamObject(document_properties_variant_types::BinaryStreamObject),
-    BinaryVersionedStream(document_properties_variant_types::BinaryVersionedStream),
-    Blip(#[rkyv(omit_bounds)] super::Blip),
-    Boolean(document_properties_variant_types::Boolean),
-    BottomBorder(vml_wordprocessing_drawing::BottomBorder),
-    CalculationChainInfo(#[rkyv(omit_bounds)] super::super::spreadsheet::CalculationChainInfo),
-    Callout(super::super::vml_office_drawing::Callout),
-    ChartSheet(#[rkyv(omit_bounds)] super::super::spreadsheet::ChartSheet),
-    ChartSpace(#[rkyv(omit_bounds)] super::super::chart::ChartSpace),
-    ClassID(document_properties_variant_types::ClassID),
+    ArcSegment(#[rkyv(omit_bounds)] Box<super::super::vml::ArcSegment>),
+    Array(Box<document_properties_variant_types::Array>),
+    AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectData>),
+    BasicString(Box<document_properties_variant_types::BasicString>),
+    BezierCurve(#[rkyv(omit_bounds)] Box<super::super::vml::BezierCurve>),
+    BinaryBlob(Box<document_properties_variant_types::BinaryBlob>),
+    BinaryBlobObject(Box<document_properties_variant_types::BinaryBlobObject>),
+    BinaryStorage(Box<document_properties_variant_types::BinaryStorage>),
+    BinaryStorageObject(Box<document_properties_variant_types::BinaryStorageObject>),
+    BinaryStream(Box<document_properties_variant_types::BinaryStream>),
+    BinaryStreamObject(Box<document_properties_variant_types::BinaryStreamObject>),
+    BinaryVersionedStream(Box<document_properties_variant_types::BinaryVersionedStream>),
+    Blip(#[rkyv(omit_bounds)] Box<super::Blip>),
+    Boolean(Box<document_properties_variant_types::Boolean>),
+    BottomBorder(Box<vml_wordprocessing_drawing::BottomBorder>),
+    CalculationChainInfo(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::CalculationChainInfo>),
+    Callout(Box<super::super::vml_office_drawing::Callout>),
+    ChartSheet(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::ChartSheet>),
+    ChartSpace(#[rkyv(omit_bounds)] Box<super::super::chart::ChartSpace>),
+    ClassID(Box<document_properties_variant_types::ClassID>),
     ColorTransformDefinitionHeader(
-        #[rkyv(omit_bounds)] super::super::diagram::ColorTransformDefinitionHeader,
+        #[rkyv(omit_bounds)] Box<super::super::diagram::ColorTransformDefinitionHeader>,
     ),
     ColorTransformDefinitions(
-        #[rkyv(omit_bounds)] super::super::diagram::ColorTransformDefinitions,
+        #[rkyv(omit_bounds)] Box<super::super::diagram::ColorTransformDefinitions>,
     ),
-    ColorTransformHeaderList(#[rkyv(omit_bounds)] super::super::diagram::ColorTransformHeaderList),
-    CommentList(#[rkyv(omit_bounds)] super::super::presentation::CommentList),
-    Comments(#[rkyv(omit_bounds)] super::super::spreadsheet::Comments),
-    CommentsCollection(#[rkyv(omit_bounds)] super::super::wordprocessing::CommentsCollection),
-    Complex(super::super::vml_office_drawing::Complex),
-    Connections(#[rkyv(omit_bounds)] super::super::spreadsheet::Connections),
-    Currency(document_properties_variant_types::Currency),
-    CustomFileProperties(document_properties_custom::CustomFileProperties),
-    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataProperties),
-    DataModel(#[rkyv(omit_bounds)] super::super::diagram::DataModel),
-    DateAndTime(document_properties_variant_types::DateAndTime),
-    Decimal(document_properties_variant_types::Decimal),
-    DiagramLayoutHeaderList(#[rkyv(omit_bounds)] super::super::diagram::DiagramLayoutHeaderList),
-    DialogSheet(#[rkyv(omit_bounds)] super::super::spreadsheet::DialogSheet),
-    DigitalSignatureLine(super::super::vml_office_drawing::DigitalSignatureLine),
-    Document(#[rkyv(omit_bounds)] super::super::wordprocessing::Document),
-    DocumentBackground(super::super::vml::DocumentBackground),
-    DocumentEndnotes(#[rkyv(omit_bounds)] super::super::wordprocessing::DocumentEndnotes),
-    DocumentFootnotes(#[rkyv(omit_bounds)] super::super::wordprocessing::DocumentFootnotes),
-    DocumentSettings(#[rkyv(omit_bounds)] super::super::wordprocessing::DocumentSettings),
+    ColorTransformHeaderList(
+        #[rkyv(omit_bounds)] Box<super::super::diagram::ColorTransformHeaderList>,
+    ),
+    CommentList(#[rkyv(omit_bounds)] Box<super::super::presentation::CommentList>),
+    Comments(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Comments>),
+    CommentsCollection(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::CommentsCollection>),
+    Complex(Box<super::super::vml_office_drawing::Complex>),
+    Connections(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Connections>),
+    Currency(Box<document_properties_variant_types::Currency>),
+    CustomFileProperties(Box<document_properties_custom::CustomFileProperties>),
+    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataProperties>),
+    DataModel(#[rkyv(omit_bounds)] Box<super::super::diagram::DataModel>),
+    DateAndTime(Box<document_properties_variant_types::DateAndTime>),
+    Decimal(Box<document_properties_variant_types::Decimal>),
+    DiagramLayoutHeaderList(
+        #[rkyv(omit_bounds)] Box<super::super::diagram::DiagramLayoutHeaderList>,
+    ),
+    DialogSheet(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::DialogSheet>),
+    DigitalSignatureLine(Box<super::super::vml_office_drawing::DigitalSignatureLine>),
+    Document(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::Document>),
+    DocumentBackground(Box<super::super::vml::DocumentBackground>),
+    DocumentEndnotes(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::DocumentEndnotes>),
+    DocumentFootnotes(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::DocumentFootnotes>),
+    DocumentSettings(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::DocumentSettings>),
     EmbeddedCustomXMLSchemaSupplementaryData(
-        custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryData,
+        Box<custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryData>,
     ),
-    EmbeddedOLEObject(super::super::vml_office_drawing::EmbeddedOLEObject),
+    EmbeddedOLEObject(Box<super::super::vml_office_drawing::EmbeddedOLEObject>),
     EmbeddedObjectsAndControls(
-        #[rkyv(omit_bounds)] super::super::presentation::EmbeddedObjectsAndControls,
+        #[rkyv(omit_bounds)] Box<super::super::presentation::EmbeddedObjectsAndControls>,
     ),
-    Empty(document_properties_variant_types::Empty),
-    EndingAnchorPoint(super::super::spreadsheet_drawing::EndingAnchorPoint),
-    ErrorStatusCode(document_properties_variant_types::ErrorStatusCode),
-    ExplicitRelationshipsToDiagramParts(super::super::diagram::ExplicitRelationshipsToDiagramParts),
+    Empty(Box<document_properties_variant_types::Empty>),
+    EndingAnchorPoint(Box<super::super::spreadsheet_drawing::EndingAnchorPoint>),
+    ErrorStatusCode(Box<document_properties_variant_types::ErrorStatusCode>),
+    ExplicitRelationshipsToDiagramParts(
+        Box<super::super::diagram::ExplicitRelationshipsToDiagramParts>,
+    ),
     ExternalReferenceExternalLink(
-        #[rkyv(omit_bounds)] super::super::spreadsheet::ExternalReferenceExternalLink,
+        #[rkyv(omit_bounds)] Box<super::super::spreadsheet::ExternalReferenceExternalLink>,
     ),
-    Extrusion(super::super::vml_office_drawing::Extrusion),
-    FileTime(document_properties_variant_types::FileTime),
-    FontTableRootElement(super::super::wordprocessing::FontTableRootElement),
-    Footer(#[rkyv(omit_bounds)] super::super::wordprocessing::Footer),
+    Extrusion(Box<super::super::vml_office_drawing::Extrusion>),
+    FileTime(Box<document_properties_variant_types::FileTime>),
+    FontTableRootElement(Box<super::super::wordprocessing::FontTableRootElement>),
+    Footer(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::Footer>),
     GlossaryDocumentRootElement(
-        #[rkyv(omit_bounds)] super::super::wordprocessing::GlossaryDocumentRootElement,
+        #[rkyv(omit_bounds)] Box<super::super::wordprocessing::GlossaryDocumentRootElement>,
     ),
-    GraphicObject(#[rkyv(omit_bounds)] super::GraphicObject),
-    HandoutMaster(#[rkyv(omit_bounds)] super::super::presentation::HandoutMaster),
-    Header(#[rkyv(omit_bounds)] super::super::wordprocessing::Header),
-    I1(document_properties_variant_types::I1),
-    I2(document_properties_variant_types::I2),
-    I4(document_properties_variant_types::I4),
-    I8(document_properties_variant_types::I8),
-    ImageData(super::super::vml::ImageData),
-    ImageFile(#[rkyv(omit_bounds)] super::super::vml::ImageFile),
+    GraphicObject(#[rkyv(omit_bounds)] Box<super::GraphicObject>),
+    HandoutMaster(#[rkyv(omit_bounds)] Box<super::super::presentation::HandoutMaster>),
+    Header(#[rkyv(omit_bounds)] Box<super::super::wordprocessing::Header>),
+    I1(Box<document_properties_variant_types::I1>),
+    I2(Box<document_properties_variant_types::I2>),
+    I4(Box<document_properties_variant_types::I4>),
+    I8(Box<document_properties_variant_types::I8>),
+    ImageData(Box<super::super::vml::ImageData>),
+    ImageFile(#[rkyv(omit_bounds)] Box<super::super::vml::ImageFile>),
     InclusionExclusionDataForDataSource(
-        super::super::wordprocessing::InclusionExclusionDataForDataSource,
+        Box<super::super::wordprocessing::InclusionExclusionDataForDataSource>,
     ),
-    Ink(super::super::vml_office_drawing::Ink),
-    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlag),
+    Ink(Box<super::super::vml_office_drawing::Ink>),
+    InkAnnotationFlag(Box<vml_presentation_drawing::InkAnnotationFlag>),
     InlineDrawingMLObject(
-        #[rkyv(omit_bounds)] super::super::wordprocessing_drawing::InlineDrawingMLObject,
+        #[rkyv(omit_bounds)] Box<super::super::wordprocessing_drawing::InlineDrawingMLObject>,
     ),
-    Integer(document_properties_variant_types::Integer),
-    LayoutDefinition(#[rkyv(omit_bounds)] super::super::diagram::LayoutDefinition),
-    LayoutDefinitionHeader(#[rkyv(omit_bounds)] super::super::diagram::LayoutDefinitionHeader),
-    LeftBorder(vml_wordprocessing_drawing::LeftBorder),
-    Line(#[rkyv(omit_bounds)] super::super::vml::Line),
-    LineStrokeSettings(super::super::vml::LineStrokeSettings),
-    ListOfCommentAuthors(#[rkyv(omit_bounds)] super::super::presentation::ListOfCommentAuthors),
+    Integer(Box<document_properties_variant_types::Integer>),
+    LayoutDefinition(#[rkyv(omit_bounds)] Box<super::super::diagram::LayoutDefinition>),
+    LayoutDefinitionHeader(#[rkyv(omit_bounds)] Box<super::super::diagram::LayoutDefinitionHeader>),
+    LeftBorder(Box<vml_wordprocessing_drawing::LeftBorder>),
+    Line(#[rkyv(omit_bounds)] Box<super::super::vml::Line>),
+    LineStrokeSettings(Box<super::super::vml::LineStrokeSettings>),
+    ListOfCommentAuthors(
+        #[rkyv(omit_bounds)] Box<super::super::presentation::ListOfCommentAuthors>,
+    ),
     ListOfStyleDefinitionHeaders(
-        #[rkyv(omit_bounds)] super::super::diagram::ListOfStyleDefinitionHeaders,
+        #[rkyv(omit_bounds)] Box<super::super::diagram::ListOfStyleDefinitionHeaders>,
     ),
-    LockedCanvasContainer(#[rkyv(omit_bounds)] super::super::locked_canvas::LockedCanvasContainer),
-    Lpstr(document_properties_variant_types::Lpstr),
-    Lpwstr(document_properties_variant_types::Lpwstr),
-    MathProperties(super::super::math::MathProperties),
-    Metadata(#[rkyv(omit_bounds)] super::super::spreadsheet::Metadata),
-    MultiplePathLine(#[rkyv(omit_bounds)] super::super::vml::MultiplePathLine),
-    NewShapeDefaults(#[rkyv(omit_bounds)] super::super::vml_office_drawing::NewShapeDefaults),
-    NotesMaster(#[rkyv(omit_bounds)] super::super::presentation::NotesMaster),
-    NotesSlide(#[rkyv(omit_bounds)] super::super::presentation::NotesSlide),
-    Null(document_properties_variant_types::Null),
-    NumberingDefinitions(#[rkyv(omit_bounds)] super::super::wordprocessing::NumberingDefinitions),
-    OfficeMath(#[rkyv(omit_bounds)] super::super::math::OfficeMath),
-    OfficeMathParagraph(#[rkyv(omit_bounds)] super::super::math::OfficeMathParagraph),
-    Other(Node),
-    Oval(#[rkyv(omit_bounds)] super::super::vml::Oval),
-    Picture(#[rkyv(omit_bounds)] super::super::picture::Picture),
-    PivotCacheDefinition(#[rkyv(omit_bounds)] super::super::spreadsheet::PivotCacheDefinition),
-    PivotCacheRecords(#[rkyv(omit_bounds)] super::super::spreadsheet::PivotCacheRecords),
+    LockedCanvasContainer(
+        #[rkyv(omit_bounds)] Box<super::super::locked_canvas::LockedCanvasContainer>,
+    ),
+    Lpstr(Box<document_properties_variant_types::Lpstr>),
+    Lpwstr(Box<document_properties_variant_types::Lpwstr>),
+    MathProperties(Box<super::super::math::MathProperties>),
+    Metadata(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Metadata>),
+    MultiplePathLine(#[rkyv(omit_bounds)] Box<super::super::vml::MultiplePathLine>),
+    NewShapeDefaults(#[rkyv(omit_bounds)] Box<super::super::vml_office_drawing::NewShapeDefaults>),
+    NotesMaster(#[rkyv(omit_bounds)] Box<super::super::presentation::NotesMaster>),
+    NotesSlide(#[rkyv(omit_bounds)] Box<super::super::presentation::NotesSlide>),
+    Null(Box<document_properties_variant_types::Null>),
+    NumberingDefinitions(
+        #[rkyv(omit_bounds)] Box<super::super::wordprocessing::NumberingDefinitions>,
+    ),
+    OfficeMath(#[rkyv(omit_bounds)] Box<super::super::math::OfficeMath>),
+    OfficeMathParagraph(#[rkyv(omit_bounds)] Box<super::super::math::OfficeMathParagraph>),
+    Other(Box<Node>),
+    Oval(#[rkyv(omit_bounds)] Box<super::super::vml::Oval>),
+    Picture(#[rkyv(omit_bounds)] Box<super::super::picture::Picture>),
+    PivotCacheDefinition(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::PivotCacheDefinition>),
+    PivotCacheRecords(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::PivotCacheRecords>),
     PivotTableDefinition(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::PivotTableDefinition>),
-    Presentation(#[rkyv(omit_bounds)] super::super::presentation::Presentation),
-    PresentationSlideSlide(#[rkyv(omit_bounds)] super::super::presentation::PresentationSlideSlide),
+    Presentation(#[rkyv(omit_bounds)] Box<super::super::presentation::Presentation>),
+    PresentationSlideSlide(
+        #[rkyv(omit_bounds)] Box<super::super::presentation::PresentationSlideSlide>,
+    ),
     PresentationWideProperties(
-        #[rkyv(omit_bounds)] super::super::presentation::PresentationWideProperties,
+        #[rkyv(omit_bounds)] Box<super::super::presentation::PresentationWideProperties>,
     ),
     PresentationWideViewProperties(
-        #[rkyv(omit_bounds)] super::super::presentation::PresentationWideViewProperties,
+        #[rkyv(omit_bounds)] Box<super::super::presentation::PresentationWideViewProperties>,
     ),
-    ProgrammableTabList(super::super::presentation::ProgrammableTabList),
-    QueryTable(#[rkyv(omit_bounds)] super::super::spreadsheet::QueryTable),
-    R4(document_properties_variant_types::R4),
-    R8(document_properties_variant_types::R8),
-    Rectangle(#[rkyv(omit_bounds)] super::super::vml::Rectangle),
-    ReferenceToChartPart(super::super::chart::ReferenceToChartPart),
-    RevisionHeaders(#[rkyv(omit_bounds)] super::super::spreadsheet::RevisionHeaders),
-    Revisions(#[rkyv(omit_bounds)] super::super::spreadsheet::Revisions),
+    ProgrammableTabList(Box<super::super::presentation::ProgrammableTabList>),
+    QueryTable(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::QueryTable>),
+    R4(Box<document_properties_variant_types::R4>),
+    R8(Box<document_properties_variant_types::R8>),
+    Rectangle(#[rkyv(omit_bounds)] Box<super::super::vml::Rectangle>),
+    ReferenceToChartPart(Box<super::super::chart::ReferenceToChartPart>),
+    RevisionHeaders(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::RevisionHeaders>),
+    Revisions(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Revisions>),
     RichTextBoxContentContainer(
-        #[rkyv(omit_bounds)] super::super::wordprocessing::RichTextBoxContentContainer,
+        #[rkyv(omit_bounds)] Box<super::super::wordprocessing::RichTextBoxContentContainer>,
     ),
-    RightBorder(vml_wordprocessing_drawing::RightBorder),
-    RoundedRectangle(#[rkyv(omit_bounds)] super::super::vml::RoundedRectangle),
-    SetOfAdditionalCharacteristics(additional_characteristics::SetOfAdditionalCharacteristics),
-    SetOfFormulas(super::super::vml::SetOfFormulas),
-    SetOfHandles(super::super::vml::SetOfHandles),
-    ShadowEffect(super::super::vml::ShadowEffect),
-    ShapeClippingPath(super::super::vml_office_drawing::ShapeClippingPath),
-    ShapeDefinition(#[rkyv(omit_bounds)] super::super::vml::ShapeDefinition),
-    ShapeFillExtendedProperties(super::super::vml_office_drawing::ShapeFillExtendedProperties),
-    ShapeFillProperties(super::super::vml::ShapeFillProperties),
-    ShapeGroup(#[rkyv(omit_bounds)] super::super::vml::ShapeGroup),
-    ShapeLayoutProperties(super::super::vml_office_drawing::ShapeLayoutProperties),
-    ShapePath(super::super::vml::ShapePath),
-    ShapeProtections(super::super::vml_office_drawing::ShapeProtections),
-    ShapeTemplate(#[rkyv(omit_bounds)] super::super::vml::ShapeTemplate),
-    SharedStringTable(#[rkyv(omit_bounds)] super::super::spreadsheet::SharedStringTable),
-    SingleCells(#[rkyv(omit_bounds)] super::super::spreadsheet::SingleCells),
-    SkewTransform(super::super::vml_office_drawing::SkewTransform),
-    SlideLayout(#[rkyv(omit_bounds)] super::super::presentation::SlideLayout),
-    SlideMaster(#[rkyv(omit_bounds)] super::super::presentation::SlideMaster),
+    RightBorder(Box<vml_wordprocessing_drawing::RightBorder>),
+    RoundedRectangle(#[rkyv(omit_bounds)] Box<super::super::vml::RoundedRectangle>),
+    SetOfAdditionalCharacteristics(Box<additional_characteristics::SetOfAdditionalCharacteristics>),
+    SetOfFormulas(Box<super::super::vml::SetOfFormulas>),
+    SetOfHandles(Box<super::super::vml::SetOfHandles>),
+    ShadowEffect(Box<super::super::vml::ShadowEffect>),
+    ShapeClippingPath(Box<super::super::vml_office_drawing::ShapeClippingPath>),
+    ShapeDefinition(#[rkyv(omit_bounds)] Box<super::super::vml::ShapeDefinition>),
+    ShapeFillExtendedProperties(Box<super::super::vml_office_drawing::ShapeFillExtendedProperties>),
+    ShapeFillProperties(Box<super::super::vml::ShapeFillProperties>),
+    ShapeGroup(#[rkyv(omit_bounds)] Box<super::super::vml::ShapeGroup>),
+    ShapeLayoutProperties(Box<super::super::vml_office_drawing::ShapeLayoutProperties>),
+    ShapePath(Box<super::super::vml::ShapePath>),
+    ShapeProtections(Box<super::super::vml_office_drawing::ShapeProtections>),
+    ShapeTemplate(#[rkyv(omit_bounds)] Box<super::super::vml::ShapeTemplate>),
+    SharedStringTable(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::SharedStringTable>),
+    SingleCells(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::SingleCells>),
+    SkewTransform(Box<super::super::vml_office_drawing::SkewTransform>),
+    SlideLayout(#[rkyv(omit_bounds)] Box<super::super::presentation::SlideLayout>),
+    SlideMaster(#[rkyv(omit_bounds)] Box<super::super::presentation::SlideMaster>),
     SlideSynchronizationProperties(
-        #[rkyv(omit_bounds)] super::super::presentation::SlideSynchronizationProperties,
+        #[rkyv(omit_bounds)] Box<super::super::presentation::SlideSynchronizationProperties>,
     ),
-    Sources(bibliography::Sources),
-    SpreadsheetTable(#[rkyv(omit_bounds)] super::super::spreadsheet::Table),
-    StartingAnchorPoint(super::super::spreadsheet_drawing::StartingAnchorPoint),
+    Sources(Box<bibliography::Sources>),
+    SpreadsheetTable(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Table>),
+    StartingAnchorPoint(Box<super::super::spreadsheet_drawing::StartingAnchorPoint>),
     StorageForAlternateMathContent(
-        #[rkyv(omit_bounds)] super::super::vml_office_drawing::StorageForAlternateMathContent,
+        #[rkyv(omit_bounds)] Box<super::super::vml_office_drawing::StorageForAlternateMathContent>,
     ),
-    StyleDefinition(#[rkyv(omit_bounds)] super::super::diagram::StyleDefinition),
-    StyleDefinitionHeader(#[rkyv(omit_bounds)] super::super::diagram::StyleDefinitionHeader),
-    StyleDefinitions(super::super::wordprocessing::StyleDefinitions),
-    StyleSheet(#[rkyv(omit_bounds)] super::super::spreadsheet::StyleSheet),
-    Table(#[rkyv(omit_bounds)] super::Table),
-    TableStyleList(#[rkyv(omit_bounds)] super::TableStyleList),
-    TextBox(#[rkyv(omit_bounds)] super::super::vml::TextBox),
-    TextBoxBottomStroke(super::super::vml_office_drawing::TextBoxBottomStroke),
-    TextBoxInteriorStroke(super::super::vml_office_drawing::TextBoxInteriorStroke),
-    TextBoxLeftStroke(super::super::vml_office_drawing::TextBoxLeftStroke),
-    TextBoxRightStroke(super::super::vml_office_drawing::TextBoxRightStroke),
-    TextBoxTopStroke(super::super::vml_office_drawing::TextBoxTopStroke),
-    TextLayoutPath(super::super::vml::TextLayoutPath),
-    TextWrapping(vml_wordprocessing_drawing::TextWrapping),
-    Theme(#[rkyv(omit_bounds)] super::Theme),
-    ThemeManager(super::ThemeManager),
-    ThemeOverride(#[rkyv(omit_bounds)] super::ThemeOverride),
-    TopBorder(vml_wordprocessing_drawing::TopBorder),
-    Ui1(document_properties_variant_types::Ui1),
-    Ui2(document_properties_variant_types::Ui2),
-    Ui4(document_properties_variant_types::Ui4),
-    Ui8(document_properties_variant_types::Ui8),
-    UnsignedInteger(document_properties_variant_types::UnsignedInteger),
-    UserList(#[rkyv(omit_bounds)] super::super::spreadsheet::UserList),
-    UserShapes(#[rkyv(omit_bounds)] super::super::chart::UserShapes),
-    VMLDiagram(super::super::vml_office_drawing::VMLDiagram),
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramText),
-    Variant(document_properties_variant_types::Variant),
-    Vector(document_properties_variant_types::Vector),
-    VideoFromFile(#[rkyv(omit_bounds)] super::VideoFromFile),
+    StyleDefinition(#[rkyv(omit_bounds)] Box<super::super::diagram::StyleDefinition>),
+    StyleDefinitionHeader(#[rkyv(omit_bounds)] Box<super::super::diagram::StyleDefinitionHeader>),
+    StyleDefinitions(Box<super::super::wordprocessing::StyleDefinitions>),
+    StyleSheet(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::StyleSheet>),
+    Table(#[rkyv(omit_bounds)] Box<super::Table>),
+    TableStyleList(#[rkyv(omit_bounds)] Box<super::TableStyleList>),
+    TextBox(#[rkyv(omit_bounds)] Box<super::super::vml::TextBox>),
+    TextBoxBottomStroke(Box<super::super::vml_office_drawing::TextBoxBottomStroke>),
+    TextBoxInteriorStroke(Box<super::super::vml_office_drawing::TextBoxInteriorStroke>),
+    TextBoxLeftStroke(Box<super::super::vml_office_drawing::TextBoxLeftStroke>),
+    TextBoxRightStroke(Box<super::super::vml_office_drawing::TextBoxRightStroke>),
+    TextBoxTopStroke(Box<super::super::vml_office_drawing::TextBoxTopStroke>),
+    TextLayoutPath(Box<super::super::vml::TextLayoutPath>),
+    TextWrapping(Box<vml_wordprocessing_drawing::TextWrapping>),
+    Theme(#[rkyv(omit_bounds)] Box<super::Theme>),
+    ThemeManager(Box<super::ThemeManager>),
+    ThemeOverride(#[rkyv(omit_bounds)] Box<super::ThemeOverride>),
+    TopBorder(Box<vml_wordprocessing_drawing::TopBorder>),
+    Ui1(Box<document_properties_variant_types::Ui1>),
+    Ui2(Box<document_properties_variant_types::Ui2>),
+    Ui4(Box<document_properties_variant_types::Ui4>),
+    Ui8(Box<document_properties_variant_types::Ui8>),
+    UnsignedInteger(Box<document_properties_variant_types::UnsignedInteger>),
+    UserList(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::UserList>),
+    UserShapes(#[rkyv(omit_bounds)] Box<super::super::chart::UserShapes>),
+    VMLDiagram(Box<super::super::vml_office_drawing::VMLDiagram>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramText>),
+    Variant(Box<document_properties_variant_types::Variant>),
+    Vector(Box<document_properties_variant_types::Vector>),
+    VideoFromFile(#[rkyv(omit_bounds)] Box<super::VideoFromFile>),
     VolatileDependencyTypes(
-        #[rkyv(omit_bounds)] super::super::spreadsheet::VolatileDependencyTypes,
+        #[rkyv(omit_bounds)] Box<super::super::spreadsheet::VolatileDependencyTypes>,
     ),
-    WebPageSettings(super::super::wordprocessing::WebPageSettings),
+    WebPageSettings(Box<super::super::wordprocessing::WebPageSettings>),
     WordprocessingMLDrawingCanvas(
-        #[rkyv(omit_bounds)] super::super::wordprocessing_drawing::WordprocessingMLDrawingCanvas,
+        #[rkyv(omit_bounds)]
+        Box<super::super::wordprocessing_drawing::WordprocessingMLDrawingCanvas>,
     ),
     WordprocessingMLShape(
-        #[rkyv(omit_bounds)] super::super::wordprocessing_drawing::WordprocessingMLShape,
+        #[rkyv(omit_bounds)] Box<super::super::wordprocessing_drawing::WordprocessingMLShape>,
     ),
     WordprocessingMLShapeGroup(
-        #[rkyv(omit_bounds)] super::super::wordprocessing_drawing::WordprocessingMLShapeGroup,
+        #[rkyv(omit_bounds)] Box<super::super::wordprocessing_drawing::WordprocessingMLShapeGroup>,
     ),
-    Workbook(#[rkyv(omit_bounds)] super::super::spreadsheet::Workbook),
-    Worksheet(#[rkyv(omit_bounds)] super::super::spreadsheet::Worksheet),
-    WorksheetDrawing(#[rkyv(omit_bounds)] super::super::spreadsheet_drawing::WorksheetDrawing),
-    XMLMappingMapInfo(#[rkyv(omit_bounds)] super::super::spreadsheet::XMLMappingMapInfo),
+    Workbook(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Workbook>),
+    Worksheet(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::Worksheet>),
+    WorksheetDrawing(#[rkyv(omit_bounds)] Box<super::super::spreadsheet_drawing::WorksheetDrawing>),
+    XMLMappingMapInfo(#[rkyv(omit_bounds)] Box<super::super::spreadsheet::XMLMappingMapInfo>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5169,46 +5185,46 @@ pub enum AnyElementContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum BlipContent {
-    AlphaBiLevelEffect(super::AlphaBiLevelEffect),
-    AlphaCeilingEffect(super::AlphaCeilingEffect),
-    AlphaFloorEffect(super::AlphaFloorEffect),
-    AlphaInverseEffect(super::AlphaInverseEffect),
-    AlphaModulateEffect(#[rkyv(omit_bounds)] super::AlphaModulateEffect),
-    AlphaModulateFixedEffect(super::AlphaModulateFixedEffect),
-    AlphaReplaceEffect(super::AlphaReplaceEffect),
-    BiLevel(super::BiLevel),
-    BlurEffect(super::BlurEffect),
-    ColorChangeEffect(super::ColorChangeEffect),
-    DuotoneEffect(super::DuotoneEffect),
-    FillOverlayEffect(#[rkyv(omit_bounds)] super::FillOverlayEffect),
-    GrayScaleEffect(super::GrayScaleEffect),
-    HueSaturationLuminanceEffect(super::HueSaturationLuminanceEffect),
-    LuminanceEffect(super::LuminanceEffect),
-    Other(Node),
-    SolidColorReplacement(super::SolidColorReplacement),
-    TintEffect(super::TintEffect),
+    AlphaBiLevelEffect(Box<super::AlphaBiLevelEffect>),
+    AlphaCeilingEffect(Box<super::AlphaCeilingEffect>),
+    AlphaFloorEffect(Box<super::AlphaFloorEffect>),
+    AlphaInverseEffect(Box<super::AlphaInverseEffect>),
+    AlphaModulateEffect(#[rkyv(omit_bounds)] Box<super::AlphaModulateEffect>),
+    AlphaModulateFixedEffect(Box<super::AlphaModulateFixedEffect>),
+    AlphaReplaceEffect(Box<super::AlphaReplaceEffect>),
+    BiLevel(Box<super::BiLevel>),
+    BlurEffect(Box<super::BlurEffect>),
+    ColorChangeEffect(Box<super::ColorChangeEffect>),
+    DuotoneEffect(Box<super::DuotoneEffect>),
+    FillOverlayEffect(#[rkyv(omit_bounds)] Box<super::FillOverlayEffect>),
+    GrayScaleEffect(Box<super::GrayScaleEffect>),
+    HueSaturationLuminanceEffect(Box<super::HueSaturationLuminanceEffect>),
+    LuminanceEffect(Box<super::LuminanceEffect>),
+    Other(Box<Node>),
+    SolidColorReplacement(Box<super::SolidColorReplacement>),
+    TintEffect(Box<super::TintEffect>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BuildSubElementsContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum BuildSubElementsContent {
-    BuildChart(super::BuildChart),
-    BuildDiagram(super::BuildDiagram),
-    Other(Node),
+    BuildChart(Box<super::BuildChart>),
+    BuildDiagram(Box<super::BuildDiagram>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ColorContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ColorContent {
-    HueSaturationLuminanceColorModel(super::HueSaturationLuminanceColorModel),
-    Other(Node),
-    PresetColor(super::PresetColor),
-    RGBColorModelHexVariant(super::RGBColorModelHexVariant),
-    RGBColorModelPercentageVariant(super::RGBColorModelPercentageVariant),
-    SchemeColor(super::SchemeColor),
-    SystemColor(super::SystemColor),
+    HueSaturationLuminanceColorModel(Box<super::HueSaturationLuminanceColorModel>),
+    Other(Box<Node>),
+    PresetColor(Box<super::PresetColor>),
+    RGBColorModelHexVariant(Box<super::RGBColorModelHexVariant>),
+    RGBColorModelPercentageVariant(Box<super::RGBColorModelPercentageVariant>),
+    SchemeColor(Box<super::SchemeColor>),
+    SystemColor(Box<super::SystemColor>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5218,8 +5234,8 @@ pub enum ColorContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ColorSchemeMapOverrideContent {
-    MasterColorMapping(super::MasterColorMapping),
-    Other(Node),
+    MasterColorMapping(Box<super::MasterColorMapping>),
+    Other(Box<Node>),
     OverrideColorMapping(#[rkyv(omit_bounds)] Box<super::OverrideColorMapping>),
 }
 
@@ -5227,35 +5243,35 @@ pub enum ColorSchemeMapOverrideContent {
 #[rkyv(remote = super::ColorTransformContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ColorTransformContent {
-    Alpha(super::Alpha),
-    AlphaModulation(super::AlphaModulation),
-    AlphaOffset(super::AlphaOffset),
-    Blue(super::Blue),
-    BlueModulation(super::BlueModulation),
-    BlueOffset(super::BlueOffset),
-    Complement(super::Complement),
-    Gamma(super::Gamma),
-    Gray(super::Gray),
-    Green(super::Green),
-    GreenModulation(super::GreenModulation),
-    GreenOffset(super::GreenOffset),
-    Hue(super::Hue),
-    HueModulate(super::HueModulate),
-    HueOffset(super::HueOffset),
-    Inverse(super::Inverse),
-    InverseGamma(super::InverseGamma),
-    Luminance(super::Luminance),
-    LuminanceModulation(super::LuminanceModulation),
-    LuminanceOffset(super::LuminanceOffset),
-    Other(Node),
-    Red(super::Red),
-    RedModulation(super::RedModulation),
-    RedOffset(super::RedOffset),
-    Saturation(super::Saturation),
-    SaturationModulation(super::SaturationModulation),
-    SaturationOffset(super::SaturationOffset),
-    Shade(super::Shade),
-    Tint(super::Tint),
+    Alpha(Box<super::Alpha>),
+    AlphaModulation(Box<super::AlphaModulation>),
+    AlphaOffset(Box<super::AlphaOffset>),
+    Blue(Box<super::Blue>),
+    BlueModulation(Box<super::BlueModulation>),
+    BlueOffset(Box<super::BlueOffset>),
+    Complement(Box<super::Complement>),
+    Gamma(Box<super::Gamma>),
+    Gray(Box<super::Gray>),
+    Green(Box<super::Green>),
+    GreenModulation(Box<super::GreenModulation>),
+    GreenOffset(Box<super::GreenOffset>),
+    Hue(Box<super::Hue>),
+    HueModulate(Box<super::HueModulate>),
+    HueOffset(Box<super::HueOffset>),
+    Inverse(Box<super::Inverse>),
+    InverseGamma(Box<super::InverseGamma>),
+    Luminance(Box<super::Luminance>),
+    LuminanceModulation(Box<super::LuminanceModulation>),
+    LuminanceOffset(Box<super::LuminanceOffset>),
+    Other(Box<Node>),
+    Red(Box<super::Red>),
+    RedModulation(Box<super::RedModulation>),
+    RedOffset(Box<super::RedOffset>),
+    Saturation(Box<super::Saturation>),
+    SaturationModulation(Box<super::SaturationModulation>),
+    SaturationOffset(Box<super::SaturationOffset>),
+    Shade(Box<super::Shade>),
+    Tint(Box<super::Tint>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5265,37 +5281,37 @@ pub enum ColorTransformContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum EffectContainerContent {
-    AlphaBiLevelEffect(super::AlphaBiLevelEffect),
-    AlphaCeilingEffect(super::AlphaCeilingEffect),
-    AlphaFloorEffect(super::AlphaFloorEffect),
-    AlphaInsetOutsetEffect(super::AlphaInsetOutsetEffect),
-    AlphaInverseEffect(super::AlphaInverseEffect),
-    AlphaModulateEffect(#[rkyv(omit_bounds)] super::AlphaModulateEffect),
-    AlphaModulateFixedEffect(super::AlphaModulateFixedEffect),
-    AlphaReplaceEffect(super::AlphaReplaceEffect),
-    BiLevel(super::BiLevel),
-    BlendEffect(#[rkyv(omit_bounds)] super::BlendEffect),
-    BlurEffect(super::BlurEffect),
-    ColorChangeEffect(super::ColorChangeEffect),
-    DuotoneEffect(super::DuotoneEffect),
-    EffectContainerCont(#[rkyv(omit_bounds)] super::EffectContainerCont),
-    EffectEffectReference(super::EffectEffectReference),
-    FillFillEffect(#[rkyv(omit_bounds)] super::FillFillEffect),
-    FillOverlayEffect(#[rkyv(omit_bounds)] super::FillOverlayEffect),
-    GlowEffect(super::GlowEffect),
-    GrayScaleEffect(super::GrayScaleEffect),
-    HueSaturationLuminanceEffect(super::HueSaturationLuminanceEffect),
-    InnerShadowEffect(super::InnerShadowEffect),
-    LuminanceEffect(super::LuminanceEffect),
-    Other(Node),
-    OuterShadowEffect(super::OuterShadowEffect),
-    PresetShadow(super::PresetShadow),
-    ReflectionEffect(super::ReflectionEffect),
-    RelativeOffsetEffect(super::RelativeOffsetEffect),
-    SoftEdgeEffect(super::SoftEdgeEffect),
-    SolidColorReplacement(super::SolidColorReplacement),
-    TintEffect(super::TintEffect),
-    TransformEffect(super::TransformEffect),
+    AlphaBiLevelEffect(Box<super::AlphaBiLevelEffect>),
+    AlphaCeilingEffect(Box<super::AlphaCeilingEffect>),
+    AlphaFloorEffect(Box<super::AlphaFloorEffect>),
+    AlphaInsetOutsetEffect(Box<super::AlphaInsetOutsetEffect>),
+    AlphaInverseEffect(Box<super::AlphaInverseEffect>),
+    AlphaModulateEffect(#[rkyv(omit_bounds)] Box<super::AlphaModulateEffect>),
+    AlphaModulateFixedEffect(Box<super::AlphaModulateFixedEffect>),
+    AlphaReplaceEffect(Box<super::AlphaReplaceEffect>),
+    BiLevel(Box<super::BiLevel>),
+    BlendEffect(#[rkyv(omit_bounds)] Box<super::BlendEffect>),
+    BlurEffect(Box<super::BlurEffect>),
+    ColorChangeEffect(Box<super::ColorChangeEffect>),
+    DuotoneEffect(Box<super::DuotoneEffect>),
+    EffectContainerCont(#[rkyv(omit_bounds)] Box<super::EffectContainerCont>),
+    EffectEffectReference(Box<super::EffectEffectReference>),
+    FillFillEffect(#[rkyv(omit_bounds)] Box<super::FillFillEffect>),
+    FillOverlayEffect(#[rkyv(omit_bounds)] Box<super::FillOverlayEffect>),
+    GlowEffect(Box<super::GlowEffect>),
+    GrayScaleEffect(Box<super::GrayScaleEffect>),
+    HueSaturationLuminanceEffect(Box<super::HueSaturationLuminanceEffect>),
+    InnerShadowEffect(Box<super::InnerShadowEffect>),
+    LuminanceEffect(Box<super::LuminanceEffect>),
+    Other(Box<Node>),
+    OuterShadowEffect(Box<super::OuterShadowEffect>),
+    PresetShadow(Box<super::PresetShadow>),
+    ReflectionEffect(Box<super::ReflectionEffect>),
+    RelativeOffsetEffect(Box<super::RelativeOffsetEffect>),
+    SoftEdgeEffect(Box<super::SoftEdgeEffect>),
+    SolidColorReplacement(Box<super::SolidColorReplacement>),
+    TintEffect(Box<super::TintEffect>),
+    TransformEffect(Box<super::TransformEffect>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5305,18 +5321,18 @@ pub enum EffectContainerContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum EffectPropertiesContent {
-    EffectContainerEffectDag(#[rkyv(omit_bounds)] super::EffectContainerEffectDag),
-    EffectContainerEffectLst(#[rkyv(omit_bounds)] super::EffectContainerEffectLst),
-    Other(Node),
+    EffectContainerEffectDag(#[rkyv(omit_bounds)] Box<super::EffectContainerEffectDag>),
+    EffectContainerEffectLst(#[rkyv(omit_bounds)] Box<super::EffectContainerEffectLst>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FillModeContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FillModeContent {
-    Other(Node),
-    Stretch(super::Stretch),
-    Tile(super::Tile),
+    Other(Box<Node>),
+    Stretch(Box<super::Stretch>),
+    Tile(Box<super::Tile>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5326,40 +5342,40 @@ pub enum FillModeContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum FillPropertiesContent {
-    GradientFill(super::GradientFill),
-    GroupFill(super::GroupFill),
-    NoFill(super::NoFill),
-    Other(Node),
-    PatternFill(super::PatternFill),
-    PictureFill(#[rkyv(omit_bounds)] super::PictureFill),
-    SolidFill(super::SolidFill),
+    GradientFill(Box<super::GradientFill>),
+    GroupFill(Box<super::GroupFill>),
+    NoFill(Box<super::NoFill>),
+    Other(Box<Node>),
+    PatternFill(Box<super::PatternFill>),
+    PictureFill(#[rkyv(omit_bounds)] Box<super::PictureFill>),
+    SolidFill(Box<super::SolidFill>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GeometryContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GeometryContent {
-    CustomGeometry(super::CustomGeometry),
-    Other(Node),
-    PresetGeometry(super::PresetGeometry),
+    CustomGeometry(Box<super::CustomGeometry>),
+    Other(Box<Node>),
+    PresetGeometry(Box<super::PresetGeometry>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GradientFillContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GradientFillContent {
-    LinearGradientFill(super::LinearGradientFill),
-    Other(Node),
-    PathGradient(super::PathGradient),
+    LinearGradientFill(Box<super::LinearGradientFill>),
+    Other(Box<Node>),
+    PathGradient(Box<super::PathGradient>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GraphicElementContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GraphicElementContent {
-    ChartToAnimate(super::ChartToAnimate),
-    DiagramToAnimate(super::DiagramToAnimate),
-    Other(Node),
+    ChartToAnimate(Box<super::ChartToAnimate>),
+    DiagramToAnimate(Box<super::DiagramToAnimate>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5369,66 +5385,66 @@ pub enum GraphicElementContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupShapeContent {
-    ConnectionShape(#[rkyv(omit_bounds)] super::ConnectionShape),
-    ContentPart(#[rkyv(omit_bounds)] super::super::office_drawing_2010_main::ContentPart),
-    GraphicFrame(#[rkyv(omit_bounds)] super::GraphicFrame),
-    GroupShape(#[rkyv(omit_bounds)] super::GroupShape),
-    Other(Node),
-    Picture(#[rkyv(omit_bounds)] super::Picture),
-    Shape(#[rkyv(omit_bounds)] super::Shape),
-    TextShape(#[rkyv(omit_bounds)] super::TextShape),
+    ConnectionShape(#[rkyv(omit_bounds)] Box<super::ConnectionShape>),
+    ContentPart(#[rkyv(omit_bounds)] Box<super::super::office_drawing_2010_main::ContentPart>),
+    GraphicFrame(#[rkyv(omit_bounds)] Box<super::GraphicFrame>),
+    GroupShape(#[rkyv(omit_bounds)] Box<super::GroupShape>),
+    Other(Box<Node>),
+    Picture(#[rkyv(omit_bounds)] Box<super::Picture>),
+    Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
+    TextShape(#[rkyv(omit_bounds)] Box<super::TextShape>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineDashContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum LineDashContent {
-    CustomDash(super::CustomDash),
-    Other(Node),
-    PresetDash(super::PresetDash),
+    CustomDash(Box<super::CustomDash>),
+    Other(Box<Node>),
+    PresetDash(Box<super::PresetDash>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineFillContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum LineFillContent {
-    GradientFill(super::GradientFill),
-    NoFill(super::NoFill),
-    Other(Node),
-    PatternFill(super::PatternFill),
-    SolidFill(super::SolidFill),
+    GradientFill(Box<super::GradientFill>),
+    NoFill(Box<super::NoFill>),
+    Other(Box<Node>),
+    PatternFill(Box<super::PatternFill>),
+    SolidFill(Box<super::SolidFill>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineJoinContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum LineJoinContent {
-    LineJoinBevel(super::LineJoinBevel),
-    MiterLineJoin(super::MiterLineJoin),
-    Other(Node),
-    RoundLineJoin(super::RoundLineJoin),
+    LineJoinBevel(Box<super::LineJoinBevel>),
+    MiterLineJoin(Box<super::MiterLineJoin>),
+    Other(Box<Node>),
+    RoundLineJoin(Box<super::RoundLineJoin>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeAdjustHandlesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeAdjustHandlesContent {
-    Other(Node),
-    PolarAdjustHandle(super::PolarAdjustHandle),
-    XYAdjustHandle(super::XYAdjustHandle),
+    Other(Box<Node>),
+    PolarAdjustHandle(Box<super::PolarAdjustHandle>),
+    XYAdjustHandle(Box<super::XYAdjustHandle>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapePathContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapePathContent {
-    CloseShapePath(super::CloseShapePath),
-    DrawArcTo(super::DrawArcTo),
-    DrawCubicBezierCurveTo(super::DrawCubicBezierCurveTo),
-    DrawLineTo(super::DrawLineTo),
-    DrawQuadraticBezierCurveTo(super::DrawQuadraticBezierCurveTo),
-    MovePathTo(super::MovePathTo),
-    Other(Node),
+    CloseShapePath(Box<super::CloseShapePath>),
+    DrawArcTo(Box<super::DrawArcTo>),
+    DrawCubicBezierCurveTo(Box<super::DrawCubicBezierCurveTo>),
+    DrawLineTo(Box<super::DrawLineTo>),
+    DrawQuadraticBezierCurveTo(Box<super::DrawQuadraticBezierCurveTo>),
+    MovePathTo(Box<super::MovePathTo>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5438,9 +5454,9 @@ pub enum ShapePathContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TableBackgroundEffectContent {
-    Effect(#[rkyv(omit_bounds)] super::Effect),
-    EffectReference(super::EffectReference),
-    Other(Node),
+    Effect(#[rkyv(omit_bounds)] Box<super::Effect>),
+    EffectReference(Box<super::EffectReference>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5450,9 +5466,9 @@ pub enum TableBackgroundEffectContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TableCellTextStyleFontContent {
-    FontFontCollection(#[rkyv(omit_bounds)] super::FontFontCollection),
-    FontReference(super::FontReference),
-    Other(Node),
+    FontFontCollection(#[rkyv(omit_bounds)] Box<super::FontFontCollection>),
+    FontReference(Box<super::FontReference>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5462,9 +5478,9 @@ pub enum TableCellTextStyleFontContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TablePropertiesStyleContent {
-    Other(Node),
-    TableStyle(#[rkyv(omit_bounds)] super::TableStyle),
-    TableStyleID(super::TableStyleID),
+    Other(Box<Node>),
+    TableStyle(#[rkyv(omit_bounds)] Box<super::TableStyle>),
+    TableStyleID(Box<super::TableStyleID>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5474,28 +5490,28 @@ pub enum TablePropertiesStyleContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum Text3DContent {
-    Apply3DShapeProperties(#[rkyv(omit_bounds)] super::Apply3DShapeProperties),
-    NoTextIn3DScene(super::NoTextIn3DScene),
-    Other(Node),
+    Apply3DShapeProperties(#[rkyv(omit_bounds)] Box<super::Apply3DShapeProperties>),
+    NoTextIn3DScene(Box<super::NoTextIn3DScene>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextAutofitContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextAutofitContent {
-    NoAutoFit(super::NoAutoFit),
-    NormalAutoFit(super::NormalAutoFit),
-    Other(Node),
-    ShapeAutoFit(super::ShapeAutoFit),
+    NoAutoFit(Box<super::NoAutoFit>),
+    NormalAutoFit(Box<super::NormalAutoFit>),
+    Other(Box<Node>),
+    ShapeAutoFit(Box<super::ShapeAutoFit>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBulletColorContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextBulletColorContent {
-    ColorSpecified(super::ColorSpecified),
-    FollowTextBuClrTx(super::FollowTextBuClrTx),
-    Other(Node),
+    ColorSpecified(Box<super::ColorSpecified>),
+    FollowTextBuClrTx(Box<super::FollowTextBuClrTx>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5505,30 +5521,30 @@ pub enum TextBulletColorContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextBulletContent {
-    AutoNumberedBullet(super::AutoNumberedBullet),
-    CharacterBullet(super::CharacterBullet),
-    NoBullet(super::NoBullet),
-    Other(Node),
-    PictureBullet(#[rkyv(omit_bounds)] super::PictureBullet),
+    AutoNumberedBullet(Box<super::AutoNumberedBullet>),
+    CharacterBullet(Box<super::CharacterBullet>),
+    NoBullet(Box<super::NoBullet>),
+    Other(Box<Node>),
+    PictureBullet(#[rkyv(omit_bounds)] Box<super::PictureBullet>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBulletSizeContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextBulletSizeContent {
-    BulletSizeFollowsText(super::BulletSizeFollowsText),
-    BulletSizePercentage(super::BulletSizePercentage),
-    BulletSizePoints(super::BulletSizePoints),
-    Other(Node),
+    BulletSizeFollowsText(Box<super::BulletSizeFollowsText>),
+    BulletSizePercentage(Box<super::BulletSizePercentage>),
+    BulletSizePoints(Box<super::BulletSizePoints>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextBulletTypefaceContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextBulletTypefaceContent {
-    FollowTextBuFontTx(super::FollowTextBuFontTx),
-    Other(Node),
-    Specified(super::Specified),
+    FollowTextBuFontTx(Box<super::FollowTextBuFontTx>),
+    Other(Box<Node>),
+    Specified(Box<super::Specified>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5538,29 +5554,29 @@ pub enum TextBulletTypefaceContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextParagraphsContent {
-    M(super::super::office_drawing_2010_main::M),
-    Other(Node),
-    TextField(#[rkyv(omit_bounds)] super::TextField),
-    TextLineBreak(#[rkyv(omit_bounds)] super::TextLineBreak),
-    TextRun(#[rkyv(omit_bounds)] super::TextRun),
+    M(Box<super::super::office_drawing_2010_main::M>),
+    Other(Box<Node>),
+    TextField(#[rkyv(omit_bounds)] Box<super::TextField>),
+    TextLineBreak(#[rkyv(omit_bounds)] Box<super::TextLineBreak>),
+    TextRun(#[rkyv(omit_bounds)] Box<super::TextRun>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextShapeContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextShapeContent {
-    Other(Node),
-    UseShapeTextRectangle(super::UseShapeTextRectangle),
-    XfrmTransform2D(super::XfrmTransform2D),
+    Other(Box<Node>),
+    UseShapeTextRectangle(Box<super::UseShapeTextRectangle>),
+    XfrmTransform2D(Box<super::XfrmTransform2D>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextSpacingContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextSpacingContent {
-    Other(Node),
-    SpacingPercent(super::SpacingPercent),
-    SpacingPoints(super::SpacingPoints),
+    Other(Box<Node>),
+    SpacingPercent(Box<super::SpacingPercent>),
+    SpacingPoints(Box<super::SpacingPoints>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5570,9 +5586,9 @@ pub enum TextSpacingContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextUnderlineFillContent {
-    Other(Node),
-    UnderlineFill(#[rkyv(omit_bounds)] super::UnderlineFill),
-    UnderlineFillPropertiesFollowText(super::UnderlineFillPropertiesFollowText),
+    Other(Box<Node>),
+    UnderlineFill(#[rkyv(omit_bounds)] Box<super::UnderlineFill>),
+    UnderlineFillPropertiesFollowText(Box<super::UnderlineFillPropertiesFollowText>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5582,9 +5598,9 @@ pub enum TextUnderlineFillContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextUnderlineLineContent {
-    Other(Node),
-    UnderlineFollowsText(super::UnderlineFollowsText),
-    UnderlineStroke(#[rkyv(omit_bounds)] super::UnderlineStroke),
+    Other(Box<Node>),
+    UnderlineFollowsText(Box<super::UnderlineFollowsText>),
+    UnderlineStroke(#[rkyv(omit_bounds)] Box<super::UnderlineStroke>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5594,9 +5610,9 @@ pub enum TextUnderlineLineContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ThemeableFillStyleContent {
-    Fill(#[rkyv(omit_bounds)] super::Fill),
-    FillReference(super::FillReference),
-    Other(Node),
+    Fill(#[rkyv(omit_bounds)] Box<super::Fill>),
+    FillReference(Box<super::FillReference>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -5606,9 +5622,9 @@ pub enum ThemeableFillStyleContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ThemeableLineStyleContent {
-    LineReference(super::LineReference),
-    Other(Node),
-    Outline(#[rkyv(omit_bounds)] super::Outline),
+    LineReference(Box<super::LineReference>),
+    Other(Box<Node>),
+    Outline(#[rkyv(omit_bounds)] Box<super::Outline>),
 }
 
 impl From<Accent1Mirror> for super::Accent1 {

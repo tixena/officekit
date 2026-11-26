@@ -18,7 +18,7 @@ fn bold() -> RunProperties {
     let mut properties = RunProperties::default();
     properties
         .content
-        .push(RunPropertiesContent::Bold(Bold::default()));
+        .push(RunPropertiesContent::from(Bold::default()));
     properties
 }
 

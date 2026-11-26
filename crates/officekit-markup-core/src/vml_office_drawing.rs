@@ -1449,27 +1449,27 @@ impl Eq for NewShapeDefaultsWith<()> {}
 #[non_exhaustive]
 pub enum NewShapeDefaultsContentWith<X: UserData> {
     /// The element `o:callout`, a `Callout`.
-    Callout(CalloutWith<X>),
+    Callout(Box<CalloutWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(ExtrusionWith<X>),
+    Extrusion(Box<ExtrusionWith<X>>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(super::vml::LineStrokeSettingsWith<X>),
+    LineStrokeSettings(Box<super::vml::LineStrokeSettingsWith<X>>),
     /// The element `o:colormru`, a `MostRecentlyUsedColors`.
-    MostRecentlyUsedColors(MostRecentlyUsedColorsWith<X>),
+    MostRecentlyUsedColors(Box<MostRecentlyUsedColorsWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(super::vml::ShadowEffectWith<X>),
+    ShadowEffect(Box<super::vml::ShadowEffectWith<X>>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(super::vml::ShapeFillPropertiesWith<X>),
+    ShapeFillProperties(Box<super::vml::ShapeFillPropertiesWith<X>>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(ShapeProtectionsWith<X>),
+    ShapeProtections(Box<ShapeProtectionsWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(SkewTransformWith<X>),
+    SkewTransform(Box<SkewTransformWith<X>>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(super::vml::TextBoxWith<X>),
+    TextBox(Box<super::vml::TextBoxWith<X>>),
     /// The element `o:colormenu`, a `UIDefaultColors`.
-    UIDefaultColors(UIDefaultColorsWith<X>),
+    UIDefaultColors(Box<UIDefaultColorsWith<X>>),
 }
 
 /// [`NewShapeDefaultsContentWith`] of the tree a read gives, where no node holds anything in
@@ -1831,13 +1831,13 @@ impl Eq for ShapeLayoutPropertiesWith<()> {}
 #[non_exhaustive]
 pub enum ShapeLayoutPropertiesContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `o:rules`, a `RuleSet`.
-    RuleSet(RuleSetWith<X>),
+    RuleSet(Box<RuleSetWith<X>>),
     /// The element `o:regrouptable`, a `ShapeGroupingHistory`.
-    ShapeGroupingHistory(ShapeGroupingHistoryWith<X>),
+    ShapeGroupingHistory(Box<ShapeGroupingHistoryWith<X>>),
     /// The element `o:idmap`, a `ShapeIDMap`.
-    ShapeIDMap(ShapeIDMapWith<X>),
+    ShapeIDMap(Box<ShapeIDMapWith<X>>),
 }
 
 /// [`ShapeLayoutPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -3728,30 +3728,38 @@ impl<X: UserData> NewShapeDefaultsContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Callout(node) => NewShapeDefaultsContentWith::Callout(node.into_user_data()),
-            Self::Extrusion(node) => NewShapeDefaultsContentWith::Extrusion(node.into_user_data()),
+            Self::Callout(node) => {
+                NewShapeDefaultsContentWith::Callout(Box::new((*node).into_user_data()))
+            }
+            Self::Extrusion(node) => {
+                NewShapeDefaultsContentWith::Extrusion(Box::new((*node).into_user_data()))
+            }
             Self::LineStrokeSettings(node) => {
-                NewShapeDefaultsContentWith::LineStrokeSettings(node.into_user_data())
+                NewShapeDefaultsContentWith::LineStrokeSettings(Box::new((*node).into_user_data()))
             }
             Self::MostRecentlyUsedColors(node) => {
-                NewShapeDefaultsContentWith::MostRecentlyUsedColors(node.into_user_data())
+                NewShapeDefaultsContentWith::MostRecentlyUsedColors(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => NewShapeDefaultsContentWith::Other(node),
             Self::ShadowEffect(node) => {
-                NewShapeDefaultsContentWith::ShadowEffect(node.into_user_data())
+                NewShapeDefaultsContentWith::ShadowEffect(Box::new((*node).into_user_data()))
             }
             Self::ShapeFillProperties(node) => {
-                NewShapeDefaultsContentWith::ShapeFillProperties(node.into_user_data())
+                NewShapeDefaultsContentWith::ShapeFillProperties(Box::new((*node).into_user_data()))
             }
             Self::ShapeProtections(node) => {
-                NewShapeDefaultsContentWith::ShapeProtections(node.into_user_data())
+                NewShapeDefaultsContentWith::ShapeProtections(Box::new((*node).into_user_data()))
             }
             Self::SkewTransform(node) => {
-                NewShapeDefaultsContentWith::SkewTransform(node.into_user_data())
+                NewShapeDefaultsContentWith::SkewTransform(Box::new((*node).into_user_data()))
             }
-            Self::TextBox(node) => NewShapeDefaultsContentWith::TextBox(node.into_user_data()),
+            Self::TextBox(node) => {
+                NewShapeDefaultsContentWith::TextBox(Box::new((*node).into_user_data()))
+            }
             Self::UIDefaultColors(node) => {
-                NewShapeDefaultsContentWith::UIDefaultColors(node.into_user_data())
+                NewShapeDefaultsContentWith::UIDefaultColors(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -3759,22 +3767,22 @@ impl<X: UserData> NewShapeDefaultsContentWith<X> {
 
 impl officekit_markup_base::Read for NewShapeDefaultsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_O, "callout")) => Self::Callout(item.read()),
-            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
-            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
-            Some((NS_O, "colormru")) => Self::MostRecentlyUsedColors(item.read()),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
-            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
-            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
-            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
-            Some((NS_O, "colormenu")) => Self::UIDefaultColors(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_O, "callout")) => Self::Callout(Box::new(item.read())),
+            Some((NS_O, "extrusion")) => Self::Extrusion(Box::new(item.read())),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(Box::new(item.read())),
+            Some((NS_O, "colormru")) => Self::MostRecentlyUsedColors(Box::new(item.read())),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(Box::new(item.read())),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(Box::new(item.read())),
+            Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
+            Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
+            Some((NS_V, "textbox")) => Self::TextBox(Box::new(item.read())),
+            Some((NS_O, "colormenu")) => Self::UIDefaultColors(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3786,7 +3794,7 @@ impl officekit_markup_base::Write for NewShapeDefaultsContent {
             Self::Extrusion(arm) => arm.write_into(writer),
             Self::LineStrokeSettings(arm) => arm.write_into(writer),
             Self::MostRecentlyUsedColors(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::ShadowEffect(arm) => arm.write_into(writer),
             Self::ShapeFillProperties(arm) => arm.write_into(writer),
             Self::ShapeProtections(arm) => arm.write_into(writer),
@@ -3796,6 +3804,71 @@ impl officekit_markup_base::Write for NewShapeDefaultsContent {
         }
     }
 }
+
+impl<X: UserData> From<CalloutWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: CalloutWith<X>) -> Self {
+        Self::Callout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ExtrusionWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: ExtrusionWith<X>) -> Self {
+        Self::Extrusion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::LineStrokeSettingsWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: super::vml::LineStrokeSettingsWith<X>) -> Self {
+        Self::LineStrokeSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MostRecentlyUsedColorsWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: MostRecentlyUsedColorsWith<X>) -> Self {
+        Self::MostRecentlyUsedColors(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShadowEffectWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: super::vml::ShadowEffectWith<X>) -> Self {
+        Self::ShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShapeFillPropertiesWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: super::vml::ShapeFillPropertiesWith<X>) -> Self {
+        Self::ShapeFillProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeProtectionsWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: ShapeProtectionsWith<X>) -> Self {
+        Self::ShapeProtections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SkewTransformWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: SkewTransformWith<X>) -> Self {
+        Self::SkewTransform(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::TextBoxWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: super::vml::TextBoxWith<X>) -> Self {
+        Self::TextBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UIDefaultColorsWith<X>> for NewShapeDefaultsContentWith<X> {
+    fn from(arm: UIDefaultColorsWith<X>) -> Self {
+        Self::UIDefaultColors(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<NewShapeDefaultsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for OLEDrawAspect {
     fn as_ref(&self) -> &str {
@@ -4526,12 +4599,16 @@ impl<X: UserData> ShapeLayoutPropertiesContentWith<X> {
     {
         match self {
             Self::Other(node) => ShapeLayoutPropertiesContentWith::Other(node),
-            Self::RuleSet(node) => ShapeLayoutPropertiesContentWith::RuleSet(node.into_user_data()),
+            Self::RuleSet(node) => {
+                ShapeLayoutPropertiesContentWith::RuleSet(Box::new((*node).into_user_data()))
+            }
             Self::ShapeGroupingHistory(node) => {
-                ShapeLayoutPropertiesContentWith::ShapeGroupingHistory(node.into_user_data())
+                ShapeLayoutPropertiesContentWith::ShapeGroupingHistory(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::ShapeIDMap(node) => {
-                ShapeLayoutPropertiesContentWith::ShapeIDMap(node.into_user_data())
+                ShapeLayoutPropertiesContentWith::ShapeIDMap(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -4539,15 +4616,15 @@ impl<X: UserData> ShapeLayoutPropertiesContentWith<X> {
 
 impl officekit_markup_base::Read for ShapeLayoutPropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_O, "rules")) => Self::RuleSet(item.read()),
-            Some((NS_O, "regrouptable")) => Self::ShapeGroupingHistory(item.read()),
-            Some((NS_O, "idmap")) => Self::ShapeIDMap(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_O, "rules")) => Self::RuleSet(Box::new(item.read())),
+            Some((NS_O, "regrouptable")) => Self::ShapeGroupingHistory(Box::new(item.read())),
+            Some((NS_O, "idmap")) => Self::ShapeIDMap(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -4555,13 +4632,36 @@ impl officekit_markup_base::Read for ShapeLayoutPropertiesContent {
 impl officekit_markup_base::Write for ShapeLayoutPropertiesContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RuleSet(arm) => arm.write_into(writer),
             Self::ShapeGroupingHistory(arm) => arm.write_into(writer),
             Self::ShapeIDMap(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<RuleSetWith<X>> for ShapeLayoutPropertiesContentWith<X> {
+    fn from(arm: RuleSetWith<X>) -> Self {
+        Self::RuleSet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeGroupingHistoryWith<X>> for ShapeLayoutPropertiesContentWith<X> {
+    fn from(arm: ShapeGroupingHistoryWith<X>) -> Self {
+        Self::ShapeGroupingHistory(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeIDMapWith<X>> for ShapeLayoutPropertiesContentWith<X> {
+    fn from(arm: ShapeIDMapWith<X>) -> Self {
+        Self::ShapeIDMap(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeLayoutPropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShapeProtectionsWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

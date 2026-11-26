@@ -160,10 +160,8 @@ fn twips(value: &str) -> MeasurementInTwentiethsOfAPoint {
 /// A run holding a `w:pict` of an empty VML shape.
 fn vml_run() -> TextRun {
     let mut picture = VMLObject::default();
-    picture.content = vec![VmlElementContent::ShapeDefinition(
-        ShapeDefinition::default(),
-    )];
-    run_of(TextRunContent::VMLObject(picture))
+    picture.content = vec![VmlElementContent::from(ShapeDefinition::default())];
+    run_of(TextRunContent::from(picture))
 }
 
 #[test]
@@ -189,7 +187,7 @@ fn a_transitional_paragraph_writes_as_strict() {
     let mut characters = WordText::default();
     characters.value = "Hello".to_owned();
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::TextRun(run_of(TextRunContent::Text(
+    paragraph.content = vec![ParagraphContent::from(run_of(TextRunContent::from(
         characters,
     )))];
     paragraph.properties = Some(Box::new(properties));
@@ -336,20 +334,14 @@ fn an_embedded_object_takes_the_wrapper_and_its_attribute_rules() {
     link.locked_field = Some(OnOffValue::from("on".to_owned()));
     link.update_mode = Some(EmbeddedObjectUpdateModes::from("always".to_owned()));
     let mut object = EmbeddedObject::default();
-    object.content = Some(Box::new(EmbeddedObjectContent::LinkedObjectProperties(
-        link,
-    )));
+    object.content = Some(Box::new(EmbeddedObjectContent::from(link)));
     object.dxa_orig = Some(twips("3630"));
     object.dya_orig = Some(twips("1935"));
     object.vml_element_content = vec![
-        VmlElementContent::ShapeDefinition(ShapeDefinition::default()),
-        VmlElementContent::EmbeddedOLEObject(ole),
+        VmlElementContent::from(ShapeDefinition::default()),
+        VmlElementContent::from(ole),
     ];
-    let text = written(
-        run_of(TextRunContent::EmbeddedObject(object))
-            .to_strict()
-            .unwrap(),
-    );
+    let text = written(run_of(TextRunContent::from(object)).to_strict().unwrap());
     assert!(
         text.contains("<mc:Choice Requires=\"v\"><w:object w:dxaOrig=\"3630\" w:dyaOrig=\"1935\">"),
         "{text}"
@@ -363,11 +355,7 @@ fn an_object_holding_no_vml_stays_in_the_run() {
     let mut object = EmbeddedObject::default();
     object.drawingml_object = Some(Box::default());
     object.dxa_orig = Some(twips("3630"));
-    let text = written(
-        run_of(TextRunContent::EmbeddedObject(object))
-            .to_strict()
-            .unwrap(),
-    );
+    let text = written(run_of(TextRunContent::from(object)).to_strict().unwrap());
     assert!(
         text.ends_with("><w:object w:dxaOrig=\"3630\"><w:drawing/></w:object></w:r>"),
         "{text}"
@@ -742,7 +730,7 @@ fn a_strict_save_removes_the_settings_word_leaves_out() {
         None
     );
     let layout = || {
-        vec![VmlOfficeDrawingElementContent::ShapeLayoutProperties(
+        vec![VmlOfficeDrawingElementContent::from(
             ShapeLayoutProperties::default(),
         )]
     };
@@ -1167,7 +1155,7 @@ fn a_vml_background_with_a_fill_of_its_own_stays_refused() {
     let background = |content: VmlBackground| {
         let mut background = DocumentBackground::default();
         background.color = Some(ColorValue::from("ffffff".to_owned()));
-        background.content = vec![VmlElementContent::DocumentBackground(content)];
+        background.content = vec![VmlElementContent::from(content)];
         background
     };
     let shape = || {

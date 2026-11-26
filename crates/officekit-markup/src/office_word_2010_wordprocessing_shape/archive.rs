@@ -372,18 +372,18 @@ pub struct WspMirror {
 #[rkyv(remote = super::ShapeNonVisualPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeNonVisualPropertiesContent {
-    CNvCnPr(super::CNvCnPr),
-    CNvSpPr(super::CNvSpPr),
-    Other(Node),
+    CNvCnPr(Box<super::CNvCnPr>),
+    CNvSpPr(Box<super::CNvSpPr>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeTextContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeTextContent {
-    LinkedTxbx(super::LinkedTxbx),
-    Other(Node),
-    Txbx(super::Txbx),
+    LinkedTxbx(Box<super::LinkedTxbx>),
+    Other(Box<Node>),
+    Txbx(Box<super::Txbx>),
 }
 
 impl From<BodyPrMirror> for super::BodyPr {

@@ -69,7 +69,7 @@ fn table() -> BlockContent {
     table
         .properties
         .table_style_conditional_formatting_settings_exception = Some(Box::new(look));
-    BlockContent::Table(table)
+    BlockContent::from(table)
 }
 
 /// A left-justified paragraph indented 720 and hanging 360, of the run "x" scaled to 89%.
@@ -85,16 +85,16 @@ fn paragraph() -> BlockContent {
     let mut scale = ExpandedCompressedText::default();
     scale.val = Some(StTextScale::from("89".to_owned()));
     let mut run_properties = RunProperties::default();
-    run_properties.content = vec![RunPropertiesContent::ExpandedCompressedText(scale)];
+    run_properties.content = vec![RunPropertiesContent::from(scale)];
     let mut characters = Text::default();
     characters.value = "x".to_owned();
     let mut run = TextRun::default();
     run.properties = Some(Box::new(run_properties));
-    run.content = vec![TextRunContent::Text(characters)];
+    run.content = vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();
     paragraph.properties = Some(Box::new(properties));
-    paragraph.content = vec![ParagraphContent::TextRun(run)];
-    BlockContent::Paragraph(paragraph)
+    paragraph.content = vec![ParagraphContent::from(run)];
+    BlockContent::from(paragraph)
 }
 
 /// A document of `table` and `paragraph`, on a page 12240 by 15840.

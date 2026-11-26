@@ -619,21 +619,21 @@ pub struct VSupportingPropertyBagValueMirror {
 #[rkyv(remote = super::CustomRichFiltersContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum CustomRichFiltersContent {
-    CustomFilter(super::CustomFilter),
-    ExtLst(super::ExtLst),
-    Other(Node),
+    CustomFilter(Box<super::CustomFilter>),
+    ExtLst(Box<super::ExtLst>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RichFilterColumnContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RichFilterColumnContent {
-    CustomFilters(super::CustomFilters),
-    DynamicFilter(super::DynamicFilter),
-    ExtLst(super::ExtLst),
-    Filters(super::Filters),
-    Other(Node),
-    Top10(super::Top10),
+    CustomFilters(Box<super::CustomFilters>),
+    DynamicFilter(Box<super::DynamicFilter>),
+    ExtLst(Box<super::ExtLst>),
+    Filters(Box<super::Filters>),
+    Other(Box<Node>),
+    Top10(Box<super::Top10>),
 }
 
 impl From<AArrayMirror> for super::AArray {

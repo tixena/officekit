@@ -2849,11 +2849,11 @@ impl Eq for AnimateColorBehaviorWith<()> {}
 #[non_exhaustive]
 pub enum AnimateColorByContentWith<X: UserData> {
     /// The element `p:hsl`, a `Hsl`.
-    Hsl(HslWith<X>),
+    Hsl(Box<HslWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:rgb`, a `Rgb`.
-    Rgb(RgbWith<X>),
+    Rgb(Box<RgbWith<X>>),
 }
 
 /// [`AnimateColorByContentWith`] of the tree a read gives, where no node holds anything in
@@ -3023,17 +3023,17 @@ pub enum AnimationTimeMember {
 #[non_exhaustive]
 pub enum AnimationVariantContentWith<X: UserData> {
     /// The element `p:boolVal`, a `BooleanVariant`.
-    BooleanVariant(BooleanVariantWith<X>),
+    BooleanVariant(Box<BooleanVariantWith<X>>),
     /// The element `p:clrVal`, a `ColorValue`.
-    ColorValue(ColorValueWith<X>),
+    ColorValue(Box<ColorValueWith<X>>),
     /// The element `p:fltVal`, a `FloatValue`.
-    FloatValue(FloatValueWith<X>),
+    FloatValue(Box<FloatValueWith<X>>),
     /// The element `p:intVal`, a `Integer`.
-    Integer(IntegerWith<X>),
+    Integer(Box<IntegerWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:strVal`, a `StringValue`.
-    StringValue(StringValueWith<X>),
+    StringValue(Box<StringValueWith<X>>),
 }
 
 /// [`AnimationVariantContentWith`] of the tree a read gives, where no node holds anything in
@@ -3492,11 +3492,11 @@ impl Eq for BuildGraphicsWith<()> {}
 #[non_exhaustive]
 pub enum BuildGraphicsContentWith<X: UserData> {
     /// The element `p:bldAsOne`, a `BuildAsOne`.
-    BuildAsOne(BuildAsOneWith<X>),
+    BuildAsOne(Box<BuildAsOneWith<X>>),
     /// The element `p:bldSub`, a `BuildSubElements`.
-    BuildSubElements(BuildSubElementsWith<X>),
+    BuildSubElements(Box<BuildSubElementsWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`BuildGraphicsContentWith`] of the tree a read gives, where no node holds anything in
@@ -3534,15 +3534,15 @@ impl Eq for BuildListWith<()> {}
 #[non_exhaustive]
 pub enum BuildListContentWith<X: UserData> {
     /// The element `p:bldDgm`, a `BuildDiagram`.
-    BuildDiagram(BuildDiagramWith<X>),
+    BuildDiagram(Box<BuildDiagramWith<X>>),
     /// The element `p:bldOleChart`, a `BuildEmbeddedChart`.
-    BuildEmbeddedChart(BuildEmbeddedChartWith<X>),
+    BuildEmbeddedChart(Box<BuildEmbeddedChartWith<X>>),
     /// The element `p:bldGraphic`, a `BuildGraphics`.
-    BuildGraphics(BuildGraphicsWith<X>),
+    BuildGraphics(Box<BuildGraphicsWith<X>>),
     /// The element `p:bldP`, a `BuildParagraph`.
-    BuildParagraph(BuildParagraphWith<X>),
+    BuildParagraph(Box<BuildParagraphWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`BuildListContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -4822,11 +4822,11 @@ impl Eq for EmbeddedFontNameWith<()> {}
 #[non_exhaustive]
 pub enum EmbeddedObjectContentWith<X: UserData> {
     /// The element `p:embed`, a `EmbeddedObjectOrControl`.
-    EmbeddedObjectOrControl(EmbeddedObjectOrControlWith<X>),
+    EmbeddedObjectOrControl(Box<EmbeddedObjectOrControlWith<X>>),
     /// The element `p:link`, a `LinkedObjectOrControl`.
-    LinkedObjectOrControl(LinkedObjectOrControlWith<X>),
+    LinkedObjectOrControl(Box<LinkedObjectOrControlWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`EmbeddedObjectContentWith`] of the tree a read gives, where no node holds anything in
@@ -5206,19 +5206,19 @@ impl Eq for GroupShapeWith<()> {}
 #[non_exhaustive]
 pub enum GroupShapeContentWith<X: UserData> {
     /// The element `p:cxnSp`, a `ConnectionShape`.
-    ConnectionShape(ConnectionShapeWith<X>),
+    ConnectionShape(Box<ConnectionShapeWith<X>>),
     /// The element `p:contentPart`, a `ContentPart`.
-    ContentPart(ContentPartWith<X>),
+    ContentPart(Box<ContentPartWith<X>>),
     /// The element `p:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrameWith<X>),
+    GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `p:grpSp`, a `GroupShape`.
-    GroupShape(GroupShapeWith<X>),
+    GroupShape(Box<GroupShapeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:pic`, a `Picture`.
-    Picture(PictureWith<X>),
+    Picture(Box<PictureWith<X>>),
     /// The element `p:sp`, a `Shape`.
-    Shape(ShapeWith<X>),
+    Shape(Box<ShapeWith<X>>),
 }
 
 /// [`GroupShapeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -5590,11 +5590,11 @@ impl Eq for IterateWith<()> {}
 #[non_exhaustive]
 pub enum IterateContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:tmAbs`, a `TimeAbsolute`.
-    TimeAbsolute(TimeAbsoluteWith<X>),
+    TimeAbsolute(Box<TimeAbsoluteWith<X>>),
     /// The element `p:tmPct`, a `TimePercentage`.
-    TimePercentage(TimePercentageWith<X>),
+    TimePercentage(Box<TimePercentageWith<X>>),
 }
 
 /// [`IterateContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -6256,17 +6256,17 @@ impl Eq for NonVisualPropertiesWith<()> {}
 #[non_exhaustive]
 pub enum NonVisualPropertiesContentWith<X: UserData> {
     /// The element `a:audioCd`, a `AudioFromCD`.
-    AudioFromCD(super::drawing::AudioFromCDWith<X>),
+    AudioFromCD(Box<super::drawing::AudioFromCDWith<X>>),
     /// The element `a:audioFile`, a `AudioFromFile`.
-    AudioFromFile(super::drawing::AudioFromFileWith<X>),
+    AudioFromFile(Box<super::drawing::AudioFromFileWith<X>>),
     /// The element `a:wavAudioFile`, a `AudioFromWAVFile`.
-    AudioFromWAVFile(super::drawing::AudioFromWAVFileWith<X>),
+    AudioFromWAVFile(Box<super::drawing::AudioFromWAVFileWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:quickTimeFile`, a `QuickTimeFromFile`.
-    QuickTimeFromFile(super::drawing::QuickTimeFromFileWith<X>),
+    QuickTimeFromFile(Box<super::drawing::QuickTimeFromFileWith<X>>),
     /// The element `a:videoFile`, a `VideoFromFile`.
-    VideoFromFile(super::drawing::VideoFromFileWith<X>),
+    VideoFromFile(Box<super::drawing::VideoFromFileWith<X>>),
 }
 
 /// [`NonVisualPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -7913,17 +7913,17 @@ impl Eq for ShapeTargetWith<()> {}
 #[non_exhaustive]
 pub enum ShapeTargetContentWith<X: UserData> {
     /// The element `p:bg`, a `Background`.
-    Background(BackgroundWith<X>),
+    Background(Box<BackgroundWith<X>>),
     /// The element `p:oleChartEl`, a `EmbeddedChartElement`.
-    EmbeddedChartElement(EmbeddedChartElementWith<X>),
+    EmbeddedChartElement(Box<EmbeddedChartElementWith<X>>),
     /// The element `p:graphicEl`, a `GraphicElement`.
-    GraphicElement(GraphicElementWith<X>),
+    GraphicElement(Box<GraphicElementWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:subSp`, a `Subshape`.
-    Subshape(SubshapeWith<X>),
+    Subshape(Box<SubshapeWith<X>>),
     /// The element `p:txEl`, a `TextElement`.
-    TextElement(TextElementWith<X>),
+    TextElement(Box<TextElementWith<X>>),
 }
 
 /// [`ShapeTargetContentWith`] of the tree a read gives, where no node holds anything in
@@ -7992,13 +7992,13 @@ impl Eq for ShapeTreeWith<()> {}
 #[non_exhaustive]
 pub enum ShowTypeContentWith<X: UserData> {
     /// The element `p:browse`, a `BrowseSlideShowMode`.
-    BrowseSlideShowMode(BrowseSlideShowModeWith<X>),
+    BrowseSlideShowMode(Box<BrowseSlideShowModeWith<X>>),
     /// The element `p:kiosk`, a `KioskSlideShowMode`.
-    KioskSlideShowMode(KioskSlideShowModeWith<X>),
+    KioskSlideShowMode(Box<KioskSlideShowModeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:present`, a `PresenterSlideShowMode`.
-    PresenterSlideShowMode(PresenterSlideShowModeWith<X>),
+    PresenterSlideShowMode(Box<PresenterSlideShowModeWith<X>>),
 }
 
 /// [`ShowTypeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -8037,11 +8037,11 @@ impl Eq for SlideBackgroundWith<()> {}
 #[non_exhaustive]
 pub enum SlideBackgroundContentWith<X: UserData> {
     /// The element `p:bgPr`, a `BackgroundProperties`.
-    BackgroundProperties(BackgroundPropertiesWith<X>),
+    BackgroundProperties(Box<BackgroundPropertiesWith<X>>),
     /// The element `p:bgRef`, a `BackgroundStyleReference`.
-    BackgroundStyleReference(BackgroundStyleReferenceWith<X>),
+    BackgroundStyleReference(Box<BackgroundStyleReferenceWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`SlideBackgroundContentWith`] of the tree a read gives, where no node holds anything in
@@ -8270,13 +8270,13 @@ pub enum SlideLayoutTypeMember {
 #[non_exhaustive]
 pub enum SlideListContentWith<X: UserData> {
     /// The element `p:sldAll`, a `AllSlides`.
-    AllSlides(AllSlidesWith<X>),
+    AllSlides(Box<AllSlidesWith<X>>),
     /// The element `p:custShow`, a `CustomShow`.
-    CustomShow(CustomShowWith<X>),
+    CustomShow(Box<CustomShowWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:sldRg`, a `SlideRange`.
-    SlideRange(SlideRangeWith<X>),
+    SlideRange(Box<SlideRangeWith<X>>),
 }
 
 /// [`SlideListContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -8681,89 +8681,89 @@ impl Eq for SlideTimingInformationWith<()> {}
 #[non_exhaustive]
 pub enum SlideTransitionContentWith<X: UserData> {
     /// The element `p:blinds`, a `BlindsSlideTransition`.
-    BlindsSlideTransition(BlindsSlideTransitionWith<X>),
+    BlindsSlideTransition(Box<BlindsSlideTransitionWith<X>>),
     /// The element `p:checker`, a `CheckerSlideTransition`.
-    CheckerSlideTransition(CheckerSlideTransitionWith<X>),
+    CheckerSlideTransition(Box<CheckerSlideTransitionWith<X>>),
     /// The element `p:circle`, a `CircleSlideTransition`.
-    CircleSlideTransition(CircleSlideTransitionWith<X>),
+    CircleSlideTransition(Box<CircleSlideTransitionWith<X>>),
     /// The element `p:comb`, a `CombSlideTransition`.
-    CombSlideTransition(CombSlideTransitionWith<X>),
+    CombSlideTransition(Box<CombSlideTransitionWith<X>>),
     /// The element `p14:conveyor`, a `Conveyor`.
-    Conveyor(super::office_powerpoint_2010_main::ConveyorWith<X>),
+    Conveyor(Box<super::office_powerpoint_2010_main::ConveyorWith<X>>),
     /// The element `p:cover`, a `CoverSlideTransition`.
-    CoverSlideTransition(CoverSlideTransitionWith<X>),
+    CoverSlideTransition(Box<CoverSlideTransitionWith<X>>),
     /// The element `p:cut`, a `CutSlideTransition`.
-    CutSlideTransition(CutSlideTransitionWith<X>),
+    CutSlideTransition(Box<CutSlideTransitionWith<X>>),
     /// The element `p:diamond`, a `DiamondSlideTransition`.
-    DiamondSlideTransition(DiamondSlideTransitionWith<X>),
+    DiamondSlideTransition(Box<DiamondSlideTransitionWith<X>>),
     /// The element `p:dissolve`, a `DissolveSlideTransition`.
-    DissolveSlideTransition(DissolveSlideTransitionWith<X>),
+    DissolveSlideTransition(Box<DissolveSlideTransitionWith<X>>),
     /// The element `p14:doors`, a `Doors`.
-    Doors(super::office_powerpoint_2010_main::DoorsWith<X>),
+    Doors(Box<super::office_powerpoint_2010_main::DoorsWith<X>>),
     /// The element `p:fade`, a `FadeSlideTransition`.
-    FadeSlideTransition(FadeSlideTransitionWith<X>),
+    FadeSlideTransition(Box<FadeSlideTransitionWith<X>>),
     /// The element `p14:ferris`, a `Ferris`.
-    Ferris(super::office_powerpoint_2010_main::FerrisWith<X>),
+    Ferris(Box<super::office_powerpoint_2010_main::FerrisWith<X>>),
     /// The element `p14:flash`, a `Flash`.
-    Flash(super::office_powerpoint_2010_main::FlashWith<X>),
+    Flash(Box<super::office_powerpoint_2010_main::FlashWith<X>>),
     /// The element `p14:flip`, a `Flip`.
-    Flip(super::office_powerpoint_2010_main::FlipWith<X>),
+    Flip(Box<super::office_powerpoint_2010_main::FlipWith<X>>),
     /// The element `p14:flythrough`, a `Flythrough`.
-    Flythrough(super::office_powerpoint_2010_main::FlythroughWith<X>),
+    Flythrough(Box<super::office_powerpoint_2010_main::FlythroughWith<X>>),
     /// The element `p14:gallery`, a `Gallery`.
-    Gallery(super::office_powerpoint_2010_main::GalleryWith<X>),
+    Gallery(Box<super::office_powerpoint_2010_main::GalleryWith<X>>),
     /// The element `p14:glitter`, a `Glitter`.
-    Glitter(super::office_powerpoint_2010_main::GlitterWith<X>),
+    Glitter(Box<super::office_powerpoint_2010_main::GlitterWith<X>>),
     /// The element `p14:honeycomb`, a `Honeycomb`.
-    Honeycomb(super::office_powerpoint_2010_main::HoneycombWith<X>),
+    Honeycomb(Box<super::office_powerpoint_2010_main::HoneycombWith<X>>),
     /// The element `p:newsflash`, a `NewsflashSlideTransition`.
-    NewsflashSlideTransition(NewsflashSlideTransitionWith<X>),
+    NewsflashSlideTransition(Box<NewsflashSlideTransitionWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p14:pan`, a `Pan`.
-    Pan(super::office_powerpoint_2010_main::PanWith<X>),
+    Pan(Box<super::office_powerpoint_2010_main::PanWith<X>>),
     /// The element `p:plus`, a `PlusSlideTransition`.
-    PlusSlideTransition(PlusSlideTransitionWith<X>),
+    PlusSlideTransition(Box<PlusSlideTransitionWith<X>>),
     /// The element `p14:prism`, a `Prism`.
-    Prism(super::office_powerpoint_2010_main::PrismWith<X>),
+    Prism(Box<super::office_powerpoint_2010_main::PrismWith<X>>),
     /// The element `p15:prstTrans`, a `PrstTrans`.
-    PrstTrans(super::office_powerpoint_2012_main::PrstTransWith<X>),
+    PrstTrans(Box<super::office_powerpoint_2012_main::PrstTransWith<X>>),
     /// The element `p:pull`, a `PullSlideTransition`.
-    PullSlideTransition(PullSlideTransitionWith<X>),
+    PullSlideTransition(Box<PullSlideTransitionWith<X>>),
     /// The element `p:push`, a `PushSlideTransition`.
-    PushSlideTransition(PushSlideTransitionWith<X>),
+    PushSlideTransition(Box<PushSlideTransitionWith<X>>),
     /// The element `p:randomBar`, a `RandomBarSlideTransition`.
-    RandomBarSlideTransition(RandomBarSlideTransitionWith<X>),
+    RandomBarSlideTransition(Box<RandomBarSlideTransitionWith<X>>),
     /// The element `p:random`, a `RandomSlideTransition`.
-    RandomSlideTransition(RandomSlideTransitionWith<X>),
+    RandomSlideTransition(Box<RandomSlideTransitionWith<X>>),
     /// The element `p14:reveal`, a `Reveal`.
-    Reveal(super::office_powerpoint_2010_main::RevealWith<X>),
+    Reveal(Box<super::office_powerpoint_2010_main::RevealWith<X>>),
     /// The element `p14:ripple`, a `Ripple`.
-    Ripple(super::office_powerpoint_2010_main::RippleWith<X>),
+    Ripple(Box<super::office_powerpoint_2010_main::RippleWith<X>>),
     /// The element `p14:shred`, a `Shred`.
-    Shred(super::office_powerpoint_2010_main::ShredWith<X>),
+    Shred(Box<super::office_powerpoint_2010_main::ShredWith<X>>),
     /// The element `p:split`, a `SplitSlideTransition`.
-    SplitSlideTransition(SplitSlideTransitionWith<X>),
+    SplitSlideTransition(Box<SplitSlideTransitionWith<X>>),
     /// The element `p:strips`, a `StripsSlideTransition`.
-    StripsSlideTransition(StripsSlideTransitionWith<X>),
+    StripsSlideTransition(Box<StripsSlideTransitionWith<X>>),
     /// The element `p14:switch`, a `Switch`.
-    Switch(super::office_powerpoint_2010_main::SwitchWith<X>),
+    Switch(Box<super::office_powerpoint_2010_main::SwitchWith<X>>),
     /// The element `p14:vortex`, a `Vortex`.
-    Vortex(super::office_powerpoint_2010_main::VortexWith<X>),
+    Vortex(Box<super::office_powerpoint_2010_main::VortexWith<X>>),
     /// The element `p14:warp`, a `Warp`.
-    Warp(super::office_powerpoint_2010_main::WarpWith<X>),
+    Warp(Box<super::office_powerpoint_2010_main::WarpWith<X>>),
     /// The element `p:wedge`, a `WedgeSlideTransition`.
-    WedgeSlideTransition(WedgeSlideTransitionWith<X>),
+    WedgeSlideTransition(Box<WedgeSlideTransitionWith<X>>),
     /// The element `p14:wheelReverse`, a `WheelReverse`.
-    WheelReverse(super::office_powerpoint_2010_main::WheelReverseWith<X>),
+    WheelReverse(Box<super::office_powerpoint_2010_main::WheelReverseWith<X>>),
     /// The element `p:wheel`, a `WheelSlideTransition`.
-    WheelSlideTransition(WheelSlideTransitionWith<X>),
+    WheelSlideTransition(Box<WheelSlideTransitionWith<X>>),
     /// The element `p14:window`, a `Window`.
-    Window(super::office_powerpoint_2010_main::WindowWith<X>),
+    Window(Box<super::office_powerpoint_2010_main::WindowWith<X>>),
     /// The element `p:wipe`, a `WipeSlideTransition`.
-    WipeSlideTransition(WipeSlideTransitionWith<X>),
+    WipeSlideTransition(Box<WipeSlideTransitionWith<X>>),
     /// The element `p:zoom`, a `ZoomSlideTransition`.
-    ZoomSlideTransition(ZoomSlideTransitionWith<X>),
+    ZoomSlideTransition(Box<ZoomSlideTransitionWith<X>>),
 }
 
 /// [`SlideTransitionContentWith`] of the tree a read gives, where no node holds anything in
@@ -8897,11 +8897,11 @@ impl Eq for SoundActionWith<()> {}
 #[non_exhaustive]
 pub enum SoundActionContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:stSnd`, a `StartSoundAction`.
-    StartSoundAction(StartSoundActionWith<X>),
+    StartSoundAction(Box<StartSoundActionWith<X>>),
     /// The element `p:endSnd`, a `StopSoundAction`.
-    StopSoundAction(StopSoundActionWith<X>),
+    StopSoundAction(Box<StopSoundActionWith<X>>),
 }
 
 /// [`SoundActionContentWith`] of the tree a read gives, where no node holds anything in
@@ -9258,17 +9258,17 @@ impl Eq for TargetElementWith<()> {}
 #[non_exhaustive]
 pub enum TargetElementContentWith<X: UserData> {
     /// The element `p14:bmkTgt`, a `BmkTgt`.
-    BmkTgt(super::office_powerpoint_2010_main::BmkTgtWith<X>),
+    BmkTgt(Box<super::office_powerpoint_2010_main::BmkTgtWith<X>>),
     /// The element `p:inkTgt`, a `InkTarget`.
-    InkTarget(InkTargetWith<X>),
+    InkTarget(Box<InkTargetWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:spTgt`, a `ShapeTarget`.
-    ShapeTarget(ShapeTargetWith<X>),
+    ShapeTarget(Box<ShapeTargetWith<X>>),
     /// The element `p:sldTgt`, a `SlideTarget`.
-    SlideTarget(SlideTargetWith<X>),
+    SlideTarget(Box<SlideTargetWith<X>>),
     /// The element `p:sndTgt`, a `SoundTarget`.
-    SoundTarget(SoundTargetWith<X>),
+    SoundTarget(Box<SoundTargetWith<X>>),
 }
 
 /// [`TargetElementContentWith`] of the tree a read gives, where no node holds anything in
@@ -9348,11 +9348,11 @@ impl Eq for TextElementWith<()> {}
 #[non_exhaustive]
 pub enum TextElementContentWith<X: UserData> {
     /// The element `p:charRg`, a `CharacterRange`.
-    CharacterRange(CharacterRangeWith<X>),
+    CharacterRange(Box<CharacterRangeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:pRg`, a `ParagraphTextRange`.
-    ParagraphTextRange(ParagraphTextRangeWith<X>),
+    ParagraphTextRange(Box<ParagraphTextRangeWith<X>>),
 }
 
 /// [`TextElementContentWith`] of the tree a read gives, where no node holds anything in
@@ -9458,13 +9458,13 @@ impl Eq for TimeAnimatedValueListWith<()> {}
 #[non_exhaustive]
 pub enum TimeConditionContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:rtn`, a `RuntimeNodeTriggerChoice`.
-    RuntimeNodeTriggerChoice(RuntimeNodeTriggerChoiceWith<X>),
+    RuntimeNodeTriggerChoice(Box<RuntimeNodeTriggerChoiceWith<X>>),
     /// The element `p:tgtEl`, a `TargetElement`.
-    TargetElement(TargetElementWith<X>),
+    TargetElement(Box<TargetElementWith<X>>),
     /// The element `p:tn`, a `TimeNode`.
-    TimeNode(TimeNodeWith<X>),
+    TimeNode(Box<TimeNodeWith<X>>),
 }
 
 /// [`TimeConditionContentWith`] of the tree a read gives, where no node holds anything in
@@ -9637,33 +9637,33 @@ impl Eq for TimeNodeListWith<()> {}
 #[non_exhaustive]
 pub enum TimeNodeListContentWith<X: UserData> {
     /// The element `p:anim`, a `Animate`.
-    Animate(AnimateWith<X>),
+    Animate(Box<AnimateWith<X>>),
     /// The element `p:animClr`, a `AnimateColorBehavior`.
-    AnimateColorBehavior(AnimateColorBehaviorWith<X>),
+    AnimateColorBehavior(Box<AnimateColorBehaviorWith<X>>),
     /// The element `p:animEffect`, a `AnimateEffect`.
-    AnimateEffect(AnimateEffectWith<X>),
+    AnimateEffect(Box<AnimateEffectWith<X>>),
     /// The element `p:animMotion`, a `AnimateMotion`.
-    AnimateMotion(AnimateMotionWith<X>),
+    AnimateMotion(Box<AnimateMotionWith<X>>),
     /// The element `p:animRot`, a `AnimateRotation`.
-    AnimateRotation(AnimateRotationWith<X>),
+    AnimateRotation(Box<AnimateRotationWith<X>>),
     /// The element `p:animScale`, a `AnimateScale`.
-    AnimateScale(AnimateScaleWith<X>),
+    AnimateScale(Box<AnimateScaleWith<X>>),
     /// The element `p:audio`, a `Audio`.
-    Audio(AudioWith<X>),
+    Audio(Box<AudioWith<X>>),
     /// The element `p:cmd`, a `Command`.
-    Command(CommandWith<X>),
+    Command(Box<CommandWith<X>>),
     /// The element `p:excl`, a `Exclusive`.
-    Exclusive(ExclusiveWith<X>),
+    Exclusive(Box<ExclusiveWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p:par`, a `ParallelTimeNode`.
-    ParallelTimeNode(ParallelTimeNodeWith<X>),
+    ParallelTimeNode(Box<ParallelTimeNodeWith<X>>),
     /// The element `p:seq`, a `SequenceTimeNode`.
-    SequenceTimeNode(SequenceTimeNodeWith<X>),
+    SequenceTimeNode(Box<SequenceTimeNodeWith<X>>),
     /// The element `p:set`, a `SetTimeNodeBehavior`.
-    SetTimeNodeBehavior(SetTimeNodeBehaviorWith<X>),
+    SetTimeNodeBehavior(Box<SetTimeNodeBehaviorWith<X>>),
     /// The element `p:video`, a `Video`.
-    Video(VideoWith<X>),
+    Video(Box<VideoWith<X>>),
 }
 
 /// [`TimeNodeListContentWith`] of the tree a read gives, where no node holds anything in
@@ -10558,29 +10558,29 @@ impl<X: UserData> AnimateColorByContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Hsl(node) => AnimateColorByContentWith::Hsl(node.into_user_data()),
+            Self::Hsl(node) => AnimateColorByContentWith::Hsl(Box::new((*node).into_user_data())),
             Self::Other(node) => AnimateColorByContentWith::Other(node),
-            Self::Rgb(node) => AnimateColorByContentWith::Rgb(node.into_user_data()),
+            Self::Rgb(node) => AnimateColorByContentWith::Rgb(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl<X: UserData> Default for AnimateColorByContentWith<X> {
     fn default() -> Self {
-        Self::Hsl(HslWith::default())
+        Self::Hsl(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for AnimateColorByContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "hsl")) => Self::Hsl(item.read()),
-            Some((NS_P, "rgb")) => Self::Rgb(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "hsl")) => Self::Hsl(Box::new(item.read())),
+            Some((NS_P, "rgb")) => Self::Rgb(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -10589,11 +10589,28 @@ impl officekit_markup_base::Write for AnimateColorByContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::Hsl(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Rgb(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<HslWith<X>> for AnimateColorByContentWith<X> {
+    fn from(arm: HslWith<X>) -> Self {
+        Self::Hsl(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RgbWith<X>> for AnimateColorByContentWith<X> {
+    fn from(arm: RgbWith<X>) -> Self {
+        Self::Rgb(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<AnimateColorByContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> AnimateEffectWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -10911,18 +10928,20 @@ impl<X: UserData> AnimationVariantContentWith<X> {
     {
         match self {
             Self::BooleanVariant(node) => {
-                AnimationVariantContentWith::BooleanVariant(node.into_user_data())
+                AnimationVariantContentWith::BooleanVariant(Box::new((*node).into_user_data()))
             }
             Self::ColorValue(node) => {
-                AnimationVariantContentWith::ColorValue(node.into_user_data())
+                AnimationVariantContentWith::ColorValue(Box::new((*node).into_user_data()))
             }
             Self::FloatValue(node) => {
-                AnimationVariantContentWith::FloatValue(node.into_user_data())
+                AnimationVariantContentWith::FloatValue(Box::new((*node).into_user_data()))
             }
-            Self::Integer(node) => AnimationVariantContentWith::Integer(node.into_user_data()),
+            Self::Integer(node) => {
+                AnimationVariantContentWith::Integer(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => AnimationVariantContentWith::Other(node),
             Self::StringValue(node) => {
-                AnimationVariantContentWith::StringValue(node.into_user_data())
+                AnimationVariantContentWith::StringValue(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -10930,23 +10949,23 @@ impl<X: UserData> AnimationVariantContentWith<X> {
 
 impl<X: UserData> Default for AnimationVariantContentWith<X> {
     fn default() -> Self {
-        Self::BooleanVariant(BooleanVariantWith::default())
+        Self::BooleanVariant(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for AnimationVariantContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "boolVal")) => Self::BooleanVariant(item.read()),
-            Some((NS_P, "clrVal")) => Self::ColorValue(item.read()),
-            Some((NS_P, "fltVal")) => Self::FloatValue(item.read()),
-            Some((NS_P, "intVal")) => Self::Integer(item.read()),
-            Some((NS_P, "strVal")) => Self::StringValue(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "boolVal")) => Self::BooleanVariant(Box::new(item.read())),
+            Some((NS_P, "clrVal")) => Self::ColorValue(Box::new(item.read())),
+            Some((NS_P, "fltVal")) => Self::FloatValue(Box::new(item.read())),
+            Some((NS_P, "intVal")) => Self::Integer(Box::new(item.read())),
+            Some((NS_P, "strVal")) => Self::StringValue(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -10958,11 +10977,46 @@ impl officekit_markup_base::Write for AnimationVariantContent {
             Self::ColorValue(arm) => arm.write_into(writer),
             Self::FloatValue(arm) => arm.write_into(writer),
             Self::Integer(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::StringValue(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<BooleanVariantWith<X>> for AnimationVariantContentWith<X> {
+    fn from(arm: BooleanVariantWith<X>) -> Self {
+        Self::BooleanVariant(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ColorValueWith<X>> for AnimationVariantContentWith<X> {
+    fn from(arm: ColorValueWith<X>) -> Self {
+        Self::ColorValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FloatValueWith<X>> for AnimationVariantContentWith<X> {
+    fn from(arm: FloatValueWith<X>) -> Self {
+        Self::FloatValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<IntegerWith<X>> for AnimationVariantContentWith<X> {
+    fn from(arm: IntegerWith<X>) -> Self {
+        Self::Integer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<StringValueWith<X>> for AnimationVariantContentWith<X> {
+    fn from(arm: StringValueWith<X>) -> Self {
+        Self::StringValue(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<AnimationVariantContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> AttributeNameWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -11975,9 +12029,11 @@ impl<X: UserData> BuildGraphicsContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BuildAsOne(node) => BuildGraphicsContentWith::BuildAsOne(node.into_user_data()),
+            Self::BuildAsOne(node) => {
+                BuildGraphicsContentWith::BuildAsOne(Box::new((*node).into_user_data()))
+            }
             Self::BuildSubElements(node) => {
-                BuildGraphicsContentWith::BuildSubElements(node.into_user_data())
+                BuildGraphicsContentWith::BuildSubElements(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => BuildGraphicsContentWith::Other(node),
         }
@@ -11986,20 +12042,20 @@ impl<X: UserData> BuildGraphicsContentWith<X> {
 
 impl<X: UserData> Default for BuildGraphicsContentWith<X> {
     fn default() -> Self {
-        Self::BuildAsOne(BuildAsOneWith::default())
+        Self::BuildAsOne(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for BuildGraphicsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "bldAsOne")) => Self::BuildAsOne(item.read()),
-            Some((NS_P, "bldSub")) => Self::BuildSubElements(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "bldAsOne")) => Self::BuildAsOne(Box::new(item.read())),
+            Some((NS_P, "bldSub")) => Self::BuildSubElements(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -12009,10 +12065,27 @@ impl officekit_markup_base::Write for BuildGraphicsContent {
         match self {
             Self::BuildAsOne(arm) => arm.write_into(writer),
             Self::BuildSubElements(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<BuildAsOneWith<X>> for BuildGraphicsContentWith<X> {
+    fn from(arm: BuildAsOneWith<X>) -> Self {
+        Self::BuildAsOne(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BuildSubElementsWith<X>> for BuildGraphicsContentWith<X> {
+    fn from(arm: BuildSubElementsWith<X>) -> Self {
+        Self::BuildSubElements(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BuildGraphicsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> BuildListWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -12071,13 +12144,17 @@ impl<X: UserData> BuildListContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BuildDiagram(node) => BuildListContentWith::BuildDiagram(node.into_user_data()),
-            Self::BuildEmbeddedChart(node) => {
-                BuildListContentWith::BuildEmbeddedChart(node.into_user_data())
+            Self::BuildDiagram(node) => {
+                BuildListContentWith::BuildDiagram(Box::new((*node).into_user_data()))
             }
-            Self::BuildGraphics(node) => BuildListContentWith::BuildGraphics(node.into_user_data()),
+            Self::BuildEmbeddedChart(node) => {
+                BuildListContentWith::BuildEmbeddedChart(Box::new((*node).into_user_data()))
+            }
+            Self::BuildGraphics(node) => {
+                BuildListContentWith::BuildGraphics(Box::new((*node).into_user_data()))
+            }
             Self::BuildParagraph(node) => {
-                BuildListContentWith::BuildParagraph(node.into_user_data())
+                BuildListContentWith::BuildParagraph(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => BuildListContentWith::Other(node),
         }
@@ -12086,16 +12163,16 @@ impl<X: UserData> BuildListContentWith<X> {
 
 impl officekit_markup_base::Read for BuildListContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "bldDgm")) => Self::BuildDiagram(item.read()),
-            Some((NS_P, "bldOleChart")) => Self::BuildEmbeddedChart(item.read()),
-            Some((NS_P, "bldGraphic")) => Self::BuildGraphics(item.read()),
-            Some((NS_P, "bldP")) => Self::BuildParagraph(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "bldDgm")) => Self::BuildDiagram(Box::new(item.read())),
+            Some((NS_P, "bldOleChart")) => Self::BuildEmbeddedChart(Box::new(item.read())),
+            Some((NS_P, "bldGraphic")) => Self::BuildGraphics(Box::new(item.read())),
+            Some((NS_P, "bldP")) => Self::BuildParagraph(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -12107,10 +12184,39 @@ impl officekit_markup_base::Write for BuildListContent {
             Self::BuildEmbeddedChart(arm) => arm.write_into(writer),
             Self::BuildGraphics(arm) => arm.write_into(writer),
             Self::BuildParagraph(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<BuildDiagramWith<X>> for BuildListContentWith<X> {
+    fn from(arm: BuildDiagramWith<X>) -> Self {
+        Self::BuildDiagram(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BuildEmbeddedChartWith<X>> for BuildListContentWith<X> {
+    fn from(arm: BuildEmbeddedChartWith<X>) -> Self {
+        Self::BuildEmbeddedChart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BuildGraphicsWith<X>> for BuildListContentWith<X> {
+    fn from(arm: BuildGraphicsWith<X>) -> Self {
+        Self::BuildGraphics(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BuildParagraphWith<X>> for BuildListContentWith<X> {
+    fn from(arm: BuildParagraphWith<X>) -> Self {
+        Self::BuildParagraph(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BuildListContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> BuildParagraphWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -14810,10 +14916,12 @@ impl<X: UserData> EmbeddedObjectContentWith<X> {
     {
         match self {
             Self::EmbeddedObjectOrControl(node) => {
-                EmbeddedObjectContentWith::EmbeddedObjectOrControl(node.into_user_data())
+                EmbeddedObjectContentWith::EmbeddedObjectOrControl(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::LinkedObjectOrControl(node) => {
-                EmbeddedObjectContentWith::LinkedObjectOrControl(node.into_user_data())
+                EmbeddedObjectContentWith::LinkedObjectOrControl(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => EmbeddedObjectContentWith::Other(node),
         }
@@ -14822,20 +14930,20 @@ impl<X: UserData> EmbeddedObjectContentWith<X> {
 
 impl<X: UserData> Default for EmbeddedObjectContentWith<X> {
     fn default() -> Self {
-        Self::EmbeddedObjectOrControl(EmbeddedObjectOrControlWith::default())
+        Self::EmbeddedObjectOrControl(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for EmbeddedObjectContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "embed")) => Self::EmbeddedObjectOrControl(item.read()),
-            Some((NS_P, "link")) => Self::LinkedObjectOrControl(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "embed")) => Self::EmbeddedObjectOrControl(Box::new(item.read())),
+            Some((NS_P, "link")) => Self::LinkedObjectOrControl(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -14845,10 +14953,27 @@ impl officekit_markup_base::Write for EmbeddedObjectContent {
         match self {
             Self::EmbeddedObjectOrControl(arm) => arm.write_into(writer),
             Self::LinkedObjectOrControl(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<EmbeddedObjectOrControlWith<X>> for EmbeddedObjectContentWith<X> {
+    fn from(arm: EmbeddedObjectOrControlWith<X>) -> Self {
+        Self::EmbeddedObjectOrControl(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LinkedObjectOrControlWith<X>> for EmbeddedObjectContentWith<X> {
+    fn from(arm: LinkedObjectOrControlWith<X>) -> Self {
+        Self::LinkedObjectOrControl(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<EmbeddedObjectContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> EmbeddedObjectOrControlWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -15713,32 +15838,40 @@ impl<X: UserData> GroupShapeContentWith<X> {
     {
         match self {
             Self::ConnectionShape(node) => {
-                GroupShapeContentWith::ConnectionShape(node.into_user_data())
+                GroupShapeContentWith::ConnectionShape(Box::new((*node).into_user_data()))
             }
-            Self::ContentPart(node) => GroupShapeContentWith::ContentPart(node.into_user_data()),
-            Self::GraphicFrame(node) => GroupShapeContentWith::GraphicFrame(node.into_user_data()),
-            Self::GroupShape(node) => GroupShapeContentWith::GroupShape(node.into_user_data()),
+            Self::ContentPart(node) => {
+                GroupShapeContentWith::ContentPart(Box::new((*node).into_user_data()))
+            }
+            Self::GraphicFrame(node) => {
+                GroupShapeContentWith::GraphicFrame(Box::new((*node).into_user_data()))
+            }
+            Self::GroupShape(node) => {
+                GroupShapeContentWith::GroupShape(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => GroupShapeContentWith::Other(node),
-            Self::Picture(node) => GroupShapeContentWith::Picture(node.into_user_data()),
-            Self::Shape(node) => GroupShapeContentWith::Shape(node.into_user_data()),
+            Self::Picture(node) => {
+                GroupShapeContentWith::Picture(Box::new((*node).into_user_data()))
+            }
+            Self::Shape(node) => GroupShapeContentWith::Shape(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for GroupShapeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "cxnSp")) => Self::ConnectionShape(item.read()),
-            Some((NS_P, "contentPart")) => Self::ContentPart(item.read()),
-            Some((NS_P, "graphicFrame")) => Self::GraphicFrame(item.read()),
-            Some((NS_P, "grpSp")) => Self::GroupShape(item.read()),
-            Some((NS_P, "pic")) => Self::Picture(item.read()),
-            Some((NS_P, "sp")) => Self::Shape(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "cxnSp")) => Self::ConnectionShape(Box::new(item.read())),
+            Some((NS_P, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_P, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
+            Some((NS_P, "grpSp")) => Self::GroupShape(Box::new(item.read())),
+            Some((NS_P, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_P, "sp")) => Self::Shape(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -15750,12 +15883,53 @@ impl officekit_markup_base::Write for GroupShapeContent {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicFrame(arm) => arm.write_into(writer),
             Self::GroupShape(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Shape(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ConnectionShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ConnectionShapeWith<X>) -> Self {
+        Self::ConnectionShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ContentPartWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GraphicFrameWith<X>) -> Self {
+        Self::GraphicFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GroupShapeWith<X>) -> Self {
+        Self::GroupShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PictureWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ShapeWith<X>) -> Self {
+        Self::Shape(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupShapeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GroupShapePropertiesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -16520,28 +16694,32 @@ impl<X: UserData> IterateContentWith<X> {
     {
         match self {
             Self::Other(node) => IterateContentWith::Other(node),
-            Self::TimeAbsolute(node) => IterateContentWith::TimeAbsolute(node.into_user_data()),
-            Self::TimePercentage(node) => IterateContentWith::TimePercentage(node.into_user_data()),
+            Self::TimeAbsolute(node) => {
+                IterateContentWith::TimeAbsolute(Box::new((*node).into_user_data()))
+            }
+            Self::TimePercentage(node) => {
+                IterateContentWith::TimePercentage(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for IterateContentWith<X> {
     fn default() -> Self {
-        Self::TimeAbsolute(TimeAbsoluteWith::default())
+        Self::TimeAbsolute(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for IterateContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "tmAbs")) => Self::TimeAbsolute(item.read()),
-            Some((NS_P, "tmPct")) => Self::TimePercentage(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "tmAbs")) => Self::TimeAbsolute(Box::new(item.read())),
+            Some((NS_P, "tmPct")) => Self::TimePercentage(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -16549,12 +16727,29 @@ impl officekit_markup_base::Read for IterateContent {
 impl officekit_markup_base::Write for IterateContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TimeAbsolute(arm) => arm.write_into(writer),
             Self::TimePercentage(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<TimeAbsoluteWith<X>> for IterateContentWith<X> {
+    fn from(arm: TimeAbsoluteWith<X>) -> Self {
+        Self::TimeAbsolute(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TimePercentageWith<X>> for IterateContentWith<X> {
+    fn from(arm: TimePercentageWith<X>) -> Self {
+        Self::TimePercentage(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<IterateContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for IterateType {
     fn as_ref(&self) -> &str {
@@ -18006,20 +18201,20 @@ impl<X: UserData> NonVisualPropertiesContentWith<X> {
     {
         match self {
             Self::AudioFromCD(node) => {
-                NonVisualPropertiesContentWith::AudioFromCD(node.into_user_data())
+                NonVisualPropertiesContentWith::AudioFromCD(Box::new((*node).into_user_data()))
             }
             Self::AudioFromFile(node) => {
-                NonVisualPropertiesContentWith::AudioFromFile(node.into_user_data())
+                NonVisualPropertiesContentWith::AudioFromFile(Box::new((*node).into_user_data()))
             }
             Self::AudioFromWAVFile(node) => {
-                NonVisualPropertiesContentWith::AudioFromWAVFile(node.into_user_data())
+                NonVisualPropertiesContentWith::AudioFromWAVFile(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => NonVisualPropertiesContentWith::Other(node),
-            Self::QuickTimeFromFile(node) => {
-                NonVisualPropertiesContentWith::QuickTimeFromFile(node.into_user_data())
-            }
+            Self::QuickTimeFromFile(node) => NonVisualPropertiesContentWith::QuickTimeFromFile(
+                Box::new((*node).into_user_data()),
+            ),
             Self::VideoFromFile(node) => {
-                NonVisualPropertiesContentWith::VideoFromFile(node.into_user_data())
+                NonVisualPropertiesContentWith::VideoFromFile(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -18027,17 +18222,17 @@ impl<X: UserData> NonVisualPropertiesContentWith<X> {
 
 impl officekit_markup_base::Read for NonVisualPropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "audioCd")) => Self::AudioFromCD(item.read()),
-            Some((NS_A, "audioFile")) => Self::AudioFromFile(item.read()),
-            Some((NS_A, "wavAudioFile")) => Self::AudioFromWAVFile(item.read()),
-            Some((NS_A, "quickTimeFile")) => Self::QuickTimeFromFile(item.read()),
-            Some((NS_A, "videoFile")) => Self::VideoFromFile(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "audioCd")) => Self::AudioFromCD(Box::new(item.read())),
+            Some((NS_A, "audioFile")) => Self::AudioFromFile(Box::new(item.read())),
+            Some((NS_A, "wavAudioFile")) => Self::AudioFromWAVFile(Box::new(item.read())),
+            Some((NS_A, "quickTimeFile")) => Self::QuickTimeFromFile(Box::new(item.read())),
+            Some((NS_A, "videoFile")) => Self::VideoFromFile(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -18048,12 +18243,51 @@ impl officekit_markup_base::Write for NonVisualPropertiesContent {
             Self::AudioFromCD(arm) => arm.write_into(writer),
             Self::AudioFromFile(arm) => arm.write_into(writer),
             Self::AudioFromWAVFile(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::QuickTimeFromFile(arm) => arm.write_into(writer),
             Self::VideoFromFile(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<super::drawing::AudioFromCDWith<X>> for NonVisualPropertiesContentWith<X> {
+    fn from(arm: super::drawing::AudioFromCDWith<X>) -> Self {
+        Self::AudioFromCD(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::drawing::AudioFromFileWith<X>> for NonVisualPropertiesContentWith<X> {
+    fn from(arm: super::drawing::AudioFromFileWith<X>) -> Self {
+        Self::AudioFromFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::drawing::AudioFromWAVFileWith<X>>
+    for NonVisualPropertiesContentWith<X>
+{
+    fn from(arm: super::drawing::AudioFromWAVFileWith<X>) -> Self {
+        Self::AudioFromWAVFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::drawing::QuickTimeFromFileWith<X>>
+    for NonVisualPropertiesContentWith<X>
+{
+    fn from(arm: super::drawing::QuickTimeFromFileWith<X>) -> Self {
+        Self::QuickTimeFromFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::drawing::VideoFromFileWith<X>> for NonVisualPropertiesContentWith<X> {
+    fn from(arm: super::drawing::VideoFromFileWith<X>) -> Self {
+        Self::VideoFromFile(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<NonVisualPropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> NonVisualPropertiesForAConnectionShapeWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -21645,33 +21879,39 @@ impl<X: UserData> ShapeTargetContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Background(node) => ShapeTargetContentWith::Background(node.into_user_data()),
+            Self::Background(node) => {
+                ShapeTargetContentWith::Background(Box::new((*node).into_user_data()))
+            }
             Self::EmbeddedChartElement(node) => {
-                ShapeTargetContentWith::EmbeddedChartElement(node.into_user_data())
+                ShapeTargetContentWith::EmbeddedChartElement(Box::new((*node).into_user_data()))
             }
             Self::GraphicElement(node) => {
-                ShapeTargetContentWith::GraphicElement(node.into_user_data())
+                ShapeTargetContentWith::GraphicElement(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ShapeTargetContentWith::Other(node),
-            Self::Subshape(node) => ShapeTargetContentWith::Subshape(node.into_user_data()),
-            Self::TextElement(node) => ShapeTargetContentWith::TextElement(node.into_user_data()),
+            Self::Subshape(node) => {
+                ShapeTargetContentWith::Subshape(Box::new((*node).into_user_data()))
+            }
+            Self::TextElement(node) => {
+                ShapeTargetContentWith::TextElement(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for ShapeTargetContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "bg")) => Self::Background(item.read()),
-            Some((NS_P, "oleChartEl")) => Self::EmbeddedChartElement(item.read()),
-            Some((NS_P, "graphicEl")) => Self::GraphicElement(item.read()),
-            Some((NS_P, "subSp")) => Self::Subshape(item.read()),
-            Some((NS_P, "txEl")) => Self::TextElement(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "bg")) => Self::Background(Box::new(item.read())),
+            Some((NS_P, "oleChartEl")) => Self::EmbeddedChartElement(Box::new(item.read())),
+            Some((NS_P, "graphicEl")) => Self::GraphicElement(Box::new(item.read())),
+            Some((NS_P, "subSp")) => Self::Subshape(Box::new(item.read())),
+            Some((NS_P, "txEl")) => Self::TextElement(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -21682,12 +21922,47 @@ impl officekit_markup_base::Write for ShapeTargetContent {
             Self::Background(arm) => arm.write_into(writer),
             Self::EmbeddedChartElement(arm) => arm.write_into(writer),
             Self::GraphicElement(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Subshape(arm) => arm.write_into(writer),
             Self::TextElement(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<BackgroundWith<X>> for ShapeTargetContentWith<X> {
+    fn from(arm: BackgroundWith<X>) -> Self {
+        Self::Background(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EmbeddedChartElementWith<X>> for ShapeTargetContentWith<X> {
+    fn from(arm: EmbeddedChartElementWith<X>) -> Self {
+        Self::EmbeddedChartElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicElementWith<X>> for ShapeTargetContentWith<X> {
+    fn from(arm: GraphicElementWith<X>) -> Self {
+        Self::GraphicElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SubshapeWith<X>> for ShapeTargetContentWith<X> {
+    fn from(arm: SubshapeWith<X>) -> Self {
+        Self::Subshape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextElementWith<X>> for ShapeTargetContentWith<X> {
+    fn from(arm: TextElementWith<X>) -> Self {
+        Self::TextElement(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeTargetContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShapeTextBodyWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -21816,14 +22091,14 @@ impl<X: UserData> ShowTypeContentWith<X> {
     {
         match self {
             Self::BrowseSlideShowMode(node) => {
-                ShowTypeContentWith::BrowseSlideShowMode(node.into_user_data())
+                ShowTypeContentWith::BrowseSlideShowMode(Box::new((*node).into_user_data()))
             }
             Self::KioskSlideShowMode(node) => {
-                ShowTypeContentWith::KioskSlideShowMode(node.into_user_data())
+                ShowTypeContentWith::KioskSlideShowMode(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ShowTypeContentWith::Other(node),
             Self::PresenterSlideShowMode(node) => {
-                ShowTypeContentWith::PresenterSlideShowMode(node.into_user_data())
+                ShowTypeContentWith::PresenterSlideShowMode(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -21831,15 +22106,15 @@ impl<X: UserData> ShowTypeContentWith<X> {
 
 impl officekit_markup_base::Read for ShowTypeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "browse")) => Self::BrowseSlideShowMode(item.read()),
-            Some((NS_P, "kiosk")) => Self::KioskSlideShowMode(item.read()),
-            Some((NS_P, "present")) => Self::PresenterSlideShowMode(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "browse")) => Self::BrowseSlideShowMode(Box::new(item.read())),
+            Some((NS_P, "kiosk")) => Self::KioskSlideShowMode(Box::new(item.read())),
+            Some((NS_P, "present")) => Self::PresenterSlideShowMode(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -21849,11 +22124,34 @@ impl officekit_markup_base::Write for ShowTypeContent {
         match self {
             Self::BrowseSlideShowMode(arm) => arm.write_into(writer),
             Self::KioskSlideShowMode(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PresenterSlideShowMode(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<BrowseSlideShowModeWith<X>> for ShowTypeContentWith<X> {
+    fn from(arm: BrowseSlideShowModeWith<X>) -> Self {
+        Self::BrowseSlideShowMode(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<KioskSlideShowModeWith<X>> for ShowTypeContentWith<X> {
+    fn from(arm: KioskSlideShowModeWith<X>) -> Self {
+        Self::KioskSlideShowMode(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PresenterSlideShowModeWith<X>> for ShowTypeContentWith<X> {
+    fn from(arm: PresenterSlideShowModeWith<X>) -> Self {
+        Self::PresenterSlideShowMode(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShowTypeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SlideBackgroundWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -21917,10 +22215,12 @@ impl<X: UserData> SlideBackgroundContentWith<X> {
     {
         match self {
             Self::BackgroundProperties(node) => {
-                SlideBackgroundContentWith::BackgroundProperties(node.into_user_data())
+                SlideBackgroundContentWith::BackgroundProperties(Box::new((*node).into_user_data()))
             }
             Self::BackgroundStyleReference(node) => {
-                SlideBackgroundContentWith::BackgroundStyleReference(node.into_user_data())
+                SlideBackgroundContentWith::BackgroundStyleReference(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => SlideBackgroundContentWith::Other(node),
         }
@@ -21929,20 +22229,20 @@ impl<X: UserData> SlideBackgroundContentWith<X> {
 
 impl<X: UserData> Default for SlideBackgroundContentWith<X> {
     fn default() -> Self {
-        Self::BackgroundProperties(BackgroundPropertiesWith::default())
+        Self::BackgroundProperties(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for SlideBackgroundContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "bgPr")) => Self::BackgroundProperties(item.read()),
-            Some((NS_P, "bgRef")) => Self::BackgroundStyleReference(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "bgPr")) => Self::BackgroundProperties(Box::new(item.read())),
+            Some((NS_P, "bgRef")) => Self::BackgroundStyleReference(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -21952,10 +22252,27 @@ impl officekit_markup_base::Write for SlideBackgroundContent {
         match self {
             Self::BackgroundProperties(arm) => arm.write_into(writer),
             Self::BackgroundStyleReference(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<BackgroundPropertiesWith<X>> for SlideBackgroundContentWith<X> {
+    fn from(arm: BackgroundPropertiesWith<X>) -> Self {
+        Self::BackgroundProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BackgroundStyleReferenceWith<X>> for SlideBackgroundContentWith<X> {
+    fn from(arm: BackgroundStyleReferenceWith<X>) -> Self {
+        Self::BackgroundStyleReference(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SlideBackgroundContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SlideIDWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -22296,31 +22613,37 @@ impl<X: UserData> SlideListContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::AllSlides(node) => SlideListContentWith::AllSlides(node.into_user_data()),
-            Self::CustomShow(node) => SlideListContentWith::CustomShow(node.into_user_data()),
+            Self::AllSlides(node) => {
+                SlideListContentWith::AllSlides(Box::new((*node).into_user_data()))
+            }
+            Self::CustomShow(node) => {
+                SlideListContentWith::CustomShow(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => SlideListContentWith::Other(node),
-            Self::SlideRange(node) => SlideListContentWith::SlideRange(node.into_user_data()),
+            Self::SlideRange(node) => {
+                SlideListContentWith::SlideRange(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for SlideListContentWith<X> {
     fn default() -> Self {
-        Self::AllSlides(AllSlidesWith::default())
+        Self::AllSlides(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for SlideListContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "sldAll")) => Self::AllSlides(item.read()),
-            Some((NS_P, "custShow")) => Self::CustomShow(item.read()),
-            Some((NS_P, "sldRg")) => Self::SlideRange(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "sldAll")) => Self::AllSlides(Box::new(item.read())),
+            Some((NS_P, "custShow")) => Self::CustomShow(Box::new(item.read())),
+            Some((NS_P, "sldRg")) => Self::SlideRange(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -22330,11 +22653,34 @@ impl officekit_markup_base::Write for SlideListContent {
         match self {
             Self::AllSlides(arm) => arm.write_into(writer),
             Self::CustomShow(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SlideRange(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AllSlidesWith<X>> for SlideListContentWith<X> {
+    fn from(arm: AllSlidesWith<X>) -> Self {
+        Self::AllSlides(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CustomShowWith<X>> for SlideListContentWith<X> {
+    fn from(arm: CustomShowWith<X>) -> Self {
+        Self::CustomShow(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SlideRangeWith<X>> for SlideListContentWith<X> {
+    fn from(arm: SlideRangeWith<X>) -> Self {
+        Self::SlideRange(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SlideListContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SlideMasterWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -23162,6 +23508,8 @@ impl<X: UserData> SlideTransitionContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, SlideTransitionContentWith;
             plain [
+            ]
+            boxed [
                 BlindsSlideTransition, CheckerSlideTransition, CircleSlideTransition,
                 CombSlideTransition, Conveyor, CoverSlideTransition, CutSlideTransition,
                 DiamondSlideTransition, DissolveSlideTransition, Doors, FadeSlideTransition, Ferris,
@@ -23172,61 +23520,59 @@ impl<X: UserData> SlideTransitionContentWith<X> {
                 WedgeSlideTransition, WheelReverse, WheelSlideTransition, Window,
                 WipeSlideTransition, ZoomSlideTransition,
             ]
-            boxed [
-            ]
         )
     }
 }
 
 impl officekit_markup_base::Read for SlideTransitionContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "blinds")) => Self::BlindsSlideTransition(item.read()),
-            Some((NS_P, "checker")) => Self::CheckerSlideTransition(item.read()),
-            Some((NS_P, "circle")) => Self::CircleSlideTransition(item.read()),
-            Some((NS_P, "comb")) => Self::CombSlideTransition(item.read()),
-            Some((NS_P14, "conveyor")) => Self::Conveyor(item.read()),
-            Some((NS_P, "cover")) => Self::CoverSlideTransition(item.read()),
-            Some((NS_P, "cut")) => Self::CutSlideTransition(item.read()),
-            Some((NS_P, "diamond")) => Self::DiamondSlideTransition(item.read()),
-            Some((NS_P, "dissolve")) => Self::DissolveSlideTransition(item.read()),
-            Some((NS_P14, "doors")) => Self::Doors(item.read()),
-            Some((NS_P, "fade")) => Self::FadeSlideTransition(item.read()),
-            Some((NS_P14, "ferris")) => Self::Ferris(item.read()),
-            Some((NS_P14, "flash")) => Self::Flash(item.read()),
-            Some((NS_P14, "flip")) => Self::Flip(item.read()),
-            Some((NS_P14, "flythrough")) => Self::Flythrough(item.read()),
-            Some((NS_P14, "gallery")) => Self::Gallery(item.read()),
-            Some((NS_P14, "glitter")) => Self::Glitter(item.read()),
-            Some((NS_P14, "honeycomb")) => Self::Honeycomb(item.read()),
-            Some((NS_P, "newsflash")) => Self::NewsflashSlideTransition(item.read()),
-            Some((NS_P14, "pan")) => Self::Pan(item.read()),
-            Some((NS_P, "plus")) => Self::PlusSlideTransition(item.read()),
-            Some((NS_P14, "prism")) => Self::Prism(item.read()),
-            Some((NS_P15, "prstTrans")) => Self::PrstTrans(item.read()),
-            Some((NS_P, "pull")) => Self::PullSlideTransition(item.read()),
-            Some((NS_P, "push")) => Self::PushSlideTransition(item.read()),
-            Some((NS_P, "randomBar")) => Self::RandomBarSlideTransition(item.read()),
-            Some((NS_P, "random")) => Self::RandomSlideTransition(item.read()),
-            Some((NS_P14, "reveal")) => Self::Reveal(item.read()),
-            Some((NS_P14, "ripple")) => Self::Ripple(item.read()),
-            Some((NS_P14, "shred")) => Self::Shred(item.read()),
-            Some((NS_P, "split")) => Self::SplitSlideTransition(item.read()),
-            Some((NS_P, "strips")) => Self::StripsSlideTransition(item.read()),
-            Some((NS_P14, "switch")) => Self::Switch(item.read()),
-            Some((NS_P14, "vortex")) => Self::Vortex(item.read()),
-            Some((NS_P14, "warp")) => Self::Warp(item.read()),
-            Some((NS_P, "wedge")) => Self::WedgeSlideTransition(item.read()),
-            Some((NS_P14, "wheelReverse")) => Self::WheelReverse(item.read()),
-            Some((NS_P, "wheel")) => Self::WheelSlideTransition(item.read()),
-            Some((NS_P14, "window")) => Self::Window(item.read()),
-            Some((NS_P, "wipe")) => Self::WipeSlideTransition(item.read()),
-            Some((NS_P, "zoom")) => Self::ZoomSlideTransition(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "blinds")) => Self::BlindsSlideTransition(Box::new(item.read())),
+            Some((NS_P, "checker")) => Self::CheckerSlideTransition(Box::new(item.read())),
+            Some((NS_P, "circle")) => Self::CircleSlideTransition(Box::new(item.read())),
+            Some((NS_P, "comb")) => Self::CombSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "conveyor")) => Self::Conveyor(Box::new(item.read())),
+            Some((NS_P, "cover")) => Self::CoverSlideTransition(Box::new(item.read())),
+            Some((NS_P, "cut")) => Self::CutSlideTransition(Box::new(item.read())),
+            Some((NS_P, "diamond")) => Self::DiamondSlideTransition(Box::new(item.read())),
+            Some((NS_P, "dissolve")) => Self::DissolveSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "doors")) => Self::Doors(Box::new(item.read())),
+            Some((NS_P, "fade")) => Self::FadeSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "ferris")) => Self::Ferris(Box::new(item.read())),
+            Some((NS_P14, "flash")) => Self::Flash(Box::new(item.read())),
+            Some((NS_P14, "flip")) => Self::Flip(Box::new(item.read())),
+            Some((NS_P14, "flythrough")) => Self::Flythrough(Box::new(item.read())),
+            Some((NS_P14, "gallery")) => Self::Gallery(Box::new(item.read())),
+            Some((NS_P14, "glitter")) => Self::Glitter(Box::new(item.read())),
+            Some((NS_P14, "honeycomb")) => Self::Honeycomb(Box::new(item.read())),
+            Some((NS_P, "newsflash")) => Self::NewsflashSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "pan")) => Self::Pan(Box::new(item.read())),
+            Some((NS_P, "plus")) => Self::PlusSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "prism")) => Self::Prism(Box::new(item.read())),
+            Some((NS_P15, "prstTrans")) => Self::PrstTrans(Box::new(item.read())),
+            Some((NS_P, "pull")) => Self::PullSlideTransition(Box::new(item.read())),
+            Some((NS_P, "push")) => Self::PushSlideTransition(Box::new(item.read())),
+            Some((NS_P, "randomBar")) => Self::RandomBarSlideTransition(Box::new(item.read())),
+            Some((NS_P, "random")) => Self::RandomSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "reveal")) => Self::Reveal(Box::new(item.read())),
+            Some((NS_P14, "ripple")) => Self::Ripple(Box::new(item.read())),
+            Some((NS_P14, "shred")) => Self::Shred(Box::new(item.read())),
+            Some((NS_P, "split")) => Self::SplitSlideTransition(Box::new(item.read())),
+            Some((NS_P, "strips")) => Self::StripsSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "switch")) => Self::Switch(Box::new(item.read())),
+            Some((NS_P14, "vortex")) => Self::Vortex(Box::new(item.read())),
+            Some((NS_P14, "warp")) => Self::Warp(Box::new(item.read())),
+            Some((NS_P, "wedge")) => Self::WedgeSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "wheelReverse")) => Self::WheelReverse(Box::new(item.read())),
+            Some((NS_P, "wheel")) => Self::WheelSlideTransition(Box::new(item.read())),
+            Some((NS_P14, "window")) => Self::Window(Box::new(item.read())),
+            Some((NS_P, "wipe")) => Self::WipeSlideTransition(Box::new(item.read())),
+            Some((NS_P, "zoom")) => Self::ZoomSlideTransition(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -23253,7 +23599,7 @@ impl officekit_markup_base::Write for SlideTransitionContent {
             Self::Glitter(arm) => arm.write_into(writer),
             Self::Honeycomb(arm) => arm.write_into(writer),
             Self::NewsflashSlideTransition(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Pan(arm) => arm.write_into(writer),
             Self::PlusSlideTransition(arm) => arm.write_into(writer),
             Self::Prism(arm) => arm.write_into(writer),
@@ -23279,6 +23625,297 @@ impl officekit_markup_base::Write for SlideTransitionContent {
         }
     }
 }
+
+impl<X: UserData> From<BlindsSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: BlindsSlideTransitionWith<X>) -> Self {
+        Self::BlindsSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckerSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: CheckerSlideTransitionWith<X>) -> Self {
+        Self::CheckerSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CircleSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: CircleSlideTransitionWith<X>) -> Self {
+        Self::CircleSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CombSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: CombSlideTransitionWith<X>) -> Self {
+        Self::CombSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::ConveyorWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::ConveyorWith<X>) -> Self {
+        Self::Conveyor(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CoverSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: CoverSlideTransitionWith<X>) -> Self {
+        Self::CoverSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CutSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: CutSlideTransitionWith<X>) -> Self {
+        Self::CutSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DiamondSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: DiamondSlideTransitionWith<X>) -> Self {
+        Self::DiamondSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DissolveSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: DissolveSlideTransitionWith<X>) -> Self {
+        Self::DissolveSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::DoorsWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::DoorsWith<X>) -> Self {
+        Self::Doors(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FadeSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: FadeSlideTransitionWith<X>) -> Self {
+        Self::FadeSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::FerrisWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::FerrisWith<X>) -> Self {
+        Self::Ferris(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::FlashWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::FlashWith<X>) -> Self {
+        Self::Flash(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::FlipWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::FlipWith<X>) -> Self {
+        Self::Flip(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::FlythroughWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::FlythroughWith<X>) -> Self {
+        Self::Flythrough(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::GalleryWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::GalleryWith<X>) -> Self {
+        Self::Gallery(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::GlitterWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::GlitterWith<X>) -> Self {
+        Self::Glitter(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::HoneycombWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::HoneycombWith<X>) -> Self {
+        Self::Honeycomb(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NewsflashSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: NewsflashSlideTransitionWith<X>) -> Self {
+        Self::NewsflashSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::PanWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::PanWith<X>) -> Self {
+        Self::Pan(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PlusSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: PlusSlideTransitionWith<X>) -> Self {
+        Self::PlusSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::PrismWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::PrismWith<X>) -> Self {
+        Self::Prism(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2012_main::PrstTransWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2012_main::PrstTransWith<X>) -> Self {
+        Self::PrstTrans(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PullSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: PullSlideTransitionWith<X>) -> Self {
+        Self::PullSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PushSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: PushSlideTransitionWith<X>) -> Self {
+        Self::PushSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RandomBarSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: RandomBarSlideTransitionWith<X>) -> Self {
+        Self::RandomBarSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RandomSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: RandomSlideTransitionWith<X>) -> Self {
+        Self::RandomSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::RevealWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::RevealWith<X>) -> Self {
+        Self::Reveal(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::RippleWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::RippleWith<X>) -> Self {
+        Self::Ripple(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::ShredWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::ShredWith<X>) -> Self {
+        Self::Shred(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SplitSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: SplitSlideTransitionWith<X>) -> Self {
+        Self::SplitSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<StripsSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: StripsSlideTransitionWith<X>) -> Self {
+        Self::StripsSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::SwitchWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::SwitchWith<X>) -> Self {
+        Self::Switch(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::VortexWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::VortexWith<X>) -> Self {
+        Self::Vortex(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::WarpWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::WarpWith<X>) -> Self {
+        Self::Warp(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WedgeSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: WedgeSlideTransitionWith<X>) -> Self {
+        Self::WedgeSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::WheelReverseWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::WheelReverseWith<X>) -> Self {
+        Self::WheelReverse(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WheelSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: WheelSlideTransitionWith<X>) -> Self {
+        Self::WheelSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::WindowWith<X>>
+    for SlideTransitionContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::WindowWith<X>) -> Self {
+        Self::Window(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WipeSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: WipeSlideTransitionWith<X>) -> Self {
+        Self::WipeSlideTransition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ZoomSlideTransitionWith<X>> for SlideTransitionContentWith<X> {
+    fn from(arm: ZoomSlideTransitionWith<X>) -> Self {
+        Self::ZoomSlideTransition(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SlideTransitionContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SlideTransitionForASlideLayoutWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -23559,10 +24196,10 @@ impl<X: UserData> SoundActionContentWith<X> {
         match self {
             Self::Other(node) => SoundActionContentWith::Other(node),
             Self::StartSoundAction(node) => {
-                SoundActionContentWith::StartSoundAction(node.into_user_data())
+                SoundActionContentWith::StartSoundAction(Box::new((*node).into_user_data()))
             }
             Self::StopSoundAction(node) => {
-                SoundActionContentWith::StopSoundAction(node.into_user_data())
+                SoundActionContentWith::StopSoundAction(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -23570,20 +24207,20 @@ impl<X: UserData> SoundActionContentWith<X> {
 
 impl<X: UserData> Default for SoundActionContentWith<X> {
     fn default() -> Self {
-        Self::StartSoundAction(StartSoundActionWith::default())
+        Self::StartSoundAction(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for SoundActionContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "stSnd")) => Self::StartSoundAction(item.read()),
-            Some((NS_P, "endSnd")) => Self::StopSoundAction(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "stSnd")) => Self::StartSoundAction(Box::new(item.read())),
+            Some((NS_P, "endSnd")) => Self::StopSoundAction(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -23591,12 +24228,29 @@ impl officekit_markup_base::Read for SoundActionContent {
 impl officekit_markup_base::Write for SoundActionContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::StartSoundAction(arm) => arm.write_into(writer),
             Self::StopSoundAction(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<StartSoundActionWith<X>> for SoundActionContentWith<X> {
+    fn from(arm: StartSoundActionWith<X>) -> Self {
+        Self::StartSoundAction(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<StopSoundActionWith<X>> for SoundActionContentWith<X> {
+    fn from(arm: StopSoundActionWith<X>) -> Self {
+        Self::StopSoundAction(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SoundActionContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SoundTargetWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -24391,35 +25045,45 @@ impl<X: UserData> TargetElementContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BmkTgt(node) => TargetElementContentWith::BmkTgt(node.into_user_data()),
-            Self::InkTarget(node) => TargetElementContentWith::InkTarget(node.into_user_data()),
+            Self::BmkTgt(node) => {
+                TargetElementContentWith::BmkTgt(Box::new((*node).into_user_data()))
+            }
+            Self::InkTarget(node) => {
+                TargetElementContentWith::InkTarget(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => TargetElementContentWith::Other(node),
-            Self::ShapeTarget(node) => TargetElementContentWith::ShapeTarget(node.into_user_data()),
-            Self::SlideTarget(node) => TargetElementContentWith::SlideTarget(node.into_user_data()),
-            Self::SoundTarget(node) => TargetElementContentWith::SoundTarget(node.into_user_data()),
+            Self::ShapeTarget(node) => {
+                TargetElementContentWith::ShapeTarget(Box::new((*node).into_user_data()))
+            }
+            Self::SlideTarget(node) => {
+                TargetElementContentWith::SlideTarget(Box::new((*node).into_user_data()))
+            }
+            Self::SoundTarget(node) => {
+                TargetElementContentWith::SoundTarget(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for TargetElementContentWith<X> {
     fn default() -> Self {
-        Self::BmkTgt(super::office_powerpoint_2010_main::BmkTgtWith::default())
+        Self::BmkTgt(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for TargetElementContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P14, "bmkTgt")) => Self::BmkTgt(item.read()),
-            Some((NS_P, "inkTgt")) => Self::InkTarget(item.read()),
-            Some((NS_P, "spTgt")) => Self::ShapeTarget(item.read()),
-            Some((NS_P, "sldTgt")) => Self::SlideTarget(item.read()),
-            Some((NS_P, "sndTgt")) => Self::SoundTarget(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P14, "bmkTgt")) => Self::BmkTgt(Box::new(item.read())),
+            Some((NS_P, "inkTgt")) => Self::InkTarget(Box::new(item.read())),
+            Some((NS_P, "spTgt")) => Self::ShapeTarget(Box::new(item.read())),
+            Some((NS_P, "sldTgt")) => Self::SlideTarget(Box::new(item.read())),
+            Some((NS_P, "sndTgt")) => Self::SoundTarget(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -24429,13 +25093,50 @@ impl officekit_markup_base::Write for TargetElementContent {
         match self {
             Self::BmkTgt(arm) => arm.write_into(writer),
             Self::InkTarget(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::ShapeTarget(arm) => arm.write_into(writer),
             Self::SlideTarget(arm) => arm.write_into(writer),
             Self::SoundTarget(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<super::office_powerpoint_2010_main::BmkTgtWith<X>>
+    for TargetElementContentWith<X>
+{
+    fn from(arm: super::office_powerpoint_2010_main::BmkTgtWith<X>) -> Self {
+        Self::BmkTgt(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<InkTargetWith<X>> for TargetElementContentWith<X> {
+    fn from(arm: InkTargetWith<X>) -> Self {
+        Self::InkTarget(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeTargetWith<X>> for TargetElementContentWith<X> {
+    fn from(arm: ShapeTargetWith<X>) -> Self {
+        Self::ShapeTarget(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SlideTargetWith<X>> for TargetElementContentWith<X> {
+    fn from(arm: SlideTargetWith<X>) -> Self {
+        Self::SlideTarget(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SoundTargetWith<X>> for TargetElementContentWith<X> {
+    fn from(arm: SoundTargetWith<X>) -> Self {
+        Self::SoundTarget(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TargetElementContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TemplateEffectsTmplWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -24597,11 +25298,11 @@ impl<X: UserData> TextElementContentWith<X> {
     {
         match self {
             Self::CharacterRange(node) => {
-                TextElementContentWith::CharacterRange(node.into_user_data())
+                TextElementContentWith::CharacterRange(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TextElementContentWith::Other(node),
             Self::ParagraphTextRange(node) => {
-                TextElementContentWith::ParagraphTextRange(node.into_user_data())
+                TextElementContentWith::ParagraphTextRange(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -24609,14 +25310,14 @@ impl<X: UserData> TextElementContentWith<X> {
 
 impl officekit_markup_base::Read for TextElementContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "charRg")) => Self::CharacterRange(item.read()),
-            Some((NS_P, "pRg")) => Self::ParagraphTextRange(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "charRg")) => Self::CharacterRange(Box::new(item.read())),
+            Some((NS_P, "pRg")) => Self::ParagraphTextRange(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -24625,11 +25326,28 @@ impl officekit_markup_base::Write for TextElementContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::CharacterRange(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::ParagraphTextRange(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<CharacterRangeWith<X>> for TextElementContentWith<X> {
+    fn from(arm: CharacterRangeWith<X>) -> Self {
+        Self::CharacterRange(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ParagraphTextRangeWith<X>> for TextElementContentWith<X> {
+    fn from(arm: ParagraphTextRangeWith<X>) -> Self {
+        Self::ParagraphTextRange(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextElementContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for Time {
     fn as_ref(&self) -> &str {
@@ -24825,27 +25543,31 @@ impl<X: UserData> TimeConditionContentWith<X> {
         match self {
             Self::Other(node) => TimeConditionContentWith::Other(node),
             Self::RuntimeNodeTriggerChoice(node) => {
-                TimeConditionContentWith::RuntimeNodeTriggerChoice(node.into_user_data())
+                TimeConditionContentWith::RuntimeNodeTriggerChoice(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::TargetElement(node) => {
-                TimeConditionContentWith::TargetElement(node.into_user_data())
+                TimeConditionContentWith::TargetElement(Box::new((*node).into_user_data()))
             }
-            Self::TimeNode(node) => TimeConditionContentWith::TimeNode(node.into_user_data()),
+            Self::TimeNode(node) => {
+                TimeConditionContentWith::TimeNode(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for TimeConditionContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "rtn")) => Self::RuntimeNodeTriggerChoice(item.read()),
-            Some((NS_P, "tgtEl")) => Self::TargetElement(item.read()),
-            Some((NS_P, "tn")) => Self::TimeNode(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "rtn")) => Self::RuntimeNodeTriggerChoice(Box::new(item.read())),
+            Some((NS_P, "tgtEl")) => Self::TargetElement(Box::new(item.read())),
+            Some((NS_P, "tn")) => Self::TimeNode(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -24853,13 +25575,36 @@ impl officekit_markup_base::Read for TimeConditionContent {
 impl officekit_markup_base::Write for TimeConditionContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RuntimeNodeTriggerChoice(arm) => arm.write_into(writer),
             Self::TargetElement(arm) => arm.write_into(writer),
             Self::TimeNode(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<RuntimeNodeTriggerChoiceWith<X>> for TimeConditionContentWith<X> {
+    fn from(arm: RuntimeNodeTriggerChoiceWith<X>) -> Self {
+        Self::RuntimeNodeTriggerChoice(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TargetElementWith<X>> for TimeConditionContentWith<X> {
+    fn from(arm: TargetElementWith<X>) -> Self {
+        Self::TargetElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TimeNodeWith<X>> for TimeConditionContentWith<X> {
+    fn from(arm: TimeNodeWith<X>) -> Self {
+        Self::TimeNode(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TimeConditionContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TimeListAnimateColorDirection {
     fn as_ref(&self) -> &str {
@@ -25201,61 +25946,67 @@ impl<X: UserData> TimeNodeListContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Animate(node) => TimeNodeListContentWith::Animate(node.into_user_data()),
+            Self::Animate(node) => {
+                TimeNodeListContentWith::Animate(Box::new((*node).into_user_data()))
+            }
             Self::AnimateColorBehavior(node) => {
-                TimeNodeListContentWith::AnimateColorBehavior(node.into_user_data())
+                TimeNodeListContentWith::AnimateColorBehavior(Box::new((*node).into_user_data()))
             }
             Self::AnimateEffect(node) => {
-                TimeNodeListContentWith::AnimateEffect(node.into_user_data())
+                TimeNodeListContentWith::AnimateEffect(Box::new((*node).into_user_data()))
             }
             Self::AnimateMotion(node) => {
-                TimeNodeListContentWith::AnimateMotion(node.into_user_data())
+                TimeNodeListContentWith::AnimateMotion(Box::new((*node).into_user_data()))
             }
             Self::AnimateRotation(node) => {
-                TimeNodeListContentWith::AnimateRotation(node.into_user_data())
+                TimeNodeListContentWith::AnimateRotation(Box::new((*node).into_user_data()))
             }
             Self::AnimateScale(node) => {
-                TimeNodeListContentWith::AnimateScale(node.into_user_data())
+                TimeNodeListContentWith::AnimateScale(Box::new((*node).into_user_data()))
             }
-            Self::Audio(node) => TimeNodeListContentWith::Audio(node.into_user_data()),
-            Self::Command(node) => TimeNodeListContentWith::Command(node.into_user_data()),
-            Self::Exclusive(node) => TimeNodeListContentWith::Exclusive(node.into_user_data()),
+            Self::Audio(node) => TimeNodeListContentWith::Audio(Box::new((*node).into_user_data())),
+            Self::Command(node) => {
+                TimeNodeListContentWith::Command(Box::new((*node).into_user_data()))
+            }
+            Self::Exclusive(node) => {
+                TimeNodeListContentWith::Exclusive(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => TimeNodeListContentWith::Other(node),
             Self::ParallelTimeNode(node) => {
-                TimeNodeListContentWith::ParallelTimeNode(node.into_user_data())
+                TimeNodeListContentWith::ParallelTimeNode(Box::new((*node).into_user_data()))
             }
             Self::SequenceTimeNode(node) => {
-                TimeNodeListContentWith::SequenceTimeNode(node.into_user_data())
+                TimeNodeListContentWith::SequenceTimeNode(Box::new((*node).into_user_data()))
             }
             Self::SetTimeNodeBehavior(node) => {
-                TimeNodeListContentWith::SetTimeNodeBehavior(node.into_user_data())
+                TimeNodeListContentWith::SetTimeNodeBehavior(Box::new((*node).into_user_data()))
             }
-            Self::Video(node) => TimeNodeListContentWith::Video(node.into_user_data()),
+            Self::Video(node) => TimeNodeListContentWith::Video(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for TimeNodeListContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P, "anim")) => Self::Animate(item.read()),
-            Some((NS_P, "animClr")) => Self::AnimateColorBehavior(item.read()),
-            Some((NS_P, "animEffect")) => Self::AnimateEffect(item.read()),
-            Some((NS_P, "animMotion")) => Self::AnimateMotion(item.read()),
-            Some((NS_P, "animRot")) => Self::AnimateRotation(item.read()),
-            Some((NS_P, "animScale")) => Self::AnimateScale(item.read()),
-            Some((NS_P, "audio")) => Self::Audio(item.read()),
-            Some((NS_P, "cmd")) => Self::Command(item.read()),
-            Some((NS_P, "excl")) => Self::Exclusive(item.read()),
-            Some((NS_P, "par")) => Self::ParallelTimeNode(item.read()),
-            Some((NS_P, "seq")) => Self::SequenceTimeNode(item.read()),
-            Some((NS_P, "set")) => Self::SetTimeNodeBehavior(item.read()),
-            Some((NS_P, "video")) => Self::Video(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P, "anim")) => Self::Animate(Box::new(item.read())),
+            Some((NS_P, "animClr")) => Self::AnimateColorBehavior(Box::new(item.read())),
+            Some((NS_P, "animEffect")) => Self::AnimateEffect(Box::new(item.read())),
+            Some((NS_P, "animMotion")) => Self::AnimateMotion(Box::new(item.read())),
+            Some((NS_P, "animRot")) => Self::AnimateRotation(Box::new(item.read())),
+            Some((NS_P, "animScale")) => Self::AnimateScale(Box::new(item.read())),
+            Some((NS_P, "audio")) => Self::Audio(Box::new(item.read())),
+            Some((NS_P, "cmd")) => Self::Command(Box::new(item.read())),
+            Some((NS_P, "excl")) => Self::Exclusive(Box::new(item.read())),
+            Some((NS_P, "par")) => Self::ParallelTimeNode(Box::new(item.read())),
+            Some((NS_P, "seq")) => Self::SequenceTimeNode(Box::new(item.read())),
+            Some((NS_P, "set")) => Self::SetTimeNodeBehavior(Box::new(item.read())),
+            Some((NS_P, "video")) => Self::Video(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -25272,7 +26023,7 @@ impl officekit_markup_base::Write for TimeNodeListContent {
             Self::Audio(arm) => arm.write_into(writer),
             Self::Command(arm) => arm.write_into(writer),
             Self::Exclusive(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::ParallelTimeNode(arm) => arm.write_into(writer),
             Self::SequenceTimeNode(arm) => arm.write_into(writer),
             Self::SetTimeNodeBehavior(arm) => arm.write_into(writer),
@@ -25280,6 +26031,89 @@ impl officekit_markup_base::Write for TimeNodeListContent {
         }
     }
 }
+
+impl<X: UserData> From<AnimateWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: AnimateWith<X>) -> Self {
+        Self::Animate(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AnimateColorBehaviorWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: AnimateColorBehaviorWith<X>) -> Self {
+        Self::AnimateColorBehavior(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AnimateEffectWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: AnimateEffectWith<X>) -> Self {
+        Self::AnimateEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AnimateMotionWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: AnimateMotionWith<X>) -> Self {
+        Self::AnimateMotion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AnimateRotationWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: AnimateRotationWith<X>) -> Self {
+        Self::AnimateRotation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AnimateScaleWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: AnimateScaleWith<X>) -> Self {
+        Self::AnimateScale(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AudioWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: AudioWith<X>) -> Self {
+        Self::Audio(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CommandWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: CommandWith<X>) -> Self {
+        Self::Command(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ExclusiveWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: ExclusiveWith<X>) -> Self {
+        Self::Exclusive(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ParallelTimeNodeWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: ParallelTimeNodeWith<X>) -> Self {
+        Self::ParallelTimeNode(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SequenceTimeNodeWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: SequenceTimeNodeWith<X>) -> Self {
+        Self::SequenceTimeNode(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetTimeNodeBehaviorWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: SetTimeNodeBehaviorWith<X>) -> Self {
+        Self::SetTimeNodeBehavior(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<VideoWith<X>> for TimeNodeListContentWith<X> {
+    fn from(arm: VideoWith<X>) -> Self {
+        Self::Video(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TimeNodeListContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TimeNodeMasterRelation {
     fn as_ref(&self) -> &str {

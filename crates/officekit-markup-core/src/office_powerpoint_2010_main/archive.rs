@@ -763,14 +763,14 @@ pub struct XfrmMirror {
 #[rkyv(remote = super::ShowEventRecordListContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShowEventRecordListContent {
-    NullEvt(super::NullEvt),
-    Other(Node),
-    PauseEvt(super::PauseEvt),
-    PlayEvt(super::PlayEvt),
-    ResumeEvt(super::ResumeEvt),
-    SeekEvt(super::SeekEvt),
-    StopEvt(super::StopEvt),
-    TriggerEvt(super::TriggerEvt),
+    NullEvt(Box<super::NullEvt>),
+    Other(Box<Node>),
+    PauseEvt(Box<super::PauseEvt>),
+    PlayEvt(Box<super::PlayEvt>),
+    ResumeEvt(Box<super::ResumeEvt>),
+    SeekEvt(Box<super::SeekEvt>),
+    StopEvt(Box<super::StopEvt>),
+    TriggerEvt(Box<super::TriggerEvt>),
 }
 
 impl From<BmkMirror> for super::Bmk {

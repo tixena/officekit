@@ -1846,11 +1846,11 @@ impl Eq for MeterPerModelUnitWith<()> {}
 #[non_exhaustive]
 pub enum Model3DCameraContentWith<X: UserData> {
     /// The element `am3d:orthographic`, a `Orthographic`.
-    Orthographic(OrthographicWith<X>),
+    Orthographic(Box<OrthographicWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `am3d:perspective`, a `Perspective`.
-    Perspective(PerspectiveWith<X>),
+    Perspective(Box<PerspectiveWith<X>>),
 }
 
 /// [`Model3DCameraContentWith`] of the tree a read gives, where no node holds anything in
@@ -1869,366 +1869,370 @@ impl Eq for Model3DCameraContentWith<()> {}
 pub enum Model3DExtensionContentWith<X: UserData> {
     /// The element `wp:anchor`, a `AnchorForFloatingDrawingMLObject`.
     AnchorForFloatingDrawingMLObject(
-        wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>,
+        Box<wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>>,
     ),
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
+    AnchorLocationIsLocked(Box<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>),
     /// The element `ap:Properties`, a `ApplicationSpecificFileProperties`.
     ApplicationSpecificFileProperties(
-        document_properties_extended::ApplicationSpecificFilePropertiesWith<X>,
+        Box<document_properties_extended::ApplicationSpecificFilePropertiesWith<X>>,
     ),
     /// The element `v:arc`, a `ArcSegment`.
-    ArcSegment(vml::ArcSegmentWith<X>),
+    ArcSegment(Box<vml::ArcSegmentWith<X>>),
     /// The element `vt:array`, a `Array`.
-    Array(document_properties_variant_types::ArrayWith<X>),
+    Array(Box<document_properties_variant_types::ArrayWith<X>>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
+    AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(document_properties_variant_types::BasicStringWith<X>),
+    BasicString(Box<document_properties_variant_types::BasicStringWith<X>>),
     /// The element `v:curve`, a `BezierCurve`.
-    BezierCurve(vml::BezierCurveWith<X>),
+    BezierCurve(Box<vml::BezierCurveWith<X>>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(document_properties_variant_types::BinaryBlobWith<X>),
+    BinaryBlob(Box<document_properties_variant_types::BinaryBlobWith<X>>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(document_properties_variant_types::BinaryBlobObjectWith<X>),
+    BinaryBlobObject(Box<document_properties_variant_types::BinaryBlobObjectWith<X>>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(document_properties_variant_types::BinaryStorageWith<X>),
+    BinaryStorage(Box<document_properties_variant_types::BinaryStorageWith<X>>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(document_properties_variant_types::BinaryStorageObjectWith<X>),
+    BinaryStorageObject(Box<document_properties_variant_types::BinaryStorageObjectWith<X>>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(document_properties_variant_types::BinaryStreamWith<X>),
+    BinaryStream(Box<document_properties_variant_types::BinaryStreamWith<X>>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(document_properties_variant_types::BinaryStreamObjectWith<X>),
+    BinaryStreamObject(Box<document_properties_variant_types::BinaryStreamObjectWith<X>>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
-    BinaryVersionedStream(document_properties_variant_types::BinaryVersionedStreamWith<X>),
+    BinaryVersionedStream(Box<document_properties_variant_types::BinaryVersionedStreamWith<X>>),
     /// The element `a:blip`, a `Blip`.
-    Blip(drawing::BlipWith<X>),
+    Blip(Box<drawing::BlipWith<X>>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(document_properties_variant_types::BooleanWith<X>),
+    Boolean(Box<document_properties_variant_types::BooleanWith<X>>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
+    BottomBorder(Box<vml_wordprocessing_drawing::BottomBorderWith<X>>),
     /// The element `x:calcChain`, a `CalculationChainInfo`.
-    CalculationChainInfo(spreadsheet::CalculationChainInfoWith<X>),
+    CalculationChainInfo(Box<spreadsheet::CalculationChainInfoWith<X>>),
     /// The element `o:callout`, a `Callout`.
-    Callout(vml_office_drawing::CalloutWith<X>),
+    Callout(Box<vml_office_drawing::CalloutWith<X>>),
     /// The element `x:chartsheet`, a `ChartSheet`.
-    ChartSheet(spreadsheet::ChartSheetWith<X>),
+    ChartSheet(Box<spreadsheet::ChartSheetWith<X>>),
     /// The element `c:chartSpace`, a `ChartSpace`.
-    ChartSpace(chart::ChartSpaceWith<X>),
+    ChartSpace(Box<chart::ChartSpaceWith<X>>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(document_properties_variant_types::ClassIDWith<X>),
+    ClassID(Box<document_properties_variant_types::ClassIDWith<X>>),
     /// The element `dgm:colorsDefHdr`, a `ColorTransformDefinitionHeader`.
-    ColorTransformDefinitionHeader(diagram::ColorTransformDefinitionHeaderWith<X>),
+    ColorTransformDefinitionHeader(Box<diagram::ColorTransformDefinitionHeaderWith<X>>),
     /// The element `dgm:colorsDef`, a `ColorTransformDefinitions`.
-    ColorTransformDefinitions(diagram::ColorTransformDefinitionsWith<X>),
+    ColorTransformDefinitions(Box<diagram::ColorTransformDefinitionsWith<X>>),
     /// The element `dgm:colorsDefHdrLst`, a `ColorTransformHeaderList`.
-    ColorTransformHeaderList(diagram::ColorTransformHeaderListWith<X>),
+    ColorTransformHeaderList(Box<diagram::ColorTransformHeaderListWith<X>>),
     /// The element `p:cmLst`, a `CommentList`.
-    CommentList(presentation::CommentListWith<X>),
+    CommentList(Box<presentation::CommentListWith<X>>),
     /// The element `x:comments`, a `Comments`.
-    Comments(spreadsheet::CommentsWith<X>),
+    Comments(Box<spreadsheet::CommentsWith<X>>),
     /// The element `w:comments`, a `CommentsCollection`.
-    CommentsCollection(wordprocessing::CommentsCollectionWith<X>),
+    CommentsCollection(Box<wordprocessing::CommentsCollectionWith<X>>),
     /// The element `o:complex`, a `Complex`.
-    Complex(vml_office_drawing::ComplexWith<X>),
+    Complex(Box<vml_office_drawing::ComplexWith<X>>),
     /// The element `x:connections`, a `Connections`.
-    Connections(spreadsheet::ConnectionsWith<X>),
+    Connections(Box<spreadsheet::ConnectionsWith<X>>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(document_properties_variant_types::CurrencyWith<X>),
+    Currency(Box<document_properties_variant_types::CurrencyWith<X>>),
     /// The element `op:Properties`, a `CustomFileProperties`.
-    CustomFileProperties(document_properties_custom::CustomFilePropertiesWith<X>),
+    CustomFileProperties(Box<document_properties_custom::CustomFilePropertiesWith<X>>),
     /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
-    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataPropertiesWith<X>),
+    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataPropertiesWith<X>>),
     /// The element `dgm:dataModel`, a `DataModel`.
-    DataModel(diagram::DataModelWith<X>),
+    DataModel(Box<diagram::DataModelWith<X>>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(document_properties_variant_types::DateAndTimeWith<X>),
+    DateAndTime(Box<document_properties_variant_types::DateAndTimeWith<X>>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(document_properties_variant_types::DecimalWith<X>),
+    Decimal(Box<document_properties_variant_types::DecimalWith<X>>),
     /// The element `dgm:layoutDefHdrLst`, a `DiagramLayoutHeaderList`.
-    DiagramLayoutHeaderList(diagram::DiagramLayoutHeaderListWith<X>),
+    DiagramLayoutHeaderList(Box<diagram::DiagramLayoutHeaderListWith<X>>),
     /// The element `x:dialogsheet`, a `DialogSheet`.
-    DialogSheet(spreadsheet::DialogSheetWith<X>),
+    DialogSheet(Box<spreadsheet::DialogSheetWith<X>>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(vml_office_drawing::DigitalSignatureLineWith<X>),
+    DigitalSignatureLine(Box<vml_office_drawing::DigitalSignatureLineWith<X>>),
     /// The element `w:document`, a `Document`.
-    Document(wordprocessing::DocumentWith<X>),
+    Document(Box<wordprocessing::DocumentWith<X>>),
     /// The element `v:background`, a `DocumentBackground`.
-    DocumentBackground(vml::DocumentBackgroundWith<X>),
+    DocumentBackground(Box<vml::DocumentBackgroundWith<X>>),
     /// The element `w:endnotes`, a `DocumentEndnotes`.
-    DocumentEndnotes(wordprocessing::DocumentEndnotesWith<X>),
+    DocumentEndnotes(Box<wordprocessing::DocumentEndnotesWith<X>>),
     /// The element `w:footnotes`, a `DocumentFootnotes`.
-    DocumentFootnotes(wordprocessing::DocumentFootnotesWith<X>),
+    DocumentFootnotes(Box<wordprocessing::DocumentFootnotesWith<X>>),
     /// The element `w:settings`, a `DocumentSettings`.
-    DocumentSettings(wordprocessing::DocumentSettingsWith<X>),
+    DocumentSettings(Box<wordprocessing::DocumentSettingsWith<X>>),
     /// The element `a:tbl`, a `Table`.
-    DrawingTable(drawing::TableWith<X>),
+    DrawingTable(Box<drawing::TableWith<X>>),
     /// The element `a3danim:embedAnim`, a `EmbedAnim`.
-    EmbedAnim(super::office_drawing_2018_animation_model3d::EmbedAnimWith<X>),
+    EmbedAnim(Box<super::office_drawing_2018_animation_model3d::EmbedAnimWith<X>>),
     /// The element `sl:schemaLibrary`, a `EmbeddedCustomXMLSchemaSupplementaryData`.
     EmbeddedCustomXMLSchemaSupplementaryData(
-        custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>,
+        Box<custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>>,
     ),
     /// The element `o:OLEObject`, a `EmbeddedOLEObject`.
-    EmbeddedOLEObject(vml_office_drawing::EmbeddedOLEObjectWith<X>),
+    EmbeddedOLEObject(Box<vml_office_drawing::EmbeddedOLEObjectWith<X>>),
     /// The element `p:oleObj`, a `EmbeddedObjectsAndControls`.
-    EmbeddedObjectsAndControls(presentation::EmbeddedObjectsAndControlsWith<X>),
+    EmbeddedObjectsAndControls(Box<presentation::EmbeddedObjectsAndControlsWith<X>>),
     /// The element `vt:empty`, a `Empty`.
-    Empty(document_properties_variant_types::EmptyWith<X>),
+    Empty(Box<document_properties_variant_types::EmptyWith<X>>),
     /// The element `xdr:to`, a `EndingAnchorPoint`.
-    EndingAnchorPoint(spreadsheet_drawing::EndingAnchorPointWith<X>),
+    EndingAnchorPoint(Box<spreadsheet_drawing::EndingAnchorPointWith<X>>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(document_properties_variant_types::ErrorStatusCodeWith<X>),
+    ErrorStatusCode(Box<document_properties_variant_types::ErrorStatusCodeWith<X>>),
     /// The element `dgm:relIds`, a `ExplicitRelationshipsToDiagramParts`.
-    ExplicitRelationshipsToDiagramParts(diagram::ExplicitRelationshipsToDiagramPartsWith<X>),
+    ExplicitRelationshipsToDiagramParts(Box<diagram::ExplicitRelationshipsToDiagramPartsWith<X>>),
     /// The element `x:externalLink`, a `ExternalReferenceExternalLink`.
-    ExternalReferenceExternalLink(spreadsheet::ExternalReferenceExternalLinkWith<X>),
+    ExternalReferenceExternalLink(Box<spreadsheet::ExternalReferenceExternalLinkWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(vml_office_drawing::ExtrusionWith<X>),
+    Extrusion(Box<vml_office_drawing::ExtrusionWith<X>>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(document_properties_variant_types::FileTimeWith<X>),
+    FileTime(Box<document_properties_variant_types::FileTimeWith<X>>),
     /// The element `w:fonts`, a `FontTableRootElement`.
-    FontTableRootElement(wordprocessing::FontTableRootElementWith<X>),
+    FontTableRootElement(Box<wordprocessing::FontTableRootElementWith<X>>),
     /// The element `w:ftr`, a `Footer`.
-    Footer(wordprocessing::FooterWith<X>),
+    Footer(Box<wordprocessing::FooterWith<X>>),
     /// The element `w:glossaryDocument`, a `GlossaryDocumentRootElement`.
-    GlossaryDocumentRootElement(wordprocessing::GlossaryDocumentRootElementWith<X>),
+    GlossaryDocumentRootElement(Box<wordprocessing::GlossaryDocumentRootElementWith<X>>),
     /// The element `a:graphic`, a `GraphicObject`.
-    GraphicObject(drawing::GraphicObjectWith<X>),
+    GraphicObject(Box<drawing::GraphicObjectWith<X>>),
     /// The element `p:handoutMaster`, a `HandoutMaster`.
-    HandoutMaster(presentation::HandoutMasterWith<X>),
+    HandoutMaster(Box<presentation::HandoutMasterWith<X>>),
     /// The element `w:hdr`, a `Header`.
-    Header(wordprocessing::HeaderWith<X>),
+    Header(Box<wordprocessing::HeaderWith<X>>),
     /// The element `vt:i1`, a `I1`.
-    I1(document_properties_variant_types::I1With<X>),
+    I1(Box<document_properties_variant_types::I1With<X>>),
     /// The element `vt:i2`, a `I2`.
-    I2(document_properties_variant_types::I2With<X>),
+    I2(Box<document_properties_variant_types::I2With<X>>),
     /// The element `vt:i4`, a `I4`.
-    I4(document_properties_variant_types::I4With<X>),
+    I4(Box<document_properties_variant_types::I4With<X>>),
     /// The element `vt:i8`, a `I8`.
-    I8(document_properties_variant_types::I8With<X>),
+    I8(Box<document_properties_variant_types::I8With<X>>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(vml::ImageDataWith<X>),
+    ImageData(Box<vml::ImageDataWith<X>>),
     /// The element `v:image`, a `ImageFile`.
-    ImageFile(vml::ImageFileWith<X>),
+    ImageFile(Box<vml::ImageFileWith<X>>),
     /// The element `w:recipients`, a `InclusionExclusionDataForDataSource`.
-    InclusionExclusionDataForDataSource(wordprocessing::InclusionExclusionDataForDataSourceWith<X>),
+    InclusionExclusionDataForDataSource(
+        Box<wordprocessing::InclusionExclusionDataForDataSourceWith<X>>,
+    ),
     /// The element `o:ink`, a `Ink`.
-    Ink(vml_office_drawing::InkWith<X>),
+    Ink(Box<vml_office_drawing::InkWith<X>>),
     /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
-    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlagWith<X>),
+    InkAnnotationFlag(Box<vml_presentation_drawing::InkAnnotationFlagWith<X>>),
     /// The element `wp:inline`, a `InlineDrawingMLObject`.
-    InlineDrawingMLObject(wordprocessing_drawing::InlineDrawingMLObjectWith<X>),
+    InlineDrawingMLObject(Box<wordprocessing_drawing::InlineDrawingMLObjectWith<X>>),
     /// The element `vt:int`, a `Integer`.
-    Integer(document_properties_variant_types::IntegerWith<X>),
+    Integer(Box<document_properties_variant_types::IntegerWith<X>>),
     /// The element `dgm:layoutDef`, a `LayoutDefinition`.
-    LayoutDefinition(diagram::LayoutDefinitionWith<X>),
+    LayoutDefinition(Box<diagram::LayoutDefinitionWith<X>>),
     /// The element `dgm:layoutDefHdr`, a `LayoutDefinitionHeader`.
-    LayoutDefinitionHeader(diagram::LayoutDefinitionHeaderWith<X>),
+    LayoutDefinitionHeader(Box<diagram::LayoutDefinitionHeaderWith<X>>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
+    LeftBorder(Box<vml_wordprocessing_drawing::LeftBorderWith<X>>),
     /// The element `v:line`, a `Line`.
-    Line(vml::LineWith<X>),
+    Line(Box<vml::LineWith<X>>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(vml::LineStrokeSettingsWith<X>),
+    LineStrokeSettings(Box<vml::LineStrokeSettingsWith<X>>),
     /// The element `p:cmAuthorLst`, a `ListOfCommentAuthors`.
-    ListOfCommentAuthors(presentation::ListOfCommentAuthorsWith<X>),
+    ListOfCommentAuthors(Box<presentation::ListOfCommentAuthorsWith<X>>),
     /// The element `dgm:styleDefHdrLst`, a `ListOfStyleDefinitionHeaders`.
-    ListOfStyleDefinitionHeaders(diagram::ListOfStyleDefinitionHeadersWith<X>),
+    ListOfStyleDefinitionHeaders(Box<diagram::ListOfStyleDefinitionHeadersWith<X>>),
     /// The element `lc:lockedCanvas`, a `LockedCanvasContainer`.
-    LockedCanvasContainer(locked_canvas::LockedCanvasContainerWith<X>),
+    LockedCanvasContainer(Box<locked_canvas::LockedCanvasContainerWith<X>>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(document_properties_variant_types::LpstrWith<X>),
+    Lpstr(Box<document_properties_variant_types::LpstrWith<X>>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(document_properties_variant_types::LpwstrWith<X>),
+    Lpwstr(Box<document_properties_variant_types::LpwstrWith<X>>),
     /// The element `m:mathPr`, a `MathProperties`.
-    MathProperties(math::MathPropertiesWith<X>),
+    MathProperties(Box<math::MathPropertiesWith<X>>),
     /// The element `x:metadata`, a `Metadata`.
-    Metadata(spreadsheet::MetadataWith<X>),
+    Metadata(Box<spreadsheet::MetadataWith<X>>),
     /// The element `v:polyline`, a `MultiplePathLine`.
-    MultiplePathLine(vml::MultiplePathLineWith<X>),
+    MultiplePathLine(Box<vml::MultiplePathLineWith<X>>),
     /// The element `o:shapedefaults`, a `NewShapeDefaults`.
-    NewShapeDefaults(vml_office_drawing::NewShapeDefaultsWith<X>),
+    NewShapeDefaults(Box<vml_office_drawing::NewShapeDefaultsWith<X>>),
     /// The element `p:notesMaster`, a `NotesMaster`.
-    NotesMaster(presentation::NotesMasterWith<X>),
+    NotesMaster(Box<presentation::NotesMasterWith<X>>),
     /// The element `p:notes`, a `NotesSlide`.
-    NotesSlide(presentation::NotesSlideWith<X>),
+    NotesSlide(Box<presentation::NotesSlideWith<X>>),
     /// The element `vt:null`, a `Null`.
-    Null(document_properties_variant_types::NullWith<X>),
+    Null(Box<document_properties_variant_types::NullWith<X>>),
     /// The element `w:numbering`, a `NumberingDefinitions`.
-    NumberingDefinitions(wordprocessing::NumberingDefinitionsWith<X>),
+    NumberingDefinitions(Box<wordprocessing::NumberingDefinitionsWith<X>>),
     /// The element `m:oMath`, a `OfficeMath`.
-    OfficeMath(math::OfficeMathWith<X>),
+    OfficeMath(Box<math::OfficeMathWith<X>>),
     /// The element `m:oMathPara`, a `OfficeMathParagraph`.
-    OfficeMathParagraph(math::OfficeMathParagraphWith<X>),
+    OfficeMathParagraph(Box<math::OfficeMathParagraphWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `v:oval`, a `Oval`.
-    Oval(vml::OvalWith<X>),
+    Oval(Box<vml::OvalWith<X>>),
     /// The element `pic:pic`, a `Picture`.
-    Picture(picture::PictureWith<X>),
+    Picture(Box<picture::PictureWith<X>>),
     /// The element `x:pivotCacheDefinition`, a `PivotCacheDefinition`.
-    PivotCacheDefinition(spreadsheet::PivotCacheDefinitionWith<X>),
+    PivotCacheDefinition(Box<spreadsheet::PivotCacheDefinitionWith<X>>),
     /// The element `x:pivotCacheRecords`, a `PivotCacheRecords`.
-    PivotCacheRecords(spreadsheet::PivotCacheRecordsWith<X>),
+    PivotCacheRecords(Box<spreadsheet::PivotCacheRecordsWith<X>>),
     /// The element `x:pivotTableDefinition`, a `PivotTableDefinition`.
     PivotTableDefinition(Box<spreadsheet::PivotTableDefinitionWith<X>>),
     /// The element `a3danim:posterFrame`, a `PosterFrame`.
-    PosterFrame(super::office_drawing_2018_animation_model3d::PosterFrameWith<X>),
+    PosterFrame(Box<super::office_drawing_2018_animation_model3d::PosterFrameWith<X>>),
     /// The element `p:presentation`, a `Presentation`.
-    Presentation(presentation::PresentationWith<X>),
+    Presentation(Box<presentation::PresentationWith<X>>),
     /// The element `p:sld`, a `PresentationSlideSlide`.
-    PresentationSlideSlide(presentation::PresentationSlideSlideWith<X>),
+    PresentationSlideSlide(Box<presentation::PresentationSlideSlideWith<X>>),
     /// The element `p:presentationPr`, a `PresentationWideProperties`.
-    PresentationWideProperties(presentation::PresentationWidePropertiesWith<X>),
+    PresentationWideProperties(Box<presentation::PresentationWidePropertiesWith<X>>),
     /// The element `p:viewPr`, a `PresentationWideViewProperties`.
-    PresentationWideViewProperties(presentation::PresentationWideViewPropertiesWith<X>),
+    PresentationWideViewProperties(Box<presentation::PresentationWideViewPropertiesWith<X>>),
     /// The element `p:tagLst`, a `ProgrammableTabList`.
-    ProgrammableTabList(presentation::ProgrammableTabListWith<X>),
+    ProgrammableTabList(Box<presentation::ProgrammableTabListWith<X>>),
     /// The element `x:queryTable`, a `QueryTable`.
-    QueryTable(spreadsheet::QueryTableWith<X>),
+    QueryTable(Box<spreadsheet::QueryTableWith<X>>),
     /// The element `vt:r4`, a `R4`.
-    R4(document_properties_variant_types::R4With<X>),
+    R4(Box<document_properties_variant_types::R4With<X>>),
     /// The element `vt:r8`, a `R8`.
-    R8(document_properties_variant_types::R8With<X>),
+    R8(Box<document_properties_variant_types::R8With<X>>),
     /// The element `v:rect`, a `Rectangle`.
-    Rectangle(vml::RectangleWith<X>),
+    Rectangle(Box<vml::RectangleWith<X>>),
     /// The element `c:chart`, a `ReferenceToChartPart`.
-    ReferenceToChartPart(chart::ReferenceToChartPartWith<X>),
+    ReferenceToChartPart(Box<chart::ReferenceToChartPartWith<X>>),
     /// The element `x:headers`, a `RevisionHeaders`.
-    RevisionHeaders(spreadsheet::RevisionHeadersWith<X>),
+    RevisionHeaders(Box<spreadsheet::RevisionHeadersWith<X>>),
     /// The element `x:revisions`, a `Revisions`.
-    Revisions(spreadsheet::RevisionsWith<X>),
+    Revisions(Box<spreadsheet::RevisionsWith<X>>),
     /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
-    RichTextBoxContentContainer(wordprocessing::RichTextBoxContentContainerWith<X>),
+    RichTextBoxContentContainer(Box<wordprocessing::RichTextBoxContentContainerWith<X>>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
+    RightBorder(Box<vml_wordprocessing_drawing::RightBorderWith<X>>),
     /// The element `v:roundrect`, a `RoundedRectangle`.
-    RoundedRectangle(vml::RoundedRectangleWith<X>),
+    RoundedRectangle(Box<vml::RoundedRectangleWith<X>>),
     /// The element `ac:additionalCharacteristics`, a `SetOfAdditionalCharacteristics`.
     SetOfAdditionalCharacteristics(
-        additional_characteristics::SetOfAdditionalCharacteristicsWith<X>,
+        Box<additional_characteristics::SetOfAdditionalCharacteristicsWith<X>>,
     ),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(vml::SetOfFormulasWith<X>),
+    SetOfFormulas(Box<vml::SetOfFormulasWith<X>>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(vml::SetOfHandlesWith<X>),
+    SetOfHandles(Box<vml::SetOfHandlesWith<X>>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(vml::ShadowEffectWith<X>),
+    ShadowEffect(Box<vml::ShadowEffectWith<X>>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(vml_office_drawing::ShapeClippingPathWith<X>),
+    ShapeClippingPath(Box<vml_office_drawing::ShapeClippingPathWith<X>>),
     /// The element `v:shape`, a `ShapeDefinition`.
-    ShapeDefinition(vml::ShapeDefinitionWith<X>),
+    ShapeDefinition(Box<vml::ShapeDefinitionWith<X>>),
     /// The element `o:fill`, a `ShapeFillExtendedProperties`.
-    ShapeFillExtendedProperties(vml_office_drawing::ShapeFillExtendedPropertiesWith<X>),
+    ShapeFillExtendedProperties(Box<vml_office_drawing::ShapeFillExtendedPropertiesWith<X>>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(vml::ShapeFillPropertiesWith<X>),
+    ShapeFillProperties(Box<vml::ShapeFillPropertiesWith<X>>),
     /// The element `v:group`, a `ShapeGroup`.
-    ShapeGroup(vml::ShapeGroupWith<X>),
+    ShapeGroup(Box<vml::ShapeGroupWith<X>>),
     /// The element `o:shapelayout`, a `ShapeLayoutProperties`.
-    ShapeLayoutProperties(vml_office_drawing::ShapeLayoutPropertiesWith<X>),
+    ShapeLayoutProperties(Box<vml_office_drawing::ShapeLayoutPropertiesWith<X>>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(vml::ShapePathWith<X>),
+    ShapePath(Box<vml::ShapePathWith<X>>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(vml_office_drawing::ShapeProtectionsWith<X>),
+    ShapeProtections(Box<vml_office_drawing::ShapeProtectionsWith<X>>),
     /// The element `v:shapetype`, a `ShapeTemplate`.
-    ShapeTemplate(vml::ShapeTemplateWith<X>),
+    ShapeTemplate(Box<vml::ShapeTemplateWith<X>>),
     /// The element `x:sst`, a `SharedStringTable`.
-    SharedStringTable(spreadsheet::SharedStringTableWith<X>),
+    SharedStringTable(Box<spreadsheet::SharedStringTableWith<X>>),
     /// The element `x:singleXmlCells`, a `SingleCells`.
-    SingleCells(spreadsheet::SingleCellsWith<X>),
+    SingleCells(Box<spreadsheet::SingleCellsWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(vml_office_drawing::SkewTransformWith<X>),
+    SkewTransform(Box<vml_office_drawing::SkewTransformWith<X>>),
     /// The element `p:sldLayout`, a `SlideLayout`.
-    SlideLayout(presentation::SlideLayoutWith<X>),
+    SlideLayout(Box<presentation::SlideLayoutWith<X>>),
     /// The element `p:sldMaster`, a `SlideMaster`.
-    SlideMaster(presentation::SlideMasterWith<X>),
+    SlideMaster(Box<presentation::SlideMasterWith<X>>),
     /// The element `p:sldSyncPr`, a `SlideSynchronizationProperties`.
-    SlideSynchronizationProperties(presentation::SlideSynchronizationPropertiesWith<X>),
+    SlideSynchronizationProperties(Box<presentation::SlideSynchronizationPropertiesWith<X>>),
     /// The element `b:Sources`, a `Sources`.
-    Sources(bibliography::SourcesWith<X>),
+    Sources(Box<bibliography::SourcesWith<X>>),
     /// The element `x:table`, a `Table`.
-    SpreadsheetTable(spreadsheet::TableWith<X>),
+    SpreadsheetTable(Box<spreadsheet::TableWith<X>>),
     /// The element `xdr:from`, a `StartingAnchorPoint`.
-    StartingAnchorPoint(spreadsheet_drawing::StartingAnchorPointWith<X>),
+    StartingAnchorPoint(Box<spreadsheet_drawing::StartingAnchorPointWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
-    StorageForAlternateMathContent(vml_office_drawing::StorageForAlternateMathContentWith<X>),
+    StorageForAlternateMathContent(Box<vml_office_drawing::StorageForAlternateMathContentWith<X>>),
     /// The element `dgm:styleDef`, a `StyleDefinition`.
-    StyleDefinition(diagram::StyleDefinitionWith<X>),
+    StyleDefinition(Box<diagram::StyleDefinitionWith<X>>),
     /// The element `dgm:styleDefHdr`, a `StyleDefinitionHeader`.
-    StyleDefinitionHeader(diagram::StyleDefinitionHeaderWith<X>),
+    StyleDefinitionHeader(Box<diagram::StyleDefinitionHeaderWith<X>>),
     /// The element `w:styles`, a `StyleDefinitions`.
-    StyleDefinitions(wordprocessing::StyleDefinitionsWith<X>),
+    StyleDefinitions(Box<wordprocessing::StyleDefinitionsWith<X>>),
     /// The element `x:styleSheet`, a `StyleSheet`.
-    StyleSheet(spreadsheet::StyleSheetWith<X>),
+    StyleSheet(Box<spreadsheet::StyleSheetWith<X>>),
     /// The element `a:tblStyleLst`, a `TableStyleList`.
-    TableStyleList(drawing::TableStyleListWith<X>),
+    TableStyleList(Box<drawing::TableStyleListWith<X>>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(vml::TextBoxWith<X>),
+    TextBox(Box<vml::TextBoxWith<X>>),
     /// The element `o:bottom`, a `TextBoxBottomStroke`.
-    TextBoxBottomStroke(vml_office_drawing::TextBoxBottomStrokeWith<X>),
+    TextBoxBottomStroke(Box<vml_office_drawing::TextBoxBottomStrokeWith<X>>),
     /// The element `o:column`, a `TextBoxInteriorStroke`.
-    TextBoxInteriorStroke(vml_office_drawing::TextBoxInteriorStrokeWith<X>),
+    TextBoxInteriorStroke(Box<vml_office_drawing::TextBoxInteriorStrokeWith<X>>),
     /// The element `o:left`, a `TextBoxLeftStroke`.
-    TextBoxLeftStroke(vml_office_drawing::TextBoxLeftStrokeWith<X>),
+    TextBoxLeftStroke(Box<vml_office_drawing::TextBoxLeftStrokeWith<X>>),
     /// The element `o:right`, a `TextBoxRightStroke`.
-    TextBoxRightStroke(vml_office_drawing::TextBoxRightStrokeWith<X>),
+    TextBoxRightStroke(Box<vml_office_drawing::TextBoxRightStrokeWith<X>>),
     /// The element `o:top`, a `TextBoxTopStroke`.
-    TextBoxTopStroke(vml_office_drawing::TextBoxTopStrokeWith<X>),
+    TextBoxTopStroke(Box<vml_office_drawing::TextBoxTopStrokeWith<X>>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(vml::TextLayoutPathWith<X>),
+    TextLayoutPath(Box<vml::TextLayoutPathWith<X>>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
+    TextWrapping(Box<vml_wordprocessing_drawing::TextWrappingWith<X>>),
     /// The element `a:theme`, a `Theme`.
-    Theme(drawing::ThemeWith<X>),
+    Theme(Box<drawing::ThemeWith<X>>),
     /// The element `a:themeManager`, a `ThemeManager`.
-    ThemeManager(drawing::ThemeManagerWith<X>),
+    ThemeManager(Box<drawing::ThemeManagerWith<X>>),
     /// The element `a:themeOverride`, a `ThemeOverride`.
-    ThemeOverride(drawing::ThemeOverrideWith<X>),
+    ThemeOverride(Box<drawing::ThemeOverrideWith<X>>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
+    TopBorder(Box<vml_wordprocessing_drawing::TopBorderWith<X>>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(document_properties_variant_types::Ui1With<X>),
+    Ui1(Box<document_properties_variant_types::Ui1With<X>>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(document_properties_variant_types::Ui2With<X>),
+    Ui2(Box<document_properties_variant_types::Ui2With<X>>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(document_properties_variant_types::Ui4With<X>),
+    Ui4(Box<document_properties_variant_types::Ui4With<X>>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(document_properties_variant_types::Ui8With<X>),
+    Ui8(Box<document_properties_variant_types::Ui8With<X>>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(document_properties_variant_types::UnsignedIntegerWith<X>),
+    UnsignedInteger(Box<document_properties_variant_types::UnsignedIntegerWith<X>>),
     /// The element `x:users`, a `UserList`.
-    UserList(spreadsheet::UserListWith<X>),
+    UserList(Box<spreadsheet::UserListWith<X>>),
     /// The element `c:userShapes`, a `UserShapes`.
-    UserShapes(chart::UserShapesWith<X>),
+    UserShapes(Box<chart::UserShapesWith<X>>),
     /// The element `o:diagram`, a `VMLDiagram`.
-    VMLDiagram(vml_office_drawing::VMLDiagramWith<X>),
+    VMLDiagram(Box<vml_office_drawing::VMLDiagramWith<X>>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramTextWith<X>>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(document_properties_variant_types::VariantWith<X>),
+    Variant(Box<document_properties_variant_types::VariantWith<X>>),
     /// The element `vt:vector`, a `Vector`.
-    Vector(document_properties_variant_types::VectorWith<X>),
+    Vector(Box<document_properties_variant_types::VectorWith<X>>),
     /// The element `a:videoFile`, a `VideoFromFile`.
-    VideoFromFile(drawing::VideoFromFileWith<X>),
+    VideoFromFile(Box<drawing::VideoFromFileWith<X>>),
     /// The element `x:volTypes`, a `VolatileDependencyTypes`.
-    VolatileDependencyTypes(spreadsheet::VolatileDependencyTypesWith<X>),
+    VolatileDependencyTypes(Box<spreadsheet::VolatileDependencyTypesWith<X>>),
     /// The element `w:webSettings`, a `WebPageSettings`.
-    WebPageSettings(wordprocessing::WebPageSettingsWith<X>),
+    WebPageSettings(Box<wordprocessing::WebPageSettingsWith<X>>),
     /// The element `wp:wpc`, a `WordprocessingMLDrawingCanvas`.
-    WordprocessingMLDrawingCanvas(wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>),
+    WordprocessingMLDrawingCanvas(
+        Box<wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>>,
+    ),
     /// The element `wp:wsp`, a `WordprocessingMLShape`.
-    WordprocessingMLShape(wordprocessing_drawing::WordprocessingMLShapeWith<X>),
+    WordprocessingMLShape(Box<wordprocessing_drawing::WordprocessingMLShapeWith<X>>),
     /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
-    WordprocessingMLShapeGroup(wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>),
+    WordprocessingMLShapeGroup(Box<wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>>),
     /// The element `x:workbook`, a `Workbook`.
-    Workbook(spreadsheet::WorkbookWith<X>),
+    Workbook(Box<spreadsheet::WorkbookWith<X>>),
     /// The element `x:worksheet`, a `Worksheet`.
-    Worksheet(spreadsheet::WorksheetWith<X>),
+    Worksheet(Box<spreadsheet::WorksheetWith<X>>),
     /// The element `xdr:wsDr`, a `WorksheetDrawing`.
-    WorksheetDrawing(spreadsheet_drawing::WorksheetDrawingWith<X>),
+    WorksheetDrawing(Box<spreadsheet_drawing::WorksheetDrawingWith<X>>),
     /// The element `x:MapInfo`, a `XMLMappingMapInfo`.
-    XMLMappingMapInfo(spreadsheet::XMLMappingMapInfoWith<X>),
+    XMLMappingMapInfo(Box<spreadsheet::XMLMappingMapInfoWith<X>>),
 }
 
 /// [`Model3DExtensionContentWith`] of the tree a read gives, where no node holds anything in
@@ -2246,15 +2250,15 @@ impl Eq for Model3DExtensionContentWith<()> {}
 #[non_exhaustive]
 pub enum Model3DLightContentWith<X: UserData> {
     /// The element `am3d:dirLight`, a `DirLight`.
-    DirLight(DirLightWith<X>),
+    DirLight(Box<DirLightWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `am3d:ptLight`, a `PtLight`.
-    PtLight(PtLightWith<X>),
+    PtLight(Box<PtLightWith<X>>),
     /// The element `am3d:spotLight`, a `SpotLight`.
-    SpotLight(SpotLightWith<X>),
+    SpotLight(Box<SpotLightWith<X>>),
     /// The element `am3d:unkLight`, a `UnkLight`.
-    UnkLight(UnkLightWith<X>),
+    UnkLight(Box<UnkLightWith<X>>),
 }
 
 /// [`Model3DLightContentWith`] of the tree a read gives, where no node holds anything in
@@ -2272,11 +2276,11 @@ impl Eq for Model3DLightContentWith<()> {}
 #[non_exhaustive]
 pub enum Model3DViewportContentWith<X: UserData> {
     /// The element `am3d:objViewport`, a `ObjViewport`.
-    ObjViewport(ObjViewportWith<X>),
+    ObjViewport(Box<ObjViewportWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `am3d:winViewport`, a `WinViewport`.
-    WinViewport(WinViewportWith<X>),
+    WinViewport(Box<WinViewportWith<X>>),
 }
 
 /// [`Model3DViewportContentWith`] of the tree a read gives, where no node holds anything in
@@ -3718,30 +3722,32 @@ impl<X: UserData> Model3DCameraContentWith<X> {
     {
         match self {
             Self::Orthographic(node) => {
-                Model3DCameraContentWith::Orthographic(node.into_user_data())
+                Model3DCameraContentWith::Orthographic(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => Model3DCameraContentWith::Other(node),
-            Self::Perspective(node) => Model3DCameraContentWith::Perspective(node.into_user_data()),
+            Self::Perspective(node) => {
+                Model3DCameraContentWith::Perspective(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for Model3DCameraContentWith<X> {
     fn default() -> Self {
-        Self::Orthographic(OrthographicWith::default())
+        Self::Orthographic(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for Model3DCameraContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_AM3D, "orthographic")) => Self::Orthographic(item.read()),
-            Some((NS_AM3D, "perspective")) => Self::Perspective(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_AM3D, "orthographic")) => Self::Orthographic(Box::new(item.read())),
+            Some((NS_AM3D, "perspective")) => Self::Perspective(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3750,11 +3756,28 @@ impl officekit_markup_base::Write for Model3DCameraContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::Orthographic(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Perspective(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<OrthographicWith<X>> for Model3DCameraContentWith<X> {
+    fn from(arm: OrthographicWith<X>) -> Self {
+        Self::Orthographic(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PerspectiveWith<X>> for Model3DCameraContentWith<X> {
+    fn from(arm: PerspectiveWith<X>) -> Self {
+        Self::Perspective(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<Model3DCameraContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> Model3DExtensionContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -3765,6 +3788,8 @@ impl<X: UserData> Model3DExtensionContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, Model3DExtensionContentWith;
             plain [
+            ]
+            boxed [
                 AnchorForFloatingDrawingMLObject, AnchorLocationIsLocked,
                 ApplicationSpecificFileProperties, ArcSegment, Array, AttachedObjectData,
                 BasicString, BezierCurve, BinaryBlob, BinaryBlobObject, BinaryStorage,
@@ -3786,26 +3811,24 @@ impl<X: UserData> Model3DExtensionContentWith<X> {
                 LockedCanvasContainer, Lpstr, Lpwstr, MathProperties, Metadata, MultiplePathLine,
                 NewShapeDefaults, NotesMaster, NotesSlide, Null, NumberingDefinitions, OfficeMath,
                 OfficeMathParagraph, Oval, Picture, PivotCacheDefinition, PivotCacheRecords,
-                PosterFrame, Presentation, PresentationSlideSlide, PresentationWideProperties,
-                PresentationWideViewProperties, ProgrammableTabList, QueryTable, R4, R8, Rectangle,
-                ReferenceToChartPart, RevisionHeaders, Revisions, RichTextBoxContentContainer,
-                RightBorder, RoundedRectangle, SetOfAdditionalCharacteristics, SetOfFormulas,
-                SetOfHandles, ShadowEffect, ShapeClippingPath, ShapeDefinition,
-                ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup, ShapeLayoutProperties,
-                ShapePath, ShapeProtections, ShapeTemplate, SharedStringTable, SingleCells,
-                SkewTransform, SlideLayout, SlideMaster, SlideSynchronizationProperties, Sources,
-                SpreadsheetTable, StartingAnchorPoint, StorageForAlternateMathContent,
-                StyleDefinition, StyleDefinitionHeader, StyleDefinitions, StyleSheet,
-                TableStyleList, TextBox, TextBoxBottomStroke, TextBoxInteriorStroke,
-                TextBoxLeftStroke, TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath,
-                TextWrapping, Theme, ThemeManager, ThemeOverride, TopBorder, Ui1, Ui2, Ui4, Ui8,
-                UnsignedInteger, UserList, UserShapes, VMLDiagram, VMLDiagramText, Variant, Vector,
-                VideoFromFile, VolatileDependencyTypes, WebPageSettings,
-                WordprocessingMLDrawingCanvas, WordprocessingMLShape, WordprocessingMLShapeGroup,
-                Workbook, Worksheet, WorksheetDrawing, XMLMappingMapInfo,
-            ]
-            boxed [
-                PivotTableDefinition,
+                PivotTableDefinition, PosterFrame, Presentation, PresentationSlideSlide,
+                PresentationWideProperties, PresentationWideViewProperties, ProgrammableTabList,
+                QueryTable, R4, R8, Rectangle, ReferenceToChartPart, RevisionHeaders, Revisions,
+                RichTextBoxContentContainer, RightBorder, RoundedRectangle,
+                SetOfAdditionalCharacteristics, SetOfFormulas, SetOfHandles, ShadowEffect,
+                ShapeClippingPath, ShapeDefinition, ShapeFillExtendedProperties,
+                ShapeFillProperties, ShapeGroup, ShapeLayoutProperties, ShapePath, ShapeProtections,
+                ShapeTemplate, SharedStringTable, SingleCells, SkewTransform, SlideLayout,
+                SlideMaster, SlideSynchronizationProperties, Sources, SpreadsheetTable,
+                StartingAnchorPoint, StorageForAlternateMathContent, StyleDefinition,
+                StyleDefinitionHeader, StyleDefinitions, StyleSheet, TableStyleList, TextBox,
+                TextBoxBottomStroke, TextBoxInteriorStroke, TextBoxLeftStroke, TextBoxRightStroke,
+                TextBoxTopStroke, TextLayoutPath, TextWrapping, Theme, ThemeManager, ThemeOverride,
+                TopBorder, Ui1, Ui2, Ui4, Ui8, UnsignedInteger, UserList, UserShapes, VMLDiagram,
+                VMLDiagramText, Variant, Vector, VideoFromFile, VolatileDependencyTypes,
+                WebPageSettings, WordprocessingMLDrawingCanvas, WordprocessingMLShape,
+                WordprocessingMLShapeGroup, Workbook, Worksheet, WorksheetDrawing,
+                XMLMappingMapInfo,
             ]
         )
     }
@@ -3813,13 +3836,13 @@ impl<X: UserData> Model3DExtensionContentWith<X> {
 
 impl<X: UserData> Default for Model3DExtensionContentWith<X> {
     fn default() -> Self {
-        Self::Other(Node::Text(String::new()))
+        Self::Other(Box::new(Node::Text(String::new())))
     }
 }
 
 impl officekit_markup_base::Read for Model3DExtensionContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
@@ -3830,7 +3853,7 @@ impl officekit_markup_base::Read for Model3DExtensionContent {
 impl officekit_markup_base::Write for Model3DExtensionContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         if let Self::Other(node) = self {
-            writer.other(node.clone());
+            writer.other(Node::clone(node));
         }
         write_model3d_extension_1(self, writer);
         write_model3d_extension_2(self, writer);
@@ -3843,6 +3866,1264 @@ impl officekit_markup_base::Write for Model3DExtensionContent {
         write_model3d_extension_9(self, writer);
     }
 }
+
+impl<X: UserData> From<wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>) -> Self {
+        Self::AnchorForFloatingDrawingMLObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>) -> Self {
+        Self::AnchorLocationIsLocked(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_extended::ApplicationSpecificFilePropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_extended::ApplicationSpecificFilePropertiesWith<X>) -> Self {
+        Self::ApplicationSpecificFileProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ArcSegmentWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ArcSegmentWith<X>) -> Self {
+        Self::ArcSegment(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::ArrayWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::ArrayWith<X>) -> Self {
+        Self::Array(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_spreadsheet_drawing::AttachedObjectDataWith<X>) -> Self {
+        Self::AttachedObjectData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BasicStringWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BasicStringWith<X>) -> Self {
+        Self::BasicString(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::BezierCurveWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::BezierCurveWith<X>) -> Self {
+        Self::BezierCurve(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryBlobWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryBlobWith<X>) -> Self {
+        Self::BinaryBlob(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryBlobObjectWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryBlobObjectWith<X>) -> Self {
+        Self::BinaryBlobObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStorageWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStorageWith<X>) -> Self {
+        Self::BinaryStorage(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStorageObjectWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStorageObjectWith<X>) -> Self {
+        Self::BinaryStorageObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStreamWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStreamWith<X>) -> Self {
+        Self::BinaryStream(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStreamObjectWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStreamObjectWith<X>) -> Self {
+        Self::BinaryStreamObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryVersionedStreamWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryVersionedStreamWith<X>) -> Self {
+        Self::BinaryVersionedStream(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::BlipWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::BlipWith<X>) -> Self {
+        Self::Blip(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BooleanWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BooleanWith<X>) -> Self {
+        Self::Boolean(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::BottomBorderWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::BottomBorderWith<X>) -> Self {
+        Self::BottomBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::CalculationChainInfoWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet::CalculationChainInfoWith<X>) -> Self {
+        Self::CalculationChainInfo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::CalloutWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml_office_drawing::CalloutWith<X>) -> Self {
+        Self::Callout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::ChartSheetWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::ChartSheetWith<X>) -> Self {
+        Self::ChartSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<chart::ChartSpaceWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: chart::ChartSpaceWith<X>) -> Self {
+        Self::ChartSpace(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::ClassIDWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::ClassIDWith<X>) -> Self {
+        Self::ClassID(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::ColorTransformDefinitionHeaderWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: diagram::ColorTransformDefinitionHeaderWith<X>) -> Self {
+        Self::ColorTransformDefinitionHeader(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::ColorTransformDefinitionsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: diagram::ColorTransformDefinitionsWith<X>) -> Self {
+        Self::ColorTransformDefinitions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::ColorTransformHeaderListWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: diagram::ColorTransformHeaderListWith<X>) -> Self {
+        Self::ColorTransformHeaderList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::CommentListWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: presentation::CommentListWith<X>) -> Self {
+        Self::CommentList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::CommentsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::CommentsWith<X>) -> Self {
+        Self::Comments(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::CommentsCollectionWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing::CommentsCollectionWith<X>) -> Self {
+        Self::CommentsCollection(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::ComplexWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml_office_drawing::ComplexWith<X>) -> Self {
+        Self::Complex(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::ConnectionsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::ConnectionsWith<X>) -> Self {
+        Self::Connections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::CurrencyWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::CurrencyWith<X>) -> Self {
+        Self::Currency(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_custom::CustomFilePropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_custom::CustomFilePropertiesWith<X>) -> Self {
+        Self::CustomFileProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<custom_xml_data_properties::CustomXMLDataPropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: custom_xml_data_properties::CustomXMLDataPropertiesWith<X>) -> Self {
+        Self::CustomXMLDataProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::DataModelWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: diagram::DataModelWith<X>) -> Self {
+        Self::DataModel(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::DateAndTimeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::DateAndTimeWith<X>) -> Self {
+        Self::DateAndTime(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::DecimalWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::DecimalWith<X>) -> Self {
+        Self::Decimal(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::DiagramLayoutHeaderListWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: diagram::DiagramLayoutHeaderListWith<X>) -> Self {
+        Self::DiagramLayoutHeaderList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::DialogSheetWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::DialogSheetWith<X>) -> Self {
+        Self::DialogSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::DigitalSignatureLineWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::DigitalSignatureLineWith<X>) -> Self {
+        Self::DigitalSignatureLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::DocumentWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: wordprocessing::DocumentWith<X>) -> Self {
+        Self::Document(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::DocumentBackgroundWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::DocumentBackgroundWith<X>) -> Self {
+        Self::DocumentBackground(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::DocumentEndnotesWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: wordprocessing::DocumentEndnotesWith<X>) -> Self {
+        Self::DocumentEndnotes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::DocumentFootnotesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing::DocumentFootnotesWith<X>) -> Self {
+        Self::DocumentFootnotes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::DocumentSettingsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: wordprocessing::DocumentSettingsWith<X>) -> Self {
+        Self::DocumentSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::TableWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::TableWith<X>) -> Self {
+        Self::DrawingTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_drawing_2018_animation_model3d::EmbedAnimWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: super::office_drawing_2018_animation_model3d::EmbedAnimWith<X>) -> Self {
+        Self::EmbedAnim(Box::new(arm))
+    }
+}
+
+impl<X: UserData>
+    From<custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(
+        arm: custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>,
+    ) -> Self {
+        Self::EmbeddedCustomXMLSchemaSupplementaryData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::EmbeddedOLEObjectWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::EmbeddedOLEObjectWith<X>) -> Self {
+        Self::EmbeddedOLEObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::EmbeddedObjectsAndControlsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: presentation::EmbeddedObjectsAndControlsWith<X>) -> Self {
+        Self::EmbeddedObjectsAndControls(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::EmptyWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::EmptyWith<X>) -> Self {
+        Self::Empty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet_drawing::EndingAnchorPointWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet_drawing::EndingAnchorPointWith<X>) -> Self {
+        Self::EndingAnchorPoint(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::ErrorStatusCodeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::ErrorStatusCodeWith<X>) -> Self {
+        Self::ErrorStatusCode(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::ExplicitRelationshipsToDiagramPartsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: diagram::ExplicitRelationshipsToDiagramPartsWith<X>) -> Self {
+        Self::ExplicitRelationshipsToDiagramParts(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::ExternalReferenceExternalLinkWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet::ExternalReferenceExternalLinkWith<X>) -> Self {
+        Self::ExternalReferenceExternalLink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::ExtrusionWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml_office_drawing::ExtrusionWith<X>) -> Self {
+        Self::Extrusion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::FileTimeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::FileTimeWith<X>) -> Self {
+        Self::FileTime(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::FontTableRootElementWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing::FontTableRootElementWith<X>) -> Self {
+        Self::FontTableRootElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::FooterWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: wordprocessing::FooterWith<X>) -> Self {
+        Self::Footer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::GlossaryDocumentRootElementWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing::GlossaryDocumentRootElementWith<X>) -> Self {
+        Self::GlossaryDocumentRootElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::GraphicObjectWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::GraphicObjectWith<X>) -> Self {
+        Self::GraphicObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::HandoutMasterWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: presentation::HandoutMasterWith<X>) -> Self {
+        Self::HandoutMaster(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::HeaderWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: wordprocessing::HeaderWith<X>) -> Self {
+        Self::Header(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I1With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::I1With<X>) -> Self {
+        Self::I1(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I2With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::I2With<X>) -> Self {
+        Self::I2(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I4With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::I4With<X>) -> Self {
+        Self::I4(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I8With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::I8With<X>) -> Self {
+        Self::I8(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ImageDataWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ImageDataWith<X>) -> Self {
+        Self::ImageData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ImageFileWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ImageFileWith<X>) -> Self {
+        Self::ImageFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::InclusionExclusionDataForDataSourceWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing::InclusionExclusionDataForDataSourceWith<X>) -> Self {
+        Self::InclusionExclusionDataForDataSource(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::InkWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml_office_drawing::InkWith<X>) -> Self {
+        Self::Ink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::InkAnnotationFlagWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::InkAnnotationFlagWith<X>) -> Self {
+        Self::InkAnnotationFlag(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing_drawing::InlineDrawingMLObjectWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing_drawing::InlineDrawingMLObjectWith<X>) -> Self {
+        Self::InlineDrawingMLObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::IntegerWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::IntegerWith<X>) -> Self {
+        Self::Integer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::LayoutDefinitionWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: diagram::LayoutDefinitionWith<X>) -> Self {
+        Self::LayoutDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::LayoutDefinitionHeaderWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: diagram::LayoutDefinitionHeaderWith<X>) -> Self {
+        Self::LayoutDefinitionHeader(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::LeftBorderWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::LeftBorderWith<X>) -> Self {
+        Self::LeftBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::LineWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::LineWith<X>) -> Self {
+        Self::Line(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::LineStrokeSettingsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::LineStrokeSettingsWith<X>) -> Self {
+        Self::LineStrokeSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::ListOfCommentAuthorsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: presentation::ListOfCommentAuthorsWith<X>) -> Self {
+        Self::ListOfCommentAuthors(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::ListOfStyleDefinitionHeadersWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: diagram::ListOfStyleDefinitionHeadersWith<X>) -> Self {
+        Self::ListOfStyleDefinitionHeaders(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<locked_canvas::LockedCanvasContainerWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: locked_canvas::LockedCanvasContainerWith<X>) -> Self {
+        Self::LockedCanvasContainer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::LpstrWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::LpstrWith<X>) -> Self {
+        Self::Lpstr(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::LpwstrWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::LpwstrWith<X>) -> Self {
+        Self::Lpwstr(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<math::MathPropertiesWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: math::MathPropertiesWith<X>) -> Self {
+        Self::MathProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::MetadataWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::MetadataWith<X>) -> Self {
+        Self::Metadata(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::MultiplePathLineWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::MultiplePathLineWith<X>) -> Self {
+        Self::MultiplePathLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::NewShapeDefaultsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::NewShapeDefaultsWith<X>) -> Self {
+        Self::NewShapeDefaults(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::NotesMasterWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: presentation::NotesMasterWith<X>) -> Self {
+        Self::NotesMaster(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::NotesSlideWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: presentation::NotesSlideWith<X>) -> Self {
+        Self::NotesSlide(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::NullWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::NullWith<X>) -> Self {
+        Self::Null(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::NumberingDefinitionsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing::NumberingDefinitionsWith<X>) -> Self {
+        Self::NumberingDefinitions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<math::OfficeMathWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: math::OfficeMathWith<X>) -> Self {
+        Self::OfficeMath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<math::OfficeMathParagraphWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: math::OfficeMathParagraphWith<X>) -> Self {
+        Self::OfficeMathParagraph(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::OvalWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::OvalWith<X>) -> Self {
+        Self::Oval(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<picture::PictureWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: picture::PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::PivotCacheDefinitionWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet::PivotCacheDefinitionWith<X>) -> Self {
+        Self::PivotCacheDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::PivotCacheRecordsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::PivotCacheRecordsWith<X>) -> Self {
+        Self::PivotCacheRecords(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::PivotTableDefinitionWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet::PivotTableDefinitionWith<X>) -> Self {
+        Self::PivotTableDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_drawing_2018_animation_model3d::PosterFrameWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: super::office_drawing_2018_animation_model3d::PosterFrameWith<X>) -> Self {
+        Self::PosterFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::PresentationWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: presentation::PresentationWith<X>) -> Self {
+        Self::Presentation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::PresentationSlideSlideWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: presentation::PresentationSlideSlideWith<X>) -> Self {
+        Self::PresentationSlideSlide(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::PresentationWidePropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: presentation::PresentationWidePropertiesWith<X>) -> Self {
+        Self::PresentationWideProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::PresentationWideViewPropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: presentation::PresentationWideViewPropertiesWith<X>) -> Self {
+        Self::PresentationWideViewProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::ProgrammableTabListWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: presentation::ProgrammableTabListWith<X>) -> Self {
+        Self::ProgrammableTabList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::QueryTableWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::QueryTableWith<X>) -> Self {
+        Self::QueryTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::R4With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::R4With<X>) -> Self {
+        Self::R4(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::R8With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::R8With<X>) -> Self {
+        Self::R8(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::RectangleWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::RectangleWith<X>) -> Self {
+        Self::Rectangle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<chart::ReferenceToChartPartWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: chart::ReferenceToChartPartWith<X>) -> Self {
+        Self::ReferenceToChartPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::RevisionHeadersWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::RevisionHeadersWith<X>) -> Self {
+        Self::RevisionHeaders(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::RevisionsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::RevisionsWith<X>) -> Self {
+        Self::Revisions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::RichTextBoxContentContainerWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing::RichTextBoxContentContainerWith<X>) -> Self {
+        Self::RichTextBoxContentContainer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::RightBorderWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::RightBorderWith<X>) -> Self {
+        Self::RightBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::RoundedRectangleWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::RoundedRectangleWith<X>) -> Self {
+        Self::RoundedRectangle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<additional_characteristics::SetOfAdditionalCharacteristicsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: additional_characteristics::SetOfAdditionalCharacteristicsWith<X>) -> Self {
+        Self::SetOfAdditionalCharacteristics(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::SetOfFormulasWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::SetOfFormulasWith<X>) -> Self {
+        Self::SetOfFormulas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::SetOfHandlesWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::SetOfHandlesWith<X>) -> Self {
+        Self::SetOfHandles(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ShadowEffectWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ShadowEffectWith<X>) -> Self {
+        Self::ShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::ShapeClippingPathWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::ShapeClippingPathWith<X>) -> Self {
+        Self::ShapeClippingPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ShapeDefinitionWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ShapeDefinitionWith<X>) -> Self {
+        Self::ShapeDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::ShapeFillExtendedPropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::ShapeFillExtendedPropertiesWith<X>) -> Self {
+        Self::ShapeFillExtendedProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ShapeFillPropertiesWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ShapeFillPropertiesWith<X>) -> Self {
+        Self::ShapeFillProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ShapeGroupWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ShapeGroupWith<X>) -> Self {
+        Self::ShapeGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::ShapeLayoutPropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::ShapeLayoutPropertiesWith<X>) -> Self {
+        Self::ShapeLayoutProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ShapePathWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ShapePathWith<X>) -> Self {
+        Self::ShapePath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::ShapeProtectionsWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::ShapeProtectionsWith<X>) -> Self {
+        Self::ShapeProtections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::ShapeTemplateWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::ShapeTemplateWith<X>) -> Self {
+        Self::ShapeTemplate(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::SharedStringTableWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::SharedStringTableWith<X>) -> Self {
+        Self::SharedStringTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::SingleCellsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::SingleCellsWith<X>) -> Self {
+        Self::SingleCells(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::SkewTransformWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::SkewTransformWith<X>) -> Self {
+        Self::SkewTransform(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::SlideLayoutWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: presentation::SlideLayoutWith<X>) -> Self {
+        Self::SlideLayout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::SlideMasterWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: presentation::SlideMasterWith<X>) -> Self {
+        Self::SlideMaster(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<presentation::SlideSynchronizationPropertiesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: presentation::SlideSynchronizationPropertiesWith<X>) -> Self {
+        Self::SlideSynchronizationProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<bibliography::SourcesWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: bibliography::SourcesWith<X>) -> Self {
+        Self::Sources(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::TableWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::TableWith<X>) -> Self {
+        Self::SpreadsheetTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet_drawing::StartingAnchorPointWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet_drawing::StartingAnchorPointWith<X>) -> Self {
+        Self::StartingAnchorPoint(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::StorageForAlternateMathContentWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
+        Self::StorageForAlternateMathContent(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::StyleDefinitionWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: diagram::StyleDefinitionWith<X>) -> Self {
+        Self::StyleDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<diagram::StyleDefinitionHeaderWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: diagram::StyleDefinitionHeaderWith<X>) -> Self {
+        Self::StyleDefinitionHeader(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::StyleDefinitionsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: wordprocessing::StyleDefinitionsWith<X>) -> Self {
+        Self::StyleDefinitions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::StyleSheetWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::StyleSheetWith<X>) -> Self {
+        Self::StyleSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::TableStyleListWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::TableStyleListWith<X>) -> Self {
+        Self::TableStyleList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::TextBoxWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::TextBoxWith<X>) -> Self {
+        Self::TextBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::TextBoxBottomStrokeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::TextBoxBottomStrokeWith<X>) -> Self {
+        Self::TextBoxBottomStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::TextBoxInteriorStrokeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::TextBoxInteriorStrokeWith<X>) -> Self {
+        Self::TextBoxInteriorStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::TextBoxLeftStrokeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::TextBoxLeftStrokeWith<X>) -> Self {
+        Self::TextBoxLeftStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::TextBoxRightStrokeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::TextBoxRightStrokeWith<X>) -> Self {
+        Self::TextBoxRightStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::TextBoxTopStrokeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_office_drawing::TextBoxTopStrokeWith<X>) -> Self {
+        Self::TextBoxTopStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml::TextLayoutPathWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml::TextLayoutPathWith<X>) -> Self {
+        Self::TextLayoutPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TextWrappingWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TextWrappingWith<X>) -> Self {
+        Self::TextWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::ThemeWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::ThemeWith<X>) -> Self {
+        Self::Theme(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::ThemeManagerWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::ThemeManagerWith<X>) -> Self {
+        Self::ThemeManager(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::ThemeOverrideWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::ThemeOverrideWith<X>) -> Self {
+        Self::ThemeOverride(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TopBorderWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TopBorderWith<X>) -> Self {
+        Self::TopBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui1With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::Ui1With<X>) -> Self {
+        Self::Ui1(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui2With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::Ui2With<X>) -> Self {
+        Self::Ui2(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui4With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::Ui4With<X>) -> Self {
+        Self::Ui4(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui8With<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::Ui8With<X>) -> Self {
+        Self::Ui8(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::UnsignedIntegerWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::UnsignedIntegerWith<X>) -> Self {
+        Self::UnsignedInteger(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::UserListWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::UserListWith<X>) -> Self {
+        Self::UserList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<chart::UserShapesWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: chart::UserShapesWith<X>) -> Self {
+        Self::UserShapes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_office_drawing::VMLDiagramWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: vml_office_drawing::VMLDiagramWith<X>) -> Self {
+        Self::VMLDiagram(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::VMLDiagramTextWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::VMLDiagramTextWith<X>) -> Self {
+        Self::VMLDiagramText(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::VariantWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::VariantWith<X>) -> Self {
+        Self::Variant(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::VectorWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::VectorWith<X>) -> Self {
+        Self::Vector(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<drawing::VideoFromFileWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: drawing::VideoFromFileWith<X>) -> Self {
+        Self::VideoFromFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::VolatileDependencyTypesWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet::VolatileDependencyTypesWith<X>) -> Self {
+        Self::VolatileDependencyTypes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing::WebPageSettingsWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: wordprocessing::WebPageSettingsWith<X>) -> Self {
+        Self::WebPageSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>) -> Self {
+        Self::WordprocessingMLDrawingCanvas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing_drawing::WordprocessingMLShapeWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing_drawing::WordprocessingMLShapeWith<X>) -> Self {
+        Self::WordprocessingMLShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>) -> Self {
+        Self::WordprocessingMLShapeGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::WorkbookWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::WorkbookWith<X>) -> Self {
+        Self::Workbook(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::WorksheetWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::WorksheetWith<X>) -> Self {
+        Self::Worksheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet_drawing::WorksheetDrawingWith<X>>
+    for Model3DExtensionContentWith<X>
+{
+    fn from(arm: spreadsheet_drawing::WorksheetDrawingWith<X>) -> Self {
+        Self::WorksheetDrawing(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<spreadsheet::XMLMappingMapInfoWith<X>> for Model3DExtensionContentWith<X> {
+    fn from(arm: spreadsheet::XMLMappingMapInfoWith<X>) -> Self {
+        Self::XMLMappingMapInfo(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<Model3DExtensionContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<vml::ShapeElementContent> for Model3DExtensionContent {
     fn from(item: vml::ShapeElementContent) -> Self {
@@ -3931,7 +5212,7 @@ impl From<wordprocessing::DrawingObjectContent> for Model3DExtensionContent {
     fn from(item: wordprocessing::DrawingObjectContent) -> Self {
         match item {
             wordprocessing::DrawingObjectContent::AnchorForFloatingDrawingMLObject(arm) => {
-                Self::AnchorForFloatingDrawingMLObject(*arm)
+                Self::AnchorForFloatingDrawingMLObject(arm)
             }
             wordprocessing::DrawingObjectContent::InlineDrawingMLObject(arm) => {
                 Self::InlineDrawingMLObject(arm)
@@ -4330,7 +5611,7 @@ impl From<drawing::AnyElementContent> for Model3DExtensionContent {
             .or_else(any_element_content_into_model3d_extension_content_5)
             .or_else(any_element_content_into_model3d_extension_content_6)
             .or_else(any_element_content_into_model3d_extension_content_7)
-            .unwrap_or_else(|rest| Self::Other(officekit_markup_base::generic(&*rest)))
+            .unwrap_or_else(|rest| Self::Other(Box::new(officekit_markup_base::generic(&*rest))))
     }
 }
 
@@ -4507,27 +5788,35 @@ impl<X: UserData> Model3DLightContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::DirLight(node) => Model3DLightContentWith::DirLight(node.into_user_data()),
+            Self::DirLight(node) => {
+                Model3DLightContentWith::DirLight(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => Model3DLightContentWith::Other(node),
-            Self::PtLight(node) => Model3DLightContentWith::PtLight(node.into_user_data()),
-            Self::SpotLight(node) => Model3DLightContentWith::SpotLight(node.into_user_data()),
-            Self::UnkLight(node) => Model3DLightContentWith::UnkLight(node.into_user_data()),
+            Self::PtLight(node) => {
+                Model3DLightContentWith::PtLight(Box::new((*node).into_user_data()))
+            }
+            Self::SpotLight(node) => {
+                Model3DLightContentWith::SpotLight(Box::new((*node).into_user_data()))
+            }
+            Self::UnkLight(node) => {
+                Model3DLightContentWith::UnkLight(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for Model3DLightContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_AM3D, "dirLight")) => Self::DirLight(item.read()),
-            Some((NS_AM3D, "ptLight")) => Self::PtLight(item.read()),
-            Some((NS_AM3D, "spotLight")) => Self::SpotLight(item.read()),
-            Some((NS_AM3D, "unkLight")) => Self::UnkLight(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_AM3D, "dirLight")) => Self::DirLight(Box::new(item.read())),
+            Some((NS_AM3D, "ptLight")) => Self::PtLight(Box::new(item.read())),
+            Some((NS_AM3D, "spotLight")) => Self::SpotLight(Box::new(item.read())),
+            Some((NS_AM3D, "unkLight")) => Self::UnkLight(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -4536,13 +5825,42 @@ impl officekit_markup_base::Write for Model3DLightContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::DirLight(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PtLight(arm) => arm.write_into(writer),
             Self::SpotLight(arm) => arm.write_into(writer),
             Self::UnkLight(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<DirLightWith<X>> for Model3DLightContentWith<X> {
+    fn from(arm: DirLightWith<X>) -> Self {
+        Self::DirLight(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PtLightWith<X>> for Model3DLightContentWith<X> {
+    fn from(arm: PtLightWith<X>) -> Self {
+        Self::PtLight(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SpotLightWith<X>> for Model3DLightContentWith<X> {
+    fn from(arm: SpotLightWith<X>) -> Self {
+        Self::SpotLight(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UnkLightWith<X>> for Model3DLightContentWith<X> {
+    fn from(arm: UnkLightWith<X>) -> Self {
+        Self::UnkLight(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<Model3DLightContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> Model3DViewportContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -4553,11 +5871,11 @@ impl<X: UserData> Model3DViewportContentWith<X> {
     {
         match self {
             Self::ObjViewport(node) => {
-                Model3DViewportContentWith::ObjViewport(node.into_user_data())
+                Model3DViewportContentWith::ObjViewport(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => Model3DViewportContentWith::Other(node),
             Self::WinViewport(node) => {
-                Model3DViewportContentWith::WinViewport(node.into_user_data())
+                Model3DViewportContentWith::WinViewport(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -4565,20 +5883,20 @@ impl<X: UserData> Model3DViewportContentWith<X> {
 
 impl<X: UserData> Default for Model3DViewportContentWith<X> {
     fn default() -> Self {
-        Self::ObjViewport(ObjViewportWith::default())
+        Self::ObjViewport(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for Model3DViewportContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_AM3D, "objViewport")) => Self::ObjViewport(item.read()),
-            Some((NS_AM3D, "winViewport")) => Self::WinViewport(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_AM3D, "objViewport")) => Self::ObjViewport(Box::new(item.read())),
+            Some((NS_AM3D, "winViewport")) => Self::WinViewport(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -4587,11 +5905,28 @@ impl officekit_markup_base::Write for Model3DViewportContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::ObjViewport(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::WinViewport(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ObjViewportWith<X>> for Model3DViewportContentWith<X> {
+    fn from(arm: ObjViewportWith<X>) -> Self {
+        Self::ObjViewport(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WinViewportWith<X>> for Model3DViewportContentWith<X> {
+    fn from(arm: WinViewportWith<X>) -> Self {
+        Self::WinViewport(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<Model3DViewportContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> Model3dWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -5783,119 +7118,165 @@ impl officekit_markup_base::Write for WinViewport {
 fn read_model3d_extension_1(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
     match item.name() {
         Some((NS_WP, "anchor")) => {
-            Model3DExtensionContent::AnchorForFloatingDrawingMLObject(item.read())
+            Model3DExtensionContent::AnchorForFloatingDrawingMLObject(Box::new(item.read()))
         }
         Some((NS_W10, "anchorlock")) => {
-            Model3DExtensionContent::AnchorLocationIsLocked(item.read())
+            Model3DExtensionContent::AnchorLocationIsLocked(Box::new(item.read()))
         }
         Some((NS_AP, "Properties")) => {
-            Model3DExtensionContent::ApplicationSpecificFileProperties(item.read())
+            Model3DExtensionContent::ApplicationSpecificFileProperties(Box::new(item.read()))
         }
-        Some((NS_V, "arc")) => Model3DExtensionContent::ArcSegment(item.read()),
-        Some((NS_VT, "array")) => Model3DExtensionContent::Array(item.read()),
-        Some((NS_XVML, "ClientData")) => Model3DExtensionContent::AttachedObjectData(item.read()),
-        Some((NS_VT, "bstr")) => Model3DExtensionContent::BasicString(item.read()),
-        Some((NS_V, "curve")) => Model3DExtensionContent::BezierCurve(item.read()),
-        Some((NS_VT, "blob")) => Model3DExtensionContent::BinaryBlob(item.read()),
-        Some((NS_VT, "oblob")) => Model3DExtensionContent::BinaryBlobObject(item.read()),
-        Some((NS_VT, "storage")) => Model3DExtensionContent::BinaryStorage(item.read()),
-        Some((NS_VT, "ostorage")) => Model3DExtensionContent::BinaryStorageObject(item.read()),
-        Some((NS_VT, "stream")) => Model3DExtensionContent::BinaryStream(item.read()),
-        Some((NS_VT, "ostream")) => Model3DExtensionContent::BinaryStreamObject(item.read()),
-        Some((NS_VT, "vstream")) => Model3DExtensionContent::BinaryVersionedStream(item.read()),
-        Some((NS_A, "blip")) => Model3DExtensionContent::Blip(item.read()),
-        Some((NS_VT, "bool")) => Model3DExtensionContent::Boolean(item.read()),
-        Some((NS_W10, "borderbottom")) => Model3DExtensionContent::BottomBorder(item.read()),
-        Some((NS_X, "calcChain")) => Model3DExtensionContent::CalculationChainInfo(item.read()),
-        Some((NS_O, "callout")) => Model3DExtensionContent::Callout(item.read()),
-        Some((NS_X, "chartsheet")) => Model3DExtensionContent::ChartSheet(item.read()),
-        Some((NS_C, "chartSpace")) => Model3DExtensionContent::ChartSpace(item.read()),
-        Some((NS_VT, "clsid")) => Model3DExtensionContent::ClassID(item.read()),
+        Some((NS_V, "arc")) => Model3DExtensionContent::ArcSegment(Box::new(item.read())),
+        Some((NS_VT, "array")) => Model3DExtensionContent::Array(Box::new(item.read())),
+        Some((NS_XVML, "ClientData")) => {
+            Model3DExtensionContent::AttachedObjectData(Box::new(item.read()))
+        }
+        Some((NS_VT, "bstr")) => Model3DExtensionContent::BasicString(Box::new(item.read())),
+        Some((NS_V, "curve")) => Model3DExtensionContent::BezierCurve(Box::new(item.read())),
+        Some((NS_VT, "blob")) => Model3DExtensionContent::BinaryBlob(Box::new(item.read())),
+        Some((NS_VT, "oblob")) => Model3DExtensionContent::BinaryBlobObject(Box::new(item.read())),
+        Some((NS_VT, "storage")) => Model3DExtensionContent::BinaryStorage(Box::new(item.read())),
+        Some((NS_VT, "ostorage")) => {
+            Model3DExtensionContent::BinaryStorageObject(Box::new(item.read()))
+        }
+        Some((NS_VT, "stream")) => Model3DExtensionContent::BinaryStream(Box::new(item.read())),
+        Some((NS_VT, "ostream")) => {
+            Model3DExtensionContent::BinaryStreamObject(Box::new(item.read()))
+        }
+        Some((NS_VT, "vstream")) => {
+            Model3DExtensionContent::BinaryVersionedStream(Box::new(item.read()))
+        }
+        Some((NS_A, "blip")) => Model3DExtensionContent::Blip(Box::new(item.read())),
+        Some((NS_VT, "bool")) => Model3DExtensionContent::Boolean(Box::new(item.read())),
+        Some((NS_W10, "borderbottom")) => {
+            Model3DExtensionContent::BottomBorder(Box::new(item.read()))
+        }
+        Some((NS_X, "calcChain")) => {
+            Model3DExtensionContent::CalculationChainInfo(Box::new(item.read()))
+        }
+        Some((NS_O, "callout")) => Model3DExtensionContent::Callout(Box::new(item.read())),
+        Some((NS_X, "chartsheet")) => Model3DExtensionContent::ChartSheet(Box::new(item.read())),
+        Some((NS_C, "chartSpace")) => Model3DExtensionContent::ChartSpace(Box::new(item.read())),
+        Some((NS_VT, "clsid")) => Model3DExtensionContent::ClassID(Box::new(item.read())),
         Some((NS_DGM, "colorsDefHdr")) => {
-            Model3DExtensionContent::ColorTransformDefinitionHeader(item.read())
+            Model3DExtensionContent::ColorTransformDefinitionHeader(Box::new(item.read()))
         }
         Some((NS_DGM, "colorsDef")) => {
-            Model3DExtensionContent::ColorTransformDefinitions(item.read())
+            Model3DExtensionContent::ColorTransformDefinitions(Box::new(item.read()))
         }
         Some((NS_DGM, "colorsDefHdrLst")) => {
-            Model3DExtensionContent::ColorTransformHeaderList(item.read())
+            Model3DExtensionContent::ColorTransformHeaderList(Box::new(item.read()))
         }
-        Some((NS_P, "cmLst")) => Model3DExtensionContent::CommentList(item.read()),
-        Some((NS_X, "comments")) => Model3DExtensionContent::Comments(item.read()),
-        Some((NS_W, "comments")) => Model3DExtensionContent::CommentsCollection(item.read()),
-        Some((NS_O, "complex")) => Model3DExtensionContent::Complex(item.read()),
-        Some((NS_X, "connections")) => Model3DExtensionContent::Connections(item.read()),
-        Some((NS_VT, "cy")) => Model3DExtensionContent::Currency(item.read()),
-        Some((NS_OP, "Properties")) => Model3DExtensionContent::CustomFileProperties(item.read()),
+        Some((NS_P, "cmLst")) => Model3DExtensionContent::CommentList(Box::new(item.read())),
+        Some((NS_X, "comments")) => Model3DExtensionContent::Comments(Box::new(item.read())),
+        Some((NS_W, "comments")) => {
+            Model3DExtensionContent::CommentsCollection(Box::new(item.read()))
+        }
+        Some((NS_O, "complex")) => Model3DExtensionContent::Complex(Box::new(item.read())),
+        Some((NS_X, "connections")) => Model3DExtensionContent::Connections(Box::new(item.read())),
+        Some((NS_VT, "cy")) => Model3DExtensionContent::Currency(Box::new(item.read())),
+        Some((NS_OP, "Properties")) => {
+            Model3DExtensionContent::CustomFileProperties(Box::new(item.read()))
+        }
         Some((NS_DS, "datastoreItem")) => {
-            Model3DExtensionContent::CustomXMLDataProperties(item.read())
+            Model3DExtensionContent::CustomXMLDataProperties(Box::new(item.read()))
         }
-        Some((NS_DGM, "dataModel")) => Model3DExtensionContent::DataModel(item.read()),
-        Some((NS_VT, "date")) => Model3DExtensionContent::DateAndTime(item.read()),
-        Some((NS_VT, "decimal")) => Model3DExtensionContent::Decimal(item.read()),
+        Some((NS_DGM, "dataModel")) => Model3DExtensionContent::DataModel(Box::new(item.read())),
+        Some((NS_VT, "date")) => Model3DExtensionContent::DateAndTime(Box::new(item.read())),
+        Some((NS_VT, "decimal")) => Model3DExtensionContent::Decimal(Box::new(item.read())),
         Some((NS_DGM, "layoutDefHdrLst")) => {
-            Model3DExtensionContent::DiagramLayoutHeaderList(item.read())
+            Model3DExtensionContent::DiagramLayoutHeaderList(Box::new(item.read()))
         }
-        Some((NS_X, "dialogsheet")) => Model3DExtensionContent::DialogSheet(item.read()),
-        Some((NS_O, "signatureline")) => Model3DExtensionContent::DigitalSignatureLine(item.read()),
+        Some((NS_X, "dialogsheet")) => Model3DExtensionContent::DialogSheet(Box::new(item.read())),
+        Some((NS_O, "signatureline")) => {
+            Model3DExtensionContent::DigitalSignatureLine(Box::new(item.read()))
+        }
         _ => read_model3d_extension_2(item),
     }
 }
 
 fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
     match item.name() {
-        Some((NS_W, "document")) => Model3DExtensionContent::Document(item.read()),
-        Some((NS_V, "background")) => Model3DExtensionContent::DocumentBackground(item.read()),
-        Some((NS_W, "endnotes")) => Model3DExtensionContent::DocumentEndnotes(item.read()),
-        Some((NS_W, "footnotes")) => Model3DExtensionContent::DocumentFootnotes(item.read()),
-        Some((NS_W, "settings")) => Model3DExtensionContent::DocumentSettings(item.read()),
-        Some((NS_A, "tbl")) => Model3DExtensionContent::DrawingTable(item.read()),
-        Some((NS_A3DANIM, "embedAnim")) => Model3DExtensionContent::EmbedAnim(item.read()),
-        Some((NS_SL, "schemaLibrary")) => {
-            Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(item.read())
+        Some((NS_W, "document")) => Model3DExtensionContent::Document(Box::new(item.read())),
+        Some((NS_V, "background")) => {
+            Model3DExtensionContent::DocumentBackground(Box::new(item.read()))
         }
-        Some((NS_O, "OLEObject")) => Model3DExtensionContent::EmbeddedOLEObject(item.read()),
-        Some((NS_P, "oleObj")) => Model3DExtensionContent::EmbeddedObjectsAndControls(item.read()),
-        Some((NS_VT, "empty")) => Model3DExtensionContent::Empty(item.read()),
-        Some((NS_XDR, "to")) => Model3DExtensionContent::EndingAnchorPoint(item.read()),
-        Some((NS_VT, "error")) => Model3DExtensionContent::ErrorStatusCode(item.read()),
+        Some((NS_W, "endnotes")) => {
+            Model3DExtensionContent::DocumentEndnotes(Box::new(item.read()))
+        }
+        Some((NS_W, "footnotes")) => {
+            Model3DExtensionContent::DocumentFootnotes(Box::new(item.read()))
+        }
+        Some((NS_W, "settings")) => {
+            Model3DExtensionContent::DocumentSettings(Box::new(item.read()))
+        }
+        Some((NS_A, "tbl")) => Model3DExtensionContent::DrawingTable(Box::new(item.read())),
+        Some((NS_A3DANIM, "embedAnim")) => {
+            Model3DExtensionContent::EmbedAnim(Box::new(item.read()))
+        }
+        Some((NS_SL, "schemaLibrary")) => {
+            Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(Box::new(item.read()))
+        }
+        Some((NS_O, "OLEObject")) => {
+            Model3DExtensionContent::EmbeddedOLEObject(Box::new(item.read()))
+        }
+        Some((NS_P, "oleObj")) => {
+            Model3DExtensionContent::EmbeddedObjectsAndControls(Box::new(item.read()))
+        }
+        Some((NS_VT, "empty")) => Model3DExtensionContent::Empty(Box::new(item.read())),
+        Some((NS_XDR, "to")) => Model3DExtensionContent::EndingAnchorPoint(Box::new(item.read())),
+        Some((NS_VT, "error")) => Model3DExtensionContent::ErrorStatusCode(Box::new(item.read())),
         Some((NS_DGM, "relIds")) => {
-            Model3DExtensionContent::ExplicitRelationshipsToDiagramParts(item.read())
+            Model3DExtensionContent::ExplicitRelationshipsToDiagramParts(Box::new(item.read()))
         }
         Some((NS_X, "externalLink")) => {
-            Model3DExtensionContent::ExternalReferenceExternalLink(item.read())
+            Model3DExtensionContent::ExternalReferenceExternalLink(Box::new(item.read()))
         }
-        Some((NS_O, "extrusion")) => Model3DExtensionContent::Extrusion(item.read()),
-        Some((NS_VT, "filetime")) => Model3DExtensionContent::FileTime(item.read()),
-        Some((NS_W, "fonts")) => Model3DExtensionContent::FontTableRootElement(item.read()),
-        Some((NS_W, "ftr")) => Model3DExtensionContent::Footer(item.read()),
+        Some((NS_O, "extrusion")) => Model3DExtensionContent::Extrusion(Box::new(item.read())),
+        Some((NS_VT, "filetime")) => Model3DExtensionContent::FileTime(Box::new(item.read())),
+        Some((NS_W, "fonts")) => {
+            Model3DExtensionContent::FontTableRootElement(Box::new(item.read()))
+        }
+        Some((NS_W, "ftr")) => Model3DExtensionContent::Footer(Box::new(item.read())),
         Some((NS_W, "glossaryDocument")) => {
-            Model3DExtensionContent::GlossaryDocumentRootElement(item.read())
+            Model3DExtensionContent::GlossaryDocumentRootElement(Box::new(item.read()))
         }
-        Some((NS_A, "graphic")) => Model3DExtensionContent::GraphicObject(item.read()),
-        Some((NS_P, "handoutMaster")) => Model3DExtensionContent::HandoutMaster(item.read()),
-        Some((NS_W, "hdr")) => Model3DExtensionContent::Header(item.read()),
-        Some((NS_VT, "i1")) => Model3DExtensionContent::I1(item.read()),
-        Some((NS_VT, "i2")) => Model3DExtensionContent::I2(item.read()),
-        Some((NS_VT, "i4")) => Model3DExtensionContent::I4(item.read()),
-        Some((NS_VT, "i8")) => Model3DExtensionContent::I8(item.read()),
-        Some((NS_V, "imagedata")) => Model3DExtensionContent::ImageData(item.read()),
-        Some((NS_V, "image")) => Model3DExtensionContent::ImageFile(item.read()),
+        Some((NS_A, "graphic")) => Model3DExtensionContent::GraphicObject(Box::new(item.read())),
+        Some((NS_P, "handoutMaster")) => {
+            Model3DExtensionContent::HandoutMaster(Box::new(item.read()))
+        }
+        Some((NS_W, "hdr")) => Model3DExtensionContent::Header(Box::new(item.read())),
+        Some((NS_VT, "i1")) => Model3DExtensionContent::I1(Box::new(item.read())),
+        Some((NS_VT, "i2")) => Model3DExtensionContent::I2(Box::new(item.read())),
+        Some((NS_VT, "i4")) => Model3DExtensionContent::I4(Box::new(item.read())),
+        Some((NS_VT, "i8")) => Model3DExtensionContent::I8(Box::new(item.read())),
+        Some((NS_V, "imagedata")) => Model3DExtensionContent::ImageData(Box::new(item.read())),
+        Some((NS_V, "image")) => Model3DExtensionContent::ImageFile(Box::new(item.read())),
         Some((NS_W, "recipients")) => {
-            Model3DExtensionContent::InclusionExclusionDataForDataSource(item.read())
+            Model3DExtensionContent::InclusionExclusionDataForDataSource(Box::new(item.read()))
         }
-        Some((NS_O, "ink")) => Model3DExtensionContent::Ink(item.read()),
-        Some((NS_PVML, "iscomment")) => Model3DExtensionContent::InkAnnotationFlag(item.read()),
-        Some((NS_WP, "inline")) => Model3DExtensionContent::InlineDrawingMLObject(item.read()),
-        Some((NS_VT, "int")) => Model3DExtensionContent::Integer(item.read()),
-        Some((NS_DGM, "layoutDef")) => Model3DExtensionContent::LayoutDefinition(item.read()),
+        Some((NS_O, "ink")) => Model3DExtensionContent::Ink(Box::new(item.read())),
+        Some((NS_PVML, "iscomment")) => {
+            Model3DExtensionContent::InkAnnotationFlag(Box::new(item.read()))
+        }
+        Some((NS_WP, "inline")) => {
+            Model3DExtensionContent::InlineDrawingMLObject(Box::new(item.read()))
+        }
+        Some((NS_VT, "int")) => Model3DExtensionContent::Integer(Box::new(item.read())),
+        Some((NS_DGM, "layoutDef")) => {
+            Model3DExtensionContent::LayoutDefinition(Box::new(item.read()))
+        }
         Some((NS_DGM, "layoutDefHdr")) => {
-            Model3DExtensionContent::LayoutDefinitionHeader(item.read())
+            Model3DExtensionContent::LayoutDefinitionHeader(Box::new(item.read()))
         }
-        Some((NS_W10, "borderleft")) => Model3DExtensionContent::LeftBorder(item.read()),
-        Some((NS_V, "line")) => Model3DExtensionContent::Line(item.read()),
-        Some((NS_V, "stroke")) => Model3DExtensionContent::LineStrokeSettings(item.read()),
-        Some((NS_P, "cmAuthorLst")) => Model3DExtensionContent::ListOfCommentAuthors(item.read()),
+        Some((NS_W10, "borderleft")) => Model3DExtensionContent::LeftBorder(Box::new(item.read())),
+        Some((NS_V, "line")) => Model3DExtensionContent::Line(Box::new(item.read())),
+        Some((NS_V, "stroke")) => {
+            Model3DExtensionContent::LineStrokeSettings(Box::new(item.read()))
+        }
+        Some((NS_P, "cmAuthorLst")) => {
+            Model3DExtensionContent::ListOfCommentAuthors(Box::new(item.read()))
+        }
         _ => read_model3d_extension_3(item),
     }
 }
@@ -5903,144 +7284,196 @@ fn read_model3d_extension_2(item: officekit_markup_base::Item<'_>) -> Model3DExt
 fn read_model3d_extension_3(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
     match item.name() {
         Some((NS_DGM, "styleDefHdrLst")) => {
-            Model3DExtensionContent::ListOfStyleDefinitionHeaders(item.read())
+            Model3DExtensionContent::ListOfStyleDefinitionHeaders(Box::new(item.read()))
         }
         Some((NS_LC, "lockedCanvas")) => {
-            Model3DExtensionContent::LockedCanvasContainer(item.read())
+            Model3DExtensionContent::LockedCanvasContainer(Box::new(item.read()))
         }
-        Some((NS_VT, "lpstr")) => Model3DExtensionContent::Lpstr(item.read()),
-        Some((NS_VT, "lpwstr")) => Model3DExtensionContent::Lpwstr(item.read()),
-        Some((NS_M, "mathPr")) => Model3DExtensionContent::MathProperties(item.read()),
-        Some((NS_X, "metadata")) => Model3DExtensionContent::Metadata(item.read()),
-        Some((NS_V, "polyline")) => Model3DExtensionContent::MultiplePathLine(item.read()),
-        Some((NS_O, "shapedefaults")) => Model3DExtensionContent::NewShapeDefaults(item.read()),
-        Some((NS_P, "notesMaster")) => Model3DExtensionContent::NotesMaster(item.read()),
-        Some((NS_P, "notes")) => Model3DExtensionContent::NotesSlide(item.read()),
-        Some((NS_VT, "null")) => Model3DExtensionContent::Null(item.read()),
-        Some((NS_W, "numbering")) => Model3DExtensionContent::NumberingDefinitions(item.read()),
-        Some((NS_M, "oMath")) => Model3DExtensionContent::OfficeMath(item.read()),
-        Some((NS_M, "oMathPara")) => Model3DExtensionContent::OfficeMathParagraph(item.read()),
-        Some((NS_V, "oval")) => Model3DExtensionContent::Oval(item.read()),
-        Some((NS_PIC, "pic")) => Model3DExtensionContent::Picture(item.read()),
+        Some((NS_VT, "lpstr")) => Model3DExtensionContent::Lpstr(Box::new(item.read())),
+        Some((NS_VT, "lpwstr")) => Model3DExtensionContent::Lpwstr(Box::new(item.read())),
+        Some((NS_M, "mathPr")) => Model3DExtensionContent::MathProperties(Box::new(item.read())),
+        Some((NS_X, "metadata")) => Model3DExtensionContent::Metadata(Box::new(item.read())),
+        Some((NS_V, "polyline")) => {
+            Model3DExtensionContent::MultiplePathLine(Box::new(item.read()))
+        }
+        Some((NS_O, "shapedefaults")) => {
+            Model3DExtensionContent::NewShapeDefaults(Box::new(item.read()))
+        }
+        Some((NS_P, "notesMaster")) => Model3DExtensionContent::NotesMaster(Box::new(item.read())),
+        Some((NS_P, "notes")) => Model3DExtensionContent::NotesSlide(Box::new(item.read())),
+        Some((NS_VT, "null")) => Model3DExtensionContent::Null(Box::new(item.read())),
+        Some((NS_W, "numbering")) => {
+            Model3DExtensionContent::NumberingDefinitions(Box::new(item.read()))
+        }
+        Some((NS_M, "oMath")) => Model3DExtensionContent::OfficeMath(Box::new(item.read())),
+        Some((NS_M, "oMathPara")) => {
+            Model3DExtensionContent::OfficeMathParagraph(Box::new(item.read()))
+        }
+        Some((NS_V, "oval")) => Model3DExtensionContent::Oval(Box::new(item.read())),
+        Some((NS_PIC, "pic")) => Model3DExtensionContent::Picture(Box::new(item.read())),
         Some((NS_X, "pivotCacheDefinition")) => {
-            Model3DExtensionContent::PivotCacheDefinition(item.read())
+            Model3DExtensionContent::PivotCacheDefinition(Box::new(item.read()))
         }
         Some((NS_X, "pivotCacheRecords")) => {
-            Model3DExtensionContent::PivotCacheRecords(item.read())
+            Model3DExtensionContent::PivotCacheRecords(Box::new(item.read()))
         }
         Some((NS_X, "pivotTableDefinition")) => {
             Model3DExtensionContent::PivotTableDefinition(Box::new(item.read()))
         }
-        Some((NS_A3DANIM, "posterFrame")) => Model3DExtensionContent::PosterFrame(item.read()),
-        Some((NS_P, "presentation")) => Model3DExtensionContent::Presentation(item.read()),
-        Some((NS_P, "sld")) => Model3DExtensionContent::PresentationSlideSlide(item.read()),
+        Some((NS_A3DANIM, "posterFrame")) => {
+            Model3DExtensionContent::PosterFrame(Box::new(item.read()))
+        }
+        Some((NS_P, "presentation")) => {
+            Model3DExtensionContent::Presentation(Box::new(item.read()))
+        }
+        Some((NS_P, "sld")) => {
+            Model3DExtensionContent::PresentationSlideSlide(Box::new(item.read()))
+        }
         Some((NS_P, "presentationPr")) => {
-            Model3DExtensionContent::PresentationWideProperties(item.read())
+            Model3DExtensionContent::PresentationWideProperties(Box::new(item.read()))
         }
         Some((NS_P, "viewPr")) => {
-            Model3DExtensionContent::PresentationWideViewProperties(item.read())
+            Model3DExtensionContent::PresentationWideViewProperties(Box::new(item.read()))
         }
-        Some((NS_P, "tagLst")) => Model3DExtensionContent::ProgrammableTabList(item.read()),
-        Some((NS_X, "queryTable")) => Model3DExtensionContent::QueryTable(item.read()),
-        Some((NS_VT, "r4")) => Model3DExtensionContent::R4(item.read()),
-        Some((NS_VT, "r8")) => Model3DExtensionContent::R8(item.read()),
-        Some((NS_V, "rect")) => Model3DExtensionContent::Rectangle(item.read()),
-        Some((NS_C, "chart")) => Model3DExtensionContent::ReferenceToChartPart(item.read()),
-        Some((NS_X, "headers")) => Model3DExtensionContent::RevisionHeaders(item.read()),
-        Some((NS_X, "revisions")) => Model3DExtensionContent::Revisions(item.read()),
+        Some((NS_P, "tagLst")) => {
+            Model3DExtensionContent::ProgrammableTabList(Box::new(item.read()))
+        }
+        Some((NS_X, "queryTable")) => Model3DExtensionContent::QueryTable(Box::new(item.read())),
+        Some((NS_VT, "r4")) => Model3DExtensionContent::R4(Box::new(item.read())),
+        Some((NS_VT, "r8")) => Model3DExtensionContent::R8(Box::new(item.read())),
+        Some((NS_V, "rect")) => Model3DExtensionContent::Rectangle(Box::new(item.read())),
+        Some((NS_C, "chart")) => {
+            Model3DExtensionContent::ReferenceToChartPart(Box::new(item.read()))
+        }
+        Some((NS_X, "headers")) => Model3DExtensionContent::RevisionHeaders(Box::new(item.read())),
+        Some((NS_X, "revisions")) => Model3DExtensionContent::Revisions(Box::new(item.read())),
         Some((NS_W, "txbxContent")) => {
-            Model3DExtensionContent::RichTextBoxContentContainer(item.read())
+            Model3DExtensionContent::RichTextBoxContentContainer(Box::new(item.read()))
         }
-        Some((NS_W10, "borderright")) => Model3DExtensionContent::RightBorder(item.read()),
-        Some((NS_V, "roundrect")) => Model3DExtensionContent::RoundedRectangle(item.read()),
+        Some((NS_W10, "borderright")) => {
+            Model3DExtensionContent::RightBorder(Box::new(item.read()))
+        }
+        Some((NS_V, "roundrect")) => {
+            Model3DExtensionContent::RoundedRectangle(Box::new(item.read()))
+        }
         Some((NS_AC, "additionalCharacteristics")) => {
-            Model3DExtensionContent::SetOfAdditionalCharacteristics(item.read())
+            Model3DExtensionContent::SetOfAdditionalCharacteristics(Box::new(item.read()))
         }
-        Some((NS_V, "formulas")) => Model3DExtensionContent::SetOfFormulas(item.read()),
-        Some((NS_V, "handles")) => Model3DExtensionContent::SetOfHandles(item.read()),
-        Some((NS_V, "shadow")) => Model3DExtensionContent::ShadowEffect(item.read()),
-        Some((NS_O, "clippath")) => Model3DExtensionContent::ShapeClippingPath(item.read()),
+        Some((NS_V, "formulas")) => Model3DExtensionContent::SetOfFormulas(Box::new(item.read())),
+        Some((NS_V, "handles")) => Model3DExtensionContent::SetOfHandles(Box::new(item.read())),
+        Some((NS_V, "shadow")) => Model3DExtensionContent::ShadowEffect(Box::new(item.read())),
+        Some((NS_O, "clippath")) => {
+            Model3DExtensionContent::ShapeClippingPath(Box::new(item.read()))
+        }
         _ => read_model3d_extension_4(item),
     }
 }
 
 fn read_model3d_extension_4(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
     match item.name() {
-        Some((NS_V, "shape")) => Model3DExtensionContent::ShapeDefinition(item.read()),
-        Some((NS_O, "fill")) => Model3DExtensionContent::ShapeFillExtendedProperties(item.read()),
-        Some((NS_V, "fill")) => Model3DExtensionContent::ShapeFillProperties(item.read()),
-        Some((NS_V, "group")) => Model3DExtensionContent::ShapeGroup(item.read()),
-        Some((NS_O, "shapelayout")) => Model3DExtensionContent::ShapeLayoutProperties(item.read()),
-        Some((NS_V, "path")) => Model3DExtensionContent::ShapePath(item.read()),
-        Some((NS_O, "lock")) => Model3DExtensionContent::ShapeProtections(item.read()),
-        Some((NS_V, "shapetype")) => Model3DExtensionContent::ShapeTemplate(item.read()),
-        Some((NS_X, "sst")) => Model3DExtensionContent::SharedStringTable(item.read()),
-        Some((NS_X, "singleXmlCells")) => Model3DExtensionContent::SingleCells(item.read()),
-        Some((NS_O, "skew")) => Model3DExtensionContent::SkewTransform(item.read()),
-        Some((NS_P, "sldLayout")) => Model3DExtensionContent::SlideLayout(item.read()),
-        Some((NS_P, "sldMaster")) => Model3DExtensionContent::SlideMaster(item.read()),
+        Some((NS_V, "shape")) => Model3DExtensionContent::ShapeDefinition(Box::new(item.read())),
+        Some((NS_O, "fill")) => {
+            Model3DExtensionContent::ShapeFillExtendedProperties(Box::new(item.read()))
+        }
+        Some((NS_V, "fill")) => Model3DExtensionContent::ShapeFillProperties(Box::new(item.read())),
+        Some((NS_V, "group")) => Model3DExtensionContent::ShapeGroup(Box::new(item.read())),
+        Some((NS_O, "shapelayout")) => {
+            Model3DExtensionContent::ShapeLayoutProperties(Box::new(item.read()))
+        }
+        Some((NS_V, "path")) => Model3DExtensionContent::ShapePath(Box::new(item.read())),
+        Some((NS_O, "lock")) => Model3DExtensionContent::ShapeProtections(Box::new(item.read())),
+        Some((NS_V, "shapetype")) => Model3DExtensionContent::ShapeTemplate(Box::new(item.read())),
+        Some((NS_X, "sst")) => Model3DExtensionContent::SharedStringTable(Box::new(item.read())),
+        Some((NS_X, "singleXmlCells")) => {
+            Model3DExtensionContent::SingleCells(Box::new(item.read()))
+        }
+        Some((NS_O, "skew")) => Model3DExtensionContent::SkewTransform(Box::new(item.read())),
+        Some((NS_P, "sldLayout")) => Model3DExtensionContent::SlideLayout(Box::new(item.read())),
+        Some((NS_P, "sldMaster")) => Model3DExtensionContent::SlideMaster(Box::new(item.read())),
         Some((NS_P, "sldSyncPr")) => {
-            Model3DExtensionContent::SlideSynchronizationProperties(item.read())
+            Model3DExtensionContent::SlideSynchronizationProperties(Box::new(item.read()))
         }
-        Some((NS_B, "Sources")) => Model3DExtensionContent::Sources(item.read()),
-        Some((NS_X, "table")) => Model3DExtensionContent::SpreadsheetTable(item.read()),
-        Some((NS_XDR, "from")) => Model3DExtensionContent::StartingAnchorPoint(item.read()),
+        Some((NS_B, "Sources")) => Model3DExtensionContent::Sources(Box::new(item.read())),
+        Some((NS_X, "table")) => Model3DExtensionContent::SpreadsheetTable(Box::new(item.read())),
+        Some((NS_XDR, "from")) => {
+            Model3DExtensionContent::StartingAnchorPoint(Box::new(item.read()))
+        }
         Some((NS_O, "equationxml")) => {
-            Model3DExtensionContent::StorageForAlternateMathContent(item.read())
+            Model3DExtensionContent::StorageForAlternateMathContent(Box::new(item.read()))
         }
-        Some((NS_DGM, "styleDef")) => Model3DExtensionContent::StyleDefinition(item.read()),
+        Some((NS_DGM, "styleDef")) => {
+            Model3DExtensionContent::StyleDefinition(Box::new(item.read()))
+        }
         Some((NS_DGM, "styleDefHdr")) => {
-            Model3DExtensionContent::StyleDefinitionHeader(item.read())
+            Model3DExtensionContent::StyleDefinitionHeader(Box::new(item.read()))
         }
-        Some((NS_W, "styles")) => Model3DExtensionContent::StyleDefinitions(item.read()),
-        Some((NS_X, "styleSheet")) => Model3DExtensionContent::StyleSheet(item.read()),
-        Some((NS_A, "tblStyleLst")) => Model3DExtensionContent::TableStyleList(item.read()),
-        Some((NS_V, "textbox")) => Model3DExtensionContent::TextBox(item.read()),
-        Some((NS_O, "bottom")) => Model3DExtensionContent::TextBoxBottomStroke(item.read()),
-        Some((NS_O, "column")) => Model3DExtensionContent::TextBoxInteriorStroke(item.read()),
-        Some((NS_O, "left")) => Model3DExtensionContent::TextBoxLeftStroke(item.read()),
-        Some((NS_O, "right")) => Model3DExtensionContent::TextBoxRightStroke(item.read()),
-        Some((NS_O, "top")) => Model3DExtensionContent::TextBoxTopStroke(item.read()),
-        Some((NS_V, "textpath")) => Model3DExtensionContent::TextLayoutPath(item.read()),
-        Some((NS_W10, "wrap")) => Model3DExtensionContent::TextWrapping(item.read()),
-        Some((NS_A, "theme")) => Model3DExtensionContent::Theme(item.read()),
-        Some((NS_A, "themeManager")) => Model3DExtensionContent::ThemeManager(item.read()),
-        Some((NS_A, "themeOverride")) => Model3DExtensionContent::ThemeOverride(item.read()),
-        Some((NS_W10, "bordertop")) => Model3DExtensionContent::TopBorder(item.read()),
-        Some((NS_VT, "ui1")) => Model3DExtensionContent::Ui1(item.read()),
-        Some((NS_VT, "ui2")) => Model3DExtensionContent::Ui2(item.read()),
-        Some((NS_VT, "ui4")) => Model3DExtensionContent::Ui4(item.read()),
-        Some((NS_VT, "ui8")) => Model3DExtensionContent::Ui8(item.read()),
-        Some((NS_VT, "uint")) => Model3DExtensionContent::UnsignedInteger(item.read()),
+        Some((NS_W, "styles")) => Model3DExtensionContent::StyleDefinitions(Box::new(item.read())),
+        Some((NS_X, "styleSheet")) => Model3DExtensionContent::StyleSheet(Box::new(item.read())),
+        Some((NS_A, "tblStyleLst")) => {
+            Model3DExtensionContent::TableStyleList(Box::new(item.read()))
+        }
+        Some((NS_V, "textbox")) => Model3DExtensionContent::TextBox(Box::new(item.read())),
+        Some((NS_O, "bottom")) => {
+            Model3DExtensionContent::TextBoxBottomStroke(Box::new(item.read()))
+        }
+        Some((NS_O, "column")) => {
+            Model3DExtensionContent::TextBoxInteriorStroke(Box::new(item.read()))
+        }
+        Some((NS_O, "left")) => Model3DExtensionContent::TextBoxLeftStroke(Box::new(item.read())),
+        Some((NS_O, "right")) => Model3DExtensionContent::TextBoxRightStroke(Box::new(item.read())),
+        Some((NS_O, "top")) => Model3DExtensionContent::TextBoxTopStroke(Box::new(item.read())),
+        Some((NS_V, "textpath")) => Model3DExtensionContent::TextLayoutPath(Box::new(item.read())),
+        Some((NS_W10, "wrap")) => Model3DExtensionContent::TextWrapping(Box::new(item.read())),
+        Some((NS_A, "theme")) => Model3DExtensionContent::Theme(Box::new(item.read())),
+        Some((NS_A, "themeManager")) => {
+            Model3DExtensionContent::ThemeManager(Box::new(item.read()))
+        }
+        Some((NS_A, "themeOverride")) => {
+            Model3DExtensionContent::ThemeOverride(Box::new(item.read()))
+        }
+        Some((NS_W10, "bordertop")) => Model3DExtensionContent::TopBorder(Box::new(item.read())),
+        Some((NS_VT, "ui1")) => Model3DExtensionContent::Ui1(Box::new(item.read())),
+        Some((NS_VT, "ui2")) => Model3DExtensionContent::Ui2(Box::new(item.read())),
+        Some((NS_VT, "ui4")) => Model3DExtensionContent::Ui4(Box::new(item.read())),
+        Some((NS_VT, "ui8")) => Model3DExtensionContent::Ui8(Box::new(item.read())),
+        Some((NS_VT, "uint")) => Model3DExtensionContent::UnsignedInteger(Box::new(item.read())),
         _ => read_model3d_extension_5(item),
     }
 }
 
 fn read_model3d_extension_5(item: officekit_markup_base::Item<'_>) -> Model3DExtensionContent {
     match item.name() {
-        Some((NS_X, "users")) => Model3DExtensionContent::UserList(item.read()),
-        Some((NS_C, "userShapes")) => Model3DExtensionContent::UserShapes(item.read()),
-        Some((NS_O, "diagram")) => Model3DExtensionContent::VMLDiagram(item.read()),
-        Some((NS_PVML, "textdata")) => Model3DExtensionContent::VMLDiagramText(item.read()),
-        Some((NS_VT, "variant")) => Model3DExtensionContent::Variant(item.read()),
-        Some((NS_VT, "vector")) => Model3DExtensionContent::Vector(item.read()),
-        Some((NS_A, "videoFile")) => Model3DExtensionContent::VideoFromFile(item.read()),
-        Some((NS_X, "volTypes")) => Model3DExtensionContent::VolatileDependencyTypes(item.read()),
-        Some((NS_W, "webSettings")) => Model3DExtensionContent::WebPageSettings(item.read()),
+        Some((NS_X, "users")) => Model3DExtensionContent::UserList(Box::new(item.read())),
+        Some((NS_C, "userShapes")) => Model3DExtensionContent::UserShapes(Box::new(item.read())),
+        Some((NS_O, "diagram")) => Model3DExtensionContent::VMLDiagram(Box::new(item.read())),
+        Some((NS_PVML, "textdata")) => {
+            Model3DExtensionContent::VMLDiagramText(Box::new(item.read()))
+        }
+        Some((NS_VT, "variant")) => Model3DExtensionContent::Variant(Box::new(item.read())),
+        Some((NS_VT, "vector")) => Model3DExtensionContent::Vector(Box::new(item.read())),
+        Some((NS_A, "videoFile")) => Model3DExtensionContent::VideoFromFile(Box::new(item.read())),
+        Some((NS_X, "volTypes")) => {
+            Model3DExtensionContent::VolatileDependencyTypes(Box::new(item.read()))
+        }
+        Some((NS_W, "webSettings")) => {
+            Model3DExtensionContent::WebPageSettings(Box::new(item.read()))
+        }
         Some((NS_WP | NS_WPC, "wpc")) => {
-            Model3DExtensionContent::WordprocessingMLDrawingCanvas(item.read())
+            Model3DExtensionContent::WordprocessingMLDrawingCanvas(Box::new(item.read()))
         }
         Some((NS_WP | NS_WPS, "wsp")) => {
-            Model3DExtensionContent::WordprocessingMLShape(item.read())
+            Model3DExtensionContent::WordprocessingMLShape(Box::new(item.read()))
         }
         Some((NS_WP | NS_WPG, "wgp")) => {
-            Model3DExtensionContent::WordprocessingMLShapeGroup(item.read())
+            Model3DExtensionContent::WordprocessingMLShapeGroup(Box::new(item.read()))
         }
-        Some((NS_X, "workbook")) => Model3DExtensionContent::Workbook(item.read()),
-        Some((NS_X, "worksheet")) => Model3DExtensionContent::Worksheet(item.read()),
-        Some((NS_XDR, "wsDr")) => Model3DExtensionContent::WorksheetDrawing(item.read()),
-        Some((NS_X, "MapInfo")) => Model3DExtensionContent::XMLMappingMapInfo(item.read()),
-        _ => Model3DExtensionContent::Other(item.into_node()),
+        Some((NS_X, "workbook")) => Model3DExtensionContent::Workbook(Box::new(item.read())),
+        Some((NS_X, "worksheet")) => Model3DExtensionContent::Worksheet(Box::new(item.read())),
+        Some((NS_XDR, "wsDr")) => Model3DExtensionContent::WorksheetDrawing(Box::new(item.read())),
+        Some((NS_X, "MapInfo")) => {
+            Model3DExtensionContent::XMLMappingMapInfo(Box::new(item.read()))
+        }
+        _ => Model3DExtensionContent::Other(Box::new(item.into_node())),
     }
 }
 
@@ -6778,9 +8211,7 @@ fn model3d_extension_content_into_drawing_object_content_1(
     item: Box<Model3DExtensionContent>,
 ) -> Result<wordprocessing::DrawingObjectContent, Box<Model3DExtensionContent>> {
     if let Model3DExtensionContent::AnchorForFloatingDrawingMLObject(arm) = *item {
-        return Ok(
-            wordprocessing::DrawingObjectContent::AnchorForFloatingDrawingMLObject(Box::new(arm)),
-        );
+        return Ok(wordprocessing::DrawingObjectContent::AnchorForFloatingDrawingMLObject(arm));
     }
     if let Model3DExtensionContent::InlineDrawingMLObject(arm) = *item {
         return Ok(wordprocessing::DrawingObjectContent::InlineDrawingMLObject(

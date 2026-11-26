@@ -892,11 +892,11 @@ impl Eq for SortRuleWith<()> {}
 #[non_exhaustive]
 pub enum SortRuleContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xnsv:richSortCondition`, a `RichSortCondition`.
-    RichSortCondition(RichSortConditionWith<X>),
+    RichSortCondition(Box<RichSortConditionWith<X>>),
     /// The element `xnsv:sortCondition`, a `SortCondition`.
-    SortCondition(SortConditionWith<X>),
+    SortCondition(Box<SortConditionWith<X>>),
 }
 
 /// [`SortRuleContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1617,23 +1617,25 @@ impl<X: UserData> SortRuleContentWith<X> {
         match self {
             Self::Other(node) => SortRuleContentWith::Other(node),
             Self::RichSortCondition(node) => {
-                SortRuleContentWith::RichSortCondition(node.into_user_data())
+                SortRuleContentWith::RichSortCondition(Box::new((*node).into_user_data()))
             }
-            Self::SortCondition(node) => SortRuleContentWith::SortCondition(node.into_user_data()),
+            Self::SortCondition(node) => {
+                SortRuleContentWith::SortCondition(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for SortRuleContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XNSV, "richSortCondition")) => Self::RichSortCondition(item.read()),
-            Some((NS_XNSV, "sortCondition")) => Self::SortCondition(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XNSV, "richSortCondition")) => Self::RichSortCondition(Box::new(item.read())),
+            Some((NS_XNSV, "sortCondition")) => Self::SortCondition(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -1641,12 +1643,29 @@ impl officekit_markup_base::Read for SortRuleContent {
 impl officekit_markup_base::Write for SortRuleContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RichSortCondition(arm) => arm.write_into(writer),
             Self::SortCondition(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<RichSortConditionWith<X>> for SortRuleContentWith<X> {
+    fn from(arm: RichSortConditionWith<X>) -> Self {
+        Self::RichSortCondition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SortConditionWith<X>> for SortRuleContentWith<X> {
+    fn from(arm: SortConditionWith<X>) -> Self {
+        Self::SortCondition(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SortRuleContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SortRulesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

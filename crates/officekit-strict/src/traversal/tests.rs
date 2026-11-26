@@ -147,7 +147,7 @@ impl wordprocessing::Context for CommentForControl {
         node: &EmbeddedObjectContent,
     ) -> Option<EmbeddedObjectContent> {
         matches!(node, EmbeddedObjectContent::EmbeddedControl(_))
-            .then(|| EmbeddedObjectContent::Other(Node::Comment("x".to_owned())))
+            .then(|| EmbeddedObjectContent::Other(Box::new(Node::Comment("x".to_owned()))))
     }
 }
 
@@ -195,14 +195,14 @@ impl wordprocessing::Context for FillControl {
         let BlockContent::BlockLevelStructuredDocumentTag(sdt) = node else {
             return None;
         };
-        filled(sdt, self.alias, &self.value).map(BlockContent::Paragraph)
+        filled(sdt, self.alias, &self.value).map(BlockContent::from)
     }
 
     fn content_block(&mut self, node: &ContentBlockContent) -> Option<ContentBlockContent> {
         let ContentBlockContent::BlockLevelStructuredDocumentTag(sdt) = node else {
             return None;
         };
-        filled(sdt, self.alias, &self.value).map(ContentBlockContent::Paragraph)
+        filled(sdt, self.alias, &self.value).map(ContentBlockContent::from)
     }
 }
 
@@ -233,14 +233,14 @@ impl wordprocessing::Context for FlattenControls {
         let BlockContent::BlockLevelStructuredDocumentTag(sdt) = node else {
             return None;
         };
-        Some(BlockContent::Paragraph(paragraph_from(sdt)))
+        Some(BlockContent::from(paragraph_from(sdt)))
     }
 
     fn content_block(&mut self, node: &ContentBlockContent) -> Option<ContentBlockContent> {
         let ContentBlockContent::BlockLevelStructuredDocumentTag(sdt) = node else {
             return None;
         };
-        Some(ContentBlockContent::Paragraph(paragraph_from(sdt)))
+        Some(ContentBlockContent::from(paragraph_from(sdt)))
     }
 }
 
@@ -253,7 +253,7 @@ impl officekit_markup::Context for NumberParagraphs {
 impl wordprocessing::Context for NumberParagraphs {
     fn paragraph(&mut self, node: &Paragraph) -> Option<Paragraph> {
         self.next += 1;
-        let label = ParagraphContent::TextRun(run(preserved(&format!("{}. ", self.next))));
+        let label = ParagraphContent::from(run(preserved(&format!("{}. ", self.next))));
         let mut rebuilt = node.transform_children(self);
         rebuilt.content.insert(0, label);
         Some(rebuilt)
@@ -268,8 +268,7 @@ impl officekit_markup::Context for ParagraphForOther {
 
 impl wordprocessing::Context for ParagraphForOther {
     fn block(&mut self, node: &BlockContent) -> Option<BlockContent> {
-        matches!(node, BlockContent::Other(_))
-            .then(|| BlockContent::Paragraph(Paragraph::default()))
+        matches!(node, BlockContent::Other(_)).then(|| BlockContent::from(Paragraph::default()))
     }
 }
 
@@ -539,9 +538,9 @@ fn content(sdt: &BlockLevelStructuredDocumentTag) -> &[ContentBlockContent] {
 
 /// A block-level content control holding one paragraph of `inner`.
 fn control(alias: &str, inner: &str) -> BlockContent {
-    BlockContent::BlockLevelStructuredDocumentTag(control_of(
+    BlockContent::from(control_of(
         Some(alias),
-        vec![ContentBlockContent::Paragraph(text_paragraph(inner))],
+        vec![ContentBlockContent::from(text_paragraph(inner))],
     ))
 }
 
@@ -606,7 +605,7 @@ fn document(blocks: Vec<BlockContent>) -> Document {
 
 /// `count` empty paragraphs.
 fn empty_paragraphs(count: usize) -> Vec<BlockContent> {
-    vec![BlockContent::Paragraph(Paragraph::default()); count]
+    vec![BlockContent::from(Paragraph::default()); count]
 }
 
 /// An element `x:local` of the namespace `urn:x`, which the typed tree does not know.
@@ -643,13 +642,13 @@ fn math_paragraph() -> Paragraph {
     math_text.value = "x".to_owned();
     let mut math_run = math::Run::default();
     math_run.content = vec![
-        math::RunContent::Text(math_text),
-        math::RunContent::WordprocessingText(text("=1")),
+        math::RunContent::from(math_text),
+        math::RunContent::from(text("=1")),
     ];
     let mut office_math = math::OfficeMath::default();
-    office_math.content = vec![math::OfficeMathContent::Run(math_run)];
+    office_math.content = vec![math::OfficeMathContent::from(math_run)];
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::OfficeMath(office_math)];
+    paragraph.content = vec![ParagraphContent::from(office_math)];
     paragraph
 }
 
@@ -662,7 +661,7 @@ fn paragraph_from(sdt: &BlockLevelStructuredDocumentTag) -> Paragraph {
 
 fn paragraph_of(value: Text) -> Paragraph {
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::TextRun(run(value))];
+    paragraph.content = vec![ParagraphContent::from(run(value))];
     paragraph
 }
 
@@ -687,7 +686,7 @@ fn renamed(node: &Element, local: &str) -> Element {
 }
 
 fn replacement_row() -> TableRow {
-    row_of(BlockContent::Paragraph(text_paragraph("replaced")))
+    row_of(BlockContent::from(text_paragraph("replaced")))
 }
 
 fn row_of(block: BlockContent) -> TableRow {
@@ -699,13 +698,13 @@ fn row_of_blocks(blocks: Vec<BlockContent>) -> TableRow {
     let mut cell = TableCell::default();
     cell.content = blocks;
     let mut row = TableRow::default();
-    row.content = vec![ContentCellContent::TableCell(cell)];
+    row.content = vec![ContentCellContent::from(cell)];
     row
 }
 
 fn run(value: Text) -> TextRun {
     let mut node = TextRun::default();
-    node.content = vec![TextRunContent::Text(value)];
+    node.content = vec![TextRunContent::from(value)];
     node
 }
 
@@ -713,16 +712,16 @@ fn run(value: Text) -> TextRun {
 /// and a paragraph of math.
 fn sample() -> Document {
     document(vec![
-        BlockContent::Paragraph(text_paragraph("Hello")),
-        BlockContent::BlockLevelStructuredDocumentTag(control_of(
+        BlockContent::from(text_paragraph("Hello")),
+        BlockContent::from(control_of(
             Some("control"),
             vec![
-                ContentBlockContent::Paragraph(text_paragraph("inside ")),
-                ContentBlockContent::Table(Table::default()),
-                ContentBlockContent::Paragraph(math_paragraph()),
+                ContentBlockContent::from(text_paragraph("inside ")),
+                ContentBlockContent::from(Table::default()),
+                ContentBlockContent::from(math_paragraph()),
             ],
         )),
-        BlockContent::Paragraph(math_paragraph()),
+        BlockContent::from(math_paragraph()),
     ])
 }
 
@@ -730,9 +729,9 @@ fn sample() -> Document {
 fn table() -> Table {
     let mut node = Table::default();
     node.content_row_content = vec![
-        ContentRowContent::TableRow(row_of(BlockContent::Paragraph(text_paragraph("Name")))),
-        ContentRowContent::TableRow(row_of(control("repeat", "placeholder"))),
-        ContentRowContent::TableRow(row_of(BlockContent::Paragraph(text_paragraph("Total")))),
+        ContentRowContent::from(row_of(BlockContent::from(text_paragraph("Name")))),
+        ContentRowContent::from(row_of(control("repeat", "placeholder"))),
+        ContentRowContent::from(row_of(BlockContent::from(text_paragraph("Total")))),
     ];
     node
 }
@@ -805,11 +804,11 @@ fn flatten_from_the_root_changes_kind_and_leaves_the_source_untouched() {
     assert_eq!(source, sample());
     let blocks = body(&flattened);
     assert_eq!(blocks.len(), 3);
-    assert_eq!(blocks[0], BlockContent::Paragraph(text_paragraph("Hello")));
+    assert_eq!(blocks[0], BlockContent::from(text_paragraph("Hello")));
     // Text from both namespaces.
     assert_eq!(
         blocks[1],
-        BlockContent::Paragraph(paragraph_of(preserved("inside x=1")))
+        BlockContent::from(paragraph_of(preserved("inside x=1")))
     );
     assert_eq!(blocks[2], body(&source)[2]);
 }
@@ -843,10 +842,7 @@ fn one_context_reaches_both_namespaces_through_each_other() {
 #[test]
 fn a_context_for_one_namespace_leaves_the_other_alone() {
     let flattened = sample().transform(&mut FlattenControls);
-    assert_eq!(
-        body(&flattened)[2],
-        BlockContent::Paragraph(math_paragraph())
-    );
+    assert_eq!(body(&flattened)[2], BlockContent::from(math_paragraph()));
 }
 
 #[test]
@@ -855,7 +851,7 @@ fn edit_in_place() {
     upper_case_first_paragraph(&mut document);
     assert_eq!(
         body(&document)[0],
-        BlockContent::Paragraph(text_paragraph("HELLO"))
+        BlockContent::from(text_paragraph("HELLO"))
     );
 }
 
@@ -872,7 +868,7 @@ fn the_tables_hook_looks_down_and_turns_one_row_into_one_per_item() {
 
 #[test]
 fn a_decision_made_inside_a_cell_replaces_the_row() {
-    let source = document(vec![BlockContent::Table(table())]);
+    let source = document(vec![BlockContent::from(table())]);
     let mut ctx = ReplaceRowsWithControls::default();
     let replaced = source.transform(&mut ctx);
     let rows = as_table(&body(&replaced)[0]).unwrap();
@@ -882,7 +878,7 @@ fn a_decision_made_inside_a_cell_replaces_the_row() {
     assert_eq!(rows.content_row_content[0], expected.content_row_content[0]);
     assert_eq!(
         rows.content_row_content[1],
-        ContentRowContent::TableRow(replacement_row())
+        ContentRowContent::from(replacement_row())
     );
     assert_eq!(rows.content_row_content[2], expected.content_row_content[2]);
     // The note does not leak past the row that read it.
@@ -902,26 +898,23 @@ fn a_hook_that_changes_kind_reaches_only_the_list_its_enum_is() {
             let BlockContent::BlockLevelStructuredDocumentTag(sdt) = node else {
                 return None;
             };
-            (alias(sdt) == Some("repeat"))
-                .then(|| BlockContent::Paragraph(text_paragraph("filled")))
+            (alias(sdt) == Some("repeat")).then(|| BlockContent::from(text_paragraph("filled")))
         }
     }
-    let inner = ContentBlockContent::BlockLevelStructuredDocumentTag(control_of(
+    let inner = ContentBlockContent::from(control_of(
         Some("repeat"),
-        vec![ContentBlockContent::Paragraph(text_paragraph(
-            "placeholder",
-        ))],
+        vec![ContentBlockContent::from(text_paragraph("placeholder"))],
     ));
     let outer = control_of(Some("outer"), vec![inner]);
     let source = document(vec![
         control("repeat", "placeholder"),
-        BlockContent::BlockLevelStructuredDocumentTag(outer),
+        BlockContent::from(outer),
     ]);
 
     let body_only = source.transform(&mut BodyListsOnly);
     assert_eq!(
         body(&body_only)[0],
-        BlockContent::Paragraph(text_paragraph("filled"))
+        BlockContent::from(text_paragraph("filled"))
     );
     let kept = as_control(&body(&body_only)[1]).unwrap();
     // Inside a control: not reached.
@@ -938,17 +931,17 @@ fn a_hook_that_changes_kind_reaches_only_the_list_its_enum_is() {
     // Reached through `content_block`.
     assert_eq!(
         content(reached)[0],
-        ContentBlockContent::Paragraph(paragraph_of(preserved("filled")))
+        ContentBlockContent::from(paragraph_of(preserved("filled")))
     );
 }
 
 #[test]
 fn a_hook_on_the_control_itself_reaches_it_in_both_lists() {
-    let inner =
-        ContentBlockContent::BlockLevelStructuredDocumentTag(control_of(Some("inner"), Vec::new()));
-    let source = document(vec![BlockContent::BlockLevelStructuredDocumentTag(
-        control_of(Some("outer"), vec![inner]),
-    )]);
+    let inner = ContentBlockContent::from(control_of(Some("inner"), Vec::new()));
+    let source = document(vec![BlockContent::from(control_of(
+        Some("outer"),
+        vec![inner],
+    ))]);
     let mut count = Count::default();
     let _: Document = source.transform(&mut count);
     // The control in the body and the control inside it.
@@ -959,34 +952,32 @@ fn a_hook_on_the_control_itself_reaches_it_in_both_lists() {
 fn a_list_hook_splices_any_number_of_blocks_in_any_block_list() {
     let nested = control_of(
         None,
-        vec![ContentBlockContent::Paragraph(text_paragraph("deep"))],
+        vec![ContentBlockContent::from(text_paragraph("deep"))],
     );
-    let unwrapped_control = BlockContent::BlockLevelStructuredDocumentTag(control_of(
+    let unwrapped_control = BlockContent::from(control_of(
         None,
         vec![
-            ContentBlockContent::Paragraph(text_paragraph("a")),
-            ContentBlockContent::BlockLevelStructuredDocumentTag(nested),
-            ContentBlockContent::Paragraph(Paragraph::default()),
+            ContentBlockContent::from(text_paragraph("a")),
+            ContentBlockContent::from(nested),
+            ContentBlockContent::from(Paragraph::default()),
         ],
     ));
     let mut wrapped = Table::default();
-    wrapped.content_row_content = vec![ContentRowContent::TableRow(row_of(
-        unwrapped_control.clone(),
-    ))];
-    let source = document(vec![unwrapped_control, BlockContent::Table(wrapped)]);
+    wrapped.content_row_content = vec![ContentRowContent::from(row_of(unwrapped_control.clone()))];
+    let source = document(vec![unwrapped_control, BlockContent::from(wrapped)]);
     let unwrapped = source.transform(&mut UnwrapControls);
     let blocks = body(&unwrapped);
     // "a", "deep", the table: the control became two blocks, the empty
     // paragraph none.
     assert_eq!(blocks.len(), 3);
-    assert_eq!(blocks[0], BlockContent::Paragraph(text_paragraph("a")));
-    assert_eq!(blocks[1], BlockContent::Paragraph(text_paragraph("deep")));
+    assert_eq!(blocks[0], BlockContent::from(text_paragraph("a")));
+    assert_eq!(blocks[1], BlockContent::from(text_paragraph("deep")));
     let cells = as_table(&blocks[2]).unwrap();
     assert_eq!(
         cells.content_row_content,
-        [ContentRowContent::TableRow(row_of_blocks(vec![
-            BlockContent::Paragraph(text_paragraph("a")),
-            BlockContent::Paragraph(text_paragraph("deep")),
+        [ContentRowContent::from(row_of_blocks(vec![
+            BlockContent::from(text_paragraph("a")),
+            BlockContent::from(text_paragraph("deep")),
         ]))]
     );
 }
@@ -1050,14 +1041,17 @@ fn unknown_content_goes_through_the_root_hooks_at_its_place() {
     let generic = |local: &str| Node::Element(Element::new(QName::prefixed("x", local, "urn:x")));
     let mut source = Paragraph::default();
     source.content = vec![
-        ParagraphContent::Other(generic("a")),
-        ParagraphContent::TextRun(run(text("t"))),
-        ParagraphContent::Other(generic("c")),
+        ParagraphContent::Other(Box::new(generic("a"))),
+        ParagraphContent::from(run(text("t"))),
+        ParagraphContent::Other(Box::new(generic("c"))),
     ];
     source.properties = Some(Box::default());
     source.unknown_mut().children = vec![Extra::new(0, generic("a"))];
     let renamed = source.transform(&mut Rename);
-    assert_eq!(renamed.content[0], ParagraphContent::Other(generic("b")));
+    assert_eq!(
+        renamed.content[0],
+        ParagraphContent::Other(Box::new(generic("b")))
+    );
     assert_eq!(renamed.unknown().unwrap().children[0].node, generic("b"));
     assert_eq!(
         written(&source, &mut Rename),
@@ -1076,8 +1070,8 @@ fn a_wildcard_position_reaches_its_typed_items_through_their_namespace() {
     let chart = Node::Element(Element::new(QName::prefixed("x", "chart", "urn:x")));
     let mut source = GraphicObjectData::default();
     source.content = vec![
-        AnyElementContent::Picture(Picture::default()),
-        AnyElementContent::Other(chart),
+        AnyElementContent::from(Picture::default()),
+        AnyElementContent::Other(Box::new(chart)),
     ];
     let mut seen = Pictures::default();
     source.visit(&mut seen);
@@ -1088,9 +1082,9 @@ fn a_wildcard_position_reaches_its_typed_items_through_their_namespace() {
     assert_eq!((ctx.pictures, ctx.elements), (1, 1));
     assert_eq!(
         transformed.content[1],
-        AnyElementContent::Other(Node::Element(Element::new(QName::prefixed(
+        AnyElementContent::Other(Box::new(Node::Element(Element::new(QName::prefixed(
             "x", "graph", "urn:x"
-        ))))
+        )))))
     );
     assert_eq!(
         written(&source, &mut Pictures::default()),
@@ -1161,7 +1155,7 @@ fn an_extra_after_a_list_a_hook_empties_stays_after_its_neighbours() {
 #[test]
 fn a_transform_asks_the_hooks_of_a_nodes_children_in_document_order() {
     let mut source = Paragraph::default();
-    source.content = vec![ParagraphContent::TextRun(TextRun::default())];
+    source.content = vec![ParagraphContent::from(TextRun::default())];
     source.properties = Some(Box::default());
     let mut record = Record::default();
     let _: Paragraph = source.transform(&mut record);
@@ -1239,7 +1233,7 @@ fn an_extra_after_a_child_a_hook_turns_unknown_stays_after_it() {
 fn an_extra_after_the_first_block_stays_there_when_an_unknown_item_before_it_becomes_a_paragraph() {
     // Read, a comment between two blocks joins the block list; built here,
     // it is an `Extra` after the first block.
-    let mut blocks = vec![BlockContent::Other(generic("u"))];
+    let mut blocks = vec![BlockContent::Other(Box::new(generic("u")))];
     blocks.extend(empty_paragraphs(2));
     let source = body_with_comment(blocks, 1);
     let through = written(&source, &mut ParagraphForOther);

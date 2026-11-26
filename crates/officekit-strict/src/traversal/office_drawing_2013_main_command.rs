@@ -4242,19 +4242,19 @@ impl super::Transform for office_drawing_2013_main_command::GroupCommandContent 
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CxnSpMk(arm) = self {
-            Self::CxnSpMk(arm.transform(ctx))
+            Self::CxnSpMk(Box::new(arm.transform(ctx)))
         } else if let Self::GraphicFrameMk(arm) = self {
-            Self::GraphicFrameMk(arm.transform(ctx))
+            Self::GraphicFrameMk(Box::new(arm.transform(ctx)))
         } else if let Self::GrpSpMk(arm) = self {
-            Self::GrpSpMk(arm.transform(ctx))
+            Self::GrpSpMk(Box::new(arm.transform(ctx)))
         } else if let Self::InkMk(arm) = self {
-            Self::InkMk(arm.transform(ctx))
+            Self::InkMk(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PicMk(arm) = self {
-            Self::PicMk(arm.transform(ctx))
+            Self::PicMk(Box::new(arm.transform(ctx)))
         } else if let Self::SpMk(arm) = self {
-            Self::SpMk(arm.transform(ctx))
+            Self::SpMk(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

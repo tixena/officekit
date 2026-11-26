@@ -1519,102 +1519,102 @@ pub struct VisibilitySeriesElementVisibilitiesMirror {
 #[rkyv(remote = super::AxisContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum AxisContent {
-    CatScaling(super::CatScaling),
-    Other(Node),
-    ValScaling(super::ValScaling),
+    CatScaling(Box<super::CatScaling>),
+    Other(Box<Node>),
+    ValScaling(Box<super::ValScaling>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BinningContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum BinningContent {
-    BinCount(super::BinCount),
-    BinSize(super::BinSize),
-    Other(Node),
+    BinCount(Box<super::BinCount>),
+    BinSize(Box<super::BinSize>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DataContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum DataContent {
-    NumDim(super::NumDim),
-    Other(Node),
-    StrDim(super::StrDim),
+    NumDim(Box<super::NumDim>),
+    Other(Box<Node>),
+    StrDim(Box<super::StrDim>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GeographyCacheContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GeographyCacheContent {
-    Binary(super::Binary),
-    Clear(super::Clear),
-    Other(Node),
+    Binary(Box<super::Binary>),
+    Clear(Box<super::Clear>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::NumericDimensionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum NumericDimensionContent {
-    F(super::F),
-    LvlNumericLevel(super::LvlNumericLevel),
-    Nf(super::Nf),
-    Other(Node),
+    F(Box<super::F>),
+    LvlNumericLevel(Box<super::LvlNumericLevel>),
+    Nf(Box<super::Nf>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SeriesLayoutPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SeriesLayoutPropertiesContent {
-    Aggregation(super::Aggregation),
-    Binning(super::Binning),
-    Other(Node),
+    Aggregation(Box<super::Aggregation>),
+    Binning(Box<super::Binning>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::StringDimensionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum StringDimensionContent {
-    F(super::F),
-    LvlStringLevel(super::LvlStringLevel),
-    Nf(super::Nf),
-    Other(Node),
+    F(Box<super::F>),
+    LvlStringLevel(Box<super::LvlStringLevel>),
+    Nf(Box<super::Nf>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextContent {
-    Other(Node),
-    Rich(super::Rich),
-    TxData(super::TxData),
+    Other(Box<Node>),
+    Rich(Box<super::Rich>),
+    TxData(Box<super::TxData>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TextDataContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TextDataContent {
-    F(super::F),
-    Other(Node),
-    V(super::V),
+    F(Box<super::F>),
+    Other(Box<Node>),
+    V(Box<super::V>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ValueColorEndPositionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ValueColorEndPositionContent {
-    ExtremeValue(super::ExtremeValue),
-    Number(super::Number),
-    Other(Node),
-    Percent(super::Percent),
+    ExtremeValue(Box<super::ExtremeValue>),
+    Number(Box<super::Number>),
+    Other(Box<Node>),
+    Percent(Box<super::Percent>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ValueColorMiddlePositionContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ValueColorMiddlePositionContent {
-    Number(super::Number),
-    Other(Node),
-    Percent(super::Percent),
+    Number(Box<super::Number>),
+    Other(Box<Node>),
+    Percent(Box<super::Percent>),
 }
 
 impl From<AddressMirror> for super::Address {

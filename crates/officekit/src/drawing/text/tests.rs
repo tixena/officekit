@@ -57,13 +57,13 @@ fn alignment(member: TextAlignmentTypesMember) -> TextAlignmentTypes {
 fn character_bullet() -> TextBulletContent {
     let mut bullet = CharacterBullet::default();
     bullet.char = Some("*".to_owned());
-    TextBulletContent::CharacterBullet(bullet)
+    TextBulletContent::from(bullet)
 }
 
 fn hex(text: &str) -> ColorContent {
     let mut color = RGBColorModelHexVariant::default();
     color.val = Some(HexadecimalColorValue::from(text.to_owned()));
-    ColorContent::RGBColorModelHexVariant(color)
+    ColorContent::from(color)
 }
 
 fn latin(typeface: &str) -> LatinFont {
@@ -79,7 +79,7 @@ fn margin(text: &str) -> TextMargin {
 fn solid_fill(text: &str) -> FillPropertiesContent {
     let mut fill = SolidFill::default();
     fill.content = Some(Box::new(hex(text)));
-    FillPropertiesContent::SolidFill(fill)
+    FillPropertiesContent::from(fill)
 }
 
 /// Asserts that `levels` holds the `a:lvl3pPr` of [`list_with_level_3`] at index 2, and nothing at
@@ -184,23 +184,21 @@ fn the_nearer_level_wins_value_by_value() {
 #[test]
 fn a_bullet_choice_replaces_another_and_the_colour_stays() {
     let mut near = TextParagraphProperties::default();
-    near.text_bullet_content = Some(Box::new(TextBulletContent::NoBullet(NoBullet::default())));
+    near.text_bullet_content = Some(Box::new(TextBulletContent::from(NoBullet::default())));
     let mut far = TextParagraphProperties::default();
     far.text_bullet_content = Some(Box::new(character_bullet()));
     let mut color = ColorSpecified::default();
     color.content = Box::new(hex("00FF00"));
-    far.text_bullet_color_content = Some(Box::new(TextBulletColorContent::ColorSpecified(
-        color.clone(),
-    )));
+    far.text_bullet_color_content = Some(Box::new(TextBulletColorContent::from(color.clone())));
 
     let laid = paragraph_over(&near, &far);
     assert_eq!(
         laid.text_bullet_content.as_deref(),
-        Some(&TextBulletContent::NoBullet(NoBullet::default()))
+        Some(&TextBulletContent::from(NoBullet::default()))
     );
     assert_eq!(
         laid.text_bullet_color_content.as_deref(),
-        Some(&TextBulletColorContent::ColorSpecified(color))
+        Some(&TextBulletColorContent::from(color))
     );
 }
 

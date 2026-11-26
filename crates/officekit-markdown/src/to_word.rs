@@ -126,7 +126,7 @@ impl Body<'_> {
             .iter()
             .any(|block| matches!(block, BlockContent::Paragraph(_)))
         {
-            content.push(BlockContent::Paragraph(Paragraph::default()));
+            content.push(BlockContent::from(Paragraph::default()));
         }
         if let Some(jc) = alignment.and_then(justification) {
             for block in &mut content {
@@ -155,8 +155,7 @@ impl Body<'_> {
         )?;
         let mut chunk = AnchorForImportedExternalContent::default();
         chunk.id = Some(id);
-        self.blocks
-            .push(BlockContent::AnchorForImportedExternalContent(chunk));
+        self.blocks.push(BlockContent::from(chunk));
         Ok(())
     }
 
@@ -271,7 +270,7 @@ impl Body<'_> {
         let mut paragraph = Paragraph::default();
         paragraph.content = content;
         paragraph.properties = self.properties(style);
-        self.blocks.push(BlockContent::Paragraph(paragraph));
+        self.blocks.push(BlockContent::from(paragraph));
     }
 
     /// An empty writer of runs, relating links and pictures from the main part.
@@ -311,10 +310,10 @@ impl Body<'_> {
                 let mut end = BookmarkEnd::default();
                 end.id = Some(id.to_string().into());
                 let mut runs = self.runs();
-                runs.content.push(ParagraphContent::BookmarkStart(start));
+                runs.content.push(ParagraphContent::from(start));
                 runs.inlines(&heading.children, Format::default())?;
                 let mut content = runs.into_content();
-                content.push(ParagraphContent::BookmarkEnd(end));
+                content.push(ParagraphContent::from(end));
                 let style = parts::heading(depth.min(DEEPEST_HEADING));
                 self.push(Some(&style), content);
             }
@@ -344,11 +343,11 @@ impl Body<'_> {
         let mut rows = Vec::new();
         for row in &table.head {
             let written = self.table_row(row, true, columns, &table.alignments)?;
-            rows.push(ContentRowContent::TableRow(written));
+            rows.push(ContentRowContent::from(written));
         }
         for row in &table.rows {
             let written = self.table_row(row, false, columns, &table.alignments)?;
-            rows.push(ContentRowContent::TableRow(written));
+            rows.push(ContentRowContent::from(written));
         }
         let mut style = ReferencedTableStyle::default();
         style.val = Some(TABLE_GRID.to_owned());
@@ -365,7 +364,7 @@ impl Body<'_> {
         written.content_row_content = rows;
         written.grid = Box::new(grid);
         written.properties = Box::new(properties);
-        self.blocks.push(BlockContent::Table(written));
+        self.blocks.push(BlockContent::from(written));
         Ok(())
     }
 
@@ -384,9 +383,8 @@ impl Body<'_> {
         let mut written = TableRow::default();
         if head {
             let mut properties = TableRowProperties::default();
-            properties.content = alloc::vec![TableRowPropertiesContent::RepeatTableRow(
-                RepeatTableRow::default()
-            )];
+            properties.content =
+                alloc::vec![TableRowPropertiesContent::from(RepeatTableRow::default())];
             written.properties = Some(Box::new(properties));
         }
         for column in 0..columns {
@@ -394,10 +392,10 @@ impl Body<'_> {
                 self.cell(&cell.body, alignments.get(column).copied())?
             } else {
                 let mut empty = TableCell::default();
-                empty.content = alloc::vec![BlockContent::Paragraph(Paragraph::default())];
+                empty.content = alloc::vec![BlockContent::from(Paragraph::default())];
                 empty
             };
-            written.content.push(ContentCellContent::TableCell(cell));
+            written.content.push(ContentCellContent::from(cell));
         }
         Ok(written)
     }
@@ -415,7 +413,7 @@ impl Body<'_> {
         properties.paragraph_borders = Some(Box::new(borders));
         let mut paragraph = Paragraph::default();
         paragraph.properties = Some(properties);
-        self.blocks.push(BlockContent::Paragraph(paragraph));
+        self.blocks.push(BlockContent::from(paragraph));
     }
 }
 
@@ -462,13 +460,13 @@ impl Format {
         if let Some(id) = self.character_style {
             let mut reference = ReferencedCharacterStyle::default();
             reference.val = Some(id.to_owned());
-            content.push(RunPropertiesContent::ReferencedCharacterStyle(reference));
+            content.push(RunPropertiesContent::from(reference));
         }
         if self.bold {
-            content.push(RunPropertiesContent::Bold(Bold::default()));
+            content.push(RunPropertiesContent::from(Bold::default()));
         }
         if self.italic {
-            content.push(RunPropertiesContent::Italics(Italics::default()));
+            content.push(RunPropertiesContent::from(Italics::default()));
         }
         (!content.is_empty()).then(|| {
             let mut properties = RunProperties::default();
@@ -622,12 +620,12 @@ impl Runs<'_> {
     /// The runs written, with the hyperlink of a link still open closed.
     fn into_content(mut self) -> Vec<ParagraphContent> {
         self.content
-            .extend(self.link.take().map(ParagraphContent::Hyperlink));
+            .extend(self.link.take().map(ParagraphContent::from));
         self.content
     }
 
     fn line_break(&mut self, format: Format) {
-        self.run(alloc::vec![TextRunContent::Break(Break::default())], format);
+        self.run(alloc::vec![TextRunContent::from(Break::default())], format);
     }
 
     /// A `w:hyperlink` around the link's runs. A link written across lines, which arky cuts into
@@ -641,8 +639,7 @@ impl Runs<'_> {
         let hyperlink = match self.link.take() {
             Some(open) if goes_on_from_previous => open,
             unfinished => {
-                self.content
-                    .extend(unfinished.map(ParagraphContent::Hyperlink));
+                self.content.extend(unfinished.map(ParagraphContent::from));
                 self.hyperlink(link)?
             }
         };
@@ -656,7 +653,7 @@ impl Runs<'_> {
         }
         if !matches!(link.continues, Continues::Next | Continues::Both) {
             self.content
-                .extend(self.link.take().map(ParagraphContent::Hyperlink));
+                .extend(self.link.take().map(ParagraphContent::from));
         }
         Ok(())
     }
@@ -745,10 +742,10 @@ impl Runs<'_> {
                 ..format
             };
             run.properties = linked.properties();
-            hyperlink.content.push(ParagraphContent::TextRun(run));
+            hyperlink.content.push(ParagraphContent::from(run));
         } else {
             run.properties = format.properties();
-            self.content.push(ParagraphContent::TextRun(run));
+            self.content.push(ParagraphContent::from(run));
         }
     }
 
@@ -811,18 +808,18 @@ impl Runs<'_> {
         let mut content = Vec::new();
         for (row, raw) in value.split('\n').enumerate() {
             if row > 0 {
-                content.push(TextRunContent::Break(Break::default()));
+                content.push(TextRunContent::from(Break::default()));
             }
             let line = raw.strip_suffix('\r').unwrap_or(raw);
             for (column, piece) in line.split('\t').enumerate() {
                 if column > 0 {
-                    content.push(TextRunContent::TabCharacter(TabCharacter::default()));
+                    content.push(TextRunContent::from(TabCharacter::default()));
                 }
                 if !piece.is_empty() {
                     let mut characters = Text::default();
                     characters.space = Some("preserve".to_owned());
                     piece.clone_into(&mut characters.value);
-                    content.push(TextRunContent::Text(characters));
+                    content.push(TextRunContent::from(characters));
                 }
             }
         }

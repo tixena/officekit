@@ -70,9 +70,9 @@ fn paragraph(alignment: Option<&str>, value: &str) -> Paragraph {
     let mut characters = Text::default();
     characters.value = value.to_owned();
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::Text(characters)];
+    run.content = vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::TextRun(run)];
+    paragraph.content = vec![ParagraphContent::from(run)];
     if let Some(justified) = alignment {
         let mut justification = ParagraphAlignment::default();
         justification.val = Some(HorizontalAlignmentType::from(justified.to_owned()));
@@ -87,7 +87,7 @@ fn paragraph(alignment: Option<&str>, value: &str) -> Paragraph {
 #[cfg(any(feature = "strict", feature = "transitional"))]
 fn document() -> Document {
     let mut body = DocumentBody::default();
-    body.content = vec![BlockContent::Paragraph(paragraph(Some("left"), "Hello"))];
+    body.content = vec![BlockContent::from(paragraph(Some("left"), "Hello"))];
     let mut document = Document::default();
     document.body = Some(Box::new(body));
     document
@@ -195,7 +195,7 @@ fn a_new_part_takes_the_modules_first_content_type() {
 #[test]
 fn a_strict_store_writes_the_strict_namespace_and_reads_the_same_content_back() {
     let mut root = Header::default();
-    root.content = vec![BlockContent::Paragraph(paragraph(None, "Top"))];
+    root.content = vec![BlockContent::from(paragraph(None, "Top"))];
     let part = name("/word/header1.xml");
     let mut package = Package::new();
     header::store_strict(&mut package, &part, &root, WriteOptions::default()).unwrap();

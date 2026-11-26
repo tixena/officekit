@@ -279,7 +279,7 @@ fn mirror_arms(
         .collect();
     arms.push(MirrorArm {
         recursive: false,
-        shown: "Node".to_owned(),
+        shown: "Box<Node>".to_owned(),
         variant: "Other".to_owned(),
     });
     arms.sort_by(|left, right| left.variant.cmp(&right.variant));

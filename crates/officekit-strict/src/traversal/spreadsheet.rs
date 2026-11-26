@@ -541,25 +541,25 @@ impl super::Transform for spreadsheet::AutoFilterColumnContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ColorFilterCriteria(arm) = self {
-            Self::ColorFilterCriteria(arm.transform(ctx))
+            Self::ColorFilterCriteria(Box::new(arm.transform(ctx)))
         } else if let Self::CustomFilters(arm) = self {
-            Self::CustomFilters(arm.transform(ctx))
+            Self::CustomFilters(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicFilter(arm) = self {
-            Self::DynamicFilter(arm.transform(ctx))
+            Self::DynamicFilter(Box::new(arm.transform(ctx)))
         } else if let Self::FilterCriteria(arm) = self {
-            Self::FilterCriteria(arm.transform(ctx))
+            Self::FilterCriteria(Box::new(arm.transform(ctx)))
         } else if let Self::FutureFeatureDataStorageArea(arm) = self {
-            Self::FutureFeatureDataStorageArea(arm.transform(ctx))
+            Self::FutureFeatureDataStorageArea(Box::new(arm.transform(ctx)))
         } else if let Self::IconFilter(arm) = self {
-            Self::IconFilter(arm.transform(ctx))
+            Self::IconFilter(Box::new(arm.transform(ctx)))
         } else if let Self::OfficeSpreadsheetml20099MainCustomFilters(arm) = self {
-            Self::OfficeSpreadsheetml20099MainCustomFilters(arm.transform(ctx))
+            Self::OfficeSpreadsheetml20099MainCustomFilters(Box::new(arm.transform(ctx)))
         } else if let Self::OfficeSpreadsheetml20099MainIconFilter(arm) = self {
-            Self::OfficeSpreadsheetml20099MainIconFilter(arm.transform(ctx))
+            Self::OfficeSpreadsheetml20099MainIconFilter(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Top10(arm) = self {
-            Self::Top10(arm.transform(ctx))
+            Self::Top10(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1525,19 +1525,19 @@ impl super::Transform for spreadsheet::CacheItemContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Boolean(arm) = self {
-            Self::Boolean(arm.transform(ctx))
+            Self::Boolean(Box::new(arm.transform(ctx)))
         } else if let Self::CharacterValue(arm) = self {
-            Self::CharacterValue(arm.transform(ctx))
+            Self::CharacterValue(Box::new(arm.transform(ctx)))
         } else if let Self::DateTime(arm) = self {
-            Self::DateTime(arm.transform(ctx))
+            Self::DateTime(Box::new(arm.transform(ctx)))
         } else if let Self::ErrorValue(arm) = self {
-            Self::ErrorValue(arm.transform(ctx))
+            Self::ErrorValue(Box::new(arm.transform(ctx)))
         } else if let Self::NoValue(arm) = self {
-            Self::NoValue(arm.transform(ctx))
+            Self::NoValue(Box::new(arm.transform(ctx)))
         } else if let Self::Numeric(arm) = self {
-            Self::Numeric(arm.transform(ctx))
+            Self::Numeric(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -10573,15 +10573,15 @@ impl super::Transform for spreadsheet::EntriesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CharacterValue(arm) = self {
-            Self::CharacterValue(arm.transform(ctx))
+            Self::CharacterValue(Box::new(arm.transform(ctx)))
         } else if let Self::ErrorValue(arm) = self {
-            Self::ErrorValue(arm.transform(ctx))
+            Self::ErrorValue(Box::new(arm.transform(ctx)))
         } else if let Self::NoValue(arm) = self {
-            Self::NoValue(arm.transform(ctx))
+            Self::NoValue(Box::new(arm.transform(ctx)))
         } else if let Self::Numeric(arm) = self {
-            Self::Numeric(arm.transform(ctx))
+            Self::Numeric(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -11265,13 +11265,13 @@ impl super::Transform for spreadsheet::ExternalReferenceContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::DDEConnection(arm) = self {
-            Self::DDEConnection(arm.transform(ctx))
+            Self::DDEConnection(Box::new(arm.transform(ctx)))
         } else if let Self::ExternalWorkbook(arm) = self {
-            Self::ExternalWorkbook(arm.transform(ctx))
+            Self::ExternalWorkbook(Box::new(arm.transform(ctx)))
         } else if let Self::GenericObjectLinkConnection(arm) = self {
-            Self::GenericObjectLinkConnection(arm.transform(ctx))
+            Self::GenericObjectLinkConnection(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -12456,11 +12456,11 @@ impl super::Transform for spreadsheet::FillContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Gradient(arm) = self {
-            Self::Gradient(arm.transform(ctx))
+            Self::Gradient(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Pattern(arm) = self {
-            Self::Pattern(arm.transform(ctx))
+            Self::Pattern(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -13110,37 +13110,37 @@ impl super::Transform for spreadsheet::FontContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Bold(arm) = self {
-            Self::Bold(arm.transform(ctx))
+            Self::Bold(Box::new(arm.transform(ctx)))
         } else if let Self::CharacterSet(arm) = self {
-            Self::CharacterSet(arm.transform(ctx))
+            Self::CharacterSet(Box::new(arm.transform(ctx)))
         } else if let Self::Condense(arm) = self {
-            Self::Condense(arm.transform(ctx))
+            Self::Condense(Box::new(arm.transform(ctx)))
         } else if let Self::DataBarColor(arm) = self {
-            Self::DataBarColor(arm.transform(ctx))
+            Self::DataBarColor(Box::new(arm.transform(ctx)))
         } else if let Self::Extend(arm) = self {
-            Self::Extend(arm.transform(ctx))
+            Self::Extend(Box::new(arm.transform(ctx)))
         } else if let Self::FontFamily(arm) = self {
-            Self::FontFamily(arm.transform(ctx))
+            Self::FontFamily(Box::new(arm.transform(ctx)))
         } else if let Self::FontName(arm) = self {
-            Self::FontName(arm.transform(ctx))
+            Self::FontName(Box::new(arm.transform(ctx)))
         } else if let Self::FontSize(arm) = self {
-            Self::FontSize(arm.transform(ctx))
+            Self::FontSize(Box::new(arm.transform(ctx)))
         } else if let Self::Italic(arm) = self {
-            Self::Italic(arm.transform(ctx))
+            Self::Italic(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outline(arm) = self {
-            Self::Outline(arm.transform(ctx))
+            Self::Outline(Box::new(arm.transform(ctx)))
         } else if let Self::Scheme(arm) = self {
-            Self::Scheme(arm.transform(ctx))
+            Self::Scheme(Box::new(arm.transform(ctx)))
         } else if let Self::Shadow(arm) = self {
-            Self::Shadow(arm.transform(ctx))
+            Self::Shadow(Box::new(arm.transform(ctx)))
         } else if let Self::StrikeThrough(arm) = self {
-            Self::StrikeThrough(arm.transform(ctx))
+            Self::StrikeThrough(Box::new(arm.transform(ctx)))
         } else if let Self::Underline(arm) = self {
-            Self::Underline(arm.transform(ctx))
+            Self::Underline(Box::new(arm.transform(ctx)))
         } else if let Self::VerticalAlignment(arm) = self {
-            Self::VerticalAlignment(arm.transform(ctx))
+            Self::VerticalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -18082,15 +18082,15 @@ impl super::Transform for spreadsheet::MultidimensionalExpressionMetadataContent
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::KPIMDXMetadata(arm) = self {
-            Self::KPIMDXMetadata(arm.transform(ctx))
+            Self::KPIMDXMetadata(Box::new(arm.transform(ctx)))
         } else if let Self::MemberPropertyMDXMetadata(arm) = self {
-            Self::MemberPropertyMDXMetadata(arm.transform(ctx))
+            Self::MemberPropertyMDXMetadata(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SetMDXMetadata(arm) = self {
-            Self::SetMDXMetadata(arm.transform(ctx))
+            Self::SetMDXMetadata(Box::new(arm.transform(ctx)))
         } else if let Self::TupleMDXMetadata(arm) = self {
-            Self::TupleMDXMetadata(arm.transform(ctx))
+            Self::TupleMDXMetadata(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -18295,13 +18295,13 @@ impl super::Transform for spreadsheet::NestedRevisionContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RevisionCellChange(arm) = self {
-            Self::RevisionCellChange(arm.transform(ctx))
+            Self::RevisionCellChange(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionFormat(arm) = self {
-            Self::RevisionFormat(arm.transform(ctx))
+            Self::RevisionFormat(Box::new(arm.transform(ctx)))
         } else if let Self::Undo(arm) = self {
-            Self::Undo(arm.transform(ctx))
+            Self::Undo(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -23736,21 +23736,21 @@ impl super::Transform for spreadsheet::PivotCacheRecordContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Boolean(arm) = self {
-            Self::Boolean(arm.transform(ctx))
+            Self::Boolean(Box::new(arm.transform(ctx)))
         } else if let Self::CharacterValue(arm) = self {
-            Self::CharacterValue(arm.transform(ctx))
+            Self::CharacterValue(Box::new(arm.transform(ctx)))
         } else if let Self::DateTime(arm) = self {
-            Self::DateTime(arm.transform(ctx))
+            Self::DateTime(Box::new(arm.transform(ctx)))
         } else if let Self::ErrorValue(arm) = self {
-            Self::ErrorValue(arm.transform(ctx))
+            Self::ErrorValue(Box::new(arm.transform(ctx)))
         } else if let Self::NoValue(arm) = self {
-            Self::NoValue(arm.transform(ctx))
+            Self::NoValue(Box::new(arm.transform(ctx)))
         } else if let Self::Numeric(arm) = self {
-            Self::Numeric(arm.transform(ctx))
+            Self::Numeric(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SharedItemsIndex(arm) = self {
-            Self::SharedItemsIndex(arm.transform(ctx))
+            Self::SharedItemsIndex(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -24051,13 +24051,13 @@ impl super::Transform for spreadsheet::PivotCacheSourceDescriptionContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ConsolidationSource(arm) = self {
-            Self::ConsolidationSource(arm.transform(ctx))
+            Self::ConsolidationSource(Box::new(arm.transform(ctx)))
         } else if let Self::FutureFeatureDataStorageArea(arm) = self {
-            Self::FutureFeatureDataStorageArea(arm.transform(ctx))
+            Self::FutureFeatureDataStorageArea(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::WorksheetPivotCacheSource(arm) = self {
-            Self::WorksheetPivotCacheSource(arm.transform(ctx))
+            Self::WorksheetPivotCacheSource(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -28491,31 +28491,31 @@ impl super::Transform for spreadsheet::RevisionsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RevisionAutoFormat(arm) = self {
-            Self::RevisionAutoFormat(arm.transform(ctx))
+            Self::RevisionAutoFormat(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionCellChange(arm) = self {
-            Self::RevisionCellChange(arm.transform(ctx))
+            Self::RevisionCellChange(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionCellComment(arm) = self {
-            Self::RevisionCellComment(arm.transform(ctx))
+            Self::RevisionCellComment(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionCellMove(arm) = self {
-            Self::RevisionCellMove(arm.transform(ctx))
+            Self::RevisionCellMove(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionCustomView(arm) = self {
-            Self::RevisionCustomView(arm.transform(ctx))
+            Self::RevisionCustomView(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionDefinedName(arm) = self {
             Self::RevisionDefinedName(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionFormat(arm) = self {
-            Self::RevisionFormat(arm.transform(ctx))
+            Self::RevisionFormat(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionInsertSheet(arm) = self {
-            Self::RevisionInsertSheet(arm.transform(ctx))
+            Self::RevisionInsertSheet(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionMergeConflict(arm) = self {
-            Self::RevisionMergeConflict(arm.transform(ctx))
+            Self::RevisionMergeConflict(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionQueryTable(arm) = self {
-            Self::RevisionQueryTable(arm.transform(ctx))
+            Self::RevisionQueryTable(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionRowColumnInsertDelete(arm) = self {
-            Self::RevisionRowColumnInsertDelete(arm.transform(ctx))
+            Self::RevisionRowColumnInsertDelete(Box::new(arm.transform(ctx)))
         } else if let Self::RevisionSheetName(arm) = self {
-            Self::RevisionSheetName(arm.transform(ctx))
+            Self::RevisionSheetName(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -29605,37 +29605,37 @@ impl super::Transform for spreadsheet::RunPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Bold(arm) = self {
-            Self::Bold(arm.transform(ctx))
+            Self::Bold(Box::new(arm.transform(ctx)))
         } else if let Self::CharacterSet(arm) = self {
-            Self::CharacterSet(arm.transform(ctx))
+            Self::CharacterSet(Box::new(arm.transform(ctx)))
         } else if let Self::Condense(arm) = self {
-            Self::Condense(arm.transform(ctx))
+            Self::Condense(Box::new(arm.transform(ctx)))
         } else if let Self::DataBarColor(arm) = self {
-            Self::DataBarColor(arm.transform(ctx))
+            Self::DataBarColor(Box::new(arm.transform(ctx)))
         } else if let Self::Extend(arm) = self {
-            Self::Extend(arm.transform(ctx))
+            Self::Extend(Box::new(arm.transform(ctx)))
         } else if let Self::FontFamilyIntProperty(arm) = self {
-            Self::FontFamilyIntProperty(arm.transform(ctx))
+            Self::FontFamilyIntProperty(Box::new(arm.transform(ctx)))
         } else if let Self::FontRFont(arm) = self {
-            Self::FontRFont(arm.transform(ctx))
+            Self::FontRFont(Box::new(arm.transform(ctx)))
         } else if let Self::FontSize(arm) = self {
-            Self::FontSize(arm.transform(ctx))
+            Self::FontSize(Box::new(arm.transform(ctx)))
         } else if let Self::Italic(arm) = self {
-            Self::Italic(arm.transform(ctx))
+            Self::Italic(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outline(arm) = self {
-            Self::Outline(arm.transform(ctx))
+            Self::Outline(Box::new(arm.transform(ctx)))
         } else if let Self::Scheme(arm) = self {
-            Self::Scheme(arm.transform(ctx))
+            Self::Scheme(Box::new(arm.transform(ctx)))
         } else if let Self::Shadow(arm) = self {
-            Self::Shadow(arm.transform(ctx))
+            Self::Shadow(Box::new(arm.transform(ctx)))
         } else if let Self::StrikeThrough(arm) = self {
-            Self::StrikeThrough(arm.transform(ctx))
+            Self::StrikeThrough(Box::new(arm.transform(ctx)))
         } else if let Self::Underline(arm) = self {
-            Self::Underline(arm.transform(ctx))
+            Self::Underline(Box::new(arm.transform(ctx)))
         } else if let Self::VerticalAlignment(arm) = self {
-            Self::VerticalAlignment(arm.transform(ctx))
+            Self::VerticalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -34036,13 +34036,13 @@ impl super::Transform for spreadsheet::TablesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CharacterValueXStringElement(arm) = self {
-            Self::CharacterValueXStringElement(arm.transform(ctx))
+            Self::CharacterValueXStringElement(Box::new(arm.transform(ctx)))
         } else if let Self::NoValueTableMissing(arm) = self {
-            Self::NoValueTableMissing(arm.transform(ctx))
+            Self::NoValueTableMissing(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SharedItemsIndex(arm) = self {
-            Self::SharedItemsIndex(arm.transform(ctx))
+            Self::SharedItemsIndex(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

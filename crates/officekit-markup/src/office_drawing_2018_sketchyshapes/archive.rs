@@ -296,11 +296,11 @@ pub struct TypeMirror {
 #[rkyv(remote = super::LineSketchTypePropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum LineSketchTypePropertiesContent {
-    LineSketchCurved(super::LineSketchCurved),
-    LineSketchFreehand(super::LineSketchFreehand),
-    LineSketchNone(super::LineSketchNone),
-    LineSketchScribble(super::LineSketchScribble),
-    Other(Node),
+    LineSketchCurved(Box<super::LineSketchCurved>),
+    LineSketchFreehand(Box<super::LineSketchFreehand>),
+    LineSketchNone(Box<super::LineSketchNone>),
+    LineSketchScribble(Box<super::LineSketchScribble>),
+    Other(Box<Node>),
 }
 
 impl From<ExtLstMirror> for super::ExtLst {

@@ -350,11 +350,11 @@ impl super::Transform for office_2009_07_customui::BackstageContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonBackstageFastCommandButton(arm) = self {
-            Self::ButtonBackstageFastCommandButton(arm.transform(ctx))
+            Self::ButtonBackstageFastCommandButton(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TabBackstageTab(arm) = self {
-            Self::TabBackstageTab(arm.transform(ctx))
+            Self::TabBackstageTab(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -468,13 +468,13 @@ impl super::Transform for office_2009_07_customui::BackstageGroupsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::GroupBackstageGroup(arm) = self {
-            Self::GroupBackstageGroup(arm.transform(ctx))
+            Self::GroupBackstageGroup(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TaskFormGroup(arm) = self {
-            Self::TaskFormGroup(arm.transform(ctx))
+            Self::TaskFormGroup(Box::new(arm.transform(ctx)))
         } else if let Self::TaskGroup(arm) = self {
-            Self::TaskGroup(arm.transform(ctx))
+            Self::TaskGroup(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -593,15 +593,15 @@ impl super::Transform for office_2009_07_customui::BackstageMenuGroupContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonBackstageMenuButton(arm) = self {
-            Self::ButtonBackstageMenuButton(arm.transform(ctx))
+            Self::ButtonBackstageMenuButton(Box::new(arm.transform(ctx)))
         } else if let Self::CheckBoxBackstageMenuCheckBox(arm) = self {
-            Self::CheckBoxBackstageMenuCheckBox(arm.transform(ctx))
+            Self::CheckBoxBackstageMenuCheckBox(Box::new(arm.transform(ctx)))
         } else if let Self::MenuBackstageSubMenu(arm) = self {
-            Self::MenuBackstageSubMenu(arm.transform(ctx))
+            Self::MenuBackstageSubMenu(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ToggleButtonBackstageMenuToggleButton(arm) = self {
-            Self::ToggleButtonBackstageMenuToggleButton(arm.transform(ctx))
+            Self::ToggleButtonBackstageMenuToggleButton(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -911,35 +911,35 @@ impl super::Transform for office_2009_07_customui::BoxContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BoxBox(arm) = self {
-            Self::BoxBox(arm.transform(ctx))
+            Self::BoxBox(Box::new(arm.transform(ctx)))
         } else if let Self::ButtonButton(arm) = self {
-            Self::ButtonButton(arm.transform(ctx))
+            Self::ButtonButton(Box::new(arm.transform(ctx)))
         } else if let Self::ButtonGroup(arm) = self {
-            Self::ButtonGroup(arm.transform(ctx))
+            Self::ButtonGroup(Box::new(arm.transform(ctx)))
         } else if let Self::CheckBoxCheckBox(arm) = self {
-            Self::CheckBoxCheckBox(arm.transform(ctx))
+            Self::CheckBoxCheckBox(Box::new(arm.transform(ctx)))
         } else if let Self::ComboBoxComboBox(arm) = self {
-            Self::ComboBoxComboBox(arm.transform(ctx))
+            Self::ComboBoxComboBox(Box::new(arm.transform(ctx)))
         } else if let Self::ControlControlClone(arm) = self {
-            Self::ControlControlClone(arm.transform(ctx))
+            Self::ControlControlClone(Box::new(arm.transform(ctx)))
         } else if let Self::DropDownDropDownRegular(arm) = self {
-            Self::DropDownDropDownRegular(arm.transform(ctx))
+            Self::DropDownDropDownRegular(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicMenuDynamicMenu(arm) = self {
-            Self::DynamicMenuDynamicMenu(arm.transform(ctx))
+            Self::DynamicMenuDynamicMenu(Box::new(arm.transform(ctx)))
         } else if let Self::EditBoxEditBox(arm) = self {
-            Self::EditBoxEditBox(arm.transform(ctx))
+            Self::EditBoxEditBox(Box::new(arm.transform(ctx)))
         } else if let Self::GalleryGallery(arm) = self {
             Self::GalleryGallery(Box::new(arm.transform(ctx)))
         } else if let Self::LabelControlLabelControl(arm) = self {
-            Self::LabelControlLabelControl(arm.transform(ctx))
+            Self::LabelControlLabelControl(Box::new(arm.transform(ctx)))
         } else if let Self::MenuMenu(arm) = self {
-            Self::MenuMenu(arm.transform(ctx))
+            Self::MenuMenu(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SplitButtonSplitButton(arm) = self {
-            Self::SplitButtonSplitButton(arm.transform(ctx))
+            Self::SplitButtonSplitButton(Box::new(arm.transform(ctx)))
         } else if let Self::ToggleButtonToggleButton(arm) = self {
-            Self::ToggleButtonToggleButton(arm.transform(ctx))
+            Self::ToggleButtonToggleButton(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1863,23 +1863,23 @@ impl super::Transform for office_2009_07_customui::ButtonGroupContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonButtonRegular(arm) = self {
-            Self::ButtonButtonRegular(arm.transform(ctx))
+            Self::ButtonButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::ControlControlCloneRegular(arm) = self {
-            Self::ControlControlCloneRegular(arm.transform(ctx))
+            Self::ControlControlCloneRegular(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicMenuDynamicMenuRegular(arm) = self {
-            Self::DynamicMenuDynamicMenuRegular(arm.transform(ctx))
+            Self::DynamicMenuDynamicMenuRegular(Box::new(arm.transform(ctx)))
         } else if let Self::GalleryGalleryRegular(arm) = self {
             Self::GalleryGalleryRegular(Box::new(arm.transform(ctx)))
         } else if let Self::MenuMenuRegular(arm) = self {
-            Self::MenuMenuRegular(arm.transform(ctx))
+            Self::MenuMenuRegular(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Separator(arm) = self {
-            Self::Separator(arm.transform(ctx))
+            Self::Separator(Box::new(arm.transform(ctx)))
         } else if let Self::SplitButtonSplitButtonRegular(arm) = self {
-            Self::SplitButtonSplitButtonRegular(arm.transform(ctx))
+            Self::SplitButtonSplitButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::ToggleButtonToggleButtonRegular(arm) = self {
-            Self::ToggleButtonToggleButtonRegular(arm.transform(ctx))
+            Self::ToggleButtonToggleButtonRegular(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3157,25 +3157,25 @@ impl super::Transform for office_2009_07_customui::ContextMenuContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonButtonRegular(arm) = self {
-            Self::ButtonButtonRegular(arm.transform(ctx))
+            Self::ButtonButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::CheckBoxCheckBox(arm) = self {
-            Self::CheckBoxCheckBox(arm.transform(ctx))
+            Self::CheckBoxCheckBox(Box::new(arm.transform(ctx)))
         } else if let Self::ControlControlCloneRegular(arm) = self {
-            Self::ControlControlCloneRegular(arm.transform(ctx))
+            Self::ControlControlCloneRegular(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicMenuDynamicMenuRegular(arm) = self {
-            Self::DynamicMenuDynamicMenuRegular(arm.transform(ctx))
+            Self::DynamicMenuDynamicMenuRegular(Box::new(arm.transform(ctx)))
         } else if let Self::GalleryGalleryRegular(arm) = self {
             Self::GalleryGalleryRegular(Box::new(arm.transform(ctx)))
         } else if let Self::MenuMenuRegular(arm) = self {
-            Self::MenuMenuRegular(arm.transform(ctx))
+            Self::MenuMenuRegular(Box::new(arm.transform(ctx)))
         } else if let Self::MenuSeparatorMenuSeparatorNoTitle(arm) = self {
-            Self::MenuSeparatorMenuSeparatorNoTitle(arm.transform(ctx))
+            Self::MenuSeparatorMenuSeparatorNoTitle(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SplitButtonSplitButtonRegular(arm) = self {
-            Self::SplitButtonSplitButtonRegular(arm.transform(ctx))
+            Self::SplitButtonSplitButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::ToggleButtonToggleButtonRegular(arm) = self {
-            Self::ToggleButtonToggleButtonRegular(arm.transform(ctx))
+            Self::ToggleButtonToggleButtonRegular(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -5393,37 +5393,37 @@ impl super::Transform for office_2009_07_customui::GroupContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BoxBox(arm) = self {
-            Self::BoxBox(arm.transform(ctx))
+            Self::BoxBox(Box::new(arm.transform(ctx)))
         } else if let Self::ButtonButton(arm) = self {
-            Self::ButtonButton(arm.transform(ctx))
+            Self::ButtonButton(Box::new(arm.transform(ctx)))
         } else if let Self::ButtonGroup(arm) = self {
-            Self::ButtonGroup(arm.transform(ctx))
+            Self::ButtonGroup(Box::new(arm.transform(ctx)))
         } else if let Self::CheckBoxCheckBox(arm) = self {
-            Self::CheckBoxCheckBox(arm.transform(ctx))
+            Self::CheckBoxCheckBox(Box::new(arm.transform(ctx)))
         } else if let Self::ComboBoxComboBox(arm) = self {
-            Self::ComboBoxComboBox(arm.transform(ctx))
+            Self::ComboBoxComboBox(Box::new(arm.transform(ctx)))
         } else if let Self::ControlControlClone(arm) = self {
-            Self::ControlControlClone(arm.transform(ctx))
+            Self::ControlControlClone(Box::new(arm.transform(ctx)))
         } else if let Self::DropDownDropDownRegular(arm) = self {
-            Self::DropDownDropDownRegular(arm.transform(ctx))
+            Self::DropDownDropDownRegular(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicMenuDynamicMenu(arm) = self {
-            Self::DynamicMenuDynamicMenu(arm.transform(ctx))
+            Self::DynamicMenuDynamicMenu(Box::new(arm.transform(ctx)))
         } else if let Self::EditBoxEditBox(arm) = self {
-            Self::EditBoxEditBox(arm.transform(ctx))
+            Self::EditBoxEditBox(Box::new(arm.transform(ctx)))
         } else if let Self::GalleryGallery(arm) = self {
             Self::GalleryGallery(Box::new(arm.transform(ctx)))
         } else if let Self::LabelControlLabelControl(arm) = self {
-            Self::LabelControlLabelControl(arm.transform(ctx))
+            Self::LabelControlLabelControl(Box::new(arm.transform(ctx)))
         } else if let Self::MenuMenu(arm) = self {
-            Self::MenuMenu(arm.transform(ctx))
+            Self::MenuMenu(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Separator(arm) = self {
-            Self::Separator(arm.transform(ctx))
+            Self::Separator(Box::new(arm.transform(ctx)))
         } else if let Self::SplitButtonSplitButton(arm) = self {
-            Self::SplitButtonSplitButton(arm.transform(ctx))
+            Self::SplitButtonSplitButton(Box::new(arm.transform(ctx)))
         } else if let Self::ToggleButtonToggleButton(arm) = self {
-            Self::ToggleButtonToggleButton(arm.transform(ctx))
+            Self::ToggleButtonToggleButton(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -5602,29 +5602,29 @@ impl super::Transform for office_2009_07_customui::GroupControlsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonBackstageGroupButton(arm) = self {
-            Self::ButtonBackstageGroupButton(arm.transform(ctx))
+            Self::ButtonBackstageGroupButton(Box::new(arm.transform(ctx)))
         } else if let Self::CheckBoxBackstageCheckBox(arm) = self {
-            Self::CheckBoxBackstageCheckBox(arm.transform(ctx))
+            Self::CheckBoxBackstageCheckBox(Box::new(arm.transform(ctx)))
         } else if let Self::ComboBoxBackstageComboBox(arm) = self {
-            Self::ComboBoxBackstageComboBox(arm.transform(ctx))
+            Self::ComboBoxBackstageComboBox(Box::new(arm.transform(ctx)))
         } else if let Self::DropDownBackstageDropDown(arm) = self {
-            Self::DropDownBackstageDropDown(arm.transform(ctx))
+            Self::DropDownBackstageDropDown(Box::new(arm.transform(ctx)))
         } else if let Self::EditBoxBackstageEditBox(arm) = self {
-            Self::EditBoxBackstageEditBox(arm.transform(ctx))
+            Self::EditBoxBackstageEditBox(Box::new(arm.transform(ctx)))
         } else if let Self::GroupBox(arm) = self {
-            Self::GroupBox(arm.transform(ctx))
+            Self::GroupBox(Box::new(arm.transform(ctx)))
         } else if let Self::Hyperlink(arm) = self {
-            Self::Hyperlink(arm.transform(ctx))
+            Self::Hyperlink(Box::new(arm.transform(ctx)))
         } else if let Self::ImageControl(arm) = self {
-            Self::ImageControl(arm.transform(ctx))
+            Self::ImageControl(Box::new(arm.transform(ctx)))
         } else if let Self::LabelControlBackstageLabelControl(arm) = self {
-            Self::LabelControlBackstageLabelControl(arm.transform(ctx))
+            Self::LabelControlBackstageLabelControl(Box::new(arm.transform(ctx)))
         } else if let Self::LayoutContainer(arm) = self {
-            Self::LayoutContainer(arm.transform(ctx))
+            Self::LayoutContainer(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RadioGroup(arm) = self {
-            Self::RadioGroup(arm.transform(ctx))
+            Self::RadioGroup(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -6785,25 +6785,25 @@ impl super::Transform for office_2009_07_customui::MenuContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonButtonRegular(arm) = self {
-            Self::ButtonButtonRegular(arm.transform(ctx))
+            Self::ButtonButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::CheckBoxCheckBox(arm) = self {
-            Self::CheckBoxCheckBox(arm.transform(ctx))
+            Self::CheckBoxCheckBox(Box::new(arm.transform(ctx)))
         } else if let Self::ControlControlCloneRegular(arm) = self {
-            Self::ControlControlCloneRegular(arm.transform(ctx))
+            Self::ControlControlCloneRegular(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicMenuDynamicMenuRegular(arm) = self {
-            Self::DynamicMenuDynamicMenuRegular(arm.transform(ctx))
+            Self::DynamicMenuDynamicMenuRegular(Box::new(arm.transform(ctx)))
         } else if let Self::GalleryGalleryRegular(arm) = self {
             Self::GalleryGalleryRegular(Box::new(arm.transform(ctx)))
         } else if let Self::MenuMenuRegular(arm) = self {
-            Self::MenuMenuRegular(arm.transform(ctx))
+            Self::MenuMenuRegular(Box::new(arm.transform(ctx)))
         } else if let Self::MenuSeparatorMenuSeparator(arm) = self {
-            Self::MenuSeparatorMenuSeparator(arm.transform(ctx))
+            Self::MenuSeparatorMenuSeparator(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SplitButtonSplitButtonRegular(arm) = self {
-            Self::SplitButtonSplitButtonRegular(arm.transform(ctx))
+            Self::SplitButtonSplitButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::ToggleButtonToggleButtonRegular(arm) = self {
-            Self::ToggleButtonToggleButtonRegular(arm.transform(ctx))
+            Self::ToggleButtonToggleButtonRegular(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -7681,25 +7681,25 @@ impl super::Transform for office_2009_07_customui::MenuWithTitleContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonButtonRegular(arm) = self {
-            Self::ButtonButtonRegular(arm.transform(ctx))
+            Self::ButtonButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::CheckBoxCheckBox(arm) = self {
-            Self::CheckBoxCheckBox(arm.transform(ctx))
+            Self::CheckBoxCheckBox(Box::new(arm.transform(ctx)))
         } else if let Self::ControlControlCloneRegular(arm) = self {
-            Self::ControlControlCloneRegular(arm.transform(ctx))
+            Self::ControlControlCloneRegular(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicMenuDynamicMenuRegular(arm) = self {
-            Self::DynamicMenuDynamicMenuRegular(arm.transform(ctx))
+            Self::DynamicMenuDynamicMenuRegular(Box::new(arm.transform(ctx)))
         } else if let Self::GalleryGalleryRegular(arm) = self {
             Self::GalleryGalleryRegular(Box::new(arm.transform(ctx)))
         } else if let Self::MenuMenuWithTitle(arm) = self {
-            Self::MenuMenuWithTitle(arm.transform(ctx))
+            Self::MenuMenuWithTitle(Box::new(arm.transform(ctx)))
         } else if let Self::MenuSeparatorMenuSeparator(arm) = self {
-            Self::MenuSeparatorMenuSeparator(arm.transform(ctx))
+            Self::MenuSeparatorMenuSeparator(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SplitButtonSplitButtonWithTitle(arm) = self {
-            Self::SplitButtonSplitButtonWithTitle(arm.transform(ctx))
+            Self::SplitButtonSplitButtonWithTitle(Box::new(arm.transform(ctx)))
         } else if let Self::ToggleButtonToggleButtonRegular(arm) = self {
-            Self::ToggleButtonToggleButtonRegular(arm.transform(ctx))
+            Self::ToggleButtonToggleButtonRegular(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -7915,11 +7915,11 @@ impl super::Transform for office_2009_07_customui::PrimaryItemContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonBackstageRegularButton(arm) = self {
-            Self::ButtonBackstageRegularButton(arm.transform(ctx))
+            Self::ButtonBackstageRegularButton(Box::new(arm.transform(ctx)))
         } else if let Self::MenuBackstagePrimaryMenu(arm) = self {
-            Self::MenuBackstagePrimaryMenu(arm.transform(ctx))
+            Self::MenuBackstagePrimaryMenu(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -8124,13 +8124,13 @@ impl super::Transform for office_2009_07_customui::QuickAccessToolbarItemsConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonButtonRegular(arm) = self {
-            Self::ButtonButtonRegular(arm.transform(ctx))
+            Self::ButtonButtonRegular(Box::new(arm.transform(ctx)))
         } else if let Self::ControlControlCloneQat(arm) = self {
-            Self::ControlControlCloneQat(arm.transform(ctx))
+            Self::ControlControlCloneQat(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Separator(arm) = self {
-            Self::Separator(arm.transform(ctx))
+            Self::Separator(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -8528,13 +8528,13 @@ impl super::Transform for office_2009_07_customui::RibbonContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ContextualTabs(arm) = self {
-            Self::ContextualTabs(arm.transform(ctx))
+            Self::ContextualTabs(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Qat(arm) = self {
-            Self::Qat(arm.transform(ctx))
+            Self::Qat(Box::new(arm.transform(ctx)))
         } else if let Self::Tabs(arm) = self {
-            Self::Tabs(arm.transform(ctx))
+            Self::Tabs(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -8922,11 +8922,11 @@ impl super::Transform for office_2009_07_customui::SimpleGroupsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::GroupBackstageGroup(arm) = self {
-            Self::GroupBackstageGroup(arm.transform(ctx))
+            Self::GroupBackstageGroup(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TaskGroup(arm) = self {
-            Self::TaskGroup(arm.transform(ctx))
+            Self::TaskGroup(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -9019,11 +9019,11 @@ impl super::Transform for office_2009_07_customui::SplitButtonContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ButtonVisibleButton(arm) = self {
-            Self::ButtonVisibleButton(arm.transform(ctx))
+            Self::ButtonVisibleButton(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ToggleButtonVisibleToggleButton(arm) = self {
-            Self::ToggleButtonVisibleToggleButton(arm.transform(ctx))
+            Self::ToggleButtonVisibleToggleButton(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

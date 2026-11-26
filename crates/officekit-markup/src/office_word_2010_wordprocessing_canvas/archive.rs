@@ -280,12 +280,12 @@ pub struct WpcMirror {
 #[rkyv(remote = super::WordprocessingCanvasContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum WordprocessingCanvasContent {
-    ContentPart(office_word_2010_wordml::ContentPart),
-    GraphicFrame(super::GraphicFrame),
-    Other(Node),
-    Picture(picture::Picture),
-    Wgp(super::super::office_word_2010_wordprocessing_group::Wgp),
-    Wsp(super::super::office_word_2010_wordprocessing_shape::Wsp),
+    ContentPart(Box<office_word_2010_wordml::ContentPart>),
+    GraphicFrame(Box<super::GraphicFrame>),
+    Other(Box<Node>),
+    Picture(Box<picture::Picture>),
+    Wgp(Box<super::super::office_word_2010_wordprocessing_group::Wgp>),
+    Wsp(Box<super::super::office_word_2010_wordprocessing_shape::Wsp>),
 }
 
 impl From<BgMirror> for super::Bg {

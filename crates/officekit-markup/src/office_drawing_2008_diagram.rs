@@ -894,11 +894,11 @@ impl Eq for ExtLstWith<()> {}
 #[non_exhaustive]
 pub enum GroupShapeContentWith<X: UserData> {
     /// The element `dsp:grpSp`, a `GrpSp`.
-    GrpSp(GrpSpWith<X>),
+    GrpSp(Box<GrpSpWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `dsp:sp`, a `Sp`.
-    Sp(SpWith<X>),
+    Sp(Box<SpWith<X>>),
 }
 
 /// [`GroupShapeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1606,23 +1606,23 @@ impl<X: UserData> GroupShapeContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::GrpSp(node) => GroupShapeContentWith::GrpSp(node.into_user_data()),
+            Self::GrpSp(node) => GroupShapeContentWith::GrpSp(Box::new((*node).into_user_data())),
             Self::Other(node) => GroupShapeContentWith::Other(node),
-            Self::Sp(node) => GroupShapeContentWith::Sp(node.into_user_data()),
+            Self::Sp(node) => GroupShapeContentWith::Sp(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for GroupShapeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_DSP, "grpSp")) => Self::GrpSp(item.read()),
-            Some((NS_DSP, "sp")) => Self::Sp(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_DSP, "grpSp")) => Self::GrpSp(Box::new(item.read())),
+            Some((NS_DSP, "sp")) => Self::Sp(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -1631,11 +1631,28 @@ impl officekit_markup_base::Write for GroupShapeContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::GrpSp(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Sp(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<GrpSpWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GrpSpWith<X>) -> Self {
+        Self::GrpSp(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SpWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: SpWith<X>) -> Self {
+        Self::Sp(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupShapeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GrpSpWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

@@ -109,14 +109,14 @@ const fn rgba(red: u8, green: u8, blue: u8) -> Rgba {
 fn hex(digits: &str) -> ColorContent {
     let mut color = RGBColorModelHexVariant::default();
     color.val = Some(HexadecimalColorValue::from(digits.to_owned()));
-    ColorContent::RGBColorModelHexVariant(color)
+    ColorContent::from(color)
 }
 
 /// An `a:schemeClr` of `name`.
 fn scheme_color(name: StSchemeColorValMember) -> ColorContent {
     let mut color = SchemeColor::default();
     color.val = Some(StSchemeColorVal::from(name));
-    ColorContent::SchemeColor(color)
+    ColorContent::from(color)
 }
 
 fn placeholder() -> ColorContent {
@@ -130,7 +130,7 @@ fn solid(content: ColorContent) -> SolidFill {
 }
 
 fn no_fill() -> FillPropertiesContent {
-    FillPropertiesContent::NoFill(NoFill::default())
+    FillPropertiesContent::from(NoFill::default())
 }
 
 /// An `a:gs` at `position` of `content`.
@@ -161,7 +161,7 @@ fn theme_colors() -> ThemeColors {
 /// An `a:ln` of `width` with a solid fill of `phClr`, a flat cap and a solid dash.
 fn style_outline(width: &str) -> Outline {
     let mut outline = width_outline(width);
-    outline.line_fill_content = Some(Box::new(LineFillContent::SolidFill(solid(placeholder()))));
+    outline.line_fill_content = Some(Box::new(LineFillContent::from(solid(placeholder()))));
     outline.cap = Some(EndLineCap::from(EndLineCapMember::Flat));
     outline.line_dash_content = Some(Box::new(solid_dash()));
     outline
@@ -170,7 +170,7 @@ fn style_outline(width: &str) -> Outline {
 fn solid_dash() -> LineDashContent {
     let mut dash = PresetDash::default();
     dash.val = Some(PresetLineDashValue::from(PresetLineDashValueMember::Solid));
-    LineDashContent::PresetDash(dash)
+    LineDashContent::from(dash)
 }
 
 /// An `a:ln` stating `w` and nothing more.
@@ -185,12 +185,12 @@ fn width_outline(width: &str) -> Outline {
 fn scheme() -> FormatScheme {
     let mut scheme = FormatScheme::default();
     scheme.fill_style_list.content = vec![
-        FillPropertiesContent::SolidFill(solid(hex("111111"))),
-        FillPropertiesContent::SolidFill(solid(placeholder())),
-        FillPropertiesContent::GradientFill(gradient()),
+        FillPropertiesContent::from(solid(hex("111111"))),
+        FillPropertiesContent::from(solid(placeholder())),
+        FillPropertiesContent::from(gradient()),
     ];
     scheme.background_fill_style_list.content =
-        vec![FillPropertiesContent::SolidFill(solid(hex("70AD47")))];
+        vec![FillPropertiesContent::from(solid(hex("70AD47")))];
     scheme.line_style_list.outline = vec![
         style_outline("6350"),
         style_outline("12700"),
@@ -275,7 +275,7 @@ fn no_fill_on_the_shape_wins_over_the_style() {
 #[test]
 fn the_shapes_own_colour_wins_over_the_style() {
     let style = shape_style(2, 2);
-    let properties = properties_with_fill(FillPropertiesContent::SolidFill(solid(hex("FF0000"))));
+    let properties = properties_with_fill(FillPropertiesContent::from(solid(hex("FF0000"))));
     assert_eq!(
         themed_fill(&properties, Some(&style)),
         Fill::Solid(Some(rgba(0xFF, 0, 0))),
@@ -285,9 +285,9 @@ fn the_shapes_own_colour_wins_over_the_style() {
 #[test]
 fn the_shapes_own_placeholder_has_no_colour() {
     let style = shape_style(2, 2);
-    let properties = properties_with_fill(FillPropertiesContent::SolidFill(solid(placeholder())));
+    let properties = properties_with_fill(FillPropertiesContent::from(solid(placeholder())));
     assert_eq!(themed_fill(&properties, Some(&style)), Fill::Solid(None));
-    let empty = properties_with_fill(FillPropertiesContent::SolidFill(SolidFill::default()));
+    let empty = properties_with_fill(FillPropertiesContent::from(SolidFill::default()));
     assert_eq!(themed_fill(&empty, Some(&style)), Fill::Solid(None));
 }
 
@@ -316,7 +316,7 @@ fn the_references_0_1000_and_1001() {
 fn the_first_background_fill_style_takes_the_references_colour() {
     let mut scheme = scheme();
     scheme.background_fill_style_list.content =
-        vec![FillPropertiesContent::SolidFill(solid(placeholder()))];
+        vec![FillPropertiesContent::from(solid(placeholder()))];
     let style = shape_style(1001, 0);
     assert_eq!(
         fill(
@@ -382,7 +382,7 @@ fn a_stops_position_in_either_class() {
     ];
     let mut gradient = GradientFill::default();
     gradient.gradient_stop_list = Some(Box::new(list));
-    let properties = properties_with_fill(FillPropertiesContent::GradientFill(gradient.clone()));
+    let properties = properties_with_fill(FillPropertiesContent::from(gradient.clone()));
     let black = Some(rgba(0, 0, 0));
     assert_eq!(
         themed_fill(&properties, None),
@@ -408,7 +408,7 @@ fn a_pattern_a_picture_and_a_group_fill() {
     pattern.background_color = Some(Box::new(background));
     assert_eq!(
         themed_fill(
-            &properties_with_fill(FillPropertiesContent::PatternFill(pattern.clone())),
+            &properties_with_fill(FillPropertiesContent::from(pattern.clone())),
             None,
         ),
         Fill::Pattern {
@@ -419,14 +419,14 @@ fn a_pattern_a_picture_and_a_group_fill() {
     );
     assert_eq!(
         themed_fill(
-            &properties_with_fill(FillPropertiesContent::PictureFill(PictureFill::default())),
+            &properties_with_fill(FillPropertiesContent::from(PictureFill::default())),
             None,
         ),
         Fill::Picture(PictureFill::default()),
     );
     assert_eq!(
         themed_fill(
-            &properties_with_fill(FillPropertiesContent::GroupFill(GroupFill::default())),
+            &properties_with_fill(FillPropertiesContent::from(GroupFill::default())),
             None,
         ),
         Fill::Group,
@@ -458,7 +458,7 @@ fn the_shapes_line_over_the_styles_one_thing_at_a_time() {
 fn the_shapes_own_line_colour_has_no_placeholder() {
     let style = shape_style(0, 2);
     let mut outline = Outline::default();
-    outline.line_fill_content = Some(Box::new(LineFillContent::SolidFill(solid(placeholder()))));
+    outline.line_fill_content = Some(Box::new(LineFillContent::from(solid(placeholder()))));
     let line = themed_line(&properties_with_line(outline), Some(&style)).unwrap();
     assert_eq!(line.fill, Fill::Solid(None));
 }
@@ -514,9 +514,9 @@ fn a_join_as_stated() {
     let mut limited = MiterLineJoin::default();
     limited.lim = Some(PositivePercentageValueWithSign::from("800000".to_owned()));
     let joins = [
-        LineJoinContent::MiterLineJoin(limited),
-        LineJoinContent::MiterLineJoin(MiterLineJoin::default()),
-        LineJoinContent::LineJoinBevel(LineJoinBevel::default()),
+        LineJoinContent::from(limited),
+        LineJoinContent::from(MiterLineJoin::default()),
+        LineJoinContent::from(LineJoinBevel::default()),
     ];
     for join in joins {
         let mut outline = Outline::default();
@@ -538,7 +538,7 @@ fn no_line_at_all() {
 fn a_lines_no_fill_wins_over_the_styles_fill() {
     let style = shape_style(0, 2);
     let mut outline = Outline::default();
-    outline.line_fill_content = Some(Box::new(LineFillContent::NoFill(NoFill::default())));
+    outline.line_fill_content = Some(Box::new(LineFillContent::from(NoFill::default())));
     let line = themed_line(&properties_with_line(outline), Some(&style)).unwrap();
     assert_eq!(line.fill, Fill::None);
 }

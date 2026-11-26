@@ -1206,23 +1206,23 @@ impl super::Transform for office_powerpoint_2022_08_main::TaskHistoryEventConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Add(arm) = self {
-            Self::Add(arm.transform(ctx))
+            Self::Add(Box::new(arm.transform(ctx)))
         } else if let Self::Asgn(arm) = self {
-            Self::Asgn(arm.transform(ctx))
+            Self::Asgn(Box::new(arm.transform(ctx)))
         } else if let Self::Date(arm) = self {
-            Self::Date(arm.transform(ctx))
+            Self::Date(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PcntCmplt(arm) = self {
-            Self::PcntCmplt(arm.transform(ctx))
+            Self::PcntCmplt(Box::new(arm.transform(ctx)))
         } else if let Self::Title(arm) = self {
-            Self::Title(arm.transform(ctx))
+            Self::Title(Box::new(arm.transform(ctx)))
         } else if let Self::UnasgnAll(arm) = self {
-            Self::UnasgnAll(arm.transform(ctx))
+            Self::UnasgnAll(Box::new(arm.transform(ctx)))
         } else if let Self::Undo(arm) = self {
-            Self::Undo(arm.transform(ctx))
+            Self::Undo(Box::new(arm.transform(ctx)))
         } else if let Self::Unknown(arm) = self {
-            Self::Unknown(arm.transform(ctx))
+            Self::Unknown(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

@@ -767,15 +767,15 @@ pub struct XfrmMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupShapeContent {
-    ConnectionShape(#[rkyv(omit_bounds)] super::ConnectionShape),
+    ConnectionShape(#[rkyv(omit_bounds)] Box<super::ConnectionShape>),
     ContentPart(
-        #[rkyv(omit_bounds)] super::super::office_excel_2010_spreadsheet_drawing::ContentPart,
+        #[rkyv(omit_bounds)] Box<super::super::office_excel_2010_spreadsheet_drawing::ContentPart>,
     ),
-    GraphicFrame(#[rkyv(omit_bounds)] super::GraphicFrame),
-    GroupShape(#[rkyv(omit_bounds)] super::GroupShape),
-    Other(Node),
-    Picture(#[rkyv(omit_bounds)] super::Picture),
-    Shape(#[rkyv(omit_bounds)] super::Shape),
+    GraphicFrame(#[rkyv(omit_bounds)] Box<super::GraphicFrame>),
+    GroupShape(#[rkyv(omit_bounds)] Box<super::GroupShape>),
+    Other(Box<Node>),
+    Picture(#[rkyv(omit_bounds)] Box<super::Picture>),
+    Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -785,13 +785,13 @@ pub enum GroupShapeContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ObjectContent {
-    ConnectionShape(#[rkyv(omit_bounds)] super::ConnectionShape),
-    ContentPart(super::ContentPart),
-    GraphicFrame(#[rkyv(omit_bounds)] super::GraphicFrame),
-    GroupShape(#[rkyv(omit_bounds)] super::GroupShape),
-    Other(Node),
-    Picture(#[rkyv(omit_bounds)] super::Picture),
-    Shape(#[rkyv(omit_bounds)] super::Shape),
+    ConnectionShape(#[rkyv(omit_bounds)] Box<super::ConnectionShape>),
+    ContentPart(Box<super::ContentPart>),
+    GraphicFrame(#[rkyv(omit_bounds)] Box<super::GraphicFrame>),
+    GroupShape(#[rkyv(omit_bounds)] Box<super::GroupShape>),
+    Other(Box<Node>),
+    Picture(#[rkyv(omit_bounds)] Box<super::Picture>),
+    Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -801,10 +801,10 @@ pub enum ObjectContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum WorksheetDrawingContent {
-    AbsoluteAnchorShapeSize(#[rkyv(omit_bounds)] super::AbsoluteAnchorShapeSize),
-    OneCellAnchorShapeSize(#[rkyv(omit_bounds)] super::OneCellAnchorShapeSize),
-    Other(Node),
-    TwoCellAnchorShapeSize(#[rkyv(omit_bounds)] super::TwoCellAnchorShapeSize),
+    AbsoluteAnchorShapeSize(#[rkyv(omit_bounds)] Box<super::AbsoluteAnchorShapeSize>),
+    OneCellAnchorShapeSize(#[rkyv(omit_bounds)] Box<super::OneCellAnchorShapeSize>),
+    Other(Box<Node>),
+    TwoCellAnchorShapeSize(#[rkyv(omit_bounds)] Box<super::TwoCellAnchorShapeSize>),
 }
 
 impl From<AbsoluteAnchorShapeSizeMirror> for super::AbsoluteAnchorShapeSize {

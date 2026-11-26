@@ -21,7 +21,7 @@ fn font_named(name: &str) -> Font {
     let mut node = FontName::default();
     node.val = Some(name.to_owned());
     let mut font = Font::default();
-    font.content.push(FontContent::FontName(node));
+    font.content.push(FontContent::from(node));
     font
 }
 
@@ -30,7 +30,7 @@ fn fill(pattern: &str) -> Fill {
     let mut node = Pattern::default();
     node.pattern_type = Some(PatternType::from(pattern.to_owned()));
     let mut fill = Fill::default();
-    fill.content = Some(Box::new(FillContent::Pattern(node)));
+    fill.content = Some(Box::new(FillContent::from(node)));
     fill
 }
 
@@ -262,11 +262,11 @@ fn plain_members() -> Vec<FontContent> {
     let mut name = FontName::default();
     name.val = Some("Arial".to_owned());
     vec![
-        FontContent::Bold(Bold::default()),
-        FontContent::Italic(italic),
-        FontContent::Underline(Underline::default()),
-        FontContent::FontSize(size),
-        FontContent::FontName(name),
+        FontContent::from(Bold::default()),
+        FontContent::from(italic),
+        FontContent::from(Underline::default()),
+        FontContent::from(size),
+        FontContent::from(name),
     ]
 }
 
@@ -295,10 +295,10 @@ fn a_member_written_twice_takes_the_last_and_a_val_that_is_no_value_states_nothi
     underline.val = Some(UnderlineTypes::from("wavy".to_owned()));
     let mut font = Font::default();
     font.content = vec![
-        FontContent::Bold(first),
-        FontContent::Bold(last),
-        FontContent::Italic(nonsense),
-        FontContent::Underline(underline),
+        FontContent::from(first),
+        FontContent::from(last),
+        FontContent::from(nonsense),
+        FontContent::from(underline),
     ];
     let properties = FontProperties::from(&font);
     assert_eq!(properties.bold, Some(false));
@@ -316,11 +316,11 @@ fn a_run_s_properties_give_the_value_of_the_same_font() {
     name.val = Some("Arial".to_owned());
     let mut run = RunProperties::default();
     run.content = vec![
-        RunPropertiesContent::Bold(Bold::default()),
-        RunPropertiesContent::Italic(italic),
-        RunPropertiesContent::Underline(Underline::default()),
-        RunPropertiesContent::FontSize(size),
-        RunPropertiesContent::FontRFont(name),
+        RunPropertiesContent::from(Bold::default()),
+        RunPropertiesContent::from(italic),
+        RunPropertiesContent::from(Underline::default()),
+        RunPropertiesContent::from(size),
+        RunPropertiesContent::from(name),
     ];
     let mut font = Font::default();
     font.content = plain_members();
@@ -343,29 +343,29 @@ fn every_member_of_a_font_and_of_a_run_is_read_alike() {
     vertical.val = Some(VerticalPositioningLocation::from("superscript".to_owned()));
     let mut font = Font::default();
     font.content = vec![
-        FontContent::CharacterSet(charset.clone()),
-        FontContent::Condense(Condense::default()),
-        FontContent::DataBarColor(color.clone()),
-        FontContent::Extend(Extend::default()),
-        FontContent::FontFamily(family),
-        FontContent::Outline(Outline::default()),
-        FontContent::Scheme(scheme.clone()),
-        FontContent::Shadow(Shadow::default()),
-        FontContent::StrikeThrough(StrikeThrough::default()),
-        FontContent::VerticalAlignment(vertical.clone()),
+        FontContent::from(charset.clone()),
+        FontContent::from(Condense::default()),
+        FontContent::from(color.clone()),
+        FontContent::from(Extend::default()),
+        FontContent::from(family),
+        FontContent::from(Outline::default()),
+        FontContent::from(scheme.clone()),
+        FontContent::from(Shadow::default()),
+        FontContent::from(StrikeThrough::default()),
+        FontContent::from(vertical.clone()),
     ];
     let mut run = RunProperties::default();
     run.content = vec![
-        RunPropertiesContent::CharacterSet(charset),
-        RunPropertiesContent::Condense(Condense::default()),
-        RunPropertiesContent::DataBarColor(color.clone()),
-        RunPropertiesContent::Extend(Extend::default()),
-        RunPropertiesContent::FontFamilyIntProperty(run_family),
-        RunPropertiesContent::Outline(Outline::default()),
-        RunPropertiesContent::Scheme(scheme),
-        RunPropertiesContent::Shadow(Shadow::default()),
-        RunPropertiesContent::StrikeThrough(StrikeThrough::default()),
-        RunPropertiesContent::VerticalAlignment(vertical),
+        RunPropertiesContent::from(charset),
+        RunPropertiesContent::from(Condense::default()),
+        RunPropertiesContent::from(color.clone()),
+        RunPropertiesContent::from(Extend::default()),
+        RunPropertiesContent::from(run_family),
+        RunPropertiesContent::from(Outline::default()),
+        RunPropertiesContent::from(scheme),
+        RunPropertiesContent::from(Shadow::default()),
+        RunPropertiesContent::from(StrikeThrough::default()),
+        RunPropertiesContent::from(vertical),
     ];
     let from_font = FontProperties::from(&font);
     assert_eq!(from_font, FontProperties::from(&run));
@@ -392,11 +392,11 @@ fn every_member_of_a_font_and_of_a_run_is_read_alike() {
 fn a_run_over_a_font_keeps_what_the_run_states_and_takes_the_rest_from_the_font() {
     let mut font = Font::default();
     font.content = plain_members();
-    font.content.push(FontContent::Italic(Italic::default()));
+    font.content.push(FontContent::from(Italic::default()));
     let lower = FontProperties::from(&font);
     let mut run = RunProperties::default();
     run.content
-        .push(RunPropertiesContent::Bold(Bold::default()));
+        .push(RunPropertiesContent::from(Bold::default()));
     let merged = FontProperties::from(&run).over(&lower);
     assert_eq!(merged.bold, Some(true));
     assert_eq!(merged.italic, Some(true));

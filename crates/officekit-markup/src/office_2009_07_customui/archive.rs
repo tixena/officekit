@@ -2250,19 +2250,19 @@ pub struct TopItemsMirror {
 #[rkyv(remote = super::BackstageContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum BackstageContent {
-    ButtonBackstageFastCommandButton(super::ButtonBackstageFastCommandButton),
-    Other(Node),
-    TabBackstageTab(super::TabBackstageTab),
+    ButtonBackstageFastCommandButton(Box<super::ButtonBackstageFastCommandButton>),
+    Other(Box<Node>),
+    TabBackstageTab(Box<super::TabBackstageTab>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::BackstageGroupsContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum BackstageGroupsContent {
-    GroupBackstageGroup(super::GroupBackstageGroup),
-    Other(Node),
-    TaskFormGroup(super::TaskFormGroup),
-    TaskGroup(super::TaskGroup),
+    GroupBackstageGroup(Box<super::GroupBackstageGroup>),
+    Other(Box<Node>),
+    TaskFormGroup(Box<super::TaskFormGroup>),
+    TaskGroup(Box<super::TaskGroup>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2272,11 +2272,11 @@ pub enum BackstageGroupsContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum BackstageMenuGroupContent {
-    ButtonBackstageMenuButton(super::ButtonBackstageMenuButton),
-    CheckBoxBackstageMenuCheckBox(super::CheckBoxBackstageMenuCheckBox),
-    MenuBackstageSubMenu(#[rkyv(omit_bounds)] super::MenuBackstageSubMenu),
-    Other(Node),
-    ToggleButtonBackstageMenuToggleButton(super::ToggleButtonBackstageMenuToggleButton),
+    ButtonBackstageMenuButton(Box<super::ButtonBackstageMenuButton>),
+    CheckBoxBackstageMenuCheckBox(Box<super::CheckBoxBackstageMenuCheckBox>),
+    MenuBackstageSubMenu(#[rkyv(omit_bounds)] Box<super::MenuBackstageSubMenu>),
+    Other(Box<Node>),
+    ToggleButtonBackstageMenuToggleButton(Box<super::ToggleButtonBackstageMenuToggleButton>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2286,74 +2286,74 @@ pub enum BackstageMenuGroupContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum BoxContent {
-    BoxBox(#[rkyv(omit_bounds)] super::BoxBox),
-    ButtonButton(super::ButtonButton),
-    ButtonGroup(super::ButtonGroup),
-    CheckBoxCheckBox(super::CheckBoxCheckBox),
-    ComboBoxComboBox(super::ComboBoxComboBox),
-    ControlControlClone(super::ControlControlClone),
-    DropDownDropDownRegular(super::DropDownDropDownRegular),
-    DynamicMenuDynamicMenu(super::DynamicMenuDynamicMenu),
-    EditBoxEditBox(super::EditBoxEditBox),
+    BoxBox(#[rkyv(omit_bounds)] Box<super::BoxBox>),
+    ButtonButton(Box<super::ButtonButton>),
+    ButtonGroup(Box<super::ButtonGroup>),
+    CheckBoxCheckBox(Box<super::CheckBoxCheckBox>),
+    ComboBoxComboBox(Box<super::ComboBoxComboBox>),
+    ControlControlClone(Box<super::ControlControlClone>),
+    DropDownDropDownRegular(Box<super::DropDownDropDownRegular>),
+    DynamicMenuDynamicMenu(Box<super::DynamicMenuDynamicMenu>),
+    EditBoxEditBox(Box<super::EditBoxEditBox>),
     GalleryGallery(Box<super::GalleryGallery>),
-    LabelControlLabelControl(super::LabelControlLabelControl),
-    MenuMenu(super::MenuMenu),
-    Other(Node),
-    SplitButtonSplitButton(super::SplitButtonSplitButton),
-    ToggleButtonToggleButton(super::ToggleButtonToggleButton),
+    LabelControlLabelControl(Box<super::LabelControlLabelControl>),
+    MenuMenu(Box<super::MenuMenu>),
+    Other(Box<Node>),
+    SplitButtonSplitButton(Box<super::SplitButtonSplitButton>),
+    ToggleButtonToggleButton(Box<super::ToggleButtonToggleButton>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ButtonGroupContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ButtonGroupContent {
-    ButtonButtonRegular(super::ButtonButtonRegular),
-    ControlControlCloneRegular(super::ControlControlCloneRegular),
-    DynamicMenuDynamicMenuRegular(super::DynamicMenuDynamicMenuRegular),
+    ButtonButtonRegular(Box<super::ButtonButtonRegular>),
+    ControlControlCloneRegular(Box<super::ControlControlCloneRegular>),
+    DynamicMenuDynamicMenuRegular(Box<super::DynamicMenuDynamicMenuRegular>),
     GalleryGalleryRegular(Box<super::GalleryGalleryRegular>),
-    MenuMenuRegular(super::MenuMenuRegular),
-    Other(Node),
-    Separator(super::Separator),
-    SplitButtonSplitButtonRegular(super::SplitButtonSplitButtonRegular),
-    ToggleButtonToggleButtonRegular(super::ToggleButtonToggleButtonRegular),
+    MenuMenuRegular(Box<super::MenuMenuRegular>),
+    Other(Box<Node>),
+    Separator(Box<super::Separator>),
+    SplitButtonSplitButtonRegular(Box<super::SplitButtonSplitButtonRegular>),
+    ToggleButtonToggleButtonRegular(Box<super::ToggleButtonToggleButtonRegular>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ContextMenuContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ContextMenuContent {
-    ButtonButtonRegular(super::ButtonButtonRegular),
-    CheckBoxCheckBox(super::CheckBoxCheckBox),
-    ControlControlCloneRegular(super::ControlControlCloneRegular),
-    DynamicMenuDynamicMenuRegular(super::DynamicMenuDynamicMenuRegular),
+    ButtonButtonRegular(Box<super::ButtonButtonRegular>),
+    CheckBoxCheckBox(Box<super::CheckBoxCheckBox>),
+    ControlControlCloneRegular(Box<super::ControlControlCloneRegular>),
+    DynamicMenuDynamicMenuRegular(Box<super::DynamicMenuDynamicMenuRegular>),
     GalleryGalleryRegular(Box<super::GalleryGalleryRegular>),
-    MenuMenuRegular(super::MenuMenuRegular),
-    MenuSeparatorMenuSeparatorNoTitle(super::MenuSeparatorMenuSeparatorNoTitle),
-    Other(Node),
-    SplitButtonSplitButtonRegular(super::SplitButtonSplitButtonRegular),
-    ToggleButtonToggleButtonRegular(super::ToggleButtonToggleButtonRegular),
+    MenuMenuRegular(Box<super::MenuMenuRegular>),
+    MenuSeparatorMenuSeparatorNoTitle(Box<super::MenuSeparatorMenuSeparatorNoTitle>),
+    Other(Box<Node>),
+    SplitButtonSplitButtonRegular(Box<super::SplitButtonSplitButtonRegular>),
+    ToggleButtonToggleButtonRegular(Box<super::ToggleButtonToggleButtonRegular>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GroupContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupContent {
-    BoxBox(super::BoxBox),
-    ButtonButton(super::ButtonButton),
-    ButtonGroup(super::ButtonGroup),
-    CheckBoxCheckBox(super::CheckBoxCheckBox),
-    ComboBoxComboBox(super::ComboBoxComboBox),
-    ControlControlClone(super::ControlControlClone),
-    DropDownDropDownRegular(super::DropDownDropDownRegular),
-    DynamicMenuDynamicMenu(super::DynamicMenuDynamicMenu),
-    EditBoxEditBox(super::EditBoxEditBox),
+    BoxBox(Box<super::BoxBox>),
+    ButtonButton(Box<super::ButtonButton>),
+    ButtonGroup(Box<super::ButtonGroup>),
+    CheckBoxCheckBox(Box<super::CheckBoxCheckBox>),
+    ComboBoxComboBox(Box<super::ComboBoxComboBox>),
+    ControlControlClone(Box<super::ControlControlClone>),
+    DropDownDropDownRegular(Box<super::DropDownDropDownRegular>),
+    DynamicMenuDynamicMenu(Box<super::DynamicMenuDynamicMenu>),
+    EditBoxEditBox(Box<super::EditBoxEditBox>),
     GalleryGallery(Box<super::GalleryGallery>),
-    LabelControlLabelControl(super::LabelControlLabelControl),
-    MenuMenu(super::MenuMenu),
-    Other(Node),
-    Separator(super::Separator),
-    SplitButtonSplitButton(super::SplitButtonSplitButton),
-    ToggleButtonToggleButton(super::ToggleButtonToggleButton),
+    LabelControlLabelControl(Box<super::LabelControlLabelControl>),
+    MenuMenu(Box<super::MenuMenu>),
+    Other(Box<Node>),
+    Separator(Box<super::Separator>),
+    SplitButtonSplitButton(Box<super::SplitButtonSplitButton>),
+    ToggleButtonToggleButton(Box<super::ToggleButtonToggleButton>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2363,18 +2363,18 @@ pub enum GroupContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupControlsContent {
-    ButtonBackstageGroupButton(super::ButtonBackstageGroupButton),
-    CheckBoxBackstageCheckBox(super::CheckBoxBackstageCheckBox),
-    ComboBoxBackstageComboBox(super::ComboBoxBackstageComboBox),
-    DropDownBackstageDropDown(super::DropDownBackstageDropDown),
-    EditBoxBackstageEditBox(super::EditBoxBackstageEditBox),
-    GroupBox(#[rkyv(omit_bounds)] super::GroupBox),
-    Hyperlink(super::Hyperlink),
-    ImageControl(super::ImageControl),
-    LabelControlBackstageLabelControl(super::LabelControlBackstageLabelControl),
-    LayoutContainer(#[rkyv(omit_bounds)] super::LayoutContainer),
-    Other(Node),
-    RadioGroup(super::RadioGroup),
+    ButtonBackstageGroupButton(Box<super::ButtonBackstageGroupButton>),
+    CheckBoxBackstageCheckBox(Box<super::CheckBoxBackstageCheckBox>),
+    ComboBoxBackstageComboBox(Box<super::ComboBoxBackstageComboBox>),
+    DropDownBackstageDropDown(Box<super::DropDownBackstageDropDown>),
+    EditBoxBackstageEditBox(Box<super::EditBoxBackstageEditBox>),
+    GroupBox(#[rkyv(omit_bounds)] Box<super::GroupBox>),
+    Hyperlink(Box<super::Hyperlink>),
+    ImageControl(Box<super::ImageControl>),
+    LabelControlBackstageLabelControl(Box<super::LabelControlBackstageLabelControl>),
+    LayoutContainer(#[rkyv(omit_bounds)] Box<super::LayoutContainer>),
+    Other(Box<Node>),
+    RadioGroup(Box<super::RadioGroup>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2384,16 +2384,16 @@ pub enum GroupControlsContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum MenuContent {
-    ButtonButtonRegular(super::ButtonButtonRegular),
-    CheckBoxCheckBox(super::CheckBoxCheckBox),
-    ControlControlCloneRegular(super::ControlControlCloneRegular),
-    DynamicMenuDynamicMenuRegular(super::DynamicMenuDynamicMenuRegular),
+    ButtonButtonRegular(Box<super::ButtonButtonRegular>),
+    CheckBoxCheckBox(Box<super::CheckBoxCheckBox>),
+    ControlControlCloneRegular(Box<super::ControlControlCloneRegular>),
+    DynamicMenuDynamicMenuRegular(Box<super::DynamicMenuDynamicMenuRegular>),
     GalleryGalleryRegular(Box<super::GalleryGalleryRegular>),
-    MenuMenuRegular(#[rkyv(omit_bounds)] super::MenuMenuRegular),
-    MenuSeparatorMenuSeparator(super::MenuSeparatorMenuSeparator),
-    Other(Node),
-    SplitButtonSplitButtonRegular(#[rkyv(omit_bounds)] super::SplitButtonSplitButtonRegular),
-    ToggleButtonToggleButtonRegular(super::ToggleButtonToggleButtonRegular),
+    MenuMenuRegular(#[rkyv(omit_bounds)] Box<super::MenuMenuRegular>),
+    MenuSeparatorMenuSeparator(Box<super::MenuSeparatorMenuSeparator>),
+    Other(Box<Node>),
+    SplitButtonSplitButtonRegular(#[rkyv(omit_bounds)] Box<super::SplitButtonSplitButtonRegular>),
+    ToggleButtonToggleButtonRegular(Box<super::ToggleButtonToggleButtonRegular>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -2403,63 +2403,65 @@ pub enum MenuContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum MenuWithTitleContent {
-    ButtonButtonRegular(super::ButtonButtonRegular),
-    CheckBoxCheckBox(super::CheckBoxCheckBox),
-    ControlControlCloneRegular(super::ControlControlCloneRegular),
-    DynamicMenuDynamicMenuRegular(super::DynamicMenuDynamicMenuRegular),
+    ButtonButtonRegular(Box<super::ButtonButtonRegular>),
+    CheckBoxCheckBox(Box<super::CheckBoxCheckBox>),
+    ControlControlCloneRegular(Box<super::ControlControlCloneRegular>),
+    DynamicMenuDynamicMenuRegular(Box<super::DynamicMenuDynamicMenuRegular>),
     GalleryGalleryRegular(Box<super::GalleryGalleryRegular>),
-    MenuMenuWithTitle(#[rkyv(omit_bounds)] super::MenuMenuWithTitle),
-    MenuSeparatorMenuSeparator(super::MenuSeparatorMenuSeparator),
-    Other(Node),
-    SplitButtonSplitButtonWithTitle(#[rkyv(omit_bounds)] super::SplitButtonSplitButtonWithTitle),
-    ToggleButtonToggleButtonRegular(super::ToggleButtonToggleButtonRegular),
+    MenuMenuWithTitle(#[rkyv(omit_bounds)] Box<super::MenuMenuWithTitle>),
+    MenuSeparatorMenuSeparator(Box<super::MenuSeparatorMenuSeparator>),
+    Other(Box<Node>),
+    SplitButtonSplitButtonWithTitle(
+        #[rkyv(omit_bounds)] Box<super::SplitButtonSplitButtonWithTitle>,
+    ),
+    ToggleButtonToggleButtonRegular(Box<super::ToggleButtonToggleButtonRegular>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PrimaryItemContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum PrimaryItemContent {
-    ButtonBackstageRegularButton(super::ButtonBackstageRegularButton),
-    MenuBackstagePrimaryMenu(super::MenuBackstagePrimaryMenu),
-    Other(Node),
+    ButtonBackstageRegularButton(Box<super::ButtonBackstageRegularButton>),
+    MenuBackstagePrimaryMenu(Box<super::MenuBackstagePrimaryMenu>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::QuickAccessToolbarItemsContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum QuickAccessToolbarItemsContent {
-    ButtonButtonRegular(super::ButtonButtonRegular),
-    ControlControlCloneQat(super::ControlControlCloneQat),
-    Other(Node),
-    Separator(super::Separator),
+    ButtonButtonRegular(Box<super::ButtonButtonRegular>),
+    ControlControlCloneQat(Box<super::ControlControlCloneQat>),
+    Other(Box<Node>),
+    Separator(Box<super::Separator>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RibbonContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RibbonContent {
-    ContextualTabs(super::ContextualTabs),
-    Other(Node),
-    Qat(super::Qat),
-    Tabs(super::Tabs),
+    ContextualTabs(Box<super::ContextualTabs>),
+    Other(Box<Node>),
+    Qat(Box<super::Qat>),
+    Tabs(Box<super::Tabs>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SimpleGroupsContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SimpleGroupsContent {
-    GroupBackstageGroup(super::GroupBackstageGroup),
-    Other(Node),
-    TaskGroup(super::TaskGroup),
+    GroupBackstageGroup(Box<super::GroupBackstageGroup>),
+    Other(Box<Node>),
+    TaskGroup(Box<super::TaskGroup>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SplitButtonContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SplitButtonContent {
-    ButtonVisibleButton(super::ButtonVisibleButton),
-    Other(Node),
-    ToggleButtonVisibleToggleButton(super::ToggleButtonVisibleToggleButton),
+    ButtonVisibleButton(Box<super::ButtonVisibleButton>),
+    Other(Box<Node>),
+    ToggleButtonVisibleToggleButton(Box<super::ToggleButtonVisibleToggleButton>),
 }
 
 impl From<BackstageMirror> for super::Backstage {

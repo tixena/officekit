@@ -1177,7 +1177,7 @@ fn arm_list(found: &EnumDef) -> Vec<(String, bool, bool)> {
         .arms
         .iter()
         .map(|(variant, arm)| (variant.clone(), found.boxed.contains(arm), false))
-        .chain(iter::once(("Other".to_owned(), false, true)))
+        .chain(iter::once(("Other".to_owned(), true, true)))
         .collect();
     arms.sort_by(|left, right| left.0.cmp(&right.0));
     arms
@@ -1309,7 +1309,7 @@ fn chunked_transform(
     }
     out.push_str(
         "        if let Self::Other(node) = self {\n            \
-         return Self::Other(node.transform(ctx));\n        }\n",
+         return Self::Other(Box::new(node.transform(ctx)));\n        }\n",
     );
     // Every declared arm has a helper; an item none takes is kept as it is.
     let calls: Vec<String> = functions

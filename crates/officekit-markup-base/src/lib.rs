@@ -43,7 +43,7 @@
 //!   namespace declarations of the element, and unknown children at positions no list covers,
 //!   each as an [`Extra`] that names the declared child it follows. A node's `unknown()` reads it
 //!   and `unknown_mut()` puts an empty record in place to change.
-//! - Every enum that models a list of alternative children has an `Other(Node)` arm. An
+//! - Every enum that models a list of alternative children has an `Other(Box<Node>)` arm. An
 //!   unknown node between list items joins the list there, in order.
 //! - Whitespace-only text between children is dropped.
 //! - A required single child the element lacked is recorded in `unknown.absent`, and the

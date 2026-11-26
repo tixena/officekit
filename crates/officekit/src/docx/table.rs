@@ -39,14 +39,13 @@ impl TableRows for Table {
             .iter()
             .map(|text| {
                 let mut cell = TableCell::default();
-                cell.content = alloc::vec![BlockContent::Paragraph(paragraph_of(text))];
-                ContentCellContent::TableCell(cell)
+                cell.content = alloc::vec![BlockContent::from(paragraph_of(text))];
+                ContentCellContent::from(cell)
             })
             .collect();
         let mut row = TableRow::default();
         row.content = content;
-        self.content_row_content
-            .push(ContentRowContent::TableRow(row));
+        self.content_row_content.push(ContentRowContent::from(row));
         table_rows_mut(self).next_back().unwrap()
     }
 
@@ -60,14 +59,14 @@ impl TableRows for Table {
             None => return Err(Box::new(row)),
         };
         self.content_row_content
-            .insert(at, ContentRowContent::TableRow(row));
+            .insert(at, ContentRowContent::from(row));
         Ok(())
     }
 
     fn remove_row(&mut self, index: usize) -> Option<TableRow> {
         let at = *row_positions(self).get(index)?;
         if let ContentRowContent::TableRow(row) = self.content_row_content.remove(at) {
-            Some(row)
+            Some(*row)
         } else {
             None
         }
@@ -117,9 +116,7 @@ fn mark_header(row: &mut TableRow) {
     if !properties.content.iter().any(is_header) {
         properties
             .content
-            .push(TableRowPropertiesContent::RepeatTableRow(
-                RepeatTableRow::default(),
-            ));
+            .push(TableRowPropertiesContent::from(RepeatTableRow::default()));
     }
 }
 
@@ -128,9 +125,9 @@ fn paragraph_of(text: &str) -> Paragraph {
     characters.space = Some("preserve".to_owned());
     text.clone_into(&mut characters.value);
     let mut run = TextRun::default();
-    run.content = alloc::vec![TextRunContent::Text(characters)];
+    run.content = alloc::vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();
-    paragraph.content = alloc::vec![ParagraphContent::TextRun(run)];
+    paragraph.content = alloc::vec![ParagraphContent::from(run)];
     paragraph
 }
 

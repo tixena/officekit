@@ -4660,368 +4660,372 @@ pub enum AnimationBuildTypeMember {
 pub enum AnyElementContentWith<X: UserData> {
     /// The element `wp:anchor`, a `AnchorForFloatingDrawingMLObject`.
     AnchorForFloatingDrawingMLObject(
-        super::wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>,
+        Box<super::wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>>,
     ),
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
+    AnchorLocationIsLocked(Box<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>),
     /// The element `ap:Properties`, a `ApplicationSpecificFileProperties`.
     ApplicationSpecificFileProperties(
-        document_properties_extended::ApplicationSpecificFilePropertiesWith<X>,
+        Box<document_properties_extended::ApplicationSpecificFilePropertiesWith<X>>,
     ),
     /// The element `v:arc`, a `ArcSegment`.
-    ArcSegment(super::vml::ArcSegmentWith<X>),
+    ArcSegment(Box<super::vml::ArcSegmentWith<X>>),
     /// The element `vt:array`, a `Array`.
-    Array(document_properties_variant_types::ArrayWith<X>),
+    Array(Box<document_properties_variant_types::ArrayWith<X>>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
+    AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>),
     /// The element `vt:bstr`, a `BasicString`.
-    BasicString(document_properties_variant_types::BasicStringWith<X>),
+    BasicString(Box<document_properties_variant_types::BasicStringWith<X>>),
     /// The element `v:curve`, a `BezierCurve`.
-    BezierCurve(super::vml::BezierCurveWith<X>),
+    BezierCurve(Box<super::vml::BezierCurveWith<X>>),
     /// The element `vt:blob`, a `BinaryBlob`.
-    BinaryBlob(document_properties_variant_types::BinaryBlobWith<X>),
+    BinaryBlob(Box<document_properties_variant_types::BinaryBlobWith<X>>),
     /// The element `vt:oblob`, a `BinaryBlobObject`.
-    BinaryBlobObject(document_properties_variant_types::BinaryBlobObjectWith<X>),
+    BinaryBlobObject(Box<document_properties_variant_types::BinaryBlobObjectWith<X>>),
     /// The element `vt:storage`, a `BinaryStorage`.
-    BinaryStorage(document_properties_variant_types::BinaryStorageWith<X>),
+    BinaryStorage(Box<document_properties_variant_types::BinaryStorageWith<X>>),
     /// The element `vt:ostorage`, a `BinaryStorageObject`.
-    BinaryStorageObject(document_properties_variant_types::BinaryStorageObjectWith<X>),
+    BinaryStorageObject(Box<document_properties_variant_types::BinaryStorageObjectWith<X>>),
     /// The element `vt:stream`, a `BinaryStream`.
-    BinaryStream(document_properties_variant_types::BinaryStreamWith<X>),
+    BinaryStream(Box<document_properties_variant_types::BinaryStreamWith<X>>),
     /// The element `vt:ostream`, a `BinaryStreamObject`.
-    BinaryStreamObject(document_properties_variant_types::BinaryStreamObjectWith<X>),
+    BinaryStreamObject(Box<document_properties_variant_types::BinaryStreamObjectWith<X>>),
     /// The element `vt:vstream`, a `BinaryVersionedStream`.
-    BinaryVersionedStream(document_properties_variant_types::BinaryVersionedStreamWith<X>),
+    BinaryVersionedStream(Box<document_properties_variant_types::BinaryVersionedStreamWith<X>>),
     /// The element `a:blip`, a `Blip`.
-    Blip(BlipWith<X>),
+    Blip(Box<BlipWith<X>>),
     /// The element `vt:bool`, a `Boolean`.
-    Boolean(document_properties_variant_types::BooleanWith<X>),
+    Boolean(Box<document_properties_variant_types::BooleanWith<X>>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
+    BottomBorder(Box<vml_wordprocessing_drawing::BottomBorderWith<X>>),
     /// The element `x:calcChain`, a `CalculationChainInfo`.
-    CalculationChainInfo(super::spreadsheet::CalculationChainInfoWith<X>),
+    CalculationChainInfo(Box<super::spreadsheet::CalculationChainInfoWith<X>>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::CalloutWith<X>),
+    Callout(Box<super::vml_office_drawing::CalloutWith<X>>),
     /// The element `x:chartsheet`, a `ChartSheet`.
-    ChartSheet(super::spreadsheet::ChartSheetWith<X>),
+    ChartSheet(Box<super::spreadsheet::ChartSheetWith<X>>),
     /// The element `c:chartSpace`, a `ChartSpace`.
-    ChartSpace(super::chart::ChartSpaceWith<X>),
+    ChartSpace(Box<super::chart::ChartSpaceWith<X>>),
     /// The element `vt:clsid`, a `ClassID`.
-    ClassID(document_properties_variant_types::ClassIDWith<X>),
+    ClassID(Box<document_properties_variant_types::ClassIDWith<X>>),
     /// The element `dgm:colorsDefHdr`, a `ColorTransformDefinitionHeader`.
-    ColorTransformDefinitionHeader(super::diagram::ColorTransformDefinitionHeaderWith<X>),
+    ColorTransformDefinitionHeader(Box<super::diagram::ColorTransformDefinitionHeaderWith<X>>),
     /// The element `dgm:colorsDef`, a `ColorTransformDefinitions`.
-    ColorTransformDefinitions(super::diagram::ColorTransformDefinitionsWith<X>),
+    ColorTransformDefinitions(Box<super::diagram::ColorTransformDefinitionsWith<X>>),
     /// The element `dgm:colorsDefHdrLst`, a `ColorTransformHeaderList`.
-    ColorTransformHeaderList(super::diagram::ColorTransformHeaderListWith<X>),
+    ColorTransformHeaderList(Box<super::diagram::ColorTransformHeaderListWith<X>>),
     /// The element `p:cmLst`, a `CommentList`.
-    CommentList(super::presentation::CommentListWith<X>),
+    CommentList(Box<super::presentation::CommentListWith<X>>),
     /// The element `x:comments`, a `Comments`.
-    Comments(super::spreadsheet::CommentsWith<X>),
+    Comments(Box<super::spreadsheet::CommentsWith<X>>),
     /// The element `w:comments`, a `CommentsCollection`.
-    CommentsCollection(super::wordprocessing::CommentsCollectionWith<X>),
+    CommentsCollection(Box<super::wordprocessing::CommentsCollectionWith<X>>),
     /// The element `o:complex`, a `Complex`.
-    Complex(super::vml_office_drawing::ComplexWith<X>),
+    Complex(Box<super::vml_office_drawing::ComplexWith<X>>),
     /// The element `x:connections`, a `Connections`.
-    Connections(super::spreadsheet::ConnectionsWith<X>),
+    Connections(Box<super::spreadsheet::ConnectionsWith<X>>),
     /// The element `vt:cy`, a `Currency`.
-    Currency(document_properties_variant_types::CurrencyWith<X>),
+    Currency(Box<document_properties_variant_types::CurrencyWith<X>>),
     /// The element `op:Properties`, a `CustomFileProperties`.
-    CustomFileProperties(document_properties_custom::CustomFilePropertiesWith<X>),
+    CustomFileProperties(Box<document_properties_custom::CustomFilePropertiesWith<X>>),
     /// The element `ds:datastoreItem`, a `CustomXMLDataProperties`.
-    CustomXMLDataProperties(custom_xml_data_properties::CustomXMLDataPropertiesWith<X>),
+    CustomXMLDataProperties(Box<custom_xml_data_properties::CustomXMLDataPropertiesWith<X>>),
     /// The element `dgm:dataModel`, a `DataModel`.
-    DataModel(super::diagram::DataModelWith<X>),
+    DataModel(Box<super::diagram::DataModelWith<X>>),
     /// The element `vt:date`, a `DateAndTime`.
-    DateAndTime(document_properties_variant_types::DateAndTimeWith<X>),
+    DateAndTime(Box<document_properties_variant_types::DateAndTimeWith<X>>),
     /// The element `vt:decimal`, a `Decimal`.
-    Decimal(document_properties_variant_types::DecimalWith<X>),
+    Decimal(Box<document_properties_variant_types::DecimalWith<X>>),
     /// The element `dgm:layoutDefHdrLst`, a `DiagramLayoutHeaderList`.
-    DiagramLayoutHeaderList(super::diagram::DiagramLayoutHeaderListWith<X>),
+    DiagramLayoutHeaderList(Box<super::diagram::DiagramLayoutHeaderListWith<X>>),
     /// The element `x:dialogsheet`, a `DialogSheet`.
-    DialogSheet(super::spreadsheet::DialogSheetWith<X>),
+    DialogSheet(Box<super::spreadsheet::DialogSheetWith<X>>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
+    DigitalSignatureLine(Box<super::vml_office_drawing::DigitalSignatureLineWith<X>>),
     /// The element `w:document`, a `Document`.
-    Document(super::wordprocessing::DocumentWith<X>),
+    Document(Box<super::wordprocessing::DocumentWith<X>>),
     /// The element `v:background`, a `DocumentBackground`.
-    DocumentBackground(super::vml::DocumentBackgroundWith<X>),
+    DocumentBackground(Box<super::vml::DocumentBackgroundWith<X>>),
     /// The element `w:endnotes`, a `DocumentEndnotes`.
-    DocumentEndnotes(super::wordprocessing::DocumentEndnotesWith<X>),
+    DocumentEndnotes(Box<super::wordprocessing::DocumentEndnotesWith<X>>),
     /// The element `w:footnotes`, a `DocumentFootnotes`.
-    DocumentFootnotes(super::wordprocessing::DocumentFootnotesWith<X>),
+    DocumentFootnotes(Box<super::wordprocessing::DocumentFootnotesWith<X>>),
     /// The element `w:settings`, a `DocumentSettings`.
-    DocumentSettings(super::wordprocessing::DocumentSettingsWith<X>),
+    DocumentSettings(Box<super::wordprocessing::DocumentSettingsWith<X>>),
     /// The element `sl:schemaLibrary`, a `EmbeddedCustomXMLSchemaSupplementaryData`.
     EmbeddedCustomXMLSchemaSupplementaryData(
-        custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>,
+        Box<custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>>,
     ),
     /// The element `o:OLEObject`, a `EmbeddedOLEObject`.
-    EmbeddedOLEObject(super::vml_office_drawing::EmbeddedOLEObjectWith<X>),
+    EmbeddedOLEObject(Box<super::vml_office_drawing::EmbeddedOLEObjectWith<X>>),
     /// The element `p:oleObj`, a `EmbeddedObjectsAndControls`.
-    EmbeddedObjectsAndControls(super::presentation::EmbeddedObjectsAndControlsWith<X>),
+    EmbeddedObjectsAndControls(Box<super::presentation::EmbeddedObjectsAndControlsWith<X>>),
     /// The element `vt:empty`, a `Empty`.
-    Empty(document_properties_variant_types::EmptyWith<X>),
+    Empty(Box<document_properties_variant_types::EmptyWith<X>>),
     /// The element `xdr:to`, a `EndingAnchorPoint`.
-    EndingAnchorPoint(super::spreadsheet_drawing::EndingAnchorPointWith<X>),
+    EndingAnchorPoint(Box<super::spreadsheet_drawing::EndingAnchorPointWith<X>>),
     /// The element `vt:error`, a `ErrorStatusCode`.
-    ErrorStatusCode(document_properties_variant_types::ErrorStatusCodeWith<X>),
+    ErrorStatusCode(Box<document_properties_variant_types::ErrorStatusCodeWith<X>>),
     /// The element `dgm:relIds`, a `ExplicitRelationshipsToDiagramParts`.
-    ExplicitRelationshipsToDiagramParts(super::diagram::ExplicitRelationshipsToDiagramPartsWith<X>),
+    ExplicitRelationshipsToDiagramParts(
+        Box<super::diagram::ExplicitRelationshipsToDiagramPartsWith<X>>,
+    ),
     /// The element `x:externalLink`, a `ExternalReferenceExternalLink`.
-    ExternalReferenceExternalLink(super::spreadsheet::ExternalReferenceExternalLinkWith<X>),
+    ExternalReferenceExternalLink(Box<super::spreadsheet::ExternalReferenceExternalLinkWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
+    Extrusion(Box<super::vml_office_drawing::ExtrusionWith<X>>),
     /// The element `vt:filetime`, a `FileTime`.
-    FileTime(document_properties_variant_types::FileTimeWith<X>),
+    FileTime(Box<document_properties_variant_types::FileTimeWith<X>>),
     /// The element `w:fonts`, a `FontTableRootElement`.
-    FontTableRootElement(super::wordprocessing::FontTableRootElementWith<X>),
+    FontTableRootElement(Box<super::wordprocessing::FontTableRootElementWith<X>>),
     /// The element `w:ftr`, a `Footer`.
-    Footer(super::wordprocessing::FooterWith<X>),
+    Footer(Box<super::wordprocessing::FooterWith<X>>),
     /// The element `w:glossaryDocument`, a `GlossaryDocumentRootElement`.
-    GlossaryDocumentRootElement(super::wordprocessing::GlossaryDocumentRootElementWith<X>),
+    GlossaryDocumentRootElement(Box<super::wordprocessing::GlossaryDocumentRootElementWith<X>>),
     /// The element `a:graphic`, a `GraphicObject`.
-    GraphicObject(GraphicObjectWith<X>),
+    GraphicObject(Box<GraphicObjectWith<X>>),
     /// The element `p:handoutMaster`, a `HandoutMaster`.
-    HandoutMaster(super::presentation::HandoutMasterWith<X>),
+    HandoutMaster(Box<super::presentation::HandoutMasterWith<X>>),
     /// The element `w:hdr`, a `Header`.
-    Header(super::wordprocessing::HeaderWith<X>),
+    Header(Box<super::wordprocessing::HeaderWith<X>>),
     /// The element `vt:i1`, a `I1`.
-    I1(document_properties_variant_types::I1With<X>),
+    I1(Box<document_properties_variant_types::I1With<X>>),
     /// The element `vt:i2`, a `I2`.
-    I2(document_properties_variant_types::I2With<X>),
+    I2(Box<document_properties_variant_types::I2With<X>>),
     /// The element `vt:i4`, a `I4`.
-    I4(document_properties_variant_types::I4With<X>),
+    I4(Box<document_properties_variant_types::I4With<X>>),
     /// The element `vt:i8`, a `I8`.
-    I8(document_properties_variant_types::I8With<X>),
+    I8(Box<document_properties_variant_types::I8With<X>>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(super::vml::ImageDataWith<X>),
+    ImageData(Box<super::vml::ImageDataWith<X>>),
     /// The element `v:image`, a `ImageFile`.
-    ImageFile(super::vml::ImageFileWith<X>),
+    ImageFile(Box<super::vml::ImageFileWith<X>>),
     /// The element `w:recipients`, a `InclusionExclusionDataForDataSource`.
     InclusionExclusionDataForDataSource(
-        super::wordprocessing::InclusionExclusionDataForDataSourceWith<X>,
+        Box<super::wordprocessing::InclusionExclusionDataForDataSourceWith<X>>,
     ),
     /// The element `o:ink`, a `Ink`.
-    Ink(super::vml_office_drawing::InkWith<X>),
+    Ink(Box<super::vml_office_drawing::InkWith<X>>),
     /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
-    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlagWith<X>),
+    InkAnnotationFlag(Box<vml_presentation_drawing::InkAnnotationFlagWith<X>>),
     /// The element `wp:inline`, a `InlineDrawingMLObject`.
-    InlineDrawingMLObject(super::wordprocessing_drawing::InlineDrawingMLObjectWith<X>),
+    InlineDrawingMLObject(Box<super::wordprocessing_drawing::InlineDrawingMLObjectWith<X>>),
     /// The element `vt:int`, a `Integer`.
-    Integer(document_properties_variant_types::IntegerWith<X>),
+    Integer(Box<document_properties_variant_types::IntegerWith<X>>),
     /// The element `dgm:layoutDef`, a `LayoutDefinition`.
-    LayoutDefinition(super::diagram::LayoutDefinitionWith<X>),
+    LayoutDefinition(Box<super::diagram::LayoutDefinitionWith<X>>),
     /// The element `dgm:layoutDefHdr`, a `LayoutDefinitionHeader`.
-    LayoutDefinitionHeader(super::diagram::LayoutDefinitionHeaderWith<X>),
+    LayoutDefinitionHeader(Box<super::diagram::LayoutDefinitionHeaderWith<X>>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
+    LeftBorder(Box<vml_wordprocessing_drawing::LeftBorderWith<X>>),
     /// The element `v:line`, a `Line`.
-    Line(super::vml::LineWith<X>),
+    Line(Box<super::vml::LineWith<X>>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(super::vml::LineStrokeSettingsWith<X>),
+    LineStrokeSettings(Box<super::vml::LineStrokeSettingsWith<X>>),
     /// The element `p:cmAuthorLst`, a `ListOfCommentAuthors`.
-    ListOfCommentAuthors(super::presentation::ListOfCommentAuthorsWith<X>),
+    ListOfCommentAuthors(Box<super::presentation::ListOfCommentAuthorsWith<X>>),
     /// The element `dgm:styleDefHdrLst`, a `ListOfStyleDefinitionHeaders`.
-    ListOfStyleDefinitionHeaders(super::diagram::ListOfStyleDefinitionHeadersWith<X>),
+    ListOfStyleDefinitionHeaders(Box<super::diagram::ListOfStyleDefinitionHeadersWith<X>>),
     /// The element `lc:lockedCanvas`, a `LockedCanvasContainer`.
-    LockedCanvasContainer(super::locked_canvas::LockedCanvasContainerWith<X>),
+    LockedCanvasContainer(Box<super::locked_canvas::LockedCanvasContainerWith<X>>),
     /// The element `vt:lpstr`, a `Lpstr`.
-    Lpstr(document_properties_variant_types::LpstrWith<X>),
+    Lpstr(Box<document_properties_variant_types::LpstrWith<X>>),
     /// The element `vt:lpwstr`, a `Lpwstr`.
-    Lpwstr(document_properties_variant_types::LpwstrWith<X>),
+    Lpwstr(Box<document_properties_variant_types::LpwstrWith<X>>),
     /// The element `m:mathPr`, a `MathProperties`.
-    MathProperties(super::math::MathPropertiesWith<X>),
+    MathProperties(Box<super::math::MathPropertiesWith<X>>),
     /// The element `x:metadata`, a `Metadata`.
-    Metadata(super::spreadsheet::MetadataWith<X>),
+    Metadata(Box<super::spreadsheet::MetadataWith<X>>),
     /// The element `v:polyline`, a `MultiplePathLine`.
-    MultiplePathLine(super::vml::MultiplePathLineWith<X>),
+    MultiplePathLine(Box<super::vml::MultiplePathLineWith<X>>),
     /// The element `o:shapedefaults`, a `NewShapeDefaults`.
-    NewShapeDefaults(super::vml_office_drawing::NewShapeDefaultsWith<X>),
+    NewShapeDefaults(Box<super::vml_office_drawing::NewShapeDefaultsWith<X>>),
     /// The element `p:notesMaster`, a `NotesMaster`.
-    NotesMaster(super::presentation::NotesMasterWith<X>),
+    NotesMaster(Box<super::presentation::NotesMasterWith<X>>),
     /// The element `p:notes`, a `NotesSlide`.
-    NotesSlide(super::presentation::NotesSlideWith<X>),
+    NotesSlide(Box<super::presentation::NotesSlideWith<X>>),
     /// The element `vt:null`, a `Null`.
-    Null(document_properties_variant_types::NullWith<X>),
+    Null(Box<document_properties_variant_types::NullWith<X>>),
     /// The element `w:numbering`, a `NumberingDefinitions`.
-    NumberingDefinitions(super::wordprocessing::NumberingDefinitionsWith<X>),
+    NumberingDefinitions(Box<super::wordprocessing::NumberingDefinitionsWith<X>>),
     /// The element `m:oMath`, a `OfficeMath`.
-    OfficeMath(super::math::OfficeMathWith<X>),
+    OfficeMath(Box<super::math::OfficeMathWith<X>>),
     /// The element `m:oMathPara`, a `OfficeMathParagraph`.
-    OfficeMathParagraph(super::math::OfficeMathParagraphWith<X>),
+    OfficeMathParagraph(Box<super::math::OfficeMathParagraphWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `v:oval`, a `Oval`.
-    Oval(super::vml::OvalWith<X>),
+    Oval(Box<super::vml::OvalWith<X>>),
     /// The element `pic:pic`, a `Picture`.
-    Picture(super::picture::PictureWith<X>),
+    Picture(Box<super::picture::PictureWith<X>>),
     /// The element `x:pivotCacheDefinition`, a `PivotCacheDefinition`.
-    PivotCacheDefinition(super::spreadsheet::PivotCacheDefinitionWith<X>),
+    PivotCacheDefinition(Box<super::spreadsheet::PivotCacheDefinitionWith<X>>),
     /// The element `x:pivotCacheRecords`, a `PivotCacheRecords`.
-    PivotCacheRecords(super::spreadsheet::PivotCacheRecordsWith<X>),
+    PivotCacheRecords(Box<super::spreadsheet::PivotCacheRecordsWith<X>>),
     /// The element `x:pivotTableDefinition`, a `PivotTableDefinition`.
     PivotTableDefinition(Box<super::spreadsheet::PivotTableDefinitionWith<X>>),
     /// The element `p:presentation`, a `Presentation`.
-    Presentation(super::presentation::PresentationWith<X>),
+    Presentation(Box<super::presentation::PresentationWith<X>>),
     /// The element `p:sld`, a `PresentationSlideSlide`.
-    PresentationSlideSlide(super::presentation::PresentationSlideSlideWith<X>),
+    PresentationSlideSlide(Box<super::presentation::PresentationSlideSlideWith<X>>),
     /// The element `p:presentationPr`, a `PresentationWideProperties`.
-    PresentationWideProperties(super::presentation::PresentationWidePropertiesWith<X>),
+    PresentationWideProperties(Box<super::presentation::PresentationWidePropertiesWith<X>>),
     /// The element `p:viewPr`, a `PresentationWideViewProperties`.
-    PresentationWideViewProperties(super::presentation::PresentationWideViewPropertiesWith<X>),
+    PresentationWideViewProperties(Box<super::presentation::PresentationWideViewPropertiesWith<X>>),
     /// The element `p:tagLst`, a `ProgrammableTabList`.
-    ProgrammableTabList(super::presentation::ProgrammableTabListWith<X>),
+    ProgrammableTabList(Box<super::presentation::ProgrammableTabListWith<X>>),
     /// The element `x:queryTable`, a `QueryTable`.
-    QueryTable(super::spreadsheet::QueryTableWith<X>),
+    QueryTable(Box<super::spreadsheet::QueryTableWith<X>>),
     /// The element `vt:r4`, a `R4`.
-    R4(document_properties_variant_types::R4With<X>),
+    R4(Box<document_properties_variant_types::R4With<X>>),
     /// The element `vt:r8`, a `R8`.
-    R8(document_properties_variant_types::R8With<X>),
+    R8(Box<document_properties_variant_types::R8With<X>>),
     /// The element `v:rect`, a `Rectangle`.
-    Rectangle(super::vml::RectangleWith<X>),
+    Rectangle(Box<super::vml::RectangleWith<X>>),
     /// The element `c:chart`, a `ReferenceToChartPart`.
-    ReferenceToChartPart(super::chart::ReferenceToChartPartWith<X>),
+    ReferenceToChartPart(Box<super::chart::ReferenceToChartPartWith<X>>),
     /// The element `x:headers`, a `RevisionHeaders`.
-    RevisionHeaders(super::spreadsheet::RevisionHeadersWith<X>),
+    RevisionHeaders(Box<super::spreadsheet::RevisionHeadersWith<X>>),
     /// The element `x:revisions`, a `Revisions`.
-    Revisions(super::spreadsheet::RevisionsWith<X>),
+    Revisions(Box<super::spreadsheet::RevisionsWith<X>>),
     /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
-    RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainerWith<X>),
+    RichTextBoxContentContainer(Box<super::wordprocessing::RichTextBoxContentContainerWith<X>>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
+    RightBorder(Box<vml_wordprocessing_drawing::RightBorderWith<X>>),
     /// The element `v:roundrect`, a `RoundedRectangle`.
-    RoundedRectangle(super::vml::RoundedRectangleWith<X>),
+    RoundedRectangle(Box<super::vml::RoundedRectangleWith<X>>),
     /// The element `ac:additionalCharacteristics`, a `SetOfAdditionalCharacteristics`.
     SetOfAdditionalCharacteristics(
-        additional_characteristics::SetOfAdditionalCharacteristicsWith<X>,
+        Box<additional_characteristics::SetOfAdditionalCharacteristicsWith<X>>,
     ),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(super::vml::SetOfFormulasWith<X>),
+    SetOfFormulas(Box<super::vml::SetOfFormulasWith<X>>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(super::vml::SetOfHandlesWith<X>),
+    SetOfHandles(Box<super::vml::SetOfHandlesWith<X>>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(super::vml::ShadowEffectWith<X>),
+    ShadowEffect(Box<super::vml::ShadowEffectWith<X>>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
+    ShapeClippingPath(Box<super::vml_office_drawing::ShapeClippingPathWith<X>>),
     /// The element `v:shape`, a `ShapeDefinition`.
-    ShapeDefinition(super::vml::ShapeDefinitionWith<X>),
+    ShapeDefinition(Box<super::vml::ShapeDefinitionWith<X>>),
     /// The element `o:fill`, a `ShapeFillExtendedProperties`.
-    ShapeFillExtendedProperties(super::vml_office_drawing::ShapeFillExtendedPropertiesWith<X>),
+    ShapeFillExtendedProperties(Box<super::vml_office_drawing::ShapeFillExtendedPropertiesWith<X>>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(super::vml::ShapeFillPropertiesWith<X>),
+    ShapeFillProperties(Box<super::vml::ShapeFillPropertiesWith<X>>),
     /// The element `v:group`, a `ShapeGroup`.
-    ShapeGroup(super::vml::ShapeGroupWith<X>),
+    ShapeGroup(Box<super::vml::ShapeGroupWith<X>>),
     /// The element `o:shapelayout`, a `ShapeLayoutProperties`.
-    ShapeLayoutProperties(super::vml_office_drawing::ShapeLayoutPropertiesWith<X>),
+    ShapeLayoutProperties(Box<super::vml_office_drawing::ShapeLayoutPropertiesWith<X>>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(super::vml::ShapePathWith<X>),
+    ShapePath(Box<super::vml::ShapePathWith<X>>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
+    ShapeProtections(Box<super::vml_office_drawing::ShapeProtectionsWith<X>>),
     /// The element `v:shapetype`, a `ShapeTemplate`.
-    ShapeTemplate(super::vml::ShapeTemplateWith<X>),
+    ShapeTemplate(Box<super::vml::ShapeTemplateWith<X>>),
     /// The element `x:sst`, a `SharedStringTable`.
-    SharedStringTable(super::spreadsheet::SharedStringTableWith<X>),
+    SharedStringTable(Box<super::spreadsheet::SharedStringTableWith<X>>),
     /// The element `x:singleXmlCells`, a `SingleCells`.
-    SingleCells(super::spreadsheet::SingleCellsWith<X>),
+    SingleCells(Box<super::spreadsheet::SingleCellsWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
+    SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `p:sldLayout`, a `SlideLayout`.
-    SlideLayout(super::presentation::SlideLayoutWith<X>),
+    SlideLayout(Box<super::presentation::SlideLayoutWith<X>>),
     /// The element `p:sldMaster`, a `SlideMaster`.
-    SlideMaster(super::presentation::SlideMasterWith<X>),
+    SlideMaster(Box<super::presentation::SlideMasterWith<X>>),
     /// The element `p:sldSyncPr`, a `SlideSynchronizationProperties`.
-    SlideSynchronizationProperties(super::presentation::SlideSynchronizationPropertiesWith<X>),
+    SlideSynchronizationProperties(Box<super::presentation::SlideSynchronizationPropertiesWith<X>>),
     /// The element `b:Sources`, a `Sources`.
-    Sources(bibliography::SourcesWith<X>),
+    Sources(Box<bibliography::SourcesWith<X>>),
     /// The element `x:table`, a `Table`.
-    SpreadsheetTable(super::spreadsheet::TableWith<X>),
+    SpreadsheetTable(Box<super::spreadsheet::TableWith<X>>),
     /// The element `xdr:from`, a `StartingAnchorPoint`.
-    StartingAnchorPoint(super::spreadsheet_drawing::StartingAnchorPointWith<X>),
+    StartingAnchorPoint(Box<super::spreadsheet_drawing::StartingAnchorPointWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(
-        super::vml_office_drawing::StorageForAlternateMathContentWith<X>,
+        Box<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>,
     ),
     /// The element `dgm:styleDef`, a `StyleDefinition`.
-    StyleDefinition(super::diagram::StyleDefinitionWith<X>),
+    StyleDefinition(Box<super::diagram::StyleDefinitionWith<X>>),
     /// The element `dgm:styleDefHdr`, a `StyleDefinitionHeader`.
-    StyleDefinitionHeader(super::diagram::StyleDefinitionHeaderWith<X>),
+    StyleDefinitionHeader(Box<super::diagram::StyleDefinitionHeaderWith<X>>),
     /// The element `w:styles`, a `StyleDefinitions`.
-    StyleDefinitions(super::wordprocessing::StyleDefinitionsWith<X>),
+    StyleDefinitions(Box<super::wordprocessing::StyleDefinitionsWith<X>>),
     /// The element `x:styleSheet`, a `StyleSheet`.
-    StyleSheet(super::spreadsheet::StyleSheetWith<X>),
+    StyleSheet(Box<super::spreadsheet::StyleSheetWith<X>>),
     /// The element `a:tbl`, a `Table`.
-    Table(TableWith<X>),
+    Table(Box<TableWith<X>>),
     /// The element `a:tblStyleLst`, a `TableStyleList`.
-    TableStyleList(TableStyleListWith<X>),
+    TableStyleList(Box<TableStyleListWith<X>>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(super::vml::TextBoxWith<X>),
+    TextBox(Box<super::vml::TextBoxWith<X>>),
     /// The element `o:bottom`, a `TextBoxBottomStroke`.
-    TextBoxBottomStroke(super::vml_office_drawing::TextBoxBottomStrokeWith<X>),
+    TextBoxBottomStroke(Box<super::vml_office_drawing::TextBoxBottomStrokeWith<X>>),
     /// The element `o:column`, a `TextBoxInteriorStroke`.
-    TextBoxInteriorStroke(super::vml_office_drawing::TextBoxInteriorStrokeWith<X>),
+    TextBoxInteriorStroke(Box<super::vml_office_drawing::TextBoxInteriorStrokeWith<X>>),
     /// The element `o:left`, a `TextBoxLeftStroke`.
-    TextBoxLeftStroke(super::vml_office_drawing::TextBoxLeftStrokeWith<X>),
+    TextBoxLeftStroke(Box<super::vml_office_drawing::TextBoxLeftStrokeWith<X>>),
     /// The element `o:right`, a `TextBoxRightStroke`.
-    TextBoxRightStroke(super::vml_office_drawing::TextBoxRightStrokeWith<X>),
+    TextBoxRightStroke(Box<super::vml_office_drawing::TextBoxRightStrokeWith<X>>),
     /// The element `o:top`, a `TextBoxTopStroke`.
-    TextBoxTopStroke(super::vml_office_drawing::TextBoxTopStrokeWith<X>),
+    TextBoxTopStroke(Box<super::vml_office_drawing::TextBoxTopStrokeWith<X>>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(super::vml::TextLayoutPathWith<X>),
+    TextLayoutPath(Box<super::vml::TextLayoutPathWith<X>>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
+    TextWrapping(Box<vml_wordprocessing_drawing::TextWrappingWith<X>>),
     /// The element `a:theme`, a `Theme`.
-    Theme(ThemeWith<X>),
+    Theme(Box<ThemeWith<X>>),
     /// The element `a:themeManager`, a `ThemeManager`.
-    ThemeManager(ThemeManagerWith<X>),
+    ThemeManager(Box<ThemeManagerWith<X>>),
     /// The element `a:themeOverride`, a `ThemeOverride`.
-    ThemeOverride(ThemeOverrideWith<X>),
+    ThemeOverride(Box<ThemeOverrideWith<X>>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
+    TopBorder(Box<vml_wordprocessing_drawing::TopBorderWith<X>>),
     /// The element `vt:ui1`, a `Ui1`.
-    Ui1(document_properties_variant_types::Ui1With<X>),
+    Ui1(Box<document_properties_variant_types::Ui1With<X>>),
     /// The element `vt:ui2`, a `Ui2`.
-    Ui2(document_properties_variant_types::Ui2With<X>),
+    Ui2(Box<document_properties_variant_types::Ui2With<X>>),
     /// The element `vt:ui4`, a `Ui4`.
-    Ui4(document_properties_variant_types::Ui4With<X>),
+    Ui4(Box<document_properties_variant_types::Ui4With<X>>),
     /// The element `vt:ui8`, a `Ui8`.
-    Ui8(document_properties_variant_types::Ui8With<X>),
+    Ui8(Box<document_properties_variant_types::Ui8With<X>>),
     /// The element `vt:uint`, a `UnsignedInteger`.
-    UnsignedInteger(document_properties_variant_types::UnsignedIntegerWith<X>),
+    UnsignedInteger(Box<document_properties_variant_types::UnsignedIntegerWith<X>>),
     /// The element `x:users`, a `UserList`.
-    UserList(super::spreadsheet::UserListWith<X>),
+    UserList(Box<super::spreadsheet::UserListWith<X>>),
     /// The element `c:userShapes`, a `UserShapes`.
-    UserShapes(super::chart::UserShapesWith<X>),
+    UserShapes(Box<super::chart::UserShapesWith<X>>),
     /// The element `o:diagram`, a `VMLDiagram`.
-    VMLDiagram(super::vml_office_drawing::VMLDiagramWith<X>),
+    VMLDiagram(Box<super::vml_office_drawing::VMLDiagramWith<X>>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramTextWith<X>>),
     /// The element `vt:variant`, a `Variant`.
-    Variant(document_properties_variant_types::VariantWith<X>),
+    Variant(Box<document_properties_variant_types::VariantWith<X>>),
     /// The element `vt:vector`, a `Vector`.
-    Vector(document_properties_variant_types::VectorWith<X>),
+    Vector(Box<document_properties_variant_types::VectorWith<X>>),
     /// The element `a:videoFile`, a `VideoFromFile`.
-    VideoFromFile(VideoFromFileWith<X>),
+    VideoFromFile(Box<VideoFromFileWith<X>>),
     /// The element `x:volTypes`, a `VolatileDependencyTypes`.
-    VolatileDependencyTypes(super::spreadsheet::VolatileDependencyTypesWith<X>),
+    VolatileDependencyTypes(Box<super::spreadsheet::VolatileDependencyTypesWith<X>>),
     /// The element `w:webSettings`, a `WebPageSettings`.
-    WebPageSettings(super::wordprocessing::WebPageSettingsWith<X>),
+    WebPageSettings(Box<super::wordprocessing::WebPageSettingsWith<X>>),
     /// The element `wp:wpc`, a `WordprocessingMLDrawingCanvas`.
     WordprocessingMLDrawingCanvas(
-        super::wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>,
+        Box<super::wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>>,
     ),
     /// The element `wp:wsp`, a `WordprocessingMLShape`.
-    WordprocessingMLShape(super::wordprocessing_drawing::WordprocessingMLShapeWith<X>),
+    WordprocessingMLShape(Box<super::wordprocessing_drawing::WordprocessingMLShapeWith<X>>),
     /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
-    WordprocessingMLShapeGroup(super::wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>),
+    WordprocessingMLShapeGroup(
+        Box<super::wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>>,
+    ),
     /// The element `x:workbook`, a `Workbook`.
-    Workbook(super::spreadsheet::WorkbookWith<X>),
+    Workbook(Box<super::spreadsheet::WorkbookWith<X>>),
     /// The element `x:worksheet`, a `Worksheet`.
-    Worksheet(super::spreadsheet::WorksheetWith<X>),
+    Worksheet(Box<super::spreadsheet::WorksheetWith<X>>),
     /// The element `xdr:wsDr`, a `WorksheetDrawing`.
-    WorksheetDrawing(super::spreadsheet_drawing::WorksheetDrawingWith<X>),
+    WorksheetDrawing(Box<super::spreadsheet_drawing::WorksheetDrawingWith<X>>),
     /// The element `x:MapInfo`, a `XMLMappingMapInfo`.
-    XMLMappingMapInfo(super::spreadsheet::XMLMappingMapInfoWith<X>),
+    XMLMappingMapInfo(Box<super::spreadsheet::XMLMappingMapInfoWith<X>>),
 }
 
 /// [`AnyElementContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -5600,41 +5604,41 @@ pub enum BlipCompressionTypeMember {
 #[non_exhaustive]
 pub enum BlipContentWith<X: UserData> {
     /// The element `a:alphaBiLevel`, a `AlphaBiLevelEffect`.
-    AlphaBiLevelEffect(AlphaBiLevelEffectWith<X>),
+    AlphaBiLevelEffect(Box<AlphaBiLevelEffectWith<X>>),
     /// The element `a:alphaCeiling`, a `AlphaCeilingEffect`.
-    AlphaCeilingEffect(AlphaCeilingEffectWith<X>),
+    AlphaCeilingEffect(Box<AlphaCeilingEffectWith<X>>),
     /// The element `a:alphaFloor`, a `AlphaFloorEffect`.
-    AlphaFloorEffect(AlphaFloorEffectWith<X>),
+    AlphaFloorEffect(Box<AlphaFloorEffectWith<X>>),
     /// The element `a:alphaInv`, a `AlphaInverseEffect`.
-    AlphaInverseEffect(AlphaInverseEffectWith<X>),
+    AlphaInverseEffect(Box<AlphaInverseEffectWith<X>>),
     /// The element `a:alphaMod`, a `AlphaModulateEffect`.
-    AlphaModulateEffect(AlphaModulateEffectWith<X>),
+    AlphaModulateEffect(Box<AlphaModulateEffectWith<X>>),
     /// The element `a:alphaModFix`, a `AlphaModulateFixedEffect`.
-    AlphaModulateFixedEffect(AlphaModulateFixedEffectWith<X>),
+    AlphaModulateFixedEffect(Box<AlphaModulateFixedEffectWith<X>>),
     /// The element `a:alphaRepl`, a `AlphaReplaceEffect`.
-    AlphaReplaceEffect(AlphaReplaceEffectWith<X>),
+    AlphaReplaceEffect(Box<AlphaReplaceEffectWith<X>>),
     /// The element `a:biLevel`, a `BiLevel`.
-    BiLevel(BiLevelWith<X>),
+    BiLevel(Box<BiLevelWith<X>>),
     /// The element `a:blur`, a `BlurEffect`.
-    BlurEffect(BlurEffectWith<X>),
+    BlurEffect(Box<BlurEffectWith<X>>),
     /// The element `a:clrChange`, a `ColorChangeEffect`.
-    ColorChangeEffect(ColorChangeEffectWith<X>),
+    ColorChangeEffect(Box<ColorChangeEffectWith<X>>),
     /// The element `a:duotone`, a `DuotoneEffect`.
-    DuotoneEffect(DuotoneEffectWith<X>),
+    DuotoneEffect(Box<DuotoneEffectWith<X>>),
     /// The element `a:fillOverlay`, a `FillOverlayEffect`.
-    FillOverlayEffect(FillOverlayEffectWith<X>),
+    FillOverlayEffect(Box<FillOverlayEffectWith<X>>),
     /// The element `a:grayscl`, a `GrayScaleEffect`.
-    GrayScaleEffect(GrayScaleEffectWith<X>),
+    GrayScaleEffect(Box<GrayScaleEffectWith<X>>),
     /// The element `a:hsl`, a `HueSaturationLuminanceEffect`.
-    HueSaturationLuminanceEffect(HueSaturationLuminanceEffectWith<X>),
+    HueSaturationLuminanceEffect(Box<HueSaturationLuminanceEffectWith<X>>),
     /// The element `a:lum`, a `LuminanceEffect`.
-    LuminanceEffect(LuminanceEffectWith<X>),
+    LuminanceEffect(Box<LuminanceEffectWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:clrRepl`, a `SolidColorReplacement`.
-    SolidColorReplacement(SolidColorReplacementWith<X>),
+    SolidColorReplacement(Box<SolidColorReplacementWith<X>>),
     /// The element `a:tint`, a `TintEffect`.
-    TintEffect(TintEffectWith<X>),
+    TintEffect(Box<TintEffectWith<X>>),
 }
 
 /// [`BlipContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -5963,11 +5967,11 @@ impl Eq for BuildDiagramWith<()> {}
 #[non_exhaustive]
 pub enum BuildSubElementsContentWith<X: UserData> {
     /// The element `a:bldChart`, a `BuildChart`.
-    BuildChart(BuildChartWith<X>),
+    BuildChart(Box<BuildChartWith<X>>),
     /// The element `a:bldDgm`, a `BuildDiagram`.
-    BuildDiagram(BuildDiagramWith<X>),
+    BuildDiagram(Box<BuildDiagramWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`BuildSubElementsContentWith`] of the tree a read gives, where no node holds anything in
@@ -6390,19 +6394,19 @@ impl Eq for ColorChangeEffectWith<()> {}
 #[non_exhaustive]
 pub enum ColorContentWith<X: UserData> {
     /// The element `a:hslClr`, a `HueSaturationLuminanceColorModel`.
-    HueSaturationLuminanceColorModel(HueSaturationLuminanceColorModelWith<X>),
+    HueSaturationLuminanceColorModel(Box<HueSaturationLuminanceColorModelWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:prstClr`, a `PresetColor`.
-    PresetColor(PresetColorWith<X>),
+    PresetColor(Box<PresetColorWith<X>>),
     /// The element `a:srgbClr`, a `RGBColorModelHexVariant`.
-    RGBColorModelHexVariant(RGBColorModelHexVariantWith<X>),
+    RGBColorModelHexVariant(Box<RGBColorModelHexVariantWith<X>>),
     /// The element `a:scrgbClr`, a `RGBColorModelPercentageVariant`.
-    RGBColorModelPercentageVariant(RGBColorModelPercentageVariantWith<X>),
+    RGBColorModelPercentageVariant(Box<RGBColorModelPercentageVariantWith<X>>),
     /// The element `a:schemeClr`, a `SchemeColor`.
-    SchemeColor(SchemeColorWith<X>),
+    SchemeColor(Box<SchemeColorWith<X>>),
     /// The element `a:sysClr`, a `SystemColor`.
-    SystemColor(SystemColorWith<X>),
+    SystemColor(Box<SystemColorWith<X>>),
 }
 
 /// [`ColorContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -6509,9 +6513,9 @@ impl Eq for ColorSchemeWith<()> {}
 #[non_exhaustive]
 pub enum ColorSchemeMapOverrideContentWith<X: UserData> {
     /// The element `a:masterClrMapping`, a `MasterColorMapping`.
-    MasterColorMapping(MasterColorMappingWith<X>),
+    MasterColorMapping(Box<MasterColorMappingWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:overrideClrMapping`, a `OverrideColorMapping`.
     OverrideColorMapping(Box<OverrideColorMappingWith<X>>),
 }
@@ -6552,63 +6556,63 @@ impl Eq for ColorSpecifiedWith<()> {}
 #[non_exhaustive]
 pub enum ColorTransformContentWith<X: UserData> {
     /// The element `a:alpha`, a `Alpha`.
-    Alpha(AlphaWith<X>),
+    Alpha(Box<AlphaWith<X>>),
     /// The element `a:alphaMod`, a `AlphaModulation`.
-    AlphaModulation(AlphaModulationWith<X>),
+    AlphaModulation(Box<AlphaModulationWith<X>>),
     /// The element `a:alphaOff`, a `AlphaOffset`.
-    AlphaOffset(AlphaOffsetWith<X>),
+    AlphaOffset(Box<AlphaOffsetWith<X>>),
     /// The element `a:blue`, a `Blue`.
-    Blue(BlueWith<X>),
+    Blue(Box<BlueWith<X>>),
     /// The element `a:blueMod`, a `BlueModulation`.
-    BlueModulation(BlueModulationWith<X>),
+    BlueModulation(Box<BlueModulationWith<X>>),
     /// The element `a:blueOff`, a `BlueOffset`.
-    BlueOffset(BlueOffsetWith<X>),
+    BlueOffset(Box<BlueOffsetWith<X>>),
     /// The element `a:comp`, a `Complement`.
-    Complement(ComplementWith<X>),
+    Complement(Box<ComplementWith<X>>),
     /// The element `a:gamma`, a `Gamma`.
-    Gamma(GammaWith<X>),
+    Gamma(Box<GammaWith<X>>),
     /// The element `a:gray`, a `Gray`.
-    Gray(GrayWith<X>),
+    Gray(Box<GrayWith<X>>),
     /// The element `a:green`, a `Green`.
-    Green(GreenWith<X>),
+    Green(Box<GreenWith<X>>),
     /// The element `a:greenMod`, a `GreenModulation`.
-    GreenModulation(GreenModulationWith<X>),
+    GreenModulation(Box<GreenModulationWith<X>>),
     /// The element `a:greenOff`, a `GreenOffset`.
-    GreenOffset(GreenOffsetWith<X>),
+    GreenOffset(Box<GreenOffsetWith<X>>),
     /// The element `a:hue`, a `Hue`.
-    Hue(HueWith<X>),
+    Hue(Box<HueWith<X>>),
     /// The element `a:hueMod`, a `HueModulate`.
-    HueModulate(HueModulateWith<X>),
+    HueModulate(Box<HueModulateWith<X>>),
     /// The element `a:hueOff`, a `HueOffset`.
-    HueOffset(HueOffsetWith<X>),
+    HueOffset(Box<HueOffsetWith<X>>),
     /// The element `a:inv`, a `Inverse`.
-    Inverse(InverseWith<X>),
+    Inverse(Box<InverseWith<X>>),
     /// The element `a:invGamma`, a `InverseGamma`.
-    InverseGamma(InverseGammaWith<X>),
+    InverseGamma(Box<InverseGammaWith<X>>),
     /// The element `a:lum`, a `Luminance`.
-    Luminance(LuminanceWith<X>),
+    Luminance(Box<LuminanceWith<X>>),
     /// The element `a:lumMod`, a `LuminanceModulation`.
-    LuminanceModulation(LuminanceModulationWith<X>),
+    LuminanceModulation(Box<LuminanceModulationWith<X>>),
     /// The element `a:lumOff`, a `LuminanceOffset`.
-    LuminanceOffset(LuminanceOffsetWith<X>),
+    LuminanceOffset(Box<LuminanceOffsetWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:red`, a `Red`.
-    Red(RedWith<X>),
+    Red(Box<RedWith<X>>),
     /// The element `a:redMod`, a `RedModulation`.
-    RedModulation(RedModulationWith<X>),
+    RedModulation(Box<RedModulationWith<X>>),
     /// The element `a:redOff`, a `RedOffset`.
-    RedOffset(RedOffsetWith<X>),
+    RedOffset(Box<RedOffsetWith<X>>),
     /// The element `a:sat`, a `Saturation`.
-    Saturation(SaturationWith<X>),
+    Saturation(Box<SaturationWith<X>>),
     /// The element `a:satMod`, a `SaturationModulation`.
-    SaturationModulation(SaturationModulationWith<X>),
+    SaturationModulation(Box<SaturationModulationWith<X>>),
     /// The element `a:satOff`, a `SaturationOffset`.
-    SaturationOffset(SaturationOffsetWith<X>),
+    SaturationOffset(Box<SaturationOffsetWith<X>>),
     /// The element `a:shade`, a `Shade`.
-    Shade(ShadeWith<X>),
+    Shade(Box<ShadeWith<X>>),
     /// The element `a:tint`, a `Tint`.
-    Tint(TintWith<X>),
+    Tint(Box<TintWith<X>>),
 }
 
 /// [`ColorTransformContentWith`] of the tree a read gives, where no node holds anything in
@@ -7474,67 +7478,67 @@ impl Eq for EffectContainerContWith<()> {}
 #[non_exhaustive]
 pub enum EffectContainerContentWith<X: UserData> {
     /// The element `a:alphaBiLevel`, a `AlphaBiLevelEffect`.
-    AlphaBiLevelEffect(AlphaBiLevelEffectWith<X>),
+    AlphaBiLevelEffect(Box<AlphaBiLevelEffectWith<X>>),
     /// The element `a:alphaCeiling`, a `AlphaCeilingEffect`.
-    AlphaCeilingEffect(AlphaCeilingEffectWith<X>),
+    AlphaCeilingEffect(Box<AlphaCeilingEffectWith<X>>),
     /// The element `a:alphaFloor`, a `AlphaFloorEffect`.
-    AlphaFloorEffect(AlphaFloorEffectWith<X>),
+    AlphaFloorEffect(Box<AlphaFloorEffectWith<X>>),
     /// The element `a:alphaOutset`, a `AlphaInsetOutsetEffect`.
-    AlphaInsetOutsetEffect(AlphaInsetOutsetEffectWith<X>),
+    AlphaInsetOutsetEffect(Box<AlphaInsetOutsetEffectWith<X>>),
     /// The element `a:alphaInv`, a `AlphaInverseEffect`.
-    AlphaInverseEffect(AlphaInverseEffectWith<X>),
+    AlphaInverseEffect(Box<AlphaInverseEffectWith<X>>),
     /// The element `a:alphaMod`, a `AlphaModulateEffect`.
-    AlphaModulateEffect(AlphaModulateEffectWith<X>),
+    AlphaModulateEffect(Box<AlphaModulateEffectWith<X>>),
     /// The element `a:alphaModFix`, a `AlphaModulateFixedEffect`.
-    AlphaModulateFixedEffect(AlphaModulateFixedEffectWith<X>),
+    AlphaModulateFixedEffect(Box<AlphaModulateFixedEffectWith<X>>),
     /// The element `a:alphaRepl`, a `AlphaReplaceEffect`.
-    AlphaReplaceEffect(AlphaReplaceEffectWith<X>),
+    AlphaReplaceEffect(Box<AlphaReplaceEffectWith<X>>),
     /// The element `a:biLevel`, a `BiLevel`.
-    BiLevel(BiLevelWith<X>),
+    BiLevel(Box<BiLevelWith<X>>),
     /// The element `a:blend`, a `BlendEffect`.
-    BlendEffect(BlendEffectWith<X>),
+    BlendEffect(Box<BlendEffectWith<X>>),
     /// The element `a:blur`, a `BlurEffect`.
-    BlurEffect(BlurEffectWith<X>),
+    BlurEffect(Box<BlurEffectWith<X>>),
     /// The element `a:clrChange`, a `ColorChangeEffect`.
-    ColorChangeEffect(ColorChangeEffectWith<X>),
+    ColorChangeEffect(Box<ColorChangeEffectWith<X>>),
     /// The element `a:duotone`, a `DuotoneEffect`.
-    DuotoneEffect(DuotoneEffectWith<X>),
+    DuotoneEffect(Box<DuotoneEffectWith<X>>),
     /// The element `a:cont`, a `EffectContainerCont`.
-    EffectContainerCont(EffectContainerContWith<X>),
+    EffectContainerCont(Box<EffectContainerContWith<X>>),
     /// The element `a:effect`, a `EffectEffectReference`.
-    EffectEffectReference(EffectEffectReferenceWith<X>),
+    EffectEffectReference(Box<EffectEffectReferenceWith<X>>),
     /// The element `a:fill`, a `FillFillEffect`.
-    FillFillEffect(FillFillEffectWith<X>),
+    FillFillEffect(Box<FillFillEffectWith<X>>),
     /// The element `a:fillOverlay`, a `FillOverlayEffect`.
-    FillOverlayEffect(FillOverlayEffectWith<X>),
+    FillOverlayEffect(Box<FillOverlayEffectWith<X>>),
     /// The element `a:glow`, a `GlowEffect`.
-    GlowEffect(GlowEffectWith<X>),
+    GlowEffect(Box<GlowEffectWith<X>>),
     /// The element `a:grayscl`, a `GrayScaleEffect`.
-    GrayScaleEffect(GrayScaleEffectWith<X>),
+    GrayScaleEffect(Box<GrayScaleEffectWith<X>>),
     /// The element `a:hsl`, a `HueSaturationLuminanceEffect`.
-    HueSaturationLuminanceEffect(HueSaturationLuminanceEffectWith<X>),
+    HueSaturationLuminanceEffect(Box<HueSaturationLuminanceEffectWith<X>>),
     /// The element `a:innerShdw`, a `InnerShadowEffect`.
-    InnerShadowEffect(InnerShadowEffectWith<X>),
+    InnerShadowEffect(Box<InnerShadowEffectWith<X>>),
     /// The element `a:lum`, a `LuminanceEffect`.
-    LuminanceEffect(LuminanceEffectWith<X>),
+    LuminanceEffect(Box<LuminanceEffectWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:outerShdw`, a `OuterShadowEffect`.
-    OuterShadowEffect(OuterShadowEffectWith<X>),
+    OuterShadowEffect(Box<OuterShadowEffectWith<X>>),
     /// The element `a:prstShdw`, a `PresetShadow`.
-    PresetShadow(PresetShadowWith<X>),
+    PresetShadow(Box<PresetShadowWith<X>>),
     /// The element `a:reflection`, a `ReflectionEffect`.
-    ReflectionEffect(ReflectionEffectWith<X>),
+    ReflectionEffect(Box<ReflectionEffectWith<X>>),
     /// The element `a:relOff`, a `RelativeOffsetEffect`.
-    RelativeOffsetEffect(RelativeOffsetEffectWith<X>),
+    RelativeOffsetEffect(Box<RelativeOffsetEffectWith<X>>),
     /// The element `a:softEdge`, a `SoftEdgeEffect`.
-    SoftEdgeEffect(SoftEdgeEffectWith<X>),
+    SoftEdgeEffect(Box<SoftEdgeEffectWith<X>>),
     /// The element `a:clrRepl`, a `SolidColorReplacement`.
-    SolidColorReplacement(SolidColorReplacementWith<X>),
+    SolidColorReplacement(Box<SolidColorReplacementWith<X>>),
     /// The element `a:tint`, a `TintEffect`.
-    TintEffect(TintEffectWith<X>),
+    TintEffect(Box<TintEffectWith<X>>),
     /// The element `a:xfrm`, a `TransformEffect`.
-    TransformEffect(TransformEffectWith<X>),
+    TransformEffect(Box<TransformEffectWith<X>>),
 }
 
 /// [`EffectContainerContentWith`] of the tree a read gives, where no node holds anything in
@@ -7656,11 +7660,11 @@ impl Eq for EffectEffectReferenceWith<()> {}
 #[non_exhaustive]
 pub enum EffectPropertiesContentWith<X: UserData> {
     /// The element `a:effectDag`, a `EffectContainerEffectDag`.
-    EffectContainerEffectDag(EffectContainerEffectDagWith<X>),
+    EffectContainerEffectDag(Box<EffectContainerEffectDagWith<X>>),
     /// The element `a:effectLst`, a `EffectContainerEffectLst`.
-    EffectContainerEffectLst(EffectContainerEffectLstWith<X>),
+    EffectContainerEffectLst(Box<EffectContainerEffectLstWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`EffectPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -8031,11 +8035,11 @@ impl Eq for FillFillEffectWith<()> {}
 #[non_exhaustive]
 pub enum FillModeContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:stretch`, a `Stretch`.
-    Stretch(StretchWith<X>),
+    Stretch(Box<StretchWith<X>>),
     /// The element `a:tile`, a `Tile`.
-    Tile(TileWith<X>),
+    Tile(Box<TileWith<X>>),
 }
 
 /// [`FillModeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -8077,19 +8081,19 @@ impl Eq for FillOverlayEffectWith<()> {}
 #[non_exhaustive]
 pub enum FillPropertiesContentWith<X: UserData> {
     /// The element `a:gradFill`, a `GradientFill`.
-    GradientFill(GradientFillWith<X>),
+    GradientFill(Box<GradientFillWith<X>>),
     /// The element `a:grpFill`, a `GroupFill`.
-    GroupFill(GroupFillWith<X>),
+    GroupFill(Box<GroupFillWith<X>>),
     /// The element `a:noFill`, a `NoFill`.
-    NoFill(NoFillWith<X>),
+    NoFill(Box<NoFillWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:pattFill`, a `PatternFill`.
-    PatternFill(PatternFillWith<X>),
+    PatternFill(Box<PatternFillWith<X>>),
     /// The element `a:blipFill`, a `PictureFill`.
-    PictureFill(PictureFillWith<X>),
+    PictureFill(Box<PictureFillWith<X>>),
     /// The element `a:solidFill`, a `SolidFill`.
-    SolidFill(SolidFillWith<X>),
+    SolidFill(Box<SolidFillWith<X>>),
 }
 
 /// [`FillPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -8557,11 +8561,11 @@ impl Eq for GammaWith<()> {}
 #[non_exhaustive]
 pub enum GeometryContentWith<X: UserData> {
     /// The element `a:custGeom`, a `CustomGeometry`.
-    CustomGeometry(CustomGeometryWith<X>),
+    CustomGeometry(Box<CustomGeometryWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:prstGeom`, a `PresetGeometry`.
-    PresetGeometry(PresetGeometryWith<X>),
+    PresetGeometry(Box<PresetGeometryWith<X>>),
 }
 
 /// [`GeometryContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -8628,11 +8632,11 @@ impl Eq for GradientFillWith<()> {}
 #[non_exhaustive]
 pub enum GradientFillContentWith<X: UserData> {
     /// The element `a:lin`, a `LinearGradientFill`.
-    LinearGradientFill(LinearGradientFillWith<X>),
+    LinearGradientFill(Box<LinearGradientFillWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:path`, a `PathGradient`.
-    PathGradient(PathGradientWith<X>),
+    PathGradient(Box<PathGradientWith<X>>),
 }
 
 /// [`GradientFillContentWith`] of the tree a read gives, where no node holds anything in
@@ -8692,11 +8696,11 @@ impl Eq for GradientStopsWith<()> {}
 #[non_exhaustive]
 pub enum GraphicElementContentWith<X: UserData> {
     /// The element `a:chart`, a `ChartToAnimate`.
-    ChartToAnimate(ChartToAnimateWith<X>),
+    ChartToAnimate(Box<ChartToAnimateWith<X>>),
     /// The element `a:dgm`, a `DiagramToAnimate`.
-    DiagramToAnimate(DiagramToAnimateWith<X>),
+    DiagramToAnimate(Box<DiagramToAnimateWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`GraphicElementContentWith`] of the tree a read gives, where no node holds anything in
@@ -8952,21 +8956,21 @@ impl Eq for GroupShapeWith<()> {}
 #[non_exhaustive]
 pub enum GroupShapeContentWith<X: UserData> {
     /// The element `a:cxnSp`, a `ConnectionShape`.
-    ConnectionShape(ConnectionShapeWith<X>),
+    ConnectionShape(Box<ConnectionShapeWith<X>>),
     /// The element `a14:contentPart`, a `ContentPart`.
-    ContentPart(super::office_drawing_2010_main::ContentPartWith<X>),
+    ContentPart(Box<super::office_drawing_2010_main::ContentPartWith<X>>),
     /// The element `a:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrameWith<X>),
+    GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `a:grpSp`, a `GroupShape`.
-    GroupShape(GroupShapeWith<X>),
+    GroupShape(Box<GroupShapeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:pic`, a `Picture`.
-    Picture(PictureWith<X>),
+    Picture(Box<PictureWith<X>>),
     /// The element `a:sp`, a `Shape`.
-    Shape(ShapeWith<X>),
+    Shape(Box<ShapeWith<X>>),
     /// The element `a:txSp`, a `TextShape`.
-    TextShape(TextShapeWith<X>),
+    TextShape(Box<TextShapeWith<X>>),
 }
 
 /// [`GroupShapeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -9689,11 +9693,11 @@ pub enum LightRigTypeMember {
 #[non_exhaustive]
 pub enum LineDashContentWith<X: UserData> {
     /// The element `a:custDash`, a `CustomDash`.
-    CustomDash(CustomDashWith<X>),
+    CustomDash(Box<CustomDashWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:prstDash`, a `PresetDash`.
-    PresetDash(PresetDashWith<X>),
+    PresetDash(Box<PresetDashWith<X>>),
 }
 
 /// [`LineDashContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -9822,15 +9826,15 @@ pub enum LineEndWidthMember {
 #[non_exhaustive]
 pub enum LineFillContentWith<X: UserData> {
     /// The element `a:gradFill`, a `GradientFill`.
-    GradientFill(GradientFillWith<X>),
+    GradientFill(Box<GradientFillWith<X>>),
     /// The element `a:noFill`, a `NoFill`.
-    NoFill(NoFillWith<X>),
+    NoFill(Box<NoFillWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:pattFill`, a `PatternFill`.
-    PatternFill(PatternFillWith<X>),
+    PatternFill(Box<PatternFillWith<X>>),
     /// The element `a:solidFill`, a `SolidFill`.
-    SolidFill(SolidFillWith<X>),
+    SolidFill(Box<SolidFillWith<X>>),
 }
 
 /// [`LineFillContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -9889,13 +9893,13 @@ impl Eq for LineJoinBevelWith<()> {}
 #[non_exhaustive]
 pub enum LineJoinContentWith<X: UserData> {
     /// The element `a:bevel`, a `LineJoinBevel`.
-    LineJoinBevel(LineJoinBevelWith<X>),
+    LineJoinBevel(Box<LineJoinBevelWith<X>>),
     /// The element `a:miter`, a `MiterLineJoin`.
-    MiterLineJoin(MiterLineJoinWith<X>),
+    MiterLineJoin(Box<MiterLineJoinWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:round`, a `RoundLineJoin`.
-    RoundLineJoin(RoundLineJoinWith<X>),
+    RoundLineJoin(Box<RoundLineJoinWith<X>>),
 }
 
 /// [`LineJoinContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -13851,11 +13855,11 @@ impl Eq for ShapeWith<()> {}
 #[non_exhaustive]
 pub enum ShapeAdjustHandlesContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:ahPolar`, a `PolarAdjustHandle`.
-    PolarAdjustHandle(PolarAdjustHandleWith<X>),
+    PolarAdjustHandle(Box<PolarAdjustHandleWith<X>>),
     /// The element `a:ahXY`, a `XYAdjustHandle`.
-    XYAdjustHandle(XYAdjustHandleWith<X>),
+    XYAdjustHandle(Box<XYAdjustHandleWith<X>>),
 }
 
 /// [`ShapeAdjustHandlesContentWith`] of the tree a read gives, where no node holds anything in
@@ -14033,19 +14037,19 @@ impl Eq for ShapePathWith<()> {}
 #[non_exhaustive]
 pub enum ShapePathContentWith<X: UserData> {
     /// The element `a:close`, a `CloseShapePath`.
-    CloseShapePath(CloseShapePathWith<X>),
+    CloseShapePath(Box<CloseShapePathWith<X>>),
     /// The element `a:arcTo`, a `DrawArcTo`.
-    DrawArcTo(DrawArcToWith<X>),
+    DrawArcTo(Box<DrawArcToWith<X>>),
     /// The element `a:cubicBezTo`, a `DrawCubicBezierCurveTo`.
-    DrawCubicBezierCurveTo(DrawCubicBezierCurveToWith<X>),
+    DrawCubicBezierCurveTo(Box<DrawCubicBezierCurveToWith<X>>),
     /// The element `a:lnTo`, a `DrawLineTo`.
-    DrawLineTo(DrawLineToWith<X>),
+    DrawLineTo(Box<DrawLineToWith<X>>),
     /// The element `a:quadBezTo`, a `DrawQuadraticBezierCurveTo`.
-    DrawQuadraticBezierCurveTo(DrawQuadraticBezierCurveToWith<X>),
+    DrawQuadraticBezierCurveTo(Box<DrawQuadraticBezierCurveToWith<X>>),
     /// The element `a:moveTo`, a `MovePathTo`.
-    MovePathTo(MovePathToWith<X>),
+    MovePathTo(Box<MovePathToWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`ShapePathContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -14939,11 +14943,11 @@ impl Eq for TableBackgroundWith<()> {}
 #[non_exhaustive]
 pub enum TableBackgroundEffectContentWith<X: UserData> {
     /// The element `a:effect`, a `Effect`.
-    Effect(EffectWith<X>),
+    Effect(Box<EffectWith<X>>),
     /// The element `a:effectRef`, a `EffectReference`.
-    EffectReference(EffectReferenceWith<X>),
+    EffectReference(Box<EffectReferenceWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`TableBackgroundEffectContentWith`] of the tree a read gives, where no node holds anything in
@@ -15139,11 +15143,11 @@ impl Eq for TableCellTextStyleWith<()> {}
 #[non_exhaustive]
 pub enum TableCellTextStyleFontContentWith<X: UserData> {
     /// The element `a:font`, a `FontFontCollection`.
-    FontFontCollection(FontFontCollectionWith<X>),
+    FontFontCollection(Box<FontFontCollectionWith<X>>),
     /// The element `a:fontRef`, a `FontReference`.
-    FontReference(FontReferenceWith<X>),
+    FontReference(Box<FontReferenceWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`TableCellTextStyleFontContentWith`] of the tree a read gives, where no node holds anything in
@@ -15243,11 +15247,11 @@ impl Eq for TablePropertiesWith<()> {}
 #[non_exhaustive]
 pub enum TablePropertiesStyleContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:tableStyle`, a `TableStyle`.
-    TableStyle(TableStyleWith<X>),
+    TableStyle(Box<TableStyleWith<X>>),
     /// The element `a:tableStyleId`, a `TableStyleID`.
-    TableStyleID(TableStyleIDWith<X>),
+    TableStyleID(Box<TableStyleIDWith<X>>),
 }
 
 /// [`TablePropertiesStyleContentWith`] of the tree a read gives, where no node holds anything in
@@ -15458,11 +15462,11 @@ impl Eq for TailLineEndStyleWith<()> {}
 #[non_exhaustive]
 pub enum Text3DContentWith<X: UserData> {
     /// The element `a:sp3d`, a `Apply3DShapeProperties`.
-    Apply3DShapeProperties(Apply3DShapePropertiesWith<X>),
+    Apply3DShapeProperties(Box<Apply3DShapePropertiesWith<X>>),
     /// The element `a:flatTx`, a `NoTextIn3DScene`.
-    NoTextIn3DScene(NoTextIn3DSceneWith<X>),
+    NoTextIn3DScene(Box<NoTextIn3DSceneWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`Text3DContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -15645,13 +15649,13 @@ pub enum TextAutoNumberSchemesMember {
 #[non_exhaustive]
 pub enum TextAutofitContentWith<X: UserData> {
     /// The element `a:noAutofit`, a `NoAutoFit`.
-    NoAutoFit(NoAutoFitWith<X>),
+    NoAutoFit(Box<NoAutoFitWith<X>>),
     /// The element `a:normAutofit`, a `NormalAutoFit`.
-    NormalAutoFit(NormalAutoFitWith<X>),
+    NormalAutoFit(Box<NormalAutoFitWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:spAutoFit`, a `ShapeAutoFit`.
-    ShapeAutoFit(ShapeAutoFitWith<X>),
+    ShapeAutoFit(Box<ShapeAutoFitWith<X>>),
 }
 
 /// [`TextAutofitContentWith`] of the tree a read gives, where no node holds anything in
@@ -15669,11 +15673,11 @@ impl Eq for TextAutofitContentWith<()> {}
 #[non_exhaustive]
 pub enum TextBulletColorContentWith<X: UserData> {
     /// The element `a:buClr`, a `ColorSpecified`.
-    ColorSpecified(ColorSpecifiedWith<X>),
+    ColorSpecified(Box<ColorSpecifiedWith<X>>),
     /// The element `a:buClrTx`, a `FollowTextBuClrTx`.
-    FollowTextBuClrTx(FollowTextBuClrTxWith<X>),
+    FollowTextBuClrTx(Box<FollowTextBuClrTxWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`TextBulletColorContentWith`] of the tree a read gives, where no node holds anything in
@@ -15691,15 +15695,15 @@ impl Eq for TextBulletColorContentWith<()> {}
 #[non_exhaustive]
 pub enum TextBulletContentWith<X: UserData> {
     /// The element `a:buAutoNum`, a `AutoNumberedBullet`.
-    AutoNumberedBullet(AutoNumberedBulletWith<X>),
+    AutoNumberedBullet(Box<AutoNumberedBulletWith<X>>),
     /// The element `a:buChar`, a `CharacterBullet`.
-    CharacterBullet(CharacterBulletWith<X>),
+    CharacterBullet(Box<CharacterBulletWith<X>>),
     /// The element `a:buNone`, a `NoBullet`.
-    NoBullet(NoBulletWith<X>),
+    NoBullet(Box<NoBulletWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:buBlip`, a `PictureBullet`.
-    PictureBullet(PictureBulletWith<X>),
+    PictureBullet(Box<PictureBulletWith<X>>),
 }
 
 /// [`TextBulletContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -15716,13 +15720,13 @@ impl Eq for TextBulletContentWith<()> {}
 #[non_exhaustive]
 pub enum TextBulletSizeContentWith<X: UserData> {
     /// The element `a:buSzTx`, a `BulletSizeFollowsText`.
-    BulletSizeFollowsText(BulletSizeFollowsTextWith<X>),
+    BulletSizeFollowsText(Box<BulletSizeFollowsTextWith<X>>),
     /// The element `a:buSzPct`, a `BulletSizePercentage`.
-    BulletSizePercentage(BulletSizePercentageWith<X>),
+    BulletSizePercentage(Box<BulletSizePercentageWith<X>>),
     /// The element `a:buSzPts`, a `BulletSizePoints`.
-    BulletSizePoints(BulletSizePointsWith<X>),
+    BulletSizePoints(Box<BulletSizePointsWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`TextBulletSizeContentWith`] of the tree a read gives, where no node holds anything in
@@ -15740,11 +15744,11 @@ impl Eq for TextBulletSizeContentWith<()> {}
 #[non_exhaustive]
 pub enum TextBulletTypefaceContentWith<X: UserData> {
     /// The element `a:buFontTx`, a `FollowTextBuFontTx`.
-    FollowTextBuFontTx(FollowTextBuFontTxWith<X>),
+    FollowTextBuFontTx(Box<FollowTextBuFontTxWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:buFont`, a `Specified`.
-    Specified(SpecifiedWith<X>),
+    Specified(Box<SpecifiedWith<X>>),
 }
 
 /// [`TextBulletTypefaceContentWith`] of the tree a read gives, where no node holds anything in
@@ -16095,15 +16099,15 @@ impl Eq for TextParagraphsWith<()> {}
 #[non_exhaustive]
 pub enum TextParagraphsContentWith<X: UserData> {
     /// The element `a14:m`, a `M`.
-    M(super::office_drawing_2010_main::MWith<X>),
+    M(Box<super::office_drawing_2010_main::MWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:fld`, a `TextField`.
-    TextField(TextFieldWith<X>),
+    TextField(Box<TextFieldWith<X>>),
     /// The element `a:br`, a `TextLineBreak`.
-    TextLineBreak(TextLineBreakWith<X>),
+    TextLineBreak(Box<TextLineBreakWith<X>>),
     /// The element `a:r`, a `TextRun`.
-    TextRun(TextRunWith<X>),
+    TextRun(Box<TextRunWith<X>>),
 }
 
 /// [`TextParagraphsContentWith`] of the tree a read gives, where no node holds anything in
@@ -16273,11 +16277,11 @@ impl Eq for TextShapeWith<()> {}
 #[non_exhaustive]
 pub enum TextShapeContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:useSpRect`, a `UseShapeTextRectangle`.
-    UseShapeTextRectangle(UseShapeTextRectangleWith<X>),
+    UseShapeTextRectangle(Box<UseShapeTextRectangleWith<X>>),
     /// The element `a:xfrm`, a `XfrmTransform2D`.
-    XfrmTransform2D(XfrmTransform2DWith<X>),
+    XfrmTransform2D(Box<XfrmTransform2DWith<X>>),
 }
 
 /// [`TextShapeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -16294,11 +16298,11 @@ impl Eq for TextShapeContentWith<()> {}
 #[non_exhaustive]
 pub enum TextSpacingContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:spcPct`, a `SpacingPercent`.
-    SpacingPercent(SpacingPercentWith<X>),
+    SpacingPercent(Box<SpacingPercentWith<X>>),
     /// The element `a:spcPts`, a `SpacingPoints`.
-    SpacingPoints(SpacingPointsWith<X>),
+    SpacingPoints(Box<SpacingPointsWith<X>>),
 }
 
 /// [`TextSpacingContentWith`] of the tree a read gives, where no node holds anything in
@@ -16417,11 +16421,11 @@ pub enum TextTabAlignmentTypesMember {
 #[non_exhaustive]
 pub enum TextUnderlineFillContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:uFill`, a `UnderlineFill`.
-    UnderlineFill(UnderlineFillWith<X>),
+    UnderlineFill(Box<UnderlineFillWith<X>>),
     /// The element `a:uFillTx`, a `UnderlineFillPropertiesFollowText`.
-    UnderlineFillPropertiesFollowText(UnderlineFillPropertiesFollowTextWith<X>),
+    UnderlineFillPropertiesFollowText(Box<UnderlineFillPropertiesFollowTextWith<X>>),
 }
 
 /// [`TextUnderlineFillContentWith`] of the tree a read gives, where no node holds anything in
@@ -16439,11 +16443,11 @@ impl Eq for TextUnderlineFillContentWith<()> {}
 #[non_exhaustive]
 pub enum TextUnderlineLineContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:uLnTx`, a `UnderlineFollowsText`.
-    UnderlineFollowsText(UnderlineFollowsTextWith<X>),
+    UnderlineFollowsText(Box<UnderlineFollowsTextWith<X>>),
     /// The element `a:uLn`, a `UnderlineStroke`.
-    UnderlineStroke(UnderlineStrokeWith<X>),
+    UnderlineStroke(Box<UnderlineStrokeWith<X>>),
 }
 
 /// [`TextUnderlineLineContentWith`] of the tree a read gives, where no node holds anything in
@@ -16710,11 +16714,11 @@ impl Eq for ThemeOverrideWith<()> {}
 #[non_exhaustive]
 pub enum ThemeableFillStyleContentWith<X: UserData> {
     /// The element `a:fill`, a `Fill`.
-    Fill(FillWith<X>),
+    Fill(Box<FillWith<X>>),
     /// The element `a:fillRef`, a `FillReference`.
-    FillReference(FillReferenceWith<X>),
+    FillReference(Box<FillReferenceWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`ThemeableFillStyleContentWith`] of the tree a read gives, where no node holds anything in
@@ -16732,11 +16736,11 @@ impl Eq for ThemeableFillStyleContentWith<()> {}
 #[non_exhaustive]
 pub enum ThemeableLineStyleContentWith<X: UserData> {
     /// The element `a:lnRef`, a `LineReference`.
-    LineReference(LineReferenceWith<X>),
+    LineReference(Box<LineReferenceWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a:ln`, a `Outline`.
-    Outline(OutlineWith<X>),
+    Outline(Box<OutlineWith<X>>),
 }
 
 /// [`ThemeableLineStyleContentWith`] of the tree a read gives, where no node holds anything in
@@ -18487,6 +18491,8 @@ impl<X: UserData> AnyElementContentWith<X> {
     {
         officekit_markup_base::into_user_data_match!(self, AnyElementContentWith;
             plain [
+            ]
+            boxed [
                 AnchorForFloatingDrawingMLObject, AnchorLocationIsLocked,
                 ApplicationSpecificFileProperties, ArcSegment, Array, AttachedObjectData,
                 BasicString, BezierCurve, BinaryBlob, BinaryBlobObject, BinaryStorage,
@@ -18508,26 +18514,24 @@ impl<X: UserData> AnyElementContentWith<X> {
                 LockedCanvasContainer, Lpstr, Lpwstr, MathProperties, Metadata, MultiplePathLine,
                 NewShapeDefaults, NotesMaster, NotesSlide, Null, NumberingDefinitions, OfficeMath,
                 OfficeMathParagraph, Oval, Picture, PivotCacheDefinition, PivotCacheRecords,
-                Presentation, PresentationSlideSlide, PresentationWideProperties,
-                PresentationWideViewProperties, ProgrammableTabList, QueryTable, R4, R8, Rectangle,
-                ReferenceToChartPart, RevisionHeaders, Revisions, RichTextBoxContentContainer,
-                RightBorder, RoundedRectangle, SetOfAdditionalCharacteristics, SetOfFormulas,
-                SetOfHandles, ShadowEffect, ShapeClippingPath, ShapeDefinition,
-                ShapeFillExtendedProperties, ShapeFillProperties, ShapeGroup, ShapeLayoutProperties,
-                ShapePath, ShapeProtections, ShapeTemplate, SharedStringTable, SingleCells,
-                SkewTransform, SlideLayout, SlideMaster, SlideSynchronizationProperties, Sources,
-                SpreadsheetTable, StartingAnchorPoint, StorageForAlternateMathContent,
-                StyleDefinition, StyleDefinitionHeader, StyleDefinitions, StyleSheet, Table,
-                TableStyleList, TextBox, TextBoxBottomStroke, TextBoxInteriorStroke,
-                TextBoxLeftStroke, TextBoxRightStroke, TextBoxTopStroke, TextLayoutPath,
-                TextWrapping, Theme, ThemeManager, ThemeOverride, TopBorder, Ui1, Ui2, Ui4, Ui8,
-                UnsignedInteger, UserList, UserShapes, VMLDiagram, VMLDiagramText, Variant, Vector,
-                VideoFromFile, VolatileDependencyTypes, WebPageSettings,
-                WordprocessingMLDrawingCanvas, WordprocessingMLShape, WordprocessingMLShapeGroup,
-                Workbook, Worksheet, WorksheetDrawing, XMLMappingMapInfo,
-            ]
-            boxed [
-                PivotTableDefinition,
+                PivotTableDefinition, Presentation, PresentationSlideSlide,
+                PresentationWideProperties, PresentationWideViewProperties, ProgrammableTabList,
+                QueryTable, R4, R8, Rectangle, ReferenceToChartPart, RevisionHeaders, Revisions,
+                RichTextBoxContentContainer, RightBorder, RoundedRectangle,
+                SetOfAdditionalCharacteristics, SetOfFormulas, SetOfHandles, ShadowEffect,
+                ShapeClippingPath, ShapeDefinition, ShapeFillExtendedProperties,
+                ShapeFillProperties, ShapeGroup, ShapeLayoutProperties, ShapePath, ShapeProtections,
+                ShapeTemplate, SharedStringTable, SingleCells, SkewTransform, SlideLayout,
+                SlideMaster, SlideSynchronizationProperties, Sources, SpreadsheetTable,
+                StartingAnchorPoint, StorageForAlternateMathContent, StyleDefinition,
+                StyleDefinitionHeader, StyleDefinitions, StyleSheet, Table, TableStyleList, TextBox,
+                TextBoxBottomStroke, TextBoxInteriorStroke, TextBoxLeftStroke, TextBoxRightStroke,
+                TextBoxTopStroke, TextLayoutPath, TextWrapping, Theme, ThemeManager, ThemeOverride,
+                TopBorder, Ui1, Ui2, Ui4, Ui8, UnsignedInteger, UserList, UserShapes, VMLDiagram,
+                VMLDiagramText, Variant, Vector, VideoFromFile, VolatileDependencyTypes,
+                WebPageSettings, WordprocessingMLDrawingCanvas, WordprocessingMLShape,
+                WordprocessingMLShapeGroup, Workbook, Worksheet, WorksheetDrawing,
+                XMLMappingMapInfo,
             ]
         )
     }
@@ -18535,13 +18539,13 @@ impl<X: UserData> AnyElementContentWith<X> {
 
 impl<X: UserData> Default for AnyElementContentWith<X> {
     fn default() -> Self {
-        Self::Other(Node::Text(String::new()))
+        Self::Other(Box::new(Node::Text(String::new())))
     }
 }
 
 impl officekit_markup_base::Read for AnyElementContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
@@ -18552,7 +18556,7 @@ impl officekit_markup_base::Read for AnyElementContent {
 impl officekit_markup_base::Write for AnyElementContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         if let Self::Other(node) = self {
-            writer.other(node.clone());
+            writer.other(Node::clone(node));
         }
         write_any_element_1(self, writer);
         write_any_element_2(self, writer);
@@ -18565,6 +18569,1232 @@ impl officekit_markup_base::Write for AnyElementContent {
         write_any_element_9(self, writer);
     }
 }
+
+impl<X: UserData> From<super::wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing_drawing::AnchorForFloatingDrawingMLObjectWith<X>) -> Self {
+        Self::AnchorForFloatingDrawingMLObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>) -> Self {
+        Self::AnchorLocationIsLocked(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_extended::ApplicationSpecificFilePropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_extended::ApplicationSpecificFilePropertiesWith<X>) -> Self {
+        Self::ApplicationSpecificFileProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ArcSegmentWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ArcSegmentWith<X>) -> Self {
+        Self::ArcSegment(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::ArrayWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::ArrayWith<X>) -> Self {
+        Self::Array(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: vml_spreadsheet_drawing::AttachedObjectDataWith<X>) -> Self {
+        Self::AttachedObjectData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BasicStringWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BasicStringWith<X>) -> Self {
+        Self::BasicString(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::BezierCurveWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::BezierCurveWith<X>) -> Self {
+        Self::BezierCurve(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryBlobWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryBlobWith<X>) -> Self {
+        Self::BinaryBlob(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryBlobObjectWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryBlobObjectWith<X>) -> Self {
+        Self::BinaryBlobObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStorageWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStorageWith<X>) -> Self {
+        Self::BinaryStorage(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStorageObjectWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStorageObjectWith<X>) -> Self {
+        Self::BinaryStorageObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStreamWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStreamWith<X>) -> Self {
+        Self::BinaryStream(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryStreamObjectWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryStreamObjectWith<X>) -> Self {
+        Self::BinaryStreamObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BinaryVersionedStreamWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BinaryVersionedStreamWith<X>) -> Self {
+        Self::BinaryVersionedStream(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BlipWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: BlipWith<X>) -> Self {
+        Self::Blip(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::BooleanWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::BooleanWith<X>) -> Self {
+        Self::Boolean(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::BottomBorderWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::BottomBorderWith<X>) -> Self {
+        Self::BottomBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::CalculationChainInfoWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet::CalculationChainInfoWith<X>) -> Self {
+        Self::CalculationChainInfo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::CalloutWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml_office_drawing::CalloutWith<X>) -> Self {
+        Self::Callout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::ChartSheetWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::ChartSheetWith<X>) -> Self {
+        Self::ChartSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::chart::ChartSpaceWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::chart::ChartSpaceWith<X>) -> Self {
+        Self::ChartSpace(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::ClassIDWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::ClassIDWith<X>) -> Self {
+        Self::ClassID(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::ColorTransformDefinitionHeaderWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::diagram::ColorTransformDefinitionHeaderWith<X>) -> Self {
+        Self::ColorTransformDefinitionHeader(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::ColorTransformDefinitionsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::diagram::ColorTransformDefinitionsWith<X>) -> Self {
+        Self::ColorTransformDefinitions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::ColorTransformHeaderListWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::diagram::ColorTransformHeaderListWith<X>) -> Self {
+        Self::ColorTransformHeaderList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::CommentListWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::presentation::CommentListWith<X>) -> Self {
+        Self::CommentList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::CommentsWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::CommentsWith<X>) -> Self {
+        Self::Comments(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::CommentsCollectionWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::CommentsCollectionWith<X>) -> Self {
+        Self::CommentsCollection(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ComplexWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml_office_drawing::ComplexWith<X>) -> Self {
+        Self::Complex(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::ConnectionsWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::ConnectionsWith<X>) -> Self {
+        Self::Connections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::CurrencyWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::CurrencyWith<X>) -> Self {
+        Self::Currency(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_custom::CustomFilePropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_custom::CustomFilePropertiesWith<X>) -> Self {
+        Self::CustomFileProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<custom_xml_data_properties::CustomXMLDataPropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: custom_xml_data_properties::CustomXMLDataPropertiesWith<X>) -> Self {
+        Self::CustomXMLDataProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::DataModelWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::diagram::DataModelWith<X>) -> Self {
+        Self::DataModel(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::DateAndTimeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::DateAndTimeWith<X>) -> Self {
+        Self::DateAndTime(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::DecimalWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::DecimalWith<X>) -> Self {
+        Self::Decimal(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::DiagramLayoutHeaderListWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::diagram::DiagramLayoutHeaderListWith<X>) -> Self {
+        Self::DiagramLayoutHeaderList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::DialogSheetWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::DialogSheetWith<X>) -> Self {
+        Self::DialogSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::DigitalSignatureLineWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::DigitalSignatureLineWith<X>) -> Self {
+        Self::DigitalSignatureLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::DocumentWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::wordprocessing::DocumentWith<X>) -> Self {
+        Self::Document(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::DocumentBackgroundWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::DocumentBackgroundWith<X>) -> Self {
+        Self::DocumentBackground(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::DocumentEndnotesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::DocumentEndnotesWith<X>) -> Self {
+        Self::DocumentEndnotes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::DocumentFootnotesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::DocumentFootnotesWith<X>) -> Self {
+        Self::DocumentFootnotes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::DocumentSettingsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::DocumentSettingsWith<X>) -> Self {
+        Self::DocumentSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData>
+    From<custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(
+        arm: custom_xml_schema_properties::EmbeddedCustomXMLSchemaSupplementaryDataWith<X>,
+    ) -> Self {
+        Self::EmbeddedCustomXMLSchemaSupplementaryData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::EmbeddedOLEObjectWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::EmbeddedOLEObjectWith<X>) -> Self {
+        Self::EmbeddedOLEObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::EmbeddedObjectsAndControlsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::presentation::EmbeddedObjectsAndControlsWith<X>) -> Self {
+        Self::EmbeddedObjectsAndControls(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::EmptyWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::EmptyWith<X>) -> Self {
+        Self::Empty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet_drawing::EndingAnchorPointWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet_drawing::EndingAnchorPointWith<X>) -> Self {
+        Self::EndingAnchorPoint(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::ErrorStatusCodeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::ErrorStatusCodeWith<X>) -> Self {
+        Self::ErrorStatusCode(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::ExplicitRelationshipsToDiagramPartsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::diagram::ExplicitRelationshipsToDiagramPartsWith<X>) -> Self {
+        Self::ExplicitRelationshipsToDiagramParts(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::ExternalReferenceExternalLinkWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet::ExternalReferenceExternalLinkWith<X>) -> Self {
+        Self::ExternalReferenceExternalLink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ExtrusionWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml_office_drawing::ExtrusionWith<X>) -> Self {
+        Self::Extrusion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::FileTimeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::FileTimeWith<X>) -> Self {
+        Self::FileTime(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::FontTableRootElementWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::FontTableRootElementWith<X>) -> Self {
+        Self::FontTableRootElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::FooterWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::wordprocessing::FooterWith<X>) -> Self {
+        Self::Footer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::GlossaryDocumentRootElementWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::GlossaryDocumentRootElementWith<X>) -> Self {
+        Self::GlossaryDocumentRootElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicObjectWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: GraphicObjectWith<X>) -> Self {
+        Self::GraphicObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::HandoutMasterWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::presentation::HandoutMasterWith<X>) -> Self {
+        Self::HandoutMaster(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::HeaderWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::wordprocessing::HeaderWith<X>) -> Self {
+        Self::Header(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I1With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::I1With<X>) -> Self {
+        Self::I1(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I2With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::I2With<X>) -> Self {
+        Self::I2(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I4With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::I4With<X>) -> Self {
+        Self::I4(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::I8With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::I8With<X>) -> Self {
+        Self::I8(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ImageDataWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ImageDataWith<X>) -> Self {
+        Self::ImageData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ImageFileWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ImageFileWith<X>) -> Self {
+        Self::ImageFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::InclusionExclusionDataForDataSourceWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::InclusionExclusionDataForDataSourceWith<X>) -> Self {
+        Self::InclusionExclusionDataForDataSource(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::InkWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml_office_drawing::InkWith<X>) -> Self {
+        Self::Ink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::InkAnnotationFlagWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::InkAnnotationFlagWith<X>) -> Self {
+        Self::InkAnnotationFlag(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing_drawing::InlineDrawingMLObjectWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing_drawing::InlineDrawingMLObjectWith<X>) -> Self {
+        Self::InlineDrawingMLObject(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::IntegerWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::IntegerWith<X>) -> Self {
+        Self::Integer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::LayoutDefinitionWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::diagram::LayoutDefinitionWith<X>) -> Self {
+        Self::LayoutDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::LayoutDefinitionHeaderWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::diagram::LayoutDefinitionHeaderWith<X>) -> Self {
+        Self::LayoutDefinitionHeader(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::LeftBorderWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: vml_wordprocessing_drawing::LeftBorderWith<X>) -> Self {
+        Self::LeftBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::LineWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::LineWith<X>) -> Self {
+        Self::Line(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::LineStrokeSettingsWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::LineStrokeSettingsWith<X>) -> Self {
+        Self::LineStrokeSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::ListOfCommentAuthorsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::presentation::ListOfCommentAuthorsWith<X>) -> Self {
+        Self::ListOfCommentAuthors(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::ListOfStyleDefinitionHeadersWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::diagram::ListOfStyleDefinitionHeadersWith<X>) -> Self {
+        Self::ListOfStyleDefinitionHeaders(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::locked_canvas::LockedCanvasContainerWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::locked_canvas::LockedCanvasContainerWith<X>) -> Self {
+        Self::LockedCanvasContainer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::LpstrWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::LpstrWith<X>) -> Self {
+        Self::Lpstr(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::LpwstrWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::LpwstrWith<X>) -> Self {
+        Self::Lpwstr(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::math::MathPropertiesWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::math::MathPropertiesWith<X>) -> Self {
+        Self::MathProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::MetadataWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::MetadataWith<X>) -> Self {
+        Self::Metadata(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::MultiplePathLineWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::MultiplePathLineWith<X>) -> Self {
+        Self::MultiplePathLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::NewShapeDefaultsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::NewShapeDefaultsWith<X>) -> Self {
+        Self::NewShapeDefaults(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::NotesMasterWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::presentation::NotesMasterWith<X>) -> Self {
+        Self::NotesMaster(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::NotesSlideWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::presentation::NotesSlideWith<X>) -> Self {
+        Self::NotesSlide(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::NullWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::NullWith<X>) -> Self {
+        Self::Null(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::NumberingDefinitionsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::NumberingDefinitionsWith<X>) -> Self {
+        Self::NumberingDefinitions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::math::OfficeMathWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::math::OfficeMathWith<X>) -> Self {
+        Self::OfficeMath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::math::OfficeMathParagraphWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::math::OfficeMathParagraphWith<X>) -> Self {
+        Self::OfficeMathParagraph(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::OvalWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::OvalWith<X>) -> Self {
+        Self::Oval(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::picture::PictureWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::picture::PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::PivotCacheDefinitionWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet::PivotCacheDefinitionWith<X>) -> Self {
+        Self::PivotCacheDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::PivotCacheRecordsWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::PivotCacheRecordsWith<X>) -> Self {
+        Self::PivotCacheRecords(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::PivotTableDefinitionWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet::PivotTableDefinitionWith<X>) -> Self {
+        Self::PivotTableDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::PresentationWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::presentation::PresentationWith<X>) -> Self {
+        Self::Presentation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::PresentationSlideSlideWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::presentation::PresentationSlideSlideWith<X>) -> Self {
+        Self::PresentationSlideSlide(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::PresentationWidePropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::presentation::PresentationWidePropertiesWith<X>) -> Self {
+        Self::PresentationWideProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::PresentationWideViewPropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::presentation::PresentationWideViewPropertiesWith<X>) -> Self {
+        Self::PresentationWideViewProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::ProgrammableTabListWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::presentation::ProgrammableTabListWith<X>) -> Self {
+        Self::ProgrammableTabList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::QueryTableWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::QueryTableWith<X>) -> Self {
+        Self::QueryTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::R4With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::R4With<X>) -> Self {
+        Self::R4(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::R8With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::R8With<X>) -> Self {
+        Self::R8(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::RectangleWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::RectangleWith<X>) -> Self {
+        Self::Rectangle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::chart::ReferenceToChartPartWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::chart::ReferenceToChartPartWith<X>) -> Self {
+        Self::ReferenceToChartPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::RevisionHeadersWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::RevisionHeadersWith<X>) -> Self {
+        Self::RevisionHeaders(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::RevisionsWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::RevisionsWith<X>) -> Self {
+        Self::Revisions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::RichTextBoxContentContainerWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::RichTextBoxContentContainerWith<X>) -> Self {
+        Self::RichTextBoxContentContainer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::RightBorderWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::RightBorderWith<X>) -> Self {
+        Self::RightBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::RoundedRectangleWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::RoundedRectangleWith<X>) -> Self {
+        Self::RoundedRectangle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<additional_characteristics::SetOfAdditionalCharacteristicsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: additional_characteristics::SetOfAdditionalCharacteristicsWith<X>) -> Self {
+        Self::SetOfAdditionalCharacteristics(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::SetOfFormulasWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::SetOfFormulasWith<X>) -> Self {
+        Self::SetOfFormulas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::SetOfHandlesWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::SetOfHandlesWith<X>) -> Self {
+        Self::SetOfHandles(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShadowEffectWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ShadowEffectWith<X>) -> Self {
+        Self::ShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeClippingPathWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeClippingPathWith<X>) -> Self {
+        Self::ShapeClippingPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShapeDefinitionWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ShapeDefinitionWith<X>) -> Self {
+        Self::ShapeDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeFillExtendedPropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeFillExtendedPropertiesWith<X>) -> Self {
+        Self::ShapeFillExtendedProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShapeFillPropertiesWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ShapeFillPropertiesWith<X>) -> Self {
+        Self::ShapeFillProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShapeGroupWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ShapeGroupWith<X>) -> Self {
+        Self::ShapeGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeLayoutPropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeLayoutPropertiesWith<X>) -> Self {
+        Self::ShapeLayoutProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShapePathWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ShapePathWith<X>) -> Self {
+        Self::ShapePath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeProtectionsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeProtectionsWith<X>) -> Self {
+        Self::ShapeProtections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::ShapeTemplateWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::ShapeTemplateWith<X>) -> Self {
+        Self::ShapeTemplate(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::SharedStringTableWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::SharedStringTableWith<X>) -> Self {
+        Self::SharedStringTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::SingleCellsWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::SingleCellsWith<X>) -> Self {
+        Self::SingleCells(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::SkewTransformWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::SkewTransformWith<X>) -> Self {
+        Self::SkewTransform(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::SlideLayoutWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::presentation::SlideLayoutWith<X>) -> Self {
+        Self::SlideLayout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::SlideMasterWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::presentation::SlideMasterWith<X>) -> Self {
+        Self::SlideMaster(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::presentation::SlideSynchronizationPropertiesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::presentation::SlideSynchronizationPropertiesWith<X>) -> Self {
+        Self::SlideSynchronizationProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<bibliography::SourcesWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: bibliography::SourcesWith<X>) -> Self {
+        Self::Sources(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::TableWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::TableWith<X>) -> Self {
+        Self::SpreadsheetTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet_drawing::StartingAnchorPointWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet_drawing::StartingAnchorPointWith<X>) -> Self {
+        Self::StartingAnchorPoint(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
+        Self::StorageForAlternateMathContent(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::StyleDefinitionWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::diagram::StyleDefinitionWith<X>) -> Self {
+        Self::StyleDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::diagram::StyleDefinitionHeaderWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::diagram::StyleDefinitionHeaderWith<X>) -> Self {
+        Self::StyleDefinitionHeader(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::StyleDefinitionsWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing::StyleDefinitionsWith<X>) -> Self {
+        Self::StyleDefinitions(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::StyleSheetWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::StyleSheetWith<X>) -> Self {
+        Self::StyleSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TableWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: TableWith<X>) -> Self {
+        Self::Table(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TableStyleListWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: TableStyleListWith<X>) -> Self {
+        Self::TableStyleList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::TextBoxWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::TextBoxWith<X>) -> Self {
+        Self::TextBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::TextBoxBottomStrokeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::TextBoxBottomStrokeWith<X>) -> Self {
+        Self::TextBoxBottomStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::TextBoxInteriorStrokeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::TextBoxInteriorStrokeWith<X>) -> Self {
+        Self::TextBoxInteriorStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::TextBoxLeftStrokeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::TextBoxLeftStrokeWith<X>) -> Self {
+        Self::TextBoxLeftStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::TextBoxRightStrokeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::TextBoxRightStrokeWith<X>) -> Self {
+        Self::TextBoxRightStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::TextBoxTopStrokeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::TextBoxTopStrokeWith<X>) -> Self {
+        Self::TextBoxTopStroke(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml::TextLayoutPathWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml::TextLayoutPathWith<X>) -> Self {
+        Self::TextLayoutPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TextWrappingWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TextWrappingWith<X>) -> Self {
+        Self::TextWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ThemeWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: ThemeWith<X>) -> Self {
+        Self::Theme(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ThemeManagerWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: ThemeManagerWith<X>) -> Self {
+        Self::ThemeManager(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ThemeOverrideWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: ThemeOverrideWith<X>) -> Self {
+        Self::ThemeOverride(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TopBorderWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: vml_wordprocessing_drawing::TopBorderWith<X>) -> Self {
+        Self::TopBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui1With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::Ui1With<X>) -> Self {
+        Self::Ui1(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui2With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::Ui2With<X>) -> Self {
+        Self::Ui2(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui4With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::Ui4With<X>) -> Self {
+        Self::Ui4(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::Ui8With<X>> for AnyElementContentWith<X> {
+    fn from(arm: document_properties_variant_types::Ui8With<X>) -> Self {
+        Self::Ui8(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::UnsignedIntegerWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::UnsignedIntegerWith<X>) -> Self {
+        Self::UnsignedInteger(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::UserListWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::UserListWith<X>) -> Self {
+        Self::UserList(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::chart::UserShapesWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::chart::UserShapesWith<X>) -> Self {
+        Self::UserShapes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::VMLDiagramWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::vml_office_drawing::VMLDiagramWith<X>) -> Self {
+        Self::VMLDiagram(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::VMLDiagramTextWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::VMLDiagramTextWith<X>) -> Self {
+        Self::VMLDiagramText(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::VariantWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::VariantWith<X>) -> Self {
+        Self::Variant(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<document_properties_variant_types::VectorWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: document_properties_variant_types::VectorWith<X>) -> Self {
+        Self::Vector(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<VideoFromFileWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: VideoFromFileWith<X>) -> Self {
+        Self::VideoFromFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::VolatileDependencyTypesWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet::VolatileDependencyTypesWith<X>) -> Self {
+        Self::VolatileDependencyTypes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing::WebPageSettingsWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::wordprocessing::WebPageSettingsWith<X>) -> Self {
+        Self::WebPageSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing_drawing::WordprocessingMLDrawingCanvasWith<X>) -> Self {
+        Self::WordprocessingMLDrawingCanvas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing_drawing::WordprocessingMLShapeWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing_drawing::WordprocessingMLShapeWith<X>) -> Self {
+        Self::WordprocessingMLShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::wordprocessing_drawing::WordprocessingMLShapeGroupWith<X>) -> Self {
+        Self::WordprocessingMLShapeGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::WorkbookWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::WorkbookWith<X>) -> Self {
+        Self::Workbook(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::WorksheetWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::WorksheetWith<X>) -> Self {
+        Self::Worksheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet_drawing::WorksheetDrawingWith<X>>
+    for AnyElementContentWith<X>
+{
+    fn from(arm: super::spreadsheet_drawing::WorksheetDrawingWith<X>) -> Self {
+        Self::WorksheetDrawing(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::spreadsheet::XMLMappingMapInfoWith<X>> for AnyElementContentWith<X> {
+    fn from(arm: super::spreadsheet::XMLMappingMapInfoWith<X>) -> Self {
+        Self::XMLMappingMapInfo(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<AnyElementContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<super::vml::ShapeElementContent> for AnyElementContent {
     fn from(item: super::vml::ShapeElementContent) -> Self {
@@ -18660,7 +19890,7 @@ impl From<super::wordprocessing::DrawingObjectContent> for AnyElementContent {
     fn from(item: super::wordprocessing::DrawingObjectContent) -> Self {
         match item {
             super::wordprocessing::DrawingObjectContent::AnchorForFloatingDrawingMLObject(arm) => {
-                Self::AnchorForFloatingDrawingMLObject(*arm)
+                Self::AnchorForFloatingDrawingMLObject(arm)
             }
             super::wordprocessing::DrawingObjectContent::InlineDrawingMLObject(arm) => {
                 Self::InlineDrawingMLObject(arm)
@@ -20464,74 +21694,84 @@ impl<X: UserData> BlipContentWith<X> {
     {
         match self {
             Self::AlphaBiLevelEffect(node) => {
-                BlipContentWith::AlphaBiLevelEffect(node.into_user_data())
+                BlipContentWith::AlphaBiLevelEffect(Box::new((*node).into_user_data()))
             }
             Self::AlphaCeilingEffect(node) => {
-                BlipContentWith::AlphaCeilingEffect(node.into_user_data())
+                BlipContentWith::AlphaCeilingEffect(Box::new((*node).into_user_data()))
             }
             Self::AlphaFloorEffect(node) => {
-                BlipContentWith::AlphaFloorEffect(node.into_user_data())
+                BlipContentWith::AlphaFloorEffect(Box::new((*node).into_user_data()))
             }
             Self::AlphaInverseEffect(node) => {
-                BlipContentWith::AlphaInverseEffect(node.into_user_data())
+                BlipContentWith::AlphaInverseEffect(Box::new((*node).into_user_data()))
             }
             Self::AlphaModulateEffect(node) => {
-                BlipContentWith::AlphaModulateEffect(node.into_user_data())
+                BlipContentWith::AlphaModulateEffect(Box::new((*node).into_user_data()))
             }
             Self::AlphaModulateFixedEffect(node) => {
-                BlipContentWith::AlphaModulateFixedEffect(node.into_user_data())
+                BlipContentWith::AlphaModulateFixedEffect(Box::new((*node).into_user_data()))
             }
             Self::AlphaReplaceEffect(node) => {
-                BlipContentWith::AlphaReplaceEffect(node.into_user_data())
+                BlipContentWith::AlphaReplaceEffect(Box::new((*node).into_user_data()))
             }
-            Self::BiLevel(node) => BlipContentWith::BiLevel(node.into_user_data()),
-            Self::BlurEffect(node) => BlipContentWith::BlurEffect(node.into_user_data()),
+            Self::BiLevel(node) => BlipContentWith::BiLevel(Box::new((*node).into_user_data())),
+            Self::BlurEffect(node) => {
+                BlipContentWith::BlurEffect(Box::new((*node).into_user_data()))
+            }
             Self::ColorChangeEffect(node) => {
-                BlipContentWith::ColorChangeEffect(node.into_user_data())
+                BlipContentWith::ColorChangeEffect(Box::new((*node).into_user_data()))
             }
-            Self::DuotoneEffect(node) => BlipContentWith::DuotoneEffect(node.into_user_data()),
+            Self::DuotoneEffect(node) => {
+                BlipContentWith::DuotoneEffect(Box::new((*node).into_user_data()))
+            }
             Self::FillOverlayEffect(node) => {
-                BlipContentWith::FillOverlayEffect(node.into_user_data())
+                BlipContentWith::FillOverlayEffect(Box::new((*node).into_user_data()))
             }
-            Self::GrayScaleEffect(node) => BlipContentWith::GrayScaleEffect(node.into_user_data()),
+            Self::GrayScaleEffect(node) => {
+                BlipContentWith::GrayScaleEffect(Box::new((*node).into_user_data()))
+            }
             Self::HueSaturationLuminanceEffect(node) => {
-                BlipContentWith::HueSaturationLuminanceEffect(node.into_user_data())
+                BlipContentWith::HueSaturationLuminanceEffect(Box::new((*node).into_user_data()))
             }
-            Self::LuminanceEffect(node) => BlipContentWith::LuminanceEffect(node.into_user_data()),
+            Self::LuminanceEffect(node) => {
+                BlipContentWith::LuminanceEffect(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => BlipContentWith::Other(node),
             Self::SolidColorReplacement(node) => {
-                BlipContentWith::SolidColorReplacement(node.into_user_data())
+                BlipContentWith::SolidColorReplacement(Box::new((*node).into_user_data()))
             }
-            Self::TintEffect(node) => BlipContentWith::TintEffect(node.into_user_data()),
+            Self::TintEffect(node) => {
+                BlipContentWith::TintEffect(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for BlipContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "alphaBiLevel")) => Self::AlphaBiLevelEffect(item.read()),
-            Some((NS_A, "alphaCeiling")) => Self::AlphaCeilingEffect(item.read()),
-            Some((NS_A, "alphaFloor")) => Self::AlphaFloorEffect(item.read()),
-            Some((NS_A, "alphaInv")) => Self::AlphaInverseEffect(item.read()),
-            Some((NS_A, "alphaMod")) => Self::AlphaModulateEffect(item.read()),
-            Some((NS_A, "alphaModFix")) => Self::AlphaModulateFixedEffect(item.read()),
-            Some((NS_A, "alphaRepl")) => Self::AlphaReplaceEffect(item.read()),
-            Some((NS_A, "biLevel")) => Self::BiLevel(item.read()),
-            Some((NS_A, "blur")) => Self::BlurEffect(item.read()),
-            Some((NS_A, "clrChange")) => Self::ColorChangeEffect(item.read()),
-            Some((NS_A, "duotone")) => Self::DuotoneEffect(item.read()),
-            Some((NS_A, "fillOverlay")) => Self::FillOverlayEffect(item.read()),
-            Some((NS_A, "grayscl")) => Self::GrayScaleEffect(item.read()),
-            Some((NS_A, "hsl")) => Self::HueSaturationLuminanceEffect(item.read()),
-            Some((NS_A, "lum")) => Self::LuminanceEffect(item.read()),
-            Some((NS_A, "clrRepl")) => Self::SolidColorReplacement(item.read()),
-            Some((NS_A, "tint")) => Self::TintEffect(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "alphaBiLevel")) => Self::AlphaBiLevelEffect(Box::new(item.read())),
+            Some((NS_A, "alphaCeiling")) => Self::AlphaCeilingEffect(Box::new(item.read())),
+            Some((NS_A, "alphaFloor")) => Self::AlphaFloorEffect(Box::new(item.read())),
+            Some((NS_A, "alphaInv")) => Self::AlphaInverseEffect(Box::new(item.read())),
+            Some((NS_A, "alphaMod")) => Self::AlphaModulateEffect(Box::new(item.read())),
+            Some((NS_A, "alphaModFix")) => Self::AlphaModulateFixedEffect(Box::new(item.read())),
+            Some((NS_A, "alphaRepl")) => Self::AlphaReplaceEffect(Box::new(item.read())),
+            Some((NS_A, "biLevel")) => Self::BiLevel(Box::new(item.read())),
+            Some((NS_A, "blur")) => Self::BlurEffect(Box::new(item.read())),
+            Some((NS_A, "clrChange")) => Self::ColorChangeEffect(Box::new(item.read())),
+            Some((NS_A, "duotone")) => Self::DuotoneEffect(Box::new(item.read())),
+            Some((NS_A, "fillOverlay")) => Self::FillOverlayEffect(Box::new(item.read())),
+            Some((NS_A, "grayscl")) => Self::GrayScaleEffect(Box::new(item.read())),
+            Some((NS_A, "hsl")) => Self::HueSaturationLuminanceEffect(Box::new(item.read())),
+            Some((NS_A, "lum")) => Self::LuminanceEffect(Box::new(item.read())),
+            Some((NS_A, "clrRepl")) => Self::SolidColorReplacement(Box::new(item.read())),
+            Some((NS_A, "tint")) => Self::TintEffect(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -20554,12 +21794,119 @@ impl officekit_markup_base::Write for BlipContent {
             Self::GrayScaleEffect(arm) => arm.write_into(writer),
             Self::HueSaturationLuminanceEffect(arm) => arm.write_into(writer),
             Self::LuminanceEffect(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SolidColorReplacement(arm) => arm.write_into(writer),
             Self::TintEffect(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AlphaBiLevelEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: AlphaBiLevelEffectWith<X>) -> Self {
+        Self::AlphaBiLevelEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaCeilingEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: AlphaCeilingEffectWith<X>) -> Self {
+        Self::AlphaCeilingEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaFloorEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: AlphaFloorEffectWith<X>) -> Self {
+        Self::AlphaFloorEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaInverseEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: AlphaInverseEffectWith<X>) -> Self {
+        Self::AlphaInverseEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaModulateEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: AlphaModulateEffectWith<X>) -> Self {
+        Self::AlphaModulateEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaModulateFixedEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: AlphaModulateFixedEffectWith<X>) -> Self {
+        Self::AlphaModulateFixedEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaReplaceEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: AlphaReplaceEffectWith<X>) -> Self {
+        Self::AlphaReplaceEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BiLevelWith<X>> for BlipContentWith<X> {
+    fn from(arm: BiLevelWith<X>) -> Self {
+        Self::BiLevel(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BlurEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: BlurEffectWith<X>) -> Self {
+        Self::BlurEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ColorChangeEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: ColorChangeEffectWith<X>) -> Self {
+        Self::ColorChangeEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DuotoneEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: DuotoneEffectWith<X>) -> Self {
+        Self::DuotoneEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FillOverlayEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: FillOverlayEffectWith<X>) -> Self {
+        Self::FillOverlayEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GrayScaleEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: GrayScaleEffectWith<X>) -> Self {
+        Self::GrayScaleEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HueSaturationLuminanceEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: HueSaturationLuminanceEffectWith<X>) -> Self {
+        Self::HueSaturationLuminanceEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LuminanceEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: LuminanceEffectWith<X>) -> Self {
+        Self::LuminanceEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SolidColorReplacementWith<X>> for BlipContentWith<X> {
+    fn from(arm: SolidColorReplacementWith<X>) -> Self {
+        Self::SolidColorReplacement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TintEffectWith<X>> for BlipContentWith<X> {
+    fn from(arm: TintEffectWith<X>) -> Self {
+        Self::TintEffect(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BlipContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> BlueWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -21235,10 +22582,10 @@ impl<X: UserData> BuildSubElementsContentWith<X> {
     {
         match self {
             Self::BuildChart(node) => {
-                BuildSubElementsContentWith::BuildChart(node.into_user_data())
+                BuildSubElementsContentWith::BuildChart(Box::new((*node).into_user_data()))
             }
             Self::BuildDiagram(node) => {
-                BuildSubElementsContentWith::BuildDiagram(node.into_user_data())
+                BuildSubElementsContentWith::BuildDiagram(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => BuildSubElementsContentWith::Other(node),
         }
@@ -21247,20 +22594,20 @@ impl<X: UserData> BuildSubElementsContentWith<X> {
 
 impl<X: UserData> Default for BuildSubElementsContentWith<X> {
     fn default() -> Self {
-        Self::BuildChart(BuildChartWith::default())
+        Self::BuildChart(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for BuildSubElementsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "bldChart")) => Self::BuildChart(item.read()),
-            Some((NS_A, "bldDgm")) => Self::BuildDiagram(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "bldChart")) => Self::BuildChart(Box::new(item.read())),
+            Some((NS_A, "bldDgm")) => Self::BuildDiagram(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -21270,10 +22617,27 @@ impl officekit_markup_base::Write for BuildSubElementsContent {
         match self {
             Self::BuildChart(arm) => arm.write_into(writer),
             Self::BuildDiagram(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<BuildChartWith<X>> for BuildSubElementsContentWith<X> {
+    fn from(arm: BuildChartWith<X>) -> Self {
+        Self::BuildChart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BuildDiagramWith<X>> for BuildSubElementsContentWith<X> {
+    fn from(arm: BuildDiagramWith<X>) -> Self {
+        Self::BuildDiagram(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BuildSubElementsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> BulletSizeFollowsTextWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -22168,42 +23532,50 @@ impl<X: UserData> ColorContentWith<X> {
     {
         match self {
             Self::HueSaturationLuminanceColorModel(node) => {
-                ColorContentWith::HueSaturationLuminanceColorModel(node.into_user_data())
+                ColorContentWith::HueSaturationLuminanceColorModel(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => ColorContentWith::Other(node),
-            Self::PresetColor(node) => ColorContentWith::PresetColor(node.into_user_data()),
+            Self::PresetColor(node) => {
+                ColorContentWith::PresetColor(Box::new((*node).into_user_data()))
+            }
             Self::RGBColorModelHexVariant(node) => {
-                ColorContentWith::RGBColorModelHexVariant(node.into_user_data())
+                ColorContentWith::RGBColorModelHexVariant(Box::new((*node).into_user_data()))
             }
             Self::RGBColorModelPercentageVariant(node) => {
-                ColorContentWith::RGBColorModelPercentageVariant(node.into_user_data())
+                ColorContentWith::RGBColorModelPercentageVariant(Box::new((*node).into_user_data()))
             }
-            Self::SchemeColor(node) => ColorContentWith::SchemeColor(node.into_user_data()),
-            Self::SystemColor(node) => ColorContentWith::SystemColor(node.into_user_data()),
+            Self::SchemeColor(node) => {
+                ColorContentWith::SchemeColor(Box::new((*node).into_user_data()))
+            }
+            Self::SystemColor(node) => {
+                ColorContentWith::SystemColor(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for ColorContentWith<X> {
     fn default() -> Self {
-        Self::HueSaturationLuminanceColorModel(HueSaturationLuminanceColorModelWith::default())
+        Self::HueSaturationLuminanceColorModel(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for ColorContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "hslClr")) => Self::HueSaturationLuminanceColorModel(item.read()),
-            Some((NS_A, "prstClr")) => Self::PresetColor(item.read()),
-            Some((NS_A, "srgbClr")) => Self::RGBColorModelHexVariant(item.read()),
-            Some((NS_A, "scrgbClr")) => Self::RGBColorModelPercentageVariant(item.read()),
-            Some((NS_A, "schemeClr")) => Self::SchemeColor(item.read()),
-            Some((NS_A, "sysClr")) => Self::SystemColor(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "hslClr")) => Self::HueSaturationLuminanceColorModel(Box::new(item.read())),
+            Some((NS_A, "prstClr")) => Self::PresetColor(Box::new(item.read())),
+            Some((NS_A, "srgbClr")) => Self::RGBColorModelHexVariant(Box::new(item.read())),
+            Some((NS_A, "scrgbClr")) => Self::RGBColorModelPercentageVariant(Box::new(item.read())),
+            Some((NS_A, "schemeClr")) => Self::SchemeColor(Box::new(item.read())),
+            Some((NS_A, "sysClr")) => Self::SystemColor(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -22212,7 +23584,7 @@ impl officekit_markup_base::Write for ColorContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::HueSaturationLuminanceColorModel(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PresetColor(arm) => arm.write_into(writer),
             Self::RGBColorModelHexVariant(arm) => arm.write_into(writer),
             Self::RGBColorModelPercentageVariant(arm) => arm.write_into(writer),
@@ -22221,6 +23593,47 @@ impl officekit_markup_base::Write for ColorContent {
         }
     }
 }
+
+impl<X: UserData> From<HueSaturationLuminanceColorModelWith<X>> for ColorContentWith<X> {
+    fn from(arm: HueSaturationLuminanceColorModelWith<X>) -> Self {
+        Self::HueSaturationLuminanceColorModel(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PresetColorWith<X>> for ColorContentWith<X> {
+    fn from(arm: PresetColorWith<X>) -> Self {
+        Self::PresetColor(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RGBColorModelHexVariantWith<X>> for ColorContentWith<X> {
+    fn from(arm: RGBColorModelHexVariantWith<X>) -> Self {
+        Self::RGBColorModelHexVariant(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RGBColorModelPercentageVariantWith<X>> for ColorContentWith<X> {
+    fn from(arm: RGBColorModelPercentageVariantWith<X>) -> Self {
+        Self::RGBColorModelPercentageVariant(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SchemeColorWith<X>> for ColorContentWith<X> {
+    fn from(arm: SchemeColorWith<X>) -> Self {
+        Self::SchemeColor(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SystemColorWith<X>> for ColorContentWith<X> {
+    fn from(arm: SystemColorWith<X>) -> Self {
+        Self::SystemColor(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ColorContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ColorMapWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -22407,7 +23820,9 @@ impl<X: UserData> ColorSchemeMapOverrideContentWith<X> {
     {
         match self {
             Self::MasterColorMapping(node) => {
-                ColorSchemeMapOverrideContentWith::MasterColorMapping(node.into_user_data())
+                ColorSchemeMapOverrideContentWith::MasterColorMapping(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => ColorSchemeMapOverrideContentWith::Other(node),
             Self::OverrideColorMapping(node) => {
@@ -22421,20 +23836,20 @@ impl<X: UserData> ColorSchemeMapOverrideContentWith<X> {
 
 impl<X: UserData> Default for ColorSchemeMapOverrideContentWith<X> {
     fn default() -> Self {
-        Self::MasterColorMapping(MasterColorMappingWith::default())
+        Self::MasterColorMapping(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for ColorSchemeMapOverrideContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "masterClrMapping")) => Self::MasterColorMapping(item.read()),
+            Some((NS_A, "masterClrMapping")) => Self::MasterColorMapping(Box::new(item.read())),
             Some((NS_A, "overrideClrMapping")) => Self::OverrideColorMapping(Box::new(item.read())),
-            _ => Self::Other(item.into_node()),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -22443,11 +23858,28 @@ impl officekit_markup_base::Write for ColorSchemeMapOverrideContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::MasterColorMapping(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::OverrideColorMapping(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<MasterColorMappingWith<X>> for ColorSchemeMapOverrideContentWith<X> {
+    fn from(arm: MasterColorMappingWith<X>) -> Self {
+        Self::MasterColorMapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OverrideColorMappingWith<X>> for ColorSchemeMapOverrideContentWith<X> {
+    fn from(arm: OverrideColorMappingWith<X>) -> Self {
+        Self::OverrideColorMapping(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ColorSchemeMapOverrideContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ColorSpecifiedWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -22506,99 +23938,121 @@ impl<X: UserData> ColorTransformContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Alpha(node) => ColorTransformContentWith::Alpha(node.into_user_data()),
+            Self::Alpha(node) => {
+                ColorTransformContentWith::Alpha(Box::new((*node).into_user_data()))
+            }
             Self::AlphaModulation(node) => {
-                ColorTransformContentWith::AlphaModulation(node.into_user_data())
+                ColorTransformContentWith::AlphaModulation(Box::new((*node).into_user_data()))
             }
             Self::AlphaOffset(node) => {
-                ColorTransformContentWith::AlphaOffset(node.into_user_data())
+                ColorTransformContentWith::AlphaOffset(Box::new((*node).into_user_data()))
             }
-            Self::Blue(node) => ColorTransformContentWith::Blue(node.into_user_data()),
+            Self::Blue(node) => ColorTransformContentWith::Blue(Box::new((*node).into_user_data())),
             Self::BlueModulation(node) => {
-                ColorTransformContentWith::BlueModulation(node.into_user_data())
+                ColorTransformContentWith::BlueModulation(Box::new((*node).into_user_data()))
             }
-            Self::BlueOffset(node) => ColorTransformContentWith::BlueOffset(node.into_user_data()),
-            Self::Complement(node) => ColorTransformContentWith::Complement(node.into_user_data()),
-            Self::Gamma(node) => ColorTransformContentWith::Gamma(node.into_user_data()),
-            Self::Gray(node) => ColorTransformContentWith::Gray(node.into_user_data()),
-            Self::Green(node) => ColorTransformContentWith::Green(node.into_user_data()),
+            Self::BlueOffset(node) => {
+                ColorTransformContentWith::BlueOffset(Box::new((*node).into_user_data()))
+            }
+            Self::Complement(node) => {
+                ColorTransformContentWith::Complement(Box::new((*node).into_user_data()))
+            }
+            Self::Gamma(node) => {
+                ColorTransformContentWith::Gamma(Box::new((*node).into_user_data()))
+            }
+            Self::Gray(node) => ColorTransformContentWith::Gray(Box::new((*node).into_user_data())),
+            Self::Green(node) => {
+                ColorTransformContentWith::Green(Box::new((*node).into_user_data()))
+            }
             Self::GreenModulation(node) => {
-                ColorTransformContentWith::GreenModulation(node.into_user_data())
+                ColorTransformContentWith::GreenModulation(Box::new((*node).into_user_data()))
             }
             Self::GreenOffset(node) => {
-                ColorTransformContentWith::GreenOffset(node.into_user_data())
+                ColorTransformContentWith::GreenOffset(Box::new((*node).into_user_data()))
             }
-            Self::Hue(node) => ColorTransformContentWith::Hue(node.into_user_data()),
+            Self::Hue(node) => ColorTransformContentWith::Hue(Box::new((*node).into_user_data())),
             Self::HueModulate(node) => {
-                ColorTransformContentWith::HueModulate(node.into_user_data())
+                ColorTransformContentWith::HueModulate(Box::new((*node).into_user_data()))
             }
-            Self::HueOffset(node) => ColorTransformContentWith::HueOffset(node.into_user_data()),
-            Self::Inverse(node) => ColorTransformContentWith::Inverse(node.into_user_data()),
+            Self::HueOffset(node) => {
+                ColorTransformContentWith::HueOffset(Box::new((*node).into_user_data()))
+            }
+            Self::Inverse(node) => {
+                ColorTransformContentWith::Inverse(Box::new((*node).into_user_data()))
+            }
             Self::InverseGamma(node) => {
-                ColorTransformContentWith::InverseGamma(node.into_user_data())
+                ColorTransformContentWith::InverseGamma(Box::new((*node).into_user_data()))
             }
-            Self::Luminance(node) => ColorTransformContentWith::Luminance(node.into_user_data()),
+            Self::Luminance(node) => {
+                ColorTransformContentWith::Luminance(Box::new((*node).into_user_data()))
+            }
             Self::LuminanceModulation(node) => {
-                ColorTransformContentWith::LuminanceModulation(node.into_user_data())
+                ColorTransformContentWith::LuminanceModulation(Box::new((*node).into_user_data()))
             }
             Self::LuminanceOffset(node) => {
-                ColorTransformContentWith::LuminanceOffset(node.into_user_data())
+                ColorTransformContentWith::LuminanceOffset(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ColorTransformContentWith::Other(node),
-            Self::Red(node) => ColorTransformContentWith::Red(node.into_user_data()),
+            Self::Red(node) => ColorTransformContentWith::Red(Box::new((*node).into_user_data())),
             Self::RedModulation(node) => {
-                ColorTransformContentWith::RedModulation(node.into_user_data())
+                ColorTransformContentWith::RedModulation(Box::new((*node).into_user_data()))
             }
-            Self::RedOffset(node) => ColorTransformContentWith::RedOffset(node.into_user_data()),
-            Self::Saturation(node) => ColorTransformContentWith::Saturation(node.into_user_data()),
+            Self::RedOffset(node) => {
+                ColorTransformContentWith::RedOffset(Box::new((*node).into_user_data()))
+            }
+            Self::Saturation(node) => {
+                ColorTransformContentWith::Saturation(Box::new((*node).into_user_data()))
+            }
             Self::SaturationModulation(node) => {
-                ColorTransformContentWith::SaturationModulation(node.into_user_data())
+                ColorTransformContentWith::SaturationModulation(Box::new((*node).into_user_data()))
             }
             Self::SaturationOffset(node) => {
-                ColorTransformContentWith::SaturationOffset(node.into_user_data())
+                ColorTransformContentWith::SaturationOffset(Box::new((*node).into_user_data()))
             }
-            Self::Shade(node) => ColorTransformContentWith::Shade(node.into_user_data()),
-            Self::Tint(node) => ColorTransformContentWith::Tint(node.into_user_data()),
+            Self::Shade(node) => {
+                ColorTransformContentWith::Shade(Box::new((*node).into_user_data()))
+            }
+            Self::Tint(node) => ColorTransformContentWith::Tint(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for ColorTransformContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "alpha")) => Self::Alpha(item.read()),
-            Some((NS_A, "alphaMod")) => Self::AlphaModulation(item.read()),
-            Some((NS_A, "alphaOff")) => Self::AlphaOffset(item.read()),
-            Some((NS_A, "blue")) => Self::Blue(item.read()),
-            Some((NS_A, "blueMod")) => Self::BlueModulation(item.read()),
-            Some((NS_A, "blueOff")) => Self::BlueOffset(item.read()),
-            Some((NS_A, "comp")) => Self::Complement(item.read()),
-            Some((NS_A, "gamma")) => Self::Gamma(item.read()),
-            Some((NS_A, "gray")) => Self::Gray(item.read()),
-            Some((NS_A, "green")) => Self::Green(item.read()),
-            Some((NS_A, "greenMod")) => Self::GreenModulation(item.read()),
-            Some((NS_A, "greenOff")) => Self::GreenOffset(item.read()),
-            Some((NS_A, "hue")) => Self::Hue(item.read()),
-            Some((NS_A, "hueMod")) => Self::HueModulate(item.read()),
-            Some((NS_A, "hueOff")) => Self::HueOffset(item.read()),
-            Some((NS_A, "inv")) => Self::Inverse(item.read()),
-            Some((NS_A, "invGamma")) => Self::InverseGamma(item.read()),
-            Some((NS_A, "lum")) => Self::Luminance(item.read()),
-            Some((NS_A, "lumMod")) => Self::LuminanceModulation(item.read()),
-            Some((NS_A, "lumOff")) => Self::LuminanceOffset(item.read()),
-            Some((NS_A, "red")) => Self::Red(item.read()),
-            Some((NS_A, "redMod")) => Self::RedModulation(item.read()),
-            Some((NS_A, "redOff")) => Self::RedOffset(item.read()),
-            Some((NS_A, "sat")) => Self::Saturation(item.read()),
-            Some((NS_A, "satMod")) => Self::SaturationModulation(item.read()),
-            Some((NS_A, "satOff")) => Self::SaturationOffset(item.read()),
-            Some((NS_A, "shade")) => Self::Shade(item.read()),
-            Some((NS_A, "tint")) => Self::Tint(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "alpha")) => Self::Alpha(Box::new(item.read())),
+            Some((NS_A, "alphaMod")) => Self::AlphaModulation(Box::new(item.read())),
+            Some((NS_A, "alphaOff")) => Self::AlphaOffset(Box::new(item.read())),
+            Some((NS_A, "blue")) => Self::Blue(Box::new(item.read())),
+            Some((NS_A, "blueMod")) => Self::BlueModulation(Box::new(item.read())),
+            Some((NS_A, "blueOff")) => Self::BlueOffset(Box::new(item.read())),
+            Some((NS_A, "comp")) => Self::Complement(Box::new(item.read())),
+            Some((NS_A, "gamma")) => Self::Gamma(Box::new(item.read())),
+            Some((NS_A, "gray")) => Self::Gray(Box::new(item.read())),
+            Some((NS_A, "green")) => Self::Green(Box::new(item.read())),
+            Some((NS_A, "greenMod")) => Self::GreenModulation(Box::new(item.read())),
+            Some((NS_A, "greenOff")) => Self::GreenOffset(Box::new(item.read())),
+            Some((NS_A, "hue")) => Self::Hue(Box::new(item.read())),
+            Some((NS_A, "hueMod")) => Self::HueModulate(Box::new(item.read())),
+            Some((NS_A, "hueOff")) => Self::HueOffset(Box::new(item.read())),
+            Some((NS_A, "inv")) => Self::Inverse(Box::new(item.read())),
+            Some((NS_A, "invGamma")) => Self::InverseGamma(Box::new(item.read())),
+            Some((NS_A, "lum")) => Self::Luminance(Box::new(item.read())),
+            Some((NS_A, "lumMod")) => Self::LuminanceModulation(Box::new(item.read())),
+            Some((NS_A, "lumOff")) => Self::LuminanceOffset(Box::new(item.read())),
+            Some((NS_A, "red")) => Self::Red(Box::new(item.read())),
+            Some((NS_A, "redMod")) => Self::RedModulation(Box::new(item.read())),
+            Some((NS_A, "redOff")) => Self::RedOffset(Box::new(item.read())),
+            Some((NS_A, "sat")) => Self::Saturation(Box::new(item.read())),
+            Some((NS_A, "satMod")) => Self::SaturationModulation(Box::new(item.read())),
+            Some((NS_A, "satOff")) => Self::SaturationOffset(Box::new(item.read())),
+            Some((NS_A, "shade")) => Self::Shade(Box::new(item.read())),
+            Some((NS_A, "tint")) => Self::Tint(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -22626,7 +24080,7 @@ impl officekit_markup_base::Write for ColorTransformContent {
             Self::Luminance(arm) => arm.write_into(writer),
             Self::LuminanceModulation(arm) => arm.write_into(writer),
             Self::LuminanceOffset(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Red(arm) => arm.write_into(writer),
             Self::RedModulation(arm) => arm.write_into(writer),
             Self::RedOffset(arm) => arm.write_into(writer),
@@ -22638,6 +24092,179 @@ impl officekit_markup_base::Write for ColorTransformContent {
         }
     }
 }
+
+impl<X: UserData> From<AlphaWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: AlphaWith<X>) -> Self {
+        Self::Alpha(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaModulationWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: AlphaModulationWith<X>) -> Self {
+        Self::AlphaModulation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaOffsetWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: AlphaOffsetWith<X>) -> Self {
+        Self::AlphaOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BlueWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: BlueWith<X>) -> Self {
+        Self::Blue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BlueModulationWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: BlueModulationWith<X>) -> Self {
+        Self::BlueModulation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BlueOffsetWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: BlueOffsetWith<X>) -> Self {
+        Self::BlueOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ComplementWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: ComplementWith<X>) -> Self {
+        Self::Complement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GammaWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: GammaWith<X>) -> Self {
+        Self::Gamma(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GrayWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: GrayWith<X>) -> Self {
+        Self::Gray(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GreenWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: GreenWith<X>) -> Self {
+        Self::Green(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GreenModulationWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: GreenModulationWith<X>) -> Self {
+        Self::GreenModulation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GreenOffsetWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: GreenOffsetWith<X>) -> Self {
+        Self::GreenOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HueWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: HueWith<X>) -> Self {
+        Self::Hue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HueModulateWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: HueModulateWith<X>) -> Self {
+        Self::HueModulate(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HueOffsetWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: HueOffsetWith<X>) -> Self {
+        Self::HueOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<InverseWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: InverseWith<X>) -> Self {
+        Self::Inverse(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<InverseGammaWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: InverseGammaWith<X>) -> Self {
+        Self::InverseGamma(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LuminanceWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: LuminanceWith<X>) -> Self {
+        Self::Luminance(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LuminanceModulationWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: LuminanceModulationWith<X>) -> Self {
+        Self::LuminanceModulation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LuminanceOffsetWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: LuminanceOffsetWith<X>) -> Self {
+        Self::LuminanceOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RedWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: RedWith<X>) -> Self {
+        Self::Red(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RedModulationWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: RedModulationWith<X>) -> Self {
+        Self::RedModulation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RedOffsetWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: RedOffsetWith<X>) -> Self {
+        Self::RedOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SaturationWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: SaturationWith<X>) -> Self {
+        Self::Saturation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SaturationModulationWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: SaturationModulationWith<X>) -> Self {
+        Self::SaturationModulation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SaturationOffsetWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: SaturationOffsetWith<X>) -> Self {
+        Self::SaturationOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShadeWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: ShadeWith<X>) -> Self {
+        Self::Shade(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TintWith<X>> for ColorTransformContentWith<X> {
+    fn from(arm: TintWith<X>) -> Self {
+        Self::Tint(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ColorTransformContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ComplementWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -24427,132 +26054,61 @@ impl<X: UserData> EffectContainerContentWith<X> {
     where
         Y: UserData,
     {
-        match self {
-            Self::AlphaBiLevelEffect(node) => {
-                EffectContainerContentWith::AlphaBiLevelEffect(node.into_user_data())
-            }
-            Self::AlphaCeilingEffect(node) => {
-                EffectContainerContentWith::AlphaCeilingEffect(node.into_user_data())
-            }
-            Self::AlphaFloorEffect(node) => {
-                EffectContainerContentWith::AlphaFloorEffect(node.into_user_data())
-            }
-            Self::AlphaInsetOutsetEffect(node) => {
-                EffectContainerContentWith::AlphaInsetOutsetEffect(node.into_user_data())
-            }
-            Self::AlphaInverseEffect(node) => {
-                EffectContainerContentWith::AlphaInverseEffect(node.into_user_data())
-            }
-            Self::AlphaModulateEffect(node) => {
-                EffectContainerContentWith::AlphaModulateEffect(node.into_user_data())
-            }
-            Self::AlphaModulateFixedEffect(node) => {
-                EffectContainerContentWith::AlphaModulateFixedEffect(node.into_user_data())
-            }
-            Self::AlphaReplaceEffect(node) => {
-                EffectContainerContentWith::AlphaReplaceEffect(node.into_user_data())
-            }
-            Self::BiLevel(node) => EffectContainerContentWith::BiLevel(node.into_user_data()),
-            Self::BlendEffect(node) => {
-                EffectContainerContentWith::BlendEffect(node.into_user_data())
-            }
-            Self::BlurEffect(node) => EffectContainerContentWith::BlurEffect(node.into_user_data()),
-            Self::ColorChangeEffect(node) => {
-                EffectContainerContentWith::ColorChangeEffect(node.into_user_data())
-            }
-            Self::DuotoneEffect(node) => {
-                EffectContainerContentWith::DuotoneEffect(node.into_user_data())
-            }
-            Self::EffectContainerCont(node) => {
-                EffectContainerContentWith::EffectContainerCont(node.into_user_data())
-            }
-            Self::EffectEffectReference(node) => {
-                EffectContainerContentWith::EffectEffectReference(node.into_user_data())
-            }
-            Self::FillFillEffect(node) => {
-                EffectContainerContentWith::FillFillEffect(node.into_user_data())
-            }
-            Self::FillOverlayEffect(node) => {
-                EffectContainerContentWith::FillOverlayEffect(node.into_user_data())
-            }
-            Self::GlowEffect(node) => EffectContainerContentWith::GlowEffect(node.into_user_data()),
-            Self::GrayScaleEffect(node) => {
-                EffectContainerContentWith::GrayScaleEffect(node.into_user_data())
-            }
-            Self::HueSaturationLuminanceEffect(node) => {
-                EffectContainerContentWith::HueSaturationLuminanceEffect(node.into_user_data())
-            }
-            Self::InnerShadowEffect(node) => {
-                EffectContainerContentWith::InnerShadowEffect(node.into_user_data())
-            }
-            Self::LuminanceEffect(node) => {
-                EffectContainerContentWith::LuminanceEffect(node.into_user_data())
-            }
-            Self::Other(node) => EffectContainerContentWith::Other(node),
-            Self::OuterShadowEffect(node) => {
-                EffectContainerContentWith::OuterShadowEffect(node.into_user_data())
-            }
-            Self::PresetShadow(node) => {
-                EffectContainerContentWith::PresetShadow(node.into_user_data())
-            }
-            Self::ReflectionEffect(node) => {
-                EffectContainerContentWith::ReflectionEffect(node.into_user_data())
-            }
-            Self::RelativeOffsetEffect(node) => {
-                EffectContainerContentWith::RelativeOffsetEffect(node.into_user_data())
-            }
-            Self::SoftEdgeEffect(node) => {
-                EffectContainerContentWith::SoftEdgeEffect(node.into_user_data())
-            }
-            Self::SolidColorReplacement(node) => {
-                EffectContainerContentWith::SolidColorReplacement(node.into_user_data())
-            }
-            Self::TintEffect(node) => EffectContainerContentWith::TintEffect(node.into_user_data()),
-            Self::TransformEffect(node) => {
-                EffectContainerContentWith::TransformEffect(node.into_user_data())
-            }
-        }
+        officekit_markup_base::into_user_data_match!(self, EffectContainerContentWith;
+            plain [
+            ]
+            boxed [
+                AlphaBiLevelEffect, AlphaCeilingEffect, AlphaFloorEffect, AlphaInsetOutsetEffect,
+                AlphaInverseEffect, AlphaModulateEffect, AlphaModulateFixedEffect,
+                AlphaReplaceEffect, BiLevel, BlendEffect, BlurEffect, ColorChangeEffect,
+                DuotoneEffect, EffectContainerCont, EffectEffectReference, FillFillEffect,
+                FillOverlayEffect, GlowEffect, GrayScaleEffect, HueSaturationLuminanceEffect,
+                InnerShadowEffect, LuminanceEffect, OuterShadowEffect, PresetShadow,
+                ReflectionEffect, RelativeOffsetEffect, SoftEdgeEffect, SolidColorReplacement,
+                TintEffect, TransformEffect,
+            ]
+        )
     }
 }
 
 impl officekit_markup_base::Read for EffectContainerContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "alphaBiLevel")) => Self::AlphaBiLevelEffect(item.read()),
-            Some((NS_A, "alphaCeiling")) => Self::AlphaCeilingEffect(item.read()),
-            Some((NS_A, "alphaFloor")) => Self::AlphaFloorEffect(item.read()),
-            Some((NS_A, "alphaOutset")) => Self::AlphaInsetOutsetEffect(item.read()),
-            Some((NS_A, "alphaInv")) => Self::AlphaInverseEffect(item.read()),
-            Some((NS_A, "alphaMod")) => Self::AlphaModulateEffect(item.read()),
-            Some((NS_A, "alphaModFix")) => Self::AlphaModulateFixedEffect(item.read()),
-            Some((NS_A, "alphaRepl")) => Self::AlphaReplaceEffect(item.read()),
-            Some((NS_A, "biLevel")) => Self::BiLevel(item.read()),
-            Some((NS_A, "blend")) => Self::BlendEffect(item.read()),
-            Some((NS_A, "blur")) => Self::BlurEffect(item.read()),
-            Some((NS_A, "clrChange")) => Self::ColorChangeEffect(item.read()),
-            Some((NS_A, "duotone")) => Self::DuotoneEffect(item.read()),
-            Some((NS_A, "cont")) => Self::EffectContainerCont(item.read()),
-            Some((NS_A, "effect")) => Self::EffectEffectReference(item.read()),
-            Some((NS_A, "fill")) => Self::FillFillEffect(item.read()),
-            Some((NS_A, "fillOverlay")) => Self::FillOverlayEffect(item.read()),
-            Some((NS_A, "glow")) => Self::GlowEffect(item.read()),
-            Some((NS_A, "grayscl")) => Self::GrayScaleEffect(item.read()),
-            Some((NS_A, "hsl")) => Self::HueSaturationLuminanceEffect(item.read()),
-            Some((NS_A, "innerShdw")) => Self::InnerShadowEffect(item.read()),
-            Some((NS_A, "lum")) => Self::LuminanceEffect(item.read()),
-            Some((NS_A, "outerShdw")) => Self::OuterShadowEffect(item.read()),
-            Some((NS_A, "prstShdw")) => Self::PresetShadow(item.read()),
-            Some((NS_A, "reflection")) => Self::ReflectionEffect(item.read()),
-            Some((NS_A, "relOff")) => Self::RelativeOffsetEffect(item.read()),
-            Some((NS_A, "softEdge")) => Self::SoftEdgeEffect(item.read()),
-            Some((NS_A, "clrRepl")) => Self::SolidColorReplacement(item.read()),
-            Some((NS_A, "tint")) => Self::TintEffect(item.read()),
-            Some((NS_A, "xfrm")) => Self::TransformEffect(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "alphaBiLevel")) => Self::AlphaBiLevelEffect(Box::new(item.read())),
+            Some((NS_A, "alphaCeiling")) => Self::AlphaCeilingEffect(Box::new(item.read())),
+            Some((NS_A, "alphaFloor")) => Self::AlphaFloorEffect(Box::new(item.read())),
+            Some((NS_A, "alphaOutset")) => Self::AlphaInsetOutsetEffect(Box::new(item.read())),
+            Some((NS_A, "alphaInv")) => Self::AlphaInverseEffect(Box::new(item.read())),
+            Some((NS_A, "alphaMod")) => Self::AlphaModulateEffect(Box::new(item.read())),
+            Some((NS_A, "alphaModFix")) => Self::AlphaModulateFixedEffect(Box::new(item.read())),
+            Some((NS_A, "alphaRepl")) => Self::AlphaReplaceEffect(Box::new(item.read())),
+            Some((NS_A, "biLevel")) => Self::BiLevel(Box::new(item.read())),
+            Some((NS_A, "blend")) => Self::BlendEffect(Box::new(item.read())),
+            Some((NS_A, "blur")) => Self::BlurEffect(Box::new(item.read())),
+            Some((NS_A, "clrChange")) => Self::ColorChangeEffect(Box::new(item.read())),
+            Some((NS_A, "duotone")) => Self::DuotoneEffect(Box::new(item.read())),
+            Some((NS_A, "cont")) => Self::EffectContainerCont(Box::new(item.read())),
+            Some((NS_A, "effect")) => Self::EffectEffectReference(Box::new(item.read())),
+            Some((NS_A, "fill")) => Self::FillFillEffect(Box::new(item.read())),
+            Some((NS_A, "fillOverlay")) => Self::FillOverlayEffect(Box::new(item.read())),
+            Some((NS_A, "glow")) => Self::GlowEffect(Box::new(item.read())),
+            Some((NS_A, "grayscl")) => Self::GrayScaleEffect(Box::new(item.read())),
+            Some((NS_A, "hsl")) => Self::HueSaturationLuminanceEffect(Box::new(item.read())),
+            Some((NS_A, "innerShdw")) => Self::InnerShadowEffect(Box::new(item.read())),
+            Some((NS_A, "lum")) => Self::LuminanceEffect(Box::new(item.read())),
+            Some((NS_A, "outerShdw")) => Self::OuterShadowEffect(Box::new(item.read())),
+            Some((NS_A, "prstShdw")) => Self::PresetShadow(Box::new(item.read())),
+            Some((NS_A, "reflection")) => Self::ReflectionEffect(Box::new(item.read())),
+            Some((NS_A, "relOff")) => Self::RelativeOffsetEffect(Box::new(item.read())),
+            Some((NS_A, "softEdge")) => Self::SoftEdgeEffect(Box::new(item.read())),
+            Some((NS_A, "clrRepl")) => Self::SolidColorReplacement(Box::new(item.read())),
+            Some((NS_A, "tint")) => Self::TintEffect(Box::new(item.read())),
+            Some((NS_A, "xfrm")) => Self::TransformEffect(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -24582,7 +26138,7 @@ impl officekit_markup_base::Write for EffectContainerContent {
             Self::HueSaturationLuminanceEffect(arm) => arm.write_into(writer),
             Self::InnerShadowEffect(arm) => arm.write_into(writer),
             Self::LuminanceEffect(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::OuterShadowEffect(arm) => arm.write_into(writer),
             Self::PresetShadow(arm) => arm.write_into(writer),
             Self::ReflectionEffect(arm) => arm.write_into(writer),
@@ -24594,6 +26150,191 @@ impl officekit_markup_base::Write for EffectContainerContent {
         }
     }
 }
+
+impl<X: UserData> From<AlphaBiLevelEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaBiLevelEffectWith<X>) -> Self {
+        Self::AlphaBiLevelEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaCeilingEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaCeilingEffectWith<X>) -> Self {
+        Self::AlphaCeilingEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaFloorEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaFloorEffectWith<X>) -> Self {
+        Self::AlphaFloorEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaInsetOutsetEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaInsetOutsetEffectWith<X>) -> Self {
+        Self::AlphaInsetOutsetEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaInverseEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaInverseEffectWith<X>) -> Self {
+        Self::AlphaInverseEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaModulateEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaModulateEffectWith<X>) -> Self {
+        Self::AlphaModulateEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaModulateFixedEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaModulateFixedEffectWith<X>) -> Self {
+        Self::AlphaModulateFixedEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<AlphaReplaceEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: AlphaReplaceEffectWith<X>) -> Self {
+        Self::AlphaReplaceEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BiLevelWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: BiLevelWith<X>) -> Self {
+        Self::BiLevel(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BlendEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: BlendEffectWith<X>) -> Self {
+        Self::BlendEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BlurEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: BlurEffectWith<X>) -> Self {
+        Self::BlurEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ColorChangeEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: ColorChangeEffectWith<X>) -> Self {
+        Self::ColorChangeEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DuotoneEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: DuotoneEffectWith<X>) -> Self {
+        Self::DuotoneEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EffectContainerContWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: EffectContainerContWith<X>) -> Self {
+        Self::EffectContainerCont(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EffectEffectReferenceWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: EffectEffectReferenceWith<X>) -> Self {
+        Self::EffectEffectReference(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FillFillEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: FillFillEffectWith<X>) -> Self {
+        Self::FillFillEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FillOverlayEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: FillOverlayEffectWith<X>) -> Self {
+        Self::FillOverlayEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GlowEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: GlowEffectWith<X>) -> Self {
+        Self::GlowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GrayScaleEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: GrayScaleEffectWith<X>) -> Self {
+        Self::GrayScaleEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HueSaturationLuminanceEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: HueSaturationLuminanceEffectWith<X>) -> Self {
+        Self::HueSaturationLuminanceEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<InnerShadowEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: InnerShadowEffectWith<X>) -> Self {
+        Self::InnerShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LuminanceEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: LuminanceEffectWith<X>) -> Self {
+        Self::LuminanceEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OuterShadowEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: OuterShadowEffectWith<X>) -> Self {
+        Self::OuterShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PresetShadowWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: PresetShadowWith<X>) -> Self {
+        Self::PresetShadow(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ReflectionEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: ReflectionEffectWith<X>) -> Self {
+        Self::ReflectionEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RelativeOffsetEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: RelativeOffsetEffectWith<X>) -> Self {
+        Self::RelativeOffsetEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SoftEdgeEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: SoftEdgeEffectWith<X>) -> Self {
+        Self::SoftEdgeEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SolidColorReplacementWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: SolidColorReplacementWith<X>) -> Self {
+        Self::SolidColorReplacement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TintEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: TintEffectWith<X>) -> Self {
+        Self::TintEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TransformEffectWith<X>> for EffectContainerContentWith<X> {
+    fn from(arm: TransformEffectWith<X>) -> Self {
+        Self::TransformEffect(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<EffectContainerContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<BlipContent> for EffectContainerContent {
     fn from(item: BlipContent) -> Self {
@@ -24933,10 +26674,14 @@ impl<X: UserData> EffectPropertiesContentWith<X> {
     {
         match self {
             Self::EffectContainerEffectDag(node) => {
-                EffectPropertiesContentWith::EffectContainerEffectDag(node.into_user_data())
+                EffectPropertiesContentWith::EffectContainerEffectDag(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::EffectContainerEffectLst(node) => {
-                EffectPropertiesContentWith::EffectContainerEffectLst(node.into_user_data())
+                EffectPropertiesContentWith::EffectContainerEffectLst(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => EffectPropertiesContentWith::Other(node),
         }
@@ -24945,20 +26690,20 @@ impl<X: UserData> EffectPropertiesContentWith<X> {
 
 impl<X: UserData> Default for EffectPropertiesContentWith<X> {
     fn default() -> Self {
-        Self::EffectContainerEffectDag(EffectContainerEffectDagWith::default())
+        Self::EffectContainerEffectDag(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for EffectPropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "effectDag")) => Self::EffectContainerEffectDag(item.read()),
-            Some((NS_A, "effectLst")) => Self::EffectContainerEffectLst(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "effectDag")) => Self::EffectContainerEffectDag(Box::new(item.read())),
+            Some((NS_A, "effectLst")) => Self::EffectContainerEffectLst(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -24968,10 +26713,27 @@ impl officekit_markup_base::Write for EffectPropertiesContent {
         match self {
             Self::EffectContainerEffectDag(arm) => arm.write_into(writer),
             Self::EffectContainerEffectLst(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<EffectContainerEffectDagWith<X>> for EffectPropertiesContentWith<X> {
+    fn from(arm: EffectContainerEffectDagWith<X>) -> Self {
+        Self::EffectContainerEffectDag(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EffectContainerEffectLstWith<X>> for EffectPropertiesContentWith<X> {
+    fn from(arm: EffectContainerEffectLstWith<X>) -> Self {
+        Self::EffectContainerEffectLst(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<EffectPropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> EffectReferenceWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -25757,22 +27519,22 @@ impl<X: UserData> FillModeContentWith<X> {
     {
         match self {
             Self::Other(node) => FillModeContentWith::Other(node),
-            Self::Stretch(node) => FillModeContentWith::Stretch(node.into_user_data()),
-            Self::Tile(node) => FillModeContentWith::Tile(node.into_user_data()),
+            Self::Stretch(node) => FillModeContentWith::Stretch(Box::new((*node).into_user_data())),
+            Self::Tile(node) => FillModeContentWith::Tile(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for FillModeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "stretch")) => Self::Stretch(item.read()),
-            Some((NS_A, "tile")) => Self::Tile(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "stretch")) => Self::Stretch(Box::new(item.read())),
+            Some((NS_A, "tile")) => Self::Tile(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -25780,12 +27542,29 @@ impl officekit_markup_base::Read for FillModeContent {
 impl officekit_markup_base::Write for FillModeContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Stretch(arm) => arm.write_into(writer),
             Self::Tile(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<StretchWith<X>> for FillModeContentWith<X> {
+    fn from(arm: StretchWith<X>) -> Self {
+        Self::Stretch(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TileWith<X>> for FillModeContentWith<X> {
+    fn from(arm: TileWith<X>) -> Self {
+        Self::Tile(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<FillModeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> FillOverlayEffectWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -25849,42 +27628,48 @@ impl<X: UserData> FillPropertiesContentWith<X> {
     {
         match self {
             Self::GradientFill(node) => {
-                FillPropertiesContentWith::GradientFill(node.into_user_data())
+                FillPropertiesContentWith::GradientFill(Box::new((*node).into_user_data()))
             }
-            Self::GroupFill(node) => FillPropertiesContentWith::GroupFill(node.into_user_data()),
-            Self::NoFill(node) => FillPropertiesContentWith::NoFill(node.into_user_data()),
+            Self::GroupFill(node) => {
+                FillPropertiesContentWith::GroupFill(Box::new((*node).into_user_data()))
+            }
+            Self::NoFill(node) => {
+                FillPropertiesContentWith::NoFill(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => FillPropertiesContentWith::Other(node),
             Self::PatternFill(node) => {
-                FillPropertiesContentWith::PatternFill(node.into_user_data())
+                FillPropertiesContentWith::PatternFill(Box::new((*node).into_user_data()))
             }
             Self::PictureFill(node) => {
-                FillPropertiesContentWith::PictureFill(node.into_user_data())
+                FillPropertiesContentWith::PictureFill(Box::new((*node).into_user_data()))
             }
-            Self::SolidFill(node) => FillPropertiesContentWith::SolidFill(node.into_user_data()),
+            Self::SolidFill(node) => {
+                FillPropertiesContentWith::SolidFill(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for FillPropertiesContentWith<X> {
     fn default() -> Self {
-        Self::GradientFill(GradientFillWith::default())
+        Self::GradientFill(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for FillPropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "gradFill")) => Self::GradientFill(item.read()),
-            Some((NS_A, "grpFill")) => Self::GroupFill(item.read()),
-            Some((NS_A, "noFill")) => Self::NoFill(item.read()),
-            Some((NS_A, "pattFill")) => Self::PatternFill(item.read()),
-            Some((NS_A, "blipFill")) => Self::PictureFill(item.read()),
-            Some((NS_A, "solidFill")) => Self::SolidFill(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "gradFill")) => Self::GradientFill(Box::new(item.read())),
+            Some((NS_A, "grpFill")) => Self::GroupFill(Box::new(item.read())),
+            Some((NS_A, "noFill")) => Self::NoFill(Box::new(item.read())),
+            Some((NS_A, "pattFill")) => Self::PatternFill(Box::new(item.read())),
+            Some((NS_A, "blipFill")) => Self::PictureFill(Box::new(item.read())),
+            Some((NS_A, "solidFill")) => Self::SolidFill(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -25895,13 +27680,54 @@ impl officekit_markup_base::Write for FillPropertiesContent {
             Self::GradientFill(arm) => arm.write_into(writer),
             Self::GroupFill(arm) => arm.write_into(writer),
             Self::NoFill(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PatternFill(arm) => arm.write_into(writer),
             Self::PictureFill(arm) => arm.write_into(writer),
             Self::SolidFill(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<GradientFillWith<X>> for FillPropertiesContentWith<X> {
+    fn from(arm: GradientFillWith<X>) -> Self {
+        Self::GradientFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupFillWith<X>> for FillPropertiesContentWith<X> {
+    fn from(arm: GroupFillWith<X>) -> Self {
+        Self::GroupFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoFillWith<X>> for FillPropertiesContentWith<X> {
+    fn from(arm: NoFillWith<X>) -> Self {
+        Self::NoFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PatternFillWith<X>> for FillPropertiesContentWith<X> {
+    fn from(arm: PatternFillWith<X>) -> Self {
+        Self::PatternFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PictureFillWith<X>> for FillPropertiesContentWith<X> {
+    fn from(arm: PictureFillWith<X>) -> Self {
+        Self::PictureFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SolidFillWith<X>> for FillPropertiesContentWith<X> {
+    fn from(arm: SolidFillWith<X>) -> Self {
+        Self::SolidFill(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<FillPropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<LineFillContent> for FillPropertiesContent {
     fn from(item: LineFillContent) -> Self {
@@ -26950,11 +28776,11 @@ impl<X: UserData> GeometryContentWith<X> {
     {
         match self {
             Self::CustomGeometry(node) => {
-                GeometryContentWith::CustomGeometry(node.into_user_data())
+                GeometryContentWith::CustomGeometry(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => GeometryContentWith::Other(node),
             Self::PresetGeometry(node) => {
-                GeometryContentWith::PresetGeometry(node.into_user_data())
+                GeometryContentWith::PresetGeometry(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -26962,14 +28788,14 @@ impl<X: UserData> GeometryContentWith<X> {
 
 impl officekit_markup_base::Read for GeometryContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "custGeom")) => Self::CustomGeometry(item.read()),
-            Some((NS_A, "prstGeom")) => Self::PresetGeometry(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "custGeom")) => Self::CustomGeometry(Box::new(item.read())),
+            Some((NS_A, "prstGeom")) => Self::PresetGeometry(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -26978,11 +28804,28 @@ impl officekit_markup_base::Write for GeometryContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::CustomGeometry(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PresetGeometry(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<CustomGeometryWith<X>> for GeometryContentWith<X> {
+    fn from(arm: CustomGeometryWith<X>) -> Self {
+        Self::CustomGeometry(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PresetGeometryWith<X>> for GeometryContentWith<X> {
+    fn from(arm: PresetGeometryWith<X>) -> Self {
+        Self::PresetGeometry(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GeometryContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GlowEffectWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -27109,11 +28952,11 @@ impl<X: UserData> GradientFillContentWith<X> {
     {
         match self {
             Self::LinearGradientFill(node) => {
-                GradientFillContentWith::LinearGradientFill(node.into_user_data())
+                GradientFillContentWith::LinearGradientFill(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => GradientFillContentWith::Other(node),
             Self::PathGradient(node) => {
-                GradientFillContentWith::PathGradient(node.into_user_data())
+                GradientFillContentWith::PathGradient(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -27121,14 +28964,14 @@ impl<X: UserData> GradientFillContentWith<X> {
 
 impl officekit_markup_base::Read for GradientFillContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "lin")) => Self::LinearGradientFill(item.read()),
-            Some((NS_A, "path")) => Self::PathGradient(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "lin")) => Self::LinearGradientFill(Box::new(item.read())),
+            Some((NS_A, "path")) => Self::PathGradient(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -27137,11 +28980,28 @@ impl officekit_markup_base::Write for GradientFillContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::LinearGradientFill(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PathGradient(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<LinearGradientFillWith<X>> for GradientFillContentWith<X> {
+    fn from(arm: LinearGradientFillWith<X>) -> Self {
+        Self::LinearGradientFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PathGradientWith<X>> for GradientFillContentWith<X> {
+    fn from(arm: PathGradientWith<X>) -> Self {
+        Self::PathGradient(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GradientFillContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GradientStopListWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -27254,10 +29114,10 @@ impl<X: UserData> GraphicElementContentWith<X> {
     {
         match self {
             Self::ChartToAnimate(node) => {
-                GraphicElementContentWith::ChartToAnimate(node.into_user_data())
+                GraphicElementContentWith::ChartToAnimate(Box::new((*node).into_user_data()))
             }
             Self::DiagramToAnimate(node) => {
-                GraphicElementContentWith::DiagramToAnimate(node.into_user_data())
+                GraphicElementContentWith::DiagramToAnimate(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => GraphicElementContentWith::Other(node),
         }
@@ -27266,20 +29126,20 @@ impl<X: UserData> GraphicElementContentWith<X> {
 
 impl<X: UserData> Default for GraphicElementContentWith<X> {
     fn default() -> Self {
-        Self::ChartToAnimate(ChartToAnimateWith::default())
+        Self::ChartToAnimate(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for GraphicElementContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "chart")) => Self::ChartToAnimate(item.read()),
-            Some((NS_A, "dgm")) => Self::DiagramToAnimate(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "chart")) => Self::ChartToAnimate(Box::new(item.read())),
+            Some((NS_A, "dgm")) => Self::DiagramToAnimate(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -27289,10 +29149,27 @@ impl officekit_markup_base::Write for GraphicElementContent {
         match self {
             Self::ChartToAnimate(arm) => arm.write_into(writer),
             Self::DiagramToAnimate(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<ChartToAnimateWith<X>> for GraphicElementContentWith<X> {
+    fn from(arm: ChartToAnimateWith<X>) -> Self {
+        Self::ChartToAnimate(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DiagramToAnimateWith<X>> for GraphicElementContentWith<X> {
+    fn from(arm: DiagramToAnimateWith<X>) -> Self {
+        Self::DiagramToAnimate(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GraphicElementContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GraphicFrameWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -27872,34 +29749,44 @@ impl<X: UserData> GroupShapeContentWith<X> {
     {
         match self {
             Self::ConnectionShape(node) => {
-                GroupShapeContentWith::ConnectionShape(node.into_user_data())
+                GroupShapeContentWith::ConnectionShape(Box::new((*node).into_user_data()))
             }
-            Self::ContentPart(node) => GroupShapeContentWith::ContentPart(node.into_user_data()),
-            Self::GraphicFrame(node) => GroupShapeContentWith::GraphicFrame(node.into_user_data()),
-            Self::GroupShape(node) => GroupShapeContentWith::GroupShape(node.into_user_data()),
+            Self::ContentPart(node) => {
+                GroupShapeContentWith::ContentPart(Box::new((*node).into_user_data()))
+            }
+            Self::GraphicFrame(node) => {
+                GroupShapeContentWith::GraphicFrame(Box::new((*node).into_user_data()))
+            }
+            Self::GroupShape(node) => {
+                GroupShapeContentWith::GroupShape(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => GroupShapeContentWith::Other(node),
-            Self::Picture(node) => GroupShapeContentWith::Picture(node.into_user_data()),
-            Self::Shape(node) => GroupShapeContentWith::Shape(node.into_user_data()),
-            Self::TextShape(node) => GroupShapeContentWith::TextShape(node.into_user_data()),
+            Self::Picture(node) => {
+                GroupShapeContentWith::Picture(Box::new((*node).into_user_data()))
+            }
+            Self::Shape(node) => GroupShapeContentWith::Shape(Box::new((*node).into_user_data())),
+            Self::TextShape(node) => {
+                GroupShapeContentWith::TextShape(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for GroupShapeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "cxnSp")) => Self::ConnectionShape(item.read()),
-            Some((NS_A14, "contentPart")) => Self::ContentPart(item.read()),
-            Some((NS_A, "graphicFrame")) => Self::GraphicFrame(item.read()),
-            Some((NS_A, "grpSp")) => Self::GroupShape(item.read()),
-            Some((NS_A, "pic")) => Self::Picture(item.read()),
-            Some((NS_A, "sp")) => Self::Shape(item.read()),
-            Some((NS_A, "txSp")) => Self::TextShape(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "cxnSp")) => Self::ConnectionShape(Box::new(item.read())),
+            Some((NS_A14, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_A, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
+            Some((NS_A, "grpSp")) => Self::GroupShape(Box::new(item.read())),
+            Some((NS_A, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_A, "sp")) => Self::Shape(Box::new(item.read())),
+            Some((NS_A, "txSp")) => Self::TextShape(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -27911,13 +29798,62 @@ impl officekit_markup_base::Write for GroupShapeContent {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicFrame(arm) => arm.write_into(writer),
             Self::GroupShape(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Shape(arm) => arm.write_into(writer),
             Self::TextShape(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ConnectionShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ConnectionShapeWith<X>) -> Self {
+        Self::ConnectionShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_drawing_2010_main::ContentPartWith<X>>
+    for GroupShapeContentWith<X>
+{
+    fn from(arm: super::office_drawing_2010_main::ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GraphicFrameWith<X>) -> Self {
+        Self::GraphicFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GroupShapeWith<X>) -> Self {
+        Self::GroupShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PictureWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ShapeWith<X>) -> Self {
+        Self::Shape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: TextShapeWith<X>) -> Self {
+        Self::TextShape(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupShapeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GroupShapeLocksWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -29438,23 +31374,27 @@ impl<X: UserData> LineDashContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::CustomDash(node) => LineDashContentWith::CustomDash(node.into_user_data()),
+            Self::CustomDash(node) => {
+                LineDashContentWith::CustomDash(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => LineDashContentWith::Other(node),
-            Self::PresetDash(node) => LineDashContentWith::PresetDash(node.into_user_data()),
+            Self::PresetDash(node) => {
+                LineDashContentWith::PresetDash(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for LineDashContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "custDash")) => Self::CustomDash(item.read()),
-            Some((NS_A, "prstDash")) => Self::PresetDash(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "custDash")) => Self::CustomDash(Box::new(item.read())),
+            Some((NS_A, "prstDash")) => Self::PresetDash(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -29463,11 +31403,28 @@ impl officekit_markup_base::Write for LineDashContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::CustomDash(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PresetDash(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<CustomDashWith<X>> for LineDashContentWith<X> {
+    fn from(arm: CustomDashWith<X>) -> Self {
+        Self::CustomDash(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PresetDashWith<X>> for LineDashContentWith<X> {
+    fn from(arm: PresetDashWith<X>) -> Self {
+        Self::PresetDash(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<LineDashContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> LineDefaultWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -29695,27 +31652,33 @@ impl<X: UserData> LineFillContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::GradientFill(node) => LineFillContentWith::GradientFill(node.into_user_data()),
-            Self::NoFill(node) => LineFillContentWith::NoFill(node.into_user_data()),
+            Self::GradientFill(node) => {
+                LineFillContentWith::GradientFill(Box::new((*node).into_user_data()))
+            }
+            Self::NoFill(node) => LineFillContentWith::NoFill(Box::new((*node).into_user_data())),
             Self::Other(node) => LineFillContentWith::Other(node),
-            Self::PatternFill(node) => LineFillContentWith::PatternFill(node.into_user_data()),
-            Self::SolidFill(node) => LineFillContentWith::SolidFill(node.into_user_data()),
+            Self::PatternFill(node) => {
+                LineFillContentWith::PatternFill(Box::new((*node).into_user_data()))
+            }
+            Self::SolidFill(node) => {
+                LineFillContentWith::SolidFill(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for LineFillContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "gradFill")) => Self::GradientFill(item.read()),
-            Some((NS_A, "noFill")) => Self::NoFill(item.read()),
-            Some((NS_A, "pattFill")) => Self::PatternFill(item.read()),
-            Some((NS_A, "solidFill")) => Self::SolidFill(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "gradFill")) => Self::GradientFill(Box::new(item.read())),
+            Some((NS_A, "noFill")) => Self::NoFill(Box::new(item.read())),
+            Some((NS_A, "pattFill")) => Self::PatternFill(Box::new(item.read())),
+            Some((NS_A, "solidFill")) => Self::SolidFill(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -29725,12 +31688,41 @@ impl officekit_markup_base::Write for LineFillContent {
         match self {
             Self::GradientFill(arm) => arm.write_into(writer),
             Self::NoFill(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PatternFill(arm) => arm.write_into(writer),
             Self::SolidFill(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<GradientFillWith<X>> for LineFillContentWith<X> {
+    fn from(arm: GradientFillWith<X>) -> Self {
+        Self::GradientFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoFillWith<X>> for LineFillContentWith<X> {
+    fn from(arm: NoFillWith<X>) -> Self {
+        Self::NoFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PatternFillWith<X>> for LineFillContentWith<X> {
+    fn from(arm: PatternFillWith<X>) -> Self {
+        Self::PatternFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SolidFillWith<X>> for LineFillContentWith<X> {
+    fn from(arm: SolidFillWith<X>) -> Self {
+        Self::SolidFill(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<LineFillContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> LineHeadEndStyleWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -29838,25 +31830,31 @@ impl<X: UserData> LineJoinContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::LineJoinBevel(node) => LineJoinContentWith::LineJoinBevel(node.into_user_data()),
-            Self::MiterLineJoin(node) => LineJoinContentWith::MiterLineJoin(node.into_user_data()),
+            Self::LineJoinBevel(node) => {
+                LineJoinContentWith::LineJoinBevel(Box::new((*node).into_user_data()))
+            }
+            Self::MiterLineJoin(node) => {
+                LineJoinContentWith::MiterLineJoin(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => LineJoinContentWith::Other(node),
-            Self::RoundLineJoin(node) => LineJoinContentWith::RoundLineJoin(node.into_user_data()),
+            Self::RoundLineJoin(node) => {
+                LineJoinContentWith::RoundLineJoin(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for LineJoinContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "bevel")) => Self::LineJoinBevel(item.read()),
-            Some((NS_A, "miter")) => Self::MiterLineJoin(item.read()),
-            Some((NS_A, "round")) => Self::RoundLineJoin(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "bevel")) => Self::LineJoinBevel(Box::new(item.read())),
+            Some((NS_A, "miter")) => Self::MiterLineJoin(Box::new(item.read())),
+            Some((NS_A, "round")) => Self::RoundLineJoin(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -29866,11 +31864,34 @@ impl officekit_markup_base::Write for LineJoinContent {
         match self {
             Self::LineJoinBevel(arm) => arm.write_into(writer),
             Self::MiterLineJoin(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RoundLineJoin(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<LineJoinBevelWith<X>> for LineJoinContentWith<X> {
+    fn from(arm: LineJoinBevelWith<X>) -> Self {
+        Self::LineJoinBevel(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MiterLineJoinWith<X>> for LineJoinContentWith<X> {
+    fn from(arm: MiterLineJoinWith<X>) -> Self {
+        Self::MiterLineJoin(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RoundLineJoinWith<X>> for LineJoinContentWith<X> {
+    fn from(arm: RoundLineJoinWith<X>) -> Self {
+        Self::RoundLineJoin(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<LineJoinContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> LineReferenceWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -36718,10 +38739,10 @@ impl<X: UserData> ShapeAdjustHandlesContentWith<X> {
         match self {
             Self::Other(node) => ShapeAdjustHandlesContentWith::Other(node),
             Self::PolarAdjustHandle(node) => {
-                ShapeAdjustHandlesContentWith::PolarAdjustHandle(node.into_user_data())
+                ShapeAdjustHandlesContentWith::PolarAdjustHandle(Box::new((*node).into_user_data()))
             }
             Self::XYAdjustHandle(node) => {
-                ShapeAdjustHandlesContentWith::XYAdjustHandle(node.into_user_data())
+                ShapeAdjustHandlesContentWith::XYAdjustHandle(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -36729,14 +38750,14 @@ impl<X: UserData> ShapeAdjustHandlesContentWith<X> {
 
 impl officekit_markup_base::Read for ShapeAdjustHandlesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "ahPolar")) => Self::PolarAdjustHandle(item.read()),
-            Some((NS_A, "ahXY")) => Self::XYAdjustHandle(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "ahPolar")) => Self::PolarAdjustHandle(Box::new(item.read())),
+            Some((NS_A, "ahXY")) => Self::XYAdjustHandle(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -36744,12 +38765,29 @@ impl officekit_markup_base::Read for ShapeAdjustHandlesContent {
 impl officekit_markup_base::Write for ShapeAdjustHandlesContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PolarAdjustHandle(arm) => arm.write_into(writer),
             Self::XYAdjustHandle(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<PolarAdjustHandleWith<X>> for ShapeAdjustHandlesContentWith<X> {
+    fn from(arm: PolarAdjustHandleWith<X>) -> Self {
+        Self::PolarAdjustHandle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XYAdjustHandleWith<X>> for ShapeAdjustHandlesContentWith<X> {
+    fn from(arm: XYAdjustHandleWith<X>) -> Self {
+        Self::XYAdjustHandle(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeAdjustHandlesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShapeAutoFitWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -37108,17 +39146,23 @@ impl<X: UserData> ShapePathContentWith<X> {
     {
         match self {
             Self::CloseShapePath(node) => {
-                ShapePathContentWith::CloseShapePath(node.into_user_data())
+                ShapePathContentWith::CloseShapePath(Box::new((*node).into_user_data()))
             }
-            Self::DrawArcTo(node) => ShapePathContentWith::DrawArcTo(node.into_user_data()),
+            Self::DrawArcTo(node) => {
+                ShapePathContentWith::DrawArcTo(Box::new((*node).into_user_data()))
+            }
             Self::DrawCubicBezierCurveTo(node) => {
-                ShapePathContentWith::DrawCubicBezierCurveTo(node.into_user_data())
+                ShapePathContentWith::DrawCubicBezierCurveTo(Box::new((*node).into_user_data()))
             }
-            Self::DrawLineTo(node) => ShapePathContentWith::DrawLineTo(node.into_user_data()),
+            Self::DrawLineTo(node) => {
+                ShapePathContentWith::DrawLineTo(Box::new((*node).into_user_data()))
+            }
             Self::DrawQuadraticBezierCurveTo(node) => {
-                ShapePathContentWith::DrawQuadraticBezierCurveTo(node.into_user_data())
+                ShapePathContentWith::DrawQuadraticBezierCurveTo(Box::new((*node).into_user_data()))
             }
-            Self::MovePathTo(node) => ShapePathContentWith::MovePathTo(node.into_user_data()),
+            Self::MovePathTo(node) => {
+                ShapePathContentWith::MovePathTo(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => ShapePathContentWith::Other(node),
         }
     }
@@ -37126,18 +39170,18 @@ impl<X: UserData> ShapePathContentWith<X> {
 
 impl officekit_markup_base::Read for ShapePathContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "close")) => Self::CloseShapePath(item.read()),
-            Some((NS_A, "arcTo")) => Self::DrawArcTo(item.read()),
-            Some((NS_A, "cubicBezTo")) => Self::DrawCubicBezierCurveTo(item.read()),
-            Some((NS_A, "lnTo")) => Self::DrawLineTo(item.read()),
-            Some((NS_A, "quadBezTo")) => Self::DrawQuadraticBezierCurveTo(item.read()),
-            Some((NS_A, "moveTo")) => Self::MovePathTo(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "close")) => Self::CloseShapePath(Box::new(item.read())),
+            Some((NS_A, "arcTo")) => Self::DrawArcTo(Box::new(item.read())),
+            Some((NS_A, "cubicBezTo")) => Self::DrawCubicBezierCurveTo(Box::new(item.read())),
+            Some((NS_A, "lnTo")) => Self::DrawLineTo(Box::new(item.read())),
+            Some((NS_A, "quadBezTo")) => Self::DrawQuadraticBezierCurveTo(Box::new(item.read())),
+            Some((NS_A, "moveTo")) => Self::MovePathTo(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -37151,10 +39195,51 @@ impl officekit_markup_base::Write for ShapePathContent {
             Self::DrawLineTo(arm) => arm.write_into(writer),
             Self::DrawQuadraticBezierCurveTo(arm) => arm.write_into(writer),
             Self::MovePathTo(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<CloseShapePathWith<X>> for ShapePathContentWith<X> {
+    fn from(arm: CloseShapePathWith<X>) -> Self {
+        Self::CloseShapePath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DrawArcToWith<X>> for ShapePathContentWith<X> {
+    fn from(arm: DrawArcToWith<X>) -> Self {
+        Self::DrawArcTo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DrawCubicBezierCurveToWith<X>> for ShapePathContentWith<X> {
+    fn from(arm: DrawCubicBezierCurveToWith<X>) -> Self {
+        Self::DrawCubicBezierCurveTo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DrawLineToWith<X>> for ShapePathContentWith<X> {
+    fn from(arm: DrawLineToWith<X>) -> Self {
+        Self::DrawLineTo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DrawQuadraticBezierCurveToWith<X>> for ShapePathContentWith<X> {
+    fn from(arm: DrawQuadraticBezierCurveToWith<X>) -> Self {
+        Self::DrawQuadraticBezierCurveTo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MovePathToWith<X>> for ShapePathContentWith<X> {
+    fn from(arm: MovePathToWith<X>) -> Self {
+        Self::MovePathTo(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapePathContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShapePathPointWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -38918,10 +41003,12 @@ impl<X: UserData> TableBackgroundEffectContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Effect(node) => TableBackgroundEffectContentWith::Effect(node.into_user_data()),
-            Self::EffectReference(node) => {
-                TableBackgroundEffectContentWith::EffectReference(node.into_user_data())
+            Self::Effect(node) => {
+                TableBackgroundEffectContentWith::Effect(Box::new((*node).into_user_data()))
             }
+            Self::EffectReference(node) => TableBackgroundEffectContentWith::EffectReference(
+                Box::new((*node).into_user_data()),
+            ),
             Self::Other(node) => TableBackgroundEffectContentWith::Other(node),
         }
     }
@@ -38929,14 +41016,14 @@ impl<X: UserData> TableBackgroundEffectContentWith<X> {
 
 impl officekit_markup_base::Read for TableBackgroundEffectContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "effect")) => Self::Effect(item.read()),
-            Some((NS_A, "effectRef")) => Self::EffectReference(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "effect")) => Self::Effect(Box::new(item.read())),
+            Some((NS_A, "effectRef")) => Self::EffectReference(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -38946,10 +41033,27 @@ impl officekit_markup_base::Write for TableBackgroundEffectContent {
         match self {
             Self::Effect(arm) => arm.write_into(writer),
             Self::EffectReference(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<EffectWith<X>> for TableBackgroundEffectContentWith<X> {
+    fn from(arm: EffectWith<X>) -> Self {
+        Self::Effect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EffectReferenceWith<X>> for TableBackgroundEffectContentWith<X> {
+    fn from(arm: EffectReferenceWith<X>) -> Self {
+        Self::EffectReference(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TableBackgroundEffectContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TableCellWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -39335,10 +41439,12 @@ impl<X: UserData> TableCellTextStyleFontContentWith<X> {
     {
         match self {
             Self::FontFontCollection(node) => {
-                TableCellTextStyleFontContentWith::FontFontCollection(node.into_user_data())
+                TableCellTextStyleFontContentWith::FontFontCollection(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::FontReference(node) => {
-                TableCellTextStyleFontContentWith::FontReference(node.into_user_data())
+                TableCellTextStyleFontContentWith::FontReference(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TableCellTextStyleFontContentWith::Other(node),
         }
@@ -39347,14 +41453,14 @@ impl<X: UserData> TableCellTextStyleFontContentWith<X> {
 
 impl officekit_markup_base::Read for TableCellTextStyleFontContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "font")) => Self::FontFontCollection(item.read()),
-            Some((NS_A, "fontRef")) => Self::FontReference(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "font")) => Self::FontFontCollection(Box::new(item.read())),
+            Some((NS_A, "fontRef")) => Self::FontReference(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -39364,10 +41470,27 @@ impl officekit_markup_base::Write for TableCellTextStyleFontContent {
         match self {
             Self::FontFontCollection(arm) => arm.write_into(writer),
             Self::FontReference(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<FontFontCollectionWith<X>> for TableCellTextStyleFontContentWith<X> {
+    fn from(arm: FontFontCollectionWith<X>) -> Self {
+        Self::FontFontCollection(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FontReferenceWith<X>> for TableCellTextStyleFontContentWith<X> {
+    fn from(arm: FontReferenceWith<X>) -> Self {
+        Self::FontReference(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TableCellTextStyleFontContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TableGridWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -39558,10 +41681,10 @@ impl<X: UserData> TablePropertiesStyleContentWith<X> {
         match self {
             Self::Other(node) => TablePropertiesStyleContentWith::Other(node),
             Self::TableStyle(node) => {
-                TablePropertiesStyleContentWith::TableStyle(node.into_user_data())
+                TablePropertiesStyleContentWith::TableStyle(Box::new((*node).into_user_data()))
             }
             Self::TableStyleID(node) => {
-                TablePropertiesStyleContentWith::TableStyleID(node.into_user_data())
+                TablePropertiesStyleContentWith::TableStyleID(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -39569,14 +41692,14 @@ impl<X: UserData> TablePropertiesStyleContentWith<X> {
 
 impl officekit_markup_base::Read for TablePropertiesStyleContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "tableStyle")) => Self::TableStyle(item.read()),
-            Some((NS_A, "tableStyleId")) => Self::TableStyleID(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "tableStyle")) => Self::TableStyle(Box::new(item.read())),
+            Some((NS_A, "tableStyleId")) => Self::TableStyleID(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -39584,12 +41707,29 @@ impl officekit_markup_base::Read for TablePropertiesStyleContent {
 impl officekit_markup_base::Write for TablePropertiesStyleContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TableStyle(arm) => arm.write_into(writer),
             Self::TableStyleID(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<TableStyleWith<X>> for TablePropertiesStyleContentWith<X> {
+    fn from(arm: TableStyleWith<X>) -> Self {
+        Self::TableStyle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TableStyleIDWith<X>> for TablePropertiesStyleContentWith<X> {
+    fn from(arm: TableStyleIDWith<X>) -> Self {
+        Self::TableStyleID(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TablePropertiesStyleContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TableRowWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -40034,10 +42174,10 @@ impl<X: UserData> Text3DContentWith<X> {
     {
         match self {
             Self::Apply3DShapeProperties(node) => {
-                Text3DContentWith::Apply3DShapeProperties(node.into_user_data())
+                Text3DContentWith::Apply3DShapeProperties(Box::new((*node).into_user_data()))
             }
             Self::NoTextIn3DScene(node) => {
-                Text3DContentWith::NoTextIn3DScene(node.into_user_data())
+                Text3DContentWith::NoTextIn3DScene(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => Text3DContentWith::Other(node),
         }
@@ -40046,14 +42186,14 @@ impl<X: UserData> Text3DContentWith<X> {
 
 impl officekit_markup_base::Read for Text3DContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "sp3d")) => Self::Apply3DShapeProperties(item.read()),
-            Some((NS_A, "flatTx")) => Self::NoTextIn3DScene(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "sp3d")) => Self::Apply3DShapeProperties(Box::new(item.read())),
+            Some((NS_A, "flatTx")) => Self::NoTextIn3DScene(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -40063,10 +42203,27 @@ impl officekit_markup_base::Write for Text3DContent {
         match self {
             Self::Apply3DShapeProperties(arm) => arm.write_into(writer),
             Self::NoTextIn3DScene(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<Apply3DShapePropertiesWith<X>> for Text3DContentWith<X> {
+    fn from(arm: Apply3DShapePropertiesWith<X>) -> Self {
+        Self::Apply3DShapeProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoTextIn3DSceneWith<X>> for Text3DContentWith<X> {
+    fn from(arm: NoTextIn3DSceneWith<X>) -> Self {
+        Self::NoTextIn3DScene(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<Text3DContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TextAlignmentTypes {
     fn as_ref(&self) -> &str {
@@ -40282,27 +42439,31 @@ impl<X: UserData> TextAutofitContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::NoAutoFit(node) => TextAutofitContentWith::NoAutoFit(node.into_user_data()),
+            Self::NoAutoFit(node) => {
+                TextAutofitContentWith::NoAutoFit(Box::new((*node).into_user_data()))
+            }
             Self::NormalAutoFit(node) => {
-                TextAutofitContentWith::NormalAutoFit(node.into_user_data())
+                TextAutofitContentWith::NormalAutoFit(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TextAutofitContentWith::Other(node),
-            Self::ShapeAutoFit(node) => TextAutofitContentWith::ShapeAutoFit(node.into_user_data()),
+            Self::ShapeAutoFit(node) => {
+                TextAutofitContentWith::ShapeAutoFit(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for TextAutofitContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "noAutofit")) => Self::NoAutoFit(item.read()),
-            Some((NS_A, "normAutofit")) => Self::NormalAutoFit(item.read()),
-            Some((NS_A, "spAutoFit")) => Self::ShapeAutoFit(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "noAutofit")) => Self::NoAutoFit(Box::new(item.read())),
+            Some((NS_A, "normAutofit")) => Self::NormalAutoFit(Box::new(item.read())),
+            Some((NS_A, "spAutoFit")) => Self::ShapeAutoFit(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -40312,11 +42473,34 @@ impl officekit_markup_base::Write for TextAutofitContent {
         match self {
             Self::NoAutoFit(arm) => arm.write_into(writer),
             Self::NormalAutoFit(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::ShapeAutoFit(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<NoAutoFitWith<X>> for TextAutofitContentWith<X> {
+    fn from(arm: NoAutoFitWith<X>) -> Self {
+        Self::NoAutoFit(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NormalAutoFitWith<X>> for TextAutofitContentWith<X> {
+    fn from(arm: NormalAutoFitWith<X>) -> Self {
+        Self::NormalAutoFit(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeAutoFitWith<X>> for TextAutofitContentWith<X> {
+    fn from(arm: ShapeAutoFitWith<X>) -> Self {
+        Self::ShapeAutoFit(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextAutofitContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TextBulletColorContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -40327,10 +42511,10 @@ impl<X: UserData> TextBulletColorContentWith<X> {
     {
         match self {
             Self::ColorSpecified(node) => {
-                TextBulletColorContentWith::ColorSpecified(node.into_user_data())
+                TextBulletColorContentWith::ColorSpecified(Box::new((*node).into_user_data()))
             }
             Self::FollowTextBuClrTx(node) => {
-                TextBulletColorContentWith::FollowTextBuClrTx(node.into_user_data())
+                TextBulletColorContentWith::FollowTextBuClrTx(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TextBulletColorContentWith::Other(node),
         }
@@ -40339,14 +42523,14 @@ impl<X: UserData> TextBulletColorContentWith<X> {
 
 impl officekit_markup_base::Read for TextBulletColorContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "buClr")) => Self::ColorSpecified(item.read()),
-            Some((NS_A, "buClrTx")) => Self::FollowTextBuClrTx(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "buClr")) => Self::ColorSpecified(Box::new(item.read())),
+            Some((NS_A, "buClrTx")) => Self::FollowTextBuClrTx(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -40356,10 +42540,27 @@ impl officekit_markup_base::Write for TextBulletColorContent {
         match self {
             Self::ColorSpecified(arm) => arm.write_into(writer),
             Self::FollowTextBuClrTx(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<ColorSpecifiedWith<X>> for TextBulletColorContentWith<X> {
+    fn from(arm: ColorSpecifiedWith<X>) -> Self {
+        Self::ColorSpecified(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FollowTextBuClrTxWith<X>> for TextBulletColorContentWith<X> {
+    fn from(arm: FollowTextBuClrTxWith<X>) -> Self {
+        Self::FollowTextBuClrTx(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextBulletColorContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TextBulletContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -40370,15 +42571,17 @@ impl<X: UserData> TextBulletContentWith<X> {
     {
         match self {
             Self::AutoNumberedBullet(node) => {
-                TextBulletContentWith::AutoNumberedBullet(node.into_user_data())
+                TextBulletContentWith::AutoNumberedBullet(Box::new((*node).into_user_data()))
             }
             Self::CharacterBullet(node) => {
-                TextBulletContentWith::CharacterBullet(node.into_user_data())
+                TextBulletContentWith::CharacterBullet(Box::new((*node).into_user_data()))
             }
-            Self::NoBullet(node) => TextBulletContentWith::NoBullet(node.into_user_data()),
+            Self::NoBullet(node) => {
+                TextBulletContentWith::NoBullet(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => TextBulletContentWith::Other(node),
             Self::PictureBullet(node) => {
-                TextBulletContentWith::PictureBullet(node.into_user_data())
+                TextBulletContentWith::PictureBullet(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -40386,22 +42589,22 @@ impl<X: UserData> TextBulletContentWith<X> {
 
 impl<X: UserData> Default for TextBulletContentWith<X> {
     fn default() -> Self {
-        Self::AutoNumberedBullet(AutoNumberedBulletWith::default())
+        Self::AutoNumberedBullet(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for TextBulletContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "buAutoNum")) => Self::AutoNumberedBullet(item.read()),
-            Some((NS_A, "buChar")) => Self::CharacterBullet(item.read()),
-            Some((NS_A, "buNone")) => Self::NoBullet(item.read()),
-            Some((NS_A, "buBlip")) => Self::PictureBullet(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "buAutoNum")) => Self::AutoNumberedBullet(Box::new(item.read())),
+            Some((NS_A, "buChar")) => Self::CharacterBullet(Box::new(item.read())),
+            Some((NS_A, "buNone")) => Self::NoBullet(Box::new(item.read())),
+            Some((NS_A, "buBlip")) => Self::PictureBullet(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -40412,11 +42615,40 @@ impl officekit_markup_base::Write for TextBulletContent {
             Self::AutoNumberedBullet(arm) => arm.write_into(writer),
             Self::CharacterBullet(arm) => arm.write_into(writer),
             Self::NoBullet(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PictureBullet(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AutoNumberedBulletWith<X>> for TextBulletContentWith<X> {
+    fn from(arm: AutoNumberedBulletWith<X>) -> Self {
+        Self::AutoNumberedBullet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CharacterBulletWith<X>> for TextBulletContentWith<X> {
+    fn from(arm: CharacterBulletWith<X>) -> Self {
+        Self::CharacterBullet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoBulletWith<X>> for TextBulletContentWith<X> {
+    fn from(arm: NoBulletWith<X>) -> Self {
+        Self::NoBullet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PictureBulletWith<X>> for TextBulletContentWith<X> {
+    fn from(arm: PictureBulletWith<X>) -> Self {
+        Self::PictureBullet(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextBulletContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TextBulletSizeContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -40427,13 +42659,13 @@ impl<X: UserData> TextBulletSizeContentWith<X> {
     {
         match self {
             Self::BulletSizeFollowsText(node) => {
-                TextBulletSizeContentWith::BulletSizeFollowsText(node.into_user_data())
+                TextBulletSizeContentWith::BulletSizeFollowsText(Box::new((*node).into_user_data()))
             }
             Self::BulletSizePercentage(node) => {
-                TextBulletSizeContentWith::BulletSizePercentage(node.into_user_data())
+                TextBulletSizeContentWith::BulletSizePercentage(Box::new((*node).into_user_data()))
             }
             Self::BulletSizePoints(node) => {
-                TextBulletSizeContentWith::BulletSizePoints(node.into_user_data())
+                TextBulletSizeContentWith::BulletSizePoints(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TextBulletSizeContentWith::Other(node),
         }
@@ -40442,15 +42674,15 @@ impl<X: UserData> TextBulletSizeContentWith<X> {
 
 impl officekit_markup_base::Read for TextBulletSizeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "buSzTx")) => Self::BulletSizeFollowsText(item.read()),
-            Some((NS_A, "buSzPct")) => Self::BulletSizePercentage(item.read()),
-            Some((NS_A, "buSzPts")) => Self::BulletSizePoints(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "buSzTx")) => Self::BulletSizeFollowsText(Box::new(item.read())),
+            Some((NS_A, "buSzPct")) => Self::BulletSizePercentage(Box::new(item.read())),
+            Some((NS_A, "buSzPts")) => Self::BulletSizePoints(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -40461,10 +42693,33 @@ impl officekit_markup_base::Write for TextBulletSizeContent {
             Self::BulletSizeFollowsText(arm) => arm.write_into(writer),
             Self::BulletSizePercentage(arm) => arm.write_into(writer),
             Self::BulletSizePoints(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<BulletSizeFollowsTextWith<X>> for TextBulletSizeContentWith<X> {
+    fn from(arm: BulletSizeFollowsTextWith<X>) -> Self {
+        Self::BulletSizeFollowsText(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BulletSizePercentageWith<X>> for TextBulletSizeContentWith<X> {
+    fn from(arm: BulletSizePercentageWith<X>) -> Self {
+        Self::BulletSizePercentage(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BulletSizePointsWith<X>> for TextBulletSizeContentWith<X> {
+    fn from(arm: BulletSizePointsWith<X>) -> Self {
+        Self::BulletSizePoints(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextBulletSizeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TextBulletTypefaceContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -40474,12 +42729,12 @@ impl<X: UserData> TextBulletTypefaceContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::FollowTextBuFontTx(node) => {
-                TextBulletTypefaceContentWith::FollowTextBuFontTx(node.into_user_data())
-            }
+            Self::FollowTextBuFontTx(node) => TextBulletTypefaceContentWith::FollowTextBuFontTx(
+                Box::new((*node).into_user_data()),
+            ),
             Self::Other(node) => TextBulletTypefaceContentWith::Other(node),
             Self::Specified(node) => {
-                TextBulletTypefaceContentWith::Specified(node.into_user_data())
+                TextBulletTypefaceContentWith::Specified(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -40487,14 +42742,14 @@ impl<X: UserData> TextBulletTypefaceContentWith<X> {
 
 impl officekit_markup_base::Read for TextBulletTypefaceContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "buFontTx")) => Self::FollowTextBuFontTx(item.read()),
-            Some((NS_A, "buFont")) => Self::Specified(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "buFontTx")) => Self::FollowTextBuFontTx(Box::new(item.read())),
+            Some((NS_A, "buFont")) => Self::Specified(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -40503,11 +42758,28 @@ impl officekit_markup_base::Write for TextBulletTypefaceContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::FollowTextBuFontTx(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Specified(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<FollowTextBuFontTxWith<X>> for TextBulletTypefaceContentWith<X> {
+    fn from(arm: FollowTextBuFontTxWith<X>) -> Self {
+        Self::FollowTextBuFontTx(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SpecifiedWith<X>> for TextBulletTypefaceContentWith<X> {
+    fn from(arm: SpecifiedWith<X>) -> Self {
+        Self::Specified(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextBulletTypefaceContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TextCapTypes {
     fn as_ref(&self) -> &str {
@@ -41190,29 +43462,33 @@ impl<X: UserData> TextParagraphsContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::M(node) => TextParagraphsContentWith::M(node.into_user_data()),
+            Self::M(node) => TextParagraphsContentWith::M(Box::new((*node).into_user_data())),
             Self::Other(node) => TextParagraphsContentWith::Other(node),
-            Self::TextField(node) => TextParagraphsContentWith::TextField(node.into_user_data()),
-            Self::TextLineBreak(node) => {
-                TextParagraphsContentWith::TextLineBreak(node.into_user_data())
+            Self::TextField(node) => {
+                TextParagraphsContentWith::TextField(Box::new((*node).into_user_data()))
             }
-            Self::TextRun(node) => TextParagraphsContentWith::TextRun(node.into_user_data()),
+            Self::TextLineBreak(node) => {
+                TextParagraphsContentWith::TextLineBreak(Box::new((*node).into_user_data()))
+            }
+            Self::TextRun(node) => {
+                TextParagraphsContentWith::TextRun(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for TextParagraphsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A14, "m")) => Self::M(item.read()),
-            Some((NS_A, "fld")) => Self::TextField(item.read()),
-            Some((NS_A, "br")) => Self::TextLineBreak(item.read()),
-            Some((NS_A, "r")) => Self::TextRun(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A14, "m")) => Self::M(Box::new(item.read())),
+            Some((NS_A, "fld")) => Self::TextField(Box::new(item.read())),
+            Some((NS_A, "br")) => Self::TextLineBreak(Box::new(item.read())),
+            Some((NS_A, "r")) => Self::TextRun(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -41221,13 +43497,42 @@ impl officekit_markup_base::Write for TextParagraphsContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::M(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TextField(arm) => arm.write_into(writer),
             Self::TextLineBreak(arm) => arm.write_into(writer),
             Self::TextRun(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<super::office_drawing_2010_main::MWith<X>> for TextParagraphsContentWith<X> {
+    fn from(arm: super::office_drawing_2010_main::MWith<X>) -> Self {
+        Self::M(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextFieldWith<X>> for TextParagraphsContentWith<X> {
+    fn from(arm: TextFieldWith<X>) -> Self {
+        Self::TextField(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextLineBreakWith<X>> for TextParagraphsContentWith<X> {
+    fn from(arm: TextLineBreakWith<X>) -> Self {
+        Self::TextLineBreak(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextRunWith<X>> for TextParagraphsContentWith<X> {
+    fn from(arm: TextRunWith<X>) -> Self {
+        Self::TextRun(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextParagraphsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TextPoint {
     fn as_ref(&self) -> &str {
@@ -41521,10 +43826,10 @@ impl<X: UserData> TextShapeContentWith<X> {
         match self {
             Self::Other(node) => TextShapeContentWith::Other(node),
             Self::UseShapeTextRectangle(node) => {
-                TextShapeContentWith::UseShapeTextRectangle(node.into_user_data())
+                TextShapeContentWith::UseShapeTextRectangle(Box::new((*node).into_user_data()))
             }
             Self::XfrmTransform2D(node) => {
-                TextShapeContentWith::XfrmTransform2D(node.into_user_data())
+                TextShapeContentWith::XfrmTransform2D(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -41532,20 +43837,20 @@ impl<X: UserData> TextShapeContentWith<X> {
 
 impl<X: UserData> Default for TextShapeContentWith<X> {
     fn default() -> Self {
-        Self::UseShapeTextRectangle(UseShapeTextRectangleWith::default())
+        Self::UseShapeTextRectangle(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for TextShapeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "useSpRect")) => Self::UseShapeTextRectangle(item.read()),
-            Some((NS_A, "xfrm")) => Self::XfrmTransform2D(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "useSpRect")) => Self::UseShapeTextRectangle(Box::new(item.read())),
+            Some((NS_A, "xfrm")) => Self::XfrmTransform2D(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -41553,12 +43858,29 @@ impl officekit_markup_base::Read for TextShapeContent {
 impl officekit_markup_base::Write for TextShapeContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::UseShapeTextRectangle(arm) => arm.write_into(writer),
             Self::XfrmTransform2D(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<UseShapeTextRectangleWith<X>> for TextShapeContentWith<X> {
+    fn from(arm: UseShapeTextRectangleWith<X>) -> Self {
+        Self::UseShapeTextRectangle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<XfrmTransform2DWith<X>> for TextShapeContentWith<X> {
+    fn from(arm: XfrmTransform2DWith<X>) -> Self {
+        Self::XfrmTransform2D(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextShapeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TextSpacingContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -41570,10 +43892,10 @@ impl<X: UserData> TextSpacingContentWith<X> {
         match self {
             Self::Other(node) => TextSpacingContentWith::Other(node),
             Self::SpacingPercent(node) => {
-                TextSpacingContentWith::SpacingPercent(node.into_user_data())
+                TextSpacingContentWith::SpacingPercent(Box::new((*node).into_user_data()))
             }
             Self::SpacingPoints(node) => {
-                TextSpacingContentWith::SpacingPoints(node.into_user_data())
+                TextSpacingContentWith::SpacingPoints(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -41581,20 +43903,20 @@ impl<X: UserData> TextSpacingContentWith<X> {
 
 impl<X: UserData> Default for TextSpacingContentWith<X> {
     fn default() -> Self {
-        Self::SpacingPercent(SpacingPercentWith::default())
+        Self::SpacingPercent(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for TextSpacingContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "spcPct")) => Self::SpacingPercent(item.read()),
-            Some((NS_A, "spcPts")) => Self::SpacingPoints(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "spcPct")) => Self::SpacingPercent(Box::new(item.read())),
+            Some((NS_A, "spcPts")) => Self::SpacingPoints(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -41602,12 +43924,29 @@ impl officekit_markup_base::Read for TextSpacingContent {
 impl officekit_markup_base::Write for TextSpacingContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SpacingPercent(arm) => arm.write_into(writer),
             Self::SpacingPoints(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<SpacingPercentWith<X>> for TextSpacingContentWith<X> {
+    fn from(arm: SpacingPercentWith<X>) -> Self {
+        Self::SpacingPercent(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SpacingPointsWith<X>> for TextSpacingContentWith<X> {
+    fn from(arm: SpacingPointsWith<X>) -> Self {
+        Self::SpacingPoints(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextSpacingContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TextSpacingPercent {
     fn as_ref(&self) -> &str {
@@ -41819,12 +44158,12 @@ impl<X: UserData> TextUnderlineFillContentWith<X> {
         match self {
             Self::Other(node) => TextUnderlineFillContentWith::Other(node),
             Self::UnderlineFill(node) => {
-                TextUnderlineFillContentWith::UnderlineFill(node.into_user_data())
+                TextUnderlineFillContentWith::UnderlineFill(Box::new((*node).into_user_data()))
             }
             Self::UnderlineFillPropertiesFollowText(node) => {
-                TextUnderlineFillContentWith::UnderlineFillPropertiesFollowText(
-                    node.into_user_data(),
-                )
+                TextUnderlineFillContentWith::UnderlineFillPropertiesFollowText(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -41832,14 +44171,16 @@ impl<X: UserData> TextUnderlineFillContentWith<X> {
 
 impl officekit_markup_base::Read for TextUnderlineFillContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "uFill")) => Self::UnderlineFill(item.read()),
-            Some((NS_A, "uFillTx")) => Self::UnderlineFillPropertiesFollowText(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "uFill")) => Self::UnderlineFill(Box::new(item.read())),
+            Some((NS_A, "uFillTx")) => {
+                Self::UnderlineFillPropertiesFollowText(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -41847,12 +44188,31 @@ impl officekit_markup_base::Read for TextUnderlineFillContent {
 impl officekit_markup_base::Write for TextUnderlineFillContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::UnderlineFill(arm) => arm.write_into(writer),
             Self::UnderlineFillPropertiesFollowText(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<UnderlineFillWith<X>> for TextUnderlineFillContentWith<X> {
+    fn from(arm: UnderlineFillWith<X>) -> Self {
+        Self::UnderlineFill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UnderlineFillPropertiesFollowTextWith<X>>
+    for TextUnderlineFillContentWith<X>
+{
+    fn from(arm: UnderlineFillPropertiesFollowTextWith<X>) -> Self {
+        Self::UnderlineFillPropertiesFollowText(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextUnderlineFillContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TextUnderlineLineContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -41863,11 +44223,11 @@ impl<X: UserData> TextUnderlineLineContentWith<X> {
     {
         match self {
             Self::Other(node) => TextUnderlineLineContentWith::Other(node),
-            Self::UnderlineFollowsText(node) => {
-                TextUnderlineLineContentWith::UnderlineFollowsText(node.into_user_data())
-            }
+            Self::UnderlineFollowsText(node) => TextUnderlineLineContentWith::UnderlineFollowsText(
+                Box::new((*node).into_user_data()),
+            ),
             Self::UnderlineStroke(node) => {
-                TextUnderlineLineContentWith::UnderlineStroke(node.into_user_data())
+                TextUnderlineLineContentWith::UnderlineStroke(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -41875,14 +44235,14 @@ impl<X: UserData> TextUnderlineLineContentWith<X> {
 
 impl officekit_markup_base::Read for TextUnderlineLineContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "uLnTx")) => Self::UnderlineFollowsText(item.read()),
-            Some((NS_A, "uLn")) => Self::UnderlineStroke(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "uLnTx")) => Self::UnderlineFollowsText(Box::new(item.read())),
+            Some((NS_A, "uLn")) => Self::UnderlineStroke(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -41890,12 +44250,29 @@ impl officekit_markup_base::Read for TextUnderlineLineContent {
 impl officekit_markup_base::Write for TextUnderlineLineContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::UnderlineFollowsText(arm) => arm.write_into(writer),
             Self::UnderlineStroke(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<UnderlineFollowsTextWith<X>> for TextUnderlineLineContentWith<X> {
+    fn from(arm: UnderlineFollowsTextWith<X>) -> Self {
+        Self::UnderlineFollowsText(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UnderlineStrokeWith<X>> for TextUnderlineLineContentWith<X> {
+    fn from(arm: UnderlineStrokeWith<X>) -> Self {
+        Self::UnderlineStroke(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextUnderlineLineContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TextUnderlineTypes {
     fn as_ref(&self) -> &str {
@@ -42376,9 +44753,11 @@ impl<X: UserData> ThemeableFillStyleContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Fill(node) => ThemeableFillStyleContentWith::Fill(node.into_user_data()),
+            Self::Fill(node) => {
+                ThemeableFillStyleContentWith::Fill(Box::new((*node).into_user_data()))
+            }
             Self::FillReference(node) => {
-                ThemeableFillStyleContentWith::FillReference(node.into_user_data())
+                ThemeableFillStyleContentWith::FillReference(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ThemeableFillStyleContentWith::Other(node),
         }
@@ -42387,14 +44766,14 @@ impl<X: UserData> ThemeableFillStyleContentWith<X> {
 
 impl officekit_markup_base::Read for ThemeableFillStyleContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "fill")) => Self::Fill(item.read()),
-            Some((NS_A, "fillRef")) => Self::FillReference(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "fill")) => Self::Fill(Box::new(item.read())),
+            Some((NS_A, "fillRef")) => Self::FillReference(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -42404,10 +44783,27 @@ impl officekit_markup_base::Write for ThemeableFillStyleContent {
         match self {
             Self::Fill(arm) => arm.write_into(writer),
             Self::FillReference(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<FillWith<X>> for ThemeableFillStyleContentWith<X> {
+    fn from(arm: FillWith<X>) -> Self {
+        Self::Fill(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FillReferenceWith<X>> for ThemeableFillStyleContentWith<X> {
+    fn from(arm: FillReferenceWith<X>) -> Self {
+        Self::FillReference(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ThemeableFillStyleContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ThemeableLineStyleContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -42418,30 +44814,32 @@ impl<X: UserData> ThemeableLineStyleContentWith<X> {
     {
         match self {
             Self::LineReference(node) => {
-                ThemeableLineStyleContentWith::LineReference(node.into_user_data())
+                ThemeableLineStyleContentWith::LineReference(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ThemeableLineStyleContentWith::Other(node),
-            Self::Outline(node) => ThemeableLineStyleContentWith::Outline(node.into_user_data()),
+            Self::Outline(node) => {
+                ThemeableLineStyleContentWith::Outline(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for ThemeableLineStyleContentWith<X> {
     fn default() -> Self {
-        Self::LineReference(LineReferenceWith::default())
+        Self::LineReference(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for ThemeableLineStyleContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A, "lnRef")) => Self::LineReference(item.read()),
-            Some((NS_A, "ln")) => Self::Outline(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A, "lnRef")) => Self::LineReference(Box::new(item.read())),
+            Some((NS_A, "ln")) => Self::Outline(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -42450,11 +44848,28 @@ impl officekit_markup_base::Write for ThemeableLineStyleContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::LineReference(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Outline(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<LineReferenceWith<X>> for ThemeableLineStyleContentWith<X> {
+    fn from(arm: LineReferenceWith<X>) -> Self {
+        Self::LineReference(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OutlineWith<X>> for ThemeableLineStyleContentWith<X> {
+    fn from(arm: OutlineWith<X>) -> Self {
+        Self::Outline(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ThemeableLineStyleContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TileWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -43935,237 +46350,279 @@ impl officekit_markup_base::Write for XfrmTransform2D {
 
 fn read_any_element_1(item: officekit_markup_base::Item<'_>) -> AnyElementContent {
     match item.name() {
-        Some((NS_WP, "anchor")) => AnyElementContent::AnchorForFloatingDrawingMLObject(item.read()),
-        Some((NS_W10, "anchorlock")) => AnyElementContent::AnchorLocationIsLocked(item.read()),
+        Some((NS_WP, "anchor")) => {
+            AnyElementContent::AnchorForFloatingDrawingMLObject(Box::new(item.read()))
+        }
+        Some((NS_W10, "anchorlock")) => {
+            AnyElementContent::AnchorLocationIsLocked(Box::new(item.read()))
+        }
         Some((NS_AP, "Properties")) => {
-            AnyElementContent::ApplicationSpecificFileProperties(item.read())
+            AnyElementContent::ApplicationSpecificFileProperties(Box::new(item.read()))
         }
-        Some((NS_V, "arc")) => AnyElementContent::ArcSegment(item.read()),
-        Some((NS_VT, "array")) => AnyElementContent::Array(item.read()),
-        Some((NS_XVML, "ClientData")) => AnyElementContent::AttachedObjectData(item.read()),
-        Some((NS_VT, "bstr")) => AnyElementContent::BasicString(item.read()),
-        Some((NS_V, "curve")) => AnyElementContent::BezierCurve(item.read()),
-        Some((NS_VT, "blob")) => AnyElementContent::BinaryBlob(item.read()),
-        Some((NS_VT, "oblob")) => AnyElementContent::BinaryBlobObject(item.read()),
-        Some((NS_VT, "storage")) => AnyElementContent::BinaryStorage(item.read()),
-        Some((NS_VT, "ostorage")) => AnyElementContent::BinaryStorageObject(item.read()),
-        Some((NS_VT, "stream")) => AnyElementContent::BinaryStream(item.read()),
-        Some((NS_VT, "ostream")) => AnyElementContent::BinaryStreamObject(item.read()),
-        Some((NS_VT, "vstream")) => AnyElementContent::BinaryVersionedStream(item.read()),
-        Some((NS_A, "blip")) => AnyElementContent::Blip(item.read()),
-        Some((NS_VT, "bool")) => AnyElementContent::Boolean(item.read()),
-        Some((NS_W10, "borderbottom")) => AnyElementContent::BottomBorder(item.read()),
-        Some((NS_X, "calcChain")) => AnyElementContent::CalculationChainInfo(item.read()),
-        Some((NS_O, "callout")) => AnyElementContent::Callout(item.read()),
-        Some((NS_X, "chartsheet")) => AnyElementContent::ChartSheet(item.read()),
-        Some((NS_C, "chartSpace")) => AnyElementContent::ChartSpace(item.read()),
-        Some((NS_VT, "clsid")) => AnyElementContent::ClassID(item.read()),
+        Some((NS_V, "arc")) => AnyElementContent::ArcSegment(Box::new(item.read())),
+        Some((NS_VT, "array")) => AnyElementContent::Array(Box::new(item.read())),
+        Some((NS_XVML, "ClientData")) => {
+            AnyElementContent::AttachedObjectData(Box::new(item.read()))
+        }
+        Some((NS_VT, "bstr")) => AnyElementContent::BasicString(Box::new(item.read())),
+        Some((NS_V, "curve")) => AnyElementContent::BezierCurve(Box::new(item.read())),
+        Some((NS_VT, "blob")) => AnyElementContent::BinaryBlob(Box::new(item.read())),
+        Some((NS_VT, "oblob")) => AnyElementContent::BinaryBlobObject(Box::new(item.read())),
+        Some((NS_VT, "storage")) => AnyElementContent::BinaryStorage(Box::new(item.read())),
+        Some((NS_VT, "ostorage")) => AnyElementContent::BinaryStorageObject(Box::new(item.read())),
+        Some((NS_VT, "stream")) => AnyElementContent::BinaryStream(Box::new(item.read())),
+        Some((NS_VT, "ostream")) => AnyElementContent::BinaryStreamObject(Box::new(item.read())),
+        Some((NS_VT, "vstream")) => AnyElementContent::BinaryVersionedStream(Box::new(item.read())),
+        Some((NS_A, "blip")) => AnyElementContent::Blip(Box::new(item.read())),
+        Some((NS_VT, "bool")) => AnyElementContent::Boolean(Box::new(item.read())),
+        Some((NS_W10, "borderbottom")) => AnyElementContent::BottomBorder(Box::new(item.read())),
+        Some((NS_X, "calcChain")) => AnyElementContent::CalculationChainInfo(Box::new(item.read())),
+        Some((NS_O, "callout")) => AnyElementContent::Callout(Box::new(item.read())),
+        Some((NS_X, "chartsheet")) => AnyElementContent::ChartSheet(Box::new(item.read())),
+        Some((NS_C, "chartSpace")) => AnyElementContent::ChartSpace(Box::new(item.read())),
+        Some((NS_VT, "clsid")) => AnyElementContent::ClassID(Box::new(item.read())),
         Some((NS_DGM, "colorsDefHdr")) => {
-            AnyElementContent::ColorTransformDefinitionHeader(item.read())
+            AnyElementContent::ColorTransformDefinitionHeader(Box::new(item.read()))
         }
-        Some((NS_DGM, "colorsDef")) => AnyElementContent::ColorTransformDefinitions(item.read()),
+        Some((NS_DGM, "colorsDef")) => {
+            AnyElementContent::ColorTransformDefinitions(Box::new(item.read()))
+        }
         Some((NS_DGM, "colorsDefHdrLst")) => {
-            AnyElementContent::ColorTransformHeaderList(item.read())
+            AnyElementContent::ColorTransformHeaderList(Box::new(item.read()))
         }
-        Some((NS_P, "cmLst")) => AnyElementContent::CommentList(item.read()),
-        Some((NS_X, "comments")) => AnyElementContent::Comments(item.read()),
-        Some((NS_W, "comments")) => AnyElementContent::CommentsCollection(item.read()),
-        Some((NS_O, "complex")) => AnyElementContent::Complex(item.read()),
-        Some((NS_X, "connections")) => AnyElementContent::Connections(item.read()),
-        Some((NS_VT, "cy")) => AnyElementContent::Currency(item.read()),
-        Some((NS_OP, "Properties")) => AnyElementContent::CustomFileProperties(item.read()),
-        Some((NS_DS, "datastoreItem")) => AnyElementContent::CustomXMLDataProperties(item.read()),
-        Some((NS_DGM, "dataModel")) => AnyElementContent::DataModel(item.read()),
-        Some((NS_VT, "date")) => AnyElementContent::DateAndTime(item.read()),
-        Some((NS_VT, "decimal")) => AnyElementContent::Decimal(item.read()),
+        Some((NS_P, "cmLst")) => AnyElementContent::CommentList(Box::new(item.read())),
+        Some((NS_X, "comments")) => AnyElementContent::Comments(Box::new(item.read())),
+        Some((NS_W, "comments")) => AnyElementContent::CommentsCollection(Box::new(item.read())),
+        Some((NS_O, "complex")) => AnyElementContent::Complex(Box::new(item.read())),
+        Some((NS_X, "connections")) => AnyElementContent::Connections(Box::new(item.read())),
+        Some((NS_VT, "cy")) => AnyElementContent::Currency(Box::new(item.read())),
+        Some((NS_OP, "Properties")) => {
+            AnyElementContent::CustomFileProperties(Box::new(item.read()))
+        }
+        Some((NS_DS, "datastoreItem")) => {
+            AnyElementContent::CustomXMLDataProperties(Box::new(item.read()))
+        }
+        Some((NS_DGM, "dataModel")) => AnyElementContent::DataModel(Box::new(item.read())),
+        Some((NS_VT, "date")) => AnyElementContent::DateAndTime(Box::new(item.read())),
+        Some((NS_VT, "decimal")) => AnyElementContent::Decimal(Box::new(item.read())),
         Some((NS_DGM, "layoutDefHdrLst")) => {
-            AnyElementContent::DiagramLayoutHeaderList(item.read())
+            AnyElementContent::DiagramLayoutHeaderList(Box::new(item.read()))
         }
-        Some((NS_X, "dialogsheet")) => AnyElementContent::DialogSheet(item.read()),
-        Some((NS_O, "signatureline")) => AnyElementContent::DigitalSignatureLine(item.read()),
+        Some((NS_X, "dialogsheet")) => AnyElementContent::DialogSheet(Box::new(item.read())),
+        Some((NS_O, "signatureline")) => {
+            AnyElementContent::DigitalSignatureLine(Box::new(item.read()))
+        }
         _ => read_any_element_2(item),
     }
 }
 
 fn read_any_element_2(item: officekit_markup_base::Item<'_>) -> AnyElementContent {
     match item.name() {
-        Some((NS_W, "document")) => AnyElementContent::Document(item.read()),
-        Some((NS_V, "background")) => AnyElementContent::DocumentBackground(item.read()),
-        Some((NS_W, "endnotes")) => AnyElementContent::DocumentEndnotes(item.read()),
-        Some((NS_W, "footnotes")) => AnyElementContent::DocumentFootnotes(item.read()),
-        Some((NS_W, "settings")) => AnyElementContent::DocumentSettings(item.read()),
+        Some((NS_W, "document")) => AnyElementContent::Document(Box::new(item.read())),
+        Some((NS_V, "background")) => AnyElementContent::DocumentBackground(Box::new(item.read())),
+        Some((NS_W, "endnotes")) => AnyElementContent::DocumentEndnotes(Box::new(item.read())),
+        Some((NS_W, "footnotes")) => AnyElementContent::DocumentFootnotes(Box::new(item.read())),
+        Some((NS_W, "settings")) => AnyElementContent::DocumentSettings(Box::new(item.read())),
         Some((NS_SL, "schemaLibrary")) => {
-            AnyElementContent::EmbeddedCustomXMLSchemaSupplementaryData(item.read())
+            AnyElementContent::EmbeddedCustomXMLSchemaSupplementaryData(Box::new(item.read()))
         }
-        Some((NS_O, "OLEObject")) => AnyElementContent::EmbeddedOLEObject(item.read()),
-        Some((NS_P, "oleObj")) => AnyElementContent::EmbeddedObjectsAndControls(item.read()),
-        Some((NS_VT, "empty")) => AnyElementContent::Empty(item.read()),
-        Some((NS_XDR, "to")) => AnyElementContent::EndingAnchorPoint(item.read()),
-        Some((NS_VT, "error")) => AnyElementContent::ErrorStatusCode(item.read()),
+        Some((NS_O, "OLEObject")) => AnyElementContent::EmbeddedOLEObject(Box::new(item.read())),
+        Some((NS_P, "oleObj")) => {
+            AnyElementContent::EmbeddedObjectsAndControls(Box::new(item.read()))
+        }
+        Some((NS_VT, "empty")) => AnyElementContent::Empty(Box::new(item.read())),
+        Some((NS_XDR, "to")) => AnyElementContent::EndingAnchorPoint(Box::new(item.read())),
+        Some((NS_VT, "error")) => AnyElementContent::ErrorStatusCode(Box::new(item.read())),
         Some((NS_DGM, "relIds")) => {
-            AnyElementContent::ExplicitRelationshipsToDiagramParts(item.read())
+            AnyElementContent::ExplicitRelationshipsToDiagramParts(Box::new(item.read()))
         }
         Some((NS_X, "externalLink")) => {
-            AnyElementContent::ExternalReferenceExternalLink(item.read())
+            AnyElementContent::ExternalReferenceExternalLink(Box::new(item.read()))
         }
-        Some((NS_O, "extrusion")) => AnyElementContent::Extrusion(item.read()),
-        Some((NS_VT, "filetime")) => AnyElementContent::FileTime(item.read()),
-        Some((NS_W, "fonts")) => AnyElementContent::FontTableRootElement(item.read()),
-        Some((NS_W, "ftr")) => AnyElementContent::Footer(item.read()),
+        Some((NS_O, "extrusion")) => AnyElementContent::Extrusion(Box::new(item.read())),
+        Some((NS_VT, "filetime")) => AnyElementContent::FileTime(Box::new(item.read())),
+        Some((NS_W, "fonts")) => AnyElementContent::FontTableRootElement(Box::new(item.read())),
+        Some((NS_W, "ftr")) => AnyElementContent::Footer(Box::new(item.read())),
         Some((NS_W, "glossaryDocument")) => {
-            AnyElementContent::GlossaryDocumentRootElement(item.read())
+            AnyElementContent::GlossaryDocumentRootElement(Box::new(item.read()))
         }
-        Some((NS_A, "graphic")) => AnyElementContent::GraphicObject(item.read()),
-        Some((NS_P, "handoutMaster")) => AnyElementContent::HandoutMaster(item.read()),
-        Some((NS_W, "hdr")) => AnyElementContent::Header(item.read()),
-        Some((NS_VT, "i1")) => AnyElementContent::I1(item.read()),
-        Some((NS_VT, "i2")) => AnyElementContent::I2(item.read()),
-        Some((NS_VT, "i4")) => AnyElementContent::I4(item.read()),
-        Some((NS_VT, "i8")) => AnyElementContent::I8(item.read()),
-        Some((NS_V, "imagedata")) => AnyElementContent::ImageData(item.read()),
-        Some((NS_V, "image")) => AnyElementContent::ImageFile(item.read()),
+        Some((NS_A, "graphic")) => AnyElementContent::GraphicObject(Box::new(item.read())),
+        Some((NS_P, "handoutMaster")) => AnyElementContent::HandoutMaster(Box::new(item.read())),
+        Some((NS_W, "hdr")) => AnyElementContent::Header(Box::new(item.read())),
+        Some((NS_VT, "i1")) => AnyElementContent::I1(Box::new(item.read())),
+        Some((NS_VT, "i2")) => AnyElementContent::I2(Box::new(item.read())),
+        Some((NS_VT, "i4")) => AnyElementContent::I4(Box::new(item.read())),
+        Some((NS_VT, "i8")) => AnyElementContent::I8(Box::new(item.read())),
+        Some((NS_V, "imagedata")) => AnyElementContent::ImageData(Box::new(item.read())),
+        Some((NS_V, "image")) => AnyElementContent::ImageFile(Box::new(item.read())),
         Some((NS_W, "recipients")) => {
-            AnyElementContent::InclusionExclusionDataForDataSource(item.read())
+            AnyElementContent::InclusionExclusionDataForDataSource(Box::new(item.read()))
         }
-        Some((NS_O, "ink")) => AnyElementContent::Ink(item.read()),
-        Some((NS_PVML, "iscomment")) => AnyElementContent::InkAnnotationFlag(item.read()),
-        Some((NS_WP, "inline")) => AnyElementContent::InlineDrawingMLObject(item.read()),
-        Some((NS_VT, "int")) => AnyElementContent::Integer(item.read()),
-        Some((NS_DGM, "layoutDef")) => AnyElementContent::LayoutDefinition(item.read()),
-        Some((NS_DGM, "layoutDefHdr")) => AnyElementContent::LayoutDefinitionHeader(item.read()),
-        Some((NS_W10, "borderleft")) => AnyElementContent::LeftBorder(item.read()),
-        Some((NS_V, "line")) => AnyElementContent::Line(item.read()),
-        Some((NS_V, "stroke")) => AnyElementContent::LineStrokeSettings(item.read()),
-        Some((NS_P, "cmAuthorLst")) => AnyElementContent::ListOfCommentAuthors(item.read()),
+        Some((NS_O, "ink")) => AnyElementContent::Ink(Box::new(item.read())),
+        Some((NS_PVML, "iscomment")) => AnyElementContent::InkAnnotationFlag(Box::new(item.read())),
+        Some((NS_WP, "inline")) => AnyElementContent::InlineDrawingMLObject(Box::new(item.read())),
+        Some((NS_VT, "int")) => AnyElementContent::Integer(Box::new(item.read())),
+        Some((NS_DGM, "layoutDef")) => AnyElementContent::LayoutDefinition(Box::new(item.read())),
+        Some((NS_DGM, "layoutDefHdr")) => {
+            AnyElementContent::LayoutDefinitionHeader(Box::new(item.read()))
+        }
+        Some((NS_W10, "borderleft")) => AnyElementContent::LeftBorder(Box::new(item.read())),
+        Some((NS_V, "line")) => AnyElementContent::Line(Box::new(item.read())),
+        Some((NS_V, "stroke")) => AnyElementContent::LineStrokeSettings(Box::new(item.read())),
+        Some((NS_P, "cmAuthorLst")) => {
+            AnyElementContent::ListOfCommentAuthors(Box::new(item.read()))
+        }
         Some((NS_DGM, "styleDefHdrLst")) => {
-            AnyElementContent::ListOfStyleDefinitionHeaders(item.read())
+            AnyElementContent::ListOfStyleDefinitionHeaders(Box::new(item.read()))
         }
-        Some((NS_LC, "lockedCanvas")) => AnyElementContent::LockedCanvasContainer(item.read()),
+        Some((NS_LC, "lockedCanvas")) => {
+            AnyElementContent::LockedCanvasContainer(Box::new(item.read()))
+        }
         _ => read_any_element_3(item),
     }
 }
 
 fn read_any_element_3(item: officekit_markup_base::Item<'_>) -> AnyElementContent {
     match item.name() {
-        Some((NS_VT, "lpstr")) => AnyElementContent::Lpstr(item.read()),
-        Some((NS_VT, "lpwstr")) => AnyElementContent::Lpwstr(item.read()),
-        Some((NS_M, "mathPr")) => AnyElementContent::MathProperties(item.read()),
-        Some((NS_X, "metadata")) => AnyElementContent::Metadata(item.read()),
-        Some((NS_V, "polyline")) => AnyElementContent::MultiplePathLine(item.read()),
-        Some((NS_O, "shapedefaults")) => AnyElementContent::NewShapeDefaults(item.read()),
-        Some((NS_P, "notesMaster")) => AnyElementContent::NotesMaster(item.read()),
-        Some((NS_P, "notes")) => AnyElementContent::NotesSlide(item.read()),
-        Some((NS_VT, "null")) => AnyElementContent::Null(item.read()),
-        Some((NS_W, "numbering")) => AnyElementContent::NumberingDefinitions(item.read()),
-        Some((NS_M, "oMath")) => AnyElementContent::OfficeMath(item.read()),
-        Some((NS_M, "oMathPara")) => AnyElementContent::OfficeMathParagraph(item.read()),
-        Some((NS_V, "oval")) => AnyElementContent::Oval(item.read()),
-        Some((NS_PIC, "pic")) => AnyElementContent::Picture(item.read()),
+        Some((NS_VT, "lpstr")) => AnyElementContent::Lpstr(Box::new(item.read())),
+        Some((NS_VT, "lpwstr")) => AnyElementContent::Lpwstr(Box::new(item.read())),
+        Some((NS_M, "mathPr")) => AnyElementContent::MathProperties(Box::new(item.read())),
+        Some((NS_X, "metadata")) => AnyElementContent::Metadata(Box::new(item.read())),
+        Some((NS_V, "polyline")) => AnyElementContent::MultiplePathLine(Box::new(item.read())),
+        Some((NS_O, "shapedefaults")) => AnyElementContent::NewShapeDefaults(Box::new(item.read())),
+        Some((NS_P, "notesMaster")) => AnyElementContent::NotesMaster(Box::new(item.read())),
+        Some((NS_P, "notes")) => AnyElementContent::NotesSlide(Box::new(item.read())),
+        Some((NS_VT, "null")) => AnyElementContent::Null(Box::new(item.read())),
+        Some((NS_W, "numbering")) => AnyElementContent::NumberingDefinitions(Box::new(item.read())),
+        Some((NS_M, "oMath")) => AnyElementContent::OfficeMath(Box::new(item.read())),
+        Some((NS_M, "oMathPara")) => AnyElementContent::OfficeMathParagraph(Box::new(item.read())),
+        Some((NS_V, "oval")) => AnyElementContent::Oval(Box::new(item.read())),
+        Some((NS_PIC, "pic")) => AnyElementContent::Picture(Box::new(item.read())),
         Some((NS_X, "pivotCacheDefinition")) => {
-            AnyElementContent::PivotCacheDefinition(item.read())
+            AnyElementContent::PivotCacheDefinition(Box::new(item.read()))
         }
-        Some((NS_X, "pivotCacheRecords")) => AnyElementContent::PivotCacheRecords(item.read()),
+        Some((NS_X, "pivotCacheRecords")) => {
+            AnyElementContent::PivotCacheRecords(Box::new(item.read()))
+        }
         Some((NS_X, "pivotTableDefinition")) => {
             AnyElementContent::PivotTableDefinition(Box::new(item.read()))
         }
-        Some((NS_P, "presentation")) => AnyElementContent::Presentation(item.read()),
-        Some((NS_P, "sld")) => AnyElementContent::PresentationSlideSlide(item.read()),
+        Some((NS_P, "presentation")) => AnyElementContent::Presentation(Box::new(item.read())),
+        Some((NS_P, "sld")) => AnyElementContent::PresentationSlideSlide(Box::new(item.read())),
         Some((NS_P, "presentationPr")) => {
-            AnyElementContent::PresentationWideProperties(item.read())
+            AnyElementContent::PresentationWideProperties(Box::new(item.read()))
         }
-        Some((NS_P, "viewPr")) => AnyElementContent::PresentationWideViewProperties(item.read()),
-        Some((NS_P, "tagLst")) => AnyElementContent::ProgrammableTabList(item.read()),
-        Some((NS_X, "queryTable")) => AnyElementContent::QueryTable(item.read()),
-        Some((NS_VT, "r4")) => AnyElementContent::R4(item.read()),
-        Some((NS_VT, "r8")) => AnyElementContent::R8(item.read()),
-        Some((NS_V, "rect")) => AnyElementContent::Rectangle(item.read()),
-        Some((NS_C, "chart")) => AnyElementContent::ReferenceToChartPart(item.read()),
-        Some((NS_X, "headers")) => AnyElementContent::RevisionHeaders(item.read()),
-        Some((NS_X, "revisions")) => AnyElementContent::Revisions(item.read()),
-        Some((NS_W, "txbxContent")) => AnyElementContent::RichTextBoxContentContainer(item.read()),
-        Some((NS_W10, "borderright")) => AnyElementContent::RightBorder(item.read()),
-        Some((NS_V, "roundrect")) => AnyElementContent::RoundedRectangle(item.read()),
+        Some((NS_P, "viewPr")) => {
+            AnyElementContent::PresentationWideViewProperties(Box::new(item.read()))
+        }
+        Some((NS_P, "tagLst")) => AnyElementContent::ProgrammableTabList(Box::new(item.read())),
+        Some((NS_X, "queryTable")) => AnyElementContent::QueryTable(Box::new(item.read())),
+        Some((NS_VT, "r4")) => AnyElementContent::R4(Box::new(item.read())),
+        Some((NS_VT, "r8")) => AnyElementContent::R8(Box::new(item.read())),
+        Some((NS_V, "rect")) => AnyElementContent::Rectangle(Box::new(item.read())),
+        Some((NS_C, "chart")) => AnyElementContent::ReferenceToChartPart(Box::new(item.read())),
+        Some((NS_X, "headers")) => AnyElementContent::RevisionHeaders(Box::new(item.read())),
+        Some((NS_X, "revisions")) => AnyElementContent::Revisions(Box::new(item.read())),
+        Some((NS_W, "txbxContent")) => {
+            AnyElementContent::RichTextBoxContentContainer(Box::new(item.read()))
+        }
+        Some((NS_W10, "borderright")) => AnyElementContent::RightBorder(Box::new(item.read())),
+        Some((NS_V, "roundrect")) => AnyElementContent::RoundedRectangle(Box::new(item.read())),
         Some((NS_AC, "additionalCharacteristics")) => {
-            AnyElementContent::SetOfAdditionalCharacteristics(item.read())
+            AnyElementContent::SetOfAdditionalCharacteristics(Box::new(item.read()))
         }
-        Some((NS_V, "formulas")) => AnyElementContent::SetOfFormulas(item.read()),
-        Some((NS_V, "handles")) => AnyElementContent::SetOfHandles(item.read()),
-        Some((NS_V, "shadow")) => AnyElementContent::ShadowEffect(item.read()),
-        Some((NS_O, "clippath")) => AnyElementContent::ShapeClippingPath(item.read()),
-        Some((NS_V, "shape")) => AnyElementContent::ShapeDefinition(item.read()),
-        Some((NS_O, "fill")) => AnyElementContent::ShapeFillExtendedProperties(item.read()),
-        Some((NS_V, "fill")) => AnyElementContent::ShapeFillProperties(item.read()),
+        Some((NS_V, "formulas")) => AnyElementContent::SetOfFormulas(Box::new(item.read())),
+        Some((NS_V, "handles")) => AnyElementContent::SetOfHandles(Box::new(item.read())),
+        Some((NS_V, "shadow")) => AnyElementContent::ShadowEffect(Box::new(item.read())),
+        Some((NS_O, "clippath")) => AnyElementContent::ShapeClippingPath(Box::new(item.read())),
+        Some((NS_V, "shape")) => AnyElementContent::ShapeDefinition(Box::new(item.read())),
+        Some((NS_O, "fill")) => {
+            AnyElementContent::ShapeFillExtendedProperties(Box::new(item.read()))
+        }
+        Some((NS_V, "fill")) => AnyElementContent::ShapeFillProperties(Box::new(item.read())),
         _ => read_any_element_4(item),
     }
 }
 
 fn read_any_element_4(item: officekit_markup_base::Item<'_>) -> AnyElementContent {
     match item.name() {
-        Some((NS_V, "group")) => AnyElementContent::ShapeGroup(item.read()),
-        Some((NS_O, "shapelayout")) => AnyElementContent::ShapeLayoutProperties(item.read()),
-        Some((NS_V, "path")) => AnyElementContent::ShapePath(item.read()),
-        Some((NS_O, "lock")) => AnyElementContent::ShapeProtections(item.read()),
-        Some((NS_V, "shapetype")) => AnyElementContent::ShapeTemplate(item.read()),
-        Some((NS_X, "sst")) => AnyElementContent::SharedStringTable(item.read()),
-        Some((NS_X, "singleXmlCells")) => AnyElementContent::SingleCells(item.read()),
-        Some((NS_O, "skew")) => AnyElementContent::SkewTransform(item.read()),
-        Some((NS_P, "sldLayout")) => AnyElementContent::SlideLayout(item.read()),
-        Some((NS_P, "sldMaster")) => AnyElementContent::SlideMaster(item.read()),
-        Some((NS_P, "sldSyncPr")) => AnyElementContent::SlideSynchronizationProperties(item.read()),
-        Some((NS_B, "Sources")) => AnyElementContent::Sources(item.read()),
-        Some((NS_X, "table")) => AnyElementContent::SpreadsheetTable(item.read()),
-        Some((NS_XDR, "from")) => AnyElementContent::StartingAnchorPoint(item.read()),
-        Some((NS_O, "equationxml")) => {
-            AnyElementContent::StorageForAlternateMathContent(item.read())
+        Some((NS_V, "group")) => AnyElementContent::ShapeGroup(Box::new(item.read())),
+        Some((NS_O, "shapelayout")) => {
+            AnyElementContent::ShapeLayoutProperties(Box::new(item.read()))
         }
-        Some((NS_DGM, "styleDef")) => AnyElementContent::StyleDefinition(item.read()),
-        Some((NS_DGM, "styleDefHdr")) => AnyElementContent::StyleDefinitionHeader(item.read()),
-        Some((NS_W, "styles")) => AnyElementContent::StyleDefinitions(item.read()),
-        Some((NS_X, "styleSheet")) => AnyElementContent::StyleSheet(item.read()),
-        Some((NS_A, "tbl")) => AnyElementContent::Table(item.read()),
-        Some((NS_A, "tblStyleLst")) => AnyElementContent::TableStyleList(item.read()),
-        Some((NS_V, "textbox")) => AnyElementContent::TextBox(item.read()),
-        Some((NS_O, "bottom")) => AnyElementContent::TextBoxBottomStroke(item.read()),
-        Some((NS_O, "column")) => AnyElementContent::TextBoxInteriorStroke(item.read()),
-        Some((NS_O, "left")) => AnyElementContent::TextBoxLeftStroke(item.read()),
-        Some((NS_O, "right")) => AnyElementContent::TextBoxRightStroke(item.read()),
-        Some((NS_O, "top")) => AnyElementContent::TextBoxTopStroke(item.read()),
-        Some((NS_V, "textpath")) => AnyElementContent::TextLayoutPath(item.read()),
-        Some((NS_W10, "wrap")) => AnyElementContent::TextWrapping(item.read()),
-        Some((NS_A, "theme")) => AnyElementContent::Theme(item.read()),
-        Some((NS_A, "themeManager")) => AnyElementContent::ThemeManager(item.read()),
-        Some((NS_A, "themeOverride")) => AnyElementContent::ThemeOverride(item.read()),
-        Some((NS_W10, "bordertop")) => AnyElementContent::TopBorder(item.read()),
-        Some((NS_VT, "ui1")) => AnyElementContent::Ui1(item.read()),
-        Some((NS_VT, "ui2")) => AnyElementContent::Ui2(item.read()),
-        Some((NS_VT, "ui4")) => AnyElementContent::Ui4(item.read()),
-        Some((NS_VT, "ui8")) => AnyElementContent::Ui8(item.read()),
-        Some((NS_VT, "uint")) => AnyElementContent::UnsignedInteger(item.read()),
-        Some((NS_X, "users")) => AnyElementContent::UserList(item.read()),
-        Some((NS_C, "userShapes")) => AnyElementContent::UserShapes(item.read()),
+        Some((NS_V, "path")) => AnyElementContent::ShapePath(Box::new(item.read())),
+        Some((NS_O, "lock")) => AnyElementContent::ShapeProtections(Box::new(item.read())),
+        Some((NS_V, "shapetype")) => AnyElementContent::ShapeTemplate(Box::new(item.read())),
+        Some((NS_X, "sst")) => AnyElementContent::SharedStringTable(Box::new(item.read())),
+        Some((NS_X, "singleXmlCells")) => AnyElementContent::SingleCells(Box::new(item.read())),
+        Some((NS_O, "skew")) => AnyElementContent::SkewTransform(Box::new(item.read())),
+        Some((NS_P, "sldLayout")) => AnyElementContent::SlideLayout(Box::new(item.read())),
+        Some((NS_P, "sldMaster")) => AnyElementContent::SlideMaster(Box::new(item.read())),
+        Some((NS_P, "sldSyncPr")) => {
+            AnyElementContent::SlideSynchronizationProperties(Box::new(item.read()))
+        }
+        Some((NS_B, "Sources")) => AnyElementContent::Sources(Box::new(item.read())),
+        Some((NS_X, "table")) => AnyElementContent::SpreadsheetTable(Box::new(item.read())),
+        Some((NS_XDR, "from")) => AnyElementContent::StartingAnchorPoint(Box::new(item.read())),
+        Some((NS_O, "equationxml")) => {
+            AnyElementContent::StorageForAlternateMathContent(Box::new(item.read()))
+        }
+        Some((NS_DGM, "styleDef")) => AnyElementContent::StyleDefinition(Box::new(item.read())),
+        Some((NS_DGM, "styleDefHdr")) => {
+            AnyElementContent::StyleDefinitionHeader(Box::new(item.read()))
+        }
+        Some((NS_W, "styles")) => AnyElementContent::StyleDefinitions(Box::new(item.read())),
+        Some((NS_X, "styleSheet")) => AnyElementContent::StyleSheet(Box::new(item.read())),
+        Some((NS_A, "tbl")) => AnyElementContent::Table(Box::new(item.read())),
+        Some((NS_A, "tblStyleLst")) => AnyElementContent::TableStyleList(Box::new(item.read())),
+        Some((NS_V, "textbox")) => AnyElementContent::TextBox(Box::new(item.read())),
+        Some((NS_O, "bottom")) => AnyElementContent::TextBoxBottomStroke(Box::new(item.read())),
+        Some((NS_O, "column")) => AnyElementContent::TextBoxInteriorStroke(Box::new(item.read())),
+        Some((NS_O, "left")) => AnyElementContent::TextBoxLeftStroke(Box::new(item.read())),
+        Some((NS_O, "right")) => AnyElementContent::TextBoxRightStroke(Box::new(item.read())),
+        Some((NS_O, "top")) => AnyElementContent::TextBoxTopStroke(Box::new(item.read())),
+        Some((NS_V, "textpath")) => AnyElementContent::TextLayoutPath(Box::new(item.read())),
+        Some((NS_W10, "wrap")) => AnyElementContent::TextWrapping(Box::new(item.read())),
+        Some((NS_A, "theme")) => AnyElementContent::Theme(Box::new(item.read())),
+        Some((NS_A, "themeManager")) => AnyElementContent::ThemeManager(Box::new(item.read())),
+        Some((NS_A, "themeOverride")) => AnyElementContent::ThemeOverride(Box::new(item.read())),
+        Some((NS_W10, "bordertop")) => AnyElementContent::TopBorder(Box::new(item.read())),
+        Some((NS_VT, "ui1")) => AnyElementContent::Ui1(Box::new(item.read())),
+        Some((NS_VT, "ui2")) => AnyElementContent::Ui2(Box::new(item.read())),
+        Some((NS_VT, "ui4")) => AnyElementContent::Ui4(Box::new(item.read())),
+        Some((NS_VT, "ui8")) => AnyElementContent::Ui8(Box::new(item.read())),
+        Some((NS_VT, "uint")) => AnyElementContent::UnsignedInteger(Box::new(item.read())),
+        Some((NS_X, "users")) => AnyElementContent::UserList(Box::new(item.read())),
+        Some((NS_C, "userShapes")) => AnyElementContent::UserShapes(Box::new(item.read())),
         _ => read_any_element_5(item),
     }
 }
 
 fn read_any_element_5(item: officekit_markup_base::Item<'_>) -> AnyElementContent {
     match item.name() {
-        Some((NS_O, "diagram")) => AnyElementContent::VMLDiagram(item.read()),
-        Some((NS_PVML, "textdata")) => AnyElementContent::VMLDiagramText(item.read()),
-        Some((NS_VT, "variant")) => AnyElementContent::Variant(item.read()),
-        Some((NS_VT, "vector")) => AnyElementContent::Vector(item.read()),
-        Some((NS_A, "videoFile")) => AnyElementContent::VideoFromFile(item.read()),
-        Some((NS_X, "volTypes")) => AnyElementContent::VolatileDependencyTypes(item.read()),
-        Some((NS_W, "webSettings")) => AnyElementContent::WebPageSettings(item.read()),
-        Some((NS_WP | NS_WPC, "wpc")) => {
-            AnyElementContent::WordprocessingMLDrawingCanvas(item.read())
+        Some((NS_O, "diagram")) => AnyElementContent::VMLDiagram(Box::new(item.read())),
+        Some((NS_PVML, "textdata")) => AnyElementContent::VMLDiagramText(Box::new(item.read())),
+        Some((NS_VT, "variant")) => AnyElementContent::Variant(Box::new(item.read())),
+        Some((NS_VT, "vector")) => AnyElementContent::Vector(Box::new(item.read())),
+        Some((NS_A, "videoFile")) => AnyElementContent::VideoFromFile(Box::new(item.read())),
+        Some((NS_X, "volTypes")) => {
+            AnyElementContent::VolatileDependencyTypes(Box::new(item.read()))
         }
-        Some((NS_WP | NS_WPS, "wsp")) => AnyElementContent::WordprocessingMLShape(item.read()),
-        Some((NS_WP | NS_WPG, "wgp")) => AnyElementContent::WordprocessingMLShapeGroup(item.read()),
-        Some((NS_X, "workbook")) => AnyElementContent::Workbook(item.read()),
-        Some((NS_X, "worksheet")) => AnyElementContent::Worksheet(item.read()),
-        Some((NS_XDR, "wsDr")) => AnyElementContent::WorksheetDrawing(item.read()),
-        Some((NS_X, "MapInfo")) => AnyElementContent::XMLMappingMapInfo(item.read()),
-        _ => AnyElementContent::Other(item.into_node()),
+        Some((NS_W, "webSettings")) => AnyElementContent::WebPageSettings(Box::new(item.read())),
+        Some((NS_WP | NS_WPC, "wpc")) => {
+            AnyElementContent::WordprocessingMLDrawingCanvas(Box::new(item.read()))
+        }
+        Some((NS_WP | NS_WPS, "wsp")) => {
+            AnyElementContent::WordprocessingMLShape(Box::new(item.read()))
+        }
+        Some((NS_WP | NS_WPG, "wgp")) => {
+            AnyElementContent::WordprocessingMLShapeGroup(Box::new(item.read()))
+        }
+        Some((NS_X, "workbook")) => AnyElementContent::Workbook(Box::new(item.read())),
+        Some((NS_X, "worksheet")) => AnyElementContent::Worksheet(Box::new(item.read())),
+        Some((NS_XDR, "wsDr")) => AnyElementContent::WorksheetDrawing(Box::new(item.read())),
+        Some((NS_X, "MapInfo")) => AnyElementContent::XMLMappingMapInfo(Box::new(item.read())),
+        _ => AnyElementContent::Other(Box::new(item.into_node())),
     }
 }
 
@@ -44898,9 +47355,7 @@ fn any_element_content_into_drawing_object_content_1(
 ) -> Result<super::wordprocessing::DrawingObjectContent, Box<AnyElementContent>> {
     if let AnyElementContent::AnchorForFloatingDrawingMLObject(arm) = *item {
         return Ok(
-            super::wordprocessing::DrawingObjectContent::AnchorForFloatingDrawingMLObject(
-                Box::new(arm),
-            ),
+            super::wordprocessing::DrawingObjectContent::AnchorForFloatingDrawingMLObject(arm),
         );
     }
     if let AnyElementContent::InlineDrawingMLObject(arm) = *item {

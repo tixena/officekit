@@ -8,9 +8,18 @@ use alloc::collections::{BTreeMap, BTreeSet};
 
 use anyhow::{Context as _, Result, bail};
 
+use super::render::layout::{self, Expr};
+use super::render::{Names, generic_name};
+use super::structs::EnumDef;
 use super::{Data, NodeKey, Source};
 use crate::generate_schema::model::{Content, Method, Name, Particle, ParticleKind, SchemaSet};
 use crate::generate_schema::sdk_data::DataParticle;
+
+/// The most bytes an arm holds its struct in place; a larger struct is boxed.
+pub const INLINE_BYTES: usize = 32;
+
+/// The most bytes an enum of the tree a read gives takes: an inline arm and the tag.
+pub const ENUM_BYTES: usize = INLINE_BYTES + 8;
 
 /// One entry of a flattened choice: an element's tag and type, or a wildcard.
 #[derive(Clone, Debug, Eq, Ord, PartialEq, PartialOrd)]
@@ -576,4 +585,56 @@ pub fn rows(text: &str) -> Result<Vec<Row>> {
             })
         })
         .collect()
+}
+
+/// An enum's `From` of each struct its arms hold, boxing it where the arm
+/// does, and the assertion that the enum takes at most `ENUM_BYTES`.
+#[must_use = "this only returns the value"]
+pub fn arm_impls(names: &Names<'_>, found: &EnumDef) -> String {
+    let with = generic_name(&found.name);
+    let mut out = String::new();
+    for (variant, arm) in &found.arms {
+        if found.arms.iter().filter(|(_, other)| other == arm).count() > 1 {
+            continue;
+        }
+        let node = &names.catalog.nodes[*arm];
+        let held = format!("{}<X>", names.path(node.module, &generic_name(&node.name)));
+        out.push('\n');
+        out.push_str(&layout::generic_impl_header(
+            "<X: UserData>",
+            &format!("From<{held}>"),
+            &format!("{with}<X>"),
+        ));
+        out.push_str(&layout::signature(
+            4,
+            "fn from",
+            &[format!("arm: {held}")],
+            "Self",
+        ));
+        let value = if found.boxed.contains(arm) {
+            Expr::call("Box::new", vec![Expr::atom("arm")])
+        } else {
+            Expr::atom("arm")
+        };
+        layout::line(
+            "        ",
+            &Expr::call(&format!("Self::{variant}"), vec![value]),
+            "",
+            &mut out,
+        );
+        out.push_str("    }\n}\n");
+    }
+    out.push('\n');
+    layout::statement(
+        "const _: () = ",
+        &Expr::call(
+            "assert!",
+            vec![
+                Expr::Atom(format!("size_of::<{}>() <= {ENUM_BYTES}", found.name)),
+                Expr::atom("\"an arm the generator holds in place takes more than 32 bytes\""),
+            ],
+        ),
+        &mut out,
+    );
+    out
 }

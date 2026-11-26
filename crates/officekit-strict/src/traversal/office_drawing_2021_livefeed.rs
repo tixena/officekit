@@ -594,15 +594,15 @@ impl super::Transform for office_drawing_2021_livefeed::LiveFeedBackgroundProper
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Blur(arm) = self {
-            Self::Blur(arm.transform(ctx))
+            Self::Blur(Box::new(arm.transform(ctx)))
         } else if let Self::Custom(arm) = self {
-            Self::Custom(arm.transform(ctx))
+            Self::Custom(Box::new(arm.transform(ctx)))
         } else if let Self::Normal(arm) = self {
-            Self::Normal(arm.transform(ctx))
+            Self::Normal(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Removed(arm) = self {
-            Self::Removed(arm.transform(ctx))
+            Self::Removed(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

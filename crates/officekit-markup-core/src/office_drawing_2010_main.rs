@@ -1760,61 +1760,61 @@ impl Eq for NvContentPartPrWith<()> {}
 #[non_exhaustive]
 pub enum PictureEffectContentWith<X: UserData> {
     /// The element `a14:artisticBlur`, a `ArtisticBlur`.
-    ArtisticBlur(ArtisticBlurWith<X>),
+    ArtisticBlur(Box<ArtisticBlurWith<X>>),
     /// The element `a14:artisticCement`, a `ArtisticCement`.
-    ArtisticCement(ArtisticCementWith<X>),
+    ArtisticCement(Box<ArtisticCementWith<X>>),
     /// The element `a14:artisticChalkSketch`, a `ArtisticChalkSketch`.
-    ArtisticChalkSketch(ArtisticChalkSketchWith<X>),
+    ArtisticChalkSketch(Box<ArtisticChalkSketchWith<X>>),
     /// The element `a14:artisticCrisscrossEtching`, a `ArtisticCrisscrossEtching`.
-    ArtisticCrisscrossEtching(ArtisticCrisscrossEtchingWith<X>),
+    ArtisticCrisscrossEtching(Box<ArtisticCrisscrossEtchingWith<X>>),
     /// The element `a14:artisticCutout`, a `ArtisticCutout`.
-    ArtisticCutout(ArtisticCutoutWith<X>),
+    ArtisticCutout(Box<ArtisticCutoutWith<X>>),
     /// The element `a14:artisticFilmGrain`, a `ArtisticFilmGrain`.
-    ArtisticFilmGrain(ArtisticFilmGrainWith<X>),
+    ArtisticFilmGrain(Box<ArtisticFilmGrainWith<X>>),
     /// The element `a14:artisticGlass`, a `ArtisticGlass`.
-    ArtisticGlass(ArtisticGlassWith<X>),
+    ArtisticGlass(Box<ArtisticGlassWith<X>>),
     /// The element `a14:artisticGlowDiffused`, a `ArtisticGlowDiffused`.
-    ArtisticGlowDiffused(ArtisticGlowDiffusedWith<X>),
+    ArtisticGlowDiffused(Box<ArtisticGlowDiffusedWith<X>>),
     /// The element `a14:artisticGlowEdges`, a `ArtisticGlowEdges`.
-    ArtisticGlowEdges(ArtisticGlowEdgesWith<X>),
+    ArtisticGlowEdges(Box<ArtisticGlowEdgesWith<X>>),
     /// The element `a14:artisticLightScreen`, a `ArtisticLightScreen`.
-    ArtisticLightScreen(ArtisticLightScreenWith<X>),
+    ArtisticLightScreen(Box<ArtisticLightScreenWith<X>>),
     /// The element `a14:artisticLineDrawing`, a `ArtisticLineDrawing`.
-    ArtisticLineDrawing(ArtisticLineDrawingWith<X>),
+    ArtisticLineDrawing(Box<ArtisticLineDrawingWith<X>>),
     /// The element `a14:artisticMarker`, a `ArtisticMarker`.
-    ArtisticMarker(ArtisticMarkerWith<X>),
+    ArtisticMarker(Box<ArtisticMarkerWith<X>>),
     /// The element `a14:artisticMosiaicBubbles`, a `ArtisticMosiaicBubbles`.
-    ArtisticMosiaicBubbles(ArtisticMosiaicBubblesWith<X>),
+    ArtisticMosiaicBubbles(Box<ArtisticMosiaicBubblesWith<X>>),
     /// The element `a14:artisticPaintBrush`, a `ArtisticPaintBrush`.
-    ArtisticPaintBrush(ArtisticPaintBrushWith<X>),
+    ArtisticPaintBrush(Box<ArtisticPaintBrushWith<X>>),
     /// The element `a14:artisticPaintStrokes`, a `ArtisticPaintStrokes`.
-    ArtisticPaintStrokes(ArtisticPaintStrokesWith<X>),
+    ArtisticPaintStrokes(Box<ArtisticPaintStrokesWith<X>>),
     /// The element `a14:artisticPastelsSmooth`, a `ArtisticPastelsSmooth`.
-    ArtisticPastelsSmooth(ArtisticPastelsSmoothWith<X>),
+    ArtisticPastelsSmooth(Box<ArtisticPastelsSmoothWith<X>>),
     /// The element `a14:artisticPencilGrayscale`, a `ArtisticPencilGrayscale`.
-    ArtisticPencilGrayscale(ArtisticPencilGrayscaleWith<X>),
+    ArtisticPencilGrayscale(Box<ArtisticPencilGrayscaleWith<X>>),
     /// The element `a14:artisticPencilSketch`, a `ArtisticPencilSketch`.
-    ArtisticPencilSketch(ArtisticPencilSketchWith<X>),
+    ArtisticPencilSketch(Box<ArtisticPencilSketchWith<X>>),
     /// The element `a14:artisticPhotocopy`, a `ArtisticPhotocopy`.
-    ArtisticPhotocopy(ArtisticPhotocopyWith<X>),
+    ArtisticPhotocopy(Box<ArtisticPhotocopyWith<X>>),
     /// The element `a14:artisticPlasticWrap`, a `ArtisticPlasticWrap`.
-    ArtisticPlasticWrap(ArtisticPlasticWrapWith<X>),
+    ArtisticPlasticWrap(Box<ArtisticPlasticWrapWith<X>>),
     /// The element `a14:artisticTexturizer`, a `ArtisticTexturizer`.
-    ArtisticTexturizer(ArtisticTexturizerWith<X>),
+    ArtisticTexturizer(Box<ArtisticTexturizerWith<X>>),
     /// The element `a14:artisticWatercolorSponge`, a `ArtisticWatercolorSponge`.
-    ArtisticWatercolorSponge(ArtisticWatercolorSpongeWith<X>),
+    ArtisticWatercolorSponge(Box<ArtisticWatercolorSpongeWith<X>>),
     /// The element `a14:backgroundRemoval`, a `BackgroundRemoval`.
-    BackgroundRemoval(BackgroundRemovalWith<X>),
+    BackgroundRemoval(Box<BackgroundRemovalWith<X>>),
     /// The element `a14:brightnessContrast`, a `BrightnessContrast`.
-    BrightnessContrast(BrightnessContrastWith<X>),
+    BrightnessContrast(Box<BrightnessContrastWith<X>>),
     /// The element `a14:colorTemperature`, a `ColorTemperature`.
-    ColorTemperature(ColorTemperatureWith<X>),
+    ColorTemperature(Box<ColorTemperatureWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `a14:saturation`, a `Saturation`.
-    Saturation(SaturationWith<X>),
+    Saturation(Box<SaturationWith<X>>),
     /// The element `a14:sharpenSoften`, a `SharpenSoften`.
-    SharpenSoften(SharpenSoftenWith<X>),
+    SharpenSoften(Box<SharpenSoftenWith<X>>),
 }
 
 /// [`PictureEffectContentWith`] of the tree a read gives, where no node holds anything in
@@ -4354,136 +4354,88 @@ impl<X: UserData> PictureEffectContentWith<X> {
     where
         Y: UserData,
     {
-        match self {
-            Self::ArtisticBlur(node) => {
-                PictureEffectContentWith::ArtisticBlur(node.into_user_data())
-            }
-            Self::ArtisticCement(node) => {
-                PictureEffectContentWith::ArtisticCement(node.into_user_data())
-            }
-            Self::ArtisticChalkSketch(node) => {
-                PictureEffectContentWith::ArtisticChalkSketch(node.into_user_data())
-            }
-            Self::ArtisticCrisscrossEtching(node) => {
-                PictureEffectContentWith::ArtisticCrisscrossEtching(node.into_user_data())
-            }
-            Self::ArtisticCutout(node) => {
-                PictureEffectContentWith::ArtisticCutout(node.into_user_data())
-            }
-            Self::ArtisticFilmGrain(node) => {
-                PictureEffectContentWith::ArtisticFilmGrain(node.into_user_data())
-            }
-            Self::ArtisticGlass(node) => {
-                PictureEffectContentWith::ArtisticGlass(node.into_user_data())
-            }
-            Self::ArtisticGlowDiffused(node) => {
-                PictureEffectContentWith::ArtisticGlowDiffused(node.into_user_data())
-            }
-            Self::ArtisticGlowEdges(node) => {
-                PictureEffectContentWith::ArtisticGlowEdges(node.into_user_data())
-            }
-            Self::ArtisticLightScreen(node) => {
-                PictureEffectContentWith::ArtisticLightScreen(node.into_user_data())
-            }
-            Self::ArtisticLineDrawing(node) => {
-                PictureEffectContentWith::ArtisticLineDrawing(node.into_user_data())
-            }
-            Self::ArtisticMarker(node) => {
-                PictureEffectContentWith::ArtisticMarker(node.into_user_data())
-            }
-            Self::ArtisticMosiaicBubbles(node) => {
-                PictureEffectContentWith::ArtisticMosiaicBubbles(node.into_user_data())
-            }
-            Self::ArtisticPaintBrush(node) => {
-                PictureEffectContentWith::ArtisticPaintBrush(node.into_user_data())
-            }
-            Self::ArtisticPaintStrokes(node) => {
-                PictureEffectContentWith::ArtisticPaintStrokes(node.into_user_data())
-            }
-            Self::ArtisticPastelsSmooth(node) => {
-                PictureEffectContentWith::ArtisticPastelsSmooth(node.into_user_data())
-            }
-            Self::ArtisticPencilGrayscale(node) => {
-                PictureEffectContentWith::ArtisticPencilGrayscale(node.into_user_data())
-            }
-            Self::ArtisticPencilSketch(node) => {
-                PictureEffectContentWith::ArtisticPencilSketch(node.into_user_data())
-            }
-            Self::ArtisticPhotocopy(node) => {
-                PictureEffectContentWith::ArtisticPhotocopy(node.into_user_data())
-            }
-            Self::ArtisticPlasticWrap(node) => {
-                PictureEffectContentWith::ArtisticPlasticWrap(node.into_user_data())
-            }
-            Self::ArtisticTexturizer(node) => {
-                PictureEffectContentWith::ArtisticTexturizer(node.into_user_data())
-            }
-            Self::ArtisticWatercolorSponge(node) => {
-                PictureEffectContentWith::ArtisticWatercolorSponge(node.into_user_data())
-            }
-            Self::BackgroundRemoval(node) => {
-                PictureEffectContentWith::BackgroundRemoval(node.into_user_data())
-            }
-            Self::BrightnessContrast(node) => {
-                PictureEffectContentWith::BrightnessContrast(node.into_user_data())
-            }
-            Self::ColorTemperature(node) => {
-                PictureEffectContentWith::ColorTemperature(node.into_user_data())
-            }
-            Self::Other(node) => PictureEffectContentWith::Other(node),
-            Self::Saturation(node) => PictureEffectContentWith::Saturation(node.into_user_data()),
-            Self::SharpenSoften(node) => {
-                PictureEffectContentWith::SharpenSoften(node.into_user_data())
-            }
-        }
+        officekit_markup_base::into_user_data_match!(self, PictureEffectContentWith;
+            plain [
+            ]
+            boxed [
+                ArtisticBlur, ArtisticCement, ArtisticChalkSketch, ArtisticCrisscrossEtching,
+                ArtisticCutout, ArtisticFilmGrain, ArtisticGlass, ArtisticGlowDiffused,
+                ArtisticGlowEdges, ArtisticLightScreen, ArtisticLineDrawing, ArtisticMarker,
+                ArtisticMosiaicBubbles, ArtisticPaintBrush, ArtisticPaintStrokes,
+                ArtisticPastelsSmooth, ArtisticPencilGrayscale, ArtisticPencilSketch,
+                ArtisticPhotocopy, ArtisticPlasticWrap, ArtisticTexturizer,
+                ArtisticWatercolorSponge, BackgroundRemoval, BrightnessContrast, ColorTemperature,
+                Saturation, SharpenSoften,
+            ]
+        )
     }
 }
 
 impl<X: UserData> Default for PictureEffectContentWith<X> {
     fn default() -> Self {
-        Self::ArtisticBlur(ArtisticBlurWith::default())
+        Self::ArtisticBlur(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for PictureEffectContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_A14, "artisticBlur")) => Self::ArtisticBlur(item.read()),
-            Some((NS_A14, "artisticCement")) => Self::ArtisticCement(item.read()),
-            Some((NS_A14, "artisticChalkSketch")) => Self::ArtisticChalkSketch(item.read()),
+            Some((NS_A14, "artisticBlur")) => Self::ArtisticBlur(Box::new(item.read())),
+            Some((NS_A14, "artisticCement")) => Self::ArtisticCement(Box::new(item.read())),
+            Some((NS_A14, "artisticChalkSketch")) => {
+                Self::ArtisticChalkSketch(Box::new(item.read()))
+            }
             Some((NS_A14, "artisticCrisscrossEtching")) => {
-                Self::ArtisticCrisscrossEtching(item.read())
+                Self::ArtisticCrisscrossEtching(Box::new(item.read()))
             }
-            Some((NS_A14, "artisticCutout")) => Self::ArtisticCutout(item.read()),
-            Some((NS_A14, "artisticFilmGrain")) => Self::ArtisticFilmGrain(item.read()),
-            Some((NS_A14, "artisticGlass")) => Self::ArtisticGlass(item.read()),
-            Some((NS_A14, "artisticGlowDiffused")) => Self::ArtisticGlowDiffused(item.read()),
-            Some((NS_A14, "artisticGlowEdges")) => Self::ArtisticGlowEdges(item.read()),
-            Some((NS_A14, "artisticLightScreen")) => Self::ArtisticLightScreen(item.read()),
-            Some((NS_A14, "artisticLineDrawing")) => Self::ArtisticLineDrawing(item.read()),
-            Some((NS_A14, "artisticMarker")) => Self::ArtisticMarker(item.read()),
-            Some((NS_A14, "artisticMosiaicBubbles")) => Self::ArtisticMosiaicBubbles(item.read()),
-            Some((NS_A14, "artisticPaintBrush")) => Self::ArtisticPaintBrush(item.read()),
-            Some((NS_A14, "artisticPaintStrokes")) => Self::ArtisticPaintStrokes(item.read()),
-            Some((NS_A14, "artisticPastelsSmooth")) => Self::ArtisticPastelsSmooth(item.read()),
-            Some((NS_A14, "artisticPencilGrayscale")) => Self::ArtisticPencilGrayscale(item.read()),
-            Some((NS_A14, "artisticPencilSketch")) => Self::ArtisticPencilSketch(item.read()),
-            Some((NS_A14, "artisticPhotocopy")) => Self::ArtisticPhotocopy(item.read()),
-            Some((NS_A14, "artisticPlasticWrap")) => Self::ArtisticPlasticWrap(item.read()),
-            Some((NS_A14, "artisticTexturizer")) => Self::ArtisticTexturizer(item.read()),
+            Some((NS_A14, "artisticCutout")) => Self::ArtisticCutout(Box::new(item.read())),
+            Some((NS_A14, "artisticFilmGrain")) => Self::ArtisticFilmGrain(Box::new(item.read())),
+            Some((NS_A14, "artisticGlass")) => Self::ArtisticGlass(Box::new(item.read())),
+            Some((NS_A14, "artisticGlowDiffused")) => {
+                Self::ArtisticGlowDiffused(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticGlowEdges")) => Self::ArtisticGlowEdges(Box::new(item.read())),
+            Some((NS_A14, "artisticLightScreen")) => {
+                Self::ArtisticLightScreen(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticLineDrawing")) => {
+                Self::ArtisticLineDrawing(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticMarker")) => Self::ArtisticMarker(Box::new(item.read())),
+            Some((NS_A14, "artisticMosiaicBubbles")) => {
+                Self::ArtisticMosiaicBubbles(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticPaintBrush")) => Self::ArtisticPaintBrush(Box::new(item.read())),
+            Some((NS_A14, "artisticPaintStrokes")) => {
+                Self::ArtisticPaintStrokes(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticPastelsSmooth")) => {
+                Self::ArtisticPastelsSmooth(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticPencilGrayscale")) => {
+                Self::ArtisticPencilGrayscale(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticPencilSketch")) => {
+                Self::ArtisticPencilSketch(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticPhotocopy")) => Self::ArtisticPhotocopy(Box::new(item.read())),
+            Some((NS_A14, "artisticPlasticWrap")) => {
+                Self::ArtisticPlasticWrap(Box::new(item.read()))
+            }
+            Some((NS_A14, "artisticTexturizer")) => Self::ArtisticTexturizer(Box::new(item.read())),
             Some((NS_A14, "artisticWatercolorSponge")) => {
-                Self::ArtisticWatercolorSponge(item.read())
+                Self::ArtisticWatercolorSponge(Box::new(item.read()))
             }
-            Some((NS_A14, "backgroundRemoval")) => Self::BackgroundRemoval(item.read()),
-            Some((NS_A14, "brightnessContrast")) => Self::BrightnessContrast(item.read()),
-            Some((NS_A14, "colorTemperature")) => Self::ColorTemperature(item.read()),
-            Some((NS_A14, "saturation")) => Self::Saturation(item.read()),
-            Some((NS_A14, "sharpenSoften")) => Self::SharpenSoften(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_A14, "backgroundRemoval")) => Self::BackgroundRemoval(Box::new(item.read())),
+            Some((NS_A14, "brightnessContrast")) => Self::BrightnessContrast(Box::new(item.read())),
+            Some((NS_A14, "colorTemperature")) => Self::ColorTemperature(Box::new(item.read())),
+            Some((NS_A14, "saturation")) => Self::Saturation(Box::new(item.read())),
+            Some((NS_A14, "sharpenSoften")) => Self::SharpenSoften(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -4516,12 +4468,179 @@ impl officekit_markup_base::Write for PictureEffectContent {
             Self::BackgroundRemoval(arm) => arm.write_into(writer),
             Self::BrightnessContrast(arm) => arm.write_into(writer),
             Self::ColorTemperature(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Saturation(arm) => arm.write_into(writer),
             Self::SharpenSoften(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ArtisticBlurWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticBlurWith<X>) -> Self {
+        Self::ArtisticBlur(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticCementWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticCementWith<X>) -> Self {
+        Self::ArtisticCement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticChalkSketchWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticChalkSketchWith<X>) -> Self {
+        Self::ArtisticChalkSketch(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticCrisscrossEtchingWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticCrisscrossEtchingWith<X>) -> Self {
+        Self::ArtisticCrisscrossEtching(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticCutoutWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticCutoutWith<X>) -> Self {
+        Self::ArtisticCutout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticFilmGrainWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticFilmGrainWith<X>) -> Self {
+        Self::ArtisticFilmGrain(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticGlassWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticGlassWith<X>) -> Self {
+        Self::ArtisticGlass(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticGlowDiffusedWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticGlowDiffusedWith<X>) -> Self {
+        Self::ArtisticGlowDiffused(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticGlowEdgesWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticGlowEdgesWith<X>) -> Self {
+        Self::ArtisticGlowEdges(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticLightScreenWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticLightScreenWith<X>) -> Self {
+        Self::ArtisticLightScreen(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticLineDrawingWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticLineDrawingWith<X>) -> Self {
+        Self::ArtisticLineDrawing(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticMarkerWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticMarkerWith<X>) -> Self {
+        Self::ArtisticMarker(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticMosiaicBubblesWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticMosiaicBubblesWith<X>) -> Self {
+        Self::ArtisticMosiaicBubbles(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticPaintBrushWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticPaintBrushWith<X>) -> Self {
+        Self::ArtisticPaintBrush(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticPaintStrokesWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticPaintStrokesWith<X>) -> Self {
+        Self::ArtisticPaintStrokes(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticPastelsSmoothWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticPastelsSmoothWith<X>) -> Self {
+        Self::ArtisticPastelsSmooth(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticPencilGrayscaleWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticPencilGrayscaleWith<X>) -> Self {
+        Self::ArtisticPencilGrayscale(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticPencilSketchWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticPencilSketchWith<X>) -> Self {
+        Self::ArtisticPencilSketch(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticPhotocopyWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticPhotocopyWith<X>) -> Self {
+        Self::ArtisticPhotocopy(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticPlasticWrapWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticPlasticWrapWith<X>) -> Self {
+        Self::ArtisticPlasticWrap(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticTexturizerWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticTexturizerWith<X>) -> Self {
+        Self::ArtisticTexturizer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArtisticWatercolorSpongeWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ArtisticWatercolorSpongeWith<X>) -> Self {
+        Self::ArtisticWatercolorSponge(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BackgroundRemovalWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: BackgroundRemovalWith<X>) -> Self {
+        Self::BackgroundRemoval(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BrightnessContrastWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: BrightnessContrastWith<X>) -> Self {
+        Self::BrightnessContrast(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ColorTemperatureWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: ColorTemperatureWith<X>) -> Self {
+        Self::ColorTemperature(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SaturationWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: SaturationWith<X>) -> Self {
+        Self::Saturation(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SharpenSoftenWith<X>> for PictureEffectContentWith<X> {
+    fn from(arm: SharpenSoftenWith<X>) -> Self {
+        Self::SharpenSoften(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<PictureEffectContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SaturationWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

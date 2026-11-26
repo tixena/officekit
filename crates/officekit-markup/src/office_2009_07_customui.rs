@@ -2444,11 +2444,11 @@ impl Eq for BackstageWith<()> {}
 #[non_exhaustive]
 pub enum BackstageContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageFastCommandButton`.
-    ButtonBackstageFastCommandButton(ButtonBackstageFastCommandButtonWith<X>),
+    ButtonBackstageFastCommandButton(Box<ButtonBackstageFastCommandButtonWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:tab`, a `TabBackstageTab`.
-    TabBackstageTab(TabBackstageTabWith<X>),
+    TabBackstageTab(Box<TabBackstageTabWith<X>>),
 }
 
 /// [`BackstageContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -2465,13 +2465,13 @@ impl Eq for BackstageContentWith<()> {}
 #[non_exhaustive]
 pub enum BackstageGroupsContentWith<X: UserData> {
     /// The element `mso14:group`, a `GroupBackstageGroup`.
-    GroupBackstageGroup(GroupBackstageGroupWith<X>),
+    GroupBackstageGroup(Box<GroupBackstageGroupWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:taskFormGroup`, a `TaskFormGroup`.
-    TaskFormGroup(TaskFormGroupWith<X>),
+    TaskFormGroup(Box<TaskFormGroupWith<X>>),
     /// The element `mso14:taskGroup`, a `TaskGroup`.
-    TaskGroup(TaskGroupWith<X>),
+    TaskGroup(Box<TaskGroupWith<X>>),
 }
 
 /// [`BackstageGroupsContentWith`] of the tree a read gives, where no node holds anything in
@@ -2489,15 +2489,15 @@ impl Eq for BackstageGroupsContentWith<()> {}
 #[non_exhaustive]
 pub enum BackstageMenuGroupContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageMenuButton`.
-    ButtonBackstageMenuButton(ButtonBackstageMenuButtonWith<X>),
+    ButtonBackstageMenuButton(Box<ButtonBackstageMenuButtonWith<X>>),
     /// The element `mso14:checkBox`, a `CheckBoxBackstageMenuCheckBox`.
-    CheckBoxBackstageMenuCheckBox(CheckBoxBackstageMenuCheckBoxWith<X>),
+    CheckBoxBackstageMenuCheckBox(Box<CheckBoxBackstageMenuCheckBoxWith<X>>),
     /// The element `mso14:menu`, a `MenuBackstageSubMenu`.
-    MenuBackstageSubMenu(MenuBackstageSubMenuWith<X>),
+    MenuBackstageSubMenu(Box<MenuBackstageSubMenuWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:toggleButton`, a `ToggleButtonBackstageMenuToggleButton`.
-    ToggleButtonBackstageMenuToggleButton(ToggleButtonBackstageMenuToggleButtonWith<X>),
+    ToggleButtonBackstageMenuToggleButton(Box<ToggleButtonBackstageMenuToggleButtonWith<X>>),
 }
 
 /// [`BackstageMenuGroupContentWith`] of the tree a read gives, where no node holds anything in
@@ -2574,35 +2574,35 @@ impl Eq for BoxBoxWith<()> {}
 #[non_exhaustive]
 pub enum BoxContentWith<X: UserData> {
     /// The element `mso14:box`, a `BoxBox`.
-    BoxBox(BoxBoxWith<X>),
+    BoxBox(Box<BoxBoxWith<X>>),
     /// The element `mso14:button`, a `ButtonButton`.
-    ButtonButton(ButtonButtonWith<X>),
+    ButtonButton(Box<ButtonButtonWith<X>>),
     /// The element `mso14:buttonGroup`, a `ButtonGroup`.
-    ButtonGroup(ButtonGroupWith<X>),
+    ButtonGroup(Box<ButtonGroupWith<X>>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
+    CheckBoxCheckBox(Box<CheckBoxCheckBoxWith<X>>),
     /// The element `mso14:comboBox`, a `ComboBoxComboBox`.
-    ComboBoxComboBox(ComboBoxComboBoxWith<X>),
+    ComboBoxComboBox(Box<ComboBoxComboBoxWith<X>>),
     /// The element `mso14:control`, a `ControlControlClone`.
-    ControlControlClone(ControlControlCloneWith<X>),
+    ControlControlClone(Box<ControlControlCloneWith<X>>),
     /// The element `mso14:dropDown`, a `DropDownDropDownRegular`.
-    DropDownDropDownRegular(DropDownDropDownRegularWith<X>),
+    DropDownDropDownRegular(Box<DropDownDropDownRegularWith<X>>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenu`.
-    DynamicMenuDynamicMenu(DynamicMenuDynamicMenuWith<X>),
+    DynamicMenuDynamicMenu(Box<DynamicMenuDynamicMenuWith<X>>),
     /// The element `mso14:editBox`, a `EditBoxEditBox`.
-    EditBoxEditBox(EditBoxEditBoxWith<X>),
+    EditBoxEditBox(Box<EditBoxEditBoxWith<X>>),
     /// The element `mso14:gallery`, a `GalleryGallery`.
     GalleryGallery(Box<GalleryGalleryWith<X>>),
     /// The element `mso14:labelControl`, a `LabelControlLabelControl`.
-    LabelControlLabelControl(LabelControlLabelControlWith<X>),
+    LabelControlLabelControl(Box<LabelControlLabelControlWith<X>>),
     /// The element `mso14:menu`, a `MenuMenu`.
-    MenuMenu(MenuMenuWith<X>),
+    MenuMenu(Box<MenuMenuWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButton`.
-    SplitButtonSplitButton(SplitButtonSplitButtonWith<X>),
+    SplitButtonSplitButton(Box<SplitButtonSplitButtonWith<X>>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButton`.
-    ToggleButtonToggleButton(ToggleButtonToggleButtonWith<X>),
+    ToggleButtonToggleButton(Box<ToggleButtonToggleButtonWith<X>>),
 }
 
 /// [`BoxContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -3074,23 +3074,23 @@ impl Eq for ButtonGroupWith<()> {}
 #[non_exhaustive]
 pub enum ButtonGroupContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegularWith<X>),
+    ButtonButtonRegular(Box<ButtonButtonRegularWith<X>>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
+    ControlControlCloneRegular(Box<ControlControlCloneRegularWith<X>>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
+    DynamicMenuDynamicMenuRegular(Box<DynamicMenuDynamicMenuRegularWith<X>>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuRegular`.
-    MenuMenuRegular(MenuMenuRegularWith<X>),
+    MenuMenuRegular(Box<MenuMenuRegularWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:separator`, a `Separator`.
-    Separator(SeparatorWith<X>),
+    Separator(Box<SeparatorWith<X>>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
-    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegularWith<X>),
+    SplitButtonSplitButtonRegular(Box<SplitButtonSplitButtonRegularWith<X>>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
+    ToggleButtonToggleButtonRegular(Box<ToggleButtonToggleButtonRegularWith<X>>),
 }
 
 /// [`ButtonGroupContentWith`] of the tree a read gives, where no node holds anything in
@@ -5965,25 +5965,25 @@ impl Eq for ContextMenuWith<()> {}
 #[non_exhaustive]
 pub enum ContextMenuContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegularWith<X>),
+    ButtonButtonRegular(Box<ButtonButtonRegularWith<X>>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
+    CheckBoxCheckBox(Box<CheckBoxCheckBoxWith<X>>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
+    ControlControlCloneRegular(Box<ControlControlCloneRegularWith<X>>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
+    DynamicMenuDynamicMenuRegular(Box<DynamicMenuDynamicMenuRegularWith<X>>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuRegular`.
-    MenuMenuRegular(MenuMenuRegularWith<X>),
+    MenuMenuRegular(Box<MenuMenuRegularWith<X>>),
     /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparatorNoTitle`.
-    MenuSeparatorMenuSeparatorNoTitle(MenuSeparatorMenuSeparatorNoTitleWith<X>),
+    MenuSeparatorMenuSeparatorNoTitle(Box<MenuSeparatorMenuSeparatorNoTitleWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
-    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegularWith<X>),
+    SplitButtonSplitButtonRegular(Box<SplitButtonSplitButtonRegularWith<X>>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
+    ToggleButtonToggleButtonRegular(Box<ToggleButtonToggleButtonRegularWith<X>>),
 }
 
 /// [`ContextMenuContentWith`] of the tree a read gives, where no node holds anything in
@@ -7215,37 +7215,37 @@ impl Eq for GroupBoxWith<()> {}
 #[non_exhaustive]
 pub enum GroupContentWith<X: UserData> {
     /// The element `mso14:box`, a `BoxBox`.
-    BoxBox(BoxBoxWith<X>),
+    BoxBox(Box<BoxBoxWith<X>>),
     /// The element `mso14:button`, a `ButtonButton`.
-    ButtonButton(ButtonButtonWith<X>),
+    ButtonButton(Box<ButtonButtonWith<X>>),
     /// The element `mso14:buttonGroup`, a `ButtonGroup`.
-    ButtonGroup(ButtonGroupWith<X>),
+    ButtonGroup(Box<ButtonGroupWith<X>>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
+    CheckBoxCheckBox(Box<CheckBoxCheckBoxWith<X>>),
     /// The element `mso14:comboBox`, a `ComboBoxComboBox`.
-    ComboBoxComboBox(ComboBoxComboBoxWith<X>),
+    ComboBoxComboBox(Box<ComboBoxComboBoxWith<X>>),
     /// The element `mso14:control`, a `ControlControlClone`.
-    ControlControlClone(ControlControlCloneWith<X>),
+    ControlControlClone(Box<ControlControlCloneWith<X>>),
     /// The element `mso14:dropDown`, a `DropDownDropDownRegular`.
-    DropDownDropDownRegular(DropDownDropDownRegularWith<X>),
+    DropDownDropDownRegular(Box<DropDownDropDownRegularWith<X>>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenu`.
-    DynamicMenuDynamicMenu(DynamicMenuDynamicMenuWith<X>),
+    DynamicMenuDynamicMenu(Box<DynamicMenuDynamicMenuWith<X>>),
     /// The element `mso14:editBox`, a `EditBoxEditBox`.
-    EditBoxEditBox(EditBoxEditBoxWith<X>),
+    EditBoxEditBox(Box<EditBoxEditBoxWith<X>>),
     /// The element `mso14:gallery`, a `GalleryGallery`.
     GalleryGallery(Box<GalleryGalleryWith<X>>),
     /// The element `mso14:labelControl`, a `LabelControlLabelControl`.
-    LabelControlLabelControl(LabelControlLabelControlWith<X>),
+    LabelControlLabelControl(Box<LabelControlLabelControlWith<X>>),
     /// The element `mso14:menu`, a `MenuMenu`.
-    MenuMenu(MenuMenuWith<X>),
+    MenuMenu(Box<MenuMenuWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:separator`, a `Separator`.
-    Separator(SeparatorWith<X>),
+    Separator(Box<SeparatorWith<X>>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButton`.
-    SplitButtonSplitButton(SplitButtonSplitButtonWith<X>),
+    SplitButtonSplitButton(Box<SplitButtonSplitButtonWith<X>>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButton`.
-    ToggleButtonToggleButton(ToggleButtonToggleButtonWith<X>),
+    ToggleButtonToggleButton(Box<ToggleButtonToggleButtonWith<X>>),
 }
 
 /// [`GroupContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -7263,29 +7263,29 @@ impl Eq for GroupContentWith<()> {}
 #[non_exhaustive]
 pub enum GroupControlsContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageGroupButton`.
-    ButtonBackstageGroupButton(ButtonBackstageGroupButtonWith<X>),
+    ButtonBackstageGroupButton(Box<ButtonBackstageGroupButtonWith<X>>),
     /// The element `mso14:checkBox`, a `CheckBoxBackstageCheckBox`.
-    CheckBoxBackstageCheckBox(CheckBoxBackstageCheckBoxWith<X>),
+    CheckBoxBackstageCheckBox(Box<CheckBoxBackstageCheckBoxWith<X>>),
     /// The element `mso14:comboBox`, a `ComboBoxBackstageComboBox`.
-    ComboBoxBackstageComboBox(ComboBoxBackstageComboBoxWith<X>),
+    ComboBoxBackstageComboBox(Box<ComboBoxBackstageComboBoxWith<X>>),
     /// The element `mso14:dropDown`, a `DropDownBackstageDropDown`.
-    DropDownBackstageDropDown(DropDownBackstageDropDownWith<X>),
+    DropDownBackstageDropDown(Box<DropDownBackstageDropDownWith<X>>),
     /// The element `mso14:editBox`, a `EditBoxBackstageEditBox`.
-    EditBoxBackstageEditBox(EditBoxBackstageEditBoxWith<X>),
+    EditBoxBackstageEditBox(Box<EditBoxBackstageEditBoxWith<X>>),
     /// The element `mso14:groupBox`, a `GroupBox`.
-    GroupBox(GroupBoxWith<X>),
+    GroupBox(Box<GroupBoxWith<X>>),
     /// The element `mso14:hyperlink`, a `Hyperlink`.
-    Hyperlink(HyperlinkWith<X>),
+    Hyperlink(Box<HyperlinkWith<X>>),
     /// The element `mso14:imageControl`, a `ImageControl`.
-    ImageControl(ImageControlWith<X>),
+    ImageControl(Box<ImageControlWith<X>>),
     /// The element `mso14:labelControl`, a `LabelControlBackstageLabelControl`.
-    LabelControlBackstageLabelControl(LabelControlBackstageLabelControlWith<X>),
+    LabelControlBackstageLabelControl(Box<LabelControlBackstageLabelControlWith<X>>),
     /// The element `mso14:layoutContainer`, a `LayoutContainer`.
-    LayoutContainer(LayoutContainerWith<X>),
+    LayoutContainer(Box<LayoutContainerWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:radioGroup`, a `RadioGroup`.
-    RadioGroup(RadioGroupWith<X>),
+    RadioGroup(Box<RadioGroupWith<X>>),
 }
 
 /// [`GroupControlsContentWith`] of the tree a read gives, where no node holds anything in
@@ -7812,25 +7812,25 @@ impl Eq for MenuBackstageSubMenuWith<()> {}
 #[non_exhaustive]
 pub enum MenuContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegularWith<X>),
+    ButtonButtonRegular(Box<ButtonButtonRegularWith<X>>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
+    CheckBoxCheckBox(Box<CheckBoxCheckBoxWith<X>>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
+    ControlControlCloneRegular(Box<ControlControlCloneRegularWith<X>>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
+    DynamicMenuDynamicMenuRegular(Box<DynamicMenuDynamicMenuRegularWith<X>>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuRegular`.
-    MenuMenuRegular(MenuMenuRegularWith<X>),
+    MenuMenuRegular(Box<MenuMenuRegularWith<X>>),
     /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparator`.
-    MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparatorWith<X>),
+    MenuSeparatorMenuSeparator(Box<MenuSeparatorMenuSeparatorWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonRegular`.
-    SplitButtonSplitButtonRegular(SplitButtonSplitButtonRegularWith<X>),
+    SplitButtonSplitButtonRegular(Box<SplitButtonSplitButtonRegularWith<X>>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
+    ToggleButtonToggleButtonRegular(Box<ToggleButtonToggleButtonRegularWith<X>>),
 }
 
 /// [`MenuContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -8217,25 +8217,25 @@ impl Eq for MenuSeparatorMenuSeparatorNoTitleWith<()> {}
 #[non_exhaustive]
 pub enum MenuWithTitleContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegularWith<X>),
+    ButtonButtonRegular(Box<ButtonButtonRegularWith<X>>),
     /// The element `mso14:checkBox`, a `CheckBoxCheckBox`.
-    CheckBoxCheckBox(CheckBoxCheckBoxWith<X>),
+    CheckBoxCheckBox(Box<CheckBoxCheckBoxWith<X>>),
     /// The element `mso14:control`, a `ControlControlCloneRegular`.
-    ControlControlCloneRegular(ControlControlCloneRegularWith<X>),
+    ControlControlCloneRegular(Box<ControlControlCloneRegularWith<X>>),
     /// The element `mso14:dynamicMenu`, a `DynamicMenuDynamicMenuRegular`.
-    DynamicMenuDynamicMenuRegular(DynamicMenuDynamicMenuRegularWith<X>),
+    DynamicMenuDynamicMenuRegular(Box<DynamicMenuDynamicMenuRegularWith<X>>),
     /// The element `mso14:gallery`, a `GalleryGalleryRegular`.
     GalleryGalleryRegular(Box<GalleryGalleryRegularWith<X>>),
     /// The element `mso14:menu`, a `MenuMenuWithTitle`.
-    MenuMenuWithTitle(MenuMenuWithTitleWith<X>),
+    MenuMenuWithTitle(Box<MenuMenuWithTitleWith<X>>),
     /// The element `mso14:menuSeparator`, a `MenuSeparatorMenuSeparator`.
-    MenuSeparatorMenuSeparator(MenuSeparatorMenuSeparatorWith<X>),
+    MenuSeparatorMenuSeparator(Box<MenuSeparatorMenuSeparatorWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:splitButton`, a `SplitButtonSplitButtonWithTitle`.
-    SplitButtonSplitButtonWithTitle(SplitButtonSplitButtonWithTitleWith<X>),
+    SplitButtonSplitButtonWithTitle(Box<SplitButtonSplitButtonWithTitleWith<X>>),
     /// The element `mso14:toggleButton`, a `ToggleButtonToggleButtonRegular`.
-    ToggleButtonToggleButtonRegular(ToggleButtonToggleButtonRegularWith<X>),
+    ToggleButtonToggleButtonRegular(Box<ToggleButtonToggleButtonRegularWith<X>>),
 }
 
 /// [`MenuWithTitleContentWith`] of the tree a read gives, where no node holds anything in
@@ -8273,11 +8273,11 @@ impl Eq for PrimaryItemWith<()> {}
 #[non_exhaustive]
 pub enum PrimaryItemContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonBackstageRegularButton`.
-    ButtonBackstageRegularButton(ButtonBackstageRegularButtonWith<X>),
+    ButtonBackstageRegularButton(Box<ButtonBackstageRegularButtonWith<X>>),
     /// The element `mso14:menu`, a `MenuBackstagePrimaryMenu`.
-    MenuBackstagePrimaryMenu(MenuBackstagePrimaryMenuWith<X>),
+    MenuBackstagePrimaryMenu(Box<MenuBackstagePrimaryMenuWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`PrimaryItemContentWith`] of the tree a read gives, where no node holds anything in
@@ -8316,13 +8316,13 @@ impl Eq for QatWith<()> {}
 #[non_exhaustive]
 pub enum QuickAccessToolbarItemsContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonButtonRegular`.
-    ButtonButtonRegular(ButtonButtonRegularWith<X>),
+    ButtonButtonRegular(Box<ButtonButtonRegularWith<X>>),
     /// The element `mso14:control`, a `ControlControlCloneQat`.
-    ControlControlCloneQat(ControlControlCloneQatWith<X>),
+    ControlControlCloneQat(Box<ControlControlCloneQatWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:separator`, a `Separator`.
-    Separator(SeparatorWith<X>),
+    Separator(Box<SeparatorWith<X>>),
 }
 
 /// [`QuickAccessToolbarItemsContentWith`] of the tree a read gives, where no node holds anything in
@@ -8436,13 +8436,13 @@ impl Eq for RibbonWith<()> {}
 #[non_exhaustive]
 pub enum RibbonContentWith<X: UserData> {
     /// The element `mso14:contextualTabs`, a `ContextualTabs`.
-    ContextualTabs(ContextualTabsWith<X>),
+    ContextualTabs(Box<ContextualTabsWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:qat`, a `Qat`.
-    Qat(QatWith<X>),
+    Qat(Box<QatWith<X>>),
     /// The element `mso14:tabs`, a `Tabs`.
-    Tabs(TabsWith<X>),
+    Tabs(Box<TabsWith<X>>),
 }
 
 /// [`RibbonContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -8535,11 +8535,11 @@ impl Eq for SharedControlsWith<()> {}
 #[non_exhaustive]
 pub enum SimpleGroupsContentWith<X: UserData> {
     /// The element `mso14:group`, a `GroupBackstageGroup`.
-    GroupBackstageGroup(GroupBackstageGroupWith<X>),
+    GroupBackstageGroup(Box<GroupBackstageGroupWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:taskGroup`, a `TaskGroup`.
-    TaskGroup(TaskGroupWith<X>),
+    TaskGroup(Box<TaskGroupWith<X>>),
 }
 
 /// [`SimpleGroupsContentWith`] of the tree a read gives, where no node holds anything in
@@ -8582,11 +8582,11 @@ pub enum SizeMember {
 #[non_exhaustive]
 pub enum SplitButtonContentWith<X: UserData> {
     /// The element `mso14:button`, a `ButtonVisibleButton`.
-    ButtonVisibleButton(ButtonVisibleButtonWith<X>),
+    ButtonVisibleButton(Box<ButtonVisibleButtonWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `mso14:toggleButton`, a `ToggleButtonVisibleToggleButton`.
-    ToggleButtonVisibleToggleButton(ToggleButtonVisibleToggleButtonWith<X>),
+    ToggleButtonVisibleToggleButton(Box<ToggleButtonVisibleToggleButtonWith<X>>),
 }
 
 /// [`SplitButtonContentWith`] of the tree a read gives, where no node holds anything in
@@ -10305,11 +10305,13 @@ impl<X: UserData> BackstageContentWith<X> {
     {
         match self {
             Self::ButtonBackstageFastCommandButton(node) => {
-                BackstageContentWith::ButtonBackstageFastCommandButton(node.into_user_data())
+                BackstageContentWith::ButtonBackstageFastCommandButton(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => BackstageContentWith::Other(node),
             Self::TabBackstageTab(node) => {
-                BackstageContentWith::TabBackstageTab(node.into_user_data())
+                BackstageContentWith::TabBackstageTab(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -10317,14 +10319,16 @@ impl<X: UserData> BackstageContentWith<X> {
 
 impl officekit_markup_base::Read for BackstageContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonBackstageFastCommandButton(item.read()),
-            Some((NS_MSO14, "tab")) => Self::TabBackstageTab(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "button")) => {
+                Self::ButtonBackstageFastCommandButton(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "tab")) => Self::TabBackstageTab(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -10333,11 +10337,28 @@ impl officekit_markup_base::Write for BackstageContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::ButtonBackstageFastCommandButton(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TabBackstageTab(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonBackstageFastCommandButtonWith<X>> for BackstageContentWith<X> {
+    fn from(arm: ButtonBackstageFastCommandButtonWith<X>) -> Self {
+        Self::ButtonBackstageFastCommandButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TabBackstageTabWith<X>> for BackstageContentWith<X> {
+    fn from(arm: TabBackstageTabWith<X>) -> Self {
+        Self::TabBackstageTab(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BackstageContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> BackstageGroupsContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -10348,28 +10369,30 @@ impl<X: UserData> BackstageGroupsContentWith<X> {
     {
         match self {
             Self::GroupBackstageGroup(node) => {
-                BackstageGroupsContentWith::GroupBackstageGroup(node.into_user_data())
+                BackstageGroupsContentWith::GroupBackstageGroup(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => BackstageGroupsContentWith::Other(node),
             Self::TaskFormGroup(node) => {
-                BackstageGroupsContentWith::TaskFormGroup(node.into_user_data())
+                BackstageGroupsContentWith::TaskFormGroup(Box::new((*node).into_user_data()))
             }
-            Self::TaskGroup(node) => BackstageGroupsContentWith::TaskGroup(node.into_user_data()),
+            Self::TaskGroup(node) => {
+                BackstageGroupsContentWith::TaskGroup(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for BackstageGroupsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(item.read()),
-            Some((NS_MSO14, "taskFormGroup")) => Self::TaskFormGroup(item.read()),
-            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(Box::new(item.read())),
+            Some((NS_MSO14, "taskFormGroup")) => Self::TaskFormGroup(Box::new(item.read())),
+            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -10378,12 +10401,35 @@ impl officekit_markup_base::Write for BackstageGroupsContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::GroupBackstageGroup(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TaskFormGroup(arm) => arm.write_into(writer),
             Self::TaskGroup(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<GroupBackstageGroupWith<X>> for BackstageGroupsContentWith<X> {
+    fn from(arm: GroupBackstageGroupWith<X>) -> Self {
+        Self::GroupBackstageGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TaskFormGroupWith<X>> for BackstageGroupsContentWith<X> {
+    fn from(arm: TaskFormGroupWith<X>) -> Self {
+        Self::TaskFormGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TaskGroupWith<X>> for BackstageGroupsContentWith<X> {
+    fn from(arm: TaskGroupWith<X>) -> Self {
+        Self::TaskGroup(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BackstageGroupsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<SimpleGroupsContent> for BackstageGroupsContent {
     fn from(item: SimpleGroupsContent) -> Self {
@@ -10419,19 +10465,25 @@ impl<X: UserData> BackstageMenuGroupContentWith<X> {
     {
         match self {
             Self::ButtonBackstageMenuButton(node) => {
-                BackstageMenuGroupContentWith::ButtonBackstageMenuButton(node.into_user_data())
+                BackstageMenuGroupContentWith::ButtonBackstageMenuButton(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::CheckBoxBackstageMenuCheckBox(node) => {
-                BackstageMenuGroupContentWith::CheckBoxBackstageMenuCheckBox(node.into_user_data())
+                BackstageMenuGroupContentWith::CheckBoxBackstageMenuCheckBox(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::MenuBackstageSubMenu(node) => {
-                BackstageMenuGroupContentWith::MenuBackstageSubMenu(node.into_user_data())
+                BackstageMenuGroupContentWith::MenuBackstageSubMenu(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => BackstageMenuGroupContentWith::Other(node),
             Self::ToggleButtonBackstageMenuToggleButton(node) => {
-                BackstageMenuGroupContentWith::ToggleButtonBackstageMenuToggleButton(
-                    node.into_user_data(),
-                )
+                BackstageMenuGroupContentWith::ToggleButtonBackstageMenuToggleButton(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -10439,18 +10491,20 @@ impl<X: UserData> BackstageMenuGroupContentWith<X> {
 
 impl officekit_markup_base::Read for BackstageMenuGroupContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonBackstageMenuButton(item.read()),
-            Some((NS_MSO14, "checkBox")) => Self::CheckBoxBackstageMenuCheckBox(item.read()),
-            Some((NS_MSO14, "menu")) => Self::MenuBackstageSubMenu(item.read()),
-            Some((NS_MSO14, "toggleButton")) => {
-                Self::ToggleButtonBackstageMenuToggleButton(item.read())
+            Some((NS_MSO14, "button")) => Self::ButtonBackstageMenuButton(Box::new(item.read())),
+            Some((NS_MSO14, "checkBox")) => {
+                Self::CheckBoxBackstageMenuCheckBox(Box::new(item.read()))
             }
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "menu")) => Self::MenuBackstageSubMenu(Box::new(item.read())),
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonBackstageMenuToggleButton(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -10461,11 +10515,42 @@ impl officekit_markup_base::Write for BackstageMenuGroupContent {
             Self::ButtonBackstageMenuButton(arm) => arm.write_into(writer),
             Self::CheckBoxBackstageMenuCheckBox(arm) => arm.write_into(writer),
             Self::MenuBackstageSubMenu(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::ToggleButtonBackstageMenuToggleButton(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonBackstageMenuButtonWith<X>> for BackstageMenuGroupContentWith<X> {
+    fn from(arm: ButtonBackstageMenuButtonWith<X>) -> Self {
+        Self::ButtonBackstageMenuButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckBoxBackstageMenuCheckBoxWith<X>> for BackstageMenuGroupContentWith<X> {
+    fn from(arm: CheckBoxBackstageMenuCheckBoxWith<X>) -> Self {
+        Self::CheckBoxBackstageMenuCheckBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuBackstageSubMenuWith<X>> for BackstageMenuGroupContentWith<X> {
+    fn from(arm: MenuBackstageSubMenuWith<X>) -> Self {
+        Self::MenuBackstageSubMenu(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonBackstageMenuToggleButtonWith<X>>
+    for BackstageMenuGroupContentWith<X>
+{
+    fn from(arm: ToggleButtonBackstageMenuToggleButtonWith<X>) -> Self {
+        Self::ToggleButtonBackstageMenuToggleButton(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BackstageMenuGroupContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> BottomItemsWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -10595,34 +10680,44 @@ impl<X: UserData> BoxContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BoxBox(node) => BoxContentWith::BoxBox(node.into_user_data()),
-            Self::ButtonButton(node) => BoxContentWith::ButtonButton(node.into_user_data()),
-            Self::ButtonGroup(node) => BoxContentWith::ButtonGroup(node.into_user_data()),
-            Self::CheckBoxCheckBox(node) => BoxContentWith::CheckBoxCheckBox(node.into_user_data()),
-            Self::ComboBoxComboBox(node) => BoxContentWith::ComboBoxComboBox(node.into_user_data()),
+            Self::BoxBox(node) => BoxContentWith::BoxBox(Box::new((*node).into_user_data())),
+            Self::ButtonButton(node) => {
+                BoxContentWith::ButtonButton(Box::new((*node).into_user_data()))
+            }
+            Self::ButtonGroup(node) => {
+                BoxContentWith::ButtonGroup(Box::new((*node).into_user_data()))
+            }
+            Self::CheckBoxCheckBox(node) => {
+                BoxContentWith::CheckBoxCheckBox(Box::new((*node).into_user_data()))
+            }
+            Self::ComboBoxComboBox(node) => {
+                BoxContentWith::ComboBoxComboBox(Box::new((*node).into_user_data()))
+            }
             Self::ControlControlClone(node) => {
-                BoxContentWith::ControlControlClone(node.into_user_data())
+                BoxContentWith::ControlControlClone(Box::new((*node).into_user_data()))
             }
             Self::DropDownDropDownRegular(node) => {
-                BoxContentWith::DropDownDropDownRegular(node.into_user_data())
+                BoxContentWith::DropDownDropDownRegular(Box::new((*node).into_user_data()))
             }
             Self::DynamicMenuDynamicMenu(node) => {
-                BoxContentWith::DynamicMenuDynamicMenu(node.into_user_data())
+                BoxContentWith::DynamicMenuDynamicMenu(Box::new((*node).into_user_data()))
             }
-            Self::EditBoxEditBox(node) => BoxContentWith::EditBoxEditBox(node.into_user_data()),
+            Self::EditBoxEditBox(node) => {
+                BoxContentWith::EditBoxEditBox(Box::new((*node).into_user_data()))
+            }
             Self::GalleryGallery(node) => {
                 BoxContentWith::GalleryGallery(Box::new((*node).into_user_data()))
             }
             Self::LabelControlLabelControl(node) => {
-                BoxContentWith::LabelControlLabelControl(node.into_user_data())
+                BoxContentWith::LabelControlLabelControl(Box::new((*node).into_user_data()))
             }
-            Self::MenuMenu(node) => BoxContentWith::MenuMenu(node.into_user_data()),
+            Self::MenuMenu(node) => BoxContentWith::MenuMenu(Box::new((*node).into_user_data())),
             Self::Other(node) => BoxContentWith::Other(node),
             Self::SplitButtonSplitButton(node) => {
-                BoxContentWith::SplitButtonSplitButton(node.into_user_data())
+                BoxContentWith::SplitButtonSplitButton(Box::new((*node).into_user_data()))
             }
             Self::ToggleButtonToggleButton(node) => {
-                BoxContentWith::ToggleButtonToggleButton(node.into_user_data())
+                BoxContentWith::ToggleButtonToggleButton(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -10630,26 +10725,30 @@ impl<X: UserData> BoxContentWith<X> {
 
 impl officekit_markup_base::Read for BoxContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "box")) => Self::BoxBox(item.read()),
-            Some((NS_MSO14, "button")) => Self::ButtonButton(item.read()),
-            Some((NS_MSO14, "buttonGroup")) => Self::ButtonGroup(item.read()),
-            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
-            Some((NS_MSO14, "comboBox")) => Self::ComboBoxComboBox(item.read()),
-            Some((NS_MSO14, "control")) => Self::ControlControlClone(item.read()),
-            Some((NS_MSO14, "dropDown")) => Self::DropDownDropDownRegular(item.read()),
-            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenu(item.read()),
-            Some((NS_MSO14, "editBox")) => Self::EditBoxEditBox(item.read()),
+            Some((NS_MSO14, "box")) => Self::BoxBox(Box::new(item.read())),
+            Some((NS_MSO14, "button")) => Self::ButtonButton(Box::new(item.read())),
+            Some((NS_MSO14, "buttonGroup")) => Self::ButtonGroup(Box::new(item.read())),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(Box::new(item.read())),
+            Some((NS_MSO14, "comboBox")) => Self::ComboBoxComboBox(Box::new(item.read())),
+            Some((NS_MSO14, "control")) => Self::ControlControlClone(Box::new(item.read())),
+            Some((NS_MSO14, "dropDown")) => Self::DropDownDropDownRegular(Box::new(item.read())),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenu(Box::new(item.read())),
+            Some((NS_MSO14, "editBox")) => Self::EditBoxEditBox(Box::new(item.read())),
             Some((NS_MSO14, "gallery")) => Self::GalleryGallery(Box::new(item.read())),
-            Some((NS_MSO14, "labelControl")) => Self::LabelControlLabelControl(item.read()),
-            Some((NS_MSO14, "menu")) => Self::MenuMenu(item.read()),
-            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButton(item.read()),
-            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButton(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "labelControl")) => {
+                Self::LabelControlLabelControl(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "menu")) => Self::MenuMenu(Box::new(item.read())),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButton(Box::new(item.read())),
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonToggleButton(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -10669,12 +10768,101 @@ impl officekit_markup_base::Write for BoxContent {
             Self::GalleryGallery(arm) => arm.write_into(writer),
             Self::LabelControlLabelControl(arm) => arm.write_into(writer),
             Self::MenuMenu(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SplitButtonSplitButton(arm) => arm.write_into(writer),
             Self::ToggleButtonToggleButton(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<BoxBoxWith<X>> for BoxContentWith<X> {
+    fn from(arm: BoxBoxWith<X>) -> Self {
+        Self::BoxBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ButtonButtonWith<X>> for BoxContentWith<X> {
+    fn from(arm: ButtonButtonWith<X>) -> Self {
+        Self::ButtonButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ButtonGroupWith<X>> for BoxContentWith<X> {
+    fn from(arm: ButtonGroupWith<X>) -> Self {
+        Self::ButtonGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckBoxCheckBoxWith<X>> for BoxContentWith<X> {
+    fn from(arm: CheckBoxCheckBoxWith<X>) -> Self {
+        Self::CheckBoxCheckBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ComboBoxComboBoxWith<X>> for BoxContentWith<X> {
+    fn from(arm: ComboBoxComboBoxWith<X>) -> Self {
+        Self::ComboBoxComboBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ControlControlCloneWith<X>> for BoxContentWith<X> {
+    fn from(arm: ControlControlCloneWith<X>) -> Self {
+        Self::ControlControlClone(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DropDownDropDownRegularWith<X>> for BoxContentWith<X> {
+    fn from(arm: DropDownDropDownRegularWith<X>) -> Self {
+        Self::DropDownDropDownRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicMenuDynamicMenuWith<X>> for BoxContentWith<X> {
+    fn from(arm: DynamicMenuDynamicMenuWith<X>) -> Self {
+        Self::DynamicMenuDynamicMenu(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EditBoxEditBoxWith<X>> for BoxContentWith<X> {
+    fn from(arm: EditBoxEditBoxWith<X>) -> Self {
+        Self::EditBoxEditBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GalleryGalleryWith<X>> for BoxContentWith<X> {
+    fn from(arm: GalleryGalleryWith<X>) -> Self {
+        Self::GalleryGallery(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LabelControlLabelControlWith<X>> for BoxContentWith<X> {
+    fn from(arm: LabelControlLabelControlWith<X>) -> Self {
+        Self::LabelControlLabelControl(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuMenuWith<X>> for BoxContentWith<X> {
+    fn from(arm: MenuMenuWith<X>) -> Self {
+        Self::MenuMenu(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SplitButtonSplitButtonWith<X>> for BoxContentWith<X> {
+    fn from(arm: SplitButtonSplitButtonWith<X>) -> Self {
+        Self::SplitButtonSplitButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonToggleButtonWith<X>> for BoxContentWith<X> {
+    fn from(arm: ToggleButtonToggleButtonWith<X>) -> Self {
+        Self::ToggleButtonToggleButton(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<BoxContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for BoxStyle {
     fn as_ref(&self) -> &str {
@@ -11375,27 +11563,37 @@ impl<X: UserData> ButtonGroupContentWith<X> {
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                ButtonGroupContentWith::ButtonButtonRegular(node.into_user_data())
+                ButtonGroupContentWith::ButtonButtonRegular(Box::new((*node).into_user_data()))
             }
             Self::ControlControlCloneRegular(node) => {
-                ButtonGroupContentWith::ControlControlCloneRegular(node.into_user_data())
+                ButtonGroupContentWith::ControlControlCloneRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                ButtonGroupContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
+                ButtonGroupContentWith::DynamicMenuDynamicMenuRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::GalleryGalleryRegular(node) => {
                 ButtonGroupContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
             Self::MenuMenuRegular(node) => {
-                ButtonGroupContentWith::MenuMenuRegular(node.into_user_data())
+                ButtonGroupContentWith::MenuMenuRegular(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ButtonGroupContentWith::Other(node),
-            Self::Separator(node) => ButtonGroupContentWith::Separator(node.into_user_data()),
+            Self::Separator(node) => {
+                ButtonGroupContentWith::Separator(Box::new((*node).into_user_data()))
+            }
             Self::SplitButtonSplitButtonRegular(node) => {
-                ButtonGroupContentWith::SplitButtonSplitButtonRegular(node.into_user_data())
+                ButtonGroupContentWith::SplitButtonSplitButtonRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                ButtonGroupContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
+                ButtonGroupContentWith::ToggleButtonToggleButtonRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -11403,20 +11601,26 @@ impl<X: UserData> ButtonGroupContentWith<X> {
 
 impl officekit_markup_base::Read for ButtonGroupContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
-            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
-            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(Box::new(item.read())),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(Box::new(item.read())),
+            Some((NS_MSO14, "dynamicMenu")) => {
+                Self::DynamicMenuDynamicMenuRegular(Box::new(item.read()))
+            }
             Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
-            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(item.read()),
-            Some((NS_MSO14, "separator")) => Self::Separator(item.read()),
-            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonRegular(item.read()),
-            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(Box::new(item.read())),
+            Some((NS_MSO14, "separator")) => Self::Separator(Box::new(item.read())),
+            Some((NS_MSO14, "splitButton")) => {
+                Self::SplitButtonSplitButtonRegular(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonToggleButtonRegular(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -11429,13 +11633,66 @@ impl officekit_markup_base::Write for ButtonGroupContent {
             Self::DynamicMenuDynamicMenuRegular(arm) => arm.write_into(writer),
             Self::GalleryGalleryRegular(arm) => arm.write_into(writer),
             Self::MenuMenuRegular(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Separator(arm) => arm.write_into(writer),
             Self::SplitButtonSplitButtonRegular(arm) => arm.write_into(writer),
             Self::ToggleButtonToggleButtonRegular(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonButtonRegularWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: ButtonButtonRegularWith<X>) -> Self {
+        Self::ButtonButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ControlControlCloneRegularWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: ControlControlCloneRegularWith<X>) -> Self {
+        Self::ControlControlCloneRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicMenuDynamicMenuRegularWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: DynamicMenuDynamicMenuRegularWith<X>) -> Self {
+        Self::DynamicMenuDynamicMenuRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GalleryGalleryRegularWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: GalleryGalleryRegularWith<X>) -> Self {
+        Self::GalleryGalleryRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuMenuRegularWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: MenuMenuRegularWith<X>) -> Self {
+        Self::MenuMenuRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SeparatorWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: SeparatorWith<X>) -> Self {
+        Self::Separator(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SplitButtonSplitButtonRegularWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: SplitButtonSplitButtonRegularWith<X>) -> Self {
+        Self::SplitButtonSplitButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for ButtonGroupContentWith<X> {
+    fn from(arm: ToggleButtonToggleButtonRegularWith<X>) -> Self {
+        Self::ToggleButtonToggleButtonRegular(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ButtonGroupContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ButtonVisibleButtonWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -12333,32 +12590,42 @@ impl<X: UserData> ContextMenuContentWith<X> {
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                ContextMenuContentWith::ButtonButtonRegular(node.into_user_data())
+                ContextMenuContentWith::ButtonButtonRegular(Box::new((*node).into_user_data()))
             }
             Self::CheckBoxCheckBox(node) => {
-                ContextMenuContentWith::CheckBoxCheckBox(node.into_user_data())
+                ContextMenuContentWith::CheckBoxCheckBox(Box::new((*node).into_user_data()))
             }
             Self::ControlControlCloneRegular(node) => {
-                ContextMenuContentWith::ControlControlCloneRegular(node.into_user_data())
+                ContextMenuContentWith::ControlControlCloneRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                ContextMenuContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
+                ContextMenuContentWith::DynamicMenuDynamicMenuRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::GalleryGalleryRegular(node) => {
                 ContextMenuContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
             Self::MenuMenuRegular(node) => {
-                ContextMenuContentWith::MenuMenuRegular(node.into_user_data())
+                ContextMenuContentWith::MenuMenuRegular(Box::new((*node).into_user_data()))
             }
             Self::MenuSeparatorMenuSeparatorNoTitle(node) => {
-                ContextMenuContentWith::MenuSeparatorMenuSeparatorNoTitle(node.into_user_data())
+                ContextMenuContentWith::MenuSeparatorMenuSeparatorNoTitle(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => ContextMenuContentWith::Other(node),
             Self::SplitButtonSplitButtonRegular(node) => {
-                ContextMenuContentWith::SplitButtonSplitButtonRegular(node.into_user_data())
+                ContextMenuContentWith::SplitButtonSplitButtonRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                ContextMenuContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
+                ContextMenuContentWith::ToggleButtonToggleButtonRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -12366,23 +12633,29 @@ impl<X: UserData> ContextMenuContentWith<X> {
 
 impl officekit_markup_base::Read for ContextMenuContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
-            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
-            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
-            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
-            Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
-            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(item.read()),
-            Some((NS_MSO14, "menuSeparator")) => {
-                Self::MenuSeparatorMenuSeparatorNoTitle(item.read())
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(Box::new(item.read())),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(Box::new(item.read())),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(Box::new(item.read())),
+            Some((NS_MSO14, "dynamicMenu")) => {
+                Self::DynamicMenuDynamicMenuRegular(Box::new(item.read()))
             }
-            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonRegular(item.read()),
-            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(Box::new(item.read())),
+            Some((NS_MSO14, "menuSeparator")) => {
+                Self::MenuSeparatorMenuSeparatorNoTitle(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "splitButton")) => {
+                Self::SplitButtonSplitButtonRegular(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonToggleButtonRegular(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -12397,12 +12670,71 @@ impl officekit_markup_base::Write for ContextMenuContent {
             Self::GalleryGalleryRegular(arm) => arm.write_into(writer),
             Self::MenuMenuRegular(arm) => arm.write_into(writer),
             Self::MenuSeparatorMenuSeparatorNoTitle(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SplitButtonSplitButtonRegular(arm) => arm.write_into(writer),
             Self::ToggleButtonToggleButtonRegular(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonButtonRegularWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: ButtonButtonRegularWith<X>) -> Self {
+        Self::ButtonButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckBoxCheckBoxWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: CheckBoxCheckBoxWith<X>) -> Self {
+        Self::CheckBoxCheckBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ControlControlCloneRegularWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: ControlControlCloneRegularWith<X>) -> Self {
+        Self::ControlControlCloneRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicMenuDynamicMenuRegularWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: DynamicMenuDynamicMenuRegularWith<X>) -> Self {
+        Self::DynamicMenuDynamicMenuRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GalleryGalleryRegularWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: GalleryGalleryRegularWith<X>) -> Self {
+        Self::GalleryGalleryRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuMenuRegularWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: MenuMenuRegularWith<X>) -> Self {
+        Self::MenuMenuRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuSeparatorMenuSeparatorNoTitleWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: MenuSeparatorMenuSeparatorNoTitleWith<X>) -> Self {
+        Self::MenuSeparatorMenuSeparatorNoTitle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SplitButtonSplitButtonRegularWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: SplitButtonSplitButtonRegularWith<X>) -> Self {
+        Self::SplitButtonSplitButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for ContextMenuContentWith<X> {
+    fn from(arm: ToggleButtonToggleButtonRegularWith<X>) -> Self {
+        Self::ToggleButtonToggleButtonRegular(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ContextMenuContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ContextMenusWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -14264,39 +14596,47 @@ impl<X: UserData> GroupContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::BoxBox(node) => GroupContentWith::BoxBox(node.into_user_data()),
-            Self::ButtonButton(node) => GroupContentWith::ButtonButton(node.into_user_data()),
-            Self::ButtonGroup(node) => GroupContentWith::ButtonGroup(node.into_user_data()),
+            Self::BoxBox(node) => GroupContentWith::BoxBox(Box::new((*node).into_user_data())),
+            Self::ButtonButton(node) => {
+                GroupContentWith::ButtonButton(Box::new((*node).into_user_data()))
+            }
+            Self::ButtonGroup(node) => {
+                GroupContentWith::ButtonGroup(Box::new((*node).into_user_data()))
+            }
             Self::CheckBoxCheckBox(node) => {
-                GroupContentWith::CheckBoxCheckBox(node.into_user_data())
+                GroupContentWith::CheckBoxCheckBox(Box::new((*node).into_user_data()))
             }
             Self::ComboBoxComboBox(node) => {
-                GroupContentWith::ComboBoxComboBox(node.into_user_data())
+                GroupContentWith::ComboBoxComboBox(Box::new((*node).into_user_data()))
             }
             Self::ControlControlClone(node) => {
-                GroupContentWith::ControlControlClone(node.into_user_data())
+                GroupContentWith::ControlControlClone(Box::new((*node).into_user_data()))
             }
             Self::DropDownDropDownRegular(node) => {
-                GroupContentWith::DropDownDropDownRegular(node.into_user_data())
+                GroupContentWith::DropDownDropDownRegular(Box::new((*node).into_user_data()))
             }
             Self::DynamicMenuDynamicMenu(node) => {
-                GroupContentWith::DynamicMenuDynamicMenu(node.into_user_data())
+                GroupContentWith::DynamicMenuDynamicMenu(Box::new((*node).into_user_data()))
             }
-            Self::EditBoxEditBox(node) => GroupContentWith::EditBoxEditBox(node.into_user_data()),
+            Self::EditBoxEditBox(node) => {
+                GroupContentWith::EditBoxEditBox(Box::new((*node).into_user_data()))
+            }
             Self::GalleryGallery(node) => {
                 GroupContentWith::GalleryGallery(Box::new((*node).into_user_data()))
             }
             Self::LabelControlLabelControl(node) => {
-                GroupContentWith::LabelControlLabelControl(node.into_user_data())
+                GroupContentWith::LabelControlLabelControl(Box::new((*node).into_user_data()))
             }
-            Self::MenuMenu(node) => GroupContentWith::MenuMenu(node.into_user_data()),
+            Self::MenuMenu(node) => GroupContentWith::MenuMenu(Box::new((*node).into_user_data())),
             Self::Other(node) => GroupContentWith::Other(node),
-            Self::Separator(node) => GroupContentWith::Separator(node.into_user_data()),
+            Self::Separator(node) => {
+                GroupContentWith::Separator(Box::new((*node).into_user_data()))
+            }
             Self::SplitButtonSplitButton(node) => {
-                GroupContentWith::SplitButtonSplitButton(node.into_user_data())
+                GroupContentWith::SplitButtonSplitButton(Box::new((*node).into_user_data()))
             }
             Self::ToggleButtonToggleButton(node) => {
-                GroupContentWith::ToggleButtonToggleButton(node.into_user_data())
+                GroupContentWith::ToggleButtonToggleButton(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -14304,27 +14644,31 @@ impl<X: UserData> GroupContentWith<X> {
 
 impl officekit_markup_base::Read for GroupContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "box")) => Self::BoxBox(item.read()),
-            Some((NS_MSO14, "button")) => Self::ButtonButton(item.read()),
-            Some((NS_MSO14, "buttonGroup")) => Self::ButtonGroup(item.read()),
-            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
-            Some((NS_MSO14, "comboBox")) => Self::ComboBoxComboBox(item.read()),
-            Some((NS_MSO14, "control")) => Self::ControlControlClone(item.read()),
-            Some((NS_MSO14, "dropDown")) => Self::DropDownDropDownRegular(item.read()),
-            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenu(item.read()),
-            Some((NS_MSO14, "editBox")) => Self::EditBoxEditBox(item.read()),
+            Some((NS_MSO14, "box")) => Self::BoxBox(Box::new(item.read())),
+            Some((NS_MSO14, "button")) => Self::ButtonButton(Box::new(item.read())),
+            Some((NS_MSO14, "buttonGroup")) => Self::ButtonGroup(Box::new(item.read())),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(Box::new(item.read())),
+            Some((NS_MSO14, "comboBox")) => Self::ComboBoxComboBox(Box::new(item.read())),
+            Some((NS_MSO14, "control")) => Self::ControlControlClone(Box::new(item.read())),
+            Some((NS_MSO14, "dropDown")) => Self::DropDownDropDownRegular(Box::new(item.read())),
+            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenu(Box::new(item.read())),
+            Some((NS_MSO14, "editBox")) => Self::EditBoxEditBox(Box::new(item.read())),
             Some((NS_MSO14, "gallery")) => Self::GalleryGallery(Box::new(item.read())),
-            Some((NS_MSO14, "labelControl")) => Self::LabelControlLabelControl(item.read()),
-            Some((NS_MSO14, "menu")) => Self::MenuMenu(item.read()),
-            Some((NS_MSO14, "separator")) => Self::Separator(item.read()),
-            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButton(item.read()),
-            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButton(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "labelControl")) => {
+                Self::LabelControlLabelControl(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "menu")) => Self::MenuMenu(Box::new(item.read())),
+            Some((NS_MSO14, "separator")) => Self::Separator(Box::new(item.read())),
+            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButton(Box::new(item.read())),
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonToggleButton(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -14344,13 +14688,108 @@ impl officekit_markup_base::Write for GroupContent {
             Self::GalleryGallery(arm) => arm.write_into(writer),
             Self::LabelControlLabelControl(arm) => arm.write_into(writer),
             Self::MenuMenu(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Separator(arm) => arm.write_into(writer),
             Self::SplitButtonSplitButton(arm) => arm.write_into(writer),
             Self::ToggleButtonToggleButton(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<BoxBoxWith<X>> for GroupContentWith<X> {
+    fn from(arm: BoxBoxWith<X>) -> Self {
+        Self::BoxBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ButtonButtonWith<X>> for GroupContentWith<X> {
+    fn from(arm: ButtonButtonWith<X>) -> Self {
+        Self::ButtonButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ButtonGroupWith<X>> for GroupContentWith<X> {
+    fn from(arm: ButtonGroupWith<X>) -> Self {
+        Self::ButtonGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckBoxCheckBoxWith<X>> for GroupContentWith<X> {
+    fn from(arm: CheckBoxCheckBoxWith<X>) -> Self {
+        Self::CheckBoxCheckBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ComboBoxComboBoxWith<X>> for GroupContentWith<X> {
+    fn from(arm: ComboBoxComboBoxWith<X>) -> Self {
+        Self::ComboBoxComboBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ControlControlCloneWith<X>> for GroupContentWith<X> {
+    fn from(arm: ControlControlCloneWith<X>) -> Self {
+        Self::ControlControlClone(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DropDownDropDownRegularWith<X>> for GroupContentWith<X> {
+    fn from(arm: DropDownDropDownRegularWith<X>) -> Self {
+        Self::DropDownDropDownRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicMenuDynamicMenuWith<X>> for GroupContentWith<X> {
+    fn from(arm: DynamicMenuDynamicMenuWith<X>) -> Self {
+        Self::DynamicMenuDynamicMenu(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EditBoxEditBoxWith<X>> for GroupContentWith<X> {
+    fn from(arm: EditBoxEditBoxWith<X>) -> Self {
+        Self::EditBoxEditBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GalleryGalleryWith<X>> for GroupContentWith<X> {
+    fn from(arm: GalleryGalleryWith<X>) -> Self {
+        Self::GalleryGallery(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LabelControlLabelControlWith<X>> for GroupContentWith<X> {
+    fn from(arm: LabelControlLabelControlWith<X>) -> Self {
+        Self::LabelControlLabelControl(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuMenuWith<X>> for GroupContentWith<X> {
+    fn from(arm: MenuMenuWith<X>) -> Self {
+        Self::MenuMenu(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SeparatorWith<X>> for GroupContentWith<X> {
+    fn from(arm: SeparatorWith<X>) -> Self {
+        Self::Separator(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SplitButtonSplitButtonWith<X>> for GroupContentWith<X> {
+    fn from(arm: SplitButtonSplitButtonWith<X>) -> Self {
+        Self::SplitButtonSplitButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonToggleButtonWith<X>> for GroupContentWith<X> {
+    fn from(arm: ToggleButtonToggleButtonWith<X>) -> Self {
+        Self::ToggleButtonToggleButton(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<BoxContent> for GroupContent {
     fn from(item: BoxContent) -> Self {
@@ -14408,58 +14847,76 @@ impl<X: UserData> GroupControlsContentWith<X> {
     {
         match self {
             Self::ButtonBackstageGroupButton(node) => {
-                GroupControlsContentWith::ButtonBackstageGroupButton(node.into_user_data())
+                GroupControlsContentWith::ButtonBackstageGroupButton(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::CheckBoxBackstageCheckBox(node) => {
-                GroupControlsContentWith::CheckBoxBackstageCheckBox(node.into_user_data())
+                GroupControlsContentWith::CheckBoxBackstageCheckBox(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::ComboBoxBackstageComboBox(node) => {
-                GroupControlsContentWith::ComboBoxBackstageComboBox(node.into_user_data())
+                GroupControlsContentWith::ComboBoxBackstageComboBox(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::DropDownBackstageDropDown(node) => {
-                GroupControlsContentWith::DropDownBackstageDropDown(node.into_user_data())
+                GroupControlsContentWith::DropDownBackstageDropDown(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::EditBoxBackstageEditBox(node) => {
-                GroupControlsContentWith::EditBoxBackstageEditBox(node.into_user_data())
+                GroupControlsContentWith::EditBoxBackstageEditBox(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
-            Self::GroupBox(node) => GroupControlsContentWith::GroupBox(node.into_user_data()),
-            Self::Hyperlink(node) => GroupControlsContentWith::Hyperlink(node.into_user_data()),
+            Self::GroupBox(node) => {
+                GroupControlsContentWith::GroupBox(Box::new((*node).into_user_data()))
+            }
+            Self::Hyperlink(node) => {
+                GroupControlsContentWith::Hyperlink(Box::new((*node).into_user_data()))
+            }
             Self::ImageControl(node) => {
-                GroupControlsContentWith::ImageControl(node.into_user_data())
+                GroupControlsContentWith::ImageControl(Box::new((*node).into_user_data()))
             }
             Self::LabelControlBackstageLabelControl(node) => {
-                GroupControlsContentWith::LabelControlBackstageLabelControl(node.into_user_data())
+                GroupControlsContentWith::LabelControlBackstageLabelControl(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::LayoutContainer(node) => {
-                GroupControlsContentWith::LayoutContainer(node.into_user_data())
+                GroupControlsContentWith::LayoutContainer(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => GroupControlsContentWith::Other(node),
-            Self::RadioGroup(node) => GroupControlsContentWith::RadioGroup(node.into_user_data()),
+            Self::RadioGroup(node) => {
+                GroupControlsContentWith::RadioGroup(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for GroupControlsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonBackstageGroupButton(item.read()),
-            Some((NS_MSO14, "checkBox")) => Self::CheckBoxBackstageCheckBox(item.read()),
-            Some((NS_MSO14, "comboBox")) => Self::ComboBoxBackstageComboBox(item.read()),
-            Some((NS_MSO14, "dropDown")) => Self::DropDownBackstageDropDown(item.read()),
-            Some((NS_MSO14, "editBox")) => Self::EditBoxBackstageEditBox(item.read()),
-            Some((NS_MSO14, "groupBox")) => Self::GroupBox(item.read()),
-            Some((NS_MSO14, "hyperlink")) => Self::Hyperlink(item.read()),
-            Some((NS_MSO14, "imageControl")) => Self::ImageControl(item.read()),
+            Some((NS_MSO14, "button")) => Self::ButtonBackstageGroupButton(Box::new(item.read())),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxBackstageCheckBox(Box::new(item.read())),
+            Some((NS_MSO14, "comboBox")) => Self::ComboBoxBackstageComboBox(Box::new(item.read())),
+            Some((NS_MSO14, "dropDown")) => Self::DropDownBackstageDropDown(Box::new(item.read())),
+            Some((NS_MSO14, "editBox")) => Self::EditBoxBackstageEditBox(Box::new(item.read())),
+            Some((NS_MSO14, "groupBox")) => Self::GroupBox(Box::new(item.read())),
+            Some((NS_MSO14, "hyperlink")) => Self::Hyperlink(Box::new(item.read())),
+            Some((NS_MSO14, "imageControl")) => Self::ImageControl(Box::new(item.read())),
             Some((NS_MSO14, "labelControl")) => {
-                Self::LabelControlBackstageLabelControl(item.read())
+                Self::LabelControlBackstageLabelControl(Box::new(item.read()))
             }
-            Some((NS_MSO14, "layoutContainer")) => Self::LayoutContainer(item.read()),
-            Some((NS_MSO14, "radioGroup")) => Self::RadioGroup(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "layoutContainer")) => Self::LayoutContainer(Box::new(item.read())),
+            Some((NS_MSO14, "radioGroup")) => Self::RadioGroup(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -14477,11 +14934,82 @@ impl officekit_markup_base::Write for GroupControlsContent {
             Self::ImageControl(arm) => arm.write_into(writer),
             Self::LabelControlBackstageLabelControl(arm) => arm.write_into(writer),
             Self::LayoutContainer(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RadioGroup(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonBackstageGroupButtonWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: ButtonBackstageGroupButtonWith<X>) -> Self {
+        Self::ButtonBackstageGroupButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckBoxBackstageCheckBoxWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: CheckBoxBackstageCheckBoxWith<X>) -> Self {
+        Self::CheckBoxBackstageCheckBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ComboBoxBackstageComboBoxWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: ComboBoxBackstageComboBoxWith<X>) -> Self {
+        Self::ComboBoxBackstageComboBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DropDownBackstageDropDownWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: DropDownBackstageDropDownWith<X>) -> Self {
+        Self::DropDownBackstageDropDown(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<EditBoxBackstageEditBoxWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: EditBoxBackstageEditBoxWith<X>) -> Self {
+        Self::EditBoxBackstageEditBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupBoxWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: GroupBoxWith<X>) -> Self {
+        Self::GroupBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<HyperlinkWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: HyperlinkWith<X>) -> Self {
+        Self::Hyperlink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ImageControlWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: ImageControlWith<X>) -> Self {
+        Self::ImageControl(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LabelControlBackstageLabelControlWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: LabelControlBackstageLabelControlWith<X>) -> Self {
+        Self::LabelControlBackstageLabelControl(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LayoutContainerWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: LayoutContainerWith<X>) -> Self {
+        Self::LayoutContainer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RadioGroupWith<X>> for GroupControlsContentWith<X> {
+    fn from(arm: RadioGroupWith<X>) -> Self {
+        Self::RadioGroup(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupControlsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GroupGroupWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -15354,30 +15882,32 @@ impl<X: UserData> MenuContentWith<X> {
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                MenuContentWith::ButtonButtonRegular(node.into_user_data())
+                MenuContentWith::ButtonButtonRegular(Box::new((*node).into_user_data()))
             }
             Self::CheckBoxCheckBox(node) => {
-                MenuContentWith::CheckBoxCheckBox(node.into_user_data())
+                MenuContentWith::CheckBoxCheckBox(Box::new((*node).into_user_data()))
             }
             Self::ControlControlCloneRegular(node) => {
-                MenuContentWith::ControlControlCloneRegular(node.into_user_data())
+                MenuContentWith::ControlControlCloneRegular(Box::new((*node).into_user_data()))
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                MenuContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
+                MenuContentWith::DynamicMenuDynamicMenuRegular(Box::new((*node).into_user_data()))
             }
             Self::GalleryGalleryRegular(node) => {
                 MenuContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
-            Self::MenuMenuRegular(node) => MenuContentWith::MenuMenuRegular(node.into_user_data()),
+            Self::MenuMenuRegular(node) => {
+                MenuContentWith::MenuMenuRegular(Box::new((*node).into_user_data()))
+            }
             Self::MenuSeparatorMenuSeparator(node) => {
-                MenuContentWith::MenuSeparatorMenuSeparator(node.into_user_data())
+                MenuContentWith::MenuSeparatorMenuSeparator(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => MenuContentWith::Other(node),
             Self::SplitButtonSplitButtonRegular(node) => {
-                MenuContentWith::SplitButtonSplitButtonRegular(node.into_user_data())
+                MenuContentWith::SplitButtonSplitButtonRegular(Box::new((*node).into_user_data()))
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                MenuContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
+                MenuContentWith::ToggleButtonToggleButtonRegular(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -15385,21 +15915,29 @@ impl<X: UserData> MenuContentWith<X> {
 
 impl officekit_markup_base::Read for MenuContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
-            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
-            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
-            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(Box::new(item.read())),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(Box::new(item.read())),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(Box::new(item.read())),
+            Some((NS_MSO14, "dynamicMenu")) => {
+                Self::DynamicMenuDynamicMenuRegular(Box::new(item.read()))
+            }
             Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
-            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(item.read()),
-            Some((NS_MSO14, "menuSeparator")) => Self::MenuSeparatorMenuSeparator(item.read()),
-            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonRegular(item.read()),
-            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuRegular(Box::new(item.read())),
+            Some((NS_MSO14, "menuSeparator")) => {
+                Self::MenuSeparatorMenuSeparator(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "splitButton")) => {
+                Self::SplitButtonSplitButtonRegular(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonToggleButtonRegular(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -15414,12 +15952,71 @@ impl officekit_markup_base::Write for MenuContent {
             Self::GalleryGalleryRegular(arm) => arm.write_into(writer),
             Self::MenuMenuRegular(arm) => arm.write_into(writer),
             Self::MenuSeparatorMenuSeparator(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SplitButtonSplitButtonRegular(arm) => arm.write_into(writer),
             Self::ToggleButtonToggleButtonRegular(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonButtonRegularWith<X>> for MenuContentWith<X> {
+    fn from(arm: ButtonButtonRegularWith<X>) -> Self {
+        Self::ButtonButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckBoxCheckBoxWith<X>> for MenuContentWith<X> {
+    fn from(arm: CheckBoxCheckBoxWith<X>) -> Self {
+        Self::CheckBoxCheckBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ControlControlCloneRegularWith<X>> for MenuContentWith<X> {
+    fn from(arm: ControlControlCloneRegularWith<X>) -> Self {
+        Self::ControlControlCloneRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicMenuDynamicMenuRegularWith<X>> for MenuContentWith<X> {
+    fn from(arm: DynamicMenuDynamicMenuRegularWith<X>) -> Self {
+        Self::DynamicMenuDynamicMenuRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GalleryGalleryRegularWith<X>> for MenuContentWith<X> {
+    fn from(arm: GalleryGalleryRegularWith<X>) -> Self {
+        Self::GalleryGalleryRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuMenuRegularWith<X>> for MenuContentWith<X> {
+    fn from(arm: MenuMenuRegularWith<X>) -> Self {
+        Self::MenuMenuRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuSeparatorMenuSeparatorWith<X>> for MenuContentWith<X> {
+    fn from(arm: MenuSeparatorMenuSeparatorWith<X>) -> Self {
+        Self::MenuSeparatorMenuSeparator(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SplitButtonSplitButtonRegularWith<X>> for MenuContentWith<X> {
+    fn from(arm: SplitButtonSplitButtonRegularWith<X>) -> Self {
+        Self::SplitButtonSplitButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for MenuContentWith<X> {
+    fn from(arm: ToggleButtonToggleButtonRegularWith<X>) -> Self {
+        Self::ToggleButtonToggleButtonRegular(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<MenuContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> MenuGroupWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -16013,32 +16610,42 @@ impl<X: UserData> MenuWithTitleContentWith<X> {
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                MenuWithTitleContentWith::ButtonButtonRegular(node.into_user_data())
+                MenuWithTitleContentWith::ButtonButtonRegular(Box::new((*node).into_user_data()))
             }
             Self::CheckBoxCheckBox(node) => {
-                MenuWithTitleContentWith::CheckBoxCheckBox(node.into_user_data())
+                MenuWithTitleContentWith::CheckBoxCheckBox(Box::new((*node).into_user_data()))
             }
             Self::ControlControlCloneRegular(node) => {
-                MenuWithTitleContentWith::ControlControlCloneRegular(node.into_user_data())
+                MenuWithTitleContentWith::ControlControlCloneRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::DynamicMenuDynamicMenuRegular(node) => {
-                MenuWithTitleContentWith::DynamicMenuDynamicMenuRegular(node.into_user_data())
+                MenuWithTitleContentWith::DynamicMenuDynamicMenuRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::GalleryGalleryRegular(node) => {
                 MenuWithTitleContentWith::GalleryGalleryRegular(Box::new((*node).into_user_data()))
             }
             Self::MenuMenuWithTitle(node) => {
-                MenuWithTitleContentWith::MenuMenuWithTitle(node.into_user_data())
+                MenuWithTitleContentWith::MenuMenuWithTitle(Box::new((*node).into_user_data()))
             }
             Self::MenuSeparatorMenuSeparator(node) => {
-                MenuWithTitleContentWith::MenuSeparatorMenuSeparator(node.into_user_data())
+                MenuWithTitleContentWith::MenuSeparatorMenuSeparator(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => MenuWithTitleContentWith::Other(node),
             Self::SplitButtonSplitButtonWithTitle(node) => {
-                MenuWithTitleContentWith::SplitButtonSplitButtonWithTitle(node.into_user_data())
+                MenuWithTitleContentWith::SplitButtonSplitButtonWithTitle(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::ToggleButtonToggleButtonRegular(node) => {
-                MenuWithTitleContentWith::ToggleButtonToggleButtonRegular(node.into_user_data())
+                MenuWithTitleContentWith::ToggleButtonToggleButtonRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -16046,21 +16653,29 @@ impl<X: UserData> MenuWithTitleContentWith<X> {
 
 impl officekit_markup_base::Read for MenuWithTitleContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
-            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(item.read()),
-            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(item.read()),
-            Some((NS_MSO14, "dynamicMenu")) => Self::DynamicMenuDynamicMenuRegular(item.read()),
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(Box::new(item.read())),
+            Some((NS_MSO14, "checkBox")) => Self::CheckBoxCheckBox(Box::new(item.read())),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneRegular(Box::new(item.read())),
+            Some((NS_MSO14, "dynamicMenu")) => {
+                Self::DynamicMenuDynamicMenuRegular(Box::new(item.read()))
+            }
             Some((NS_MSO14, "gallery")) => Self::GalleryGalleryRegular(Box::new(item.read())),
-            Some((NS_MSO14, "menu")) => Self::MenuMenuWithTitle(item.read()),
-            Some((NS_MSO14, "menuSeparator")) => Self::MenuSeparatorMenuSeparator(item.read()),
-            Some((NS_MSO14, "splitButton")) => Self::SplitButtonSplitButtonWithTitle(item.read()),
-            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonToggleButtonRegular(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "menu")) => Self::MenuMenuWithTitle(Box::new(item.read())),
+            Some((NS_MSO14, "menuSeparator")) => {
+                Self::MenuSeparatorMenuSeparator(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "splitButton")) => {
+                Self::SplitButtonSplitButtonWithTitle(Box::new(item.read()))
+            }
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonToggleButtonRegular(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -16075,12 +16690,71 @@ impl officekit_markup_base::Write for MenuWithTitleContent {
             Self::GalleryGalleryRegular(arm) => arm.write_into(writer),
             Self::MenuMenuWithTitle(arm) => arm.write_into(writer),
             Self::MenuSeparatorMenuSeparator(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SplitButtonSplitButtonWithTitle(arm) => arm.write_into(writer),
             Self::ToggleButtonToggleButtonRegular(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonButtonRegularWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: ButtonButtonRegularWith<X>) -> Self {
+        Self::ButtonButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CheckBoxCheckBoxWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: CheckBoxCheckBoxWith<X>) -> Self {
+        Self::CheckBoxCheckBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ControlControlCloneRegularWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: ControlControlCloneRegularWith<X>) -> Self {
+        Self::ControlControlCloneRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicMenuDynamicMenuRegularWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: DynamicMenuDynamicMenuRegularWith<X>) -> Self {
+        Self::DynamicMenuDynamicMenuRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GalleryGalleryRegularWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: GalleryGalleryRegularWith<X>) -> Self {
+        Self::GalleryGalleryRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuMenuWithTitleWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: MenuMenuWithTitleWith<X>) -> Self {
+        Self::MenuMenuWithTitle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuSeparatorMenuSeparatorWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: MenuSeparatorMenuSeparatorWith<X>) -> Self {
+        Self::MenuSeparatorMenuSeparator(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SplitButtonSplitButtonWithTitleWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: SplitButtonSplitButtonWithTitleWith<X>) -> Self {
+        Self::SplitButtonSplitButtonWithTitle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonToggleButtonRegularWith<X>> for MenuWithTitleContentWith<X> {
+    fn from(arm: ToggleButtonToggleButtonRegularWith<X>) -> Self {
+        Self::ToggleButtonToggleButtonRegular(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<MenuWithTitleContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> PrimaryItemWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -16140,10 +16814,12 @@ impl<X: UserData> PrimaryItemContentWith<X> {
     {
         match self {
             Self::ButtonBackstageRegularButton(node) => {
-                PrimaryItemContentWith::ButtonBackstageRegularButton(node.into_user_data())
+                PrimaryItemContentWith::ButtonBackstageRegularButton(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::MenuBackstagePrimaryMenu(node) => {
-                PrimaryItemContentWith::MenuBackstagePrimaryMenu(node.into_user_data())
+                PrimaryItemContentWith::MenuBackstagePrimaryMenu(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => PrimaryItemContentWith::Other(node),
         }
@@ -16152,20 +16828,20 @@ impl<X: UserData> PrimaryItemContentWith<X> {
 
 impl<X: UserData> Default for PrimaryItemContentWith<X> {
     fn default() -> Self {
-        Self::ButtonBackstageRegularButton(ButtonBackstageRegularButtonWith::default())
+        Self::ButtonBackstageRegularButton(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for PrimaryItemContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonBackstageRegularButton(item.read()),
-            Some((NS_MSO14, "menu")) => Self::MenuBackstagePrimaryMenu(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "button")) => Self::ButtonBackstageRegularButton(Box::new(item.read())),
+            Some((NS_MSO14, "menu")) => Self::MenuBackstagePrimaryMenu(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -16175,10 +16851,27 @@ impl officekit_markup_base::Write for PrimaryItemContent {
         match self {
             Self::ButtonBackstageRegularButton(arm) => arm.write_into(writer),
             Self::MenuBackstagePrimaryMenu(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<ButtonBackstageRegularButtonWith<X>> for PrimaryItemContentWith<X> {
+    fn from(arm: ButtonBackstageRegularButtonWith<X>) -> Self {
+        Self::ButtonBackstageRegularButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MenuBackstagePrimaryMenuWith<X>> for PrimaryItemContentWith<X> {
+    fn from(arm: MenuBackstagePrimaryMenuWith<X>) -> Self {
+        Self::MenuBackstagePrimaryMenu(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<PrimaryItemContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> QatWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -16242,14 +16935,18 @@ impl<X: UserData> QuickAccessToolbarItemsContentWith<X> {
     {
         match self {
             Self::ButtonButtonRegular(node) => {
-                QuickAccessToolbarItemsContentWith::ButtonButtonRegular(node.into_user_data())
+                QuickAccessToolbarItemsContentWith::ButtonButtonRegular(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::ControlControlCloneQat(node) => {
-                QuickAccessToolbarItemsContentWith::ControlControlCloneQat(node.into_user_data())
+                QuickAccessToolbarItemsContentWith::ControlControlCloneQat(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => QuickAccessToolbarItemsContentWith::Other(node),
             Self::Separator(node) => {
-                QuickAccessToolbarItemsContentWith::Separator(node.into_user_data())
+                QuickAccessToolbarItemsContentWith::Separator(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -16257,15 +16954,15 @@ impl<X: UserData> QuickAccessToolbarItemsContentWith<X> {
 
 impl officekit_markup_base::Read for QuickAccessToolbarItemsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(item.read()),
-            Some((NS_MSO14, "control")) => Self::ControlControlCloneQat(item.read()),
-            Some((NS_MSO14, "separator")) => Self::Separator(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "button")) => Self::ButtonButtonRegular(Box::new(item.read())),
+            Some((NS_MSO14, "control")) => Self::ControlControlCloneQat(Box::new(item.read())),
+            Some((NS_MSO14, "separator")) => Self::Separator(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -16275,11 +16972,34 @@ impl officekit_markup_base::Write for QuickAccessToolbarItemsContent {
         match self {
             Self::ButtonButtonRegular(arm) => arm.write_into(writer),
             Self::ControlControlCloneQat(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Separator(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonButtonRegularWith<X>> for QuickAccessToolbarItemsContentWith<X> {
+    fn from(arm: ButtonButtonRegularWith<X>) -> Self {
+        Self::ButtonButtonRegular(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ControlControlCloneQatWith<X>> for QuickAccessToolbarItemsContentWith<X> {
+    fn from(arm: ControlControlCloneQatWith<X>) -> Self {
+        Self::ControlControlCloneQat(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SeparatorWith<X>> for QuickAccessToolbarItemsContentWith<X> {
+    fn from(arm: SeparatorWith<X>) -> Self {
+        Self::Separator(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<QuickAccessToolbarItemsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> RadioButtonWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -16474,25 +17194,27 @@ impl<X: UserData> RibbonContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::ContextualTabs(node) => RibbonContentWith::ContextualTabs(node.into_user_data()),
+            Self::ContextualTabs(node) => {
+                RibbonContentWith::ContextualTabs(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => RibbonContentWith::Other(node),
-            Self::Qat(node) => RibbonContentWith::Qat(node.into_user_data()),
-            Self::Tabs(node) => RibbonContentWith::Tabs(node.into_user_data()),
+            Self::Qat(node) => RibbonContentWith::Qat(Box::new((*node).into_user_data())),
+            Self::Tabs(node) => RibbonContentWith::Tabs(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for RibbonContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(item.read()),
-            Some((NS_MSO14, "qat")) => Self::Qat(item.read()),
-            Some((NS_MSO14, "tabs")) => Self::Tabs(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "contextualTabs")) => Self::ContextualTabs(Box::new(item.read())),
+            Some((NS_MSO14, "qat")) => Self::Qat(Box::new(item.read())),
+            Some((NS_MSO14, "tabs")) => Self::Tabs(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -16501,12 +17223,35 @@ impl officekit_markup_base::Write for RibbonContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::ContextualTabs(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Qat(arm) => arm.write_into(writer),
             Self::Tabs(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ContextualTabsWith<X>> for RibbonContentWith<X> {
+    fn from(arm: ContextualTabsWith<X>) -> Self {
+        Self::ContextualTabs(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<QatWith<X>> for RibbonContentWith<X> {
+    fn from(arm: QatWith<X>) -> Self {
+        Self::Qat(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TabsWith<X>> for RibbonContentWith<X> {
+    fn from(arm: TabsWith<X>) -> Self {
+        Self::Tabs(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RibbonContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SecondColumnWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -16680,24 +17425,26 @@ impl<X: UserData> SimpleGroupsContentWith<X> {
     {
         match self {
             Self::GroupBackstageGroup(node) => {
-                SimpleGroupsContentWith::GroupBackstageGroup(node.into_user_data())
+                SimpleGroupsContentWith::GroupBackstageGroup(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => SimpleGroupsContentWith::Other(node),
-            Self::TaskGroup(node) => SimpleGroupsContentWith::TaskGroup(node.into_user_data()),
+            Self::TaskGroup(node) => {
+                SimpleGroupsContentWith::TaskGroup(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for SimpleGroupsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(item.read()),
-            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "group")) => Self::GroupBackstageGroup(Box::new(item.read())),
+            Some((NS_MSO14, "taskGroup")) => Self::TaskGroup(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -16706,11 +17453,28 @@ impl officekit_markup_base::Write for SimpleGroupsContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::GroupBackstageGroup(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TaskGroup(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<GroupBackstageGroupWith<X>> for SimpleGroupsContentWith<X> {
+    fn from(arm: GroupBackstageGroupWith<X>) -> Self {
+        Self::GroupBackstageGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TaskGroupWith<X>> for SimpleGroupsContentWith<X> {
+    fn from(arm: TaskGroupWith<X>) -> Self {
+        Self::TaskGroup(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SimpleGroupsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for Size {
     fn as_ref(&self) -> &str {
@@ -16770,11 +17534,13 @@ impl<X: UserData> SplitButtonContentWith<X> {
     {
         match self {
             Self::ButtonVisibleButton(node) => {
-                SplitButtonContentWith::ButtonVisibleButton(node.into_user_data())
+                SplitButtonContentWith::ButtonVisibleButton(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => SplitButtonContentWith::Other(node),
             Self::ToggleButtonVisibleToggleButton(node) => {
-                SplitButtonContentWith::ToggleButtonVisibleToggleButton(node.into_user_data())
+                SplitButtonContentWith::ToggleButtonVisibleToggleButton(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -16782,14 +17548,16 @@ impl<X: UserData> SplitButtonContentWith<X> {
 
 impl officekit_markup_base::Read for SplitButtonContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_MSO14, "button")) => Self::ButtonVisibleButton(item.read()),
-            Some((NS_MSO14, "toggleButton")) => Self::ToggleButtonVisibleToggleButton(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_MSO14, "button")) => Self::ButtonVisibleButton(Box::new(item.read())),
+            Some((NS_MSO14, "toggleButton")) => {
+                Self::ToggleButtonVisibleToggleButton(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -16798,11 +17566,28 @@ impl officekit_markup_base::Write for SplitButtonContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::ButtonVisibleButton(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::ToggleButtonVisibleToggleButton(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ButtonVisibleButtonWith<X>> for SplitButtonContentWith<X> {
+    fn from(arm: ButtonVisibleButtonWith<X>) -> Self {
+        Self::ButtonVisibleButton(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ToggleButtonVisibleToggleButtonWith<X>> for SplitButtonContentWith<X> {
+    fn from(arm: ToggleButtonVisibleToggleButtonWith<X>) -> Self {
+        Self::ToggleButtonVisibleToggleButton(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<SplitButtonContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SplitButtonSplitButtonWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

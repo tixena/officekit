@@ -1,5 +1,4 @@
 use alloc::borrow::ToOwned as _;
-use alloc::boxed::Box;
 
 use officekit_markup::common_simple_types::{HexadecimalColorValue, OnOffValue};
 use officekit_markup::drawing::{ColorContent, ColorScheme, RGBColorModelHexVariant};
@@ -79,16 +78,16 @@ fn two_digits(text: &str) -> TwoDigitHexadecimalValue {
     TwoDigitHexadecimalValue::from(text.to_owned())
 }
 
-fn srgb(text: &str) -> Box<ColorContent> {
+fn srgb(text: &str) -> ColorContent {
     let mut color = RGBColorModelHexVariant::default();
     color.val = Some(HexadecimalColorValue::from(text.to_owned()));
-    Box::new(ColorContent::RGBColorModelHexVariant(color))
+    ColorContent::from(color)
 }
 
 /// A theme whose `accent2` is `accent2`, under the default mapping.
 fn theme_with_accent2(accent2: &str) -> ThemeColors {
     let mut scheme = ColorScheme::default();
-    scheme.accent_2.content = srgb(accent2);
+    *scheme.accent_2.content = srgb(accent2);
     ThemeColors::new(Some(&scheme), SchemeMap::default())
 }
 
@@ -524,12 +523,12 @@ fn a_tint_with_no_theme_colour_is_not_used() {
 #[test]
 fn each_theme_name_goes_through_the_mapping_section_17_18_97_gives_it() {
     let mut scheme = ColorScheme::default();
-    scheme.dark_1.content = srgb("000001");
-    scheme.light_1.content = srgb("FFFFF1");
-    scheme.dark_2.content = srgb("000002");
-    scheme.light_2.content = srgb("FFFFF2");
-    scheme.hyperlink.content = srgb("0000FF");
-    scheme.followed_hyperlink.content = srgb("FF00FF");
+    *scheme.dark_1.content = srgb("000001");
+    *scheme.light_1.content = srgb("FFFFF1");
+    *scheme.dark_2.content = srgb("000002");
+    *scheme.light_2.content = srgb("FFFFF2");
+    *scheme.hyperlink.content = srgb("0000FF");
+    *scheme.followed_hyperlink.content = srgb("FF00FF");
     let theme = ThemeColors::new(Some(&scheme), SchemeMap::default());
     let cases = [
         ("dark1", "000001"),

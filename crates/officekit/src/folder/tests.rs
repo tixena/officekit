@@ -27,11 +27,11 @@ fn typed_docx() -> Docx {
     characters.space = Some("preserve".to_owned());
     characters.value = " kept ".to_owned();
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::Text(characters)];
+    run.content = vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::TextRun(run)];
+    paragraph.content = vec![ParagraphContent::from(run)];
     let mut body = DocumentBody::default();
-    body.content = vec![BlockContent::Paragraph(paragraph)];
+    body.content = vec![BlockContent::from(paragraph)];
     let mut document = Document::default();
     document.body = Some(Box::new(body));
     let mut file = Docx::new(WordprocessingKind::Document).unwrap();

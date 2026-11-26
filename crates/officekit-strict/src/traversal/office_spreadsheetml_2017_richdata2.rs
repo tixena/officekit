@@ -717,11 +717,11 @@ impl super::Transform for office_spreadsheetml_2017_richdata2::CustomRichFilters
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CustomFilter(arm) = self {
-            Self::CustomFilter(arm.transform(ctx))
+            Self::CustomFilter(Box::new(arm.transform(ctx)))
         } else if let Self::ExtLst(arm) = self {
-            Self::ExtLst(arm.transform(ctx))
+            Self::ExtLst(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -2061,17 +2061,17 @@ impl super::Transform for office_spreadsheetml_2017_richdata2::RichFilterColumnC
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CustomFilters(arm) = self {
-            Self::CustomFilters(arm.transform(ctx))
+            Self::CustomFilters(Box::new(arm.transform(ctx)))
         } else if let Self::DynamicFilter(arm) = self {
-            Self::DynamicFilter(arm.transform(ctx))
+            Self::DynamicFilter(Box::new(arm.transform(ctx)))
         } else if let Self::ExtLst(arm) = self {
-            Self::ExtLst(arm.transform(ctx))
+            Self::ExtLst(Box::new(arm.transform(ctx)))
         } else if let Self::Filters(arm) = self {
-            Self::Filters(arm.transform(ctx))
+            Self::Filters(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Top10(arm) = self {
-            Self::Top10(arm.transform(ctx))
+            Self::Top10(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

@@ -54,7 +54,7 @@ const NAMES: [StSchemeColorValMember; 17] = [
 fn hex(text: &str) -> ColorContent {
     let mut color = RGBColorModelHexVariant::default();
     color.val = Some(HexadecimalColorValue::from(text.to_owned()));
-    ColorContent::RGBColorModelHexVariant(color)
+    ColorContent::from(color)
 }
 
 /// A theme whose twelve colours differ.
@@ -95,7 +95,7 @@ fn overriding_tx1(tx1: ThemeColorReferenceMember) -> ColorSchemeMapOverride {
 /// A `p:clrMapOvr` holding `a:masterClrMapping`.
 fn master_mapping() -> ColorSchemeMapOverride {
     let mut map = ColorSchemeMapOverride::default();
-    map.content = Box::new(ColorSchemeMapOverrideContent::MasterColorMapping(
+    map.content = Box::new(ColorSchemeMapOverrideContent::from(
         MasterColorMapping::default(),
     ));
     map

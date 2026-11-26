@@ -910,17 +910,17 @@ pub struct AbsolutePositionOffsetValue(pub String);
 #[non_exhaustive]
 pub enum AnchorContentWith<X: UserData> {
     /// The element `wp:wrapNone`, a `NoTextWrapping`.
-    NoTextWrapping(NoTextWrappingWith<X>),
+    NoTextWrapping(Box<NoTextWrappingWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `wp:wrapSquare`, a `SquareWrapping`.
-    SquareWrapping(SquareWrappingWith<X>),
+    SquareWrapping(Box<SquareWrappingWith<X>>),
     /// The element `wp:wrapThrough`, a `ThroughWrapping`.
-    ThroughWrapping(ThroughWrappingWith<X>),
+    ThroughWrapping(Box<ThroughWrappingWith<X>>),
     /// The element `wp:wrapTight`, a `TightWrapping`.
-    TightWrapping(TightWrappingWith<X>),
+    TightWrapping(Box<TightWrappingWith<X>>),
     /// The element `wp:wrapTopAndBottom`, a `TopAndBottomWrapping`.
-    TopAndBottomWrapping(TopAndBottomWrappingWith<X>),
+    TopAndBottomWrapping(Box<TopAndBottomWrappingWith<X>>),
 }
 
 /// [`AnchorContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1158,17 +1158,17 @@ pub struct DistanceFromText(pub String);
 #[non_exhaustive]
 pub enum DrawingCanvasContentWith<X: UserData> {
     /// The element `wp:contentPart`, a `ContentPart`.
-    ContentPart(ContentPartWith<X>),
+    ContentPart(Box<ContentPartWith<X>>),
     /// The element `wp:graphicFrame`, a `GraphicalObjectContainer`.
-    GraphicalObjectContainer(GraphicalObjectContainerWith<X>),
+    GraphicalObjectContainer(Box<GraphicalObjectContainerWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `pic:pic`, a `Picture`.
-    Picture(super::picture::PictureWith<X>),
+    Picture(Box<super::picture::PictureWith<X>>),
     /// The element `wp:wsp`, a `WordprocessingMLShape`.
-    WordprocessingMLShape(WordprocessingMLShapeWith<X>),
+    WordprocessingMLShape(Box<WordprocessingMLShapeWith<X>>),
     /// The element `wp:wgp`, a `WordprocessingMLShapeGroup`.
-    WordprocessingMLShapeGroup(WordprocessingMLShapeGroupWith<X>),
+    WordprocessingMLShapeGroup(Box<WordprocessingMLShapeGroupWith<X>>),
 }
 
 /// [`DrawingCanvasContentWith`] of the tree a read gives, where no node holds anything in
@@ -1319,17 +1319,17 @@ impl Eq for GroupShapeWith<()> {}
 #[non_exhaustive]
 pub enum GroupShapeContentWith<X: UserData> {
     /// The element `wp:contentPart`, a `ContentPart`.
-    ContentPart(ContentPartWith<X>),
+    ContentPart(Box<ContentPartWith<X>>),
     /// The element `wp:graphicFrame`, a `GraphicalObjectContainer`.
-    GraphicalObjectContainer(GraphicalObjectContainerWith<X>),
+    GraphicalObjectContainer(Box<GraphicalObjectContainerWith<X>>),
     /// The element `wp:grpSp`, a `GroupShape`.
-    GroupShape(GroupShapeWith<X>),
+    GroupShape(Box<GroupShapeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `pic:pic`, a `Picture`.
-    Picture(super::picture::PictureWith<X>),
+    Picture(Box<super::picture::PictureWith<X>>),
     /// The element `wp:wsp`, a `WordprocessingMLShape`.
-    WordprocessingMLShape(WordprocessingMLShapeWith<X>),
+    WordprocessingMLShape(Box<WordprocessingMLShapeWith<X>>),
 }
 
 /// [`GroupShapeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1398,13 +1398,13 @@ impl Eq for HorizontalPositioningWith<()> {}
 #[non_exhaustive]
 pub enum HorizontalPositioningContentWith<X: UserData> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
+    AbsolutePositionOffset(Box<AbsolutePositionOffsetWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `wp14:pctPosHOffset`, a `PctPosHOffset`.
-    PctPosHOffset(super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>),
+    PctPosHOffset(Box<super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>>),
     /// The element `wp:align`, a `RelativeHorizontalAlignment`.
-    RelativeHorizontalAlignment(RelativeHorizontalAlignmentWith<X>),
+    RelativeHorizontalAlignment(Box<RelativeHorizontalAlignmentWith<X>>),
 }
 
 /// [`HorizontalPositioningContentWith`] of the tree a read gives, where no node holds anything in
@@ -1808,11 +1808,11 @@ impl Eq for RichTextBoxContentContainerWith<()> {}
 #[non_exhaustive]
 pub enum ShapeNonVisualPropertiesContentWith<X: UserData> {
     /// The element `wp:cNvCnPr`, a `NonVisualConnectorShapeDrawingProperties`.
-    NonVisualConnectorShapeDrawingProperties(NonVisualConnectorShapeDrawingPropertiesWith<X>),
+    NonVisualConnectorShapeDrawingProperties(Box<NonVisualConnectorShapeDrawingPropertiesWith<X>>),
     /// The element `wp:cNvSpPr`, a `NonVisualDrawingPropertiesForAShape`.
-    NonVisualDrawingPropertiesForAShape(NonVisualDrawingPropertiesForAShapeWith<X>),
+    NonVisualDrawingPropertiesForAShape(Box<NonVisualDrawingPropertiesForAShapeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`ShapeNonVisualPropertiesContentWith`] of the tree a read gives, where no node holds anything
@@ -1892,11 +1892,11 @@ impl Eq for ShapeStyleWith<()> {}
 #[non_exhaustive]
 pub enum ShapeTextContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `wp:linkedTxbx`, a `TextualContentsOfShapeLinkedTxbx`.
-    TextualContentsOfShapeLinkedTxbx(TextualContentsOfShapeLinkedTxbxWith<X>),
+    TextualContentsOfShapeLinkedTxbx(Box<TextualContentsOfShapeLinkedTxbxWith<X>>),
     /// The element `wp:txbx`, a `TextualContentsOfShapeTxbx`.
-    TextualContentsOfShapeTxbx(TextualContentsOfShapeTxbxWith<X>),
+    TextualContentsOfShapeTxbx(Box<TextualContentsOfShapeTxbxWith<X>>),
 }
 
 /// [`ShapeTextContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -2169,13 +2169,13 @@ impl Eq for VerticalPositioningWith<()> {}
 #[non_exhaustive]
 pub enum VerticalPositioningContentWith<X: UserData> {
     /// The element `wp:posOffset`, a `AbsolutePositionOffset`.
-    AbsolutePositionOffset(AbsolutePositionOffsetWith<X>),
+    AbsolutePositionOffset(Box<AbsolutePositionOffsetWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `wp14:pctPosVOffset`, a `PctPosVOffset`.
-    PctPosVOffset(super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>),
+    PctPosVOffset(Box<super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>>),
     /// The element `wp:align`, a `RelativeVerticalAlignment`.
-    RelativeVerticalAlignment(RelativeVerticalAlignmentWith<X>),
+    RelativeVerticalAlignment(Box<RelativeVerticalAlignmentWith<X>>),
 }
 
 /// [`VerticalPositioningContentWith`] of the tree a read gives, where no node holds anything in
@@ -2504,15 +2504,21 @@ impl<X: UserData> AnchorContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::NoTextWrapping(node) => AnchorContentWith::NoTextWrapping(node.into_user_data()),
-            Self::Other(node) => AnchorContentWith::Other(node),
-            Self::SquareWrapping(node) => AnchorContentWith::SquareWrapping(node.into_user_data()),
-            Self::ThroughWrapping(node) => {
-                AnchorContentWith::ThroughWrapping(node.into_user_data())
+            Self::NoTextWrapping(node) => {
+                AnchorContentWith::NoTextWrapping(Box::new((*node).into_user_data()))
             }
-            Self::TightWrapping(node) => AnchorContentWith::TightWrapping(node.into_user_data()),
+            Self::Other(node) => AnchorContentWith::Other(node),
+            Self::SquareWrapping(node) => {
+                AnchorContentWith::SquareWrapping(Box::new((*node).into_user_data()))
+            }
+            Self::ThroughWrapping(node) => {
+                AnchorContentWith::ThroughWrapping(Box::new((*node).into_user_data()))
+            }
+            Self::TightWrapping(node) => {
+                AnchorContentWith::TightWrapping(Box::new((*node).into_user_data()))
+            }
             Self::TopAndBottomWrapping(node) => {
-                AnchorContentWith::TopAndBottomWrapping(node.into_user_data())
+                AnchorContentWith::TopAndBottomWrapping(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -2520,23 +2526,23 @@ impl<X: UserData> AnchorContentWith<X> {
 
 impl<X: UserData> Default for AnchorContentWith<X> {
     fn default() -> Self {
-        Self::NoTextWrapping(NoTextWrappingWith::default())
+        Self::NoTextWrapping(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for AnchorContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "wrapNone")) => Self::NoTextWrapping(item.read()),
-            Some((NS_WP, "wrapSquare")) => Self::SquareWrapping(item.read()),
-            Some((NS_WP, "wrapThrough")) => Self::ThroughWrapping(item.read()),
-            Some((NS_WP, "wrapTight")) => Self::TightWrapping(item.read()),
-            Some((NS_WP, "wrapTopAndBottom")) => Self::TopAndBottomWrapping(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_WP, "wrapNone")) => Self::NoTextWrapping(Box::new(item.read())),
+            Some((NS_WP, "wrapSquare")) => Self::SquareWrapping(Box::new(item.read())),
+            Some((NS_WP, "wrapThrough")) => Self::ThroughWrapping(Box::new(item.read())),
+            Some((NS_WP, "wrapTight")) => Self::TightWrapping(Box::new(item.read())),
+            Some((NS_WP, "wrapTopAndBottom")) => Self::TopAndBottomWrapping(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -2545,7 +2551,7 @@ impl officekit_markup_base::Write for AnchorContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::NoTextWrapping(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SquareWrapping(arm) => arm.write_into(writer),
             Self::ThroughWrapping(arm) => arm.write_into(writer),
             Self::TightWrapping(arm) => arm.write_into(writer),
@@ -2553,6 +2559,41 @@ impl officekit_markup_base::Write for AnchorContent {
         }
     }
 }
+
+impl<X: UserData> From<NoTextWrappingWith<X>> for AnchorContentWith<X> {
+    fn from(arm: NoTextWrappingWith<X>) -> Self {
+        Self::NoTextWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SquareWrappingWith<X>> for AnchorContentWith<X> {
+    fn from(arm: SquareWrappingWith<X>) -> Self {
+        Self::SquareWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ThroughWrappingWith<X>> for AnchorContentWith<X> {
+    fn from(arm: ThroughWrappingWith<X>) -> Self {
+        Self::ThroughWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TightWrappingWith<X>> for AnchorContentWith<X> {
+    fn from(arm: TightWrappingWith<X>) -> Self {
+        Self::TightWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TopAndBottomWrappingWith<X>> for AnchorContentWith<X> {
+    fn from(arm: TopAndBottomWrappingWith<X>) -> Self {
+        Self::TopAndBottomWrapping(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<AnchorContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> AnchorForFloatingDrawingMLObjectWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -2976,17 +3017,25 @@ impl<X: UserData> DrawingCanvasContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::ContentPart(node) => DrawingCanvasContentWith::ContentPart(node.into_user_data()),
+            Self::ContentPart(node) => {
+                DrawingCanvasContentWith::ContentPart(Box::new((*node).into_user_data()))
+            }
             Self::GraphicalObjectContainer(node) => {
-                DrawingCanvasContentWith::GraphicalObjectContainer(node.into_user_data())
+                DrawingCanvasContentWith::GraphicalObjectContainer(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => DrawingCanvasContentWith::Other(node),
-            Self::Picture(node) => DrawingCanvasContentWith::Picture(node.into_user_data()),
+            Self::Picture(node) => {
+                DrawingCanvasContentWith::Picture(Box::new((*node).into_user_data()))
+            }
             Self::WordprocessingMLShape(node) => {
-                DrawingCanvasContentWith::WordprocessingMLShape(node.into_user_data())
+                DrawingCanvasContentWith::WordprocessingMLShape(Box::new((*node).into_user_data()))
             }
             Self::WordprocessingMLShapeGroup(node) => {
-                DrawingCanvasContentWith::WordprocessingMLShapeGroup(node.into_user_data())
+                DrawingCanvasContentWith::WordprocessingMLShapeGroup(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -2994,19 +3043,21 @@ impl<X: UserData> DrawingCanvasContentWith<X> {
 
 impl officekit_markup_base::Read for DrawingCanvasContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_WP, "contentPart")) => Self::ContentPart(Box::new(item.read())),
             Some((NS_WP | NS_WPC | NS_WPG, "graphicFrame")) => {
-                Self::GraphicalObjectContainer(item.read())
+                Self::GraphicalObjectContainer(Box::new(item.read()))
             }
-            Some((NS_PIC, "pic")) => Self::Picture(item.read()),
-            Some((NS_WP | NS_WPS, "wsp")) => Self::WordprocessingMLShape(item.read()),
-            Some((NS_WP | NS_WPG, "wgp")) => Self::WordprocessingMLShapeGroup(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_PIC, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_WP | NS_WPS, "wsp")) => Self::WordprocessingMLShape(Box::new(item.read())),
+            Some((NS_WP | NS_WPG, "wgp")) => {
+                Self::WordprocessingMLShapeGroup(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3016,13 +3067,48 @@ impl officekit_markup_base::Write for DrawingCanvasContent {
         match self {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicalObjectContainer(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::WordprocessingMLShape(arm) => arm.write_into(writer),
             Self::WordprocessingMLShapeGroup(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ContentPartWith<X>> for DrawingCanvasContentWith<X> {
+    fn from(arm: ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicalObjectContainerWith<X>> for DrawingCanvasContentWith<X> {
+    fn from(arm: GraphicalObjectContainerWith<X>) -> Self {
+        Self::GraphicalObjectContainer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::picture::PictureWith<X>> for DrawingCanvasContentWith<X> {
+    fn from(arm: super::picture::PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WordprocessingMLShapeWith<X>> for DrawingCanvasContentWith<X> {
+    fn from(arm: WordprocessingMLShapeWith<X>) -> Self {
+        Self::WordprocessingMLShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WordprocessingMLShapeGroupWith<X>> for DrawingCanvasContentWith<X> {
+    fn from(arm: WordprocessingMLShapeGroupWith<X>) -> Self {
+        Self::WordprocessingMLShapeGroup(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<DrawingCanvasContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> DrawingObjectNonVisualPropertiesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -3333,15 +3419,21 @@ impl<X: UserData> GroupShapeContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::ContentPart(node) => GroupShapeContentWith::ContentPart(node.into_user_data()),
-            Self::GraphicalObjectContainer(node) => {
-                GroupShapeContentWith::GraphicalObjectContainer(node.into_user_data())
+            Self::ContentPart(node) => {
+                GroupShapeContentWith::ContentPart(Box::new((*node).into_user_data()))
             }
-            Self::GroupShape(node) => GroupShapeContentWith::GroupShape(node.into_user_data()),
+            Self::GraphicalObjectContainer(node) => {
+                GroupShapeContentWith::GraphicalObjectContainer(Box::new((*node).into_user_data()))
+            }
+            Self::GroupShape(node) => {
+                GroupShapeContentWith::GroupShape(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => GroupShapeContentWith::Other(node),
-            Self::Picture(node) => GroupShapeContentWith::Picture(node.into_user_data()),
+            Self::Picture(node) => {
+                GroupShapeContentWith::Picture(Box::new((*node).into_user_data()))
+            }
             Self::WordprocessingMLShape(node) => {
-                GroupShapeContentWith::WordprocessingMLShape(node.into_user_data())
+                GroupShapeContentWith::WordprocessingMLShape(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -3349,19 +3441,19 @@ impl<X: UserData> GroupShapeContentWith<X> {
 
 impl officekit_markup_base::Read for GroupShapeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "contentPart")) => Self::ContentPart(item.read()),
+            Some((NS_WP, "contentPart")) => Self::ContentPart(Box::new(item.read())),
             Some((NS_WP | NS_WPC | NS_WPG, "graphicFrame")) => {
-                Self::GraphicalObjectContainer(item.read())
+                Self::GraphicalObjectContainer(Box::new(item.read()))
             }
-            Some((NS_WP | NS_WPG, "grpSp")) => Self::GroupShape(item.read()),
-            Some((NS_PIC, "pic")) => Self::Picture(item.read()),
-            Some((NS_WP | NS_WPS, "wsp")) => Self::WordprocessingMLShape(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_WP | NS_WPG, "grpSp")) => Self::GroupShape(Box::new(item.read())),
+            Some((NS_PIC, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_WP | NS_WPS, "wsp")) => Self::WordprocessingMLShape(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3372,12 +3464,47 @@ impl officekit_markup_base::Write for GroupShapeContent {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicalObjectContainer(arm) => arm.write_into(writer),
             Self::GroupShape(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::WordprocessingMLShape(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ContentPartWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicalObjectContainerWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GraphicalObjectContainerWith<X>) -> Self {
+        Self::GraphicalObjectContainer(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GroupShapeWith<X>) -> Self {
+        Self::GroupShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::picture::PictureWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: super::picture::PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WordprocessingMLShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: WordprocessingMLShapeWith<X>) -> Self {
+        Self::WordprocessingMLShape(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupShapeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GroupShapePropertiesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -3510,14 +3637,18 @@ impl<X: UserData> HorizontalPositioningContentWith<X> {
     {
         match self {
             Self::AbsolutePositionOffset(node) => {
-                HorizontalPositioningContentWith::AbsolutePositionOffset(node.into_user_data())
+                HorizontalPositioningContentWith::AbsolutePositionOffset(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => HorizontalPositioningContentWith::Other(node),
             Self::PctPosHOffset(node) => {
-                HorizontalPositioningContentWith::PctPosHOffset(node.into_user_data())
+                HorizontalPositioningContentWith::PctPosHOffset(Box::new((*node).into_user_data()))
             }
             Self::RelativeHorizontalAlignment(node) => {
-                HorizontalPositioningContentWith::RelativeHorizontalAlignment(node.into_user_data())
+                HorizontalPositioningContentWith::RelativeHorizontalAlignment(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -3525,21 +3656,21 @@ impl<X: UserData> HorizontalPositioningContentWith<X> {
 
 impl<X: UserData> Default for HorizontalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
+        Self::AbsolutePositionOffset(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for HorizontalPositioningContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(item.read()),
-            Some((NS_WP14, "pctPosHOffset")) => Self::PctPosHOffset(item.read()),
-            Some((NS_WP, "align")) => Self::RelativeHorizontalAlignment(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(Box::new(item.read())),
+            Some((NS_WP14, "pctPosHOffset")) => Self::PctPosHOffset(Box::new(item.read())),
+            Some((NS_WP, "align")) => Self::RelativeHorizontalAlignment(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3548,12 +3679,37 @@ impl officekit_markup_base::Write for HorizontalPositioningContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::AbsolutePositionOffset(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PctPosHOffset(arm) => arm.write_into(writer),
             Self::RelativeHorizontalAlignment(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AbsolutePositionOffsetWith<X>> for HorizontalPositioningContentWith<X> {
+    fn from(arm: AbsolutePositionOffsetWith<X>) -> Self {
+        Self::AbsolutePositionOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>>
+    for HorizontalPositioningContentWith<X>
+{
+    fn from(arm: super::office_word_2010_wordprocessing_drawing::PctPosHOffsetWith<X>) -> Self {
+        Self::PctPosHOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RelativeHorizontalAlignmentWith<X>> for HorizontalPositioningContentWith<X> {
+    fn from(arm: RelativeHorizontalAlignmentWith<X>) -> Self {
+        Self::RelativeHorizontalAlignment(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<HorizontalPositioningContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for HorizontalRelativePositioning {
     fn as_ref(&self) -> &str {
@@ -4410,13 +4566,13 @@ impl<X: UserData> ShapeNonVisualPropertiesContentWith<X> {
         match self {
             Self::NonVisualConnectorShapeDrawingProperties(node) => {
                 ShapeNonVisualPropertiesContentWith::NonVisualConnectorShapeDrawingProperties(
-                    node.into_user_data(),
+                    Box::new((*node).into_user_data()),
                 )
             }
             Self::NonVisualDrawingPropertiesForAShape(node) => {
-                ShapeNonVisualPropertiesContentWith::NonVisualDrawingPropertiesForAShape(
-                    node.into_user_data(),
-                )
+                ShapeNonVisualPropertiesContentWith::NonVisualDrawingPropertiesForAShape(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => ShapeNonVisualPropertiesContentWith::Other(node),
         }
@@ -4425,26 +4581,24 @@ impl<X: UserData> ShapeNonVisualPropertiesContentWith<X> {
 
 impl<X: UserData> Default for ShapeNonVisualPropertiesContentWith<X> {
     fn default() -> Self {
-        Self::NonVisualConnectorShapeDrawingProperties(
-            NonVisualConnectorShapeDrawingPropertiesWith::default(),
-        )
+        Self::NonVisualConnectorShapeDrawingProperties(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for ShapeNonVisualPropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_WP | NS_WPS, "cNvCnPr")) => {
-                Self::NonVisualConnectorShapeDrawingProperties(item.read())
+                Self::NonVisualConnectorShapeDrawingProperties(Box::new(item.read()))
             }
             Some((NS_WP | NS_WPS, "cNvSpPr")) => {
-                Self::NonVisualDrawingPropertiesForAShape(item.read())
+                Self::NonVisualDrawingPropertiesForAShape(Box::new(item.read()))
             }
-            _ => Self::Other(item.into_node()),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -4454,10 +4608,31 @@ impl officekit_markup_base::Write for ShapeNonVisualPropertiesContent {
         match self {
             Self::NonVisualConnectorShapeDrawingProperties(arm) => arm.write_into(writer),
             Self::NonVisualDrawingPropertiesForAShape(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<NonVisualConnectorShapeDrawingPropertiesWith<X>>
+    for ShapeNonVisualPropertiesContentWith<X>
+{
+    fn from(arm: NonVisualConnectorShapeDrawingPropertiesWith<X>) -> Self {
+        Self::NonVisualConnectorShapeDrawingProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NonVisualDrawingPropertiesForAShapeWith<X>>
+    for ShapeNonVisualPropertiesContentWith<X>
+{
+    fn from(arm: NonVisualDrawingPropertiesForAShapeWith<X>) -> Self {
+        Self::NonVisualDrawingPropertiesForAShape(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeNonVisualPropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShapePropertiesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -4611,10 +4786,12 @@ impl<X: UserData> ShapeTextContentWith<X> {
         match self {
             Self::Other(node) => ShapeTextContentWith::Other(node),
             Self::TextualContentsOfShapeLinkedTxbx(node) => {
-                ShapeTextContentWith::TextualContentsOfShapeLinkedTxbx(node.into_user_data())
+                ShapeTextContentWith::TextualContentsOfShapeLinkedTxbx(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::TextualContentsOfShapeTxbx(node) => {
-                ShapeTextContentWith::TextualContentsOfShapeTxbx(node.into_user_data())
+                ShapeTextContentWith::TextualContentsOfShapeTxbx(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -4622,16 +4799,18 @@ impl<X: UserData> ShapeTextContentWith<X> {
 
 impl officekit_markup_base::Read for ShapeTextContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
             Some((NS_WP | NS_WPS, "linkedTxbx")) => {
-                Self::TextualContentsOfShapeLinkedTxbx(item.read())
+                Self::TextualContentsOfShapeLinkedTxbx(Box::new(item.read()))
             }
-            Some((NS_WP | NS_WPS, "txbx")) => Self::TextualContentsOfShapeTxbx(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_WP | NS_WPS, "txbx")) => {
+                Self::TextualContentsOfShapeTxbx(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -4639,12 +4818,29 @@ impl officekit_markup_base::Read for ShapeTextContent {
 impl officekit_markup_base::Write for ShapeTextContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TextualContentsOfShapeLinkedTxbx(arm) => arm.write_into(writer),
             Self::TextualContentsOfShapeTxbx(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<TextualContentsOfShapeLinkedTxbxWith<X>> for ShapeTextContentWith<X> {
+    fn from(arm: TextualContentsOfShapeLinkedTxbxWith<X>) -> Self {
+        Self::TextualContentsOfShapeLinkedTxbx(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextualContentsOfShapeTxbxWith<X>> for ShapeTextContentWith<X> {
+    fn from(arm: TextualContentsOfShapeTxbxWith<X>) -> Self {
+        Self::TextualContentsOfShapeTxbx(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeTextContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SimplePositioningCoordinatesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -5208,14 +5404,18 @@ impl<X: UserData> VerticalPositioningContentWith<X> {
     {
         match self {
             Self::AbsolutePositionOffset(node) => {
-                VerticalPositioningContentWith::AbsolutePositionOffset(node.into_user_data())
+                VerticalPositioningContentWith::AbsolutePositionOffset(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => VerticalPositioningContentWith::Other(node),
             Self::PctPosVOffset(node) => {
-                VerticalPositioningContentWith::PctPosVOffset(node.into_user_data())
+                VerticalPositioningContentWith::PctPosVOffset(Box::new((*node).into_user_data()))
             }
             Self::RelativeVerticalAlignment(node) => {
-                VerticalPositioningContentWith::RelativeVerticalAlignment(node.into_user_data())
+                VerticalPositioningContentWith::RelativeVerticalAlignment(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -5223,21 +5423,21 @@ impl<X: UserData> VerticalPositioningContentWith<X> {
 
 impl<X: UserData> Default for VerticalPositioningContentWith<X> {
     fn default() -> Self {
-        Self::AbsolutePositionOffset(AbsolutePositionOffsetWith::default())
+        Self::AbsolutePositionOffset(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for VerticalPositioningContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(item.read()),
-            Some((NS_WP14, "pctPosVOffset")) => Self::PctPosVOffset(item.read()),
-            Some((NS_WP, "align")) => Self::RelativeVerticalAlignment(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_WP, "posOffset")) => Self::AbsolutePositionOffset(Box::new(item.read())),
+            Some((NS_WP14, "pctPosVOffset")) => Self::PctPosVOffset(Box::new(item.read())),
+            Some((NS_WP, "align")) => Self::RelativeVerticalAlignment(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -5246,12 +5446,37 @@ impl officekit_markup_base::Write for VerticalPositioningContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::AbsolutePositionOffset(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PctPosVOffset(arm) => arm.write_into(writer),
             Self::RelativeVerticalAlignment(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AbsolutePositionOffsetWith<X>> for VerticalPositioningContentWith<X> {
+    fn from(arm: AbsolutePositionOffsetWith<X>) -> Self {
+        Self::AbsolutePositionOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>>
+    for VerticalPositioningContentWith<X>
+{
+    fn from(arm: super::office_word_2010_wordprocessing_drawing::PctPosVOffsetWith<X>) -> Self {
+        Self::PctPosVOffset(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RelativeVerticalAlignmentWith<X>> for VerticalPositioningContentWith<X> {
+    fn from(arm: RelativeVerticalAlignmentWith<X>) -> Self {
+        Self::RelativeVerticalAlignment(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<VerticalPositioningContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for VerticalRelativePositioning {
     fn as_ref(&self) -> &str {

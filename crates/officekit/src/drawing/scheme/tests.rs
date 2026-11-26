@@ -52,7 +52,7 @@ const SLOTS: [ThemeSlot; 12] = [
 fn hex(text: &str) -> ColorContent {
     let mut color = RGBColorModelHexVariant::default();
     color.val = Some(HexadecimalColorValue::from(text.to_owned()));
-    ColorContent::RGBColorModelHexVariant(color)
+    ColorContent::from(color)
 }
 
 /// A colour scheme whose twelve colours differ.

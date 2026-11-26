@@ -175,7 +175,7 @@ fn document_of(content: Vec<ParagraphContent>) -> Document {
     let mut paragraph = Paragraph::default();
     paragraph.content = content;
     let mut body = DocumentBody::default();
-    body.content = vec![BlockContent::Paragraph(paragraph)];
+    body.content = vec![BlockContent::from(paragraph)];
     let mut document = Document::default();
     document.body = Some(Box::new(body));
     document
@@ -190,7 +190,7 @@ fn paragraphs(docx: &Docx) -> Vec<Paragraph> {
         .into_iter()
         .filter_map(|block| {
             if let BlockContent::Paragraph(found) = block {
-                Some(found)
+                Some(*found)
             } else {
                 None
             }
@@ -202,14 +202,14 @@ fn paragraphs(docx: &Docx) -> Vec<Paragraph> {
 fn run_of(content: Vec<TextRunContent>) -> ParagraphContent {
     let mut run = TextRun::default();
     run.content = content;
-    ParagraphContent::TextRun(run)
+    ParagraphContent::from(run)
 }
 
 /// Text of `value` with no `xml:space`.
 fn text_of(value: &str) -> TextRunContent {
     let mut text = Text::default();
     text.value = value.to_owned();
-    TextRunContent::Text(text)
+    TextRunContent::from(text)
 }
 
 #[test]
@@ -225,7 +225,7 @@ fn a_new_document_holds_one_empty_paragraph_in_its_main_part() {
         Some(WordprocessingKind::Template.main_content_type())
     );
     let blocks = docx.main_document().unwrap().body.unwrap().content;
-    assert_eq!(blocks, [BlockContent::Paragraph(Paragraph::default())]);
+    assert_eq!(blocks, [BlockContent::from(Paragraph::default())]);
     let related = docx.package().related(None).unwrap();
     assert_eq!(related.len(), 1);
     assert_eq!(related[0].id, "rId1");
@@ -468,7 +468,7 @@ fn a_new_document_saved_strict_takes_strict_names_values_and_relationship_types(
     let mut paragraph = Paragraph::default();
     paragraph.properties = Some(Box::new(properties));
     let mut body = DocumentBody::default();
-    body.content = vec![BlockContent::Paragraph(paragraph)];
+    body.content = vec![BlockContent::from(paragraph)];
     let mut document = Document::default();
     document.body = Some(Box::new(body));
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
@@ -556,9 +556,9 @@ fn vml_takes_the_wrapper_in_strict_and_keeps_it_through_a_round_trip() {
     let mut shape = ShapeDefinition::default();
     shape.style = Some("width:108.75pt;height:40.5pt".to_owned());
     let mut picture = VMLObject::default();
-    picture.content = vec![VmlElementContent::ShapeDefinition(shape)];
+    picture.content = vec![VmlElementContent::from(shape)];
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    docx.set_main_document(&document_of(vec![run_of(vec![TextRunContent::VMLObject(
+    docx.set_main_document(&document_of(vec![run_of(vec![TextRunContent::from(
         picture,
     )])]))
     .unwrap();
@@ -706,11 +706,11 @@ fn a_save_writes_the_addresses_of_graphics_and_schema_references_in_its_class() 
     frame.drawing_object_non_visual_properties.name = Some("Picture 1".to_owned());
     frame.graphic_object.data.uri = Some(picture.to_owned());
     let mut drawing = DrawingMLObject::default();
-    drawing.content = vec![DrawingObjectContent::InlineDrawingMLObject(frame)];
+    drawing.content = vec![DrawingObjectContent::from(frame)];
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    docx.set_main_document(&document_of(vec![run_of(vec![
-        TextRunContent::DrawingMLObject(drawing),
-    ])]))
+    docx.set_main_document(&document_of(vec![run_of(vec![TextRunContent::from(
+        drawing,
+    )])]))
     .unwrap();
     let main = docx.main_document_part().clone();
     docx.package_mut()
@@ -786,9 +786,7 @@ fn a_strict_save_removes_the_settings_word_leaves_out_and_goes_on() {
     shape_defaults.ext = Some(VMLExtensionHandlingBehaviors::from("edit".to_owned()));
     shape_defaults.spidmax = Some("1026".to_owned());
     let mut defaults = DefaultPropertiesForVMLObjectsInMainDocument::default();
-    defaults.content = vec![VmlOfficeDrawingElementContent::NewShapeDefaults(
-        shape_defaults,
-    )];
+    defaults.content = vec![VmlOfficeDrawingElementContent::from(shape_defaults)];
     let mut settings = DocumentSettings::default();
     settings.compatibility_settings = Some(Box::new(compatibility));
     settings.default_properties_for_vml_objects_in_main_document = Some(Box::new(defaults));
@@ -923,11 +921,9 @@ fn a_binding_to_a_bibliography_follows_the_bibliography_into_each_class() {
     mapping.store_item_id = Some("{1}".to_owned());
     mapping.xpath = Some("/ns0:Sources[1]/ns0:Source[1]/ns0:Title[1]".to_owned());
     let mut properties = StructuredDocumentTagProperties::default();
-    properties.content = Some(Box::new(
-        StructuredDocumentTagPropertiesContent::PlainTextStructuredDocumentTag(
-            PlainTextStructuredDocumentTag::default(),
-        ),
-    ));
+    properties.content = Some(Box::new(StructuredDocumentTagPropertiesContent::from(
+        PlainTextStructuredDocumentTag::default(),
+    )));
     properties.xml_mapping = Some(Box::new(mapping));
     let mut content = InlineLevelStructuredDocumentTagContent::default();
     content.content = vec![run_of(vec![text_of("x")])];
@@ -935,10 +931,8 @@ fn a_binding_to_a_bibliography_follows_the_bibliography_into_each_class() {
     control.content = Some(Box::new(content));
     control.properties = Some(Box::new(properties));
     let mut docx = Docx::new(WordprocessingKind::Document).unwrap();
-    docx.set_main_document(&document_of(vec![
-        ParagraphContent::InlineLevelStructuredDocumentTag(control),
-    ]))
-    .unwrap();
+    docx.set_main_document(&document_of(vec![ParagraphContent::from(control)]))
+        .unwrap();
     let main = docx.main_document_part().clone();
     let item = docx
         .package_mut()
@@ -1046,7 +1040,7 @@ fn hex(text: &str) -> ColorContent {
 
     let mut color = RGBColorModelHexVariant::default();
     color.val = Some(HexadecimalColorValue::from(text.to_owned()));
-    ColorContent::RGBColorModelHexVariant(color)
+    ColorContent::from(color)
 }
 
 /// A colour scheme whose first dark and first light colours differ.

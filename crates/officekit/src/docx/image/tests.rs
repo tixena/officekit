@@ -385,8 +385,7 @@ fn only_the_first_picture_of_the_run_changes() {
     let mut docx = with_old_image();
     let main = docx.main_document_part().clone();
     let mut run = run_holding(old_picture());
-    run.content
-        .push(TextRunContent::DrawingMLObject(old_picture()));
+    run.content.push(TextRunContent::from(old_picture()));
     docx.set_picture(&main, &mut run, &wide_png(), PictureFit::Width)
         .unwrap();
     let pictures = inlines(&run);
@@ -472,7 +471,7 @@ fn sizes(inline: &InlineDrawingMLObject) -> [(String, String); 2] {
 /// A run holding `drawing`.
 fn run_holding(drawing: DrawingMLObject) -> TextRun {
     let mut run = TextRun::default();
-    run.content = alloc::vec![TextRunContent::DrawingMLObject(drawing)];
+    run.content = alloc::vec![TextRunContent::from(drawing)];
     run
 }
 
@@ -483,8 +482,8 @@ fn document_of(runs: Vec<TextRun>) -> Document {
         .into_iter()
         .map(|run| {
             let mut paragraph = Paragraph::default();
-            paragraph.content = alloc::vec![ParagraphContent::TextRun(run)];
-            BlockContent::Paragraph(paragraph)
+            paragraph.content = alloc::vec![ParagraphContent::from(run)];
+            BlockContent::from(paragraph)
         })
         .collect();
     let mut document = Document::default();

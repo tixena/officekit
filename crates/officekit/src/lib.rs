@@ -31,9 +31,9 @@
 //! ```text
 //! Docx::main_document()          -> Document
 //!   .body                        -> DocumentBody
-//!     .content[i]                -> BlockContent::Paragraph(Paragraph)
-//!       .content[j]              -> ParagraphContent::TextRun(TextRun)
-//!         .content[k]            -> TextRunContent::Text(Text)
+//!     .content[i]                -> BlockContent::Paragraph(Box<Paragraph>)
+//!       .content[j]              -> ParagraphContent::TextRun(Box<TextRun>)
+//!         .content[k]            -> TextRunContent::Text(Box<Text>)
 //!           .value               -> the text
 //! ```
 //!
@@ -101,15 +101,15 @@ let mut document = docx.main_document()?;
 let mut text = Text::default();
 text.value = "Hello".to_owned();
 let mut run = TextRun::default();
-run.content.push(TextRunContent::Text(text));
+run.content.push(TextRunContent::from(text));
 let mut paragraph = Paragraph::default();
-paragraph.content.push(ParagraphContent::TextRun(run));
+paragraph.content.push(ParagraphContent::from(run));
 document
     .body
     .as_mut()
     .ok_or("the document has no body")?
     .content
-    .push(BlockContent::Paragraph(paragraph));
+    .push(BlockContent::from(paragraph));
 docx.set_main_document(&document)?;
 
 let (bytes, warnings) = docx.to_bytes_transitional()?;
@@ -183,15 +183,15 @@ let mut document = docx.main_document()?;
 let mut text = Text::default();
 text.value = "Dear {{name}},".to_owned();
 let mut run = TextRun::default();
-run.content.push(TextRunContent::Text(text));
+run.content.push(TextRunContent::from(text));
 let mut paragraph = Paragraph::default();
-paragraph.content.push(ParagraphContent::TextRun(run));
+paragraph.content.push(ParagraphContent::from(run));
 document
     .body
     .as_mut()
     .ok_or("the document has no body")?
     .content
-    .push(BlockContent::Paragraph(paragraph));
+    .push(BlockContent::from(paragraph));
 
 let body = document.body.as_mut().ok_or("the document has no body")?;
 for block in &mut body.content {

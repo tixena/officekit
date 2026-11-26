@@ -1149,7 +1149,7 @@ impl super::Transform for vml::MultiplePathLineContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_multiple_path_line_content_1(self, ctx)
             .or_else(|| transform_multiple_path_line_content_2(self, ctx))
@@ -1921,7 +1921,7 @@ impl super::Transform for vml::ShapeDefinitionContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_shape_definition_content_1(self, ctx)
             .or_else(|| transform_shape_definition_content_2(self, ctx))
@@ -2012,7 +2012,7 @@ impl super::Transform for vml::ShapeElementContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_shape_element_1(self, ctx)
             .or_else(|| transform_shape_element_2(self, ctx))
@@ -2305,7 +2305,7 @@ impl super::Transform for vml::ShapeGroupContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_shape_group_content_1(self, ctx)
             .or_else(|| transform_shape_group_content_2(self, ctx))
@@ -2774,9 +2774,9 @@ impl super::Transform for vml::TextBoxContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RichTextBoxContentContainer(arm) = self {
-            Self::RichTextBoxContentContainer(arm.transform(ctx))
+            Self::RichTextBoxContentContainer(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -2906,83 +2906,83 @@ fn transform_shape_element_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::ShapeElementContent> {
     if let vml::ShapeElementContent::AnchorLocationIsLocked(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::AnchorLocationIsLocked(node));
     }
     if let vml::ShapeElementContent::AttachedObjectData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::AttachedObjectData(node));
     }
     if let vml::ShapeElementContent::BottomBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::BottomBorder(node));
     }
     if let vml::ShapeElementContent::Callout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::Callout(node));
     }
     if let vml::ShapeElementContent::DigitalSignatureLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::DigitalSignatureLine(node));
     }
     if let vml::ShapeElementContent::Extrusion(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::Extrusion(node));
     }
     if let vml::ShapeElementContent::ImageData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::ImageData(node));
     }
     if let vml::ShapeElementContent::LeftBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::LeftBorder(node));
     }
     if let vml::ShapeElementContent::LineStrokeSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::LineStrokeSettings(node));
     }
     if let vml::ShapeElementContent::RightBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::RightBorder(node));
     }
     if let vml::ShapeElementContent::SetOfFormulas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::SetOfFormulas(node));
     }
     if let vml::ShapeElementContent::SetOfHandles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::SetOfHandles(node));
     }
     if let vml::ShapeElementContent::ShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::ShadowEffect(node));
     }
     if let vml::ShapeElementContent::ShapeClippingPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::ShapeClippingPath(node));
     }
     if let vml::ShapeElementContent::ShapeFillProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::ShapeFillProperties(node));
     }
     if let vml::ShapeElementContent::ShapePath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::ShapePath(node));
     }
     if let vml::ShapeElementContent::ShapeProtections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::ShapeProtections(node));
     }
     if let vml::ShapeElementContent::SkewTransform(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::SkewTransform(node));
     }
     if let vml::ShapeElementContent::TextBox(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::TextBox(node));
     }
     if let vml::ShapeElementContent::TextLayoutPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::TextLayoutPath(node));
     }
     None
@@ -2993,15 +2993,15 @@ fn transform_shape_element_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::ShapeElementContent> {
     if let vml::ShapeElementContent::TextWrapping(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::TextWrapping(node));
     }
     if let vml::ShapeElementContent::TopBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::TopBorder(node));
     }
     if let vml::ShapeElementContent::VMLDiagramText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeElementContent::VMLDiagramText(node));
     }
     None
@@ -3178,83 +3178,83 @@ fn transform_shape_group_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::ShapeGroupContent> {
     if let vml::ShapeGroupContent::AnchorLocationIsLocked(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::AnchorLocationIsLocked(node));
     }
     if let vml::ShapeGroupContent::ArcSegment(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ArcSegment(node));
     }
     if let vml::ShapeGroupContent::AttachedObjectData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::AttachedObjectData(node));
     }
     if let vml::ShapeGroupContent::BezierCurve(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::BezierCurve(node));
     }
     if let vml::ShapeGroupContent::BottomBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::BottomBorder(node));
     }
     if let vml::ShapeGroupContent::Callout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::Callout(node));
     }
     if let vml::ShapeGroupContent::DigitalSignatureLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::DigitalSignatureLine(node));
     }
     if let vml::ShapeGroupContent::Extrusion(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::Extrusion(node));
     }
     if let vml::ShapeGroupContent::ImageData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ImageData(node));
     }
     if let vml::ShapeGroupContent::ImageFile(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ImageFile(node));
     }
     if let vml::ShapeGroupContent::LeftBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::LeftBorder(node));
     }
     if let vml::ShapeGroupContent::Line(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::Line(node));
     }
     if let vml::ShapeGroupContent::LineStrokeSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::LineStrokeSettings(node));
     }
     if let vml::ShapeGroupContent::MultiplePathLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::MultiplePathLine(node));
     }
     if let vml::ShapeGroupContent::Oval(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::Oval(node));
     }
     if let vml::ShapeGroupContent::Rectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::Rectangle(node));
     }
     if let vml::ShapeGroupContent::RightBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::RightBorder(node));
     }
     if let vml::ShapeGroupContent::RoundedRectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::RoundedRectangle(node));
     }
     if let vml::ShapeGroupContent::SetOfFormulas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::SetOfFormulas(node));
     }
     if let vml::ShapeGroupContent::SetOfHandles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::SetOfHandles(node));
     }
     None
@@ -3265,63 +3265,63 @@ fn transform_shape_group_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::ShapeGroupContent> {
     if let vml::ShapeGroupContent::ShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShadowEffect(node));
     }
     if let vml::ShapeGroupContent::ShapeClippingPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShapeClippingPath(node));
     }
     if let vml::ShapeGroupContent::ShapeDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShapeDefinition(node));
     }
     if let vml::ShapeGroupContent::ShapeFillProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShapeFillProperties(node));
     }
     if let vml::ShapeGroupContent::ShapeGroup(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShapeGroup(node));
     }
     if let vml::ShapeGroupContent::ShapePath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShapePath(node));
     }
     if let vml::ShapeGroupContent::ShapeProtections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShapeProtections(node));
     }
     if let vml::ShapeGroupContent::ShapeTemplate(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::ShapeTemplate(node));
     }
     if let vml::ShapeGroupContent::SkewTransform(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::SkewTransform(node));
     }
     if let vml::ShapeGroupContent::TextBox(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::TextBox(node));
     }
     if let vml::ShapeGroupContent::TextLayoutPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::TextLayoutPath(node));
     }
     if let vml::ShapeGroupContent::TextWrapping(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::TextWrapping(node));
     }
     if let vml::ShapeGroupContent::TopBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::TopBorder(node));
     }
     if let vml::ShapeGroupContent::VMLDiagram(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::VMLDiagram(node));
     }
     if let vml::ShapeGroupContent::VMLDiagramText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeGroupContent::VMLDiagramText(node));
     }
     None
@@ -3570,83 +3570,83 @@ fn transform_multiple_path_line_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::MultiplePathLineContent> {
     if let vml::MultiplePathLineContent::AnchorLocationIsLocked(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::AnchorLocationIsLocked(node));
     }
     if let vml::MultiplePathLineContent::AttachedObjectData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::AttachedObjectData(node));
     }
     if let vml::MultiplePathLineContent::BottomBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::BottomBorder(node));
     }
     if let vml::MultiplePathLineContent::Callout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::Callout(node));
     }
     if let vml::MultiplePathLineContent::DigitalSignatureLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::DigitalSignatureLine(node));
     }
     if let vml::MultiplePathLineContent::Extrusion(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::Extrusion(node));
     }
     if let vml::MultiplePathLineContent::ImageData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::ImageData(node));
     }
     if let vml::MultiplePathLineContent::Ink(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::Ink(node));
     }
     if let vml::MultiplePathLineContent::LeftBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::LeftBorder(node));
     }
     if let vml::MultiplePathLineContent::LineStrokeSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::LineStrokeSettings(node));
     }
     if let vml::MultiplePathLineContent::RightBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::RightBorder(node));
     }
     if let vml::MultiplePathLineContent::SetOfFormulas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::SetOfFormulas(node));
     }
     if let vml::MultiplePathLineContent::SetOfHandles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::SetOfHandles(node));
     }
     if let vml::MultiplePathLineContent::ShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::ShadowEffect(node));
     }
     if let vml::MultiplePathLineContent::ShapeClippingPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::ShapeClippingPath(node));
     }
     if let vml::MultiplePathLineContent::ShapeFillProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::ShapeFillProperties(node));
     }
     if let vml::MultiplePathLineContent::ShapePath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::ShapePath(node));
     }
     if let vml::MultiplePathLineContent::ShapeProtections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::ShapeProtections(node));
     }
     if let vml::MultiplePathLineContent::SkewTransform(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::SkewTransform(node));
     }
     if let vml::MultiplePathLineContent::TextBox(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::TextBox(node));
     }
     None
@@ -3657,19 +3657,19 @@ fn transform_multiple_path_line_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::MultiplePathLineContent> {
     if let vml::MultiplePathLineContent::TextLayoutPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::TextLayoutPath(node));
     }
     if let vml::MultiplePathLineContent::TextWrapping(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::TextWrapping(node));
     }
     if let vml::MultiplePathLineContent::TopBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::TopBorder(node));
     }
     if let vml::MultiplePathLineContent::VMLDiagramText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::MultiplePathLineContent::VMLDiagramText(node));
     }
     None
@@ -3852,83 +3852,83 @@ fn transform_shape_definition_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::ShapeDefinitionContent> {
     if let vml::ShapeDefinitionContent::AnchorLocationIsLocked(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::AnchorLocationIsLocked(node));
     }
     if let vml::ShapeDefinitionContent::AttachedObjectData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::AttachedObjectData(node));
     }
     if let vml::ShapeDefinitionContent::BottomBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::BottomBorder(node));
     }
     if let vml::ShapeDefinitionContent::Callout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::Callout(node));
     }
     if let vml::ShapeDefinitionContent::DigitalSignatureLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::DigitalSignatureLine(node));
     }
     if let vml::ShapeDefinitionContent::Extrusion(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::Extrusion(node));
     }
     if let vml::ShapeDefinitionContent::ImageData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::ImageData(node));
     }
     if let vml::ShapeDefinitionContent::Ink(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::Ink(node));
     }
     if let vml::ShapeDefinitionContent::InkAnnotationFlag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::InkAnnotationFlag(node));
     }
     if let vml::ShapeDefinitionContent::LeftBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::LeftBorder(node));
     }
     if let vml::ShapeDefinitionContent::LineStrokeSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::LineStrokeSettings(node));
     }
     if let vml::ShapeDefinitionContent::RightBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::RightBorder(node));
     }
     if let vml::ShapeDefinitionContent::SetOfFormulas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::SetOfFormulas(node));
     }
     if let vml::ShapeDefinitionContent::SetOfHandles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::SetOfHandles(node));
     }
     if let vml::ShapeDefinitionContent::ShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::ShadowEffect(node));
     }
     if let vml::ShapeDefinitionContent::ShapeClippingPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::ShapeClippingPath(node));
     }
     if let vml::ShapeDefinitionContent::ShapeFillProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::ShapeFillProperties(node));
     }
     if let vml::ShapeDefinitionContent::ShapePath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::ShapePath(node));
     }
     if let vml::ShapeDefinitionContent::ShapeProtections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::ShapeProtections(node));
     }
     if let vml::ShapeDefinitionContent::SkewTransform(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::SkewTransform(node));
     }
     None
@@ -3939,29 +3939,29 @@ fn transform_shape_definition_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<vml::ShapeDefinitionContent> {
     if let vml::ShapeDefinitionContent::StorageForAlternateMathContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::StorageForAlternateMathContent(
             node,
         ));
     }
     if let vml::ShapeDefinitionContent::TextBox(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::TextBox(node));
     }
     if let vml::ShapeDefinitionContent::TextLayoutPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::TextLayoutPath(node));
     }
     if let vml::ShapeDefinitionContent::TextWrapping(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::TextWrapping(node));
     }
     if let vml::ShapeDefinitionContent::TopBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::TopBorder(node));
     }
     if let vml::ShapeDefinitionContent::VMLDiagramText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(vml::ShapeDefinitionContent::VMLDiagramText(node));
     }
     None

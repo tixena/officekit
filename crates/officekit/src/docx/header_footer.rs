@@ -49,13 +49,13 @@ impl Which {
                 let mut reference = FooterReference::default();
                 reference.id = Some(id);
                 reference.r#type = Some(kind.into());
-                SectionPropertiesContent::FooterReference(reference)
+                SectionPropertiesContent::from(reference)
             }
             Self::Header => {
                 let mut reference = HeaderReference::default();
                 reference.id = Some(id);
                 reference.r#type = Some(kind.into());
-                SectionPropertiesContent::HeaderReference(reference)
+                SectionPropertiesContent::from(reference)
             }
         }
     }

@@ -854,17 +854,17 @@ impl Eq for WgpWith<()> {}
 #[non_exhaustive]
 pub enum WordprocessingGroupContentWith<X: UserData> {
     /// The element `w14:contentPart`, a `ContentPart`.
-    ContentPart(office_word_2010_wordml::ContentPartWith<X>),
+    ContentPart(Box<office_word_2010_wordml::ContentPartWith<X>>),
     /// The element `wpg:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrameWith<X>),
+    GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `wpg:grpSp`, a `GrpSp`.
-    GrpSp(GrpSpWith<X>),
+    GrpSp(Box<GrpSpWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `pic:pic`, a `Picture`.
-    Picture(picture::PictureWith<X>),
+    Picture(Box<picture::PictureWith<X>>),
     /// The element `wps:wsp`, a `Wsp`.
-    Wsp(super::office_word_2010_wordprocessing_shape::WspWith<X>),
+    Wsp(Box<super::office_word_2010_wordprocessing_shape::WspWith<X>>),
 }
 
 /// [`WordprocessingGroupContentWith`] of the tree a read gives, where no node holds anything in
@@ -1397,32 +1397,38 @@ impl<X: UserData> WordprocessingGroupContentWith<X> {
     {
         match self {
             Self::ContentPart(node) => {
-                WordprocessingGroupContentWith::ContentPart(node.into_user_data())
+                WordprocessingGroupContentWith::ContentPart(Box::new((*node).into_user_data()))
             }
             Self::GraphicFrame(node) => {
-                WordprocessingGroupContentWith::GraphicFrame(node.into_user_data())
+                WordprocessingGroupContentWith::GraphicFrame(Box::new((*node).into_user_data()))
             }
-            Self::GrpSp(node) => WordprocessingGroupContentWith::GrpSp(node.into_user_data()),
+            Self::GrpSp(node) => {
+                WordprocessingGroupContentWith::GrpSp(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => WordprocessingGroupContentWith::Other(node),
-            Self::Picture(node) => WordprocessingGroupContentWith::Picture(node.into_user_data()),
-            Self::Wsp(node) => WordprocessingGroupContentWith::Wsp(node.into_user_data()),
+            Self::Picture(node) => {
+                WordprocessingGroupContentWith::Picture(Box::new((*node).into_user_data()))
+            }
+            Self::Wsp(node) => {
+                WordprocessingGroupContentWith::Wsp(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for WordprocessingGroupContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W14, "contentPart")) => Self::ContentPart(item.read()),
-            Some((NS_WPG, "graphicFrame")) => Self::GraphicFrame(item.read()),
-            Some((NS_WPG, "grpSp")) => Self::GrpSp(item.read()),
-            Some((NS_PIC, "pic")) => Self::Picture(item.read()),
-            Some((NS_WPS, "wsp")) => Self::Wsp(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_W14, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_WPG, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
+            Some((NS_WPG, "grpSp")) => Self::GrpSp(Box::new(item.read())),
+            Some((NS_PIC, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_WPS, "wsp")) => Self::Wsp(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -1433,12 +1439,51 @@ impl officekit_markup_base::Write for WordprocessingGroupContent {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicFrame(arm) => arm.write_into(writer),
             Self::GrpSp(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Wsp(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<office_word_2010_wordml::ContentPartWith<X>>
+    for WordprocessingGroupContentWith<X>
+{
+    fn from(arm: office_word_2010_wordml::ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameWith<X>> for WordprocessingGroupContentWith<X> {
+    fn from(arm: GraphicFrameWith<X>) -> Self {
+        Self::GraphicFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GrpSpWith<X>> for WordprocessingGroupContentWith<X> {
+    fn from(arm: GrpSpWith<X>) -> Self {
+        Self::GrpSp(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<picture::PictureWith<X>> for WordprocessingGroupContentWith<X> {
+    fn from(arm: picture::PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_word_2010_wordprocessing_shape::WspWith<X>>
+    for WordprocessingGroupContentWith<X>
+{
+    fn from(arm: super::office_word_2010_wordprocessing_shape::WspWith<X>) -> Self {
+        Self::Wsp(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<WordprocessingGroupContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> XfrmWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

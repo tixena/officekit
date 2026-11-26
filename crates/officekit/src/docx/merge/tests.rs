@@ -396,7 +396,7 @@ fn run_of(content: Vec<TextRunContent>) -> TextRun {
 fn text_run(value: &str) -> ParagraphContent {
     let mut text = Text::default();
     text.value = value.to_owned();
-    ParagraphContent::TextRun(run_of(vec![TextRunContent::Text(text)]))
+    ParagraphContent::from(run_of(vec![TextRunContent::from(text)]))
 }
 
 /// A paragraph with `properties`, when given, holding `content`.
@@ -436,20 +436,20 @@ fn bookmark_start(id: &str, mark: &str) -> ParagraphContent {
     let mut start = BookmarkStart::default();
     start.id = Some(number(id));
     start.name = Some(mark.to_owned());
-    ParagraphContent::BookmarkStart(start)
+    ParagraphContent::from(start)
 }
 
 fn bookmark_end(id: &str) -> ParagraphContent {
     let mut end = BookmarkEnd::default();
     end.id = Some(number(id));
-    ParagraphContent::BookmarkEnd(end)
+    ParagraphContent::from(end)
 }
 
 /// A note's one paragraph, whose run holds the separator `mark`.
 fn separator_paragraphs(mark: TextRunContent) -> Vec<BlockContent> {
-    vec![BlockContent::Paragraph(paragraph(
+    vec![BlockContent::from(paragraph(
         None,
-        vec![ParagraphContent::TextRun(run_of(vec![mark]))],
+        vec![ParagraphContent::from(run_of(vec![mark]))],
     ))]
 }
 
@@ -472,12 +472,12 @@ fn footnotes_of(first: i64, notes: Vec<FootnoteContent>, source: bool) -> Vec<u8
         separator(
             "separator",
             first,
-            TextRunContent::FootnoteEndnoteSeparatorMark(FootnoteEndnoteSeparatorMark::default()),
+            TextRunContent::from(FootnoteEndnoteSeparatorMark::default()),
         ),
         separator(
             "continuationSeparator",
             first + 1,
-            TextRunContent::ContinuationSeparatorMark(ContinuationSeparatorMark::default()),
+            TextRunContent::from(ContinuationSeparatorMark::default()),
         ),
     ];
     part.footnote_content.extend(notes);
@@ -506,12 +506,12 @@ fn endnotes_of(first: i64, notes: Vec<EndnoteContent>, source: bool) -> Vec<u8> 
         separator(
             "separator",
             first,
-            TextRunContent::FootnoteEndnoteSeparatorMark(FootnoteEndnoteSeparatorMark::default()),
+            TextRunContent::from(FootnoteEndnoteSeparatorMark::default()),
         ),
         separator(
             "continuationSeparator",
             first + 1,
-            TextRunContent::ContinuationSeparatorMark(ContinuationSeparatorMark::default()),
+            TextRunContent::from(ContinuationSeparatorMark::default()),
         ),
     ];
     part.endnote_content.extend(notes);
@@ -537,7 +537,7 @@ fn sized(mut definition: StyleDefinition, half_points: &str) -> StyleDefinition 
     let mut size = NonComplexScriptFontSize::default();
     size.val = Some(MeasurementInHalfPoints::from(half_points.to_owned()));
     let mut properties = RunProperties::default();
-    properties.content = vec![RunPropertiesContent::NonComplexScriptFontSize(size)];
+    properties.content = vec![RunPropertiesContent::from(size)];
     definition.run_properties = Some(Box::new(properties));
     definition
 }
@@ -659,7 +659,7 @@ where
 /// separators, -1 and 0, a `Normal` style, a bookmark, and neither comments nor numbering.
 fn notes_target() -> Docx {
     let mut target = docx(&document_of(
-        vec![BlockContent::Paragraph(paragraph(
+        vec![BlockContent::from(paragraph(
             None,
             vec![
                 bookmark_start("0", "own"),
@@ -719,12 +719,8 @@ fn notes_source_document() -> Document {
         Some(styled("ClausulaImportada")),
         vec![
             text_run("Imported clause"),
-            ParagraphContent::TextRun(run_of(vec![TextRunContent::FootnoteReference(
-                footnote_reference,
-            )])),
-            ParagraphContent::TextRun(run_of(vec![TextRunContent::EndnoteReference(
-                endnote_reference,
-            )])),
+            ParagraphContent::from(run_of(vec![TextRunContent::from(footnote_reference)])),
+            ParagraphContent::from(run_of(vec![TextRunContent::from(endnote_reference)])),
         ],
     );
     clause.para_id = Some("1A2B3C4D".to_owned());
@@ -741,19 +737,17 @@ fn notes_source_document() -> Document {
     let commented = paragraph(
         Some(styled("Normal")),
         vec![
-            ParagraphContent::CommentAnchorRangeStart(range_start),
+            ParagraphContent::from(range_start),
             bookmark_start("0", "imported_mark"),
             text_run("a bookmark"),
             bookmark_end("0"),
-            ParagraphContent::CommentAnchorRangeEnd(range_end),
-            ParagraphContent::TextRun(run_of(vec![TextRunContent::CommentContentReferenceMark(
-                mark,
-            )])),
-            ParagraphContent::Hyperlink(hyperlink),
+            ParagraphContent::from(range_end),
+            ParagraphContent::from(run_of(vec![TextRunContent::from(mark)])),
+            ParagraphContent::from(hyperlink),
         ],
     );
     let item = |value: &str| {
-        BlockContent::Paragraph(paragraph(Some(numbered("1", true)), vec![text_run(value)]))
+        BlockContent::from(paragraph(Some(numbered("1", true)), vec![text_run(value)]))
     };
     let mut page = PageSize::default();
     page.h = Some("15840".to_owned().into());
@@ -762,8 +756,8 @@ fn notes_source_document() -> Document {
     section.page_size = Some(Box::new(page));
     document_of(
         vec![
-            BlockContent::Paragraph(clause),
-            BlockContent::Paragraph(commented),
+            BlockContent::from(clause),
+            BlockContent::from(commented),
             item("First"),
             item("Second"),
         ],
@@ -802,13 +796,13 @@ fn source_footnote() -> FootnoteContent {
     note_link.content = vec![text_run("Imported footnote text.")];
     note_link.id = Some("rId1".to_owned());
     let mut footnote = FootnoteContent::default();
-    footnote.content = vec![BlockContent::Paragraph(paragraph(
+    footnote.content = vec![BlockContent::from(paragraph(
         Some(styled("FootnoteText")),
         vec![
-            ParagraphContent::TextRun(run_of(vec![TextRunContent::FootnoteReferenceMark(
+            ParagraphContent::from(run_of(vec![TextRunContent::from(
                 FootnoteReferenceMark::default(),
             )])),
-            ParagraphContent::Hyperlink(note_link),
+            ParagraphContent::from(note_link),
         ],
     ))];
     footnote.id = Some(number("2"));
@@ -818,7 +812,7 @@ fn source_footnote() -> FootnoteContent {
 /// The source's endnote 2.
 fn source_endnote() -> EndnoteContent {
     let mut endnote = EndnoteContent::default();
-    endnote.content = vec![BlockContent::Paragraph(paragraph(
+    endnote.content = vec![BlockContent::from(paragraph(
         None,
         vec![text_run("Imported endnote text.")],
     ))];
@@ -830,7 +824,7 @@ fn source_endnote() -> EndnoteContent {
 fn source_comments() -> Vec<u8> {
     let mut comment = CommentContent::default();
     comment.author = Some("Reviewer".to_owned());
-    comment.content = vec![BlockContent::Paragraph(paragraph(
+    comment.content = vec![BlockContent::from(paragraph(
         None,
         vec![text_run("Imported comment text.")],
     ))];
@@ -935,21 +929,21 @@ fn frame(id: &str, frame_name: &str, uri: &str, content: Vec<AnyElementContent>)
     inline.graphic_object.data.content = content;
     inline.graphic_object.data.uri = Some(uri.to_owned());
     let mut drawing = DrawingMLObject::default();
-    drawing.content = vec![DrawingObjectContent::InlineDrawingMLObject(inline)];
-    run_of(vec![TextRunContent::DrawingMLObject(drawing)])
+    drawing.content = vec![DrawingObjectContent::from(inline)];
+    run_of(vec![TextRunContent::from(drawing)])
 }
 
 /// A document shaped as `formulario_cumplimiento_fatca` is for the self import: lists 1 and 2 over
 /// abstract numberings 0 and 1, the body using list 1, bookmarks, and drawings.
 fn lists() -> Docx {
     let item = |bookmark: &str, drawing: &str| {
-        BlockContent::Paragraph(paragraph(
+        BlockContent::from(paragraph(
             Some(numbered("1", true)),
             vec![
                 bookmark_start(bookmark, &format!("m{bookmark}")),
                 text_run("Item"),
                 bookmark_end(bookmark),
-                ParagraphContent::TextRun(frame(
+                ParagraphContent::from(frame(
                     drawing,
                     &format!("Picture {drawing}"),
                     "http://schemas.openxmlformats.org/drawingml/2006/picture",
@@ -962,7 +956,7 @@ fn lists() -> Docx {
         vec![
             item("3", "4"),
             item("7", "6"),
-            BlockContent::Paragraph(paragraph(Some(numbered("0", false)), Vec::new())),
+            BlockContent::from(paragraph(Some(numbered("0", false)), Vec::new())),
         ],
         Some(DocumentFinalSectionProperties::default()),
         false,
@@ -991,7 +985,7 @@ fn lists() -> Docx {
 /// A main document of one empty paragraph.
 fn empty_document() -> Document {
     document_of(
-        vec![BlockContent::Paragraph(Paragraph::default())],
+        vec![BlockContent::from(Paragraph::default())],
         None,
         false,
         "",
@@ -1002,7 +996,7 @@ fn empty_document() -> Document {
 fn empty_header() -> Vec<u8> {
     let mut header = Header::default();
     declare(header.unknown_mut(), false, "");
-    header.content = vec![BlockContent::Paragraph(Paragraph::default())];
+    header.content = vec![BlockContent::from(Paragraph::default())];
     bytes(wordprocessing::write::header(
         &header,
         &mut Scope::default(),
@@ -1039,7 +1033,7 @@ fn headed() -> DocumentFinalSectionProperties {
     reference.id = Some("rId6".to_owned());
     reference.r#type = Some(HeaderOrFooterType::from("default".to_owned()));
     let mut section = DocumentFinalSectionProperties::default();
-    section.content = vec![SectionPropertiesContent::HeaderReference(reference)];
+    section.content = vec![SectionPropertiesContent::from(reference)];
     section
 }
 
@@ -1047,9 +1041,13 @@ fn headed() -> DocumentFinalSectionProperties {
 /// same image, and a header that relates to the image too.
 fn pictures_source() -> Docx {
     let picture = |id: &str| {
-        ParagraphContent::TextRun(run_of(vec![TextRunContent::DrawingMLObject(
-            inline_picture(PictureSource::Embedded(id), 1, "p", None, (1, 1)),
-        )]))
+        ParagraphContent::from(run_of(vec![TextRunContent::from(inline_picture(
+            PictureSource::Embedded(id),
+            1,
+            "p",
+            None,
+            (1, 1),
+        ))]))
     };
     let mut chart_reference = ReferenceToChartPart::default();
     chart_reference.id = Some("rId5".to_owned());
@@ -1057,21 +1055,21 @@ fn pictures_source() -> Docx {
         "2",
         "c",
         "http://schemas.openxmlformats.org/drawingml/2006/chart",
-        vec![AnyElementContent::ReferenceToChartPart(chart_reference)],
+        vec![AnyElementContent::from(chart_reference)],
     );
     let mut properties = ParagraphProperties::default();
     properties.document_final_section_properties = Some(Box::new(headed()));
     let mut source = docx(&document_of(
         vec![
-            BlockContent::Paragraph(paragraph(
+            BlockContent::from(paragraph(
                 None,
                 vec![
                     picture("rId3"),
                     picture("rId4"),
-                    ParagraphContent::TextRun(chart_run),
+                    ParagraphContent::from(chart_run),
                 ],
             )),
-            BlockContent::Paragraph(paragraph(Some(properties), Vec::new())),
+            BlockContent::from(paragraph(Some(properties), Vec::new())),
         ],
         Some(headed()),
         false,
@@ -1351,7 +1349,7 @@ fn a_document_brought_into_itself_gets_a_new_list_and_ids_above_its_own() {
 #[test]
 fn range_ids_start_above_the_notes_parts_and_map_each_value_once() {
     let mut target = docx(&document_of(
-        vec![BlockContent::Paragraph(paragraph(
+        vec![BlockContent::from(paragraph(
             None,
             vec![bookmark_start("2", "own"), bookmark_end("2")],
         ))],
@@ -1360,7 +1358,7 @@ fn range_ids_start_above_the_notes_parts_and_map_each_value_once() {
         "",
     ));
     let mut comment = CommentContent::default();
-    comment.content = vec![BlockContent::Paragraph(paragraph(
+    comment.content = vec![BlockContent::from(paragraph(
         None,
         vec![bookmark_start("40", "note"), bookmark_end("40")],
     ))];
@@ -1384,30 +1382,30 @@ fn range_ids_start_above_the_notes_parts_and_map_each_value_once() {
     );
     let mut inserted = InsertedRunContent::default();
     inserted.author = Some("A".to_owned());
-    inserted.content = vec![TrackedRunContent::TextRun(run_of(vec![
-        TextRunContent::Text({
+    inserted.content = vec![TrackedRunContent::from(run_of(vec![TextRunContent::from(
+        {
             let mut text = Text::default();
             text.value = "x".to_owned();
             text
-        }),
-    ]))];
+        },
+    )]))];
     inserted.id = Some(number("5"));
     let mut removed = DeletedText::default();
     removed.value = "y".to_owned();
     let mut deleted = DeletedRunContent::default();
     deleted.author = Some("A".to_owned());
-    deleted.content = vec![TrackedRunContent::TextRun(run_of(vec![
-        TextRunContent::DeletedText(removed),
-    ]))];
+    deleted.content = vec![TrackedRunContent::from(run_of(vec![TextRunContent::from(
+        removed,
+    )]))];
     deleted.id = Some(number("0"));
     let source = docx(&document_of(
-        vec![BlockContent::Paragraph(paragraph(
+        vec![BlockContent::from(paragraph(
             None,
             vec![
                 bookmark_start("0", "a"),
-                ParagraphContent::InsertedRunContent(inserted),
+                ParagraphContent::from(inserted),
                 bookmark_end("0"),
-                ParagraphContent::DeletedRunContent(deleted),
+                ParagraphContent::from(deleted),
             ],
         ))],
         None,
@@ -1491,7 +1489,7 @@ fn parts_come_under_free_names_with_their_relationships_and_each_once() {
 /// The picture bullet `id`, a drawing of the image `embed`.
 fn picture_bullet(id: &str, embed: &str) -> PictureNumberingSymbolDefinition {
     let mut definition = PictureNumberingSymbolDefinition::default();
-    definition.content = Box::new(PictureNumberingSymbolDefinitionContent::DrawingMLObject(
+    definition.content = Box::new(PictureNumberingSymbolDefinitionContent::from(
         inline_picture(PictureSource::Embedded(embed), 9, "b", None, (1, 1)),
     ));
     definition.num_pic_bullet_id = Some(number(id));
@@ -1540,7 +1538,7 @@ fn a_picture_bullet_and_its_image_come_with_the_list() {
     );
     add(&mut target, "/word/numbering.xml", "rId1", image, PNG);
     let mut source = docx(&document_of(
-        vec![BlockContent::Paragraph(paragraph(
+        vec![BlockContent::from(paragraph(
             Some(numbered("4", true)),
             Vec::new(),
         ))],
@@ -1660,7 +1658,7 @@ fn a_styles_part_whose_root_binds_a_prefix_otherwise_is_a_read_error() {
         &styles("urn:example:one", Vec::new()),
     );
     let mut source = docx(&document_of(
-        vec![BlockContent::Paragraph(paragraph(
+        vec![BlockContent::from(paragraph(
             Some(styled("Other")),
             Vec::new(),
         ))],

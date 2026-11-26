@@ -7,7 +7,6 @@ use core::mem;
 
 use anyhow::{Context as _, Result, bail};
 use officekit_markup::Unknown;
-use officekit_xml::element::Node as XmlNode;
 
 use super::enums::{self, Entry, Placements, Position, Row};
 use super::names::{self, Heading, Overrides, Titles};
@@ -109,8 +108,7 @@ pub struct Child {
 pub struct EnumDef {
     /// `(variant, struct)`, alphabetical.
     pub arms: Vec<(String, usize)>,
-    /// The structs its arms hold boxed, as clippy's `large_enum_variant`
-    /// asks of an arm much larger than every other.
+    /// The structs its arms hold boxed: those larger than `enums::INLINE_BYTES`.
     pub boxed: BTreeSet<usize>,
     /// Whether a required single position uses it, so it gets `Default`.
     pub default: bool,
@@ -245,24 +243,22 @@ struct Builder<'data> {
 }
 
 impl Catalog {
-    /// Box the arms clippy's `large_enum_variant` would flag: while an enum's
-    /// largest arm is more than `VARIANT_SIZE_DIFFERENCE` bytes larger than
-    /// the next, that arm holds its struct boxed.
+    /// Box every arm whose struct takes more than `enums::INLINE_BYTES`, so an
+    /// enum takes at most that and its tag.
     fn box_large_arms(&mut self) {
         let sizes: Vec<usize> = self.nodes.iter().map(struct_size).collect();
         for found in &mut self.enums {
-            let mut variants: Vec<(usize, Option<usize>)> = found
+            found.boxed = found
                 .arms
                 .iter()
-                .map(|(_, arm)| (sizes.get(*arm).copied().unwrap_or(0), Some(*arm)))
+                .map(|(_, arm)| *arm)
+                .filter(|arm| sizes.get(*arm).copied().unwrap_or(0) > enums::INLINE_BYTES)
                 .collect();
-            variants.push((mem::size_of::<XmlNode>(), None));
-            found.boxed = large_variants(variants);
         }
     }
 
     /// The structs among `arms` that an enum with one variant per arm holds
-    /// boxed, by the rule `box_large_arms` boxes the typed tree's arms with.
+    /// boxed, by clippy's `large_enum_variant`.
     #[must_use = "this only returns the value"]
     pub fn boxed_arms(&self, arms: &[usize]) -> BTreeSet<usize> {
         large_variants(

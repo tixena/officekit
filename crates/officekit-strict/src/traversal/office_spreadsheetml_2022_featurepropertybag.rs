@@ -346,19 +346,19 @@ impl super::Transform
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BBoolean(arm) = self {
-            Self::BBoolean(arm.transform(ctx))
+            Self::BBoolean(Box::new(arm.transform(ctx)))
         } else if let Self::BagIdUnsignedInt(arm) = self {
-            Self::BagIdUnsignedInt(arm.transform(ctx))
+            Self::BagIdUnsignedInt(Box::new(arm.transform(ctx)))
         } else if let Self::DDouble(arm) = self {
-            Self::DDouble(arm.transform(ctx))
+            Self::DDouble(Box::new(arm.transform(ctx)))
         } else if let Self::IInteger(arm) = self {
-            Self::IInteger(arm.transform(ctx))
+            Self::IInteger(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RelString(arm) = self {
-            Self::RelString(arm.transform(ctx))
+            Self::RelString(Box::new(arm.transform(ctx)))
         } else if let Self::SString(arm) = self {
-            Self::SString(arm.transform(ctx))
+            Self::SString(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1863,21 +1863,21 @@ impl super::Transform for office_spreadsheetml_2022_featurepropertybag::FeatureP
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::A(arm) = self {
-            Self::A(arm.transform(ctx))
+            Self::A(Box::new(arm.transform(ctx)))
         } else if let Self::BBoolFeatureProperty(arm) = self {
-            Self::BBoolFeatureProperty(arm.transform(ctx))
+            Self::BBoolFeatureProperty(Box::new(arm.transform(ctx)))
         } else if let Self::BagIdBagFeatureProperty(arm) = self {
-            Self::BagIdBagFeatureProperty(arm.transform(ctx))
+            Self::BagIdBagFeatureProperty(Box::new(arm.transform(ctx)))
         } else if let Self::DDecimalFeatureProperty(arm) = self {
-            Self::DDecimalFeatureProperty(arm.transform(ctx))
+            Self::DDecimalFeatureProperty(Box::new(arm.transform(ctx)))
         } else if let Self::IIntFeatureProperty(arm) = self {
-            Self::IIntFeatureProperty(arm.transform(ctx))
+            Self::IIntFeatureProperty(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RelRelFeatureProperty(arm) = self {
-            Self::RelRelFeatureProperty(arm.transform(ctx))
+            Self::RelRelFeatureProperty(Box::new(arm.transform(ctx)))
         } else if let Self::SStringFeatureProperty(arm) = self {
-            Self::SStringFeatureProperty(arm.transform(ctx))
+            Self::SStringFeatureProperty(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

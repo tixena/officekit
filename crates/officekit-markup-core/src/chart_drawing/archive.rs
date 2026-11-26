@@ -684,13 +684,15 @@ pub struct StartingAnchorPointMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ObjectContent {
-    ConnectionShape(#[rkyv(omit_bounds)] super::ConnectionShape),
-    ContentPart(#[rkyv(omit_bounds)] super::super::office_drawing_2010_chart_drawing::ContentPart),
-    GraphicFrame(#[rkyv(omit_bounds)] super::GraphicFrame),
-    GroupShape(#[rkyv(omit_bounds)] super::GroupShape),
-    Other(Node),
-    Picture(#[rkyv(omit_bounds)] super::Picture),
-    Shape(#[rkyv(omit_bounds)] super::Shape),
+    ConnectionShape(#[rkyv(omit_bounds)] Box<super::ConnectionShape>),
+    ContentPart(
+        #[rkyv(omit_bounds)] Box<super::super::office_drawing_2010_chart_drawing::ContentPart>,
+    ),
+    GraphicFrame(#[rkyv(omit_bounds)] Box<super::GraphicFrame>),
+    GroupShape(#[rkyv(omit_bounds)] Box<super::GroupShape>),
+    Other(Box<Node>),
+    Picture(#[rkyv(omit_bounds)] Box<super::Picture>),
+    Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -700,9 +702,9 @@ pub enum ObjectContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum UserShapesContent {
-    AbsoluteAnchorShapeSize(#[rkyv(omit_bounds)] super::AbsoluteAnchorShapeSize),
-    Other(Node),
-    RelativeAnchorShapeSize(#[rkyv(omit_bounds)] super::RelativeAnchorShapeSize),
+    AbsoluteAnchorShapeSize(#[rkyv(omit_bounds)] Box<super::AbsoluteAnchorShapeSize>),
+    Other(Box<Node>),
+    RelativeAnchorShapeSize(#[rkyv(omit_bounds)] Box<super::RelativeAnchorShapeSize>),
 }
 
 impl From<AbsoluteAnchorShapeSizeMirror> for super::AbsoluteAnchorShapeSize {

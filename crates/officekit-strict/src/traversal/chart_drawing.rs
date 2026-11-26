@@ -1987,19 +1987,19 @@ impl super::Transform for chart_drawing::ObjectContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ConnectionShape(arm) = self {
-            Self::ConnectionShape(arm.transform(ctx))
+            Self::ConnectionShape(Box::new(arm.transform(ctx)))
         } else if let Self::ContentPart(arm) = self {
-            Self::ContentPart(arm.transform(ctx))
+            Self::ContentPart(Box::new(arm.transform(ctx)))
         } else if let Self::GraphicFrame(arm) = self {
-            Self::GraphicFrame(arm.transform(ctx))
+            Self::GraphicFrame(Box::new(arm.transform(ctx)))
         } else if let Self::GroupShape(arm) = self {
-            Self::GroupShape(arm.transform(ctx))
+            Self::GroupShape(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Picture(arm) = self {
-            Self::Picture(arm.transform(ctx))
+            Self::Picture(Box::new(arm.transform(ctx)))
         } else if let Self::Shape(arm) = self {
-            Self::Shape(arm.transform(ctx))
+            Self::Shape(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3142,11 +3142,11 @@ impl super::Transform for chart_drawing::UserShapesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AbsoluteAnchorShapeSize(arm) = self {
-            Self::AbsoluteAnchorShapeSize(arm.transform(ctx))
+            Self::AbsoluteAnchorShapeSize(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RelativeAnchorShapeSize(arm) = self {
-            Self::RelativeAnchorShapeSize(arm.transform(ctx))
+            Self::RelativeAnchorShapeSize(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

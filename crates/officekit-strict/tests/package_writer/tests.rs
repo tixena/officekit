@@ -173,17 +173,17 @@ fn template() -> Package {
         let mut text = Text::default();
         text.value = value.to_owned();
         let mut run = TextRun::default();
-        run.content = vec![TextRunContent::Text(text)];
+        run.content = vec![TextRunContent::from(text)];
         let mut paragraph = Paragraph::default();
-        paragraph.content = vec![ParagraphContent::TextRun(run)];
+        paragraph.content = vec![ParagraphContent::from(run)];
         paragraph
     };
     let row = |value: &str| {
         let mut cell = TableCell::default();
-        cell.content = vec![BlockContent::Paragraph(paragraph(value))];
+        cell.content = vec![BlockContent::from(paragraph(value))];
         let mut row = TableRow::default();
-        row.content = vec![ContentCellContent::TableCell(cell)];
-        ContentRowContent::TableRow(row)
+        row.content = vec![ContentCellContent::from(cell)];
+        ContentRowContent::from(row)
     };
     let mut width = PreferredTableWidth::default();
     width.r#type = Some(TableWidthUnits::from("auto".to_owned()));
@@ -196,9 +196,9 @@ fn template() -> Package {
     table.properties.preferred_table_width = Some(Box::new(width));
     let mut body = DocumentBody::default();
     body.content = vec![
-        BlockContent::Paragraph(paragraph("Before")),
-        BlockContent::Table(table),
-        BlockContent::Paragraph(paragraph("After")),
+        BlockContent::from(paragraph("Before")),
+        BlockContent::from(table),
+        BlockContent::from(paragraph("After")),
     ];
     body.document_final_section_properties = Some(Box::default());
     let mut document = Document::default();
@@ -356,7 +356,7 @@ fn a_streamed_package_of_1_000_rows_has_data_descriptors_and_opens_with_every_ro
         .iter()
         .filter_map(|row| {
             if let ContentRowContent::TableRow(found) = row {
-                Some(text_of(found))
+                Some(text_of::<TableRow>(found))
             } else {
                 None
             }

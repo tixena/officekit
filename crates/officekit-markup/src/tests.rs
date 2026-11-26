@@ -35,11 +35,11 @@ fn the_plain_names_are_the_generic_types_holding_nothing() {
     let mut paragraph = Paragraph::default();
     paragraph
         .content
-        .push(ParagraphContent::TextRun(TextRun::default()));
+        .push(ParagraphContent::from(TextRun::default()));
     let copy: ParagraphWith<()> = paragraph.clone();
     assert_eq!(copy, paragraph);
     let content: wordprocessing::ParagraphContentWith<()> =
-        ParagraphContent::TextRun(TextRun::default());
+        ParagraphContent::from(TextRun::default());
     assert_eq!(content, paragraph.content[0]);
 }
 
@@ -61,6 +61,51 @@ fn the_slot_adds_nothing_to_the_size() {
 fn a_node_holds_its_unknown_content_behind_one_pointer() {
     assert_eq!(size_of::<wordprocessing::NonComplexScriptFontSize>(), 32);
     assert_eq!(size_of::<wordprocessing::RunFonts>(), 224);
+}
+
+#[test]
+fn every_content_enum_of_wordprocessing_takes_at_most_40_bytes() {
+    use crate::wordprocessing::{
+        BlockContent, CellMarkupContent, CheckboxFormFieldPropertiesContent,
+        ComplexFieldCharacterContent, ConflictChangeContent, ContentBlockContent,
+        ContentCellContent, ContentRowContent, DrawingObjectContent, EmbeddedObjectContent,
+        FormFieldPropertiesContent, FramesetDefinitionContent,
+        GlossaryDocumentEntryPropertiesContent, InsertedMathControlCharacterContent,
+        PhoneticGuideContent, PictureNumberingSymbolDefinitionContent, RangeMarkupContent,
+        RunPropertiesContent, SectionPropertiesContent, StructuredDocumentTagPropertiesContent,
+        TableRowPropertiesContent, TextRunContent, TrackedRunContent, VmlElementContent,
+        VmlOfficeDrawingElementContent,
+    };
+    let sizes = [
+        size_of::<BlockContent>(),
+        size_of::<CellMarkupContent>(),
+        size_of::<CheckboxFormFieldPropertiesContent>(),
+        size_of::<ComplexFieldCharacterContent>(),
+        size_of::<ConflictChangeContent>(),
+        size_of::<ContentBlockContent>(),
+        size_of::<ContentCellContent>(),
+        size_of::<ContentRowContent>(),
+        size_of::<DrawingObjectContent>(),
+        size_of::<EmbeddedObjectContent>(),
+        size_of::<FormFieldPropertiesContent>(),
+        size_of::<FramesetDefinitionContent>(),
+        size_of::<GlossaryDocumentEntryPropertiesContent>(),
+        size_of::<InsertedMathControlCharacterContent>(),
+        size_of::<ParagraphContent>(),
+        size_of::<PhoneticGuideContent>(),
+        size_of::<PictureNumberingSymbolDefinitionContent>(),
+        size_of::<RangeMarkupContent>(),
+        size_of::<RunPropertiesContent>(),
+        size_of::<SectionPropertiesContent>(),
+        size_of::<StructuredDocumentTagPropertiesContent>(),
+        size_of::<TableRowPropertiesContent>(),
+        size_of::<TextRunContent>(),
+        size_of::<TrackedRunContent>(),
+        size_of::<VmlElementContent>(),
+        size_of::<VmlOfficeDrawingElementContent>(),
+    ];
+    assert!(sizes.iter().all(|size| *size <= 40), "{sizes:?}");
+    assert!(size_of::<RunPropertiesContent>() <= 40);
 }
 
 #[test]
@@ -90,19 +135,19 @@ fn a_required_wildcard_position_defaults_to_no_element() {
     let nothing = || Node::Text(String::new());
     assert_eq!(
         AnyElementContent::default(),
-        AnyElementContent::Other(nothing())
+        AnyElementContent::Other(Box::new(nothing()))
     );
     assert_eq!(
         *chart::Extension::default().content,
-        AnyElementContent::Other(nothing())
+        AnyElementContent::Other(Box::new(nothing()))
     );
     assert_eq!(
         *spreadsheet::Extension::default().content,
-        AnyElementContent::Other(nothing())
+        AnyElementContent::Other(Box::new(nothing()))
     );
     assert_eq!(
         *model3d::Ext::default().content,
-        Model3DExtensionContent::Other(nothing())
+        Model3DExtensionContent::Other(Box::new(nothing()))
     );
 }
 

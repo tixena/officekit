@@ -27,7 +27,7 @@ fn hex(digits: &str, changes: Vec<ColorTransformContent>) -> ColorContent {
     let mut color = RGBColorModelHexVariant::default();
     color.val = Some(HexadecimalColorValue::from(digits.to_owned()));
     color.content = changes;
-    ColorContent::RGBColorModelHexVariant(color)
+    ColorContent::from(color)
 }
 
 /// The colour of `content` with no theme and no placeholder.
@@ -58,19 +58,19 @@ fn positive(text: &str) -> PositivePercentageValueWithSign {
 fn shade(text: &str) -> ColorTransformContent {
     let mut shade = Shade::default();
     shade.val = Some(fixed(text));
-    ColorTransformContent::Shade(shade)
+    ColorTransformContent::from(shade)
 }
 
 fn tint(text: &str) -> ColorTransformContent {
     let mut tint = Tint::default();
     tint.val = Some(fixed(text));
-    ColorTransformContent::Tint(tint)
+    ColorTransformContent::from(tint)
 }
 
 fn alpha(text: &str) -> ColorTransformContent {
     let mut alpha = Alpha::default();
     alpha.val = Some(fixed(text));
-    ColorTransformContent::Alpha(alpha)
+    ColorTransformContent::from(alpha)
 }
 
 /// A scheme colour of `name` with `changes`.
@@ -78,7 +78,7 @@ fn scheme(name: StSchemeColorValMember, changes: Vec<ColorTransformContent>) -> 
     let mut scheme = SchemeColor::default();
     scheme.val = Some(StSchemeColorVal::from(name));
     scheme.content = changes;
-    ColorContent::SchemeColor(scheme)
+    ColorContent::from(scheme)
 }
 
 /// An `a:hslClr` of `hue` in 60000ths of a degree, `sat` and `lum`, with `changes`.
@@ -88,7 +88,7 @@ fn hsl(hue: &str, sat: &str, lum: &str, changes: Vec<ColorTransformContent>) -> 
     color.sat = Some(percent(sat));
     color.lum = Some(percent(lum));
     color.content = changes;
-    ColorContent::HueSaturationLuminanceColorModel(color)
+    ColorContent::from(color)
 }
 
 #[test]
@@ -116,7 +116,7 @@ fn a_scheme_colour_nothing_gives_is_no_colour() {
     assert_eq!(plain(&placeholder), None);
     let mut unnamed = SchemeColor::default();
     unnamed.val = Some(StSchemeColorVal::from("accent9".to_owned()));
-    assert_eq!(plain(&ColorContent::SchemeColor(unnamed)), None);
+    assert_eq!(plain(&ColorContent::from(unnamed)), None);
 }
 
 #[test]
@@ -128,7 +128,7 @@ fn a_scheme_colour_is_the_themes_with_its_own_changes() {
     darker.val = Some(percent("75000"));
     let accent = scheme(
         StSchemeColorValMember::Accent1,
-        vec![ColorTransformContent::LuminanceModulation(darker)],
+        vec![ColorTransformContent::from(darker)],
     );
     assert_eq!(color(&accent, &theme, None), Some(rgba("2F5597")));
 }
@@ -160,10 +160,7 @@ fn the_standards_scrgb_colour() {
     color.r = Some(percent("50%"));
     color.g = Some(percent("50%"));
     color.b = Some(percent("50%"));
-    assert_eq!(
-        plain(&ColorContent::RGBColorModelPercentageVariant(color)),
-        Some(rgba("BCBCBC"))
-    );
+    assert_eq!(plain(&ColorContent::from(color)), Some(rgba("BCBCBC")));
 }
 
 #[test]
@@ -174,10 +171,10 @@ fn a_system_colour_is_its_last_colour() {
     let mut never_computed = window_text.clone();
     never_computed.last_clr = None;
     assert_eq!(
-        plain(&ColorContent::SystemColor(window_text)),
+        plain(&ColorContent::from(window_text)),
         Some(rgba("000000"))
     );
-    assert_eq!(plain(&ColorContent::SystemColor(never_computed)), None);
+    assert_eq!(plain(&ColorContent::from(never_computed)), None);
 }
 
 #[test]
@@ -189,7 +186,7 @@ fn every_preset_has_the_colour_the_standard_states() {
         let mut preset = PresetColor::default();
         preset.val = Some(value);
         assert_eq!(
-            plain(&ColorContent::PresetColor(preset)),
+            plain(&ColorContent::from(preset)),
             Some(Rgba::new(red, green, blue, 100_000)),
             "{name}"
         );
@@ -200,10 +197,7 @@ fn every_preset_has_the_colour_the_standard_states() {
     ] {
         let mut preset = PresetColor::default();
         preset.val = Some(PresetColorValue::from(member));
-        assert_eq!(
-            plain(&ColorContent::PresetColor(preset)),
-            Some(rgba(digits))
-        );
+        assert_eq!(plain(&ColorContent::from(preset)), Some(rgba(digits)));
     }
 }
 
@@ -211,15 +205,12 @@ fn every_preset_has_the_colour_the_standard_states() {
 fn a_colour_whose_value_is_no_value_is_no_colour() {
     let mut unknown = PresetColor::default();
     unknown.val = Some(PresetColorValue::from("chartreuseish".to_owned()));
-    assert_eq!(plain(&ColorContent::PresetColor(unknown)), None);
-    assert_eq!(
-        plain(&ColorContent::PresetColor(PresetColor::default())),
-        None
-    );
+    assert_eq!(plain(&ColorContent::from(unknown)), None);
+    assert_eq!(plain(&ColorContent::from(PresetColor::default())), None);
     assert_eq!(plain(&hex("00FF0", Vec::new())), None);
     let absent = RGBColorModelHexVariant::default();
-    assert_eq!(plain(&ColorContent::RGBColorModelHexVariant(absent)), None);
-    let other = ColorContent::Other(Node::Comment("a colour".to_owned()));
+    assert_eq!(plain(&ColorContent::from(absent)), None);
+    let other = ColorContent::Other(Box::new(Node::Comment("a colour".to_owned())));
     assert_eq!(plain(&other), None);
 }
 
@@ -231,15 +222,12 @@ fn the_opacity_is_set_multiplied_and_shifted() {
     modulation.val = Some(positive("50%"));
     let quarter = hex(
         "00FF00",
-        vec![
-            alpha("50%"),
-            ColorTransformContent::AlphaModulation(modulation),
-        ],
+        vec![alpha("50%"), ColorTransformContent::from(modulation)],
     );
     assert_eq!(opacity(plain(&quarter)), Some(25_000));
     let mut offset = AlphaOffset::default();
     offset.val = Some(FixedPercentage::from("10%".to_owned()));
-    let full = changed("00FF00", ColorTransformContent::AlphaOffset(offset));
+    let full = changed("00FF00", ColorTransformContent::from(offset));
     assert_eq!(opacity(full), Some(100_000));
 }
 
@@ -247,15 +235,15 @@ fn the_opacity_is_set_multiplied_and_shifted() {
 fn the_standards_examples_of_red() {
     let mut red = Red::default();
     red.val = Some(percent("100%"));
-    let set = changed("00FF00", ColorTransformContent::Red(red));
+    let set = changed("00FF00", ColorTransformContent::from(red));
     assert_eq!(set, Some(rgba("FFFF00")));
     let mut modulation = RedModulation::default();
     modulation.val = Some(percent("50%"));
-    let multiplied = changed("FF0000", ColorTransformContent::RedModulation(modulation));
+    let multiplied = changed("FF0000", ColorTransformContent::from(modulation));
     assert_eq!(multiplied, Some(rgba("800000")));
     let mut offset = RedOffset::default();
     offset.val = Some(percent("-20%"));
-    let shifted = changed("FF0000", ColorTransformContent::RedOffset(offset));
+    let shifted = changed("FF0000", ColorTransformContent::from(offset));
     assert_eq!(shifted, Some(rgba("CC0000")));
 }
 
@@ -263,15 +251,15 @@ fn the_standards_examples_of_red() {
 fn the_standards_examples_of_green() {
     let mut green = Green::default();
     green.val = Some(percent("100%"));
-    let set = changed("0000FF", ColorTransformContent::Green(green));
+    let set = changed("0000FF", ColorTransformContent::from(green));
     assert_eq!(set, Some(rgba("00FFFF")));
     let mut modulation = GreenModulation::default();
     modulation.val = Some(percent("50%"));
-    let multiplied = changed("00FF00", ColorTransformContent::GreenModulation(modulation));
+    let multiplied = changed("00FF00", ColorTransformContent::from(modulation));
     assert_eq!(multiplied, Some(rgba("008000")));
     let mut offset = GreenOffset::default();
     offset.val = Some(percent("-20%"));
-    let shifted = changed("00FF00", ColorTransformContent::GreenOffset(offset));
+    let shifted = changed("00FF00", ColorTransformContent::from(offset));
     assert_eq!(shifted, Some(rgba("00CC00")));
 }
 
@@ -279,15 +267,15 @@ fn the_standards_examples_of_green() {
 fn the_standards_examples_of_blue() {
     let mut blue = Blue::default();
     blue.val = Some(percent("100%"));
-    let set = changed("00FF00", ColorTransformContent::Blue(blue));
+    let set = changed("00FF00", ColorTransformContent::from(blue));
     assert_eq!(set, Some(rgba("00FFFF")));
     let mut modulation = BlueModulation::default();
     modulation.val = Some(percent("50%"));
-    let multiplied = changed("0000FF", ColorTransformContent::BlueModulation(modulation));
+    let multiplied = changed("0000FF", ColorTransformContent::from(modulation));
     assert_eq!(multiplied, Some(rgba("000080")));
     let mut offset = BlueOffset::default();
     offset.val = Some(percent("-20%"));
-    let shifted = changed("0000FF", ColorTransformContent::BlueOffset(offset));
+    let shifted = changed("0000FF", ColorTransformContent::from(offset));
     assert_eq!(shifted, Some(rgba("0000CC")));
 }
 
@@ -295,26 +283,23 @@ fn the_standards_examples_of_blue() {
 fn the_standards_examples_of_hue_saturation_and_luminance() {
     let mut lum = Luminance::default();
     lum.val = Some(percent("20%"));
-    let set = changed("00FF00", ColorTransformContent::Luminance(lum));
+    let set = changed("00FF00", ColorTransformContent::from(lum));
     assert_eq!(set, Some(rgba("006600")));
     let mut lum_offset = LuminanceOffset::default();
     lum_offset.val = Some(percent("-20%"));
-    let darker = changed("00FF00", ColorTransformContent::LuminanceOffset(lum_offset));
+    let darker = changed("00FF00", ColorTransformContent::from(lum_offset));
     assert_eq!(darker, Some(rgba("009900")));
     let mut sat_modulation = SaturationModulation::default();
     sat_modulation.val = Some(percent("20%"));
-    let duller = changed(
-        "00FF00",
-        ColorTransformContent::SaturationModulation(sat_modulation),
-    );
+    let duller = changed("00FF00", ColorTransformContent::from(sat_modulation));
     assert_eq!(duller, Some(rgba("669966")));
     let mut hue_modulation = HueModulate::default();
     hue_modulation.val = Some(positive("50%"));
-    let yellow = changed("00FF00", ColorTransformContent::HueModulate(hue_modulation));
+    let yellow = changed("00FF00", ColorTransformContent::from(hue_modulation));
     assert_eq!(yellow, Some(rgba("FFFF00")));
     let mut hue = Hue::default();
     hue.val = Some(PositiveFixedAngle::from("14400000".to_owned()));
-    let blue = hsl("0", "100%", "50%", vec![ColorTransformContent::Hue(hue)]);
+    let blue = hsl("0", "100%", "50%", vec![ColorTransformContent::from(hue)]);
     assert_eq!(
         plain(&blue),
         plain(&hsl("14400000", "100%", "50%", Vec::new()))
@@ -325,7 +310,7 @@ fn the_standards_examples_of_hue_saturation_and_luminance() {
         "0",
         "100%",
         "50%",
-        vec![ColorTransformContent::HueOffset(hue_offset)],
+        vec![ColorTransformContent::from(hue_offset)],
     );
     assert_eq!(plain(&turned), Some(rgba("FF2B00")));
 }
@@ -335,14 +320,11 @@ fn the_standards_examples_of_hue_saturation_and_luminance() {
 fn a_saturation_set_and_shifted_keeps_the_hue_and_the_luminance() {
     let mut sat = Saturation::default();
     sat.val = Some(percent("50%"));
-    let set = changed("00FF00", ColorTransformContent::Saturation(sat));
+    let set = changed("00FF00", ColorTransformContent::from(sat));
     assert_eq!(set, Some(rgba("40BF40")));
     let mut sat_offset = SaturationOffset::default();
     sat_offset.val = Some(percent("-20%"));
-    let greyer = changed(
-        "00FF00",
-        ColorTransformContent::SaturationOffset(sat_offset),
-    );
+    let greyer = changed("00FF00", ColorTransformContent::from(sat_offset));
     assert_eq!(greyer, Some(rgba("1AE61A")));
 }
 
@@ -350,18 +332,15 @@ fn a_saturation_set_and_shifted_keeps_the_hue_and_the_luminance() {
 fn a_luminance_modulation_of_half_halves_the_luminance() {
     let mut lum_modulation = LuminanceModulation::default();
     lum_modulation.val = Some(percent("50%"));
-    let darker = changed(
-        "00FF00",
-        ColorTransformContent::LuminanceModulation(lum_modulation),
-    );
+    let darker = changed("00FF00", ColorTransformContent::from(lum_modulation));
     assert_eq!(darker, Some(rgba("008000")));
 }
 
 #[test]
 fn the_complement_and_the_inverse_of_red_are_cyan() {
-    let complement = ColorTransformContent::Complement(Complement::default());
+    let complement = ColorTransformContent::from(Complement::default());
     assert_eq!(changed("FF0000", complement), Some(rgba("00FFFF")));
-    let inverse = ColorTransformContent::Inverse(Inverse::default());
+    let inverse = ColorTransformContent::from(Inverse::default());
     assert_eq!(changed("FF0000", inverse), Some(rgba("00FFFF")));
 }
 
@@ -379,9 +358,9 @@ fn a_change_whose_value_is_no_number_leaves_the_colour() {
     for text in ["nonsense", "101%", "-5%", "100001", "50.125%"] {
         assert_eq!(changed("4472C4", shade(text)), unchanged, "{text}");
     }
-    let absent = ColorTransformContent::Shade(Shade::default());
+    let absent = ColorTransformContent::from(Shade::default());
     assert_eq!(changed("4472C4", absent), unchanged);
-    let other = ColorTransformContent::Other(Node::Comment("a change".to_owned()));
+    let other = ColorTransformContent::Other(Box::new(Node::Comment("a change".to_owned())));
     assert_eq!(changed("4472C4", other), unchanged);
 }
 
@@ -402,8 +381,8 @@ fn gamma_then_inverse_gamma_gives_the_colour_back() {
     let both = hex(
         "808080",
         vec![
-            ColorTransformContent::Gamma(Gamma::default()),
-            ColorTransformContent::InverseGamma(InverseGamma::default()),
+            ColorTransformContent::from(Gamma::default()),
+            ColorTransformContent::from(InverseGamma::default()),
         ],
     );
     assert_eq!(plain(&both), Some(rgba("808080")));
@@ -411,7 +390,7 @@ fn gamma_then_inverse_gamma_gives_the_colour_back() {
 
 #[test]
 fn gray_gives_three_equal_components() {
-    let gray = changed("FF0000", ColorTransformContent::Gray(Gray::default()));
+    let gray = changed("FF0000", ColorTransformContent::from(Gray::default()));
     assert_eq!(gray, Some(rgba("7F7F7F")));
 }
 

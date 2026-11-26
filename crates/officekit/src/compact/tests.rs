@@ -158,7 +158,7 @@ fn merged(count: usize) -> PartCompaction {
 pub(super) fn plain_text(value: &str) -> TextRunContent {
     let mut text = Text::default();
     text.value = value.to_owned();
-    TextRunContent::Text(text)
+    TextRunContent::from(text)
 }
 
 /// Text of `value` whose spaces are kept.
@@ -166,7 +166,7 @@ fn kept_text(value: &str) -> TextRunContent {
     let mut text = Text::default();
     text.space = Some("preserve".to_owned());
     text.value = value.to_owned();
-    TextRunContent::Text(text)
+    TextRunContent::from(text)
 }
 
 /// A run with the run properties `marks`, when there are any, holding `content`.
@@ -183,15 +183,15 @@ pub(super) fn run(marks: Vec<RunPropertiesContent>, content: Vec<TextRunContent>
 
 /// A run of no properties holding the text `value`.
 pub(super) fn plain_run(value: &str) -> ParagraphContent {
-    ParagraphContent::TextRun(run(Vec::new(), vec![plain_text(value)]))
+    ParagraphContent::from(run(Vec::new(), vec![plain_text(value)]))
 }
 
 pub(super) fn bold() -> RunPropertiesContent {
-    RunPropertiesContent::Bold(Bold::default())
+    RunPropertiesContent::from(Bold::default())
 }
 
 fn italic() -> RunPropertiesContent {
-    RunPropertiesContent::Italics(Italics::default())
+    RunPropertiesContent::from(Italics::default())
 }
 
 fn number(value: &str) -> DecimalNumberValue {
@@ -202,21 +202,21 @@ fn number(value: &str) -> DecimalNumberValue {
 fn proofing(kind: &str) -> ParagraphContent {
     let mut anchor = ProofingErrorAnchor::default();
     anchor.r#type = Some(ProofingErrorType::from(kind.to_owned()));
-    ParagraphContent::ProofingErrorAnchor(anchor)
+    ParagraphContent::from(anchor)
 }
 
 /// The start of the range of comment `id`.
 pub(super) fn comment_start(id: &str) -> ParagraphContent {
     let mut start = CommentAnchorRangeStart::default();
     start.id = Some(number(id));
-    ParagraphContent::CommentAnchorRangeStart(start)
+    ParagraphContent::from(start)
 }
 
 /// The end of the range of comment `id`.
 pub(super) fn comment_end(id: &str) -> ParagraphContent {
     let mut end = CommentAnchorRangeEnd::default();
     end.id = Some(number(id));
-    ParagraphContent::CommentAnchorRangeEnd(end)
+    ParagraphContent::from(end)
 }
 
 /// The run Word writes for the reference mark of comment `id`, in the `CommentReference` style.
@@ -225,9 +225,9 @@ pub(super) fn comment_reference(id: &str) -> ParagraphContent {
     style.val = Some("CommentReference".to_owned());
     let mut mark = CommentContentReferenceMark::default();
     mark.id = Some(number(id));
-    ParagraphContent::TextRun(run(
-        vec![RunPropertiesContent::ReferencedCharacterStyle(style)],
-        vec![TextRunContent::CommentContentReferenceMark(mark)],
+    ParagraphContent::from(run(
+        vec![RunPropertiesContent::from(style)],
+        vec![TextRunContent::from(mark)],
     ))
 }
 
@@ -344,15 +344,14 @@ fn shape(content: &[ParagraphContent]) -> Vec<String> {
 fn the_fox_paragraph_becomes_one_run() {
     let mut first = run(vec![bold()], vec![kept_text("the ")]);
     first.rsid_r = Some(EightDigitHexadecimalValue::from("00A1".to_owned()));
-    let no_proof =
-        RunPropertiesContent::DoNotCheckSpellingOrGrammar(DoNotCheckSpellingOrGrammar::default());
+    let no_proof = RunPropertiesContent::from(DoNotCheckSpellingOrGrammar::default());
     let source = paragraph(vec![
-        ParagraphContent::TextRun(first),
-        ParagraphContent::TextRun(run(vec![bold(), no_proof], vec![kept_text("fox ")])),
+        ParagraphContent::from(first),
+        ParagraphContent::from(run(vec![bold(), no_proof], vec![kept_text("fox ")])),
         proofing("spellStart"),
-        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("jumped")])),
+        ParagraphContent::from(run(vec![bold()], vec![plain_text("jumped")])),
         proofing("spellEnd"),
-        ParagraphContent::TextRun(run(vec![bold()], vec![kept_text(" over the lazy dog")])),
+        ParagraphContent::from(run(vec![bold()], vec![kept_text(" over the lazy dog")])),
     ]);
     let (compacted, done) = compact_paragraph(&source, Comments::Keep);
     assert_eq!(done, merged(3));
@@ -373,10 +372,10 @@ fn the_fox_paragraph_becomes_one_run() {
 #[test]
 fn runs_with_different_formatting_stay_apart() {
     let source = paragraph(vec![
-        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("bold")])),
+        ParagraphContent::from(run(vec![bold()], vec![plain_text("bold")])),
         plain_run("plain"),
         proofing("gramStart"),
-        ParagraphContent::TextRun(run(vec![italic()], vec![plain_text("italic")])),
+        ParagraphContent::from(run(vec![italic()], vec![plain_text("italic")])),
     ]);
     let (compacted, done) = compact_paragraph(&source, Comments::Keep);
     assert_eq!(done, merged(0));
@@ -460,25 +459,23 @@ fn text_content_merges_in_order_and_neighbouring_text_joins() {
     let mut page = Break::default();
     page.r#type = Some(BreakTypes::from("page".to_owned()));
     let source = paragraph(vec![
-        ParagraphContent::TextRun(run(
+        ParagraphContent::from(run(
             Vec::new(),
             vec![
                 plain_text("a"),
-                TextRunContent::TabCharacter(TabCharacter::default()),
+                TextRunContent::from(TabCharacter::default()),
             ],
         )),
         plain_run("b"),
-        ParagraphContent::TextRun(run(
+        ParagraphContent::from(run(
             Vec::new(),
             vec![
                 plain_text("c"),
-                TextRunContent::Break(page),
-                TextRunContent::CarriageReturn(CarriageReturn::default()),
-                TextRunContent::NonBreakingHyphenCharacter(NonBreakingHyphenCharacter::default()),
-                TextRunContent::OptionalHyphenCharacter(OptionalHyphenCharacter::default()),
-                TextRunContent::PositionOfLastCalculatedPageBreak(
-                    PositionOfLastCalculatedPageBreak::default(),
-                ),
+                TextRunContent::from(page),
+                TextRunContent::from(CarriageReturn::default()),
+                TextRunContent::from(NonBreakingHyphenCharacter::default()),
+                TextRunContent::from(OptionalHyphenCharacter::default()),
+                TextRunContent::from(PositionOfLastCalculatedPageBreak::default()),
             ],
         )),
         plain_run("d"),
@@ -495,14 +492,14 @@ fn text_content_merges_in_order_and_neighbouring_text_joins() {
 fn joined_text_preserves_its_space_exactly_when_it_starts_or_ends_with_white_space() {
     let trailing = paragraph(vec![
         plain_run("one"),
-        ParagraphContent::TextRun(run(Vec::new(), vec![kept_text(" two ")])),
+        ParagraphContent::from(run(Vec::new(), vec![kept_text(" two ")])),
     ]);
     assert_eq!(
         shape(&compact_paragraph(&trailing, Comments::Keep).0.content),
         [r#"[] "one two " kept"#]
     );
     let leading = paragraph(vec![
-        ParagraphContent::TextRun(run(Vec::new(), vec![kept_text("one ")])),
+        ParagraphContent::from(run(Vec::new(), vec![kept_text("one ")])),
         plain_run("two"),
     ]);
     assert_eq!(
@@ -548,7 +545,7 @@ fn moved_content_keeps_the_declarations_of_its_own_run() {
 #[test]
 fn a_proofing_anchor_stays_unless_the_runs_around_it_merge() {
     let source = paragraph(vec![
-        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("a")])),
+        ParagraphContent::from(run(vec![bold()], vec![plain_text("a")])),
         proofing("spellStart"),
         plain_run("b"),
         proofing("spellEnd"),
@@ -593,9 +590,7 @@ fn a_removed_comment_loses_every_node_of_it_in_the_tree() {
     let mut referenced = run(Vec::new(), vec![plain_text("e")]);
     let mut mark = CommentContentReferenceMark::default();
     mark.id = Some(number("7"));
-    referenced
-        .content
-        .push(TextRunContent::CommentContentReferenceMark(mark));
+    referenced.content.push(TextRunContent::from(mark));
     let mut body = DocumentBody::default();
     body.content = [
         vec![plain_run("a"), comment_start("7"), plain_run("b")],
@@ -603,16 +598,16 @@ fn a_removed_comment_loses_every_node_of_it_in_the_tree() {
             plain_run("c"),
             comment_end("7"),
             comment_reference("7"),
-            ParagraphContent::BookmarkStart(bookmark),
+            ParagraphContent::from(bookmark),
             comment_start("8"),
-            ParagraphContent::TextRun(run(vec![italic()], vec![plain_text("d")])),
+            ParagraphContent::from(run(vec![italic()], vec![plain_text("d")])),
             comment_end("8"),
             comment_reference("8"),
         ],
-        vec![ParagraphContent::TextRun(referenced)],
+        vec![ParagraphContent::from(referenced)],
     ]
     .into_iter()
-    .map(|content| BlockContent::Paragraph(paragraph(content)))
+    .map(|content| BlockContent::from(paragraph(content)))
     .collect();
     let (compacted, done) = compact_body(&body, Comments::Remove);
     let paragraphs: Vec<Vec<String>> = compacted
@@ -643,7 +638,7 @@ fn a_removed_comment_loses_every_node_of_it_in_the_tree() {
 #[test]
 fn a_comment_between_runs_that_do_not_merge_stays_under_remove() {
     let source = paragraph(vec![
-        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("a")])),
+        ParagraphContent::from(run(vec![bold()], vec![plain_text("a")])),
         comment_start("7"),
         plain_run("b"),
         comment_end("7"),
@@ -726,7 +721,7 @@ fn spreadsheetml_rich_text_runs_merge_and_pivot_records_do_not() {
     let mut numeric = Numeric::default();
     numeric.v = Some("1".to_owned());
     let mut valued = PivotCacheRecord::default();
-    valued.content = vec![PivotCacheRecordContent::Numeric(numeric)];
+    valued.content = vec![PivotCacheRecordContent::from(numeric)];
     let mut records = PivotCacheRecords::default();
     records.pivotcache_record = vec![
         PivotCacheRecord::default(),
@@ -847,8 +842,8 @@ fn a_drawingml_run_holding_no_text_is_left_as_it_is() {
 #[test]
 fn a_word_run_holding_two_texts_still_merges() {
     let source = paragraph(vec![
-        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("a"), plain_text("b")])),
-        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("c")])),
+        ParagraphContent::from(run(vec![bold()], vec![plain_text("a"), plain_text("b")])),
+        ParagraphContent::from(run(vec![bold()], vec![plain_text("c")])),
     ]);
     let (compacted, done) = compact_paragraph(&source, Comments::Keep);
     assert_eq!(done, merged(1));
@@ -1028,7 +1023,7 @@ pub(super) fn xml_of(root: &Element) -> String {
 
 /// A Word paragraph holding the runs of `a` and `b`, which merge.
 fn fragmented() -> BlockContent {
-    BlockContent::Paragraph(paragraph(vec![plain_run("a"), plain_run("b")]))
+    BlockContent::from(paragraph(vec![plain_run("a"), plain_run("b")]))
 }
 
 /// The text of a Word document whose body holds `blocks`.
@@ -1060,7 +1055,7 @@ fn drawing_paragraph(values: &[&str]) -> TextParagraphs {
             text.value = value.to_owned();
             let mut found = DrawingRun::default();
             found.text_string = Box::new(text);
-            TextParagraphsContent::TextRun(found)
+            TextParagraphsContent::from(found)
         })
         .collect();
     paragraph
@@ -1168,8 +1163,8 @@ fn styled_rich_text_run(text: SpreadsheetText) -> RichTextRun {
     size.val = Some("11".to_owned());
     let mut properties = spreadsheet::RunProperties::default();
     properties.content = vec![
-        spreadsheet::RunPropertiesContent::Bold(spreadsheet::Bold::default()),
-        spreadsheet::RunPropertiesContent::FontSize(size),
+        spreadsheet::RunPropertiesContent::from(spreadsheet::Bold::default()),
+        spreadsheet::RunPropertiesContent::from(size),
     ];
     let mut found = RichTextRun::default();
     found.properties = Some(Box::new(properties));
@@ -1184,7 +1179,7 @@ fn fragmented_slide_data() -> CommonSlideData {
     let mut shape = Shape::default();
     shape.text_body = Some(Box::new(body));
     let mut data = CommonSlideData::default();
-    data.shape_tree.content = vec![GroupShapeContent::Shape(shape)];
+    data.shape_tree.content = vec![GroupShapeContent::from(shape)];
     data
 }
 
@@ -1203,7 +1198,7 @@ fn every_word_part_that_holds_runs_is_compacted_and_stored_back() {
     let mut rich = RichText::default();
     rich.paragraphs = vec![fragmented_drawing()];
     let mut chart_text = ChartText::default();
-    chart_text.content = Box::new(ChartTextContent::RichText(rich));
+    chart_text.content = Box::new(ChartTextContent::from(rich));
     let mut title = Title::default();
     title.chart_text = Some(Box::new(chart_text));
     let mut chart = ChartSpace::default();

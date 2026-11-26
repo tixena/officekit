@@ -1379,27 +1379,27 @@ impl super::Transform for vml_office_drawing::NewShapeDefaultsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Callout(arm) = self {
-            Self::Callout(arm.transform(ctx))
+            Self::Callout(Box::new(arm.transform(ctx)))
         } else if let Self::Extrusion(arm) = self {
-            Self::Extrusion(arm.transform(ctx))
+            Self::Extrusion(Box::new(arm.transform(ctx)))
         } else if let Self::LineStrokeSettings(arm) = self {
-            Self::LineStrokeSettings(arm.transform(ctx))
+            Self::LineStrokeSettings(Box::new(arm.transform(ctx)))
         } else if let Self::MostRecentlyUsedColors(arm) = self {
-            Self::MostRecentlyUsedColors(arm.transform(ctx))
+            Self::MostRecentlyUsedColors(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ShadowEffect(arm) = self {
-            Self::ShadowEffect(arm.transform(ctx))
+            Self::ShadowEffect(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeFillProperties(arm) = self {
-            Self::ShapeFillProperties(arm.transform(ctx))
+            Self::ShapeFillProperties(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeProtections(arm) = self {
-            Self::ShapeProtections(arm.transform(ctx))
+            Self::ShapeProtections(Box::new(arm.transform(ctx)))
         } else if let Self::SkewTransform(arm) = self {
-            Self::SkewTransform(arm.transform(ctx))
+            Self::SkewTransform(Box::new(arm.transform(ctx)))
         } else if let Self::TextBox(arm) = self {
-            Self::TextBox(arm.transform(ctx))
+            Self::TextBox(Box::new(arm.transform(ctx)))
         } else if let Self::UIDefaultColors(arm) = self {
-            Self::UIDefaultColors(arm.transform(ctx))
+            Self::UIDefaultColors(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -2256,13 +2256,13 @@ impl super::Transform for vml_office_drawing::ShapeLayoutPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RuleSet(arm) = self {
-            Self::RuleSet(arm.transform(ctx))
+            Self::RuleSet(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeGroupingHistory(arm) = self {
-            Self::ShapeGroupingHistory(arm.transform(ctx))
+            Self::ShapeGroupingHistory(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeIDMap(arm) = self {
-            Self::ShapeIDMap(arm.transform(ctx))
+            Self::ShapeIDMap(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

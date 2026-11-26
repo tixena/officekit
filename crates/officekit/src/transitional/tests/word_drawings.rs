@@ -24,18 +24,14 @@ use super::{MC, Transitional as _, W, WPC, WPS};
 /// A shape with no names of its own, holding a text box with one paragraph when `text_box`.
 fn shape(text_box: bool) -> WordprocessingMLShape {
     let mut built = WordprocessingMLShape::default();
-    built.non_visual_properties_content = Box::new(
-        ShapeNonVisualPropertiesContent::NonVisualDrawingPropertiesForAShape(
-            NonVisualDrawingPropertiesForAShape::default(),
-        ),
-    );
+    built.non_visual_properties_content = Box::new(ShapeNonVisualPropertiesContent::from(
+        NonVisualDrawingPropertiesForAShape::default(),
+    ));
     if text_box {
         let mut found = TextualContentsOfShapeTxbx::default();
         found.rich_text_box_content_container.content =
-            vec![BlockContent::Paragraph(Paragraph::default())];
-        built.text_content = Some(Box::new(ShapeTextContent::TextualContentsOfShapeTxbx(
-            found,
-        )));
+            vec![BlockContent::from(Paragraph::default())];
+        built.text_content = Some(Box::new(ShapeTextContent::from(found)));
     }
     built
 }
@@ -43,7 +39,7 @@ fn shape(text_box: bool) -> WordprocessingMLShape {
 /// A canvas with no names of its own, holding `shape`.
 fn canvas(held: WordprocessingMLShape) -> WordprocessingMLDrawingCanvas {
     let mut built = WordprocessingMLDrawingCanvas::default();
-    built.content = vec![DrawingCanvasContent::WordprocessingMLShape(held)];
+    built.content = vec![DrawingCanvasContent::from(held)];
     built
 }
 
@@ -91,12 +87,12 @@ fn paragraph(uri: &str, item: AnyElementContent) -> BlockContent {
     inline.drawing_object_size = Box::new(size);
     inline.graphic_object = Box::new(graphic);
     let mut drawing = DrawingMLObject::default();
-    drawing.content = vec![DrawingObjectContent::InlineDrawingMLObject(inline)];
+    drawing.content = vec![DrawingObjectContent::from(inline)];
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::DrawingMLObject(drawing)];
+    run.content = vec![TextRunContent::from(drawing)];
     let mut built = Paragraph::default();
-    built.content = vec![ParagraphContent::TextRun(run)];
-    BlockContent::Paragraph(built)
+    built.content = vec![ParagraphContent::from(run)];
+    BlockContent::from(built)
 }
 
 /// `block`, a paragraph showing a drawing, with its drawing in an `mc:AlternateContent` as Word
@@ -127,7 +123,7 @@ fn in_words_alternate_content(block: BlockContent) -> BlockContent {
                 .push(Node::Element(Element::new(QName::prefixed("w", "pict", W))));
             let mut alternate = Element::new(QName::prefixed("mc", "AlternateContent", MC));
             alternate.children = vec![Node::Element(choice), Node::Element(fallback)];
-            *item = TextRunContent::Other(Node::Element(alternate));
+            *item = TextRunContent::Other(Box::new(Node::Element(alternate)));
         }
     }
     BlockContent::Paragraph(built)
@@ -181,12 +177,9 @@ fn assert_stable(document: &Document) {
 #[test]
 fn a_shape_a_text_box_and_a_canvas_built_with_no_names_read_the_same_after_a_second_write() {
     assert_stable(&document_of(vec![
-        paragraph(WPS, AnyElementContent::WordprocessingMLShape(shape(false))),
-        paragraph(WPS, AnyElementContent::WordprocessingMLShape(shape(true))),
-        paragraph(
-            WPC,
-            AnyElementContent::WordprocessingMLDrawingCanvas(canvas(shape(false))),
-        ),
+        paragraph(WPS, AnyElementContent::from(shape(false))),
+        paragraph(WPS, AnyElementContent::from(shape(true))),
+        paragraph(WPC, AnyElementContent::from(canvas(shape(false)))),
     ]));
 }
 
@@ -194,7 +187,7 @@ fn a_shape_a_text_box_and_a_canvas_built_with_no_names_read_the_same_after_a_sec
 fn a_shape_built_with_no_names_reads_the_same_after_a_second_write() {
     assert_stable(&document_of(vec![paragraph(
         WPS,
-        AnyElementContent::WordprocessingMLShape(shape(false)),
+        AnyElementContent::from(shape(false)),
     )]));
 }
 
@@ -202,7 +195,7 @@ fn a_shape_built_with_no_names_reads_the_same_after_a_second_write() {
 fn a_text_box_built_with_no_names_reads_the_same_after_a_second_write() {
     assert_stable(&document_of(vec![paragraph(
         WPS,
-        AnyElementContent::WordprocessingMLShape(shape(true)),
+        AnyElementContent::from(shape(true)),
     )]));
 }
 
@@ -210,7 +203,7 @@ fn a_text_box_built_with_no_names_reads_the_same_after_a_second_write() {
 fn a_canvas_with_a_shape_built_with_no_names_reads_the_same_after_a_second_write() {
     assert_stable(&document_of(vec![paragraph(
         WPC,
-        AnyElementContent::WordprocessingMLDrawingCanvas(canvas(shape(false))),
+        AnyElementContent::from(canvas(shape(false))),
     )]));
 }
 
@@ -218,7 +211,7 @@ fn a_canvas_with_a_shape_built_with_no_names_reads_the_same_after_a_second_write
 fn a_drawing_in_words_own_names_reads_the_same_after_a_second_write() {
     assert_stable(&document_of(vec![paragraph(
         WPS,
-        AnyElementContent::WordprocessingMLShape(word_shape(true)),
+        AnyElementContent::from(word_shape(true)),
     )]));
 }
 
@@ -226,7 +219,7 @@ fn a_drawing_in_words_own_names_reads_the_same_after_a_second_write() {
 fn a_drawing_read_from_the_alternate_content_word_writes_reads_the_same_after_a_second_write() {
     let mut word_file = document_of(vec![in_words_alternate_content(paragraph(
         WPS,
-        AnyElementContent::WordprocessingMLShape(word_shape(true)),
+        AnyElementContent::from(word_shape(true)),
     ))]);
     word_file.unknown_mut().namespace_declarations = vec![
         NamespaceDeclaration::new("mc".to_owned(), MC.to_owned()),

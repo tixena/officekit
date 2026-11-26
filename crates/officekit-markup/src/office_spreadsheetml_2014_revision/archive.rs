@@ -982,87 +982,87 @@ pub struct XrrtestMirror {
 #[rkyv(remote = super::ReferenceMapContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ReferenceMapContent {
-    Future(super::Future),
-    OartAnchor(super::OartAnchor),
-    Other(Node),
-    Ref(super::Ref),
-    SheetUid(super::SheetUid),
-    Test(super::Test),
+    Future(Box<super::Future>),
+    OartAnchor(Box<super::OartAnchor>),
+    Other(Box<Node>),
+    Ref(Box<super::Ref>),
+    SheetUid(Box<super::SheetUid>),
+    Test(Box<super::Test>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RevisionChangeObjectContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionChangeObjectContent {
-    Body(super::Body),
-    Link(super::Link),
-    Other(Node),
+    Body(Box<super::Body>),
+    Link(Box<super::Link>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RevisionGroupContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionGroupContent {
-    Other(Node),
-    XrrDefName(super::XrrDefName),
-    XrrList(super::XrrList),
-    XrrListExpR(super::XrrListExpR),
-    XrrSheet(super::XrrSheet),
-    XrrTrim(super::XrrTrim),
-    XrrUspt(super::XrrUspt),
-    Xrrc(super::Xrrc),
-    Xrrco(super::Xrrco),
-    Xrrdo(super::Xrrdo),
-    Xrrf(super::Xrrf),
-    Xrrftr(super::Xrrftr),
-    Xrrm(super::Xrrm),
-    Xrrrc(super::Xrrrc),
+    Other(Box<Node>),
+    XrrDefName(Box<super::XrrDefName>),
+    XrrList(Box<super::XrrList>),
+    XrrListExpR(Box<super::XrrListExpR>),
+    XrrSheet(Box<super::XrrSheet>),
+    XrrTrim(Box<super::XrrTrim>),
+    XrrUspt(Box<super::XrrUspt>),
+    Xrrc(Box<super::Xrrc>),
+    Xrrco(Box<super::Xrrco>),
+    Xrrdo(Box<super::Xrrdo>),
+    Xrrf(Box<super::Xrrf>),
+    Xrrftr(Box<super::Xrrftr>),
+    Xrrm(Box<super::Xrrm>),
+    Xrrrc(Box<super::Xrrrc>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RevisionStateContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionStateContent {
-    FreezePanes(super::FreezePanes),
-    HideUnhideSheet(super::HideUnhideSheet),
-    Other(Node),
-    Outlines(super::Outlines),
-    RowColVisualOps(super::RowColVisualOps),
-    ShowGridlinesHeadings(super::ShowGridlinesHeadings),
+    FreezePanes(Box<super::FreezePanes>),
+    HideUnhideSheet(Box<super::HideUnhideSheet>),
+    Other(Box<Node>),
+    Outlines(Box<super::Outlines>),
+    RowColVisualOps(Box<super::RowColVisualOps>),
+    ShowGridlinesHeadings(Box<super::ShowGridlinesHeadings>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RevisionStreamContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionStreamContent {
-    Other(Node),
-    XrrDefName(super::XrrDefName),
-    XrrList(super::XrrList),
-    XrrListExpR(super::XrrListExpR),
-    XrrSheet(super::XrrSheet),
-    XrrTrim(super::XrrTrim),
-    XrrUspt(super::XrrUspt),
-    Xrrc(super::Xrrc),
-    Xrrco(super::Xrrco),
-    Xrrdo(super::Xrrdo),
-    Xrrf(super::Xrrf),
-    Xrrftr(super::Xrrftr),
-    Xrrg(super::Xrrg),
-    Xrrm(super::Xrrm),
-    Xrrrc(super::Xrrrc),
+    Other(Box<Node>),
+    XrrDefName(Box<super::XrrDefName>),
+    XrrList(Box<super::XrrList>),
+    XrrListExpR(Box<super::XrrListExpR>),
+    XrrSheet(Box<super::XrrSheet>),
+    XrrTrim(Box<super::XrrTrim>),
+    XrrUspt(Box<super::XrrUspt>),
+    Xrrc(Box<super::Xrrc>),
+    Xrrco(Box<super::Xrrco>),
+    Xrrdo(Box<super::Xrrdo>),
+    Xrrf(Box<super::Xrrf>),
+    Xrrftr(Box<super::Xrrftr>),
+    Xrrg(Box<super::Xrrg>),
+    Xrrm(Box<super::Xrrm>),
+    Xrrrc(Box<super::Xrrrc>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::StateBasedObjectContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum StateBasedObjectContent {
-    AutoFilter(super::AutoFilter),
-    Comments(super::Comments),
-    DataValidation(super::DataValidation),
-    Hyperlink(super::Hyperlink),
-    Other(Node),
+    AutoFilter(Box<super::AutoFilter>),
+    Comments(Box<super::Comments>),
+    DataValidation(Box<super::DataValidation>),
+    Hyperlink(Box<super::Hyperlink>),
+    Other(Box<Node>),
     PivotTableDefinition(Box<super::PivotTableDefinition>),
-    SparklineGroup(super::SparklineGroup),
+    SparklineGroup(Box<super::SparklineGroup>),
 }
 
 impl From<AutoFilterMirror> for super::AutoFilter {

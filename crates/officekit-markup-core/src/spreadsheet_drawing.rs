@@ -920,19 +920,19 @@ impl Eq for GroupShapeWith<()> {}
 #[non_exhaustive]
 pub enum GroupShapeContentWith<X: UserData> {
     /// The element `xdr:cxnSp`, a `ConnectionShape`.
-    ConnectionShape(ConnectionShapeWith<X>),
+    ConnectionShape(Box<ConnectionShapeWith<X>>),
     /// The element `xdr14:contentPart`, a `ContentPart`.
-    ContentPart(super::office_excel_2010_spreadsheet_drawing::ContentPartWith<X>),
+    ContentPart(Box<super::office_excel_2010_spreadsheet_drawing::ContentPartWith<X>>),
     /// The element `xdr:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrameWith<X>),
+    GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `xdr:grpSp`, a `GroupShape`.
-    GroupShape(GroupShapeWith<X>),
+    GroupShape(Box<GroupShapeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xdr:pic`, a `Picture`.
-    Picture(PictureWith<X>),
+    Picture(Box<PictureWith<X>>),
     /// The element `xdr:sp`, a `Shape`.
-    Shape(ShapeWith<X>),
+    Shape(Box<ShapeWith<X>>),
 }
 
 /// [`GroupShapeContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1220,19 +1220,19 @@ impl Eq for NonVisualPropertiesForAShapeWith<()> {}
 #[non_exhaustive]
 pub enum ObjectContentWith<X: UserData> {
     /// The element `xdr:cxnSp`, a `ConnectionShape`.
-    ConnectionShape(ConnectionShapeWith<X>),
+    ConnectionShape(Box<ConnectionShapeWith<X>>),
     /// The element `xdr:contentPart`, a `ContentPart`.
-    ContentPart(ContentPartWith<X>),
+    ContentPart(Box<ContentPartWith<X>>),
     /// The element `xdr:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrameWith<X>),
+    GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `xdr:grpSp`, a `GroupShape`.
-    GroupShape(GroupShapeWith<X>),
+    GroupShape(Box<GroupShapeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xdr:pic`, a `Picture`.
-    Picture(PictureWith<X>),
+    Picture(Box<PictureWith<X>>),
     /// The element `xdr:sp`, a `Shape`.
-    Shape(ShapeWith<X>),
+    Shape(Box<ShapeWith<X>>),
 }
 
 /// [`ObjectContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1645,13 +1645,13 @@ impl Eq for WorksheetDrawingWith<()> {}
 #[non_exhaustive]
 pub enum WorksheetDrawingContentWith<X: UserData> {
     /// The element `xdr:absoluteAnchor`, a `AbsoluteAnchorShapeSize`.
-    AbsoluteAnchorShapeSize(AbsoluteAnchorShapeSizeWith<X>),
+    AbsoluteAnchorShapeSize(Box<AbsoluteAnchorShapeSizeWith<X>>),
     /// The element `xdr:oneCellAnchor`, a `OneCellAnchorShapeSize`.
-    OneCellAnchorShapeSize(OneCellAnchorShapeSizeWith<X>),
+    OneCellAnchorShapeSize(Box<OneCellAnchorShapeSizeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xdr:twoCellAnchor`, a `TwoCellAnchorShapeSize`.
-    TwoCellAnchorShapeSize(TwoCellAnchorShapeSizeWith<X>),
+    TwoCellAnchorShapeSize(Box<TwoCellAnchorShapeSizeWith<X>>),
 }
 
 /// [`WorksheetDrawingContentWith`] of the tree a read gives, where no node holds anything in
@@ -2272,32 +2272,40 @@ impl<X: UserData> GroupShapeContentWith<X> {
     {
         match self {
             Self::ConnectionShape(node) => {
-                GroupShapeContentWith::ConnectionShape(node.into_user_data())
+                GroupShapeContentWith::ConnectionShape(Box::new((*node).into_user_data()))
             }
-            Self::ContentPart(node) => GroupShapeContentWith::ContentPart(node.into_user_data()),
-            Self::GraphicFrame(node) => GroupShapeContentWith::GraphicFrame(node.into_user_data()),
-            Self::GroupShape(node) => GroupShapeContentWith::GroupShape(node.into_user_data()),
+            Self::ContentPart(node) => {
+                GroupShapeContentWith::ContentPart(Box::new((*node).into_user_data()))
+            }
+            Self::GraphicFrame(node) => {
+                GroupShapeContentWith::GraphicFrame(Box::new((*node).into_user_data()))
+            }
+            Self::GroupShape(node) => {
+                GroupShapeContentWith::GroupShape(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => GroupShapeContentWith::Other(node),
-            Self::Picture(node) => GroupShapeContentWith::Picture(node.into_user_data()),
-            Self::Shape(node) => GroupShapeContentWith::Shape(node.into_user_data()),
+            Self::Picture(node) => {
+                GroupShapeContentWith::Picture(Box::new((*node).into_user_data()))
+            }
+            Self::Shape(node) => GroupShapeContentWith::Shape(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for GroupShapeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(item.read()),
-            Some((NS_XDR14, "contentPart")) => Self::ContentPart(item.read()),
-            Some((NS_XDR, "graphicFrame")) => Self::GraphicFrame(item.read()),
-            Some((NS_XDR, "grpSp")) => Self::GroupShape(item.read()),
-            Some((NS_XDR, "pic")) => Self::Picture(item.read()),
-            Some((NS_XDR, "sp")) => Self::Shape(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(Box::new(item.read())),
+            Some((NS_XDR14, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_XDR, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
+            Some((NS_XDR, "grpSp")) => Self::GroupShape(Box::new(item.read())),
+            Some((NS_XDR, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_XDR, "sp")) => Self::Shape(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -2309,12 +2317,55 @@ impl officekit_markup_base::Write for GroupShapeContent {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicFrame(arm) => arm.write_into(writer),
             Self::GroupShape(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Shape(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ConnectionShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ConnectionShapeWith<X>) -> Self {
+        Self::ConnectionShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_excel_2010_spreadsheet_drawing::ContentPartWith<X>>
+    for GroupShapeContentWith<X>
+{
+    fn from(arm: super::office_excel_2010_spreadsheet_drawing::ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GraphicFrameWith<X>) -> Self {
+        Self::GraphicFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: GroupShapeWith<X>) -> Self {
+        Self::GroupShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PictureWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeWith<X>> for GroupShapeContentWith<X> {
+    fn from(arm: ShapeWith<X>) -> Self {
+        Self::Shape(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupShapeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GroupShapePropertiesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -2955,38 +3006,44 @@ impl<X: UserData> ObjectContentWith<X> {
     {
         match self {
             Self::ConnectionShape(node) => {
-                ObjectContentWith::ConnectionShape(node.into_user_data())
+                ObjectContentWith::ConnectionShape(Box::new((*node).into_user_data()))
             }
-            Self::ContentPart(node) => ObjectContentWith::ContentPart(node.into_user_data()),
-            Self::GraphicFrame(node) => ObjectContentWith::GraphicFrame(node.into_user_data()),
-            Self::GroupShape(node) => ObjectContentWith::GroupShape(node.into_user_data()),
+            Self::ContentPart(node) => {
+                ObjectContentWith::ContentPart(Box::new((*node).into_user_data()))
+            }
+            Self::GraphicFrame(node) => {
+                ObjectContentWith::GraphicFrame(Box::new((*node).into_user_data()))
+            }
+            Self::GroupShape(node) => {
+                ObjectContentWith::GroupShape(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => ObjectContentWith::Other(node),
-            Self::Picture(node) => ObjectContentWith::Picture(node.into_user_data()),
-            Self::Shape(node) => ObjectContentWith::Shape(node.into_user_data()),
+            Self::Picture(node) => ObjectContentWith::Picture(Box::new((*node).into_user_data())),
+            Self::Shape(node) => ObjectContentWith::Shape(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl<X: UserData> Default for ObjectContentWith<X> {
     fn default() -> Self {
-        Self::ConnectionShape(ConnectionShapeWith::default())
+        Self::ConnectionShape(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for ObjectContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(item.read()),
-            Some((NS_XDR, "contentPart")) => Self::ContentPart(item.read()),
-            Some((NS_XDR, "graphicFrame")) => Self::GraphicFrame(item.read()),
-            Some((NS_XDR, "grpSp")) => Self::GroupShape(item.read()),
-            Some((NS_XDR, "pic")) => Self::Picture(item.read()),
-            Some((NS_XDR, "sp")) => Self::Shape(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XDR, "cxnSp")) => Self::ConnectionShape(Box::new(item.read())),
+            Some((NS_XDR, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_XDR, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
+            Some((NS_XDR, "grpSp")) => Self::GroupShape(Box::new(item.read())),
+            Some((NS_XDR, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_XDR, "sp")) => Self::Shape(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -2998,12 +3055,53 @@ impl officekit_markup_base::Write for ObjectContent {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicFrame(arm) => arm.write_into(writer),
             Self::GroupShape(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Shape(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ConnectionShapeWith<X>> for ObjectContentWith<X> {
+    fn from(arm: ConnectionShapeWith<X>) -> Self {
+        Self::ConnectionShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ContentPartWith<X>> for ObjectContentWith<X> {
+    fn from(arm: ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameWith<X>> for ObjectContentWith<X> {
+    fn from(arm: GraphicFrameWith<X>) -> Self {
+        Self::GraphicFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupShapeWith<X>> for ObjectContentWith<X> {
+    fn from(arm: GroupShapeWith<X>) -> Self {
+        Self::GroupShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PictureWith<X>> for ObjectContentWith<X> {
+    fn from(arm: PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeWith<X>> for ObjectContentWith<X> {
+    fn from(arm: ShapeWith<X>) -> Self {
+        Self::Shape(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ObjectContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> OneCellAnchorShapeSizeWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -3917,14 +4015,20 @@ impl<X: UserData> WorksheetDrawingContentWith<X> {
     {
         match self {
             Self::AbsoluteAnchorShapeSize(node) => {
-                WorksheetDrawingContentWith::AbsoluteAnchorShapeSize(node.into_user_data())
+                WorksheetDrawingContentWith::AbsoluteAnchorShapeSize(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::OneCellAnchorShapeSize(node) => {
-                WorksheetDrawingContentWith::OneCellAnchorShapeSize(node.into_user_data())
+                WorksheetDrawingContentWith::OneCellAnchorShapeSize(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => WorksheetDrawingContentWith::Other(node),
             Self::TwoCellAnchorShapeSize(node) => {
-                WorksheetDrawingContentWith::TwoCellAnchorShapeSize(node.into_user_data())
+                WorksheetDrawingContentWith::TwoCellAnchorShapeSize(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -3932,15 +4036,17 @@ impl<X: UserData> WorksheetDrawingContentWith<X> {
 
 impl officekit_markup_base::Read for WorksheetDrawingContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XDR, "absoluteAnchor")) => Self::AbsoluteAnchorShapeSize(item.read()),
-            Some((NS_XDR, "oneCellAnchor")) => Self::OneCellAnchorShapeSize(item.read()),
-            Some((NS_XDR, "twoCellAnchor")) => Self::TwoCellAnchorShapeSize(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XDR, "absoluteAnchor")) => {
+                Self::AbsoluteAnchorShapeSize(Box::new(item.read()))
+            }
+            Some((NS_XDR, "oneCellAnchor")) => Self::OneCellAnchorShapeSize(Box::new(item.read())),
+            Some((NS_XDR, "twoCellAnchor")) => Self::TwoCellAnchorShapeSize(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3950,11 +4056,34 @@ impl officekit_markup_base::Write for WorksheetDrawingContent {
         match self {
             Self::AbsoluteAnchorShapeSize(arm) => arm.write_into(writer),
             Self::OneCellAnchorShapeSize(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::TwoCellAnchorShapeSize(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AbsoluteAnchorShapeSizeWith<X>> for WorksheetDrawingContentWith<X> {
+    fn from(arm: AbsoluteAnchorShapeSizeWith<X>) -> Self {
+        Self::AbsoluteAnchorShapeSize(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OneCellAnchorShapeSizeWith<X>> for WorksheetDrawingContentWith<X> {
+    fn from(arm: OneCellAnchorShapeSizeWith<X>) -> Self {
+        Self::OneCellAnchorShapeSize(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TwoCellAnchorShapeSizeWith<X>> for WorksheetDrawingContentWith<X> {
+    fn from(arm: TwoCellAnchorShapeSizeWith<X>) -> Self {
+        Self::TwoCellAnchorShapeSize(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<WorksheetDrawingContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> XfrmWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

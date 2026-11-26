@@ -5496,29 +5496,29 @@ impl Eq for AutoFilterColumnWith<()> {}
 #[non_exhaustive]
 pub enum AutoFilterColumnContentWith<X: UserData> {
     /// The element `x:colorFilter`, a `ColorFilterCriteria`.
-    ColorFilterCriteria(ColorFilterCriteriaWith<X>),
+    ColorFilterCriteria(Box<ColorFilterCriteriaWith<X>>),
     /// The element `x:customFilters`, a `CustomFilters`.
-    CustomFilters(CustomFiltersWith<X>),
+    CustomFilters(Box<CustomFiltersWith<X>>),
     /// The element `x:dynamicFilter`, a `DynamicFilter`.
-    DynamicFilter(DynamicFilterWith<X>),
+    DynamicFilter(Box<DynamicFilterWith<X>>),
     /// The element `x:filters`, a `FilterCriteria`.
-    FilterCriteria(FilterCriteriaWith<X>),
+    FilterCriteria(Box<FilterCriteriaWith<X>>),
     /// The element `x:extLst`, a `FutureFeatureDataStorageArea`.
-    FutureFeatureDataStorageArea(FutureFeatureDataStorageAreaWith<X>),
+    FutureFeatureDataStorageArea(Box<FutureFeatureDataStorageAreaWith<X>>),
     /// The element `x:iconFilter`, a `IconFilter`.
-    IconFilter(IconFilterWith<X>),
+    IconFilter(Box<IconFilterWith<X>>),
     /// The element `x14:customFilters`, a `CustomFilters`.
     OfficeSpreadsheetml20099MainCustomFilters(
-        super::office_spreadsheetml_2009_9_main::CustomFiltersWith<X>,
+        Box<super::office_spreadsheetml_2009_9_main::CustomFiltersWith<X>>,
     ),
     /// The element `x14:iconFilter`, a `IconFilter`.
     OfficeSpreadsheetml20099MainIconFilter(
-        super::office_spreadsheetml_2009_9_main::IconFilterWith<X>,
+        Box<super::office_spreadsheetml_2009_9_main::IconFilterWith<X>>,
     ),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:top10`, a `Top10`.
-    Top10(Top10With<X>),
+    Top10(Box<Top10With<X>>),
 }
 
 /// [`AutoFilterColumnContentWith`] of the tree a read gives, where no node holds anything in
@@ -5852,19 +5852,19 @@ impl Eq for BreakWith<()> {}
 #[non_exhaustive]
 pub enum CacheItemContentWith<X: UserData> {
     /// The element `x:b`, a `Boolean`.
-    Boolean(BooleanWith<X>),
+    Boolean(Box<BooleanWith<X>>),
     /// The element `x:s`, a `CharacterValue`.
-    CharacterValue(CharacterValueWith<X>),
+    CharacterValue(Box<CharacterValueWith<X>>),
     /// The element `x:d`, a `DateTime`.
-    DateTime(DateTimeWith<X>),
+    DateTime(Box<DateTimeWith<X>>),
     /// The element `x:e`, a `ErrorValue`.
-    ErrorValue(ErrorValueWith<X>),
+    ErrorValue(Box<ErrorValueWith<X>>),
     /// The element `x:m`, a `NoValue`.
-    NoValue(NoValueWith<X>),
+    NoValue(Box<NoValueWith<X>>),
     /// The element `x:n`, a `Numeric`.
-    Numeric(NumericWith<X>),
+    Numeric(Box<NumericWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`CacheItemContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -9367,15 +9367,15 @@ impl Eq for EntriesWith<()> {}
 #[non_exhaustive]
 pub enum EntriesContentWith<X: UserData> {
     /// The element `x:s`, a `CharacterValue`.
-    CharacterValue(CharacterValueWith<X>),
+    CharacterValue(Box<CharacterValueWith<X>>),
     /// The element `x:e`, a `ErrorValue`.
-    ErrorValue(ErrorValueWith<X>),
+    ErrorValue(Box<ErrorValueWith<X>>),
     /// The element `x:m`, a `NoValue`.
-    NoValue(NoValueWith<X>),
+    NoValue(Box<NoValueWith<X>>),
     /// The element `x:n`, a `Numeric`.
-    Numeric(NumericWith<X>),
+    Numeric(Box<NumericWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`EntriesContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -9567,13 +9567,13 @@ impl Eq for ExternalReferenceWith<()> {}
 #[non_exhaustive]
 pub enum ExternalReferenceContentWith<X: UserData> {
     /// The element `x:ddeLink`, a `DDEConnection`.
-    DDEConnection(DDEConnectionWith<X>),
+    DDEConnection(Box<DDEConnectionWith<X>>),
     /// The element `x:externalBook`, a `ExternalWorkbook`.
-    ExternalWorkbook(ExternalWorkbookWith<X>),
+    ExternalWorkbook(Box<ExternalWorkbookWith<X>>),
     /// The element `x:oleLink`, a `GenericObjectLinkConnection`.
-    GenericObjectLinkConnection(GenericObjectLinkConnectionWith<X>),
+    GenericObjectLinkConnection(Box<GenericObjectLinkConnectionWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`ExternalReferenceContentWith`] of the tree a read gives, where no node holds anything in
@@ -9959,11 +9959,11 @@ impl Eq for FillWith<()> {}
 #[non_exhaustive]
 pub enum FillContentWith<X: UserData> {
     /// The element `x:gradientFill`, a `Gradient`.
-    Gradient(GradientWith<X>),
+    Gradient(Box<GradientWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:patternFill`, a `Pattern`.
-    Pattern(PatternWith<X>),
+    Pattern(Box<PatternWith<X>>),
 }
 
 /// [`FillContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -10177,37 +10177,37 @@ impl Eq for FontWith<()> {}
 #[non_exhaustive]
 pub enum FontContentWith<X: UserData> {
     /// The element `x:b`, a `Bold`.
-    Bold(BoldWith<X>),
+    Bold(Box<BoldWith<X>>),
     /// The element `x:charset`, a `CharacterSet`.
-    CharacterSet(CharacterSetWith<X>),
+    CharacterSet(Box<CharacterSetWith<X>>),
     /// The element `x:condense`, a `Condense`.
-    Condense(CondenseWith<X>),
+    Condense(Box<CondenseWith<X>>),
     /// The element `x:color`, a `DataBarColor`.
-    DataBarColor(DataBarColorWith<X>),
+    DataBarColor(Box<DataBarColorWith<X>>),
     /// The element `x:extend`, a `Extend`.
-    Extend(ExtendWith<X>),
+    Extend(Box<ExtendWith<X>>),
     /// The element `x:family`, a `FontFamily`.
-    FontFamily(FontFamilyWith<X>),
+    FontFamily(Box<FontFamilyWith<X>>),
     /// The element `x:name`, a `FontName`.
-    FontName(FontNameWith<X>),
+    FontName(Box<FontNameWith<X>>),
     /// The element `x:sz`, a `FontSize`.
-    FontSize(FontSizeWith<X>),
+    FontSize(Box<FontSizeWith<X>>),
     /// The element `x:i`, a `Italic`.
-    Italic(ItalicWith<X>),
+    Italic(Box<ItalicWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:outline`, a `Outline`.
-    Outline(OutlineWith<X>),
+    Outline(Box<OutlineWith<X>>),
     /// The element `x:scheme`, a `Scheme`.
-    Scheme(SchemeWith<X>),
+    Scheme(Box<SchemeWith<X>>),
     /// The element `x:shadow`, a `Shadow`.
-    Shadow(ShadowWith<X>),
+    Shadow(Box<ShadowWith<X>>),
     /// The element `x:strike`, a `StrikeThrough`.
-    StrikeThrough(StrikeThroughWith<X>),
+    StrikeThrough(Box<StrikeThroughWith<X>>),
     /// The element `x:u`, a `Underline`.
-    Underline(UnderlineWith<X>),
+    Underline(Box<UnderlineWith<X>>),
     /// The element `x:vertAlign`, a `VerticalAlignment`.
-    VerticalAlignment(VerticalAlignmentWith<X>),
+    VerticalAlignment(Box<VerticalAlignmentWith<X>>),
 }
 
 /// [`FontContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -12056,15 +12056,15 @@ impl Eq for MetadataTypesCollectionWith<()> {}
 #[non_exhaustive]
 pub enum MultidimensionalExpressionMetadataContentWith<X: UserData> {
     /// The element `x:k`, a `KPIMDXMetadata`.
-    KPIMDXMetadata(KPIMDXMetadataWith<X>),
+    KPIMDXMetadata(Box<KPIMDXMetadataWith<X>>),
     /// The element `x:p`, a `MemberPropertyMDXMetadata`.
-    MemberPropertyMDXMetadata(MemberPropertyMDXMetadataWith<X>),
+    MemberPropertyMDXMetadata(Box<MemberPropertyMDXMetadataWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:ms`, a `SetMDXMetadata`.
-    SetMDXMetadata(SetMDXMetadataWith<X>),
+    SetMDXMetadata(Box<SetMDXMetadataWith<X>>),
     /// The element `x:t`, a `TupleMDXMetadata`.
-    TupleMDXMetadata(TupleMDXMetadataWith<X>),
+    TupleMDXMetadata(Box<TupleMDXMetadataWith<X>>),
 }
 
 /// [`MultidimensionalExpressionMetadataContentWith`] of the tree a read gives, where no node holds
@@ -12104,13 +12104,13 @@ impl Eq for NamedLinksWith<()> {}
 #[non_exhaustive]
 pub enum NestedRevisionContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:rcc`, a `RevisionCellChange`.
-    RevisionCellChange(RevisionCellChangeWith<X>),
+    RevisionCellChange(Box<RevisionCellChangeWith<X>>),
     /// The element `x:rfmt`, a `RevisionFormat`.
-    RevisionFormat(RevisionFormatWith<X>),
+    RevisionFormat(Box<RevisionFormatWith<X>>),
     /// The element `x:undo`, a `Undo`.
-    Undo(UndoWith<X>),
+    Undo(Box<UndoWith<X>>),
 }
 
 /// [`NestedRevisionContentWith`] of the tree a read gives, where no node holds anything in
@@ -14176,21 +14176,21 @@ impl Eq for PivotCacheRecordWith<()> {}
 #[non_exhaustive]
 pub enum PivotCacheRecordContentWith<X: UserData> {
     /// The element `x:b`, a `Boolean`.
-    Boolean(BooleanWith<X>),
+    Boolean(Box<BooleanWith<X>>),
     /// The element `x:s`, a `CharacterValue`.
-    CharacterValue(CharacterValueWith<X>),
+    CharacterValue(Box<CharacterValueWith<X>>),
     /// The element `x:d`, a `DateTime`.
-    DateTime(DateTimeWith<X>),
+    DateTime(Box<DateTimeWith<X>>),
     /// The element `x:e`, a `ErrorValue`.
-    ErrorValue(ErrorValueWith<X>),
+    ErrorValue(Box<ErrorValueWith<X>>),
     /// The element `x:m`, a `NoValue`.
-    NoValue(NoValueWith<X>),
+    NoValue(Box<NoValueWith<X>>),
     /// The element `x:n`, a `Numeric`.
-    Numeric(NumericWith<X>),
+    Numeric(Box<NumericWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:x`, a `SharedItemsIndex`.
-    SharedItemsIndex(SharedItemsIndexWith<X>),
+    SharedItemsIndex(Box<SharedItemsIndexWith<X>>),
 }
 
 /// [`PivotCacheRecordContentWith`] of the tree a read gives, where no node holds anything in
@@ -14256,13 +14256,13 @@ impl Eq for PivotCacheSourceDescriptionWith<()> {}
 #[non_exhaustive]
 pub enum PivotCacheSourceDescriptionContentWith<X: UserData> {
     /// The element `x:consolidation`, a `ConsolidationSource`.
-    ConsolidationSource(ConsolidationSourceWith<X>),
+    ConsolidationSource(Box<ConsolidationSourceWith<X>>),
     /// The element `x:extLst`, a `FutureFeatureDataStorageArea`.
-    FutureFeatureDataStorageArea(FutureFeatureDataStorageAreaWith<X>),
+    FutureFeatureDataStorageArea(Box<FutureFeatureDataStorageAreaWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:worksheetSource`, a `WorksheetPivotCacheSource`.
-    WorksheetPivotCacheSource(WorksheetPivotCacheSourceWith<X>),
+    WorksheetPivotCacheSource(Box<WorksheetPivotCacheSourceWith<X>>),
 }
 
 /// [`PivotCacheSourceDescriptionContentWith`] of the tree a read gives, where no node holds
@@ -16417,31 +16417,31 @@ impl Eq for RevisionsWith<()> {}
 #[non_exhaustive]
 pub enum RevisionsContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:raf`, a `RevisionAutoFormat`.
-    RevisionAutoFormat(RevisionAutoFormatWith<X>),
+    RevisionAutoFormat(Box<RevisionAutoFormatWith<X>>),
     /// The element `x:rcc`, a `RevisionCellChange`.
-    RevisionCellChange(RevisionCellChangeWith<X>),
+    RevisionCellChange(Box<RevisionCellChangeWith<X>>),
     /// The element `x:rcmt`, a `RevisionCellComment`.
-    RevisionCellComment(RevisionCellCommentWith<X>),
+    RevisionCellComment(Box<RevisionCellCommentWith<X>>),
     /// The element `x:rm`, a `RevisionCellMove`.
-    RevisionCellMove(RevisionCellMoveWith<X>),
+    RevisionCellMove(Box<RevisionCellMoveWith<X>>),
     /// The element `x:rcv`, a `RevisionCustomView`.
-    RevisionCustomView(RevisionCustomViewWith<X>),
+    RevisionCustomView(Box<RevisionCustomViewWith<X>>),
     /// The element `x:rdn`, a `RevisionDefinedName`.
     RevisionDefinedName(Box<RevisionDefinedNameWith<X>>),
     /// The element `x:rfmt`, a `RevisionFormat`.
-    RevisionFormat(RevisionFormatWith<X>),
+    RevisionFormat(Box<RevisionFormatWith<X>>),
     /// The element `x:ris`, a `RevisionInsertSheet`.
-    RevisionInsertSheet(RevisionInsertSheetWith<X>),
+    RevisionInsertSheet(Box<RevisionInsertSheetWith<X>>),
     /// The element `x:rcft`, a `RevisionMergeConflict`.
-    RevisionMergeConflict(RevisionMergeConflictWith<X>),
+    RevisionMergeConflict(Box<RevisionMergeConflictWith<X>>),
     /// The element `x:rqt`, a `RevisionQueryTable`.
-    RevisionQueryTable(RevisionQueryTableWith<X>),
+    RevisionQueryTable(Box<RevisionQueryTableWith<X>>),
     /// The element `x:rrc`, a `RevisionRowColumnInsertDelete`.
-    RevisionRowColumnInsertDelete(RevisionRowColumnInsertDeleteWith<X>),
+    RevisionRowColumnInsertDelete(Box<RevisionRowColumnInsertDeleteWith<X>>),
     /// The element `x:rsnm`, a `RevisionSheetName`.
-    RevisionSheetName(RevisionSheetNameWith<X>),
+    RevisionSheetName(Box<RevisionSheetNameWith<X>>),
 }
 
 /// [`RevisionsContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -16790,37 +16790,37 @@ impl Eq for RunPropertiesWith<()> {}
 #[non_exhaustive]
 pub enum RunPropertiesContentWith<X: UserData> {
     /// The element `x:b`, a `Bold`.
-    Bold(BoldWith<X>),
+    Bold(Box<BoldWith<X>>),
     /// The element `x:charset`, a `CharacterSet`.
-    CharacterSet(CharacterSetWith<X>),
+    CharacterSet(Box<CharacterSetWith<X>>),
     /// The element `x:condense`, a `Condense`.
-    Condense(CondenseWith<X>),
+    Condense(Box<CondenseWith<X>>),
     /// The element `x:color`, a `DataBarColor`.
-    DataBarColor(DataBarColorWith<X>),
+    DataBarColor(Box<DataBarColorWith<X>>),
     /// The element `x:extend`, a `Extend`.
-    Extend(ExtendWith<X>),
+    Extend(Box<ExtendWith<X>>),
     /// The element `x:family`, a `FontFamilyIntProperty`.
-    FontFamilyIntProperty(FontFamilyIntPropertyWith<X>),
+    FontFamilyIntProperty(Box<FontFamilyIntPropertyWith<X>>),
     /// The element `x:rFont`, a `FontRFont`.
-    FontRFont(FontRFontWith<X>),
+    FontRFont(Box<FontRFontWith<X>>),
     /// The element `x:sz`, a `FontSize`.
-    FontSize(FontSizeWith<X>),
+    FontSize(Box<FontSizeWith<X>>),
     /// The element `x:i`, a `Italic`.
-    Italic(ItalicWith<X>),
+    Italic(Box<ItalicWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:outline`, a `Outline`.
-    Outline(OutlineWith<X>),
+    Outline(Box<OutlineWith<X>>),
     /// The element `x:scheme`, a `Scheme`.
-    Scheme(SchemeWith<X>),
+    Scheme(Box<SchemeWith<X>>),
     /// The element `x:shadow`, a `Shadow`.
-    Shadow(ShadowWith<X>),
+    Shadow(Box<ShadowWith<X>>),
     /// The element `x:strike`, a `StrikeThrough`.
-    StrikeThrough(StrikeThroughWith<X>),
+    StrikeThrough(Box<StrikeThroughWith<X>>),
     /// The element `x:u`, a `Underline`.
-    Underline(UnderlineWith<X>),
+    Underline(Box<UnderlineWith<X>>),
     /// The element `x:vertAlign`, a `VerticalAlignment`.
-    VerticalAlignment(VerticalAlignmentWith<X>),
+    VerticalAlignment(Box<VerticalAlignmentWith<X>>),
 }
 
 /// [`RunPropertiesContentWith`] of the tree a read gives, where no node holds anything in
@@ -18614,13 +18614,13 @@ impl Eq for TablesWith<()> {}
 #[non_exhaustive]
 pub enum TablesContentWith<X: UserData> {
     /// The element `x:s`, a `CharacterValueXStringElement`.
-    CharacterValueXStringElement(CharacterValueXStringElementWith<X>),
+    CharacterValueXStringElement(Box<CharacterValueXStringElementWith<X>>),
     /// The element `x:m`, a `NoValueTableMissing`.
-    NoValueTableMissing(NoValueTableMissingWith<X>),
+    NoValueTableMissing(Box<NoValueTableMissingWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `x:x`, a `SharedItemsIndex`.
-    SharedItemsIndex(SharedItemsIndexWith<X>),
+    SharedItemsIndex(Box<SharedItemsIndexWith<X>>),
 }
 
 /// [`TablesContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -20699,60 +20699,64 @@ impl<X: UserData> AutoFilterColumnContentWith<X> {
     {
         match self {
             Self::ColorFilterCriteria(node) => {
-                AutoFilterColumnContentWith::ColorFilterCriteria(node.into_user_data())
+                AutoFilterColumnContentWith::ColorFilterCriteria(Box::new((*node).into_user_data()))
             }
             Self::CustomFilters(node) => {
-                AutoFilterColumnContentWith::CustomFilters(node.into_user_data())
+                AutoFilterColumnContentWith::CustomFilters(Box::new((*node).into_user_data()))
             }
             Self::DynamicFilter(node) => {
-                AutoFilterColumnContentWith::DynamicFilter(node.into_user_data())
+                AutoFilterColumnContentWith::DynamicFilter(Box::new((*node).into_user_data()))
             }
             Self::FilterCriteria(node) => {
-                AutoFilterColumnContentWith::FilterCriteria(node.into_user_data())
+                AutoFilterColumnContentWith::FilterCriteria(Box::new((*node).into_user_data()))
             }
             Self::FutureFeatureDataStorageArea(node) => {
-                AutoFilterColumnContentWith::FutureFeatureDataStorageArea(node.into_user_data())
+                AutoFilterColumnContentWith::FutureFeatureDataStorageArea(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::IconFilter(node) => {
-                AutoFilterColumnContentWith::IconFilter(node.into_user_data())
+                AutoFilterColumnContentWith::IconFilter(Box::new((*node).into_user_data()))
             }
             Self::OfficeSpreadsheetml20099MainCustomFilters(node) => {
-                AutoFilterColumnContentWith::OfficeSpreadsheetml20099MainCustomFilters(
-                    node.into_user_data(),
-                )
+                AutoFilterColumnContentWith::OfficeSpreadsheetml20099MainCustomFilters(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::OfficeSpreadsheetml20099MainIconFilter(node) => {
-                AutoFilterColumnContentWith::OfficeSpreadsheetml20099MainIconFilter(
-                    node.into_user_data(),
-                )
+                AutoFilterColumnContentWith::OfficeSpreadsheetml20099MainIconFilter(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => AutoFilterColumnContentWith::Other(node),
-            Self::Top10(node) => AutoFilterColumnContentWith::Top10(node.into_user_data()),
+            Self::Top10(node) => {
+                AutoFilterColumnContentWith::Top10(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for AutoFilterColumnContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "colorFilter")) => Self::ColorFilterCriteria(item.read()),
-            Some((NS_X, "customFilters")) => Self::CustomFilters(item.read()),
-            Some((NS_X, "dynamicFilter")) => Self::DynamicFilter(item.read()),
-            Some((NS_X, "filters")) => Self::FilterCriteria(item.read()),
-            Some((NS_X, "extLst")) => Self::FutureFeatureDataStorageArea(item.read()),
-            Some((NS_X, "iconFilter")) => Self::IconFilter(item.read()),
+            Some((NS_X, "colorFilter")) => Self::ColorFilterCriteria(Box::new(item.read())),
+            Some((NS_X, "customFilters")) => Self::CustomFilters(Box::new(item.read())),
+            Some((NS_X, "dynamicFilter")) => Self::DynamicFilter(Box::new(item.read())),
+            Some((NS_X, "filters")) => Self::FilterCriteria(Box::new(item.read())),
+            Some((NS_X, "extLst")) => Self::FutureFeatureDataStorageArea(Box::new(item.read())),
+            Some((NS_X, "iconFilter")) => Self::IconFilter(Box::new(item.read())),
             Some((NS_X14, "customFilters")) => {
-                Self::OfficeSpreadsheetml20099MainCustomFilters(item.read())
+                Self::OfficeSpreadsheetml20099MainCustomFilters(Box::new(item.read()))
             }
             Some((NS_X14, "iconFilter")) => {
-                Self::OfficeSpreadsheetml20099MainIconFilter(item.read())
+                Self::OfficeSpreadsheetml20099MainIconFilter(Box::new(item.read()))
             }
-            Some((NS_X, "top10")) => Self::Top10(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "top10")) => Self::Top10(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -20768,11 +20772,74 @@ impl officekit_markup_base::Write for AutoFilterColumnContent {
             Self::IconFilter(arm) => arm.write_into(writer),
             Self::OfficeSpreadsheetml20099MainCustomFilters(arm) => arm.write_into(writer),
             Self::OfficeSpreadsheetml20099MainIconFilter(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Top10(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ColorFilterCriteriaWith<X>> for AutoFilterColumnContentWith<X> {
+    fn from(arm: ColorFilterCriteriaWith<X>) -> Self {
+        Self::ColorFilterCriteria(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CustomFiltersWith<X>> for AutoFilterColumnContentWith<X> {
+    fn from(arm: CustomFiltersWith<X>) -> Self {
+        Self::CustomFilters(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicFilterWith<X>> for AutoFilterColumnContentWith<X> {
+    fn from(arm: DynamicFilterWith<X>) -> Self {
+        Self::DynamicFilter(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FilterCriteriaWith<X>> for AutoFilterColumnContentWith<X> {
+    fn from(arm: FilterCriteriaWith<X>) -> Self {
+        Self::FilterCriteria(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FutureFeatureDataStorageAreaWith<X>> for AutoFilterColumnContentWith<X> {
+    fn from(arm: FutureFeatureDataStorageAreaWith<X>) -> Self {
+        Self::FutureFeatureDataStorageArea(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<IconFilterWith<X>> for AutoFilterColumnContentWith<X> {
+    fn from(arm: IconFilterWith<X>) -> Self {
+        Self::IconFilter(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_spreadsheetml_2009_9_main::CustomFiltersWith<X>>
+    for AutoFilterColumnContentWith<X>
+{
+    fn from(arm: super::office_spreadsheetml_2009_9_main::CustomFiltersWith<X>) -> Self {
+        Self::OfficeSpreadsheetml20099MainCustomFilters(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_spreadsheetml_2009_9_main::IconFilterWith<X>>
+    for AutoFilterColumnContentWith<X>
+{
+    fn from(arm: super::office_spreadsheetml_2009_9_main::IconFilterWith<X>) -> Self {
+        Self::OfficeSpreadsheetml20099MainIconFilter(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<Top10With<X>> for AutoFilterColumnContentWith<X> {
+    fn from(arm: Top10With<X>) -> Self {
+        Self::Top10(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<AutoFilterColumnContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> AutoFilterSettingsWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -21444,14 +21511,24 @@ impl<X: UserData> CacheItemContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Boolean(node) => CacheItemContentWith::Boolean(node.into_user_data()),
-            Self::CharacterValue(node) => {
-                CacheItemContentWith::CharacterValue(node.into_user_data())
+            Self::Boolean(node) => {
+                CacheItemContentWith::Boolean(Box::new((*node).into_user_data()))
             }
-            Self::DateTime(node) => CacheItemContentWith::DateTime(node.into_user_data()),
-            Self::ErrorValue(node) => CacheItemContentWith::ErrorValue(node.into_user_data()),
-            Self::NoValue(node) => CacheItemContentWith::NoValue(node.into_user_data()),
-            Self::Numeric(node) => CacheItemContentWith::Numeric(node.into_user_data()),
+            Self::CharacterValue(node) => {
+                CacheItemContentWith::CharacterValue(Box::new((*node).into_user_data()))
+            }
+            Self::DateTime(node) => {
+                CacheItemContentWith::DateTime(Box::new((*node).into_user_data()))
+            }
+            Self::ErrorValue(node) => {
+                CacheItemContentWith::ErrorValue(Box::new((*node).into_user_data()))
+            }
+            Self::NoValue(node) => {
+                CacheItemContentWith::NoValue(Box::new((*node).into_user_data()))
+            }
+            Self::Numeric(node) => {
+                CacheItemContentWith::Numeric(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => CacheItemContentWith::Other(node),
         }
     }
@@ -21459,18 +21536,18 @@ impl<X: UserData> CacheItemContentWith<X> {
 
 impl officekit_markup_base::Read for CacheItemContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "b")) => Self::Boolean(item.read()),
-            Some((NS_X, "s")) => Self::CharacterValue(item.read()),
-            Some((NS_X, "d")) => Self::DateTime(item.read()),
-            Some((NS_X, "e")) => Self::ErrorValue(item.read()),
-            Some((NS_X, "m")) => Self::NoValue(item.read()),
-            Some((NS_X, "n")) => Self::Numeric(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "b")) => Self::Boolean(Box::new(item.read())),
+            Some((NS_X, "s")) => Self::CharacterValue(Box::new(item.read())),
+            Some((NS_X, "d")) => Self::DateTime(Box::new(item.read())),
+            Some((NS_X, "e")) => Self::ErrorValue(Box::new(item.read())),
+            Some((NS_X, "m")) => Self::NoValue(Box::new(item.read())),
+            Some((NS_X, "n")) => Self::Numeric(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -21484,10 +21561,51 @@ impl officekit_markup_base::Write for CacheItemContent {
             Self::ErrorValue(arm) => arm.write_into(writer),
             Self::NoValue(arm) => arm.write_into(writer),
             Self::Numeric(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<BooleanWith<X>> for CacheItemContentWith<X> {
+    fn from(arm: BooleanWith<X>) -> Self {
+        Self::Boolean(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CharacterValueWith<X>> for CacheItemContentWith<X> {
+    fn from(arm: CharacterValueWith<X>) -> Self {
+        Self::CharacterValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DateTimeWith<X>> for CacheItemContentWith<X> {
+    fn from(arm: DateTimeWith<X>) -> Self {
+        Self::DateTime(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ErrorValueWith<X>> for CacheItemContentWith<X> {
+    fn from(arm: ErrorValueWith<X>) -> Self {
+        Self::ErrorValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoValueWith<X>> for CacheItemContentWith<X> {
+    fn from(arm: NoValueWith<X>) -> Self {
+        Self::NoValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NumericWith<X>> for CacheItemContentWith<X> {
+    fn from(arm: NumericWith<X>) -> Self {
+        Self::Numeric(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<CacheItemContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<EntriesContent> for CacheItemContent {
     fn from(item: EntriesContent) -> Self {
@@ -28582,10 +28700,14 @@ impl<X: UserData> EntriesContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::CharacterValue(node) => EntriesContentWith::CharacterValue(node.into_user_data()),
-            Self::ErrorValue(node) => EntriesContentWith::ErrorValue(node.into_user_data()),
-            Self::NoValue(node) => EntriesContentWith::NoValue(node.into_user_data()),
-            Self::Numeric(node) => EntriesContentWith::Numeric(node.into_user_data()),
+            Self::CharacterValue(node) => {
+                EntriesContentWith::CharacterValue(Box::new((*node).into_user_data()))
+            }
+            Self::ErrorValue(node) => {
+                EntriesContentWith::ErrorValue(Box::new((*node).into_user_data()))
+            }
+            Self::NoValue(node) => EntriesContentWith::NoValue(Box::new((*node).into_user_data())),
+            Self::Numeric(node) => EntriesContentWith::Numeric(Box::new((*node).into_user_data())),
             Self::Other(node) => EntriesContentWith::Other(node),
         }
     }
@@ -28593,16 +28715,16 @@ impl<X: UserData> EntriesContentWith<X> {
 
 impl officekit_markup_base::Read for EntriesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "s")) => Self::CharacterValue(item.read()),
-            Some((NS_X, "e")) => Self::ErrorValue(item.read()),
-            Some((NS_X, "m")) => Self::NoValue(item.read()),
-            Some((NS_X, "n")) => Self::Numeric(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "s")) => Self::CharacterValue(Box::new(item.read())),
+            Some((NS_X, "e")) => Self::ErrorValue(Box::new(item.read())),
+            Some((NS_X, "m")) => Self::NoValue(Box::new(item.read())),
+            Some((NS_X, "n")) => Self::Numeric(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -28614,10 +28736,39 @@ impl officekit_markup_base::Write for EntriesContent {
             Self::ErrorValue(arm) => arm.write_into(writer),
             Self::NoValue(arm) => arm.write_into(writer),
             Self::Numeric(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<CharacterValueWith<X>> for EntriesContentWith<X> {
+    fn from(arm: CharacterValueWith<X>) -> Self {
+        Self::CharacterValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ErrorValueWith<X>> for EntriesContentWith<X> {
+    fn from(arm: ErrorValueWith<X>) -> Self {
+        Self::ErrorValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoValueWith<X>> for EntriesContentWith<X> {
+    fn from(arm: NoValueWith<X>) -> Self {
+        Self::NoValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NumericWith<X>> for EntriesContentWith<X> {
+    fn from(arm: NumericWith<X>) -> Self {
+        Self::Numeric(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<EntriesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ErrorValueWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -29017,13 +29168,15 @@ impl<X: UserData> ExternalReferenceContentWith<X> {
     {
         match self {
             Self::DDEConnection(node) => {
-                ExternalReferenceContentWith::DDEConnection(node.into_user_data())
+                ExternalReferenceContentWith::DDEConnection(Box::new((*node).into_user_data()))
             }
             Self::ExternalWorkbook(node) => {
-                ExternalReferenceContentWith::ExternalWorkbook(node.into_user_data())
+                ExternalReferenceContentWith::ExternalWorkbook(Box::new((*node).into_user_data()))
             }
             Self::GenericObjectLinkConnection(node) => {
-                ExternalReferenceContentWith::GenericObjectLinkConnection(node.into_user_data())
+                ExternalReferenceContentWith::GenericObjectLinkConnection(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => ExternalReferenceContentWith::Other(node),
         }
@@ -29032,15 +29185,15 @@ impl<X: UserData> ExternalReferenceContentWith<X> {
 
 impl officekit_markup_base::Read for ExternalReferenceContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "ddeLink")) => Self::DDEConnection(item.read()),
-            Some((NS_X, "externalBook")) => Self::ExternalWorkbook(item.read()),
-            Some((NS_X, "oleLink")) => Self::GenericObjectLinkConnection(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "ddeLink")) => Self::DDEConnection(Box::new(item.read())),
+            Some((NS_X, "externalBook")) => Self::ExternalWorkbook(Box::new(item.read())),
+            Some((NS_X, "oleLink")) => Self::GenericObjectLinkConnection(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -29051,10 +29204,33 @@ impl officekit_markup_base::Write for ExternalReferenceContent {
             Self::DDEConnection(arm) => arm.write_into(writer),
             Self::ExternalWorkbook(arm) => arm.write_into(writer),
             Self::GenericObjectLinkConnection(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<DDEConnectionWith<X>> for ExternalReferenceContentWith<X> {
+    fn from(arm: DDEConnectionWith<X>) -> Self {
+        Self::DDEConnection(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ExternalWorkbookWith<X>> for ExternalReferenceContentWith<X> {
+    fn from(arm: ExternalWorkbookWith<X>) -> Self {
+        Self::ExternalWorkbook(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GenericObjectLinkConnectionWith<X>> for ExternalReferenceContentWith<X> {
+    fn from(arm: GenericObjectLinkConnectionWith<X>) -> Self {
+        Self::GenericObjectLinkConnection(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ExternalReferenceContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ExternalReferenceExternalLinkWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -29881,23 +30057,23 @@ impl<X: UserData> FillContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Gradient(node) => FillContentWith::Gradient(node.into_user_data()),
+            Self::Gradient(node) => FillContentWith::Gradient(Box::new((*node).into_user_data())),
             Self::Other(node) => FillContentWith::Other(node),
-            Self::Pattern(node) => FillContentWith::Pattern(node.into_user_data()),
+            Self::Pattern(node) => FillContentWith::Pattern(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for FillContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "gradientFill")) => Self::Gradient(item.read()),
-            Some((NS_X, "patternFill")) => Self::Pattern(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "gradientFill")) => Self::Gradient(Box::new(item.read())),
+            Some((NS_X, "patternFill")) => Self::Pattern(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -29906,11 +30082,28 @@ impl officekit_markup_base::Write for FillContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::Gradient(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Pattern(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<GradientWith<X>> for FillContentWith<X> {
+    fn from(arm: GradientWith<X>) -> Self {
+        Self::Gradient(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PatternWith<X>> for FillContentWith<X> {
+    fn from(arm: PatternWith<X>) -> Self {
+        Self::Pattern(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<FillContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for FillId {
     fn as_ref(&self) -> &str {
@@ -30362,23 +30555,31 @@ impl<X: UserData> FontContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Bold(node) => FontContentWith::Bold(node.into_user_data()),
-            Self::CharacterSet(node) => FontContentWith::CharacterSet(node.into_user_data()),
-            Self::Condense(node) => FontContentWith::Condense(node.into_user_data()),
-            Self::DataBarColor(node) => FontContentWith::DataBarColor(node.into_user_data()),
-            Self::Extend(node) => FontContentWith::Extend(node.into_user_data()),
-            Self::FontFamily(node) => FontContentWith::FontFamily(node.into_user_data()),
-            Self::FontName(node) => FontContentWith::FontName(node.into_user_data()),
-            Self::FontSize(node) => FontContentWith::FontSize(node.into_user_data()),
-            Self::Italic(node) => FontContentWith::Italic(node.into_user_data()),
+            Self::Bold(node) => FontContentWith::Bold(Box::new((*node).into_user_data())),
+            Self::CharacterSet(node) => {
+                FontContentWith::CharacterSet(Box::new((*node).into_user_data()))
+            }
+            Self::Condense(node) => FontContentWith::Condense(Box::new((*node).into_user_data())),
+            Self::DataBarColor(node) => {
+                FontContentWith::DataBarColor(Box::new((*node).into_user_data()))
+            }
+            Self::Extend(node) => FontContentWith::Extend(Box::new((*node).into_user_data())),
+            Self::FontFamily(node) => {
+                FontContentWith::FontFamily(Box::new((*node).into_user_data()))
+            }
+            Self::FontName(node) => FontContentWith::FontName(Box::new((*node).into_user_data())),
+            Self::FontSize(node) => FontContentWith::FontSize(Box::new((*node).into_user_data())),
+            Self::Italic(node) => FontContentWith::Italic(Box::new((*node).into_user_data())),
             Self::Other(node) => FontContentWith::Other(node),
-            Self::Outline(node) => FontContentWith::Outline(node.into_user_data()),
-            Self::Scheme(node) => FontContentWith::Scheme(node.into_user_data()),
-            Self::Shadow(node) => FontContentWith::Shadow(node.into_user_data()),
-            Self::StrikeThrough(node) => FontContentWith::StrikeThrough(node.into_user_data()),
-            Self::Underline(node) => FontContentWith::Underline(node.into_user_data()),
+            Self::Outline(node) => FontContentWith::Outline(Box::new((*node).into_user_data())),
+            Self::Scheme(node) => FontContentWith::Scheme(Box::new((*node).into_user_data())),
+            Self::Shadow(node) => FontContentWith::Shadow(Box::new((*node).into_user_data())),
+            Self::StrikeThrough(node) => {
+                FontContentWith::StrikeThrough(Box::new((*node).into_user_data()))
+            }
+            Self::Underline(node) => FontContentWith::Underline(Box::new((*node).into_user_data())),
             Self::VerticalAlignment(node) => {
-                FontContentWith::VerticalAlignment(node.into_user_data())
+                FontContentWith::VerticalAlignment(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -30386,27 +30587,27 @@ impl<X: UserData> FontContentWith<X> {
 
 impl officekit_markup_base::Read for FontContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "b")) => Self::Bold(item.read()),
-            Some((NS_X, "charset")) => Self::CharacterSet(item.read()),
-            Some((NS_X, "condense")) => Self::Condense(item.read()),
-            Some((NS_X, "color")) => Self::DataBarColor(item.read()),
-            Some((NS_X, "extend")) => Self::Extend(item.read()),
-            Some((NS_X, "family")) => Self::FontFamily(item.read()),
-            Some((NS_X, "name")) => Self::FontName(item.read()),
-            Some((NS_X, "sz")) => Self::FontSize(item.read()),
-            Some((NS_X, "i")) => Self::Italic(item.read()),
-            Some((NS_X, "outline")) => Self::Outline(item.read()),
-            Some((NS_X, "scheme")) => Self::Scheme(item.read()),
-            Some((NS_X, "shadow")) => Self::Shadow(item.read()),
-            Some((NS_X, "strike")) => Self::StrikeThrough(item.read()),
-            Some((NS_X, "u")) => Self::Underline(item.read()),
-            Some((NS_X, "vertAlign")) => Self::VerticalAlignment(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "b")) => Self::Bold(Box::new(item.read())),
+            Some((NS_X, "charset")) => Self::CharacterSet(Box::new(item.read())),
+            Some((NS_X, "condense")) => Self::Condense(Box::new(item.read())),
+            Some((NS_X, "color")) => Self::DataBarColor(Box::new(item.read())),
+            Some((NS_X, "extend")) => Self::Extend(Box::new(item.read())),
+            Some((NS_X, "family")) => Self::FontFamily(Box::new(item.read())),
+            Some((NS_X, "name")) => Self::FontName(Box::new(item.read())),
+            Some((NS_X, "sz")) => Self::FontSize(Box::new(item.read())),
+            Some((NS_X, "i")) => Self::Italic(Box::new(item.read())),
+            Some((NS_X, "outline")) => Self::Outline(Box::new(item.read())),
+            Some((NS_X, "scheme")) => Self::Scheme(Box::new(item.read())),
+            Some((NS_X, "shadow")) => Self::Shadow(Box::new(item.read())),
+            Some((NS_X, "strike")) => Self::StrikeThrough(Box::new(item.read())),
+            Some((NS_X, "u")) => Self::Underline(Box::new(item.read())),
+            Some((NS_X, "vertAlign")) => Self::VerticalAlignment(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -30423,7 +30624,7 @@ impl officekit_markup_base::Write for FontContent {
             Self::FontName(arm) => arm.write_into(writer),
             Self::FontSize(arm) => arm.write_into(writer),
             Self::Italic(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Outline(arm) => arm.write_into(writer),
             Self::Scheme(arm) => arm.write_into(writer),
             Self::Shadow(arm) => arm.write_into(writer),
@@ -30433,6 +30634,101 @@ impl officekit_markup_base::Write for FontContent {
         }
     }
 }
+
+impl<X: UserData> From<BoldWith<X>> for FontContentWith<X> {
+    fn from(arm: BoldWith<X>) -> Self {
+        Self::Bold(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CharacterSetWith<X>> for FontContentWith<X> {
+    fn from(arm: CharacterSetWith<X>) -> Self {
+        Self::CharacterSet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CondenseWith<X>> for FontContentWith<X> {
+    fn from(arm: CondenseWith<X>) -> Self {
+        Self::Condense(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DataBarColorWith<X>> for FontContentWith<X> {
+    fn from(arm: DataBarColorWith<X>) -> Self {
+        Self::DataBarColor(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ExtendWith<X>> for FontContentWith<X> {
+    fn from(arm: ExtendWith<X>) -> Self {
+        Self::Extend(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FontFamilyWith<X>> for FontContentWith<X> {
+    fn from(arm: FontFamilyWith<X>) -> Self {
+        Self::FontFamily(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FontNameWith<X>> for FontContentWith<X> {
+    fn from(arm: FontNameWith<X>) -> Self {
+        Self::FontName(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FontSizeWith<X>> for FontContentWith<X> {
+    fn from(arm: FontSizeWith<X>) -> Self {
+        Self::FontSize(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ItalicWith<X>> for FontContentWith<X> {
+    fn from(arm: ItalicWith<X>) -> Self {
+        Self::Italic(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OutlineWith<X>> for FontContentWith<X> {
+    fn from(arm: OutlineWith<X>) -> Self {
+        Self::Outline(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SchemeWith<X>> for FontContentWith<X> {
+    fn from(arm: SchemeWith<X>) -> Self {
+        Self::Scheme(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShadowWith<X>> for FontContentWith<X> {
+    fn from(arm: ShadowWith<X>) -> Self {
+        Self::Shadow(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<StrikeThroughWith<X>> for FontContentWith<X> {
+    fn from(arm: StrikeThroughWith<X>) -> Self {
+        Self::StrikeThrough(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UnderlineWith<X>> for FontContentWith<X> {
+    fn from(arm: UnderlineWith<X>) -> Self {
+        Self::Underline(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<VerticalAlignmentWith<X>> for FontContentWith<X> {
+    fn from(arm: VerticalAlignmentWith<X>) -> Self {
+        Self::VerticalAlignment(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<FontContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> FontFamilyWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -34329,21 +34625,25 @@ impl<X: UserData> MultidimensionalExpressionMetadataContentWith<X> {
     {
         match self {
             Self::KPIMDXMetadata(node) => {
-                MultidimensionalExpressionMetadataContentWith::KPIMDXMetadata(node.into_user_data())
+                MultidimensionalExpressionMetadataContentWith::KPIMDXMetadata(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::MemberPropertyMDXMetadata(node) => {
-                MultidimensionalExpressionMetadataContentWith::MemberPropertyMDXMetadata(
-                    node.into_user_data(),
-                )
+                MultidimensionalExpressionMetadataContentWith::MemberPropertyMDXMetadata(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => MultidimensionalExpressionMetadataContentWith::Other(node),
             Self::SetMDXMetadata(node) => {
-                MultidimensionalExpressionMetadataContentWith::SetMDXMetadata(node.into_user_data())
+                MultidimensionalExpressionMetadataContentWith::SetMDXMetadata(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::TupleMDXMetadata(node) => {
-                MultidimensionalExpressionMetadataContentWith::TupleMDXMetadata(
-                    node.into_user_data(),
-                )
+                MultidimensionalExpressionMetadataContentWith::TupleMDXMetadata(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -34351,22 +34651,22 @@ impl<X: UserData> MultidimensionalExpressionMetadataContentWith<X> {
 
 impl<X: UserData> Default for MultidimensionalExpressionMetadataContentWith<X> {
     fn default() -> Self {
-        Self::KPIMDXMetadata(KPIMDXMetadataWith::default())
+        Self::KPIMDXMetadata(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for MultidimensionalExpressionMetadataContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "k")) => Self::KPIMDXMetadata(item.read()),
-            Some((NS_X, "p")) => Self::MemberPropertyMDXMetadata(item.read()),
-            Some((NS_X, "ms")) => Self::SetMDXMetadata(item.read()),
-            Some((NS_X, "t")) => Self::TupleMDXMetadata(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "k")) => Self::KPIMDXMetadata(Box::new(item.read())),
+            Some((NS_X, "p")) => Self::MemberPropertyMDXMetadata(Box::new(item.read())),
+            Some((NS_X, "ms")) => Self::SetMDXMetadata(Box::new(item.read())),
+            Some((NS_X, "t")) => Self::TupleMDXMetadata(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -34376,12 +34676,45 @@ impl officekit_markup_base::Write for MultidimensionalExpressionMetadataContent 
         match self {
             Self::KPIMDXMetadata(arm) => arm.write_into(writer),
             Self::MemberPropertyMDXMetadata(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SetMDXMetadata(arm) => arm.write_into(writer),
             Self::TupleMDXMetadata(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<KPIMDXMetadataWith<X>> for MultidimensionalExpressionMetadataContentWith<X> {
+    fn from(arm: KPIMDXMetadataWith<X>) -> Self {
+        Self::KPIMDXMetadata(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MemberPropertyMDXMetadataWith<X>>
+    for MultidimensionalExpressionMetadataContentWith<X>
+{
+    fn from(arm: MemberPropertyMDXMetadataWith<X>) -> Self {
+        Self::MemberPropertyMDXMetadata(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetMDXMetadataWith<X>> for MultidimensionalExpressionMetadataContentWith<X> {
+    fn from(arm: SetMDXMetadataWith<X>) -> Self {
+        Self::SetMDXMetadata(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TupleMDXMetadataWith<X>>
+    for MultidimensionalExpressionMetadataContentWith<X>
+{
+    fn from(arm: TupleMDXMetadataWith<X>) -> Self {
+        Self::TupleMDXMetadata(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<MultidimensionalExpressionMetadataContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> NamedLinksWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -34442,27 +34775,27 @@ impl<X: UserData> NestedRevisionContentWith<X> {
         match self {
             Self::Other(node) => NestedRevisionContentWith::Other(node),
             Self::RevisionCellChange(node) => {
-                NestedRevisionContentWith::RevisionCellChange(node.into_user_data())
+                NestedRevisionContentWith::RevisionCellChange(Box::new((*node).into_user_data()))
             }
             Self::RevisionFormat(node) => {
-                NestedRevisionContentWith::RevisionFormat(node.into_user_data())
+                NestedRevisionContentWith::RevisionFormat(Box::new((*node).into_user_data()))
             }
-            Self::Undo(node) => NestedRevisionContentWith::Undo(node.into_user_data()),
+            Self::Undo(node) => NestedRevisionContentWith::Undo(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for NestedRevisionContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "rcc")) => Self::RevisionCellChange(item.read()),
-            Some((NS_X, "rfmt")) => Self::RevisionFormat(item.read()),
-            Some((NS_X, "undo")) => Self::Undo(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "rcc")) => Self::RevisionCellChange(Box::new(item.read())),
+            Some((NS_X, "rfmt")) => Self::RevisionFormat(Box::new(item.read())),
+            Some((NS_X, "undo")) => Self::Undo(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -34470,13 +34803,36 @@ impl officekit_markup_base::Read for NestedRevisionContent {
 impl officekit_markup_base::Write for NestedRevisionContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RevisionCellChange(arm) => arm.write_into(writer),
             Self::RevisionFormat(arm) => arm.write_into(writer),
             Self::Undo(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<RevisionCellChangeWith<X>> for NestedRevisionContentWith<X> {
+    fn from(arm: RevisionCellChangeWith<X>) -> Self {
+        Self::RevisionCellChange(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionFormatWith<X>> for NestedRevisionContentWith<X> {
+    fn from(arm: RevisionFormatWith<X>) -> Self {
+        Self::RevisionFormat(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UndoWith<X>> for NestedRevisionContentWith<X> {
+    fn from(arm: UndoWith<X>) -> Self {
+        Self::Undo(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<NestedRevisionContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> NewCellDataWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -38666,19 +39022,27 @@ impl<X: UserData> PivotCacheRecordContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Boolean(node) => PivotCacheRecordContentWith::Boolean(node.into_user_data()),
+            Self::Boolean(node) => {
+                PivotCacheRecordContentWith::Boolean(Box::new((*node).into_user_data()))
+            }
             Self::CharacterValue(node) => {
-                PivotCacheRecordContentWith::CharacterValue(node.into_user_data())
+                PivotCacheRecordContentWith::CharacterValue(Box::new((*node).into_user_data()))
             }
-            Self::DateTime(node) => PivotCacheRecordContentWith::DateTime(node.into_user_data()),
+            Self::DateTime(node) => {
+                PivotCacheRecordContentWith::DateTime(Box::new((*node).into_user_data()))
+            }
             Self::ErrorValue(node) => {
-                PivotCacheRecordContentWith::ErrorValue(node.into_user_data())
+                PivotCacheRecordContentWith::ErrorValue(Box::new((*node).into_user_data()))
             }
-            Self::NoValue(node) => PivotCacheRecordContentWith::NoValue(node.into_user_data()),
-            Self::Numeric(node) => PivotCacheRecordContentWith::Numeric(node.into_user_data()),
+            Self::NoValue(node) => {
+                PivotCacheRecordContentWith::NoValue(Box::new((*node).into_user_data()))
+            }
+            Self::Numeric(node) => {
+                PivotCacheRecordContentWith::Numeric(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => PivotCacheRecordContentWith::Other(node),
             Self::SharedItemsIndex(node) => {
-                PivotCacheRecordContentWith::SharedItemsIndex(node.into_user_data())
+                PivotCacheRecordContentWith::SharedItemsIndex(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -38686,19 +39050,19 @@ impl<X: UserData> PivotCacheRecordContentWith<X> {
 
 impl officekit_markup_base::Read for PivotCacheRecordContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "b")) => Self::Boolean(item.read()),
-            Some((NS_X, "s")) => Self::CharacterValue(item.read()),
-            Some((NS_X, "d")) => Self::DateTime(item.read()),
-            Some((NS_X, "e")) => Self::ErrorValue(item.read()),
-            Some((NS_X, "m")) => Self::NoValue(item.read()),
-            Some((NS_X, "n")) => Self::Numeric(item.read()),
-            Some((NS_X, "x")) => Self::SharedItemsIndex(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "b")) => Self::Boolean(Box::new(item.read())),
+            Some((NS_X, "s")) => Self::CharacterValue(Box::new(item.read())),
+            Some((NS_X, "d")) => Self::DateTime(Box::new(item.read())),
+            Some((NS_X, "e")) => Self::ErrorValue(Box::new(item.read())),
+            Some((NS_X, "m")) => Self::NoValue(Box::new(item.read())),
+            Some((NS_X, "n")) => Self::Numeric(Box::new(item.read())),
+            Some((NS_X, "x")) => Self::SharedItemsIndex(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -38712,11 +39076,58 @@ impl officekit_markup_base::Write for PivotCacheRecordContent {
             Self::ErrorValue(arm) => arm.write_into(writer),
             Self::NoValue(arm) => arm.write_into(writer),
             Self::Numeric(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SharedItemsIndex(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<BooleanWith<X>> for PivotCacheRecordContentWith<X> {
+    fn from(arm: BooleanWith<X>) -> Self {
+        Self::Boolean(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CharacterValueWith<X>> for PivotCacheRecordContentWith<X> {
+    fn from(arm: CharacterValueWith<X>) -> Self {
+        Self::CharacterValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DateTimeWith<X>> for PivotCacheRecordContentWith<X> {
+    fn from(arm: DateTimeWith<X>) -> Self {
+        Self::DateTime(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ErrorValueWith<X>> for PivotCacheRecordContentWith<X> {
+    fn from(arm: ErrorValueWith<X>) -> Self {
+        Self::ErrorValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoValueWith<X>> for PivotCacheRecordContentWith<X> {
+    fn from(arm: NoValueWith<X>) -> Self {
+        Self::NoValue(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NumericWith<X>> for PivotCacheRecordContentWith<X> {
+    fn from(arm: NumericWith<X>) -> Self {
+        Self::Numeric(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SharedItemsIndexWith<X>> for PivotCacheRecordContentWith<X> {
+    fn from(arm: SharedItemsIndexWith<X>) -> Self {
+        Self::SharedItemsIndex(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<PivotCacheRecordContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<CacheItemContent> for PivotCacheRecordContent {
     fn from(item: CacheItemContent) -> Self {
@@ -38903,18 +39314,20 @@ impl<X: UserData> PivotCacheSourceDescriptionContentWith<X> {
     {
         match self {
             Self::ConsolidationSource(node) => {
-                PivotCacheSourceDescriptionContentWith::ConsolidationSource(node.into_user_data())
+                PivotCacheSourceDescriptionContentWith::ConsolidationSource(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::FutureFeatureDataStorageArea(node) => {
-                PivotCacheSourceDescriptionContentWith::FutureFeatureDataStorageArea(
-                    node.into_user_data(),
-                )
+                PivotCacheSourceDescriptionContentWith::FutureFeatureDataStorageArea(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::Other(node) => PivotCacheSourceDescriptionContentWith::Other(node),
             Self::WorksheetPivotCacheSource(node) => {
-                PivotCacheSourceDescriptionContentWith::WorksheetPivotCacheSource(
-                    node.into_user_data(),
-                )
+                PivotCacheSourceDescriptionContentWith::WorksheetPivotCacheSource(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
         }
     }
@@ -38922,15 +39335,17 @@ impl<X: UserData> PivotCacheSourceDescriptionContentWith<X> {
 
 impl officekit_markup_base::Read for PivotCacheSourceDescriptionContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "consolidation")) => Self::ConsolidationSource(item.read()),
-            Some((NS_X, "extLst")) => Self::FutureFeatureDataStorageArea(item.read()),
-            Some((NS_X, "worksheetSource")) => Self::WorksheetPivotCacheSource(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "consolidation")) => Self::ConsolidationSource(Box::new(item.read())),
+            Some((NS_X, "extLst")) => Self::FutureFeatureDataStorageArea(Box::new(item.read())),
+            Some((NS_X, "worksheetSource")) => {
+                Self::WorksheetPivotCacheSource(Box::new(item.read()))
+            }
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -38940,11 +39355,38 @@ impl officekit_markup_base::Write for PivotCacheSourceDescriptionContent {
         match self {
             Self::ConsolidationSource(arm) => arm.write_into(writer),
             Self::FutureFeatureDataStorageArea(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::WorksheetPivotCacheSource(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ConsolidationSourceWith<X>> for PivotCacheSourceDescriptionContentWith<X> {
+    fn from(arm: ConsolidationSourceWith<X>) -> Self {
+        Self::ConsolidationSource(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FutureFeatureDataStorageAreaWith<X>>
+    for PivotCacheSourceDescriptionContentWith<X>
+{
+    fn from(arm: FutureFeatureDataStorageAreaWith<X>) -> Self {
+        Self::FutureFeatureDataStorageArea(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<WorksheetPivotCacheSourceWith<X>>
+    for PivotCacheSourceDescriptionContentWith<X>
+{
+    fn from(arm: WorksheetPivotCacheSourceWith<X>) -> Self {
+        Self::WorksheetPivotCacheSource(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<PivotCacheSourceDescriptionContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for PivotCacheType {
     fn as_ref(&self) -> &str {
@@ -42605,40 +43047,42 @@ impl<X: UserData> RevisionsContentWith<X> {
         match self {
             Self::Other(node) => RevisionsContentWith::Other(node),
             Self::RevisionAutoFormat(node) => {
-                RevisionsContentWith::RevisionAutoFormat(node.into_user_data())
+                RevisionsContentWith::RevisionAutoFormat(Box::new((*node).into_user_data()))
             }
             Self::RevisionCellChange(node) => {
-                RevisionsContentWith::RevisionCellChange(node.into_user_data())
+                RevisionsContentWith::RevisionCellChange(Box::new((*node).into_user_data()))
             }
             Self::RevisionCellComment(node) => {
-                RevisionsContentWith::RevisionCellComment(node.into_user_data())
+                RevisionsContentWith::RevisionCellComment(Box::new((*node).into_user_data()))
             }
             Self::RevisionCellMove(node) => {
-                RevisionsContentWith::RevisionCellMove(node.into_user_data())
+                RevisionsContentWith::RevisionCellMove(Box::new((*node).into_user_data()))
             }
             Self::RevisionCustomView(node) => {
-                RevisionsContentWith::RevisionCustomView(node.into_user_data())
+                RevisionsContentWith::RevisionCustomView(Box::new((*node).into_user_data()))
             }
             Self::RevisionDefinedName(node) => {
                 RevisionsContentWith::RevisionDefinedName(Box::new((*node).into_user_data()))
             }
             Self::RevisionFormat(node) => {
-                RevisionsContentWith::RevisionFormat(node.into_user_data())
+                RevisionsContentWith::RevisionFormat(Box::new((*node).into_user_data()))
             }
             Self::RevisionInsertSheet(node) => {
-                RevisionsContentWith::RevisionInsertSheet(node.into_user_data())
+                RevisionsContentWith::RevisionInsertSheet(Box::new((*node).into_user_data()))
             }
             Self::RevisionMergeConflict(node) => {
-                RevisionsContentWith::RevisionMergeConflict(node.into_user_data())
+                RevisionsContentWith::RevisionMergeConflict(Box::new((*node).into_user_data()))
             }
             Self::RevisionQueryTable(node) => {
-                RevisionsContentWith::RevisionQueryTable(node.into_user_data())
+                RevisionsContentWith::RevisionQueryTable(Box::new((*node).into_user_data()))
             }
             Self::RevisionRowColumnInsertDelete(node) => {
-                RevisionsContentWith::RevisionRowColumnInsertDelete(node.into_user_data())
+                RevisionsContentWith::RevisionRowColumnInsertDelete(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::RevisionSheetName(node) => {
-                RevisionsContentWith::RevisionSheetName(node.into_user_data())
+                RevisionsContentWith::RevisionSheetName(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -42646,24 +43090,24 @@ impl<X: UserData> RevisionsContentWith<X> {
 
 impl officekit_markup_base::Read for RevisionsContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "raf")) => Self::RevisionAutoFormat(item.read()),
-            Some((NS_X, "rcc")) => Self::RevisionCellChange(item.read()),
-            Some((NS_X, "rcmt")) => Self::RevisionCellComment(item.read()),
-            Some((NS_X, "rm")) => Self::RevisionCellMove(item.read()),
-            Some((NS_X, "rcv")) => Self::RevisionCustomView(item.read()),
+            Some((NS_X, "raf")) => Self::RevisionAutoFormat(Box::new(item.read())),
+            Some((NS_X, "rcc")) => Self::RevisionCellChange(Box::new(item.read())),
+            Some((NS_X, "rcmt")) => Self::RevisionCellComment(Box::new(item.read())),
+            Some((NS_X, "rm")) => Self::RevisionCellMove(Box::new(item.read())),
+            Some((NS_X, "rcv")) => Self::RevisionCustomView(Box::new(item.read())),
             Some((NS_X, "rdn")) => Self::RevisionDefinedName(Box::new(item.read())),
-            Some((NS_X, "rfmt")) => Self::RevisionFormat(item.read()),
-            Some((NS_X, "ris")) => Self::RevisionInsertSheet(item.read()),
-            Some((NS_X, "rcft")) => Self::RevisionMergeConflict(item.read()),
-            Some((NS_X, "rqt")) => Self::RevisionQueryTable(item.read()),
-            Some((NS_X, "rrc")) => Self::RevisionRowColumnInsertDelete(item.read()),
-            Some((NS_X, "rsnm")) => Self::RevisionSheetName(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "rfmt")) => Self::RevisionFormat(Box::new(item.read())),
+            Some((NS_X, "ris")) => Self::RevisionInsertSheet(Box::new(item.read())),
+            Some((NS_X, "rcft")) => Self::RevisionMergeConflict(Box::new(item.read())),
+            Some((NS_X, "rqt")) => Self::RevisionQueryTable(Box::new(item.read())),
+            Some((NS_X, "rrc")) => Self::RevisionRowColumnInsertDelete(Box::new(item.read())),
+            Some((NS_X, "rsnm")) => Self::RevisionSheetName(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -42671,7 +43115,7 @@ impl officekit_markup_base::Read for RevisionsContent {
 impl officekit_markup_base::Write for RevisionsContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RevisionAutoFormat(arm) => arm.write_into(writer),
             Self::RevisionCellChange(arm) => arm.write_into(writer),
             Self::RevisionCellComment(arm) => arm.write_into(writer),
@@ -42687,6 +43131,83 @@ impl officekit_markup_base::Write for RevisionsContent {
         }
     }
 }
+
+impl<X: UserData> From<RevisionAutoFormatWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionAutoFormatWith<X>) -> Self {
+        Self::RevisionAutoFormat(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionCellChangeWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionCellChangeWith<X>) -> Self {
+        Self::RevisionCellChange(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionCellCommentWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionCellCommentWith<X>) -> Self {
+        Self::RevisionCellComment(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionCellMoveWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionCellMoveWith<X>) -> Self {
+        Self::RevisionCellMove(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionCustomViewWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionCustomViewWith<X>) -> Self {
+        Self::RevisionCustomView(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionDefinedNameWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionDefinedNameWith<X>) -> Self {
+        Self::RevisionDefinedName(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionFormatWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionFormatWith<X>) -> Self {
+        Self::RevisionFormat(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionInsertSheetWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionInsertSheetWith<X>) -> Self {
+        Self::RevisionInsertSheet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionMergeConflictWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionMergeConflictWith<X>) -> Self {
+        Self::RevisionMergeConflict(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionQueryTableWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionQueryTableWith<X>) -> Self {
+        Self::RevisionQueryTable(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionRowColumnInsertDeleteWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionRowColumnInsertDeleteWith<X>) -> Self {
+        Self::RevisionRowColumnInsertDelete(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RevisionSheetNameWith<X>> for RevisionsContentWith<X> {
+    fn from(arm: RevisionSheetNameWith<X>) -> Self {
+        Self::RevisionSheetName(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RevisionsContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> RichTextInlineWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -43417,31 +43938,49 @@ impl<X: UserData> RunPropertiesContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Bold(node) => RunPropertiesContentWith::Bold(node.into_user_data()),
+            Self::Bold(node) => RunPropertiesContentWith::Bold(Box::new((*node).into_user_data())),
             Self::CharacterSet(node) => {
-                RunPropertiesContentWith::CharacterSet(node.into_user_data())
+                RunPropertiesContentWith::CharacterSet(Box::new((*node).into_user_data()))
             }
-            Self::Condense(node) => RunPropertiesContentWith::Condense(node.into_user_data()),
+            Self::Condense(node) => {
+                RunPropertiesContentWith::Condense(Box::new((*node).into_user_data()))
+            }
             Self::DataBarColor(node) => {
-                RunPropertiesContentWith::DataBarColor(node.into_user_data())
+                RunPropertiesContentWith::DataBarColor(Box::new((*node).into_user_data()))
             }
-            Self::Extend(node) => RunPropertiesContentWith::Extend(node.into_user_data()),
+            Self::Extend(node) => {
+                RunPropertiesContentWith::Extend(Box::new((*node).into_user_data()))
+            }
             Self::FontFamilyIntProperty(node) => {
-                RunPropertiesContentWith::FontFamilyIntProperty(node.into_user_data())
+                RunPropertiesContentWith::FontFamilyIntProperty(Box::new((*node).into_user_data()))
             }
-            Self::FontRFont(node) => RunPropertiesContentWith::FontRFont(node.into_user_data()),
-            Self::FontSize(node) => RunPropertiesContentWith::FontSize(node.into_user_data()),
-            Self::Italic(node) => RunPropertiesContentWith::Italic(node.into_user_data()),
+            Self::FontRFont(node) => {
+                RunPropertiesContentWith::FontRFont(Box::new((*node).into_user_data()))
+            }
+            Self::FontSize(node) => {
+                RunPropertiesContentWith::FontSize(Box::new((*node).into_user_data()))
+            }
+            Self::Italic(node) => {
+                RunPropertiesContentWith::Italic(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => RunPropertiesContentWith::Other(node),
-            Self::Outline(node) => RunPropertiesContentWith::Outline(node.into_user_data()),
-            Self::Scheme(node) => RunPropertiesContentWith::Scheme(node.into_user_data()),
-            Self::Shadow(node) => RunPropertiesContentWith::Shadow(node.into_user_data()),
-            Self::StrikeThrough(node) => {
-                RunPropertiesContentWith::StrikeThrough(node.into_user_data())
+            Self::Outline(node) => {
+                RunPropertiesContentWith::Outline(Box::new((*node).into_user_data()))
             }
-            Self::Underline(node) => RunPropertiesContentWith::Underline(node.into_user_data()),
+            Self::Scheme(node) => {
+                RunPropertiesContentWith::Scheme(Box::new((*node).into_user_data()))
+            }
+            Self::Shadow(node) => {
+                RunPropertiesContentWith::Shadow(Box::new((*node).into_user_data()))
+            }
+            Self::StrikeThrough(node) => {
+                RunPropertiesContentWith::StrikeThrough(Box::new((*node).into_user_data()))
+            }
+            Self::Underline(node) => {
+                RunPropertiesContentWith::Underline(Box::new((*node).into_user_data()))
+            }
             Self::VerticalAlignment(node) => {
-                RunPropertiesContentWith::VerticalAlignment(node.into_user_data())
+                RunPropertiesContentWith::VerticalAlignment(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -43449,27 +43988,27 @@ impl<X: UserData> RunPropertiesContentWith<X> {
 
 impl officekit_markup_base::Read for RunPropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "b")) => Self::Bold(item.read()),
-            Some((NS_X, "charset")) => Self::CharacterSet(item.read()),
-            Some((NS_X, "condense")) => Self::Condense(item.read()),
-            Some((NS_X, "color")) => Self::DataBarColor(item.read()),
-            Some((NS_X, "extend")) => Self::Extend(item.read()),
-            Some((NS_X, "family")) => Self::FontFamilyIntProperty(item.read()),
-            Some((NS_X, "rFont")) => Self::FontRFont(item.read()),
-            Some((NS_X, "sz")) => Self::FontSize(item.read()),
-            Some((NS_X, "i")) => Self::Italic(item.read()),
-            Some((NS_X, "outline")) => Self::Outline(item.read()),
-            Some((NS_X, "scheme")) => Self::Scheme(item.read()),
-            Some((NS_X, "shadow")) => Self::Shadow(item.read()),
-            Some((NS_X, "strike")) => Self::StrikeThrough(item.read()),
-            Some((NS_X, "u")) => Self::Underline(item.read()),
-            Some((NS_X, "vertAlign")) => Self::VerticalAlignment(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "b")) => Self::Bold(Box::new(item.read())),
+            Some((NS_X, "charset")) => Self::CharacterSet(Box::new(item.read())),
+            Some((NS_X, "condense")) => Self::Condense(Box::new(item.read())),
+            Some((NS_X, "color")) => Self::DataBarColor(Box::new(item.read())),
+            Some((NS_X, "extend")) => Self::Extend(Box::new(item.read())),
+            Some((NS_X, "family")) => Self::FontFamilyIntProperty(Box::new(item.read())),
+            Some((NS_X, "rFont")) => Self::FontRFont(Box::new(item.read())),
+            Some((NS_X, "sz")) => Self::FontSize(Box::new(item.read())),
+            Some((NS_X, "i")) => Self::Italic(Box::new(item.read())),
+            Some((NS_X, "outline")) => Self::Outline(Box::new(item.read())),
+            Some((NS_X, "scheme")) => Self::Scheme(Box::new(item.read())),
+            Some((NS_X, "shadow")) => Self::Shadow(Box::new(item.read())),
+            Some((NS_X, "strike")) => Self::StrikeThrough(Box::new(item.read())),
+            Some((NS_X, "u")) => Self::Underline(Box::new(item.read())),
+            Some((NS_X, "vertAlign")) => Self::VerticalAlignment(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -43486,7 +44025,7 @@ impl officekit_markup_base::Write for RunPropertiesContent {
             Self::FontRFont(arm) => arm.write_into(writer),
             Self::FontSize(arm) => arm.write_into(writer),
             Self::Italic(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Outline(arm) => arm.write_into(writer),
             Self::Scheme(arm) => arm.write_into(writer),
             Self::Shadow(arm) => arm.write_into(writer),
@@ -43496,6 +44035,101 @@ impl officekit_markup_base::Write for RunPropertiesContent {
         }
     }
 }
+
+impl<X: UserData> From<BoldWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: BoldWith<X>) -> Self {
+        Self::Bold(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CharacterSetWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: CharacterSetWith<X>) -> Self {
+        Self::CharacterSet(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CondenseWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: CondenseWith<X>) -> Self {
+        Self::Condense(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DataBarColorWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: DataBarColorWith<X>) -> Self {
+        Self::DataBarColor(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ExtendWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: ExtendWith<X>) -> Self {
+        Self::Extend(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FontFamilyIntPropertyWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: FontFamilyIntPropertyWith<X>) -> Self {
+        Self::FontFamilyIntProperty(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FontRFontWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: FontRFontWith<X>) -> Self {
+        Self::FontRFont(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FontSizeWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: FontSizeWith<X>) -> Self {
+        Self::FontSize(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ItalicWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: ItalicWith<X>) -> Self {
+        Self::Italic(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OutlineWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: OutlineWith<X>) -> Self {
+        Self::Outline(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SchemeWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: SchemeWith<X>) -> Self {
+        Self::Scheme(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShadowWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: ShadowWith<X>) -> Self {
+        Self::Shadow(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<StrikeThroughWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: StrikeThroughWith<X>) -> Self {
+        Self::StrikeThrough(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UnderlineWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: UnderlineWith<X>) -> Self {
+        Self::Underline(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<VerticalAlignmentWith<X>> for RunPropertiesContentWith<X> {
+    fn from(arm: VerticalAlignmentWith<X>) -> Self {
+        Self::VerticalAlignment(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RunPropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ScenarioWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -47049,14 +47683,14 @@ impl<X: UserData> TablesContentWith<X> {
     {
         match self {
             Self::CharacterValueXStringElement(node) => {
-                TablesContentWith::CharacterValueXStringElement(node.into_user_data())
+                TablesContentWith::CharacterValueXStringElement(Box::new((*node).into_user_data()))
             }
             Self::NoValueTableMissing(node) => {
-                TablesContentWith::NoValueTableMissing(node.into_user_data())
+                TablesContentWith::NoValueTableMissing(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => TablesContentWith::Other(node),
             Self::SharedItemsIndex(node) => {
-                TablesContentWith::SharedItemsIndex(node.into_user_data())
+                TablesContentWith::SharedItemsIndex(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -47064,15 +47698,15 @@ impl<X: UserData> TablesContentWith<X> {
 
 impl officekit_markup_base::Read for TablesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_X, "s")) => Self::CharacterValueXStringElement(item.read()),
-            Some((NS_X, "m")) => Self::NoValueTableMissing(item.read()),
-            Some((NS_X, "x")) => Self::SharedItemsIndex(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_X, "s")) => Self::CharacterValueXStringElement(Box::new(item.read())),
+            Some((NS_X, "m")) => Self::NoValueTableMissing(Box::new(item.read())),
+            Some((NS_X, "x")) => Self::SharedItemsIndex(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -47082,11 +47716,34 @@ impl officekit_markup_base::Write for TablesContent {
         match self {
             Self::CharacterValueXStringElement(arm) => arm.write_into(writer),
             Self::NoValueTableMissing(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::SharedItemsIndex(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<CharacterValueXStringElementWith<X>> for TablesContentWith<X> {
+    fn from(arm: CharacterValueXStringElementWith<X>) -> Self {
+        Self::CharacterValueXStringElement(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<NoValueTableMissingWith<X>> for TablesContentWith<X> {
+    fn from(arm: NoValueTableMissingWith<X>) -> Self {
+        Self::NoValueTableMissing(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SharedItemsIndexWith<X>> for TablesContentWith<X> {
+    fn from(arm: SharedItemsIndexWith<X>) -> Self {
+        Self::SharedItemsIndex(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TablesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for TargetScreenSizeTypes {
     fn as_ref(&self) -> &str {

@@ -76,7 +76,7 @@ use crate::validation::validator::Validator;
 ///     .as_mut()
 ///     .ok_or("the document has no body")?
 ///     .content
-///     .push(BlockContent::Table(table));
+///     .push(BlockContent::from(table));
 /// docx.set_main_document(&document)?;
 ///
 /// let again = docx.main_document()?;

@@ -2762,25 +2762,25 @@ impl super::Transform for diagram::LayoutElementContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Algorithm(arm) = self {
-            Self::Algorithm(arm.transform(ctx))
+            Self::Algorithm(Box::new(arm.transform(ctx)))
         } else if let Self::ChooseElement(arm) = self {
-            Self::ChooseElement(arm.transform(ctx))
+            Self::ChooseElement(Box::new(arm.transform(ctx)))
         } else if let Self::ConstraintList(arm) = self {
-            Self::ConstraintList(arm.transform(ctx))
+            Self::ConstraintList(Box::new(arm.transform(ctx)))
         } else if let Self::ExtensionList(arm) = self {
-            Self::ExtensionList(arm.transform(ctx))
+            Self::ExtensionList(Box::new(arm.transform(ctx)))
         } else if let Self::ForEach(arm) = self {
-            Self::ForEach(arm.transform(ctx))
+            Self::ForEach(Box::new(arm.transform(ctx)))
         } else if let Self::LayoutNode(arm) = self {
-            Self::LayoutNode(arm.transform(ctx))
+            Self::LayoutNode(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PresentationOf(arm) = self {
-            Self::PresentationOf(arm.transform(ctx))
+            Self::PresentationOf(Box::new(arm.transform(ctx)))
         } else if let Self::RuleList(arm) = self {
-            Self::RuleList(arm.transform(ctx))
+            Self::RuleList(Box::new(arm.transform(ctx)))
         } else if let Self::Shape(arm) = self {
-            Self::Shape(arm.transform(ctx))
+            Self::Shape(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -2990,27 +2990,27 @@ impl super::Transform for diagram::LayoutNodeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Algorithm(arm) = self {
-            Self::Algorithm(arm.transform(ctx))
+            Self::Algorithm(Box::new(arm.transform(ctx)))
         } else if let Self::ChooseElement(arm) = self {
-            Self::ChooseElement(arm.transform(ctx))
+            Self::ChooseElement(Box::new(arm.transform(ctx)))
         } else if let Self::ConstraintList(arm) = self {
-            Self::ConstraintList(arm.transform(ctx))
+            Self::ConstraintList(Box::new(arm.transform(ctx)))
         } else if let Self::ExtensionList(arm) = self {
-            Self::ExtensionList(arm.transform(ctx))
+            Self::ExtensionList(Box::new(arm.transform(ctx)))
         } else if let Self::ForEach(arm) = self {
-            Self::ForEach(arm.transform(ctx))
+            Self::ForEach(Box::new(arm.transform(ctx)))
         } else if let Self::LayoutNode(arm) = self {
-            Self::LayoutNode(arm.transform(ctx))
+            Self::LayoutNode(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PresentationOf(arm) = self {
-            Self::PresentationOf(arm.transform(ctx))
+            Self::PresentationOf(Box::new(arm.transform(ctx)))
         } else if let Self::RuleList(arm) = self {
-            Self::RuleList(arm.transform(ctx))
+            Self::RuleList(Box::new(arm.transform(ctx)))
         } else if let Self::Shape(arm) = self {
-            Self::Shape(arm.transform(ctx))
+            Self::Shape(Box::new(arm.transform(ctx)))
         } else if let Self::VariableList(arm) = self {
-            Self::VariableList(arm.transform(ctx))
+            Self::VariableList(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

@@ -1194,11 +1194,11 @@ impl super::Transform for office_spreadsheetml_2019_namedsheetviews::SortRuleCon
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RichSortCondition(arm) = self {
-            Self::RichSortCondition(arm.transform(ctx))
+            Self::RichSortCondition(Box::new(arm.transform(ctx)))
         } else if let Self::SortCondition(arm) = self {
-            Self::SortCondition(arm.transform(ctx))
+            Self::SortCondition(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

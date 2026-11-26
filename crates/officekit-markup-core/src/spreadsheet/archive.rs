@@ -6292,96 +6292,96 @@ pub struct XMLSchemaMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum AutoFilterColumnContent {
-    ColorFilterCriteria(super::ColorFilterCriteria),
-    CustomFilters(super::CustomFilters),
-    DynamicFilter(super::DynamicFilter),
-    FilterCriteria(super::FilterCriteria),
-    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] super::FutureFeatureDataStorageArea),
-    IconFilter(super::IconFilter),
+    ColorFilterCriteria(Box<super::ColorFilterCriteria>),
+    CustomFilters(Box<super::CustomFilters>),
+    DynamicFilter(Box<super::DynamicFilter>),
+    FilterCriteria(Box<super::FilterCriteria>),
+    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] Box<super::FutureFeatureDataStorageArea>),
+    IconFilter(Box<super::IconFilter>),
     OfficeSpreadsheetml20099MainCustomFilters(
-        super::super::office_spreadsheetml_2009_9_main::CustomFilters,
+        Box<super::super::office_spreadsheetml_2009_9_main::CustomFilters>,
     ),
     OfficeSpreadsheetml20099MainIconFilter(
-        super::super::office_spreadsheetml_2009_9_main::IconFilter,
+        Box<super::super::office_spreadsheetml_2009_9_main::IconFilter>,
     ),
-    Other(Node),
-    Top10(super::Top10),
+    Other(Box<Node>),
+    Top10(Box<super::Top10>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::CacheItemContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum CacheItemContent {
-    Boolean(super::Boolean),
-    CharacterValue(super::CharacterValue),
-    DateTime(super::DateTime),
-    ErrorValue(super::ErrorValue),
-    NoValue(super::NoValue),
-    Numeric(super::Numeric),
-    Other(Node),
+    Boolean(Box<super::Boolean>),
+    CharacterValue(Box<super::CharacterValue>),
+    DateTime(Box<super::DateTime>),
+    ErrorValue(Box<super::ErrorValue>),
+    NoValue(Box<super::NoValue>),
+    Numeric(Box<super::Numeric>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::EntriesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum EntriesContent {
-    CharacterValue(super::CharacterValue),
-    ErrorValue(super::ErrorValue),
-    NoValue(super::NoValue),
-    Numeric(super::Numeric),
-    Other(Node),
+    CharacterValue(Box<super::CharacterValue>),
+    ErrorValue(Box<super::ErrorValue>),
+    NoValue(Box<super::NoValue>),
+    Numeric(Box<super::Numeric>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ExternalReferenceContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ExternalReferenceContent {
-    DDEConnection(super::DDEConnection),
-    ExternalWorkbook(super::ExternalWorkbook),
-    GenericObjectLinkConnection(super::GenericObjectLinkConnection),
-    Other(Node),
+    DDEConnection(Box<super::DDEConnection>),
+    ExternalWorkbook(Box<super::ExternalWorkbook>),
+    GenericObjectLinkConnection(Box<super::GenericObjectLinkConnection>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FillContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FillContent {
-    Gradient(super::Gradient),
-    Other(Node),
-    Pattern(super::Pattern),
+    Gradient(Box<super::Gradient>),
+    Other(Box<Node>),
+    Pattern(Box<super::Pattern>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FontContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FontContent {
-    Bold(super::Bold),
-    CharacterSet(super::CharacterSet),
-    Condense(super::Condense),
-    DataBarColor(super::DataBarColor),
-    Extend(super::Extend),
-    FontFamily(super::FontFamily),
-    FontName(super::FontName),
-    FontSize(super::FontSize),
-    Italic(super::Italic),
-    Other(Node),
-    Outline(super::Outline),
-    Scheme(super::Scheme),
-    Shadow(super::Shadow),
-    StrikeThrough(super::StrikeThrough),
-    Underline(super::Underline),
-    VerticalAlignment(super::VerticalAlignment),
+    Bold(Box<super::Bold>),
+    CharacterSet(Box<super::CharacterSet>),
+    Condense(Box<super::Condense>),
+    DataBarColor(Box<super::DataBarColor>),
+    Extend(Box<super::Extend>),
+    FontFamily(Box<super::FontFamily>),
+    FontName(Box<super::FontName>),
+    FontSize(Box<super::FontSize>),
+    Italic(Box<super::Italic>),
+    Other(Box<Node>),
+    Outline(Box<super::Outline>),
+    Scheme(Box<super::Scheme>),
+    Shadow(Box<super::Shadow>),
+    StrikeThrough(Box<super::StrikeThrough>),
+    Underline(Box<super::Underline>),
+    VerticalAlignment(Box<super::VerticalAlignment>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::MultidimensionalExpressionMetadataContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum MultidimensionalExpressionMetadataContent {
-    KPIMDXMetadata(super::KPIMDXMetadata),
-    MemberPropertyMDXMetadata(super::MemberPropertyMDXMetadata),
-    Other(Node),
-    SetMDXMetadata(super::SetMDXMetadata),
-    TupleMDXMetadata(super::TupleMDXMetadata),
+    KPIMDXMetadata(Box<super::KPIMDXMetadata>),
+    MemberPropertyMDXMetadata(Box<super::MemberPropertyMDXMetadata>),
+    Other(Box<Node>),
+    SetMDXMetadata(Box<super::SetMDXMetadata>),
+    TupleMDXMetadata(Box<super::TupleMDXMetadata>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6391,24 +6391,24 @@ pub enum MultidimensionalExpressionMetadataContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum NestedRevisionContent {
-    Other(Node),
-    RevisionCellChange(#[rkyv(omit_bounds)] super::RevisionCellChange),
-    RevisionFormat(#[rkyv(omit_bounds)] super::RevisionFormat),
-    Undo(super::Undo),
+    Other(Box<Node>),
+    RevisionCellChange(#[rkyv(omit_bounds)] Box<super::RevisionCellChange>),
+    RevisionFormat(#[rkyv(omit_bounds)] Box<super::RevisionFormat>),
+    Undo(Box<super::Undo>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::PivotCacheRecordContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum PivotCacheRecordContent {
-    Boolean(super::Boolean),
-    CharacterValue(super::CharacterValue),
-    DateTime(super::DateTime),
-    ErrorValue(super::ErrorValue),
-    NoValue(super::NoValue),
-    Numeric(super::Numeric),
-    Other(Node),
-    SharedItemsIndex(super::SharedItemsIndex),
+    Boolean(Box<super::Boolean>),
+    CharacterValue(Box<super::CharacterValue>),
+    DateTime(Box<super::DateTime>),
+    ErrorValue(Box<super::ErrorValue>),
+    NoValue(Box<super::NoValue>),
+    Numeric(Box<super::Numeric>),
+    Other(Box<Node>),
+    SharedItemsIndex(Box<super::SharedItemsIndex>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6418,10 +6418,10 @@ pub enum PivotCacheRecordContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum PivotCacheSourceDescriptionContent {
-    ConsolidationSource(super::ConsolidationSource),
-    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] super::FutureFeatureDataStorageArea),
-    Other(Node),
-    WorksheetPivotCacheSource(super::WorksheetPivotCacheSource),
+    ConsolidationSource(Box<super::ConsolidationSource>),
+    FutureFeatureDataStorageArea(#[rkyv(omit_bounds)] Box<super::FutureFeatureDataStorageArea>),
+    Other(Box<Node>),
+    WorksheetPivotCacheSource(Box<super::WorksheetPivotCacheSource>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -6431,51 +6431,51 @@ pub enum PivotCacheSourceDescriptionContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum RevisionsContent {
-    Other(Node),
-    RevisionAutoFormat(super::RevisionAutoFormat),
-    RevisionCellChange(#[rkyv(omit_bounds)] super::RevisionCellChange),
-    RevisionCellComment(super::RevisionCellComment),
-    RevisionCellMove(#[rkyv(omit_bounds)] super::RevisionCellMove),
-    RevisionCustomView(super::RevisionCustomView),
+    Other(Box<Node>),
+    RevisionAutoFormat(Box<super::RevisionAutoFormat>),
+    RevisionCellChange(#[rkyv(omit_bounds)] Box<super::RevisionCellChange>),
+    RevisionCellComment(Box<super::RevisionCellComment>),
+    RevisionCellMove(#[rkyv(omit_bounds)] Box<super::RevisionCellMove>),
+    RevisionCustomView(Box<super::RevisionCustomView>),
     RevisionDefinedName(#[rkyv(omit_bounds)] Box<super::RevisionDefinedName>),
-    RevisionFormat(#[rkyv(omit_bounds)] super::RevisionFormat),
-    RevisionInsertSheet(super::RevisionInsertSheet),
-    RevisionMergeConflict(super::RevisionMergeConflict),
-    RevisionQueryTable(super::RevisionQueryTable),
-    RevisionRowColumnInsertDelete(#[rkyv(omit_bounds)] super::RevisionRowColumnInsertDelete),
-    RevisionSheetName(#[rkyv(omit_bounds)] super::RevisionSheetName),
+    RevisionFormat(#[rkyv(omit_bounds)] Box<super::RevisionFormat>),
+    RevisionInsertSheet(Box<super::RevisionInsertSheet>),
+    RevisionMergeConflict(Box<super::RevisionMergeConflict>),
+    RevisionQueryTable(Box<super::RevisionQueryTable>),
+    RevisionRowColumnInsertDelete(#[rkyv(omit_bounds)] Box<super::RevisionRowColumnInsertDelete>),
+    RevisionSheetName(#[rkyv(omit_bounds)] Box<super::RevisionSheetName>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::RunPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum RunPropertiesContent {
-    Bold(super::Bold),
-    CharacterSet(super::CharacterSet),
-    Condense(super::Condense),
-    DataBarColor(super::DataBarColor),
-    Extend(super::Extend),
-    FontFamilyIntProperty(super::FontFamilyIntProperty),
-    FontRFont(super::FontRFont),
-    FontSize(super::FontSize),
-    Italic(super::Italic),
-    Other(Node),
-    Outline(super::Outline),
-    Scheme(super::Scheme),
-    Shadow(super::Shadow),
-    StrikeThrough(super::StrikeThrough),
-    Underline(super::Underline),
-    VerticalAlignment(super::VerticalAlignment),
+    Bold(Box<super::Bold>),
+    CharacterSet(Box<super::CharacterSet>),
+    Condense(Box<super::Condense>),
+    DataBarColor(Box<super::DataBarColor>),
+    Extend(Box<super::Extend>),
+    FontFamilyIntProperty(Box<super::FontFamilyIntProperty>),
+    FontRFont(Box<super::FontRFont>),
+    FontSize(Box<super::FontSize>),
+    Italic(Box<super::Italic>),
+    Other(Box<Node>),
+    Outline(Box<super::Outline>),
+    Scheme(Box<super::Scheme>),
+    Shadow(Box<super::Shadow>),
+    StrikeThrough(Box<super::StrikeThrough>),
+    Underline(Box<super::Underline>),
+    VerticalAlignment(Box<super::VerticalAlignment>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::TablesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TablesContent {
-    CharacterValueXStringElement(super::CharacterValueXStringElement),
-    NoValueTableMissing(super::NoValueTableMissing),
-    Other(Node),
-    SharedItemsIndex(super::SharedItemsIndex),
+    CharacterValueXStringElement(Box<super::CharacterValueXStringElement>),
+    NoValueTableMissing(Box<super::NoValueTableMissing>),
+    Other(Box<Node>),
+    SharedItemsIndex(Box<super::SharedItemsIndex>),
 }
 
 impl From<AlignmentMirror> for super::Alignment {

@@ -124,7 +124,7 @@ fn color(run: &RunProperties) -> Option<&str> {
 fn fonts(run: &RunProperties) -> Option<&RunFonts> {
     run.content.iter().find_map(|property| {
         if let RunPropertiesContent::RunFonts(found) = property {
-            Some(found)
+            Some::<&RunFonts>(found)
         } else {
             None
         }
@@ -588,13 +588,13 @@ fn a_toggle_pushed_after_a_style_revision_keeps_its_typed_field() {
 fn font_size(half_points: &str) -> RunPropertiesContent {
     let mut size = NonComplexScriptFontSize::default();
     size.val = Some(MeasurementInHalfPoints::from(half_points.to_owned()));
-    RunPropertiesContent::NonComplexScriptFontSize(size)
+    RunPropertiesContent::from(size)
 }
 
 fn character_reference(id: &str) -> RunPropertiesContent {
     let mut reference = ReferencedCharacterStyle::default();
     reference.val = Some(id.to_owned());
-    RunPropertiesContent::ReferencedCharacterStyle(reference)
+    RunPropertiesContent::from(reference)
 }
 
 fn style_of(
@@ -679,10 +679,10 @@ fn a_mark_toggle_combines_like_a_run_toggle() {
     let strong = style_of(
         "Strong",
         StyleTypesMember::Character,
-        vec![RunPropertiesContent::Bold(Bold::default())],
+        vec![RunPropertiesContent::from(Bold::default())],
     );
     let styles = typed_sheet(
-        vec![RunPropertiesContent::Bold(Bold::default())],
+        vec![RunPropertiesContent::from(Bold::default())],
         vec![strong],
     );
     let effective = effective_mark(&styles, mark_of(vec![character_reference("Strong")]));
@@ -702,9 +702,9 @@ fn the_mark_revision_marks_are_left_out() {
     tracked.deleted_table_row = Some(Box::new(DeletedTableRow::default()));
     tracked.move_source_paragraph = Some(Box::new(MoveSourceParagraph::default()));
     tracked.move_destination_paragraph = Some(Box::new(MoveDestinationParagraph::default()));
-    tracked.conflict_change_content = Some(Box::new(
-        ConflictChangeContent::ConflictInsTrackChange(ConflictInsTrackChange::default()),
-    ));
+    tracked.conflict_change_content = Some(Box::new(ConflictChangeContent::from(
+        ConflictInsTrackChange::default(),
+    )));
     tracked.run_properties_revision = Some(Box::new(ParagraphMarkRunPropertiesRevision::default()));
 
     let effective = effective_mark(&styles, tracked);
@@ -894,13 +894,13 @@ fn the_label_takes_the_mark_s_properties_under_the_level_s() {
     let numbering = list_of(
         &styles,
         vec![
-            RunPropertiesContent::Bold(Bold::default()),
-            RunPropertiesContent::RunContentColor(red),
+            RunPropertiesContent::from(Bold::default()),
+            RunPropertiesContent::from(red),
         ],
     );
     let mut off = Bold::default();
     off.val = Some(false.into());
-    let mark = mark_of(vec![RunPropertiesContent::Bold(off), font_size("48")]);
+    let mark = mark_of(vec![RunPropertiesContent::from(off), font_size("48")]);
     let own = own_of("Normal", Some(numbered(5, Some(0))), None);
     let (paragraph, level) = styles.numbered_paragraph(&numbering, Some(&own));
     let label = styles.label(&paragraph, Some(&mark), &level.unwrap());
@@ -991,12 +991,12 @@ fn a_toggle_combines_the_table_paragraph_and_character_levels() {
         grid_style(
             None,
             vec![],
-            vec![RunPropertiesContent::Bold(Bold::default())],
+            vec![RunPropertiesContent::from(Bold::default())],
         ),
         style_of(
             "Strong",
             StyleTypesMember::Paragraph,
-            vec![RunPropertiesContent::Bold(Bold::default())],
+            vec![RunPropertiesContent::from(Bold::default())],
         ),
     ]);
     let table = grid_table(&styles);
@@ -1005,7 +1005,7 @@ fn a_toggle_combines_the_table_paragraph_and_character_levels() {
     let (paragraph, _) = styles.paragraph_in_cell(&table, at, None, Some(&own));
     assert_eq!(paragraph.table_run_properties.len(), 1);
     assert_eq!(bold(&styles.run(&paragraph, None)), Some(false));
-    let direct = run_of(vec![RunPropertiesContent::Bold(Bold::default())]);
+    let direct = run_of(vec![RunPropertiesContent::from(Bold::default())]);
     assert_eq!(bold(&styles.run(&paragraph, Some(&direct))), Some(true));
 
     let below = CellPosition::new(1, 2, 0, 1, false);
@@ -1055,13 +1055,13 @@ fn defaults_sheet(defaults: Vec<RunPropertiesContent>) -> StyleSheet {
 fn ascii_theme(member: ThemeFontMember) -> RunPropertiesContent {
     let mut fonts = RunFonts::default();
     fonts.ascii_theme = Some(ThemeFont::from(member));
-    RunPropertiesContent::RunFonts(fonts)
+    RunPropertiesContent::from(fonts)
 }
 
 fn ascii(family: &str) -> RunPropertiesContent {
     let mut fonts = RunFonts::default();
     fonts.ascii = Some(family.to_owned());
-    RunPropertiesContent::RunFonts(fonts)
+    RunPropertiesContent::from(fonts)
 }
 
 #[test]
@@ -1104,7 +1104,7 @@ fn a_kind_the_later_level_does_not_state_keeps_the_earlier_font() {
     own.cs = Some("Arial".to_owned());
     let run = styles.run(
         &paragraph,
-        Some(&run_of(vec![RunPropertiesContent::RunFonts(own)])),
+        Some(&run_of(vec![RunPropertiesContent::from(own)])),
     );
     let effective = fonts(&run);
     assert_eq!(
@@ -1159,32 +1159,26 @@ fn the_on_off_names_are_the_on_off_children_of_the_paragraph_run_table_row_and_c
     paragraph.use_left_right_indents_as_inside_outside_indents =
         Some(Box::new(on_off!(UseLeftRightIndentsAsInsideOutsideIndents)));
     let run = run_of(vec![
-        RunPropertiesContent::Bold(on_off!(Bold)),
-        RunPropertiesContent::ComplexScriptBold(on_off!(ComplexScriptBold)),
-        RunPropertiesContent::ComplexScriptItalics(on_off!(ComplexScriptItalics)),
-        RunPropertiesContent::DisplayAllCharactersAsCapitalLetters(on_off!(
-            DisplayAllCharactersAsCapitalLetters
-        )),
-        RunPropertiesContent::DisplayCharacterOutline(on_off!(DisplayCharacterOutline)),
-        RunPropertiesContent::DoNotCheckSpellingOrGrammar(on_off!(DoNotCheckSpellingOrGrammar)),
-        RunPropertiesContent::DocumentGridInterLineParagraphSpacing(on_off!(
-            DocumentGridInterLineParagraphSpacing
-        )),
-        RunPropertiesContent::DoubleStrikethrough(on_off!(DoubleStrikethrough)),
-        RunPropertiesContent::Embossing(on_off!(Embossing)),
-        RunPropertiesContent::HiddenText(on_off!(HiddenText)),
-        RunPropertiesContent::Imprinting(on_off!(Imprinting)),
-        RunPropertiesContent::Italics(on_off!(Italics)),
-        RunPropertiesContent::OfficeOpenXMLMath(on_off!(OfficeOpenXMLMath)),
-        RunPropertiesContent::ParagraphMarkIsAlwaysHidden(on_off!(ParagraphMarkIsAlwaysHidden)),
-        RunPropertiesContent::RightToLeftText(on_off!(RightToLeftText)),
-        RunPropertiesContent::Shadow(on_off!(Shadow)),
-        RunPropertiesContent::SingleStrikethrough(on_off!(SingleStrikethrough)),
-        RunPropertiesContent::SmallCaps(on_off!(SmallCaps)),
-        RunPropertiesContent::UseComplexScriptFormattingOnRun(on_off!(
-            UseComplexScriptFormattingOnRun
-        )),
-        RunPropertiesContent::WebHiddenText(on_off!(WebHiddenText)),
+        RunPropertiesContent::from(on_off!(Bold)),
+        RunPropertiesContent::from(on_off!(ComplexScriptBold)),
+        RunPropertiesContent::from(on_off!(ComplexScriptItalics)),
+        RunPropertiesContent::from(on_off!(DisplayAllCharactersAsCapitalLetters)),
+        RunPropertiesContent::from(on_off!(DisplayCharacterOutline)),
+        RunPropertiesContent::from(on_off!(DoNotCheckSpellingOrGrammar)),
+        RunPropertiesContent::from(on_off!(DocumentGridInterLineParagraphSpacing)),
+        RunPropertiesContent::from(on_off!(DoubleStrikethrough)),
+        RunPropertiesContent::from(on_off!(Embossing)),
+        RunPropertiesContent::from(on_off!(HiddenText)),
+        RunPropertiesContent::from(on_off!(Imprinting)),
+        RunPropertiesContent::from(on_off!(Italics)),
+        RunPropertiesContent::from(on_off!(OfficeOpenXMLMath)),
+        RunPropertiesContent::from(on_off!(ParagraphMarkIsAlwaysHidden)),
+        RunPropertiesContent::from(on_off!(RightToLeftText)),
+        RunPropertiesContent::from(on_off!(Shadow)),
+        RunPropertiesContent::from(on_off!(SingleStrikethrough)),
+        RunPropertiesContent::from(on_off!(SmallCaps)),
+        RunPropertiesContent::from(on_off!(UseComplexScriptFormattingOnRun)),
+        RunPropertiesContent::from(on_off!(WebHiddenText)),
     ]);
     let mut names = child_names(&write::paragraph_properties_p_pr_general(
         &paragraph,
@@ -1202,12 +1196,9 @@ fn the_on_off_names_are_the_on_off_children_of_the_paragraph_run_table_row_and_c
     )));
     let mut row = TableRowProperties::default();
     row.content = alloc::vec![
-        TableRowPropertiesContent::HiddenTableRowMarker(on_off!(HiddenTableRowMarker, off)),
-        TableRowPropertiesContent::RepeatTableRow(on_off!(RepeatTableRow, off)),
-        TableRowPropertiesContent::TableRowCannotBreakAcrossPages(on_off!(
-            TableRowCannotBreakAcrossPages,
-            off
-        )),
+        TableRowPropertiesContent::from(on_off!(HiddenTableRowMarker, off)),
+        TableRowPropertiesContent::from(on_off!(RepeatTableRow, off)),
+        TableRowPropertiesContent::from(on_off!(TableRowCannotBreakAcrossPages, off)),
     ];
     names.extend(child_names(&write::table_row_properties(
         &row,
@@ -1264,13 +1255,14 @@ fn an_on_off_property_with_no_val_turns_on_a_style_s_off() {
 
 #[test]
 fn a_run_property_with_no_val_turns_on_the_defaults_off() {
-    let styles = defaults_sheet(vec![RunPropertiesContent::DoNotCheckSpellingOrGrammar(
-        on_off!(DoNotCheckSpellingOrGrammar, off),
-    )]);
+    let styles = defaults_sheet(vec![RunPropertiesContent::from(on_off!(
+        DoNotCheckSpellingOrGrammar,
+        off
+    ))]);
     let paragraph = styles.paragraph(None);
-    let own = run_of(vec![RunPropertiesContent::DoNotCheckSpellingOrGrammar(
-        on_off!(DoNotCheckSpellingOrGrammar),
-    )]);
+    let own = run_of(vec![RunPropertiesContent::from(on_off!(
+        DoNotCheckSpellingOrGrammar
+    ))]);
     let run = styles.run(&paragraph, Some(&own));
     let no_proof = run.content.iter().find_map(|property| {
         if let RunPropertiesContent::DoNotCheckSpellingOrGrammar(found) = property {

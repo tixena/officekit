@@ -398,18 +398,18 @@ pub struct UndoMirror {
 #[rkyv(remote = super::TaskHistoryEventContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum TaskHistoryEventContent {
-    Assign(super::Assign),
-    Create(super::Create),
-    Delete(super::Delete),
-    Other(Node),
-    Priority(super::Priority),
-    Progress(super::Progress),
-    Schedule(super::Schedule),
-    SetTitle(super::SetTitle),
-    Unassign(super::Unassign),
-    UnassignAll(super::UnassignAll),
-    Undelete(super::Undelete),
-    Undo(super::Undo),
+    Assign(Box<super::Assign>),
+    Create(Box<super::Create>),
+    Delete(Box<super::Delete>),
+    Other(Box<Node>),
+    Priority(Box<super::Priority>),
+    Progress(Box<super::Progress>),
+    Schedule(Box<super::Schedule>),
+    SetTitle(Box<super::SetTitle>),
+    Unassign(Box<super::Unassign>),
+    UnassignAll(Box<super::UnassignAll>),
+    Undelete(Box<super::Undelete>),
+    Undo(Box<super::Undo>),
 }
 
 impl From<AnchorMirror> for super::Anchor {

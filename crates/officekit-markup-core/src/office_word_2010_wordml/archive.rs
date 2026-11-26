@@ -896,55 +896,55 @@ pub struct XfrmMirror {
 #[rkyv(remote = super::ColorContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ColorContent {
-    Other(Node),
-    SchemeClr(super::SchemeClr),
-    SrgbClr(super::SrgbClr),
+    Other(Box<Node>),
+    SchemeClr(Box<super::SchemeClr>),
+    SrgbClr(Box<super::SrgbClr>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ColorTransformContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ColorTransformContent {
-    Alpha(super::Alpha),
-    HueMod(super::HueMod),
-    Lum(super::Lum),
-    LumMod(super::LumMod),
-    LumOff(super::LumOff),
-    Other(Node),
-    Sat(super::Sat),
-    SatMod(super::SatMod),
-    SatOff(super::SatOff),
-    Shade(super::Shade),
-    Tint(super::Tint),
+    Alpha(Box<super::Alpha>),
+    HueMod(Box<super::HueMod>),
+    Lum(Box<super::Lum>),
+    LumMod(Box<super::LumMod>),
+    LumOff(Box<super::LumOff>),
+    Other(Box<Node>),
+    Sat(Box<super::Sat>),
+    SatMod(Box<super::SatMod>),
+    SatOff(Box<super::SatOff>),
+    Shade(Box<super::Shade>),
+    Tint(Box<super::Tint>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FillPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FillPropertiesContent {
-    GradFill(super::GradFill),
-    NoFill(super::NoFill),
-    Other(Node),
-    SolidFill(super::SolidFill),
+    GradFill(Box<super::GradFill>),
+    NoFill(Box<super::NoFill>),
+    Other(Box<Node>),
+    SolidFill(Box<super::SolidFill>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::GradientFillPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GradientFillPropertiesContent {
-    Lin(super::Lin),
-    Other(Node),
-    Path(super::Path),
+    Lin(Box<super::Lin>),
+    Other(Box<Node>),
+    Path(Box<super::Path>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::LineJoinContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum LineJoinContent {
-    Bevel(super::Bevel),
-    Miter(super::Miter),
-    Other(Node),
-    Round(super::Round),
+    Bevel(Box<super::Bevel>),
+    Miter(Box<super::Miter>),
+    Other(Box<Node>),
+    Round(Box<super::Round>),
 }
 
 impl From<AlphaMirror> for super::Alpha {

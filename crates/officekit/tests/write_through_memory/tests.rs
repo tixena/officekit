@@ -93,14 +93,14 @@ impl wordprocessing::Context for FillControl {
         let BlockContent::BlockLevelStructuredDocumentTag(sdt) = node else {
             return None;
         };
-        is_repeat(sdt).then(|| BlockContent::Paragraph(paragraph(&self.value)))
+        is_repeat(sdt).then(|| BlockContent::from(paragraph(&self.value)))
     }
 
     fn content_block(&mut self, node: &ContentBlockContent) -> Option<ContentBlockContent> {
         let ContentBlockContent::BlockLevelStructuredDocumentTag(sdt) = node else {
             return None;
         };
-        is_repeat(sdt).then(|| ContentBlockContent::Paragraph(paragraph(&self.value)))
+        is_repeat(sdt).then(|| ContentBlockContent::from(paragraph(&self.value)))
     }
 }
 
@@ -171,9 +171,9 @@ fn paragraph(value: &str) -> Paragraph {
     let mut text = Text::default();
     text.value = value.to_owned();
     let mut run = TextRun::default();
-    run.content.push(TextRunContent::Text(text));
+    run.content.push(TextRunContent::from(text));
     let mut paragraph = Paragraph::default();
-    paragraph.content.push(ParagraphContent::TextRun(run));
+    paragraph.content.push(ParagraphContent::from(run));
     paragraph
 }
 
@@ -197,8 +197,8 @@ fn row(block: BlockContent) -> ContentRowContent {
     let mut cell = TableCell::default();
     cell.content.push(block);
     let mut row = TableRow::default();
-    row.content.push(ContentCellContent::TableCell(cell));
-    ContentRowContent::TableRow(row)
+    row.content.push(ContentCellContent::from(cell));
+    ContentRowContent::from(row)
 }
 
 /// A header row, a row whose cell holds a "repeat" control, and a total row.
@@ -210,15 +210,15 @@ fn template() -> Table {
     let mut content = BlockLevelStructuredDocumentTagContent::default();
     content
         .content
-        .push(ContentBlockContent::Paragraph(paragraph("placeholder")));
+        .push(ContentBlockContent::from(paragraph("placeholder")));
     let mut control = BlockLevelStructuredDocumentTag::default();
     control.properties = Some(Box::new(properties));
     control.content = Some(Box::new(content));
     let mut table = Table::default();
     table.content_row_content.extend([
-        row(BlockContent::Paragraph(paragraph("Name"))),
-        row(BlockContent::BlockLevelStructuredDocumentTag(control)),
-        row(BlockContent::Paragraph(paragraph("Total"))),
+        row(BlockContent::from(paragraph("Name"))),
+        row(BlockContent::from(control)),
+        row(BlockContent::from(paragraph("Total"))),
     ]);
     table
 }

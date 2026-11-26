@@ -423,9 +423,9 @@ pub struct TxXfrmMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupShapeContent {
-    GrpSp(#[rkyv(omit_bounds)] super::GrpSp),
-    Other(Node),
-    Sp(super::Sp),
+    GrpSp(#[rkyv(omit_bounds)] Box<super::GrpSp>),
+    Other(Box<Node>),
+    Sp(Box<super::Sp>),
 }
 
 impl From<CNvGrpSpPrMirror> for super::CNvGrpSpPr {

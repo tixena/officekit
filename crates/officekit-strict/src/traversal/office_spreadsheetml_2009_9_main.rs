@@ -7378,11 +7378,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::PivotUserEditContent
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::EditValue(arm) = self {
-            Self::EditValue(arm.transform(ctx))
+            Self::EditValue(Box::new(arm.transform(ctx)))
         } else if let Self::F(arm) = self {
-            Self::F(arm.transform(ctx))
+            Self::F(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -8537,11 +8537,11 @@ impl super::Transform for office_spreadsheetml_2009_9_main::SlicerCacheDataConte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Olap(arm) = self {
-            Self::Olap(arm.transform(ctx))
+            Self::Olap(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Tabular(arm) = self {
-            Self::Tabular(arm.transform(ctx))
+            Self::Tabular(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

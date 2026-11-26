@@ -1379,13 +1379,13 @@ pub struct XfrmTransform2DMirror {
 #[rkyv(remote = super::GroupCommandContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum GroupCommandContent {
-    CxnSpMk(super::CxnSpMk),
-    GraphicFrameMk(super::GraphicFrameMk),
-    GrpSpMk(super::GrpSpMk),
-    InkMk(super::InkMk),
-    Other(Node),
-    PicMk(super::PicMk),
-    SpMk(super::SpMk),
+    CxnSpMk(Box<super::CxnSpMk>),
+    GraphicFrameMk(Box<super::GraphicFrameMk>),
+    GrpSpMk(Box<super::GrpSpMk>),
+    InkMk(Box<super::InkMk>),
+    Other(Box<Node>),
+    PicMk(Box<super::PicMk>),
+    SpMk(Box<super::SpMk>),
 }
 
 impl From<BlipFillBlipFillPropertiesMirror> for super::BlipFillBlipFillProperties {

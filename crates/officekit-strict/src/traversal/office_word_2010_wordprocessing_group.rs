@@ -1039,17 +1039,17 @@ impl super::Transform for office_word_2010_wordprocessing_group::WordprocessingG
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ContentPart(arm) = self {
-            Self::ContentPart(arm.transform(ctx))
+            Self::ContentPart(Box::new(arm.transform(ctx)))
         } else if let Self::GraphicFrame(arm) = self {
-            Self::GraphicFrame(arm.transform(ctx))
+            Self::GraphicFrame(Box::new(arm.transform(ctx)))
         } else if let Self::GrpSp(arm) = self {
-            Self::GrpSp(arm.transform(ctx))
+            Self::GrpSp(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Picture(arm) = self {
-            Self::Picture(arm.transform(ctx))
+            Self::Picture(Box::new(arm.transform(ctx)))
         } else if let Self::Wsp(arm) = self {
-            Self::Wsp(arm.transform(ctx))
+            Self::Wsp(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

@@ -325,17 +325,17 @@ impl super::Transform for wordprocessing_drawing::AnchorContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::NoTextWrapping(arm) = self {
-            Self::NoTextWrapping(arm.transform(ctx))
+            Self::NoTextWrapping(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SquareWrapping(arm) = self {
-            Self::SquareWrapping(arm.transform(ctx))
+            Self::SquareWrapping(Box::new(arm.transform(ctx)))
         } else if let Self::ThroughWrapping(arm) = self {
-            Self::ThroughWrapping(arm.transform(ctx))
+            Self::ThroughWrapping(Box::new(arm.transform(ctx)))
         } else if let Self::TightWrapping(arm) = self {
-            Self::TightWrapping(arm.transform(ctx))
+            Self::TightWrapping(Box::new(arm.transform(ctx)))
         } else if let Self::TopAndBottomWrapping(arm) = self {
-            Self::TopAndBottomWrapping(arm.transform(ctx))
+            Self::TopAndBottomWrapping(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1013,17 +1013,17 @@ impl super::Transform for wordprocessing_drawing::DrawingCanvasContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ContentPart(arm) = self {
-            Self::ContentPart(arm.transform(ctx))
+            Self::ContentPart(Box::new(arm.transform(ctx)))
         } else if let Self::GraphicalObjectContainer(arm) = self {
-            Self::GraphicalObjectContainer(arm.transform(ctx))
+            Self::GraphicalObjectContainer(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Picture(arm) = self {
-            Self::Picture(arm.transform(ctx))
+            Self::Picture(Box::new(arm.transform(ctx)))
         } else if let Self::WordprocessingMLShape(arm) = self {
-            Self::WordprocessingMLShape(arm.transform(ctx))
+            Self::WordprocessingMLShape(Box::new(arm.transform(ctx)))
         } else if let Self::WordprocessingMLShapeGroup(arm) = self {
-            Self::WordprocessingMLShapeGroup(arm.transform(ctx))
+            Self::WordprocessingMLShapeGroup(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1640,17 +1640,17 @@ impl super::Transform for wordprocessing_drawing::GroupShapeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ContentPart(arm) = self {
-            Self::ContentPart(arm.transform(ctx))
+            Self::ContentPart(Box::new(arm.transform(ctx)))
         } else if let Self::GraphicalObjectContainer(arm) = self {
-            Self::GraphicalObjectContainer(arm.transform(ctx))
+            Self::GraphicalObjectContainer(Box::new(arm.transform(ctx)))
         } else if let Self::GroupShape(arm) = self {
-            Self::GroupShape(arm.transform(ctx))
+            Self::GroupShape(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Picture(arm) = self {
-            Self::Picture(arm.transform(ctx))
+            Self::Picture(Box::new(arm.transform(ctx)))
         } else if let Self::WordprocessingMLShape(arm) = self {
-            Self::WordprocessingMLShape(arm.transform(ctx))
+            Self::WordprocessingMLShape(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1951,13 +1951,13 @@ impl super::Transform for wordprocessing_drawing::HorizontalPositioningContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AbsolutePositionOffset(arm) = self {
-            Self::AbsolutePositionOffset(arm.transform(ctx))
+            Self::AbsolutePositionOffset(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PctPosHOffset(arm) = self {
-            Self::PctPosHOffset(arm.transform(ctx))
+            Self::PctPosHOffset(Box::new(arm.transform(ctx)))
         } else if let Self::RelativeHorizontalAlignment(arm) = self {
-            Self::RelativeHorizontalAlignment(arm.transform(ctx))
+            Self::RelativeHorizontalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3283,11 +3283,11 @@ impl super::Transform for wordprocessing_drawing::ShapeNonVisualPropertiesConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::NonVisualConnectorShapeDrawingProperties(arm) = self {
-            Self::NonVisualConnectorShapeDrawingProperties(arm.transform(ctx))
+            Self::NonVisualConnectorShapeDrawingProperties(Box::new(arm.transform(ctx)))
         } else if let Self::NonVisualDrawingPropertiesForAShape(arm) = self {
-            Self::NonVisualDrawingPropertiesForAShape(arm.transform(ctx))
+            Self::NonVisualDrawingPropertiesForAShape(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3589,11 +3589,11 @@ impl super::Transform for wordprocessing_drawing::ShapeTextContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TextualContentsOfShapeLinkedTxbx(arm) = self {
-            Self::TextualContentsOfShapeLinkedTxbx(arm.transform(ctx))
+            Self::TextualContentsOfShapeLinkedTxbx(Box::new(arm.transform(ctx)))
         } else if let Self::TextualContentsOfShapeTxbx(arm) = self {
-            Self::TextualContentsOfShapeTxbx(arm.transform(ctx))
+            Self::TextualContentsOfShapeTxbx(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -4416,13 +4416,13 @@ impl super::Transform for wordprocessing_drawing::VerticalPositioningContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AbsolutePositionOffset(arm) = self {
-            Self::AbsolutePositionOffset(arm.transform(ctx))
+            Self::AbsolutePositionOffset(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PctPosVOffset(arm) = self {
-            Self::PctPosVOffset(arm.transform(ctx))
+            Self::PctPosVOffset(Box::new(arm.transform(ctx)))
         } else if let Self::RelativeVerticalAlignment(arm) = self {
-            Self::RelativeVerticalAlignment(arm.transform(ctx))
+            Self::RelativeVerticalAlignment(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

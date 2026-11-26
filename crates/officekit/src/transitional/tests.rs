@@ -79,8 +79,8 @@ fn justified(alignment: &str, value: Option<&str>) -> Paragraph {
         let mut characters = Text::default();
         characters.value = text.to_owned();
         let mut run = TextRun::default();
-        run.content = vec![TextRunContent::Text(characters)];
-        paragraph.content = vec![ParagraphContent::TextRun(run)];
+        run.content = vec![TextRunContent::from(characters)];
+        paragraph.content = vec![ParagraphContent::from(run)];
     }
     paragraph
 }
@@ -163,7 +163,7 @@ fn a_read_holds_xml_space_on_the_field_of_spreadsheet_text() {
 #[test]
 fn a_strict_document_writes_the_transitional_uri_and_no_strict_conformance() {
     let mut body = DocumentBody::default();
-    body.content = vec![BlockContent::Paragraph(justified("start", None))];
+    body.content = vec![BlockContent::from(justified("start", None))];
     let mut document = Document::default();
     document.body = Some(Box::new(body));
     document.conformance = Some(DocumentConformanceClassValue::from(

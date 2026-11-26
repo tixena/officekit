@@ -3767,21 +3767,21 @@ impl super::Transform for office_powerpoint_2010_main::ShowEventRecordListConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::NullEvt(arm) = self {
-            Self::NullEvt(arm.transform(ctx))
+            Self::NullEvt(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PauseEvt(arm) = self {
-            Self::PauseEvt(arm.transform(ctx))
+            Self::PauseEvt(Box::new(arm.transform(ctx)))
         } else if let Self::PlayEvt(arm) = self {
-            Self::PlayEvt(arm.transform(ctx))
+            Self::PlayEvt(Box::new(arm.transform(ctx)))
         } else if let Self::ResumeEvt(arm) = self {
-            Self::ResumeEvt(arm.transform(ctx))
+            Self::ResumeEvt(Box::new(arm.transform(ctx)))
         } else if let Self::SeekEvt(arm) = self {
-            Self::SeekEvt(arm.transform(ctx))
+            Self::SeekEvt(Box::new(arm.transform(ctx)))
         } else if let Self::StopEvt(arm) = self {
-            Self::StopEvt(arm.transform(ctx))
+            Self::StopEvt(Box::new(arm.transform(ctx)))
         } else if let Self::TriggerEvt(arm) = self {
-            Self::TriggerEvt(arm.transform(ctx))
+            Self::TriggerEvt(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

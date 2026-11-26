@@ -107,10 +107,10 @@ fn document(count: usize) -> Document {
             let mut text = Text::default();
             text.value = format!("paragraph {index:06}");
             let mut run = TextRun::default();
-            run.content.push(TextRunContent::Text(text));
+            run.content.push(TextRunContent::from(text));
             let mut paragraph = Paragraph::default();
-            paragraph.content.push(ParagraphContent::TextRun(run));
-            BlockContent::Paragraph(paragraph)
+            paragraph.content.push(ParagraphContent::from(run));
+            BlockContent::from(paragraph)
         })
         .collect();
     let mut document = Document::default();

@@ -82,7 +82,7 @@ fn slide_with_runs(texts: &[&str]) -> PresentationSlideSlide {
             characters.value = (*text).to_owned();
             let mut run = DrawingRun::default();
             run.text_string = Box::new(characters);
-            TextParagraphsContent::TextRun(run)
+            TextParagraphsContent::from(run)
         })
         .collect();
     let mut body = ShapeTextBody::default();
@@ -90,7 +90,7 @@ fn slide_with_runs(texts: &[&str]) -> PresentationSlideSlide {
     let mut shape = Shape::default();
     shape.text_body = Some(Box::new(body));
     let mut slide_root = PresentationSlideSlide::default();
-    slide_root.common_slide_data.shape_tree.content = vec![GroupShapeContent::Shape(shape)];
+    slide_root.common_slide_data.shape_tree.content = vec![GroupShapeContent::from(shape)];
     slide_root
 }
 

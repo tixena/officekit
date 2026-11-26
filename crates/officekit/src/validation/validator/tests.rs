@@ -210,7 +210,7 @@ fn typed_body(blocks: Vec<BlockContent>) -> Package {
 fn typed_paragraph(content: Vec<ParagraphContent>) -> Package {
     let mut paragraph = Paragraph::default();
     paragraph.content = content;
-    typed_body(vec![BlockContent::Paragraph(paragraph)])
+    typed_body(vec![BlockContent::from(paragraph)])
 }
 
 /// An empty Word document whose numbering part holds `numbering`.
@@ -274,7 +274,7 @@ fn with_web_settings(package: Package, web_settings: &WebPageSettings) -> Packag
 fn typed_table(properties: TableProperties) -> Package {
     let mut table = Table::default();
     table.properties = Box::new(properties);
-    typed_body(vec![BlockContent::Table(table)])
+    typed_body(vec![BlockContent::from(table)])
 }
 
 /// A table of one row of `properties` holding one cell of `cell_properties` and an empty
@@ -284,13 +284,13 @@ fn table_of_one_cell(
     cell_properties: Option<TableCellProperties>,
 ) -> Table {
     let mut cell = TableCell::default();
-    cell.content = vec![BlockContent::Paragraph(Paragraph::default())];
+    cell.content = vec![BlockContent::from(Paragraph::default())];
     cell.properties = cell_properties.map(Box::new);
     let mut row = TableRow::default();
-    row.content = vec![ContentCellContent::TableCell(cell)];
+    row.content = vec![ContentCellContent::from(cell)];
     row.properties = Some(Box::new(properties));
     let mut table = Table::default();
-    table.content_row_content = vec![ContentRowContent::TableRow(row)];
+    table.content_row_content = vec![ContentRowContent::from(row)];
     table
 }
 
@@ -336,7 +336,7 @@ fn typed_run(value: &str) -> TextRun {
     let mut text = Text::default();
     text.value = value.to_owned();
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::Text(text)];
+    run.content = vec![TextRunContent::from(text)];
     run
 }
 
@@ -671,7 +671,7 @@ fn paragraph_in_div(value: &str) -> Package {
     properties.associated_html_div_id = Some(Box::new(div_id));
     let mut paragraph = Paragraph::default();
     paragraph.properties = Some(Box::new(properties));
-    typed_body(vec![BlockContent::Paragraph(paragraph)])
+    typed_body(vec![BlockContent::from(paragraph)])
 }
 
 /// A document holding each of the 18 on and off elements of [`ON_OFF_ELEMENTS`] at `value`: in a
@@ -679,12 +679,9 @@ fn paragraph_in_div(value: &str) -> Package {
 fn on_off_document(value: &str) -> Package {
     let mut row = TableRowProperties::default();
     row.content = vec![
-        TableRowPropertiesContent::TableRowCannotBreakAcrossPages(on_off!(
-            TableRowCannotBreakAcrossPages,
-            value
-        )),
-        TableRowPropertiesContent::RepeatTableRow(on_off!(RepeatTableRow, value)),
-        TableRowPropertiesContent::HiddenTableRowMarker(on_off!(HiddenTableRowMarker, value)),
+        TableRowPropertiesContent::from(on_off!(TableRowCannotBreakAcrossPages, value)),
+        TableRowPropertiesContent::from(on_off!(RepeatTableRow, value)),
+        TableRowPropertiesContent::from(on_off!(HiddenTableRowMarker, value)),
     ];
     let mut cell = TableCellProperties::default();
     cell.dont_wrap_cell_content = Some(Box::new(on_off!(DontWrapCellContent, value)));
@@ -713,17 +710,14 @@ fn on_off_document(value: &str) -> Package {
     frame.maintain_link_to_existing_file =
         Some(Box::new(on_off!(MaintainLinkToExistingFile, value)));
     let mut frameset = NestedFramesetDefinition::default();
-    frameset.content = vec![FramesetDefinitionContent::SingleFrameProperties(frame)];
+    frameset.content = vec![FramesetDefinitionContent::from(frame)];
     frameset.frameset_splitter_properties = Some(Box::new(splitter));
     let mut web = WebPageSettings::default();
     web.nested_frameset_definition = Some(Box::new(frameset));
     let mut styles = StyleDefinitions::default();
     styles.style_definition = vec![style];
     let package = with_part(
-        typed_body(vec![BlockContent::Table(table_of_one_cell(
-            row,
-            Some(cell),
-        ))]),
+        typed_body(vec![BlockContent::from(table_of_one_cell(row, Some(cell)))]),
         "/word/styles.xml",
         STYLES,
         STYLES_CONTENT,
@@ -743,11 +737,9 @@ fn content_controls() -> [Package; 4] {
         let mut tab_index = StructuredDocumentTagNavigationOrderIndex::default();
         tab_index.val = Some(UnsignedDecimalNumberValue::from("1".to_owned()));
         let mut properties = StructuredDocumentTagProperties::default();
-        properties.content = Some(Box::new(
-            StructuredDocumentTagPropertiesContent::PlainTextStructuredDocumentTag(
-                PlainTextStructuredDocumentTag::default(),
-            ),
-        ));
+        properties.content = Some(Box::new(StructuredDocumentTagPropertiesContent::from(
+            PlainTextStructuredDocumentTag::default(),
+        )));
         properties.programmatic_tag = Some(Box::new(tag));
         properties.structured_document_tag_label = Some(Box::new(label));
         properties.structured_document_tag_navigation_order_index = Some(Box::new(tab_index));
@@ -755,49 +747,43 @@ fn content_controls() -> [Package; 4] {
     };
     let cell = || {
         let mut cell = TableCell::default();
-        cell.content = vec![BlockContent::Paragraph(Paragraph::default())];
+        cell.content = vec![BlockContent::from(Paragraph::default())];
         cell
     };
     let table_of = |rows: Vec<ContentRowContent>| {
         let mut table = Table::default();
         table.content_row_content = rows;
-        typed_body(vec![BlockContent::Table(table)])
+        typed_body(vec![BlockContent::from(table)])
     };
     let mut block_content = BlockLevelStructuredDocumentTagContent::default();
-    block_content.content = vec![ContentBlockContent::Paragraph(Paragraph::default())];
+    block_content.content = vec![ContentBlockContent::from(Paragraph::default())];
     let mut block = BlockLevelStructuredDocumentTag::default();
     block.content = Some(Box::new(block_content));
     block.properties = properties();
     let mut run_content = InlineLevelStructuredDocumentTagContent::default();
-    run_content.content = vec![ParagraphContent::TextRun(typed_run("a"))];
+    run_content.content = vec![ParagraphContent::from(typed_run("a"))];
     let mut around_run = InlineLevelStructuredDocumentTag::default();
     around_run.content = Some(Box::new(run_content));
     around_run.properties = properties();
     let mut cell_content = CellLevelStructuredDocumentTagContent::default();
-    cell_content.content = vec![ContentCellContent::TableCell(cell())];
+    cell_content.content = vec![ContentCellContent::from(cell())];
     let mut around_cell = CellLevelStructuredDocumentTag::default();
     around_cell.content = Some(Box::new(cell_content));
     around_cell.properties = properties();
     let mut row_of_control = TableRow::default();
-    row_of_control.content = vec![ContentCellContent::CellLevelStructuredDocumentTag(
-        around_cell,
-    )];
+    row_of_control.content = vec![ContentCellContent::from(around_cell)];
     let mut row = TableRow::default();
-    row.content = vec![ContentCellContent::TableCell(cell())];
+    row.content = vec![ContentCellContent::from(cell())];
     let mut row_content = RowLevelStructuredDocumentTagContent::default();
-    row_content.content = vec![ContentRowContent::TableRow(row)];
+    row_content.content = vec![ContentRowContent::from(row)];
     let mut around_row = RowLevelStructuredDocumentTag::default();
     around_row.content = Some(Box::new(row_content));
     around_row.properties = properties();
     [
-        typed_body(vec![BlockContent::BlockLevelStructuredDocumentTag(block)]),
-        typed_paragraph(vec![ParagraphContent::InlineLevelStructuredDocumentTag(
-            around_run,
-        )]),
-        table_of(vec![ContentRowContent::TableRow(row_of_control)]),
-        table_of(vec![ContentRowContent::RowLevelStructuredDocumentTag(
-            around_row,
-        )]),
+        typed_body(vec![BlockContent::from(block)]),
+        typed_paragraph(vec![ParagraphContent::from(around_run)]),
+        table_of(vec![ContentRowContent::from(row_of_control)]),
+        table_of(vec![ContentRowContent::from(around_row)]),
     ]
 }
 
@@ -899,10 +885,11 @@ fn the_on_off_elements_accept_every_on_off_value() {
 #[test]
 fn an_on_off_element_refuses_a_value_outside_st_on_off() {
     let mut row = TableRowProperties::default();
-    row.content = vec![TableRowPropertiesContent::TableRowCannotBreakAcrossPages(
-        on_off!(TableRowCannotBreakAcrossPages, "maybe"),
-    )];
-    let package = typed_body(vec![BlockContent::Table(table_of_one_cell(row, None))]);
+    row.content = vec![TableRowPropertiesContent::from(on_off!(
+        TableRowCannotBreakAcrossPages,
+        "maybe"
+    ))];
+    let package = typed_body(vec![BlockContent::from(table_of_one_cell(row, None))]);
     refused_with(&package, "w:cantSplit", "InvalidAttributeValue");
 }
 
@@ -911,7 +898,7 @@ fn a_document_background_accepts_filled() {
     let mut shape = VmlBackground::default();
     shape.filled = Some(BooleanValue::from("t".to_owned()));
     let mut background = DocumentBackground::default();
-    background.content = vec![VmlElementContent::DocumentBackground(shape)];
+    background.content = vec![VmlElementContent::from(shape)];
     let mut document = Document::default();
     document.background = Some(Box::new(background));
     document.body = Some(Box::default());
@@ -935,11 +922,11 @@ fn a_paragraph_and_the_settings_accept_smart_tags() {
     let mut properties = SmartTagProperties::default();
     properties.custom_xml_attribute = vec![attribute];
     let mut tag = InlineLevelSmartTag::default();
-    tag.content = vec![ParagraphContent::TextRun(typed_run("LA VIVIENDA"))];
+    tag.content = vec![ParagraphContent::from(typed_run("LA VIVIENDA"))];
     tag.element = Some(XMLName::from("PersonName".to_owned()));
     tag.properties = Some(Box::new(properties));
     tag.uri = Some("urn:schemas-microsoft-com:office:smarttags".to_owned());
-    let paragraph = typed_paragraph(vec![ParagraphContent::InlineLevelSmartTag(tag)]);
+    let paragraph = typed_paragraph(vec![ParagraphContent::from(tag)]);
     accepted_at_every_version(&paragraph, "w:smartTag");
     let mut tag_type = SupplementarySmartTagInformation::default();
     tag_type.name = Some("PersonName".to_owned());
@@ -1092,10 +1079,10 @@ fn an_object_accepts_a_movie() {
     let mut movie = EmbeddedVideo::default();
     movie.id = Some("rId9".to_owned());
     let mut object = EmbeddedObject::default();
-    object.content = Some(Box::new(EmbeddedObjectContent::EmbeddedVideo(movie)));
+    object.content = Some(Box::new(EmbeddedObjectContent::from(movie)));
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::EmbeddedObject(object)];
-    let package = typed_paragraph(vec![ParagraphContent::TextRun(run)]);
+    run.content = vec![TextRunContent::from(object)];
+    let package = typed_paragraph(vec![ParagraphContent::from(run)]);
     accepted_at_every_version(&package, "holds w:movie");
 }
 
@@ -1109,19 +1096,17 @@ fn a_form_field_accepts_a_label_and_a_tab_index() {
     tab_index.val = Some(UnsignedDecimalNumberValue::from("1".to_owned()));
     let mut form_field = FormFieldProperties::default();
     form_field.content = vec![
-        FormFieldPropertiesContent::FormFieldName(name),
-        FormFieldPropertiesContent::StructuredDocumentTagLabel(label),
-        FormFieldPropertiesContent::StructuredDocumentTagNavigationOrderIndex(tab_index),
-        FormFieldPropertiesContent::FormFieldEnabled(FormFieldEnabled::default()),
+        FormFieldPropertiesContent::from(name),
+        FormFieldPropertiesContent::from(label),
+        FormFieldPropertiesContent::from(tab_index),
+        FormFieldPropertiesContent::from(FormFieldEnabled::default()),
     ];
     let mut begin = ComplexFieldCharacter::default();
-    begin.content = Some(Box::new(ComplexFieldCharacterContent::FormFieldProperties(
-        form_field,
-    )));
+    begin.content = Some(Box::new(ComplexFieldCharacterContent::from(form_field)));
     begin.fld_char_type = Some(ComplexFieldCharacterType::from("begin".to_owned()));
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::ComplexFieldCharacter(begin)];
-    let package = typed_paragraph(vec![ParagraphContent::TextRun(run)]);
+    run.content = vec![TextRunContent::from(begin)];
+    let package = typed_paragraph(vec![ParagraphContent::from(run)]);
     accepted_at_every_version(&package, "holds w:label");
     accepted_at_every_version(&package, "holds w:tabIndex");
 }
@@ -1164,12 +1149,12 @@ fn a_frame_accepts_a_title_and_a_long_description_and_a_frameset_a_title() {
         with_web_settings(typed_body(Vec::new()), &web)
     };
     let mut holding_frame = NestedFramesetDefinition::default();
-    holding_frame.content = vec![FramesetDefinitionContent::SingleFrameProperties(frame)];
+    holding_frame.content = vec![FramesetDefinitionContent::from(frame)];
     let frame_package = framed(holding_frame);
     accepted_at_every_version(&frame_package, "holds w:title");
     accepted_at_every_version(&frame_package, "holds w:longDesc");
     let mut titled = NestedFramesetDefinition::default();
-    titled.content = vec![FramesetDefinitionContent::SingleFrameProperties(
+    titled.content = vec![FramesetDefinitionContent::from(
         SingleFrameProperties::default(),
     )];
     titled.frame_or_frameset_title = title();

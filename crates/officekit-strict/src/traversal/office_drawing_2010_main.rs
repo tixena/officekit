@@ -4237,7 +4237,7 @@ impl super::Transform for office_drawing_2010_main::PictureEffectContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_picture_effect_1(self, ctx)
             .or_else(|| transform_picture_effect_2(self, ctx))
@@ -4744,85 +4744,85 @@ fn transform_picture_effect_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2010_main::PictureEffectContent> {
     if let office_drawing_2010_main::PictureEffectContent::ArtisticBlur(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticBlur(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticCement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticCement(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticChalkSketch(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticChalkSketch(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticCrisscrossEtching(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2010_main::PictureEffectContent::ArtisticCrisscrossEtching(node),
         );
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticCutout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticCutout(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticFilmGrain(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticFilmGrain(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticGlass(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticGlass(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticGlowDiffused(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticGlowDiffused(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticGlowEdges(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticGlowEdges(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticLightScreen(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticLightScreen(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticLineDrawing(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticLineDrawing(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticMarker(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticMarker(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticMosiaicBubbles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticMosiaicBubbles(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticPaintBrush(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticPaintBrush(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticPaintStrokes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticPaintStrokes(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticPastelsSmooth(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticPastelsSmooth(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticPencilGrayscale(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticPencilGrayscale(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticPencilSketch(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticPencilSketch(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticPhotocopy(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticPhotocopy(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticPlasticWrap(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticPlasticWrap(node));
     }
     None
@@ -4833,35 +4833,35 @@ fn transform_picture_effect_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2010_main::PictureEffectContent> {
     if let office_drawing_2010_main::PictureEffectContent::ArtisticTexturizer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ArtisticTexturizer(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ArtisticWatercolorSponge(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2010_main::PictureEffectContent::ArtisticWatercolorSponge(node),
         );
     }
     if let office_drawing_2010_main::PictureEffectContent::BackgroundRemoval(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::BackgroundRemoval(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::BrightnessContrast(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::BrightnessContrast(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::ColorTemperature(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::ColorTemperature(node));
     }
     if let office_drawing_2010_main::PictureEffectContent::Saturation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::Saturation(
             node,
         ));
     }
     if let office_drawing_2010_main::PictureEffectContent::SharpenSoften(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2010_main::PictureEffectContent::SharpenSoften(node));
     }
     None

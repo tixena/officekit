@@ -415,11 +415,11 @@ impl Eq for PhTypeExtWith<()> {}
 #[non_exhaustive]
 pub enum PlaceholderTypeContentWith<X: UserData> {
     /// The element `p232:cameo`, a `Cameo`.
-    Cameo(CameoWith<X>),
+    Cameo(Box<CameoWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `p232:unknown`, a `Unknown`.
-    Unknown(UnknownWith<X>),
+    Unknown(Box<UnknownWith<X>>),
 }
 
 /// [`PlaceholderTypeContentWith`] of the tree a read gives, where no node holds anything in
@@ -604,29 +604,33 @@ impl<X: UserData> PlaceholderTypeContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::Cameo(node) => PlaceholderTypeContentWith::Cameo(node.into_user_data()),
+            Self::Cameo(node) => {
+                PlaceholderTypeContentWith::Cameo(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => PlaceholderTypeContentWith::Other(node),
-            Self::Unknown(node) => PlaceholderTypeContentWith::Unknown(node.into_user_data()),
+            Self::Unknown(node) => {
+                PlaceholderTypeContentWith::Unknown(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl<X: UserData> Default for PlaceholderTypeContentWith<X> {
     fn default() -> Self {
-        Self::Cameo(CameoWith::default())
+        Self::Cameo(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for PlaceholderTypeContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_P232, "cameo")) => Self::Cameo(item.read()),
-            Some((NS_P232, "unknown")) => Self::Unknown(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_P232, "cameo")) => Self::Cameo(Box::new(item.read())),
+            Some((NS_P232, "unknown")) => Self::Unknown(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -635,11 +639,28 @@ impl officekit_markup_base::Write for PlaceholderTypeContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::Cameo(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Unknown(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<CameoWith<X>> for PlaceholderTypeContentWith<X> {
+    fn from(arm: CameoWith<X>) -> Self {
+        Self::Cameo(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<UnknownWith<X>> for PlaceholderTypeContentWith<X> {
+    fn from(arm: UnknownWith<X>) -> Self {
+        Self::Unknown(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<PlaceholderTypeContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TypeWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

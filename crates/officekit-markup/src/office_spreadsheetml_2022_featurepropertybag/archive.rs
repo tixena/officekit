@@ -535,27 +535,27 @@ pub struct XfComplementMirror {
 #[rkyv(remote = super::ArrayFeaturePropertyContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ArrayFeaturePropertyContent {
-    BBoolean(super::BBoolean),
-    BagIdUnsignedInt(super::BagIdUnsignedInt),
-    DDouble(super::DDouble),
-    IInteger(super::IInteger),
-    Other(Node),
-    RelString(super::RelString),
-    SString(super::SString),
+    BBoolean(Box<super::BBoolean>),
+    BagIdUnsignedInt(Box<super::BagIdUnsignedInt>),
+    DDouble(Box<super::DDouble>),
+    IInteger(Box<super::IInteger>),
+    Other(Box<Node>),
+    RelString(Box<super::RelString>),
+    SString(Box<super::SString>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::FeaturePropertyBagContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum FeaturePropertyBagContent {
-    A(super::A),
-    BBoolFeatureProperty(super::BBoolFeatureProperty),
-    BagIdBagFeatureProperty(super::BagIdBagFeatureProperty),
-    DDecimalFeatureProperty(super::DDecimalFeatureProperty),
-    IIntFeatureProperty(super::IIntFeatureProperty),
-    Other(Node),
-    RelRelFeatureProperty(super::RelRelFeatureProperty),
-    SStringFeatureProperty(super::SStringFeatureProperty),
+    A(Box<super::A>),
+    BBoolFeatureProperty(Box<super::BBoolFeatureProperty>),
+    BagIdBagFeatureProperty(Box<super::BagIdBagFeatureProperty>),
+    DDecimalFeatureProperty(Box<super::DDecimalFeatureProperty>),
+    IIntFeatureProperty(Box<super::IIntFeatureProperty>),
+    Other(Box<Node>),
+    RelRelFeatureProperty(Box<super::RelRelFeatureProperty>),
+    SStringFeatureProperty(Box<super::SStringFeatureProperty>),
 }
 
 impl From<AMirror> for super::A {

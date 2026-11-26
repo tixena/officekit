@@ -780,27 +780,27 @@ pub struct WordprocessingMLFieldSwitchesMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum NewShapeDefaultsContent {
-    Callout(super::Callout),
-    Extrusion(super::Extrusion),
-    LineStrokeSettings(super::super::vml::LineStrokeSettings),
-    MostRecentlyUsedColors(super::MostRecentlyUsedColors),
-    Other(Node),
-    ShadowEffect(super::super::vml::ShadowEffect),
-    ShapeFillProperties(super::super::vml::ShapeFillProperties),
-    ShapeProtections(super::ShapeProtections),
-    SkewTransform(super::SkewTransform),
-    TextBox(#[rkyv(omit_bounds)] super::super::vml::TextBox),
-    UIDefaultColors(super::UIDefaultColors),
+    Callout(Box<super::Callout>),
+    Extrusion(Box<super::Extrusion>),
+    LineStrokeSettings(Box<super::super::vml::LineStrokeSettings>),
+    MostRecentlyUsedColors(Box<super::MostRecentlyUsedColors>),
+    Other(Box<Node>),
+    ShadowEffect(Box<super::super::vml::ShadowEffect>),
+    ShapeFillProperties(Box<super::super::vml::ShapeFillProperties>),
+    ShapeProtections(Box<super::ShapeProtections>),
+    SkewTransform(Box<super::SkewTransform>),
+    TextBox(#[rkyv(omit_bounds)] Box<super::super::vml::TextBox>),
+    UIDefaultColors(Box<super::UIDefaultColors>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::ShapeLayoutPropertiesContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum ShapeLayoutPropertiesContent {
-    Other(Node),
-    RuleSet(super::RuleSet),
-    ShapeGroupingHistory(super::ShapeGroupingHistory),
-    ShapeIDMap(super::ShapeIDMap),
+    Other(Box<Node>),
+    RuleSet(Box<super::RuleSet>),
+    ShapeGroupingHistory(Box<super::ShapeGroupingHistory>),
+    ShapeIDMap(Box<super::ShapeIDMap>),
 }
 
 impl From<CalloutMirror> for super::Callout {

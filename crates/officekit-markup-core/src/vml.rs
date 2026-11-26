@@ -2265,55 +2265,55 @@ impl Eq for MultiplePathLineWith<()> {}
 #[derive(Clone, Debug, PartialEq)]
 pub enum MultiplePathLineContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
+    AnchorLocationIsLocked(Box<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
+    AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
+    BottomBorder(Box<vml_wordprocessing_drawing::BottomBorderWith<X>>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::CalloutWith<X>),
+    Callout(Box<super::vml_office_drawing::CalloutWith<X>>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
+    DigitalSignatureLine(Box<super::vml_office_drawing::DigitalSignatureLineWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
+    Extrusion(Box<super::vml_office_drawing::ExtrusionWith<X>>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageDataWith<X>),
+    ImageData(Box<ImageDataWith<X>>),
     /// The element `o:ink`, a `Ink`.
-    Ink(super::vml_office_drawing::InkWith<X>),
+    Ink(Box<super::vml_office_drawing::InkWith<X>>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
+    LeftBorder(Box<vml_wordprocessing_drawing::LeftBorderWith<X>>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettingsWith<X>),
+    LineStrokeSettings(Box<LineStrokeSettingsWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
+    RightBorder(Box<vml_wordprocessing_drawing::RightBorderWith<X>>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulasWith<X>),
+    SetOfFormulas(Box<SetOfFormulasWith<X>>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandlesWith<X>),
+    SetOfHandles(Box<SetOfHandlesWith<X>>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffectWith<X>),
+    ShadowEffect(Box<ShadowEffectWith<X>>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
+    ShapeClippingPath(Box<super::vml_office_drawing::ShapeClippingPathWith<X>>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillPropertiesWith<X>),
+    ShapeFillProperties(Box<ShapeFillPropertiesWith<X>>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePathWith<X>),
+    ShapePath(Box<ShapePathWith<X>>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
+    ShapeProtections(Box<super::vml_office_drawing::ShapeProtectionsWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
+    SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBoxWith<X>),
+    TextBox(Box<TextBoxWith<X>>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPathWith<X>),
+    TextLayoutPath(Box<TextLayoutPathWith<X>>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
+    TextWrapping(Box<vml_wordprocessing_drawing::TextWrappingWith<X>>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
+    TopBorder(Box<vml_wordprocessing_drawing::TopBorderWith<X>>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramTextWith<X>>),
 }
 
 /// [`MultiplePathLineContentWith`] of the tree a read gives, where no node holds anything in
@@ -2951,61 +2951,61 @@ impl Eq for ShapeDefinitionWith<()> {}
 #[derive(Clone, Debug, PartialEq)]
 pub enum ShapeDefinitionContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
+    AnchorLocationIsLocked(Box<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
+    AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
+    BottomBorder(Box<vml_wordprocessing_drawing::BottomBorderWith<X>>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::CalloutWith<X>),
+    Callout(Box<super::vml_office_drawing::CalloutWith<X>>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
+    DigitalSignatureLine(Box<super::vml_office_drawing::DigitalSignatureLineWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
+    Extrusion(Box<super::vml_office_drawing::ExtrusionWith<X>>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageDataWith<X>),
+    ImageData(Box<ImageDataWith<X>>),
     /// The element `o:ink`, a `Ink`.
-    Ink(super::vml_office_drawing::InkWith<X>),
+    Ink(Box<super::vml_office_drawing::InkWith<X>>),
     /// The element `pvml:iscomment`, a `InkAnnotationFlag`.
-    InkAnnotationFlag(vml_presentation_drawing::InkAnnotationFlagWith<X>),
+    InkAnnotationFlag(Box<vml_presentation_drawing::InkAnnotationFlagWith<X>>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
+    LeftBorder(Box<vml_wordprocessing_drawing::LeftBorderWith<X>>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettingsWith<X>),
+    LineStrokeSettings(Box<LineStrokeSettingsWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
+    RightBorder(Box<vml_wordprocessing_drawing::RightBorderWith<X>>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulasWith<X>),
+    SetOfFormulas(Box<SetOfFormulasWith<X>>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandlesWith<X>),
+    SetOfHandles(Box<SetOfHandlesWith<X>>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffectWith<X>),
+    ShadowEffect(Box<ShadowEffectWith<X>>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
+    ShapeClippingPath(Box<super::vml_office_drawing::ShapeClippingPathWith<X>>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillPropertiesWith<X>),
+    ShapeFillProperties(Box<ShapeFillPropertiesWith<X>>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePathWith<X>),
+    ShapePath(Box<ShapePathWith<X>>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
+    ShapeProtections(Box<super::vml_office_drawing::ShapeProtectionsWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
+    SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `o:equationxml`, a `StorageForAlternateMathContent`.
     StorageForAlternateMathContent(
-        super::vml_office_drawing::StorageForAlternateMathContentWith<X>,
+        Box<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>,
     ),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBoxWith<X>),
+    TextBox(Box<TextBoxWith<X>>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPathWith<X>),
+    TextLayoutPath(Box<TextLayoutPathWith<X>>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
+    TextWrapping(Box<vml_wordprocessing_drawing::TextWrappingWith<X>>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
+    TopBorder(Box<vml_wordprocessing_drawing::TopBorderWith<X>>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramTextWith<X>>),
 }
 
 /// [`ShapeDefinitionContentWith`] of the tree a read gives, where no node holds anything in
@@ -3024,53 +3024,53 @@ impl Eq for ShapeDefinitionContentWith<()> {}
 #[derive(Clone, Debug, PartialEq)]
 pub enum ShapeElementContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
+    AnchorLocationIsLocked(Box<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
+    AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
+    BottomBorder(Box<vml_wordprocessing_drawing::BottomBorderWith<X>>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::CalloutWith<X>),
+    Callout(Box<super::vml_office_drawing::CalloutWith<X>>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
+    DigitalSignatureLine(Box<super::vml_office_drawing::DigitalSignatureLineWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
+    Extrusion(Box<super::vml_office_drawing::ExtrusionWith<X>>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageDataWith<X>),
+    ImageData(Box<ImageDataWith<X>>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
+    LeftBorder(Box<vml_wordprocessing_drawing::LeftBorderWith<X>>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettingsWith<X>),
+    LineStrokeSettings(Box<LineStrokeSettingsWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
+    RightBorder(Box<vml_wordprocessing_drawing::RightBorderWith<X>>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulasWith<X>),
+    SetOfFormulas(Box<SetOfFormulasWith<X>>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandlesWith<X>),
+    SetOfHandles(Box<SetOfHandlesWith<X>>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffectWith<X>),
+    ShadowEffect(Box<ShadowEffectWith<X>>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
+    ShapeClippingPath(Box<super::vml_office_drawing::ShapeClippingPathWith<X>>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillPropertiesWith<X>),
+    ShapeFillProperties(Box<ShapeFillPropertiesWith<X>>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePathWith<X>),
+    ShapePath(Box<ShapePathWith<X>>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
+    ShapeProtections(Box<super::vml_office_drawing::ShapeProtectionsWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
+    SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBoxWith<X>),
+    TextBox(Box<TextBoxWith<X>>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPathWith<X>),
+    TextLayoutPath(Box<TextLayoutPathWith<X>>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
+    TextWrapping(Box<vml_wordprocessing_drawing::TextWrappingWith<X>>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
+    TopBorder(Box<vml_wordprocessing_drawing::TopBorderWith<X>>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramTextWith<X>>),
 }
 
 /// [`ShapeElementContentWith`] of the tree a read gives, where no node holds anything in
@@ -3293,77 +3293,77 @@ impl Eq for ShapeGroupWith<()> {}
 #[derive(Clone, Debug, PartialEq)]
 pub enum ShapeGroupContentWith<X: UserData> {
     /// The element `w10:anchorlock`, a `AnchorLocationIsLocked`.
-    AnchorLocationIsLocked(vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>),
+    AnchorLocationIsLocked(Box<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>),
     /// The element `v:arc`, a `ArcSegment`.
-    ArcSegment(ArcSegmentWith<X>),
+    ArcSegment(Box<ArcSegmentWith<X>>),
     /// The element `xvml:ClientData`, a `AttachedObjectData`.
-    AttachedObjectData(vml_spreadsheet_drawing::AttachedObjectDataWith<X>),
+    AttachedObjectData(Box<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>),
     /// The element `v:curve`, a `BezierCurve`.
-    BezierCurve(BezierCurveWith<X>),
+    BezierCurve(Box<BezierCurveWith<X>>),
     /// The element `w10:borderbottom`, a `BottomBorder`.
-    BottomBorder(vml_wordprocessing_drawing::BottomBorderWith<X>),
+    BottomBorder(Box<vml_wordprocessing_drawing::BottomBorderWith<X>>),
     /// The element `o:callout`, a `Callout`.
-    Callout(super::vml_office_drawing::CalloutWith<X>),
+    Callout(Box<super::vml_office_drawing::CalloutWith<X>>),
     /// The element `o:signatureline`, a `DigitalSignatureLine`.
-    DigitalSignatureLine(super::vml_office_drawing::DigitalSignatureLineWith<X>),
+    DigitalSignatureLine(Box<super::vml_office_drawing::DigitalSignatureLineWith<X>>),
     /// The element `o:extrusion`, a `Extrusion`.
-    Extrusion(super::vml_office_drawing::ExtrusionWith<X>),
+    Extrusion(Box<super::vml_office_drawing::ExtrusionWith<X>>),
     /// The element `v:imagedata`, a `ImageData`.
-    ImageData(ImageDataWith<X>),
+    ImageData(Box<ImageDataWith<X>>),
     /// The element `v:image`, a `ImageFile`.
-    ImageFile(ImageFileWith<X>),
+    ImageFile(Box<ImageFileWith<X>>),
     /// The element `w10:borderleft`, a `LeftBorder`.
-    LeftBorder(vml_wordprocessing_drawing::LeftBorderWith<X>),
+    LeftBorder(Box<vml_wordprocessing_drawing::LeftBorderWith<X>>),
     /// The element `v:line`, a `Line`.
-    Line(LineWith<X>),
+    Line(Box<LineWith<X>>),
     /// The element `v:stroke`, a `LineStrokeSettings`.
-    LineStrokeSettings(LineStrokeSettingsWith<X>),
+    LineStrokeSettings(Box<LineStrokeSettingsWith<X>>),
     /// The element `v:polyline`, a `MultiplePathLine`.
-    MultiplePathLine(MultiplePathLineWith<X>),
+    MultiplePathLine(Box<MultiplePathLineWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `v:oval`, a `Oval`.
-    Oval(OvalWith<X>),
+    Oval(Box<OvalWith<X>>),
     /// The element `v:rect`, a `Rectangle`.
-    Rectangle(RectangleWith<X>),
+    Rectangle(Box<RectangleWith<X>>),
     /// The element `w10:borderright`, a `RightBorder`.
-    RightBorder(vml_wordprocessing_drawing::RightBorderWith<X>),
+    RightBorder(Box<vml_wordprocessing_drawing::RightBorderWith<X>>),
     /// The element `v:roundrect`, a `RoundedRectangle`.
-    RoundedRectangle(RoundedRectangleWith<X>),
+    RoundedRectangle(Box<RoundedRectangleWith<X>>),
     /// The element `v:formulas`, a `SetOfFormulas`.
-    SetOfFormulas(SetOfFormulasWith<X>),
+    SetOfFormulas(Box<SetOfFormulasWith<X>>),
     /// The element `v:handles`, a `SetOfHandles`.
-    SetOfHandles(SetOfHandlesWith<X>),
+    SetOfHandles(Box<SetOfHandlesWith<X>>),
     /// The element `v:shadow`, a `ShadowEffect`.
-    ShadowEffect(ShadowEffectWith<X>),
+    ShadowEffect(Box<ShadowEffectWith<X>>),
     /// The element `o:clippath`, a `ShapeClippingPath`.
-    ShapeClippingPath(super::vml_office_drawing::ShapeClippingPathWith<X>),
+    ShapeClippingPath(Box<super::vml_office_drawing::ShapeClippingPathWith<X>>),
     /// The element `v:shape`, a `ShapeDefinition`.
-    ShapeDefinition(ShapeDefinitionWith<X>),
+    ShapeDefinition(Box<ShapeDefinitionWith<X>>),
     /// The element `v:fill`, a `ShapeFillProperties`.
-    ShapeFillProperties(ShapeFillPropertiesWith<X>),
+    ShapeFillProperties(Box<ShapeFillPropertiesWith<X>>),
     /// The element `v:group`, a `ShapeGroup`.
-    ShapeGroup(ShapeGroupWith<X>),
+    ShapeGroup(Box<ShapeGroupWith<X>>),
     /// The element `v:path`, a `ShapePath`.
-    ShapePath(ShapePathWith<X>),
+    ShapePath(Box<ShapePathWith<X>>),
     /// The element `o:lock`, a `ShapeProtections`.
-    ShapeProtections(super::vml_office_drawing::ShapeProtectionsWith<X>),
+    ShapeProtections(Box<super::vml_office_drawing::ShapeProtectionsWith<X>>),
     /// The element `v:shapetype`, a `ShapeTemplate`.
-    ShapeTemplate(ShapeTemplateWith<X>),
+    ShapeTemplate(Box<ShapeTemplateWith<X>>),
     /// The element `o:skew`, a `SkewTransform`.
-    SkewTransform(super::vml_office_drawing::SkewTransformWith<X>),
+    SkewTransform(Box<super::vml_office_drawing::SkewTransformWith<X>>),
     /// The element `v:textbox`, a `TextBox`.
-    TextBox(TextBoxWith<X>),
+    TextBox(Box<TextBoxWith<X>>),
     /// The element `v:textpath`, a `TextLayoutPath`.
-    TextLayoutPath(TextLayoutPathWith<X>),
+    TextLayoutPath(Box<TextLayoutPathWith<X>>),
     /// The element `w10:wrap`, a `TextWrapping`.
-    TextWrapping(vml_wordprocessing_drawing::TextWrappingWith<X>),
+    TextWrapping(Box<vml_wordprocessing_drawing::TextWrappingWith<X>>),
     /// The element `w10:bordertop`, a `TopBorder`.
-    TopBorder(vml_wordprocessing_drawing::TopBorderWith<X>),
+    TopBorder(Box<vml_wordprocessing_drawing::TopBorderWith<X>>),
     /// The element `o:diagram`, a `VMLDiagram`.
-    VMLDiagram(super::vml_office_drawing::VMLDiagramWith<X>),
+    VMLDiagram(Box<super::vml_office_drawing::VMLDiagramWith<X>>),
     /// The element `pvml:textdata`, a `VMLDiagramText`.
-    VMLDiagramText(vml_presentation_drawing::VMLDiagramTextWith<X>),
+    VMLDiagramText(Box<vml_presentation_drawing::VMLDiagramTextWith<X>>),
 }
 
 /// [`ShapeGroupContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -3818,9 +3818,9 @@ impl Eq for TextBoxWith<()> {}
 #[derive(Clone, Debug, PartialEq)]
 pub enum TextBoxContentWith<X: UserData> {
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `w:txbxContent`, a `RichTextBoxContentContainer`.
-    RichTextBoxContentContainer(super::wordprocessing::RichTextBoxContentContainerWith<X>),
+    RichTextBoxContentContainer(Box<super::wordprocessing::RichTextBoxContentContainerWith<X>>),
 }
 
 /// [`TextBoxContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -5165,63 +5165,77 @@ impl<X: UserData> MultiplePathLineContentWith<X> {
     {
         match self {
             Self::AnchorLocationIsLocked(node) => {
-                MultiplePathLineContentWith::AnchorLocationIsLocked(node.into_user_data())
+                MultiplePathLineContentWith::AnchorLocationIsLocked(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::AttachedObjectData(node) => {
-                MultiplePathLineContentWith::AttachedObjectData(node.into_user_data())
+                MultiplePathLineContentWith::AttachedObjectData(Box::new((*node).into_user_data()))
             }
             Self::BottomBorder(node) => {
-                MultiplePathLineContentWith::BottomBorder(node.into_user_data())
+                MultiplePathLineContentWith::BottomBorder(Box::new((*node).into_user_data()))
             }
-            Self::Callout(node) => MultiplePathLineContentWith::Callout(node.into_user_data()),
-            Self::DigitalSignatureLine(node) => {
-                MultiplePathLineContentWith::DigitalSignatureLine(node.into_user_data())
+            Self::Callout(node) => {
+                MultiplePathLineContentWith::Callout(Box::new((*node).into_user_data()))
             }
-            Self::Extrusion(node) => MultiplePathLineContentWith::Extrusion(node.into_user_data()),
-            Self::ImageData(node) => MultiplePathLineContentWith::ImageData(node.into_user_data()),
-            Self::Ink(node) => MultiplePathLineContentWith::Ink(node.into_user_data()),
+            Self::DigitalSignatureLine(node) => MultiplePathLineContentWith::DigitalSignatureLine(
+                Box::new((*node).into_user_data()),
+            ),
+            Self::Extrusion(node) => {
+                MultiplePathLineContentWith::Extrusion(Box::new((*node).into_user_data()))
+            }
+            Self::ImageData(node) => {
+                MultiplePathLineContentWith::ImageData(Box::new((*node).into_user_data()))
+            }
+            Self::Ink(node) => MultiplePathLineContentWith::Ink(Box::new((*node).into_user_data())),
             Self::LeftBorder(node) => {
-                MultiplePathLineContentWith::LeftBorder(node.into_user_data())
+                MultiplePathLineContentWith::LeftBorder(Box::new((*node).into_user_data()))
             }
             Self::LineStrokeSettings(node) => {
-                MultiplePathLineContentWith::LineStrokeSettings(node.into_user_data())
+                MultiplePathLineContentWith::LineStrokeSettings(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => MultiplePathLineContentWith::Other(node),
             Self::RightBorder(node) => {
-                MultiplePathLineContentWith::RightBorder(node.into_user_data())
+                MultiplePathLineContentWith::RightBorder(Box::new((*node).into_user_data()))
             }
             Self::SetOfFormulas(node) => {
-                MultiplePathLineContentWith::SetOfFormulas(node.into_user_data())
+                MultiplePathLineContentWith::SetOfFormulas(Box::new((*node).into_user_data()))
             }
             Self::SetOfHandles(node) => {
-                MultiplePathLineContentWith::SetOfHandles(node.into_user_data())
+                MultiplePathLineContentWith::SetOfHandles(Box::new((*node).into_user_data()))
             }
             Self::ShadowEffect(node) => {
-                MultiplePathLineContentWith::ShadowEffect(node.into_user_data())
+                MultiplePathLineContentWith::ShadowEffect(Box::new((*node).into_user_data()))
             }
             Self::ShapeClippingPath(node) => {
-                MultiplePathLineContentWith::ShapeClippingPath(node.into_user_data())
+                MultiplePathLineContentWith::ShapeClippingPath(Box::new((*node).into_user_data()))
             }
             Self::ShapeFillProperties(node) => {
-                MultiplePathLineContentWith::ShapeFillProperties(node.into_user_data())
+                MultiplePathLineContentWith::ShapeFillProperties(Box::new((*node).into_user_data()))
             }
-            Self::ShapePath(node) => MultiplePathLineContentWith::ShapePath(node.into_user_data()),
+            Self::ShapePath(node) => {
+                MultiplePathLineContentWith::ShapePath(Box::new((*node).into_user_data()))
+            }
             Self::ShapeProtections(node) => {
-                MultiplePathLineContentWith::ShapeProtections(node.into_user_data())
+                MultiplePathLineContentWith::ShapeProtections(Box::new((*node).into_user_data()))
             }
             Self::SkewTransform(node) => {
-                MultiplePathLineContentWith::SkewTransform(node.into_user_data())
+                MultiplePathLineContentWith::SkewTransform(Box::new((*node).into_user_data()))
             }
-            Self::TextBox(node) => MultiplePathLineContentWith::TextBox(node.into_user_data()),
+            Self::TextBox(node) => {
+                MultiplePathLineContentWith::TextBox(Box::new((*node).into_user_data()))
+            }
             Self::TextLayoutPath(node) => {
-                MultiplePathLineContentWith::TextLayoutPath(node.into_user_data())
+                MultiplePathLineContentWith::TextLayoutPath(Box::new((*node).into_user_data()))
             }
             Self::TextWrapping(node) => {
-                MultiplePathLineContentWith::TextWrapping(node.into_user_data())
+                MultiplePathLineContentWith::TextWrapping(Box::new((*node).into_user_data()))
             }
-            Self::TopBorder(node) => MultiplePathLineContentWith::TopBorder(node.into_user_data()),
+            Self::TopBorder(node) => {
+                MultiplePathLineContentWith::TopBorder(Box::new((*node).into_user_data()))
+            }
             Self::VMLDiagramText(node) => {
-                MultiplePathLineContentWith::VMLDiagramText(node.into_user_data())
+                MultiplePathLineContentWith::VMLDiagramText(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -5229,36 +5243,36 @@ impl<X: UserData> MultiplePathLineContentWith<X> {
 
 impl officekit_markup_base::Read for MultiplePathLineContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
-            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
-            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
-            Some((NS_O, "callout")) => Self::Callout(item.read()),
-            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
-            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
-            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
-            Some((NS_O, "ink")) => Self::Ink(item.read()),
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
-            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
-            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
-            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
-            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
-            Some((NS_V, "path")) => Self::ShapePath(item.read()),
-            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
-            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
-            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
-            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(Box::new(item.read())),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(Box::new(item.read())),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(Box::new(item.read())),
+            Some((NS_O, "callout")) => Self::Callout(Box::new(item.read())),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(Box::new(item.read())),
+            Some((NS_O, "extrusion")) => Self::Extrusion(Box::new(item.read())),
+            Some((NS_V, "imagedata")) => Self::ImageData(Box::new(item.read())),
+            Some((NS_O, "ink")) => Self::Ink(Box::new(item.read())),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(Box::new(item.read())),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(Box::new(item.read())),
+            Some((NS_W10, "borderright")) => Self::RightBorder(Box::new(item.read())),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(Box::new(item.read())),
+            Some((NS_V, "handles")) => Self::SetOfHandles(Box::new(item.read())),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(Box::new(item.read())),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(Box::new(item.read())),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(Box::new(item.read())),
+            Some((NS_V, "path")) => Self::ShapePath(Box::new(item.read())),
+            Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
+            Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
+            Some((NS_V, "textbox")) => Self::TextBox(Box::new(item.read())),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(Box::new(item.read())),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(Box::new(item.read())),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(Box::new(item.read())),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -5276,7 +5290,7 @@ impl officekit_markup_base::Write for MultiplePathLineContent {
             Self::Ink(arm) => arm.write_into(writer),
             Self::LeftBorder(arm) => arm.write_into(writer),
             Self::LineStrokeSettings(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RightBorder(arm) => arm.write_into(writer),
             Self::SetOfFormulas(arm) => arm.write_into(writer),
             Self::SetOfHandles(arm) => arm.write_into(writer),
@@ -5294,6 +5308,183 @@ impl officekit_markup_base::Write for MultiplePathLineContent {
         }
     }
 }
+
+impl<X: UserData> From<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>) -> Self {
+        Self::AnchorLocationIsLocked(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_spreadsheet_drawing::AttachedObjectDataWith<X>) -> Self {
+        Self::AttachedObjectData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::BottomBorderWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::BottomBorderWith<X>) -> Self {
+        Self::BottomBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::CalloutWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::CalloutWith<X>) -> Self {
+        Self::Callout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::DigitalSignatureLineWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::DigitalSignatureLineWith<X>) -> Self {
+        Self::DigitalSignatureLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ExtrusionWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ExtrusionWith<X>) -> Self {
+        Self::Extrusion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ImageDataWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: ImageDataWith<X>) -> Self {
+        Self::ImageData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::InkWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: super::vml_office_drawing::InkWith<X>) -> Self {
+        Self::Ink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::LeftBorderWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::LeftBorderWith<X>) -> Self {
+        Self::LeftBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineStrokeSettingsWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: LineStrokeSettingsWith<X>) -> Self {
+        Self::LineStrokeSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::RightBorderWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::RightBorderWith<X>) -> Self {
+        Self::RightBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfFormulasWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: SetOfFormulasWith<X>) -> Self {
+        Self::SetOfFormulas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfHandlesWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: SetOfHandlesWith<X>) -> Self {
+        Self::SetOfHandles(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShadowEffectWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: ShadowEffectWith<X>) -> Self {
+        Self::ShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeClippingPathWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeClippingPathWith<X>) -> Self {
+        Self::ShapeClippingPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeFillPropertiesWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: ShapeFillPropertiesWith<X>) -> Self {
+        Self::ShapeFillProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapePathWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: ShapePathWith<X>) -> Self {
+        Self::ShapePath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeProtectionsWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeProtectionsWith<X>) -> Self {
+        Self::ShapeProtections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::SkewTransformWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::SkewTransformWith<X>) -> Self {
+        Self::SkewTransform(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextBoxWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: TextBoxWith<X>) -> Self {
+        Self::TextBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextLayoutPathWith<X>> for MultiplePathLineContentWith<X> {
+    fn from(arm: TextLayoutPathWith<X>) -> Self {
+        Self::TextLayoutPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TextWrappingWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TextWrappingWith<X>) -> Self {
+        Self::TextWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TopBorderWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TopBorderWith<X>) -> Self {
+        Self::TopBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::VMLDiagramTextWith<X>>
+    for MultiplePathLineContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::VMLDiagramTextWith<X>) -> Self {
+        Self::VMLDiagramText(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<MultiplePathLineContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<ShapeElementContent> for MultiplePathLineContent {
     fn from(item: ShapeElementContent) -> Self {
@@ -6231,67 +6422,85 @@ impl<X: UserData> ShapeDefinitionContentWith<X> {
     {
         match self {
             Self::AnchorLocationIsLocked(node) => {
-                ShapeDefinitionContentWith::AnchorLocationIsLocked(node.into_user_data())
+                ShapeDefinitionContentWith::AnchorLocationIsLocked(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
             Self::AttachedObjectData(node) => {
-                ShapeDefinitionContentWith::AttachedObjectData(node.into_user_data())
+                ShapeDefinitionContentWith::AttachedObjectData(Box::new((*node).into_user_data()))
             }
             Self::BottomBorder(node) => {
-                ShapeDefinitionContentWith::BottomBorder(node.into_user_data())
+                ShapeDefinitionContentWith::BottomBorder(Box::new((*node).into_user_data()))
             }
-            Self::Callout(node) => ShapeDefinitionContentWith::Callout(node.into_user_data()),
+            Self::Callout(node) => {
+                ShapeDefinitionContentWith::Callout(Box::new((*node).into_user_data()))
+            }
             Self::DigitalSignatureLine(node) => {
-                ShapeDefinitionContentWith::DigitalSignatureLine(node.into_user_data())
+                ShapeDefinitionContentWith::DigitalSignatureLine(Box::new((*node).into_user_data()))
             }
-            Self::Extrusion(node) => ShapeDefinitionContentWith::Extrusion(node.into_user_data()),
-            Self::ImageData(node) => ShapeDefinitionContentWith::ImageData(node.into_user_data()),
-            Self::Ink(node) => ShapeDefinitionContentWith::Ink(node.into_user_data()),
+            Self::Extrusion(node) => {
+                ShapeDefinitionContentWith::Extrusion(Box::new((*node).into_user_data()))
+            }
+            Self::ImageData(node) => {
+                ShapeDefinitionContentWith::ImageData(Box::new((*node).into_user_data()))
+            }
+            Self::Ink(node) => ShapeDefinitionContentWith::Ink(Box::new((*node).into_user_data())),
             Self::InkAnnotationFlag(node) => {
-                ShapeDefinitionContentWith::InkAnnotationFlag(node.into_user_data())
+                ShapeDefinitionContentWith::InkAnnotationFlag(Box::new((*node).into_user_data()))
             }
-            Self::LeftBorder(node) => ShapeDefinitionContentWith::LeftBorder(node.into_user_data()),
+            Self::LeftBorder(node) => {
+                ShapeDefinitionContentWith::LeftBorder(Box::new((*node).into_user_data()))
+            }
             Self::LineStrokeSettings(node) => {
-                ShapeDefinitionContentWith::LineStrokeSettings(node.into_user_data())
+                ShapeDefinitionContentWith::LineStrokeSettings(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ShapeDefinitionContentWith::Other(node),
             Self::RightBorder(node) => {
-                ShapeDefinitionContentWith::RightBorder(node.into_user_data())
+                ShapeDefinitionContentWith::RightBorder(Box::new((*node).into_user_data()))
             }
             Self::SetOfFormulas(node) => {
-                ShapeDefinitionContentWith::SetOfFormulas(node.into_user_data())
+                ShapeDefinitionContentWith::SetOfFormulas(Box::new((*node).into_user_data()))
             }
             Self::SetOfHandles(node) => {
-                ShapeDefinitionContentWith::SetOfHandles(node.into_user_data())
+                ShapeDefinitionContentWith::SetOfHandles(Box::new((*node).into_user_data()))
             }
             Self::ShadowEffect(node) => {
-                ShapeDefinitionContentWith::ShadowEffect(node.into_user_data())
+                ShapeDefinitionContentWith::ShadowEffect(Box::new((*node).into_user_data()))
             }
             Self::ShapeClippingPath(node) => {
-                ShapeDefinitionContentWith::ShapeClippingPath(node.into_user_data())
+                ShapeDefinitionContentWith::ShapeClippingPath(Box::new((*node).into_user_data()))
             }
             Self::ShapeFillProperties(node) => {
-                ShapeDefinitionContentWith::ShapeFillProperties(node.into_user_data())
+                ShapeDefinitionContentWith::ShapeFillProperties(Box::new((*node).into_user_data()))
             }
-            Self::ShapePath(node) => ShapeDefinitionContentWith::ShapePath(node.into_user_data()),
+            Self::ShapePath(node) => {
+                ShapeDefinitionContentWith::ShapePath(Box::new((*node).into_user_data()))
+            }
             Self::ShapeProtections(node) => {
-                ShapeDefinitionContentWith::ShapeProtections(node.into_user_data())
+                ShapeDefinitionContentWith::ShapeProtections(Box::new((*node).into_user_data()))
             }
             Self::SkewTransform(node) => {
-                ShapeDefinitionContentWith::SkewTransform(node.into_user_data())
+                ShapeDefinitionContentWith::SkewTransform(Box::new((*node).into_user_data()))
             }
             Self::StorageForAlternateMathContent(node) => {
-                ShapeDefinitionContentWith::StorageForAlternateMathContent(node.into_user_data())
+                ShapeDefinitionContentWith::StorageForAlternateMathContent(Box::new(
+                    (*node).into_user_data(),
+                ))
             }
-            Self::TextBox(node) => ShapeDefinitionContentWith::TextBox(node.into_user_data()),
+            Self::TextBox(node) => {
+                ShapeDefinitionContentWith::TextBox(Box::new((*node).into_user_data()))
+            }
             Self::TextLayoutPath(node) => {
-                ShapeDefinitionContentWith::TextLayoutPath(node.into_user_data())
+                ShapeDefinitionContentWith::TextLayoutPath(Box::new((*node).into_user_data()))
             }
             Self::TextWrapping(node) => {
-                ShapeDefinitionContentWith::TextWrapping(node.into_user_data())
+                ShapeDefinitionContentWith::TextWrapping(Box::new((*node).into_user_data()))
             }
-            Self::TopBorder(node) => ShapeDefinitionContentWith::TopBorder(node.into_user_data()),
+            Self::TopBorder(node) => {
+                ShapeDefinitionContentWith::TopBorder(Box::new((*node).into_user_data()))
+            }
             Self::VMLDiagramText(node) => {
-                ShapeDefinitionContentWith::VMLDiagramText(node.into_user_data())
+                ShapeDefinitionContentWith::VMLDiagramText(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -6299,38 +6508,40 @@ impl<X: UserData> ShapeDefinitionContentWith<X> {
 
 impl officekit_markup_base::Read for ShapeDefinitionContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
-            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
-            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
-            Some((NS_O, "callout")) => Self::Callout(item.read()),
-            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
-            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
-            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
-            Some((NS_O, "ink")) => Self::Ink(item.read()),
-            Some((NS_PVML, "iscomment")) => Self::InkAnnotationFlag(item.read()),
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
-            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
-            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
-            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
-            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
-            Some((NS_V, "path")) => Self::ShapePath(item.read()),
-            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
-            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
-            Some((NS_O, "equationxml")) => Self::StorageForAlternateMathContent(item.read()),
-            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
-            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(Box::new(item.read())),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(Box::new(item.read())),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(Box::new(item.read())),
+            Some((NS_O, "callout")) => Self::Callout(Box::new(item.read())),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(Box::new(item.read())),
+            Some((NS_O, "extrusion")) => Self::Extrusion(Box::new(item.read())),
+            Some((NS_V, "imagedata")) => Self::ImageData(Box::new(item.read())),
+            Some((NS_O, "ink")) => Self::Ink(Box::new(item.read())),
+            Some((NS_PVML, "iscomment")) => Self::InkAnnotationFlag(Box::new(item.read())),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(Box::new(item.read())),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(Box::new(item.read())),
+            Some((NS_W10, "borderright")) => Self::RightBorder(Box::new(item.read())),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(Box::new(item.read())),
+            Some((NS_V, "handles")) => Self::SetOfHandles(Box::new(item.read())),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(Box::new(item.read())),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(Box::new(item.read())),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(Box::new(item.read())),
+            Some((NS_V, "path")) => Self::ShapePath(Box::new(item.read())),
+            Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
+            Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
+            Some((NS_O, "equationxml")) => {
+                Self::StorageForAlternateMathContent(Box::new(item.read()))
+            }
+            Some((NS_V, "textbox")) => Self::TextBox(Box::new(item.read())),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(Box::new(item.read())),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(Box::new(item.read())),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(Box::new(item.read())),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -6349,7 +6560,7 @@ impl officekit_markup_base::Write for ShapeDefinitionContent {
             Self::InkAnnotationFlag(arm) => arm.write_into(writer),
             Self::LeftBorder(arm) => arm.write_into(writer),
             Self::LineStrokeSettings(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RightBorder(arm) => arm.write_into(writer),
             Self::SetOfFormulas(arm) => arm.write_into(writer),
             Self::SetOfHandles(arm) => arm.write_into(writer),
@@ -6368,6 +6579,199 @@ impl officekit_markup_base::Write for ShapeDefinitionContent {
         }
     }
 }
+
+impl<X: UserData> From<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>) -> Self {
+        Self::AnchorLocationIsLocked(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_spreadsheet_drawing::AttachedObjectDataWith<X>) -> Self {
+        Self::AttachedObjectData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::BottomBorderWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::BottomBorderWith<X>) -> Self {
+        Self::BottomBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::CalloutWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::CalloutWith<X>) -> Self {
+        Self::Callout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::DigitalSignatureLineWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::DigitalSignatureLineWith<X>) -> Self {
+        Self::DigitalSignatureLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ExtrusionWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ExtrusionWith<X>) -> Self {
+        Self::Extrusion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ImageDataWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: ImageDataWith<X>) -> Self {
+        Self::ImageData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::InkWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: super::vml_office_drawing::InkWith<X>) -> Self {
+        Self::Ink(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::InkAnnotationFlagWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::InkAnnotationFlagWith<X>) -> Self {
+        Self::InkAnnotationFlag(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::LeftBorderWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::LeftBorderWith<X>) -> Self {
+        Self::LeftBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineStrokeSettingsWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: LineStrokeSettingsWith<X>) -> Self {
+        Self::LineStrokeSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::RightBorderWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::RightBorderWith<X>) -> Self {
+        Self::RightBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfFormulasWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: SetOfFormulasWith<X>) -> Self {
+        Self::SetOfFormulas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfHandlesWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: SetOfHandlesWith<X>) -> Self {
+        Self::SetOfHandles(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShadowEffectWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: ShadowEffectWith<X>) -> Self {
+        Self::ShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeClippingPathWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeClippingPathWith<X>) -> Self {
+        Self::ShapeClippingPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeFillPropertiesWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: ShapeFillPropertiesWith<X>) -> Self {
+        Self::ShapeFillProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapePathWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: ShapePathWith<X>) -> Self {
+        Self::ShapePath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeProtectionsWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeProtectionsWith<X>) -> Self {
+        Self::ShapeProtections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::SkewTransformWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::SkewTransformWith<X>) -> Self {
+        Self::SkewTransform(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::StorageForAlternateMathContentWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::StorageForAlternateMathContentWith<X>) -> Self {
+        Self::StorageForAlternateMathContent(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextBoxWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: TextBoxWith<X>) -> Self {
+        Self::TextBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextLayoutPathWith<X>> for ShapeDefinitionContentWith<X> {
+    fn from(arm: TextLayoutPathWith<X>) -> Self {
+        Self::TextLayoutPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TextWrappingWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TextWrappingWith<X>) -> Self {
+        Self::TextWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TopBorderWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TopBorderWith<X>) -> Self {
+        Self::TopBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::VMLDiagramTextWith<X>>
+    for ShapeDefinitionContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::VMLDiagramTextWith<X>) -> Self {
+        Self::VMLDiagramText(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeDefinitionContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<ShapeElementContent> for ShapeDefinitionContent {
     fn from(item: ShapeElementContent) -> Self {
@@ -6531,58 +6935,74 @@ impl<X: UserData> ShapeElementContentWith<X> {
     {
         match self {
             Self::AnchorLocationIsLocked(node) => {
-                ShapeElementContentWith::AnchorLocationIsLocked(node.into_user_data())
+                ShapeElementContentWith::AnchorLocationIsLocked(Box::new((*node).into_user_data()))
             }
             Self::AttachedObjectData(node) => {
-                ShapeElementContentWith::AttachedObjectData(node.into_user_data())
+                ShapeElementContentWith::AttachedObjectData(Box::new((*node).into_user_data()))
             }
             Self::BottomBorder(node) => {
-                ShapeElementContentWith::BottomBorder(node.into_user_data())
+                ShapeElementContentWith::BottomBorder(Box::new((*node).into_user_data()))
             }
-            Self::Callout(node) => ShapeElementContentWith::Callout(node.into_user_data()),
+            Self::Callout(node) => {
+                ShapeElementContentWith::Callout(Box::new((*node).into_user_data()))
+            }
             Self::DigitalSignatureLine(node) => {
-                ShapeElementContentWith::DigitalSignatureLine(node.into_user_data())
+                ShapeElementContentWith::DigitalSignatureLine(Box::new((*node).into_user_data()))
             }
-            Self::Extrusion(node) => ShapeElementContentWith::Extrusion(node.into_user_data()),
-            Self::ImageData(node) => ShapeElementContentWith::ImageData(node.into_user_data()),
-            Self::LeftBorder(node) => ShapeElementContentWith::LeftBorder(node.into_user_data()),
+            Self::Extrusion(node) => {
+                ShapeElementContentWith::Extrusion(Box::new((*node).into_user_data()))
+            }
+            Self::ImageData(node) => {
+                ShapeElementContentWith::ImageData(Box::new((*node).into_user_data()))
+            }
+            Self::LeftBorder(node) => {
+                ShapeElementContentWith::LeftBorder(Box::new((*node).into_user_data()))
+            }
             Self::LineStrokeSettings(node) => {
-                ShapeElementContentWith::LineStrokeSettings(node.into_user_data())
+                ShapeElementContentWith::LineStrokeSettings(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ShapeElementContentWith::Other(node),
-            Self::RightBorder(node) => ShapeElementContentWith::RightBorder(node.into_user_data()),
+            Self::RightBorder(node) => {
+                ShapeElementContentWith::RightBorder(Box::new((*node).into_user_data()))
+            }
             Self::SetOfFormulas(node) => {
-                ShapeElementContentWith::SetOfFormulas(node.into_user_data())
+                ShapeElementContentWith::SetOfFormulas(Box::new((*node).into_user_data()))
             }
             Self::SetOfHandles(node) => {
-                ShapeElementContentWith::SetOfHandles(node.into_user_data())
+                ShapeElementContentWith::SetOfHandles(Box::new((*node).into_user_data()))
             }
             Self::ShadowEffect(node) => {
-                ShapeElementContentWith::ShadowEffect(node.into_user_data())
+                ShapeElementContentWith::ShadowEffect(Box::new((*node).into_user_data()))
             }
             Self::ShapeClippingPath(node) => {
-                ShapeElementContentWith::ShapeClippingPath(node.into_user_data())
+                ShapeElementContentWith::ShapeClippingPath(Box::new((*node).into_user_data()))
             }
             Self::ShapeFillProperties(node) => {
-                ShapeElementContentWith::ShapeFillProperties(node.into_user_data())
+                ShapeElementContentWith::ShapeFillProperties(Box::new((*node).into_user_data()))
             }
-            Self::ShapePath(node) => ShapeElementContentWith::ShapePath(node.into_user_data()),
+            Self::ShapePath(node) => {
+                ShapeElementContentWith::ShapePath(Box::new((*node).into_user_data()))
+            }
             Self::ShapeProtections(node) => {
-                ShapeElementContentWith::ShapeProtections(node.into_user_data())
+                ShapeElementContentWith::ShapeProtections(Box::new((*node).into_user_data()))
             }
             Self::SkewTransform(node) => {
-                ShapeElementContentWith::SkewTransform(node.into_user_data())
+                ShapeElementContentWith::SkewTransform(Box::new((*node).into_user_data()))
             }
-            Self::TextBox(node) => ShapeElementContentWith::TextBox(node.into_user_data()),
+            Self::TextBox(node) => {
+                ShapeElementContentWith::TextBox(Box::new((*node).into_user_data()))
+            }
             Self::TextLayoutPath(node) => {
-                ShapeElementContentWith::TextLayoutPath(node.into_user_data())
+                ShapeElementContentWith::TextLayoutPath(Box::new((*node).into_user_data()))
             }
             Self::TextWrapping(node) => {
-                ShapeElementContentWith::TextWrapping(node.into_user_data())
+                ShapeElementContentWith::TextWrapping(Box::new((*node).into_user_data()))
             }
-            Self::TopBorder(node) => ShapeElementContentWith::TopBorder(node.into_user_data()),
+            Self::TopBorder(node) => {
+                ShapeElementContentWith::TopBorder(Box::new((*node).into_user_data()))
+            }
             Self::VMLDiagramText(node) => {
-                ShapeElementContentWith::VMLDiagramText(node.into_user_data())
+                ShapeElementContentWith::VMLDiagramText(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -6590,35 +7010,35 @@ impl<X: UserData> ShapeElementContentWith<X> {
 
 impl officekit_markup_base::Read for ShapeElementContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
-            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
-            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
-            Some((NS_O, "callout")) => Self::Callout(item.read()),
-            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
-            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
-            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
-            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
-            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
-            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
-            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
-            Some((NS_V, "path")) => Self::ShapePath(item.read()),
-            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
-            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
-            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
-            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(Box::new(item.read())),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(Box::new(item.read())),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(Box::new(item.read())),
+            Some((NS_O, "callout")) => Self::Callout(Box::new(item.read())),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(Box::new(item.read())),
+            Some((NS_O, "extrusion")) => Self::Extrusion(Box::new(item.read())),
+            Some((NS_V, "imagedata")) => Self::ImageData(Box::new(item.read())),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(Box::new(item.read())),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(Box::new(item.read())),
+            Some((NS_W10, "borderright")) => Self::RightBorder(Box::new(item.read())),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(Box::new(item.read())),
+            Some((NS_V, "handles")) => Self::SetOfHandles(Box::new(item.read())),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(Box::new(item.read())),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(Box::new(item.read())),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(Box::new(item.read())),
+            Some((NS_V, "path")) => Self::ShapePath(Box::new(item.read())),
+            Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
+            Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
+            Some((NS_V, "textbox")) => Self::TextBox(Box::new(item.read())),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(Box::new(item.read())),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(Box::new(item.read())),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(Box::new(item.read())),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -6635,7 +7055,7 @@ impl officekit_markup_base::Write for ShapeElementContent {
             Self::ImageData(arm) => arm.write_into(writer),
             Self::LeftBorder(arm) => arm.write_into(writer),
             Self::LineStrokeSettings(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RightBorder(arm) => arm.write_into(writer),
             Self::SetOfFormulas(arm) => arm.write_into(writer),
             Self::SetOfHandles(arm) => arm.write_into(writer),
@@ -6653,6 +7073,173 @@ impl officekit_markup_base::Write for ShapeElementContent {
         }
     }
 }
+
+impl<X: UserData> From<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>) -> Self {
+        Self::AnchorLocationIsLocked(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_spreadsheet_drawing::AttachedObjectDataWith<X>) -> Self {
+        Self::AttachedObjectData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::BottomBorderWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::BottomBorderWith<X>) -> Self {
+        Self::BottomBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::CalloutWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: super::vml_office_drawing::CalloutWith<X>) -> Self {
+        Self::Callout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::DigitalSignatureLineWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::DigitalSignatureLineWith<X>) -> Self {
+        Self::DigitalSignatureLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ExtrusionWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: super::vml_office_drawing::ExtrusionWith<X>) -> Self {
+        Self::Extrusion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ImageDataWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: ImageDataWith<X>) -> Self {
+        Self::ImageData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::LeftBorderWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::LeftBorderWith<X>) -> Self {
+        Self::LeftBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineStrokeSettingsWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: LineStrokeSettingsWith<X>) -> Self {
+        Self::LineStrokeSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::RightBorderWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::RightBorderWith<X>) -> Self {
+        Self::RightBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfFormulasWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: SetOfFormulasWith<X>) -> Self {
+        Self::SetOfFormulas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfHandlesWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: SetOfHandlesWith<X>) -> Self {
+        Self::SetOfHandles(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShadowEffectWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: ShadowEffectWith<X>) -> Self {
+        Self::ShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeClippingPathWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeClippingPathWith<X>) -> Self {
+        Self::ShapeClippingPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeFillPropertiesWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: ShapeFillPropertiesWith<X>) -> Self {
+        Self::ShapeFillProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapePathWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: ShapePathWith<X>) -> Self {
+        Self::ShapePath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeProtectionsWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeProtectionsWith<X>) -> Self {
+        Self::ShapeProtections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::SkewTransformWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::SkewTransformWith<X>) -> Self {
+        Self::SkewTransform(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextBoxWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: TextBoxWith<X>) -> Self {
+        Self::TextBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextLayoutPathWith<X>> for ShapeElementContentWith<X> {
+    fn from(arm: TextLayoutPathWith<X>) -> Self {
+        Self::TextLayoutPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TextWrappingWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TextWrappingWith<X>) -> Self {
+        Self::TextWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TopBorderWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TopBorderWith<X>) -> Self {
+        Self::TopBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::VMLDiagramTextWith<X>>
+    for ShapeElementContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::VMLDiagramTextWith<X>) -> Self {
+        Self::VMLDiagramText(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeElementContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShapeFillPropertiesWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -6948,120 +7535,65 @@ impl<X: UserData> ShapeGroupContentWith<X> {
     where
         Y: UserData,
     {
-        match self {
-            Self::AnchorLocationIsLocked(node) => {
-                ShapeGroupContentWith::AnchorLocationIsLocked(node.into_user_data())
-            }
-            Self::ArcSegment(node) => ShapeGroupContentWith::ArcSegment(node.into_user_data()),
-            Self::AttachedObjectData(node) => {
-                ShapeGroupContentWith::AttachedObjectData(node.into_user_data())
-            }
-            Self::BezierCurve(node) => ShapeGroupContentWith::BezierCurve(node.into_user_data()),
-            Self::BottomBorder(node) => ShapeGroupContentWith::BottomBorder(node.into_user_data()),
-            Self::Callout(node) => ShapeGroupContentWith::Callout(node.into_user_data()),
-            Self::DigitalSignatureLine(node) => {
-                ShapeGroupContentWith::DigitalSignatureLine(node.into_user_data())
-            }
-            Self::Extrusion(node) => ShapeGroupContentWith::Extrusion(node.into_user_data()),
-            Self::ImageData(node) => ShapeGroupContentWith::ImageData(node.into_user_data()),
-            Self::ImageFile(node) => ShapeGroupContentWith::ImageFile(node.into_user_data()),
-            Self::LeftBorder(node) => ShapeGroupContentWith::LeftBorder(node.into_user_data()),
-            Self::Line(node) => ShapeGroupContentWith::Line(node.into_user_data()),
-            Self::LineStrokeSettings(node) => {
-                ShapeGroupContentWith::LineStrokeSettings(node.into_user_data())
-            }
-            Self::MultiplePathLine(node) => {
-                ShapeGroupContentWith::MultiplePathLine(node.into_user_data())
-            }
-            Self::Other(node) => ShapeGroupContentWith::Other(node),
-            Self::Oval(node) => ShapeGroupContentWith::Oval(node.into_user_data()),
-            Self::Rectangle(node) => ShapeGroupContentWith::Rectangle(node.into_user_data()),
-            Self::RightBorder(node) => ShapeGroupContentWith::RightBorder(node.into_user_data()),
-            Self::RoundedRectangle(node) => {
-                ShapeGroupContentWith::RoundedRectangle(node.into_user_data())
-            }
-            Self::SetOfFormulas(node) => {
-                ShapeGroupContentWith::SetOfFormulas(node.into_user_data())
-            }
-            Self::SetOfHandles(node) => ShapeGroupContentWith::SetOfHandles(node.into_user_data()),
-            Self::ShadowEffect(node) => ShapeGroupContentWith::ShadowEffect(node.into_user_data()),
-            Self::ShapeClippingPath(node) => {
-                ShapeGroupContentWith::ShapeClippingPath(node.into_user_data())
-            }
-            Self::ShapeDefinition(node) => {
-                ShapeGroupContentWith::ShapeDefinition(node.into_user_data())
-            }
-            Self::ShapeFillProperties(node) => {
-                ShapeGroupContentWith::ShapeFillProperties(node.into_user_data())
-            }
-            Self::ShapeGroup(node) => ShapeGroupContentWith::ShapeGroup(node.into_user_data()),
-            Self::ShapePath(node) => ShapeGroupContentWith::ShapePath(node.into_user_data()),
-            Self::ShapeProtections(node) => {
-                ShapeGroupContentWith::ShapeProtections(node.into_user_data())
-            }
-            Self::ShapeTemplate(node) => {
-                ShapeGroupContentWith::ShapeTemplate(node.into_user_data())
-            }
-            Self::SkewTransform(node) => {
-                ShapeGroupContentWith::SkewTransform(node.into_user_data())
-            }
-            Self::TextBox(node) => ShapeGroupContentWith::TextBox(node.into_user_data()),
-            Self::TextLayoutPath(node) => {
-                ShapeGroupContentWith::TextLayoutPath(node.into_user_data())
-            }
-            Self::TextWrapping(node) => ShapeGroupContentWith::TextWrapping(node.into_user_data()),
-            Self::TopBorder(node) => ShapeGroupContentWith::TopBorder(node.into_user_data()),
-            Self::VMLDiagram(node) => ShapeGroupContentWith::VMLDiagram(node.into_user_data()),
-            Self::VMLDiagramText(node) => {
-                ShapeGroupContentWith::VMLDiagramText(node.into_user_data())
-            }
-        }
+        officekit_markup_base::into_user_data_match!(self, ShapeGroupContentWith;
+            plain [
+            ]
+            boxed [
+                AnchorLocationIsLocked, ArcSegment, AttachedObjectData, BezierCurve, BottomBorder,
+                Callout, DigitalSignatureLine, Extrusion, ImageData, ImageFile, LeftBorder, Line,
+                LineStrokeSettings, MultiplePathLine, Oval, Rectangle, RightBorder,
+                RoundedRectangle, SetOfFormulas, SetOfHandles, ShadowEffect, ShapeClippingPath,
+                ShapeDefinition, ShapeFillProperties, ShapeGroup, ShapePath, ShapeProtections,
+                ShapeTemplate, SkewTransform, TextBox, TextLayoutPath, TextWrapping, TopBorder,
+                VMLDiagram, VMLDiagramText,
+            ]
+        )
     }
 }
 
 impl officekit_markup_base::Read for ShapeGroupContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(item.read()),
-            Some((NS_V, "arc")) => Self::ArcSegment(item.read()),
-            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(item.read()),
-            Some((NS_V, "curve")) => Self::BezierCurve(item.read()),
-            Some((NS_W10, "borderbottom")) => Self::BottomBorder(item.read()),
-            Some((NS_O, "callout")) => Self::Callout(item.read()),
-            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(item.read()),
-            Some((NS_O, "extrusion")) => Self::Extrusion(item.read()),
-            Some((NS_V, "imagedata")) => Self::ImageData(item.read()),
-            Some((NS_V, "image")) => Self::ImageFile(item.read()),
-            Some((NS_W10, "borderleft")) => Self::LeftBorder(item.read()),
-            Some((NS_V, "line")) => Self::Line(item.read()),
-            Some((NS_V, "stroke")) => Self::LineStrokeSettings(item.read()),
-            Some((NS_V, "polyline")) => Self::MultiplePathLine(item.read()),
-            Some((NS_V, "oval")) => Self::Oval(item.read()),
-            Some((NS_V, "rect")) => Self::Rectangle(item.read()),
-            Some((NS_W10, "borderright")) => Self::RightBorder(item.read()),
-            Some((NS_V, "roundrect")) => Self::RoundedRectangle(item.read()),
-            Some((NS_V, "formulas")) => Self::SetOfFormulas(item.read()),
-            Some((NS_V, "handles")) => Self::SetOfHandles(item.read()),
-            Some((NS_V, "shadow")) => Self::ShadowEffect(item.read()),
-            Some((NS_O, "clippath")) => Self::ShapeClippingPath(item.read()),
-            Some((NS_V, "shape")) => Self::ShapeDefinition(item.read()),
-            Some((NS_V, "fill")) => Self::ShapeFillProperties(item.read()),
-            Some((NS_V, "group")) => Self::ShapeGroup(item.read()),
-            Some((NS_V, "path")) => Self::ShapePath(item.read()),
-            Some((NS_O, "lock")) => Self::ShapeProtections(item.read()),
-            Some((NS_V, "shapetype")) => Self::ShapeTemplate(item.read()),
-            Some((NS_O, "skew")) => Self::SkewTransform(item.read()),
-            Some((NS_V, "textbox")) => Self::TextBox(item.read()),
-            Some((NS_V, "textpath")) => Self::TextLayoutPath(item.read()),
-            Some((NS_W10, "wrap")) => Self::TextWrapping(item.read()),
-            Some((NS_W10, "bordertop")) => Self::TopBorder(item.read()),
-            Some((NS_O, "diagram")) => Self::VMLDiagram(item.read()),
-            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_W10, "anchorlock")) => Self::AnchorLocationIsLocked(Box::new(item.read())),
+            Some((NS_V, "arc")) => Self::ArcSegment(Box::new(item.read())),
+            Some((NS_XVML, "ClientData")) => Self::AttachedObjectData(Box::new(item.read())),
+            Some((NS_V, "curve")) => Self::BezierCurve(Box::new(item.read())),
+            Some((NS_W10, "borderbottom")) => Self::BottomBorder(Box::new(item.read())),
+            Some((NS_O, "callout")) => Self::Callout(Box::new(item.read())),
+            Some((NS_O, "signatureline")) => Self::DigitalSignatureLine(Box::new(item.read())),
+            Some((NS_O, "extrusion")) => Self::Extrusion(Box::new(item.read())),
+            Some((NS_V, "imagedata")) => Self::ImageData(Box::new(item.read())),
+            Some((NS_V, "image")) => Self::ImageFile(Box::new(item.read())),
+            Some((NS_W10, "borderleft")) => Self::LeftBorder(Box::new(item.read())),
+            Some((NS_V, "line")) => Self::Line(Box::new(item.read())),
+            Some((NS_V, "stroke")) => Self::LineStrokeSettings(Box::new(item.read())),
+            Some((NS_V, "polyline")) => Self::MultiplePathLine(Box::new(item.read())),
+            Some((NS_V, "oval")) => Self::Oval(Box::new(item.read())),
+            Some((NS_V, "rect")) => Self::Rectangle(Box::new(item.read())),
+            Some((NS_W10, "borderright")) => Self::RightBorder(Box::new(item.read())),
+            Some((NS_V, "roundrect")) => Self::RoundedRectangle(Box::new(item.read())),
+            Some((NS_V, "formulas")) => Self::SetOfFormulas(Box::new(item.read())),
+            Some((NS_V, "handles")) => Self::SetOfHandles(Box::new(item.read())),
+            Some((NS_V, "shadow")) => Self::ShadowEffect(Box::new(item.read())),
+            Some((NS_O, "clippath")) => Self::ShapeClippingPath(Box::new(item.read())),
+            Some((NS_V, "shape")) => Self::ShapeDefinition(Box::new(item.read())),
+            Some((NS_V, "fill")) => Self::ShapeFillProperties(Box::new(item.read())),
+            Some((NS_V, "group")) => Self::ShapeGroup(Box::new(item.read())),
+            Some((NS_V, "path")) => Self::ShapePath(Box::new(item.read())),
+            Some((NS_O, "lock")) => Self::ShapeProtections(Box::new(item.read())),
+            Some((NS_V, "shapetype")) => Self::ShapeTemplate(Box::new(item.read())),
+            Some((NS_O, "skew")) => Self::SkewTransform(Box::new(item.read())),
+            Some((NS_V, "textbox")) => Self::TextBox(Box::new(item.read())),
+            Some((NS_V, "textpath")) => Self::TextLayoutPath(Box::new(item.read())),
+            Some((NS_W10, "wrap")) => Self::TextWrapping(Box::new(item.read())),
+            Some((NS_W10, "bordertop")) => Self::TopBorder(Box::new(item.read())),
+            Some((NS_O, "diagram")) => Self::VMLDiagram(Box::new(item.read())),
+            Some((NS_PVML, "textdata")) => Self::VMLDiagramText(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -7083,7 +7615,7 @@ impl officekit_markup_base::Write for ShapeGroupContent {
             Self::Line(arm) => arm.write_into(writer),
             Self::LineStrokeSettings(arm) => arm.write_into(writer),
             Self::MultiplePathLine(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Oval(arm) => arm.write_into(writer),
             Self::Rectangle(arm) => arm.write_into(writer),
             Self::RightBorder(arm) => arm.write_into(writer),
@@ -7108,6 +7640,241 @@ impl officekit_markup_base::Write for ShapeGroupContent {
         }
     }
 }
+
+impl<X: UserData> From<vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::AnchorLocationIsLockedWith<X>) -> Self {
+        Self::AnchorLocationIsLocked(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ArcSegmentWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ArcSegmentWith<X>) -> Self {
+        Self::ArcSegment(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_spreadsheet_drawing::AttachedObjectDataWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: vml_spreadsheet_drawing::AttachedObjectDataWith<X>) -> Self {
+        Self::AttachedObjectData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<BezierCurveWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: BezierCurveWith<X>) -> Self {
+        Self::BezierCurve(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::BottomBorderWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::BottomBorderWith<X>) -> Self {
+        Self::BottomBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::CalloutWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: super::vml_office_drawing::CalloutWith<X>) -> Self {
+        Self::Callout(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::DigitalSignatureLineWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::DigitalSignatureLineWith<X>) -> Self {
+        Self::DigitalSignatureLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ExtrusionWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: super::vml_office_drawing::ExtrusionWith<X>) -> Self {
+        Self::Extrusion(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ImageDataWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ImageDataWith<X>) -> Self {
+        Self::ImageData(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ImageFileWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ImageFileWith<X>) -> Self {
+        Self::ImageFile(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::LeftBorderWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: vml_wordprocessing_drawing::LeftBorderWith<X>) -> Self {
+        Self::LeftBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: LineWith<X>) -> Self {
+        Self::Line(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<LineStrokeSettingsWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: LineStrokeSettingsWith<X>) -> Self {
+        Self::LineStrokeSettings(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<MultiplePathLineWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: MultiplePathLineWith<X>) -> Self {
+        Self::MultiplePathLine(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<OvalWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: OvalWith<X>) -> Self {
+        Self::Oval(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RectangleWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: RectangleWith<X>) -> Self {
+        Self::Rectangle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::RightBorderWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::RightBorderWith<X>) -> Self {
+        Self::RightBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RoundedRectangleWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: RoundedRectangleWith<X>) -> Self {
+        Self::RoundedRectangle(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfFormulasWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: SetOfFormulasWith<X>) -> Self {
+        Self::SetOfFormulas(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SetOfHandlesWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: SetOfHandlesWith<X>) -> Self {
+        Self::SetOfHandles(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShadowEffectWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ShadowEffectWith<X>) -> Self {
+        Self::ShadowEffect(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeClippingPathWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeClippingPathWith<X>) -> Self {
+        Self::ShapeClippingPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeDefinitionWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ShapeDefinitionWith<X>) -> Self {
+        Self::ShapeDefinition(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeFillPropertiesWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ShapeFillPropertiesWith<X>) -> Self {
+        Self::ShapeFillProperties(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeGroupWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ShapeGroupWith<X>) -> Self {
+        Self::ShapeGroup(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapePathWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ShapePathWith<X>) -> Self {
+        Self::ShapePath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::ShapeProtectionsWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::ShapeProtectionsWith<X>) -> Self {
+        Self::ShapeProtections(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeTemplateWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: ShapeTemplateWith<X>) -> Self {
+        Self::ShapeTemplate(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::SkewTransformWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: super::vml_office_drawing::SkewTransformWith<X>) -> Self {
+        Self::SkewTransform(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextBoxWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: TextBoxWith<X>) -> Self {
+        Self::TextBox(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TextLayoutPathWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: TextLayoutPathWith<X>) -> Self {
+        Self::TextLayoutPath(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TextWrappingWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: vml_wordprocessing_drawing::TextWrappingWith<X>) -> Self {
+        Self::TextWrapping(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_wordprocessing_drawing::TopBorderWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: vml_wordprocessing_drawing::TopBorderWith<X>) -> Self {
+        Self::TopBorder(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::vml_office_drawing::VMLDiagramWith<X>> for ShapeGroupContentWith<X> {
+    fn from(arm: super::vml_office_drawing::VMLDiagramWith<X>) -> Self {
+        Self::VMLDiagram(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<vml_presentation_drawing::VMLDiagramTextWith<X>>
+    for ShapeGroupContentWith<X>
+{
+    fn from(arm: vml_presentation_drawing::VMLDiagramTextWith<X>) -> Self {
+        Self::VMLDiagramText(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeGroupContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl From<ShapeElementContent> for ShapeGroupContent {
     fn from(item: ShapeElementContent) -> Self {
@@ -7943,7 +8710,7 @@ impl<X: UserData> TextBoxContentWith<X> {
         match self {
             Self::Other(node) => TextBoxContentWith::Other(node),
             Self::RichTextBoxContentContainer(node) => {
-                TextBoxContentWith::RichTextBoxContentContainer(node.into_user_data())
+                TextBoxContentWith::RichTextBoxContentContainer(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -7951,13 +8718,13 @@ impl<X: UserData> TextBoxContentWith<X> {
 
 impl officekit_markup_base::Read for TextBoxContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_W, "txbxContent")) => Self::RichTextBoxContentContainer(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_W, "txbxContent")) => Self::RichTextBoxContentContainer(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -7965,11 +8732,24 @@ impl officekit_markup_base::Read for TextBoxContent {
 impl officekit_markup_base::Write for TextBoxContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RichTextBoxContentContainer(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<super::wordprocessing::RichTextBoxContentContainerWith<X>>
+    for TextBoxContentWith<X>
+{
+    fn from(arm: super::wordprocessing::RichTextBoxContentContainerWith<X>) -> Self {
+        Self::RichTextBoxContentContainer(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<TextBoxContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> TextLayoutPathWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

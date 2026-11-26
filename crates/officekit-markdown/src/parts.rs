@@ -162,7 +162,7 @@ fn fonts(name: &str) -> RunPropertiesContent {
     fonts.ascii = Some(name.to_owned());
     fonts.cs = Some(name.to_owned());
     fonts.h_ansi = Some(name.to_owned());
-    RunPropertiesContent::RunFonts(fonts)
+    RunPropertiesContent::from(fonts)
 }
 
 /// `w:sz` and `w:szCs` of `half_points`.
@@ -172,8 +172,8 @@ fn font_size(half_points: &str) -> [RunPropertiesContent; 2] {
     let mut complex = ComplexScriptFontSize::default();
     complex.val = Some(half_points.to_owned().into());
     [
-        RunPropertiesContent::NonComplexScriptFontSize(latin),
-        RunPropertiesContent::ComplexScriptFontSize(complex),
+        RunPropertiesContent::from(latin),
+        RunPropertiesContent::from(complex),
     ]
 }
 
@@ -202,7 +202,7 @@ fn heading_style(level: usize, half_points: &str) -> StyleDefinition {
         Some(Box::new(KeepParagraphWithNextParagraph::default()));
     paragraph.spacing_between_lines_and_above_below_paragraph = Some(spacing(Some("240"), "120"));
     let [latin, complex] = font_size(half_points);
-    let run = alloc::vec![RunPropertiesContent::Bold(Bold::default()), latin, complex];
+    let run = alloc::vec![RunPropertiesContent::from(Bold::default()), latin, complex];
     based_on_normal(
         &heading(level),
         &format!("heading {level}"),
@@ -329,7 +329,7 @@ fn styles() -> StyleDefinitions {
         QUOTE,
         QUOTE,
         Some(quote),
-        alloc::vec![RunPropertiesContent::Italics(Italics::default())],
+        alloc::vec![RunPropertiesContent::from(Italics::default())],
     ));
 
     let mut preformatted = ParagraphPropertiesPPrGeneral::default();
@@ -360,8 +360,8 @@ fn styles() -> StyleDefinitions {
     underline.val = Some(UnderlinePatternsMember::Single.into());
     let mut hyperlink = style(StyleTypesMember::Character, HYPERLINK, HYPERLINK);
     hyperlink.run_properties = run_properties(alloc::vec![
-        RunPropertiesContent::RunContentColor(color),
-        RunPropertiesContent::Underline(underline),
+        RunPropertiesContent::from(color),
+        RunPropertiesContent::from(underline),
     ]);
     definitions.push(hyperlink);
 

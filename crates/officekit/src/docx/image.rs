@@ -72,7 +72,7 @@ pub fn inline_picture(
     }
     let mut fill = PictureFill::default();
     fill.blip = Some(Box::new(blip));
-    fill.content = Some(Box::new(FillModeContent::Stretch(Stretch::default())));
+    fill.content = Some(Box::new(FillModeContent::from(Stretch::default())));
     let mut drawing_properties = NonVisualDrawingProperties::default();
     drawing_properties.id = Some(DrawingElementID::from("0".to_owned()));
     drawing_properties.name = Some(name.to_owned());
@@ -90,14 +90,14 @@ pub fn inline_picture(
     let mut geometry = PresetGeometry::default();
     geometry.prst = Some(PresetShapeTypes::from("rect".to_owned()));
     let mut shape = ShapeProperties::default();
-    shape.geometry_content = Some(Box::new(GeometryContent::PresetGeometry(geometry)));
+    shape.geometry_content = Some(Box::new(GeometryContent::from(geometry)));
     shape.xfrm_transform2d = Some(Box::new(transform));
     let mut picture = Picture::default();
     picture.fill = Box::new(fill);
     picture.non_visual_picture_properties = Box::new(non_visual);
     picture.shape_properties = Box::new(shape);
     let mut data = GraphicObjectData::default();
-    data.content = alloc::vec![AnyElementContent::Picture(picture)];
+    data.content = alloc::vec![AnyElementContent::from(picture)];
     data.uri = Some(PICTURE.to_owned());
     let mut graphic = GraphicObject::default();
     graphic.data = Box::new(data);
@@ -113,7 +113,7 @@ pub fn inline_picture(
     inline.drawing_object_size = Box::new(frame_size);
     inline.graphic_object = Box::new(graphic);
     let mut drawing = DrawingMLObject::default();
-    drawing.content = alloc::vec![DrawingObjectContent::InlineDrawingMLObject(inline)];
+    drawing.content = alloc::vec![DrawingObjectContent::from(inline)];
     drawing
 }
 

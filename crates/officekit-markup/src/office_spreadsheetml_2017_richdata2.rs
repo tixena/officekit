@@ -1511,11 +1511,11 @@ impl Eq for CustomFiltersWith<()> {}
 #[non_exhaustive]
 pub enum CustomRichFiltersContentWith<X: UserData> {
     /// The element `xlrd2:customFilter`, a `CustomFilter`.
-    CustomFilter(CustomFilterWith<X>),
+    CustomFilter(Box<CustomFilterWith<X>>),
     /// The element `xlrd2:extLst`, a `ExtLst`.
-    ExtLst(ExtLstWith<X>),
+    ExtLst(Box<ExtLstWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`CustomRichFiltersContentWith`] of the tree a read gives, where no node holds anything in
@@ -1855,17 +1855,17 @@ impl Eq for RStyWith<()> {}
 #[non_exhaustive]
 pub enum RichFilterColumnContentWith<X: UserData> {
     /// The element `xlrd2:customFilters`, a `CustomFilters`.
-    CustomFilters(CustomFiltersWith<X>),
+    CustomFilters(Box<CustomFiltersWith<X>>),
     /// The element `xlrd2:dynamicFilter`, a `DynamicFilter`.
-    DynamicFilter(DynamicFilterWith<X>),
+    DynamicFilter(Box<DynamicFilterWith<X>>),
     /// The element `xlrd2:extLst`, a `ExtLst`.
-    ExtLst(ExtLstWith<X>),
+    ExtLst(Box<ExtLstWith<X>>),
     /// The element `xlrd2:filters`, a `Filters`.
-    Filters(FiltersWith<X>),
+    Filters(Box<FiltersWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `xlrd2:top10`, a `Top10`.
-    Top10(Top10With<X>),
+    Top10(Box<Top10With<X>>),
 }
 
 /// [`RichFilterColumnContentWith`] of the tree a read gives, where no node holds anything in
@@ -2949,9 +2949,11 @@ impl<X: UserData> CustomRichFiltersContentWith<X> {
     {
         match self {
             Self::CustomFilter(node) => {
-                CustomRichFiltersContentWith::CustomFilter(node.into_user_data())
+                CustomRichFiltersContentWith::CustomFilter(Box::new((*node).into_user_data()))
             }
-            Self::ExtLst(node) => CustomRichFiltersContentWith::ExtLst(node.into_user_data()),
+            Self::ExtLst(node) => {
+                CustomRichFiltersContentWith::ExtLst(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => CustomRichFiltersContentWith::Other(node),
         }
     }
@@ -2959,14 +2961,14 @@ impl<X: UserData> CustomRichFiltersContentWith<X> {
 
 impl officekit_markup_base::Read for CustomRichFiltersContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XLRD2, "customFilter")) => Self::CustomFilter(item.read()),
-            Some((NS_XLRD2, "extLst")) => Self::ExtLst(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XLRD2, "customFilter")) => Self::CustomFilter(Box::new(item.read())),
+            Some((NS_XLRD2, "extLst")) => Self::ExtLst(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -2976,10 +2978,27 @@ impl officekit_markup_base::Write for CustomRichFiltersContent {
         match self {
             Self::CustomFilter(arm) => arm.write_into(writer),
             Self::ExtLst(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<CustomFilterWith<X>> for CustomRichFiltersContentWith<X> {
+    fn from(arm: CustomFilterWith<X>) -> Self {
+        Self::CustomFilter(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ExtLstWith<X>> for CustomRichFiltersContentWith<X> {
+    fn from(arm: ExtLstWith<X>) -> Self {
+        Self::ExtLst(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<CustomRichFiltersContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> DateGroupItemWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -3727,32 +3746,38 @@ impl<X: UserData> RichFilterColumnContentWith<X> {
     {
         match self {
             Self::CustomFilters(node) => {
-                RichFilterColumnContentWith::CustomFilters(node.into_user_data())
+                RichFilterColumnContentWith::CustomFilters(Box::new((*node).into_user_data()))
             }
             Self::DynamicFilter(node) => {
-                RichFilterColumnContentWith::DynamicFilter(node.into_user_data())
+                RichFilterColumnContentWith::DynamicFilter(Box::new((*node).into_user_data()))
             }
-            Self::ExtLst(node) => RichFilterColumnContentWith::ExtLst(node.into_user_data()),
-            Self::Filters(node) => RichFilterColumnContentWith::Filters(node.into_user_data()),
+            Self::ExtLst(node) => {
+                RichFilterColumnContentWith::ExtLst(Box::new((*node).into_user_data()))
+            }
+            Self::Filters(node) => {
+                RichFilterColumnContentWith::Filters(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => RichFilterColumnContentWith::Other(node),
-            Self::Top10(node) => RichFilterColumnContentWith::Top10(node.into_user_data()),
+            Self::Top10(node) => {
+                RichFilterColumnContentWith::Top10(Box::new((*node).into_user_data()))
+            }
         }
     }
 }
 
 impl officekit_markup_base::Read for RichFilterColumnContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_XLRD2, "customFilters")) => Self::CustomFilters(item.read()),
-            Some((NS_XLRD2, "dynamicFilter")) => Self::DynamicFilter(item.read()),
-            Some((NS_XLRD2, "extLst")) => Self::ExtLst(item.read()),
-            Some((NS_XLRD2, "filters")) => Self::Filters(item.read()),
-            Some((NS_XLRD2, "top10")) => Self::Top10(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_XLRD2, "customFilters")) => Self::CustomFilters(Box::new(item.read())),
+            Some((NS_XLRD2, "dynamicFilter")) => Self::DynamicFilter(Box::new(item.read())),
+            Some((NS_XLRD2, "extLst")) => Self::ExtLst(Box::new(item.read())),
+            Some((NS_XLRD2, "filters")) => Self::Filters(Box::new(item.read())),
+            Some((NS_XLRD2, "top10")) => Self::Top10(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3764,11 +3789,46 @@ impl officekit_markup_base::Write for RichFilterColumnContent {
             Self::DynamicFilter(arm) => arm.write_into(writer),
             Self::ExtLst(arm) => arm.write_into(writer),
             Self::Filters(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Top10(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<CustomFiltersWith<X>> for RichFilterColumnContentWith<X> {
+    fn from(arm: CustomFiltersWith<X>) -> Self {
+        Self::CustomFilters(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<DynamicFilterWith<X>> for RichFilterColumnContentWith<X> {
+    fn from(arm: DynamicFilterWith<X>) -> Self {
+        Self::DynamicFilter(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ExtLstWith<X>> for RichFilterColumnContentWith<X> {
+    fn from(arm: ExtLstWith<X>) -> Self {
+        Self::ExtLst(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<FiltersWith<X>> for RichFilterColumnContentWith<X> {
+    fn from(arm: FiltersWith<X>) -> Self {
+        Self::Filters(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<Top10With<X>> for RichFilterColumnContentWith<X> {
+    fn from(arm: Top10With<X>) -> Self {
+        Self::Top10(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<RichFilterColumnContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl AsRef<str> for RichFormatPropertyType {
     fn as_ref(&self) -> &str {

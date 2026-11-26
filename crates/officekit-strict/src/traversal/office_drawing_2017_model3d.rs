@@ -1417,11 +1417,11 @@ impl super::Transform for office_drawing_2017_model3d::Model3DCameraContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Orthographic(arm) = self {
-            Self::Orthographic(arm.transform(ctx))
+            Self::Orthographic(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Perspective(arm) = self {
-            Self::Perspective(arm.transform(ctx))
+            Self::Perspective(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1514,7 +1514,7 @@ impl super::Transform for office_drawing_2017_model3d::Model3DExtensionContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_model3d_extension_1(self, ctx)
             .or_else(|| transform_model3d_extension_2(self, ctx))
@@ -1644,15 +1644,15 @@ impl super::Transform for office_drawing_2017_model3d::Model3DLightContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::DirLight(arm) = self {
-            Self::DirLight(arm.transform(ctx))
+            Self::DirLight(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PtLight(arm) = self {
-            Self::PtLight(arm.transform(ctx))
+            Self::PtLight(Box::new(arm.transform(ctx)))
         } else if let Self::SpotLight(arm) = self {
-            Self::SpotLight(arm.transform(ctx))
+            Self::SpotLight(Box::new(arm.transform(ctx)))
         } else if let Self::UnkLight(arm) = self {
-            Self::UnkLight(arm.transform(ctx))
+            Self::UnkLight(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -1755,11 +1755,11 @@ impl super::Transform for office_drawing_2017_model3d::Model3DViewportContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ObjViewport(arm) = self {
-            Self::ObjViewport(arm.transform(ctx))
+            Self::ObjViewport(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::WinViewport(arm) = self {
-            Self::WinViewport(arm.transform(ctx))
+            Self::WinViewport(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3785,7 +3785,7 @@ fn transform_model3d_extension_1(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::AnchorForFloatingDrawingMLObject(
                 node,
@@ -3794,7 +3794,7 @@ fn transform_model3d_extension_1(
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::AnchorLocationIsLocked(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::AnchorLocationIsLocked(node),
         );
@@ -3803,7 +3803,7 @@ fn transform_model3d_extension_1(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ApplicationSpecificFileProperties(
                 node,
@@ -3811,59 +3811,59 @@ fn transform_model3d_extension_1(
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ArcSegment(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ArcSegment(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Array(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Array(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::AttachedObjectData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::AttachedObjectData(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BasicString(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::BasicString(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BezierCurve(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::BezierCurve(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BinaryBlob(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::BinaryBlob(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BinaryBlobObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::BinaryBlobObject(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BinaryStorage(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::BinaryStorage(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BinaryStorageObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::BinaryStorageObject(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BinaryStream(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::BinaryStream(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BinaryStreamObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::BinaryStreamObject(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BinaryVersionedStream(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::BinaryVersionedStream(node),
         );
@@ -3876,46 +3876,46 @@ fn transform_model3d_extension_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::Blip(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Blip(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Boolean(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Boolean(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::BottomBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::BottomBorder(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::CalculationChainInfo(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::CalculationChainInfo(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Callout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Callout(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ChartSheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ChartSheet(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ChartSpace(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ChartSpace(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ClassID(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ClassID(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ColorTransformDefinitionHeader(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ColorTransformDefinitionHeader(
                 node,
@@ -3925,7 +3925,7 @@ fn transform_model3d_extension_2(
     if let office_drawing_2017_model3d::Model3DExtensionContent::ColorTransformDefinitions(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ColorTransformDefinitions(node),
         );
@@ -3933,31 +3933,31 @@ fn transform_model3d_extension_2(
     if let office_drawing_2017_model3d::Model3DExtensionContent::ColorTransformHeaderList(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ColorTransformHeaderList(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::CommentList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::CommentList(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Comments(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Comments(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::CommentsCollection(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::CommentsCollection(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Complex(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Complex(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Connections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Connections(node));
     }
     None
@@ -3968,88 +3968,88 @@ fn transform_model3d_extension_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::Currency(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Currency(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::CustomFileProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::CustomFileProperties(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::CustomXMLDataProperties(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::CustomXMLDataProperties(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DataModel(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::DataModel(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DateAndTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::DateAndTime(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Decimal(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Decimal(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DiagramLayoutHeaderList(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::DiagramLayoutHeaderList(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DialogSheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::DialogSheet(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DigitalSignatureLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::DigitalSignatureLine(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Document(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Document(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DocumentBackground(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::DocumentBackground(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DocumentEndnotes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::DocumentEndnotes(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DocumentFootnotes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::DocumentFootnotes(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DocumentSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::DocumentSettings(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::DrawingTable(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::DrawingTable(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::EmbedAnim(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::EmbedAnim(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::EmbeddedCustomXMLSchemaSupplementaryData(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::EmbeddedOLEObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::EmbeddedOLEObject(node));
     }
     None
@@ -4062,35 +4062,35 @@ fn transform_model3d_extension_4(
     if let office_drawing_2017_model3d::Model3DExtensionContent::EmbeddedObjectsAndControls(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::EmbeddedObjectsAndControls(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Empty(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Empty(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::EndingAnchorPoint(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::EndingAnchorPoint(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ErrorStatusCode(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ErrorStatusCode(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ExplicitRelationshipsToDiagramParts(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ExplicitRelationshipsToDiagramParts(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ExternalReferenceExternalLink(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ExternalReferenceExternalLink(
                 node,
@@ -4098,51 +4098,51 @@ fn transform_model3d_extension_4(
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Extrusion(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Extrusion(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::FileTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::FileTime(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::FontTableRootElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::FontTableRootElement(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Footer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Footer(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::GlossaryDocumentRootElement(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::GlossaryDocumentRootElement(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::GraphicObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::GraphicObject(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::HandoutMaster(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::HandoutMaster(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Header(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Header(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::I1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::I1(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::I2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::I2(
             node,
         ));
@@ -4155,79 +4155,79 @@ fn transform_model3d_extension_5(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::I4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::I4(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::I8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::I8(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ImageData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ImageData(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ImageFile(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ImageFile(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::InclusionExclusionDataForDataSource(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::InclusionExclusionDataForDataSource(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Ink(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Ink(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::InkAnnotationFlag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::InkAnnotationFlag(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::InlineDrawingMLObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::InlineDrawingMLObject(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Integer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Integer(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinition(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinitionHeader(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::LayoutDefinitionHeader(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LeftBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::LeftBorder(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Line(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Line(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::LineStrokeSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::LineStrokeSettings(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfCommentAuthors(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ListOfCommentAuthors(node),
         );
@@ -4235,7 +4235,7 @@ fn transform_model3d_extension_5(
     if let office_drawing_2017_model3d::Model3DExtensionContent::ListOfStyleDefinitionHeaders(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ListOfStyleDefinitionHeaders(
                 node,
@@ -4250,85 +4250,85 @@ fn transform_model3d_extension_6(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::LockedCanvasContainer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::LockedCanvasContainer(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Lpstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Lpstr(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Lpwstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Lpwstr(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::MathProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::MathProperties(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Metadata(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Metadata(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::MultiplePathLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::MultiplePathLine(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::NewShapeDefaults(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::NewShapeDefaults(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::NotesMaster(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::NotesMaster(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::NotesSlide(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::NotesSlide(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Null(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Null(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::NumberingDefinitions(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::NumberingDefinitions(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::OfficeMath(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::OfficeMathParagraph(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Oval(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Oval(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Picture(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Picture(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::PivotCacheDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::PivotCacheDefinition(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::PivotCacheRecords(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::PivotCacheRecords(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::PivotTableDefinition(arm) = item {
@@ -4345,16 +4345,16 @@ fn transform_model3d_extension_7(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::PosterFrame(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::PosterFrame(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Presentation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Presentation(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::PresentationSlideSlide(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::PresentationSlideSlide(node),
         );
@@ -4362,7 +4362,7 @@ fn transform_model3d_extension_7(
     if let office_drawing_2017_model3d::Model3DExtensionContent::PresentationWideProperties(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::PresentationWideProperties(node),
         );
@@ -4371,7 +4371,7 @@ fn transform_model3d_extension_7(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::PresentationWideViewProperties(
                 node,
@@ -4379,55 +4379,55 @@ fn transform_model3d_extension_7(
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ProgrammableTabList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ProgrammableTabList(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::QueryTable(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::QueryTable(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::R4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::R4(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::R8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::R8(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Rectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Rectangle(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ReferenceToChartPart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ReferenceToChartPart(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::RevisionHeaders(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::RevisionHeaders(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Revisions(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Revisions(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::RichTextBoxContentContainer(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::RichTextBoxContentContainer(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::RightBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::RightBorder(node));
     }
     None
@@ -4438,14 +4438,14 @@ fn transform_model3d_extension_8(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::RoundedRectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::RoundedRectangle(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SetOfAdditionalCharacteristics(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::SetOfAdditionalCharacteristics(
                 node,
@@ -4453,75 +4453,75 @@ fn transform_model3d_extension_8(
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SetOfFormulas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SetOfFormulas(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SetOfHandles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SetOfHandles(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ShadowEffect(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeClippingPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ShapeClippingPath(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ShapeDefinition(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeFillExtendedProperties(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ShapeFillExtendedProperties(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeFillProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ShapeFillProperties(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeGroup(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ShapeGroup(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeLayoutProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::ShapeLayoutProperties(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapePath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ShapePath(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeProtections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ShapeProtections(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ShapeTemplate(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ShapeTemplate(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SharedStringTable(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SharedStringTable(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SingleCells(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SingleCells(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SkewTransform(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SkewTransform(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SlideLayout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SlideLayout(node));
     }
     None
@@ -4532,14 +4532,14 @@ fn transform_model3d_extension_9(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::SlideMaster(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SlideMaster(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SlideSynchronizationProperties(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::SlideSynchronizationProperties(
                 node,
@@ -4547,15 +4547,15 @@ fn transform_model3d_extension_9(
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Sources(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Sources(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::SpreadsheetTable(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::SpreadsheetTable(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::StartingAnchorPoint(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::StartingAnchorPoint(node),
         );
@@ -4564,7 +4564,7 @@ fn transform_model3d_extension_9(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::StorageForAlternateMathContent(
                 node,
@@ -4572,49 +4572,49 @@ fn transform_model3d_extension_9(
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::StyleDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::StyleDefinition(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::StyleDefinitionHeader(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::StyleDefinitionHeader(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::StyleDefinitions(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::StyleDefinitions(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::StyleSheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::StyleSheet(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TableStyleList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::TableStyleList(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextBox(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::TextBox(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextBoxBottomStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::TextBoxBottomStroke(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextBoxInteriorStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::TextBoxInteriorStroke(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextBoxLeftStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::TextBoxLeftStroke(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextBoxRightStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::TextBoxRightStroke(node),
         );
@@ -4627,89 +4627,89 @@ fn transform_model3d_extension_10(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextBoxTopStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::TextBoxTopStroke(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextLayoutPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::TextLayoutPath(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TextWrapping(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::TextWrapping(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Theme(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Theme(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ThemeManager(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ThemeManager(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::ThemeOverride(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::ThemeOverride(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::TopBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::TopBorder(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Ui1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Ui1(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Ui2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Ui2(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Ui4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Ui4(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Ui8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Ui8(
             node,
         ));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::UnsignedInteger(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::UnsignedInteger(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::UserList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::UserList(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::UserShapes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::UserShapes(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::VMLDiagram(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::VMLDiagram(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::VMLDiagramText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::VMLDiagramText(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Variant(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Variant(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Vector(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Vector(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::VideoFromFile(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::VideoFromFile(node));
     }
     None
@@ -4721,20 +4721,20 @@ fn transform_model3d_extension_11(
 ) -> Option<office_drawing_2017_model3d::Model3DExtensionContent> {
     if let office_drawing_2017_model3d::Model3DExtensionContent::VolatileDependencyTypes(arm) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::VolatileDependencyTypes(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::WebPageSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::WebPageSettings(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::WordprocessingMLDrawingCanvas(
         arm,
     ) = item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::WordprocessingMLDrawingCanvas(
                 node,
@@ -4742,7 +4742,7 @@ fn transform_model3d_extension_11(
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::WordprocessingMLShape(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::WordprocessingMLShape(node),
         );
@@ -4750,25 +4750,25 @@ fn transform_model3d_extension_11(
     if let office_drawing_2017_model3d::Model3DExtensionContent::WordprocessingMLShapeGroup(arm) =
         item
     {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             office_drawing_2017_model3d::Model3DExtensionContent::WordprocessingMLShapeGroup(node),
         );
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Workbook(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Workbook(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::Worksheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::Worksheet(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::WorksheetDrawing(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::WorksheetDrawing(node));
     }
     if let office_drawing_2017_model3d::Model3DExtensionContent::XMLMappingMapInfo(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(office_drawing_2017_model3d::Model3DExtensionContent::XMLMappingMapInfo(node));
     }
     None

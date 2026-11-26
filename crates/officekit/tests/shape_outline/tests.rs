@@ -53,7 +53,7 @@ fn corners(outline: &Outline) -> Vec<(i64, i64)> {
 fn preset_geometry(name: &str) -> GeometryContent {
     let mut geometry = PresetGeometry::default();
     geometry.prst = Some(PresetShapeTypes::from(name.to_owned()));
-    GeometryContent::PresetGeometry(geometry)
+    GeometryContent::from(geometry)
 }
 
 #[test]
@@ -96,15 +96,12 @@ fn a_custom_geometry_gives_its_paths() {
     let mut line = DrawLineTo::default();
     line.shape_path_point = Box::new(point("hc", "t"));
     let mut path = ShapePath::default();
-    path.content = vec![
-        ShapePathContent::MovePathTo(moved),
-        ShapePathContent::DrawLineTo(line),
-    ];
+    path.content = vec![ShapePathContent::from(moved), ShapePathContent::from(line)];
     let mut paths = ListOfShapePaths::default();
     paths.shape_path = vec![path];
     let mut geometry = CustomGeometry::default();
     geometry.list_of_shape_paths = Box::new(paths);
-    let outline = outline_of(Some(&GeometryContent::CustomGeometry(geometry)), 80, 40).unwrap();
+    let outline = outline_of(Some(&GeometryContent::from(geometry)), 80, 40).unwrap();
     assert_eq!(corners(&outline), [(0, 40), (40, 0)]);
 }
 

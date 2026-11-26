@@ -2500,17 +2500,17 @@ impl super::Transform for office_spreadsheetml_2014_revision::ReferenceMapConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Future(arm) = self {
-            Self::Future(arm.transform(ctx))
+            Self::Future(Box::new(arm.transform(ctx)))
         } else if let Self::OartAnchor(arm) = self {
-            Self::OartAnchor(arm.transform(ctx))
+            Self::OartAnchor(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Ref(arm) = self {
-            Self::Ref(arm.transform(ctx))
+            Self::Ref(Box::new(arm.transform(ctx)))
         } else if let Self::SheetUid(arm) = self {
-            Self::SheetUid(arm.transform(ctx))
+            Self::SheetUid(Box::new(arm.transform(ctx)))
         } else if let Self::Test(arm) = self {
-            Self::Test(arm.transform(ctx))
+            Self::Test(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -2886,11 +2886,11 @@ impl super::Transform for office_spreadsheetml_2014_revision::RevisionChangeObje
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Body(arm) = self {
-            Self::Body(arm.transform(ctx))
+            Self::Body(Box::new(arm.transform(ctx)))
         } else if let Self::Link(arm) = self {
-            Self::Link(arm.transform(ctx))
+            Self::Link(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3004,33 +3004,33 @@ impl super::Transform for office_spreadsheetml_2014_revision::RevisionGroupConte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::XrrDefName(arm) = self {
-            Self::XrrDefName(arm.transform(ctx))
+            Self::XrrDefName(Box::new(arm.transform(ctx)))
         } else if let Self::XrrList(arm) = self {
-            Self::XrrList(arm.transform(ctx))
+            Self::XrrList(Box::new(arm.transform(ctx)))
         } else if let Self::XrrListExpR(arm) = self {
-            Self::XrrListExpR(arm.transform(ctx))
+            Self::XrrListExpR(Box::new(arm.transform(ctx)))
         } else if let Self::XrrSheet(arm) = self {
-            Self::XrrSheet(arm.transform(ctx))
+            Self::XrrSheet(Box::new(arm.transform(ctx)))
         } else if let Self::XrrTrim(arm) = self {
-            Self::XrrTrim(arm.transform(ctx))
+            Self::XrrTrim(Box::new(arm.transform(ctx)))
         } else if let Self::XrrUspt(arm) = self {
-            Self::XrrUspt(arm.transform(ctx))
+            Self::XrrUspt(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrc(arm) = self {
-            Self::Xrrc(arm.transform(ctx))
+            Self::Xrrc(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrco(arm) = self {
-            Self::Xrrco(arm.transform(ctx))
+            Self::Xrrco(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrdo(arm) = self {
-            Self::Xrrdo(arm.transform(ctx))
+            Self::Xrrdo(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrf(arm) = self {
-            Self::Xrrf(arm.transform(ctx))
+            Self::Xrrf(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrftr(arm) = self {
-            Self::Xrrftr(arm.transform(ctx))
+            Self::Xrrftr(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrm(arm) = self {
-            Self::Xrrm(arm.transform(ctx))
+            Self::Xrrm(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrrc(arm) = self {
-            Self::Xrrrc(arm.transform(ctx))
+            Self::Xrrrc(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3265,17 +3265,17 @@ impl super::Transform for office_spreadsheetml_2014_revision::RevisionStateConte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::FreezePanes(arm) = self {
-            Self::FreezePanes(arm.transform(ctx))
+            Self::FreezePanes(Box::new(arm.transform(ctx)))
         } else if let Self::HideUnhideSheet(arm) = self {
-            Self::HideUnhideSheet(arm.transform(ctx))
+            Self::HideUnhideSheet(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outlines(arm) = self {
-            Self::Outlines(arm.transform(ctx))
+            Self::Outlines(Box::new(arm.transform(ctx)))
         } else if let Self::RowColVisualOps(arm) = self {
-            Self::RowColVisualOps(arm.transform(ctx))
+            Self::RowColVisualOps(Box::new(arm.transform(ctx)))
         } else if let Self::ShowGridlinesHeadings(arm) = self {
-            Self::ShowGridlinesHeadings(arm.transform(ctx))
+            Self::ShowGridlinesHeadings(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3404,35 +3404,35 @@ impl super::Transform for office_spreadsheetml_2014_revision::RevisionStreamCont
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::XrrDefName(arm) = self {
-            Self::XrrDefName(arm.transform(ctx))
+            Self::XrrDefName(Box::new(arm.transform(ctx)))
         } else if let Self::XrrList(arm) = self {
-            Self::XrrList(arm.transform(ctx))
+            Self::XrrList(Box::new(arm.transform(ctx)))
         } else if let Self::XrrListExpR(arm) = self {
-            Self::XrrListExpR(arm.transform(ctx))
+            Self::XrrListExpR(Box::new(arm.transform(ctx)))
         } else if let Self::XrrSheet(arm) = self {
-            Self::XrrSheet(arm.transform(ctx))
+            Self::XrrSheet(Box::new(arm.transform(ctx)))
         } else if let Self::XrrTrim(arm) = self {
-            Self::XrrTrim(arm.transform(ctx))
+            Self::XrrTrim(Box::new(arm.transform(ctx)))
         } else if let Self::XrrUspt(arm) = self {
-            Self::XrrUspt(arm.transform(ctx))
+            Self::XrrUspt(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrc(arm) = self {
-            Self::Xrrc(arm.transform(ctx))
+            Self::Xrrc(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrco(arm) = self {
-            Self::Xrrco(arm.transform(ctx))
+            Self::Xrrco(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrdo(arm) = self {
-            Self::Xrrdo(arm.transform(ctx))
+            Self::Xrrdo(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrf(arm) = self {
-            Self::Xrrf(arm.transform(ctx))
+            Self::Xrrf(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrftr(arm) = self {
-            Self::Xrrftr(arm.transform(ctx))
+            Self::Xrrftr(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrg(arm) = self {
-            Self::Xrrg(arm.transform(ctx))
+            Self::Xrrg(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrm(arm) = self {
-            Self::Xrrm(arm.transform(ctx))
+            Self::Xrrm(Box::new(arm.transform(ctx)))
         } else if let Self::Xrrrc(arm) = self {
-            Self::Xrrrc(arm.transform(ctx))
+            Self::Xrrrc(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -3985,19 +3985,19 @@ impl super::Transform for office_spreadsheetml_2014_revision::StateBasedObjectCo
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AutoFilter(arm) = self {
-            Self::AutoFilter(arm.transform(ctx))
+            Self::AutoFilter(Box::new(arm.transform(ctx)))
         } else if let Self::Comments(arm) = self {
-            Self::Comments(arm.transform(ctx))
+            Self::Comments(Box::new(arm.transform(ctx)))
         } else if let Self::DataValidation(arm) = self {
-            Self::DataValidation(arm.transform(ctx))
+            Self::DataValidation(Box::new(arm.transform(ctx)))
         } else if let Self::Hyperlink(arm) = self {
-            Self::Hyperlink(arm.transform(ctx))
+            Self::Hyperlink(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PivotTableDefinition(arm) = self {
             Self::PivotTableDefinition(Box::new(arm.transform(ctx)))
         } else if let Self::SparklineGroup(arm) = self {
-            Self::SparklineGroup(arm.transform(ctx))
+            Self::SparklineGroup(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

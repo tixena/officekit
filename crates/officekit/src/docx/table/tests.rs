@@ -36,7 +36,7 @@ fn row_with_cells(cells: usize) -> TableRow {
 fn sdt_row() -> ContentRowContent {
     let mut control = RowLevelStructuredDocumentTag::default();
     control.content = Some(Box::new(RowLevelStructuredDocumentTagContent::default()));
-    ContentRowContent::RowLevelStructuredDocumentTag(control)
+    ContentRowContent::from(control)
 }
 
 #[test]
@@ -78,10 +78,9 @@ fn repeat_header_rows_marks_only_the_first_rows() {
 #[test]
 fn insert_row_keeps_a_bookmark_before_the_new_row() {
     let mut table = two_rows();
-    table.content_row_content.insert(
-        1,
-        ContentRowContent::BookmarkStart(BookmarkStart::default()),
-    );
+    table
+        .content_row_content
+        .insert(1, ContentRowContent::from(BookmarkStart::default()));
     assert_eq!(table.insert_row(1, row_with_cells(3)), Ok(()));
     assert!(matches!(
         table.content_row_content[1],
@@ -140,16 +139,16 @@ fn every_row_takes_the_rows_inside_content_controls_and_custom_xml_in_order() {
     let mut table = two_rows();
     let mut control = RowLevelStructuredDocumentTag::default();
     let mut inner = RowLevelStructuredDocumentTagContent::default();
-    inner.content = alloc::vec![ContentRowContent::TableRow(row_with_cells(3))];
+    inner.content = alloc::vec![ContentRowContent::from(row_with_cells(3))];
     control.content = Some(Box::new(inner));
     let mut custom = RowLevelCustomXMLElement::default();
-    custom.content = alloc::vec![ContentRowContent::TableRow(row_with_cells(4))];
+    custom.content = alloc::vec![ContentRowContent::from(row_with_cells(4))];
     table
         .content_row_content
-        .insert(1, ContentRowContent::RowLevelStructuredDocumentTag(control));
+        .insert(1, ContentRowContent::from(control));
     table
         .content_row_content
-        .push(ContentRowContent::RowLevelCustomXMLElement(custom));
+        .push(ContentRowContent::from(custom));
     let widths: Vec<usize> = every_row(&table)
         .iter()
         .map(|row| row.content.len())
@@ -162,7 +161,7 @@ fn every_cell_takes_the_cells_inside_content_controls_and_custom_xml_in_order() 
     let tagged = |id: &str| {
         let mut cell = TableCell::default();
         cell.id = Some(id.to_owned());
-        ContentCellContent::TableCell(cell)
+        ContentCellContent::from(cell)
     };
     let mut control = CellLevelStructuredDocumentTag::default();
     let mut inner = CellLevelStructuredDocumentTagContent::default();
@@ -173,9 +172,9 @@ fn every_cell_takes_the_cells_inside_content_controls_and_custom_xml_in_order() 
     let mut row = TableRow::default();
     row.content = alloc::vec![
         tagged("a"),
-        ContentCellContent::CellLevelStructuredDocumentTag(control),
-        ContentCellContent::CellLevelCustomXMLElement(custom),
-        ContentCellContent::BookmarkStart(BookmarkStart::default()),
+        ContentCellContent::from(control),
+        ContentCellContent::from(custom),
+        ContentCellContent::from(BookmarkStart::default()),
         tagged("d"),
     ];
     let ids: Vec<Option<&str>> = every_cell(&row)

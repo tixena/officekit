@@ -998,7 +998,11 @@ pub fn generic_impl_header(generics: &str, trait_part: &str, target: &str) -> St
     if flat.len() - 1 <= MAX_WIDTH {
         return flat;
     }
-    format!("impl{generics} {trait_part}\n    for {target}\n{{\n")
+    let head = format!("impl{generics} {trait_part}");
+    if head.len() <= MAX_WIDTH {
+        return format!("{head}\n    for {target}\n{{\n");
+    }
+    format!("impl{generics}\n    {trait_part}\n    for {target}\n{{\n")
 }
 
 /// A match arm at `indent`: `pattern => body,` on one line when it fits. A

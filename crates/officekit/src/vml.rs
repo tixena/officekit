@@ -318,7 +318,7 @@ where
 {
     shape.content.iter().find_map(|item| {
         if let ShapeDefinitionContentWith::ShapeFillProperties(fill) = item {
-            Some(fill)
+            Some::<&ShapeFillPropertiesWith<X>>(fill)
         } else {
             None
         }
@@ -332,7 +332,7 @@ where
 {
     shape.content.iter().find_map(|item| {
         if let ShapeDefinitionContentWith::LineStrokeSettings(stroke) = item {
-            Some(stroke)
+            Some::<&LineStrokeSettingsWith<X>>(stroke)
         } else {
             None
         }
@@ -364,7 +364,7 @@ where
 {
     template.content.iter().find_map(|item| {
         if let ShapeElementContentWith::ShapeFillProperties(fill) = item {
-            Some(fill)
+            Some::<&ShapeFillPropertiesWith<X>>(fill)
         } else {
             None
         }
@@ -378,7 +378,7 @@ where
 {
     template.content.iter().find_map(|item| {
         if let ShapeElementContentWith::LineStrokeSettings(stroke) = item {
-            Some(stroke)
+            Some::<&LineStrokeSettingsWith<X>>(stroke)
         } else {
             None
         }

@@ -176,7 +176,7 @@ fn add_part(
 fn block(content: Vec<ParagraphContent>) -> BlockContent {
     let mut paragraph = Paragraph::default();
     paragraph.content = content;
-    BlockContent::Paragraph(paragraph)
+    BlockContent::from(paragraph)
 }
 
 /// The text `value` of a run, its spaces kept.
@@ -184,7 +184,7 @@ fn characters(value: &str) -> TextRunContent {
     let mut characters = WordText::default();
     characters.space = Some("preserve".to_owned());
     characters.value = value.to_owned();
-    TextRunContent::Text(characters)
+    TextRunContent::from(characters)
 }
 
 /// A table cell of one paragraph per entry of `values`.
@@ -199,20 +199,20 @@ fn complex_field(instruction: &str, shown: &str) -> Vec<ParagraphContent> {
     let character = |kind: &str| {
         let mut character = ComplexFieldCharacter::default();
         character.fld_char_type = Some(ComplexFieldCharacterType::from(kind.to_owned()));
-        run_holding(vec![TextRunContent::ComplexFieldCharacter(character)])
+        run_holding(vec![TextRunContent::from(character)])
     };
     let mut code = FieldCode::default();
     code.space = Some("preserve".to_owned());
     code.value = instruction.to_owned();
     [
         character("begin"),
-        run_holding(vec![TextRunContent::FieldCode(code)]),
+        run_holding(vec![TextRunContent::from(code)]),
         character("separate"),
         run(shown),
         character("end"),
     ]
     .into_iter()
-    .map(ParagraphContent::TextRun)
+    .map(ParagraphContent::from)
     .collect()
 }
 
@@ -288,7 +288,7 @@ fn numbering() -> NumberingDefinitions {
 
 /// A paragraph of no style holding the run of `value`.
 fn plain(value: &str) -> BlockContent {
-    block(vec![ParagraphContent::TextRun(run(value))])
+    block(vec![ParagraphContent::from(run(value))])
 }
 
 /// A run of `value`, its text's spaces kept.
@@ -306,9 +306,9 @@ fn run_holding(content: Vec<TextRunContent>) -> TextRun {
 /// A simple field of `instruction` whose result is the run of `shown`.
 fn simple_field(instruction: &str, shown: &str) -> ParagraphContent {
     let mut field = SimpleField::default();
-    field.content = vec![ParagraphContent::TextRun(run(shown))];
+    field.content = vec![ParagraphContent::from(run(shown))];
     field.instr = Some(instruction.to_owned());
-    ParagraphContent::SimpleField(field)
+    ParagraphContent::from(field)
 }
 
 /// A style of `kind`, `id` and `name`.
@@ -355,15 +355,12 @@ fn table(head: usize, rows: Vec<Vec<TableCell>>) -> BlockContent {
         .into_iter()
         .map(|cells| {
             let mut row = TableRow::default();
-            row.content = cells
-                .into_iter()
-                .map(ContentCellContent::TableCell)
-                .collect();
-            ContentRowContent::TableRow(row)
+            row.content = cells.into_iter().map(ContentCellContent::from).collect();
+            ContentRowContent::from(row)
         })
         .collect();
     built.repeat_header_rows(head);
-    BlockContent::Table(built)
+    BlockContent::from(built)
 }
 
 /// `paragraph`, a paragraph, with `properties`.
@@ -386,8 +383,8 @@ fn formatting() -> BlockContent {
     wrapped.value = "wrapped".to_owned();
     let mut code = ReferencedCharacterStyle::default();
     code.val = Some("HTMLCode".to_owned());
-    let bold = || RunPropertiesContent::Bold(Bold::default());
-    let italic = || RunPropertiesContent::Italics(Italics::default());
+    let bold = || RunPropertiesContent::from(Bold::default());
+    let italic = || RunPropertiesContent::from(Italics::default());
     block(
         [
             run("Plain "),
@@ -397,19 +394,16 @@ fn formatting() -> BlockContent {
             run(" "),
             marked("both", vec![bold(), italic()]),
             run(" "),
-            marked(
-                "code",
-                vec![RunPropertiesContent::ReferencedCharacterStyle(code)],
-            ),
+            marked("code", vec![RunPropertiesContent::from(code)]),
             run_holding(vec![
-                TextRunContent::TabCharacter(TabCharacter::default()),
-                TextRunContent::Text(tabbed),
-                TextRunContent::Break(wrapping),
-                TextRunContent::Text(wrapped),
+                TextRunContent::from(TabCharacter::default()),
+                TextRunContent::from(tabbed),
+                TextRunContent::from(wrapping),
+                TextRunContent::from(wrapped),
             ]),
         ]
         .into_iter()
-        .map(ParagraphContent::TextRun)
+        .map(ParagraphContent::from)
         .collect(),
     )
 }
@@ -418,19 +412,19 @@ fn formatting() -> BlockContent {
 /// bookmark, two `HYPERLINK` complex fields and a `HYPERLINK` simple field.
 fn links(outer: &str) -> BlockContent {
     let mut dashboard = Hyperlink::default();
-    dashboard.content = vec![ParagraphContent::TextRun(run("the dashboard"))];
+    dashboard.content = vec![ParagraphContent::from(run("the dashboard"))];
     dashboard.id = Some(outer.to_owned());
     dashboard.tooltip = Some("Tip".to_owned());
     let mut below = Hyperlink::default();
     below.anchor = Some("notes".to_owned());
-    below.content = vec![ParagraphContent::TextRun(run("below"))];
-    let separator = || ParagraphContent::TextRun(run(", "));
+    below.content = vec![ParagraphContent::from(run("below"))];
+    let separator = || ParagraphContent::from(run(", "));
     block(
         [
             vec![
-                ParagraphContent::Hyperlink(dashboard),
+                ParagraphContent::from(dashboard),
                 separator(),
-                ParagraphContent::Hyperlink(below),
+                ParagraphContent::from(below),
                 separator(),
             ],
             complex_field(r#" HYPERLINK "https://example.com/site" "#, "site"),
@@ -466,9 +460,9 @@ fn vml_shape(alt: Option<&str>, content: ShapeDefinitionContent) -> BlockContent
     shape.alt = alt.map(str::to_owned);
     shape.content = vec![content];
     let mut picture = VMLObject::default();
-    picture.content = vec![VmlElementContent::ShapeDefinition(shape)];
-    block(vec![ParagraphContent::TextRun(run_holding(vec![
-        TextRunContent::VMLObject(picture),
+    picture.content = vec![VmlElementContent::from(shape)];
+    block(vec![ParagraphContent::from(run_holding(vec![
+        TextRunContent::from(picture),
     ]))])
 }
 
@@ -556,7 +550,7 @@ fn word_file() -> Docx {
 /// The body of the Word file; `outer` is the id of the external hyperlink, `logo` and `image` those
 /// of the pictures and `chunk` that of the HTML part.
 fn word_body(outer: &str, logo: &str, image: &str, chunk: &str) -> Vec<BlockContent> {
-    let drawing = run_holding(vec![TextRunContent::DrawingMLObject(inline_picture(
+    let drawing = run_holding(vec![TextRunContent::from(inline_picture(
         PictureSource::Embedded(image),
         1,
         "Picture 1",
@@ -570,14 +564,14 @@ fn word_body(outer: &str, logo: &str, image: &str, chunk: &str) -> Vec<BlockCont
     let mut boxed = RichTextBoxContentContainer::default();
     boxed.content = vec![plain("Boxed")];
     let mut text_box = TextBox::default();
-    text_box.content = Some(Box::new(TextBoxContent::RichTextBoxContentContainer(boxed)));
+    text_box.content = Some(Box::new(TextBoxContent::from(boxed)));
     vec![
         styled("Heading1", "Results"),
         styled("Heading2", "Notes"),
         formatting(),
         links(outer),
-        vml_shape(Some("Logo"), ShapeDefinitionContent::ImageData(data)),
-        block(vec![ParagraphContent::TextRun(drawing)]),
+        vml_shape(Some("Logo"), ShapeDefinitionContent::from(data)),
+        block(vec![ParagraphContent::from(drawing)]),
         listed(1, 0, "North"),
         listed(1, 1, "Inner"),
         listed(1, 0, "South"),
@@ -602,8 +596,8 @@ fn word_body(outer: &str, logo: &str, image: &str, chunk: &str) -> Vec<BlockCont
                 vec![cell(&["1"]), cell(&["2"])],
             ],
         ),
-        BlockContent::AnchorForImportedExternalContent(alt_chunk),
-        vml_shape(None, ShapeDefinitionContent::TextBox(text_box)),
+        BlockContent::from(alt_chunk),
+        vml_shape(None, ShapeDefinitionContent::from(text_box)),
     ]
 }
 

@@ -24,7 +24,7 @@ use super::names;
 use super::structs::{
     Body, Catalog, Child, EnumDef, EnumKind, Node, Occurs, Target, Value, Wildcard,
 };
-use super::{Crate, readers, traversal, user_data, writers};
+use super::{Crate, enums, readers, traversal, user_data, writers};
 
 /// The lines a generated function body holds before its work is split into
 /// helpers, below clippy's `too_many_lines`.
@@ -38,7 +38,7 @@ pub const CHUNK: usize = 80;
 const XML_NAMES: [(&str, &str); 6] = [
     ("-> Element {", "officekit_xml::element::Element"),
     ("Node::Element(", "officekit_xml::element::Node"),
-    ("Other(Node)", "officekit_xml::element::Node"),
+    ("Other(Box<Node>)", "officekit_xml::element::Node"),
     ("element: &Element", "officekit_xml::element::Element"),
     ("parse::list(", "officekit_xml::values::parse"),
     ("scope: &mut Scope", "officekit_xml::write::Scope"),
@@ -230,7 +230,7 @@ impl Pair<'_> {
                 &chained(
                     &functions,
                     &format!(
-                        "unwrap_or_else(|rest| Self::Other({}::generic(&*rest)))",
+                        "unwrap_or_else(|rest| Self::Other(Box::new({}::generic(&*rest))))",
                         self.runtime
                     ),
                 ),
@@ -465,6 +465,9 @@ impl ModuleItems {
             ));
             let (text, chunks) = enum_impls(names, index, found, &mut parts.namespaces);
             parts.impls.push((found.name.clone(), text));
+            parts
+                .impls
+                .push((found.name.clone(), enums::arm_impls(names, found)));
             parts.helpers.push_str(&chunks);
         }
         for (smaller, larger) in &catalog.conversions {
@@ -1554,7 +1557,7 @@ fn enum_text(names: &Names<'_>, found: &EnumDef, open: bool) -> String {
         .collect();
     variants.push((
         "Other".to_owned(),
-        "Node".to_owned(),
+        "Box<Node>".to_owned(),
         "An element or node the schemas do not declare at this position.".to_owned(),
     ));
     variants.sort();
@@ -1673,7 +1676,10 @@ fn enum_default(names: &Names<'_>, found: &EnumDef) -> String {
         return out;
     }
     let value = if found.wildcard.is_some() {
-        Expr::call("Self::Other", vec![Expr::atom("Node::Text(String::new())")])
+        Expr::call(
+            "Self::Other",
+            vec![Expr::atom("Box::new(Node::Text(String::new()))")],
+        )
     } else if let Some((variant, arm)) = found.arms.first() {
         let node = &names.catalog.nodes[*arm];
         let held = if found.boxed.contains(arm) {
@@ -1720,7 +1726,7 @@ fn enum_read(
         &found.name,
     ));
     out.push_str(
-        "    fn other(node: Node) -> Option<Self> {\n        Some(Self::Other(node))\n    }\n\n",
+        "    fn other(node: Node) -> Option<Self> {\n        Some(Self::Other(Box::new(node)))\n    }\n\n",
     );
     out.push_str(&layout::signature(
         4,
@@ -1728,7 +1734,10 @@ fn enum_read(
         &[format!("item: {runtime}::Item<'_>")],
         "Self",
     ));
-    let other = Expr::call("Self::Other", vec![Expr::atom("item.into_node()")]);
+    let other = Expr::call(
+        "Self::Other",
+        vec![Expr::atom("Box::new(item.into_node())")],
+    );
     let arm_lines: Vec<(String, String, Expr)> = found
         .arms
         .iter()
@@ -1801,7 +1810,7 @@ fn read_helpers(
 ) {
     let other = Expr::call(
         &format!("{name}::Other"),
-        vec![Expr::atom("item.into_node()")],
+        vec![Expr::atom("Box::new(item.into_node())")],
     );
     for (index, text) in chunks.iter().enumerate() {
         let helper = format!("read_{function}_{}", index + 1);
@@ -1844,7 +1853,7 @@ fn enum_write(runtime: &str, found: &EnumDef, function: &str, helpers: &mut Stri
     );
     if found.arms.is_empty() {
         out.push_str(
-            "        let Self::Other(node) = self;\n        writer.other(node.clone());\n",
+            "        let Self::Other(node) = self;\n        writer.other(Node::clone(node));\n",
         );
     } else if found.arms.len() <= CHUNK {
         out.push_str("        match self {\n");
@@ -1860,7 +1869,7 @@ fn enum_write(runtime: &str, found: &EnumDef, function: &str, helpers: &mut Stri
             .collect();
         arms.push((
             "Self::Other".to_owned(),
-            Expr::call("writer.other", vec![Expr::atom("node.clone()")]),
+            Expr::call("writer.other", vec![Expr::atom("Node::clone(node)")]),
         ));
         arms.sort_by(|left, right| left.0.cmp(&right.0));
         for (path, body) in &arms {
@@ -1870,7 +1879,7 @@ fn enum_write(runtime: &str, found: &EnumDef, function: &str, helpers: &mut Stri
         out.push_str("        }\n");
     } else {
         out.push_str(
-            "        if let Self::Other(node) = self {\n            writer.other(node.clone());\n        }\n",
+            "        if let Self::Other(node) = self {\n            writer.other(Node::clone(node));\n        }\n",
         );
         for (chunk, arms) in found.arms.chunks(CHUNK / 4).enumerate() {
             let helper = format!("write_{function}_{}", chunk + 1);

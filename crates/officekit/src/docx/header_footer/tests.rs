@@ -41,7 +41,7 @@ fn text(docx: &Docx, part: &str) -> String {
 }
 
 fn one_paragraph() -> Vec<BlockContent> {
-    vec![BlockContent::Paragraph(Paragraph::default())]
+    vec![BlockContent::from(Paragraph::default())]
 }
 
 fn a_header() -> Header {
@@ -117,7 +117,7 @@ fn header_reference(kind: &str, id: &str) -> SectionPropertiesContent {
     let mut reference = HeaderReference::default();
     reference.id = Some(id.to_owned());
     reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
-    SectionPropertiesContent::HeaderReference(reference)
+    SectionPropertiesContent::from(reference)
 }
 
 #[cfg(feature = "transitional")]
@@ -125,7 +125,7 @@ fn footer_reference(kind: &str, id: &str) -> SectionPropertiesContent {
     let mut reference = FooterReference::default();
     reference.id = Some(id.to_owned());
     reference.r#type = Some(HeaderOrFooterType::from(kind.to_owned()));
-    SectionPropertiesContent::FooterReference(reference)
+    SectionPropertiesContent::from(reference)
 }
 
 /// Section properties holding `references`.
@@ -143,7 +143,7 @@ fn section_break(section: DocumentFinalSectionProperties) -> BlockContent {
     properties.document_final_section_properties = Some(Box::new(section));
     let mut paragraph = Paragraph::default();
     paragraph.properties = Some(Box::new(properties));
-    BlockContent::Paragraph(paragraph)
+    BlockContent::from(paragraph)
 }
 
 /// A Word document whose body holds `blocks` and ends in `section`, related to one header or
@@ -212,7 +212,7 @@ fn pagare() -> Docx {
     ]);
     section.page_size = Some(Box::new(page));
     typed_docx(
-        vec![BlockContent::Paragraph(Paragraph::default())],
+        vec![BlockContent::from(Paragraph::default())],
         section,
         &[
             "/word/header1.xml",
@@ -517,9 +517,9 @@ fn a_part_two_sections_share_stays_until_the_last_reference_goes() {
 #[test]
 fn sections_inside_block_level_content_controls_count_in_document_order() {
     let mut content = BlockLevelStructuredDocumentTagContent::default();
-    content.content = vec![ContentBlockContent::Paragraph(
+    content.content = vec![ContentBlockContent::from(
         if let BlockContent::Paragraph(found) = section_break(section_of(Vec::new())) {
-            found
+            *found
         } else {
             Paragraph::default()
         },
@@ -529,8 +529,8 @@ fn sections_inside_block_level_content_controls_count_in_document_order() {
     let mut docx = typed_docx(
         vec![
             section_break(section_of(Vec::new())),
-            BlockContent::BlockLevelStructuredDocumentTag(control),
-            BlockContent::Paragraph(Paragraph::default()),
+            BlockContent::from(control),
+            BlockContent::from(Paragraph::default()),
         ],
         section_of(Vec::new()),
         &[],

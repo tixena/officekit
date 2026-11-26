@@ -1064,19 +1064,19 @@ impl Eq for NonVisualShapePropertiesWith<()> {}
 #[non_exhaustive]
 pub enum ObjectContentWith<X: UserData> {
     /// The element `cdr:cxnSp`, a `ConnectionShape`.
-    ConnectionShape(ConnectionShapeWith<X>),
+    ConnectionShape(Box<ConnectionShapeWith<X>>),
     /// The element `cdr14:contentPart`, a `ContentPart`.
-    ContentPart(super::office_drawing_2010_chart_drawing::ContentPartWith<X>),
+    ContentPart(Box<super::office_drawing_2010_chart_drawing::ContentPartWith<X>>),
     /// The element `cdr:graphicFrame`, a `GraphicFrame`.
-    GraphicFrame(GraphicFrameWith<X>),
+    GraphicFrame(Box<GraphicFrameWith<X>>),
     /// The element `cdr:grpSp`, a `GroupShape`.
-    GroupShape(GroupShapeWith<X>),
+    GroupShape(Box<GroupShapeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `cdr:pic`, a `Picture`.
-    Picture(PictureWith<X>),
+    Picture(Box<PictureWith<X>>),
     /// The element `cdr:sp`, a `Shape`.
-    Shape(ShapeWith<X>),
+    Shape(Box<ShapeWith<X>>),
 }
 
 /// [`ObjectContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1376,11 +1376,11 @@ impl Eq for StartingAnchorPointWith<()> {}
 #[non_exhaustive]
 pub enum UserShapesContentWith<X: UserData> {
     /// The element `cdr:absSizeAnchor`, a `AbsoluteAnchorShapeSize`.
-    AbsoluteAnchorShapeSize(AbsoluteAnchorShapeSizeWith<X>),
+    AbsoluteAnchorShapeSize(Box<AbsoluteAnchorShapeSizeWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `cdr:relSizeAnchor`, a `RelativeAnchorShapeSize`.
-    RelativeAnchorShapeSize(RelativeAnchorShapeSizeWith<X>),
+    RelativeAnchorShapeSize(Box<RelativeAnchorShapeSizeWith<X>>),
 }
 
 /// [`UserShapesContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -2465,38 +2465,44 @@ impl<X: UserData> ObjectContentWith<X> {
     {
         match self {
             Self::ConnectionShape(node) => {
-                ObjectContentWith::ConnectionShape(node.into_user_data())
+                ObjectContentWith::ConnectionShape(Box::new((*node).into_user_data()))
             }
-            Self::ContentPart(node) => ObjectContentWith::ContentPart(node.into_user_data()),
-            Self::GraphicFrame(node) => ObjectContentWith::GraphicFrame(node.into_user_data()),
-            Self::GroupShape(node) => ObjectContentWith::GroupShape(node.into_user_data()),
+            Self::ContentPart(node) => {
+                ObjectContentWith::ContentPart(Box::new((*node).into_user_data()))
+            }
+            Self::GraphicFrame(node) => {
+                ObjectContentWith::GraphicFrame(Box::new((*node).into_user_data()))
+            }
+            Self::GroupShape(node) => {
+                ObjectContentWith::GroupShape(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => ObjectContentWith::Other(node),
-            Self::Picture(node) => ObjectContentWith::Picture(node.into_user_data()),
-            Self::Shape(node) => ObjectContentWith::Shape(node.into_user_data()),
+            Self::Picture(node) => ObjectContentWith::Picture(Box::new((*node).into_user_data())),
+            Self::Shape(node) => ObjectContentWith::Shape(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl<X: UserData> Default for ObjectContentWith<X> {
     fn default() -> Self {
-        Self::ConnectionShape(ConnectionShapeWith::default())
+        Self::ConnectionShape(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for ObjectContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CDR, "cxnSp")) => Self::ConnectionShape(item.read()),
-            Some((NS_CDR14, "contentPart")) => Self::ContentPart(item.read()),
-            Some((NS_CDR, "graphicFrame")) => Self::GraphicFrame(item.read()),
-            Some((NS_CDR, "grpSp")) => Self::GroupShape(item.read()),
-            Some((NS_CDR, "pic")) => Self::Picture(item.read()),
-            Some((NS_CDR, "sp")) => Self::Shape(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_CDR, "cxnSp")) => Self::ConnectionShape(Box::new(item.read())),
+            Some((NS_CDR14, "contentPart")) => Self::ContentPart(Box::new(item.read())),
+            Some((NS_CDR, "graphicFrame")) => Self::GraphicFrame(Box::new(item.read())),
+            Some((NS_CDR, "grpSp")) => Self::GroupShape(Box::new(item.read())),
+            Some((NS_CDR, "pic")) => Self::Picture(Box::new(item.read())),
+            Some((NS_CDR, "sp")) => Self::Shape(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -2508,12 +2514,55 @@ impl officekit_markup_base::Write for ObjectContent {
             Self::ContentPart(arm) => arm.write_into(writer),
             Self::GraphicFrame(arm) => arm.write_into(writer),
             Self::GroupShape(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Picture(arm) => arm.write_into(writer),
             Self::Shape(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<ConnectionShapeWith<X>> for ObjectContentWith<X> {
+    fn from(arm: ConnectionShapeWith<X>) -> Self {
+        Self::ConnectionShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<super::office_drawing_2010_chart_drawing::ContentPartWith<X>>
+    for ObjectContentWith<X>
+{
+    fn from(arm: super::office_drawing_2010_chart_drawing::ContentPartWith<X>) -> Self {
+        Self::ContentPart(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameWith<X>> for ObjectContentWith<X> {
+    fn from(arm: GraphicFrameWith<X>) -> Self {
+        Self::GraphicFrame(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GroupShapeWith<X>> for ObjectContentWith<X> {
+    fn from(arm: GroupShapeWith<X>) -> Self {
+        Self::GroupShape(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PictureWith<X>> for ObjectContentWith<X> {
+    fn from(arm: PictureWith<X>) -> Self {
+        Self::Picture(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<ShapeWith<X>> for ObjectContentWith<X> {
+    fn from(arm: ShapeWith<X>) -> Self {
+        Self::Shape(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ObjectContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> PictureWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field
@@ -3183,11 +3232,11 @@ impl<X: UserData> UserShapesContentWith<X> {
     {
         match self {
             Self::AbsoluteAnchorShapeSize(node) => {
-                UserShapesContentWith::AbsoluteAnchorShapeSize(node.into_user_data())
+                UserShapesContentWith::AbsoluteAnchorShapeSize(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => UserShapesContentWith::Other(node),
             Self::RelativeAnchorShapeSize(node) => {
-                UserShapesContentWith::RelativeAnchorShapeSize(node.into_user_data())
+                UserShapesContentWith::RelativeAnchorShapeSize(Box::new((*node).into_user_data()))
             }
         }
     }
@@ -3195,14 +3244,14 @@ impl<X: UserData> UserShapesContentWith<X> {
 
 impl officekit_markup_base::Read for UserShapesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_CDR, "absSizeAnchor")) => Self::AbsoluteAnchorShapeSize(item.read()),
-            Some((NS_CDR, "relSizeAnchor")) => Self::RelativeAnchorShapeSize(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_CDR, "absSizeAnchor")) => Self::AbsoluteAnchorShapeSize(Box::new(item.read())),
+            Some((NS_CDR, "relSizeAnchor")) => Self::RelativeAnchorShapeSize(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -3211,8 +3260,25 @@ impl officekit_markup_base::Write for UserShapesContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::AbsoluteAnchorShapeSize(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::RelativeAnchorShapeSize(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<AbsoluteAnchorShapeSizeWith<X>> for UserShapesContentWith<X> {
+    fn from(arm: AbsoluteAnchorShapeSizeWith<X>) -> Self {
+        Self::AbsoluteAnchorShapeSize(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<RelativeAnchorShapeSizeWith<X>> for UserShapesContentWith<X> {
+    fn from(arm: RelativeAnchorShapeSizeWith<X>) -> Self {
+        Self::RelativeAnchorShapeSize(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<UserShapesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);

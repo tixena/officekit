@@ -1539,7 +1539,7 @@ impl super::Transform for drawing::AnyElementContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_any_element_1(self, ctx)
             .or_else(|| transform_any_element_2(self, ctx))
@@ -3020,41 +3020,41 @@ impl super::Transform for drawing::BlipContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AlphaBiLevelEffect(arm) = self {
-            Self::AlphaBiLevelEffect(arm.transform(ctx))
+            Self::AlphaBiLevelEffect(Box::new(arm.transform(ctx)))
         } else if let Self::AlphaCeilingEffect(arm) = self {
-            Self::AlphaCeilingEffect(arm.transform(ctx))
+            Self::AlphaCeilingEffect(Box::new(arm.transform(ctx)))
         } else if let Self::AlphaFloorEffect(arm) = self {
-            Self::AlphaFloorEffect(arm.transform(ctx))
+            Self::AlphaFloorEffect(Box::new(arm.transform(ctx)))
         } else if let Self::AlphaInverseEffect(arm) = self {
-            Self::AlphaInverseEffect(arm.transform(ctx))
+            Self::AlphaInverseEffect(Box::new(arm.transform(ctx)))
         } else if let Self::AlphaModulateEffect(arm) = self {
-            Self::AlphaModulateEffect(arm.transform(ctx))
+            Self::AlphaModulateEffect(Box::new(arm.transform(ctx)))
         } else if let Self::AlphaModulateFixedEffect(arm) = self {
-            Self::AlphaModulateFixedEffect(arm.transform(ctx))
+            Self::AlphaModulateFixedEffect(Box::new(arm.transform(ctx)))
         } else if let Self::AlphaReplaceEffect(arm) = self {
-            Self::AlphaReplaceEffect(arm.transform(ctx))
+            Self::AlphaReplaceEffect(Box::new(arm.transform(ctx)))
         } else if let Self::BiLevel(arm) = self {
-            Self::BiLevel(arm.transform(ctx))
+            Self::BiLevel(Box::new(arm.transform(ctx)))
         } else if let Self::BlurEffect(arm) = self {
-            Self::BlurEffect(arm.transform(ctx))
+            Self::BlurEffect(Box::new(arm.transform(ctx)))
         } else if let Self::ColorChangeEffect(arm) = self {
-            Self::ColorChangeEffect(arm.transform(ctx))
+            Self::ColorChangeEffect(Box::new(arm.transform(ctx)))
         } else if let Self::DuotoneEffect(arm) = self {
-            Self::DuotoneEffect(arm.transform(ctx))
+            Self::DuotoneEffect(Box::new(arm.transform(ctx)))
         } else if let Self::FillOverlayEffect(arm) = self {
-            Self::FillOverlayEffect(arm.transform(ctx))
+            Self::FillOverlayEffect(Box::new(arm.transform(ctx)))
         } else if let Self::GrayScaleEffect(arm) = self {
-            Self::GrayScaleEffect(arm.transform(ctx))
+            Self::GrayScaleEffect(Box::new(arm.transform(ctx)))
         } else if let Self::HueSaturationLuminanceEffect(arm) = self {
-            Self::HueSaturationLuminanceEffect(arm.transform(ctx))
+            Self::HueSaturationLuminanceEffect(Box::new(arm.transform(ctx)))
         } else if let Self::LuminanceEffect(arm) = self {
-            Self::LuminanceEffect(arm.transform(ctx))
+            Self::LuminanceEffect(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SolidColorReplacement(arm) = self {
-            Self::SolidColorReplacement(arm.transform(ctx))
+            Self::SolidColorReplacement(Box::new(arm.transform(ctx)))
         } else if let Self::TintEffect(arm) = self {
-            Self::TintEffect(arm.transform(ctx))
+            Self::TintEffect(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -4076,11 +4076,11 @@ impl super::Transform for drawing::BuildSubElementsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BuildChart(arm) = self {
-            Self::BuildChart(arm.transform(ctx))
+            Self::BuildChart(Box::new(arm.transform(ctx)))
         } else if let Self::BuildDiagram(arm) = self {
-            Self::BuildDiagram(arm.transform(ctx))
+            Self::BuildDiagram(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -5242,19 +5242,19 @@ impl super::Transform for drawing::ColorContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::HueSaturationLuminanceColorModel(arm) = self {
-            Self::HueSaturationLuminanceColorModel(arm.transform(ctx))
+            Self::HueSaturationLuminanceColorModel(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PresetColor(arm) = self {
-            Self::PresetColor(arm.transform(ctx))
+            Self::PresetColor(Box::new(arm.transform(ctx)))
         } else if let Self::RGBColorModelHexVariant(arm) = self {
-            Self::RGBColorModelHexVariant(arm.transform(ctx))
+            Self::RGBColorModelHexVariant(Box::new(arm.transform(ctx)))
         } else if let Self::RGBColorModelPercentageVariant(arm) = self {
-            Self::RGBColorModelPercentageVariant(arm.transform(ctx))
+            Self::RGBColorModelPercentageVariant(Box::new(arm.transform(ctx)))
         } else if let Self::SchemeColor(arm) = self {
-            Self::SchemeColor(arm.transform(ctx))
+            Self::SchemeColor(Box::new(arm.transform(ctx)))
         } else if let Self::SystemColor(arm) = self {
-            Self::SystemColor(arm.transform(ctx))
+            Self::SystemColor(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -5538,9 +5538,9 @@ impl super::Transform for drawing::ColorSchemeMapOverrideContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::MasterColorMapping(arm) = self {
-            Self::MasterColorMapping(arm.transform(ctx))
+            Self::MasterColorMapping(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::OverrideColorMapping(arm) = self {
             Self::OverrideColorMapping(Box::new(arm.transform(ctx)))
         } else {
@@ -5724,7 +5724,7 @@ impl super::Transform for drawing::ColorTransformContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_color_transform_1(self, ctx)
             .or_else(|| transform_color_transform_2(self, ctx))
@@ -7912,7 +7912,7 @@ impl super::Transform for drawing::EffectContainerContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_effect_container_1(self, ctx)
             .or_else(|| transform_effect_container_2(self, ctx))
@@ -8273,11 +8273,11 @@ impl super::Transform for drawing::EffectPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::EffectContainerEffectDag(arm) = self {
-            Self::EffectContainerEffectDag(arm.transform(ctx))
+            Self::EffectContainerEffectDag(Box::new(arm.transform(ctx)))
         } else if let Self::EffectContainerEffectLst(arm) = self {
-            Self::EffectContainerEffectLst(arm.transform(ctx))
+            Self::EffectContainerEffectLst(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -9324,11 +9324,11 @@ impl super::Transform for drawing::FillModeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Stretch(arm) = self {
-            Self::Stretch(arm.transform(ctx))
+            Self::Stretch(Box::new(arm.transform(ctx)))
         } else if let Self::Tile(arm) = self {
-            Self::Tile(arm.transform(ctx))
+            Self::Tile(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -9503,19 +9503,19 @@ impl super::Transform for drawing::FillPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::GradientFill(arm) = self {
-            Self::GradientFill(arm.transform(ctx))
+            Self::GradientFill(Box::new(arm.transform(ctx)))
         } else if let Self::GroupFill(arm) = self {
-            Self::GroupFill(arm.transform(ctx))
+            Self::GroupFill(Box::new(arm.transform(ctx)))
         } else if let Self::NoFill(arm) = self {
-            Self::NoFill(arm.transform(ctx))
+            Self::NoFill(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PatternFill(arm) = self {
-            Self::PatternFill(arm.transform(ctx))
+            Self::PatternFill(Box::new(arm.transform(ctx)))
         } else if let Self::PictureFill(arm) = self {
-            Self::PictureFill(arm.transform(ctx))
+            Self::PictureFill(Box::new(arm.transform(ctx)))
         } else if let Self::SolidFill(arm) = self {
-            Self::SolidFill(arm.transform(ctx))
+            Self::SolidFill(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -10808,11 +10808,11 @@ impl super::Transform for drawing::GeometryContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CustomGeometry(arm) = self {
-            Self::CustomGeometry(arm.transform(ctx))
+            Self::CustomGeometry(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PresetGeometry(arm) = self {
-            Self::PresetGeometry(arm.transform(ctx))
+            Self::PresetGeometry(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -11037,11 +11037,11 @@ impl super::Transform for drawing::GradientFillContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::LinearGradientFill(arm) = self {
-            Self::LinearGradientFill(arm.transform(ctx))
+            Self::LinearGradientFill(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PathGradient(arm) = self {
-            Self::PathGradient(arm.transform(ctx))
+            Self::PathGradient(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -11277,11 +11277,11 @@ impl super::Transform for drawing::GraphicElementContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ChartToAnimate(arm) = self {
-            Self::ChartToAnimate(arm.transform(ctx))
+            Self::ChartToAnimate(Box::new(arm.transform(ctx)))
         } else if let Self::DiagramToAnimate(arm) = self {
-            Self::DiagramToAnimate(arm.transform(ctx))
+            Self::DiagramToAnimate(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -12170,21 +12170,21 @@ impl super::Transform for drawing::GroupShapeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ConnectionShape(arm) = self {
-            Self::ConnectionShape(arm.transform(ctx))
+            Self::ConnectionShape(Box::new(arm.transform(ctx)))
         } else if let Self::ContentPart(arm) = self {
-            Self::ContentPart(arm.transform(ctx))
+            Self::ContentPart(Box::new(arm.transform(ctx)))
         } else if let Self::GraphicFrame(arm) = self {
-            Self::GraphicFrame(arm.transform(ctx))
+            Self::GraphicFrame(Box::new(arm.transform(ctx)))
         } else if let Self::GroupShape(arm) = self {
-            Self::GroupShape(arm.transform(ctx))
+            Self::GroupShape(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Picture(arm) = self {
-            Self::Picture(arm.transform(ctx))
+            Self::Picture(Box::new(arm.transform(ctx)))
         } else if let Self::Shape(arm) = self {
-            Self::Shape(arm.transform(ctx))
+            Self::Shape(Box::new(arm.transform(ctx)))
         } else if let Self::TextShape(arm) = self {
-            Self::TextShape(arm.transform(ctx))
+            Self::TextShape(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -14251,11 +14251,11 @@ impl super::Transform for drawing::LineDashContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CustomDash(arm) = self {
-            Self::CustomDash(arm.transform(ctx))
+            Self::CustomDash(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PresetDash(arm) = self {
-            Self::PresetDash(arm.transform(ctx))
+            Self::PresetDash(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -14413,15 +14413,15 @@ impl super::Transform for drawing::LineFillContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::GradientFill(arm) = self {
-            Self::GradientFill(arm.transform(ctx))
+            Self::GradientFill(Box::new(arm.transform(ctx)))
         } else if let Self::NoFill(arm) = self {
-            Self::NoFill(arm.transform(ctx))
+            Self::NoFill(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PatternFill(arm) = self {
-            Self::PatternFill(arm.transform(ctx))
+            Self::PatternFill(Box::new(arm.transform(ctx)))
         } else if let Self::SolidFill(arm) = self {
-            Self::SolidFill(arm.transform(ctx))
+            Self::SolidFill(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -14659,13 +14659,13 @@ impl super::Transform for drawing::LineJoinContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::LineJoinBevel(arm) = self {
-            Self::LineJoinBevel(arm.transform(ctx))
+            Self::LineJoinBevel(Box::new(arm.transform(ctx)))
         } else if let Self::MiterLineJoin(arm) = self {
-            Self::MiterLineJoin(arm.transform(ctx))
+            Self::MiterLineJoin(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RoundLineJoin(arm) = self {
-            Self::RoundLineJoin(arm.transform(ctx))
+            Self::RoundLineJoin(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -21763,11 +21763,11 @@ impl super::Transform for drawing::ShapeAdjustHandlesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PolarAdjustHandle(arm) = self {
-            Self::PolarAdjustHandle(arm.transform(ctx))
+            Self::PolarAdjustHandle(Box::new(arm.transform(ctx)))
         } else if let Self::XYAdjustHandle(arm) = self {
-            Self::XYAdjustHandle(arm.transform(ctx))
+            Self::XYAdjustHandle(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -22320,19 +22320,19 @@ impl super::Transform for drawing::ShapePathContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CloseShapePath(arm) = self {
-            Self::CloseShapePath(arm.transform(ctx))
+            Self::CloseShapePath(Box::new(arm.transform(ctx)))
         } else if let Self::DrawArcTo(arm) = self {
-            Self::DrawArcTo(arm.transform(ctx))
+            Self::DrawArcTo(Box::new(arm.transform(ctx)))
         } else if let Self::DrawCubicBezierCurveTo(arm) = self {
-            Self::DrawCubicBezierCurveTo(arm.transform(ctx))
+            Self::DrawCubicBezierCurveTo(Box::new(arm.transform(ctx)))
         } else if let Self::DrawLineTo(arm) = self {
-            Self::DrawLineTo(arm.transform(ctx))
+            Self::DrawLineTo(Box::new(arm.transform(ctx)))
         } else if let Self::DrawQuadraticBezierCurveTo(arm) = self {
-            Self::DrawQuadraticBezierCurveTo(arm.transform(ctx))
+            Self::DrawQuadraticBezierCurveTo(Box::new(arm.transform(ctx)))
         } else if let Self::MovePathTo(arm) = self {
-            Self::MovePathTo(arm.transform(ctx))
+            Self::MovePathTo(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -24213,11 +24213,11 @@ impl super::Transform for drawing::TableBackgroundEffectContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Effect(arm) = self {
-            Self::Effect(arm.transform(ctx))
+            Self::Effect(Box::new(arm.transform(ctx)))
         } else if let Self::EffectReference(arm) = self {
-            Self::EffectReference(arm.transform(ctx))
+            Self::EffectReference(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -24802,11 +24802,11 @@ impl super::Transform for drawing::TableCellTextStyleFontContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::FontFontCollection(arm) = self {
-            Self::FontFontCollection(arm.transform(ctx))
+            Self::FontFontCollection(Box::new(arm.transform(ctx)))
         } else if let Self::FontReference(arm) = self {
-            Self::FontReference(arm.transform(ctx))
+            Self::FontReference(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -25135,11 +25135,11 @@ impl super::Transform for drawing::TablePropertiesStyleContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TableStyle(arm) = self {
-            Self::TableStyle(arm.transform(ctx))
+            Self::TableStyle(Box::new(arm.transform(ctx)))
         } else if let Self::TableStyleID(arm) = self {
-            Self::TableStyleID(arm.transform(ctx))
+            Self::TableStyleID(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -25758,11 +25758,11 @@ impl super::Transform for drawing::Text3DContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Apply3DShapeProperties(arm) = self {
-            Self::Apply3DShapeProperties(arm.transform(ctx))
+            Self::Apply3DShapeProperties(Box::new(arm.transform(ctx)))
         } else if let Self::NoTextIn3DScene(arm) = self {
-            Self::NoTextIn3DScene(arm.transform(ctx))
+            Self::NoTextIn3DScene(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -25838,13 +25838,13 @@ impl super::Transform for drawing::TextAutofitContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::NoAutoFit(arm) = self {
-            Self::NoAutoFit(arm.transform(ctx))
+            Self::NoAutoFit(Box::new(arm.transform(ctx)))
         } else if let Self::NormalAutoFit(arm) = self {
-            Self::NormalAutoFit(arm.transform(ctx))
+            Self::NormalAutoFit(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ShapeAutoFit(arm) = self {
-            Self::ShapeAutoFit(arm.transform(ctx))
+            Self::ShapeAutoFit(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -25930,11 +25930,11 @@ impl super::Transform for drawing::TextBulletColorContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ColorSpecified(arm) = self {
-            Self::ColorSpecified(arm.transform(ctx))
+            Self::ColorSpecified(Box::new(arm.transform(ctx)))
         } else if let Self::FollowTextBuClrTx(arm) = self {
-            Self::FollowTextBuClrTx(arm.transform(ctx))
+            Self::FollowTextBuClrTx(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -26015,15 +26015,15 @@ impl super::Transform for drawing::TextBulletContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AutoNumberedBullet(arm) = self {
-            Self::AutoNumberedBullet(arm.transform(ctx))
+            Self::AutoNumberedBullet(Box::new(arm.transform(ctx)))
         } else if let Self::CharacterBullet(arm) = self {
-            Self::CharacterBullet(arm.transform(ctx))
+            Self::CharacterBullet(Box::new(arm.transform(ctx)))
         } else if let Self::NoBullet(arm) = self {
-            Self::NoBullet(arm.transform(ctx))
+            Self::NoBullet(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PictureBullet(arm) = self {
-            Self::PictureBullet(arm.transform(ctx))
+            Self::PictureBullet(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -26114,13 +26114,13 @@ impl super::Transform for drawing::TextBulletSizeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BulletSizeFollowsText(arm) = self {
-            Self::BulletSizeFollowsText(arm.transform(ctx))
+            Self::BulletSizeFollowsText(Box::new(arm.transform(ctx)))
         } else if let Self::BulletSizePercentage(arm) = self {
-            Self::BulletSizePercentage(arm.transform(ctx))
+            Self::BulletSizePercentage(Box::new(arm.transform(ctx)))
         } else if let Self::BulletSizePoints(arm) = self {
-            Self::BulletSizePoints(arm.transform(ctx))
+            Self::BulletSizePoints(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -26206,11 +26206,11 @@ impl super::Transform for drawing::TextBulletTypefaceContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::FollowTextBuFontTx(arm) = self {
-            Self::FollowTextBuFontTx(arm.transform(ctx))
+            Self::FollowTextBuFontTx(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Specified(arm) = self {
-            Self::Specified(arm.transform(ctx))
+            Self::Specified(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -26884,15 +26884,15 @@ impl super::Transform for drawing::TextParagraphsContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::M(arm) = self {
-            Self::M(arm.transform(ctx))
+            Self::M(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TextField(arm) = self {
-            Self::TextField(arm.transform(ctx))
+            Self::TextField(Box::new(arm.transform(ctx)))
         } else if let Self::TextLineBreak(arm) = self {
-            Self::TextLineBreak(arm.transform(ctx))
+            Self::TextLineBreak(Box::new(arm.transform(ctx)))
         } else if let Self::TextRun(arm) = self {
-            Self::TextRun(arm.transform(ctx))
+            Self::TextRun(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -27273,11 +27273,11 @@ impl super::Transform for drawing::TextShapeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::UseShapeTextRectangle(arm) = self {
-            Self::UseShapeTextRectangle(arm.transform(ctx))
+            Self::UseShapeTextRectangle(Box::new(arm.transform(ctx)))
         } else if let Self::XfrmTransform2D(arm) = self {
-            Self::XfrmTransform2D(arm.transform(ctx))
+            Self::XfrmTransform2D(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -27362,11 +27362,11 @@ impl super::Transform for drawing::TextSpacingContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SpacingPercent(arm) = self {
-            Self::SpacingPercent(arm.transform(ctx))
+            Self::SpacingPercent(Box::new(arm.transform(ctx)))
         } else if let Self::SpacingPoints(arm) = self {
-            Self::SpacingPoints(arm.transform(ctx))
+            Self::SpacingPoints(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -27513,11 +27513,11 @@ impl super::Transform for drawing::TextUnderlineFillContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::UnderlineFill(arm) = self {
-            Self::UnderlineFill(arm.transform(ctx))
+            Self::UnderlineFill(Box::new(arm.transform(ctx)))
         } else if let Self::UnderlineFillPropertiesFollowText(arm) = self {
-            Self::UnderlineFillPropertiesFollowText(arm.transform(ctx))
+            Self::UnderlineFillPropertiesFollowText(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -27602,11 +27602,11 @@ impl super::Transform for drawing::TextUnderlineLineContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::UnderlineFollowsText(arm) = self {
-            Self::UnderlineFollowsText(arm.transform(ctx))
+            Self::UnderlineFollowsText(Box::new(arm.transform(ctx)))
         } else if let Self::UnderlineStroke(arm) = self {
-            Self::UnderlineStroke(arm.transform(ctx))
+            Self::UnderlineStroke(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -27990,11 +27990,11 @@ impl super::Transform for drawing::ThemeableFillStyleContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Fill(arm) = self {
-            Self::Fill(arm.transform(ctx))
+            Self::Fill(Box::new(arm.transform(ctx)))
         } else if let Self::FillReference(arm) = self {
-            Self::FillReference(arm.transform(ctx))
+            Self::FillReference(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -28079,11 +28079,11 @@ impl super::Transform for drawing::ThemeableLineStyleContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::LineReference(arm) = self {
-            Self::LineReference(arm.transform(ctx))
+            Self::LineReference(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Outline(arm) = self {
-            Self::Outline(arm.transform(ctx))
+            Self::Outline(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -30093,87 +30093,87 @@ fn transform_effect_container_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::EffectContainerContent> {
     if let drawing::EffectContainerContent::AlphaBiLevelEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaBiLevelEffect(node));
     }
     if let drawing::EffectContainerContent::AlphaCeilingEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaCeilingEffect(node));
     }
     if let drawing::EffectContainerContent::AlphaFloorEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaFloorEffect(node));
     }
     if let drawing::EffectContainerContent::AlphaInsetOutsetEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaInsetOutsetEffect(
             node,
         ));
     }
     if let drawing::EffectContainerContent::AlphaInverseEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaInverseEffect(node));
     }
     if let drawing::EffectContainerContent::AlphaModulateEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaModulateEffect(node));
     }
     if let drawing::EffectContainerContent::AlphaModulateFixedEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaModulateFixedEffect(
             node,
         ));
     }
     if let drawing::EffectContainerContent::AlphaReplaceEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::AlphaReplaceEffect(node));
     }
     if let drawing::EffectContainerContent::BiLevel(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::BiLevel(node));
     }
     if let drawing::EffectContainerContent::BlendEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::BlendEffect(node));
     }
     if let drawing::EffectContainerContent::BlurEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::BlurEffect(node));
     }
     if let drawing::EffectContainerContent::ColorChangeEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::ColorChangeEffect(node));
     }
     if let drawing::EffectContainerContent::DuotoneEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::DuotoneEffect(node));
     }
     if let drawing::EffectContainerContent::EffectContainerCont(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::EffectContainerCont(node));
     }
     if let drawing::EffectContainerContent::EffectEffectReference(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::EffectEffectReference(node));
     }
     if let drawing::EffectContainerContent::FillFillEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::FillFillEffect(node));
     }
     if let drawing::EffectContainerContent::FillOverlayEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::FillOverlayEffect(node));
     }
     if let drawing::EffectContainerContent::GlowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::GlowEffect(node));
     }
     if let drawing::EffectContainerContent::GrayScaleEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::GrayScaleEffect(node));
     }
     if let drawing::EffectContainerContent::HueSaturationLuminanceEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::HueSaturationLuminanceEffect(node));
     }
     None
@@ -30184,43 +30184,43 @@ fn transform_effect_container_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::EffectContainerContent> {
     if let drawing::EffectContainerContent::InnerShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::InnerShadowEffect(node));
     }
     if let drawing::EffectContainerContent::LuminanceEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::LuminanceEffect(node));
     }
     if let drawing::EffectContainerContent::OuterShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::OuterShadowEffect(node));
     }
     if let drawing::EffectContainerContent::PresetShadow(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::PresetShadow(node));
     }
     if let drawing::EffectContainerContent::ReflectionEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::ReflectionEffect(node));
     }
     if let drawing::EffectContainerContent::RelativeOffsetEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::RelativeOffsetEffect(node));
     }
     if let drawing::EffectContainerContent::SoftEdgeEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::SoftEdgeEffect(node));
     }
     if let drawing::EffectContainerContent::SolidColorReplacement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::SolidColorReplacement(node));
     }
     if let drawing::EffectContainerContent::TintEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::TintEffect(node));
     }
     if let drawing::EffectContainerContent::TransformEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::EffectContainerContent::TransformEffect(node));
     }
     None
@@ -30439,83 +30439,83 @@ fn transform_color_transform_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::ColorTransformContent> {
     if let drawing::ColorTransformContent::Alpha(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Alpha(node));
     }
     if let drawing::ColorTransformContent::AlphaModulation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::AlphaModulation(node));
     }
     if let drawing::ColorTransformContent::AlphaOffset(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::AlphaOffset(node));
     }
     if let drawing::ColorTransformContent::Blue(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Blue(node));
     }
     if let drawing::ColorTransformContent::BlueModulation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::BlueModulation(node));
     }
     if let drawing::ColorTransformContent::BlueOffset(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::BlueOffset(node));
     }
     if let drawing::ColorTransformContent::Complement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Complement(node));
     }
     if let drawing::ColorTransformContent::Gamma(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Gamma(node));
     }
     if let drawing::ColorTransformContent::Gray(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Gray(node));
     }
     if let drawing::ColorTransformContent::Green(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Green(node));
     }
     if let drawing::ColorTransformContent::GreenModulation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::GreenModulation(node));
     }
     if let drawing::ColorTransformContent::GreenOffset(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::GreenOffset(node));
     }
     if let drawing::ColorTransformContent::Hue(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Hue(node));
     }
     if let drawing::ColorTransformContent::HueModulate(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::HueModulate(node));
     }
     if let drawing::ColorTransformContent::HueOffset(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::HueOffset(node));
     }
     if let drawing::ColorTransformContent::Inverse(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Inverse(node));
     }
     if let drawing::ColorTransformContent::InverseGamma(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::InverseGamma(node));
     }
     if let drawing::ColorTransformContent::Luminance(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Luminance(node));
     }
     if let drawing::ColorTransformContent::LuminanceModulation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::LuminanceModulation(node));
     }
     if let drawing::ColorTransformContent::LuminanceOffset(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::LuminanceOffset(node));
     }
     None
@@ -30526,35 +30526,35 @@ fn transform_color_transform_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::ColorTransformContent> {
     if let drawing::ColorTransformContent::Red(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Red(node));
     }
     if let drawing::ColorTransformContent::RedModulation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::RedModulation(node));
     }
     if let drawing::ColorTransformContent::RedOffset(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::RedOffset(node));
     }
     if let drawing::ColorTransformContent::Saturation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Saturation(node));
     }
     if let drawing::ColorTransformContent::SaturationModulation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::SaturationModulation(node));
     }
     if let drawing::ColorTransformContent::SaturationOffset(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::SaturationOffset(node));
     }
     if let drawing::ColorTransformContent::Shade(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Shade(node));
     }
     if let drawing::ColorTransformContent::Tint(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::ColorTransformContent::Tint(node));
     }
     None
@@ -30761,83 +30761,83 @@ fn transform_any_element_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::AnchorForFloatingDrawingMLObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::AnchorForFloatingDrawingMLObject(node));
     }
     if let drawing::AnyElementContent::AnchorLocationIsLocked(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::AnchorLocationIsLocked(node));
     }
     if let drawing::AnyElementContent::ApplicationSpecificFileProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ApplicationSpecificFileProperties(node));
     }
     if let drawing::AnyElementContent::ArcSegment(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ArcSegment(node));
     }
     if let drawing::AnyElementContent::Array(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Array(node));
     }
     if let drawing::AnyElementContent::AttachedObjectData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::AttachedObjectData(node));
     }
     if let drawing::AnyElementContent::BasicString(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BasicString(node));
     }
     if let drawing::AnyElementContent::BezierCurve(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BezierCurve(node));
     }
     if let drawing::AnyElementContent::BinaryBlob(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BinaryBlob(node));
     }
     if let drawing::AnyElementContent::BinaryBlobObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BinaryBlobObject(node));
     }
     if let drawing::AnyElementContent::BinaryStorage(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BinaryStorage(node));
     }
     if let drawing::AnyElementContent::BinaryStorageObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BinaryStorageObject(node));
     }
     if let drawing::AnyElementContent::BinaryStream(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BinaryStream(node));
     }
     if let drawing::AnyElementContent::BinaryStreamObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BinaryStreamObject(node));
     }
     if let drawing::AnyElementContent::BinaryVersionedStream(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BinaryVersionedStream(node));
     }
     if let drawing::AnyElementContent::Blip(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Blip(node));
     }
     if let drawing::AnyElementContent::Boolean(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Boolean(node));
     }
     if let drawing::AnyElementContent::BottomBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::BottomBorder(node));
     }
     if let drawing::AnyElementContent::CalculationChainInfo(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::CalculationChainInfo(node));
     }
     if let drawing::AnyElementContent::Callout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Callout(node));
     }
     None
@@ -30848,85 +30848,85 @@ fn transform_any_element_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::ChartSheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ChartSheet(node));
     }
     if let drawing::AnyElementContent::ChartSpace(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ChartSpace(node));
     }
     if let drawing::AnyElementContent::ClassID(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ClassID(node));
     }
     if let drawing::AnyElementContent::ColorTransformDefinitionHeader(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ColorTransformDefinitionHeader(
             node,
         ));
     }
     if let drawing::AnyElementContent::ColorTransformDefinitions(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ColorTransformDefinitions(node));
     }
     if let drawing::AnyElementContent::ColorTransformHeaderList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ColorTransformHeaderList(node));
     }
     if let drawing::AnyElementContent::CommentList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::CommentList(node));
     }
     if let drawing::AnyElementContent::Comments(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Comments(node));
     }
     if let drawing::AnyElementContent::CommentsCollection(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::CommentsCollection(node));
     }
     if let drawing::AnyElementContent::Complex(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Complex(node));
     }
     if let drawing::AnyElementContent::Connections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Connections(node));
     }
     if let drawing::AnyElementContent::Currency(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Currency(node));
     }
     if let drawing::AnyElementContent::CustomFileProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::CustomFileProperties(node));
     }
     if let drawing::AnyElementContent::CustomXMLDataProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::CustomXMLDataProperties(node));
     }
     if let drawing::AnyElementContent::DataModel(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DataModel(node));
     }
     if let drawing::AnyElementContent::DateAndTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DateAndTime(node));
     }
     if let drawing::AnyElementContent::Decimal(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Decimal(node));
     }
     if let drawing::AnyElementContent::DiagramLayoutHeaderList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DiagramLayoutHeaderList(node));
     }
     if let drawing::AnyElementContent::DialogSheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DialogSheet(node));
     }
     if let drawing::AnyElementContent::DigitalSignatureLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DigitalSignatureLine(node));
     }
     None
@@ -30937,87 +30937,87 @@ fn transform_any_element_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::Document(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Document(node));
     }
     if let drawing::AnyElementContent::DocumentBackground(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DocumentBackground(node));
     }
     if let drawing::AnyElementContent::DocumentEndnotes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DocumentEndnotes(node));
     }
     if let drawing::AnyElementContent::DocumentFootnotes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DocumentFootnotes(node));
     }
     if let drawing::AnyElementContent::DocumentSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::DocumentSettings(node));
     }
     if let drawing::AnyElementContent::EmbeddedCustomXMLSchemaSupplementaryData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::EmbeddedCustomXMLSchemaSupplementaryData(node));
     }
     if let drawing::AnyElementContent::EmbeddedOLEObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::EmbeddedOLEObject(node));
     }
     if let drawing::AnyElementContent::EmbeddedObjectsAndControls(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::EmbeddedObjectsAndControls(node));
     }
     if let drawing::AnyElementContent::Empty(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Empty(node));
     }
     if let drawing::AnyElementContent::EndingAnchorPoint(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::EndingAnchorPoint(node));
     }
     if let drawing::AnyElementContent::ErrorStatusCode(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ErrorStatusCode(node));
     }
     if let drawing::AnyElementContent::ExplicitRelationshipsToDiagramParts(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ExplicitRelationshipsToDiagramParts(node));
     }
     if let drawing::AnyElementContent::ExternalReferenceExternalLink(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ExternalReferenceExternalLink(
             node,
         ));
     }
     if let drawing::AnyElementContent::Extrusion(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Extrusion(node));
     }
     if let drawing::AnyElementContent::FileTime(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::FileTime(node));
     }
     if let drawing::AnyElementContent::FontTableRootElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::FontTableRootElement(node));
     }
     if let drawing::AnyElementContent::Footer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Footer(node));
     }
     if let drawing::AnyElementContent::GlossaryDocumentRootElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::GlossaryDocumentRootElement(
             node,
         ));
     }
     if let drawing::AnyElementContent::GraphicObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::GraphicObject(node));
     }
     if let drawing::AnyElementContent::HandoutMaster(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::HandoutMaster(node));
     }
     None
@@ -31028,85 +31028,85 @@ fn transform_any_element_4(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::Header(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Header(node));
     }
     if let drawing::AnyElementContent::I1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::I1(node));
     }
     if let drawing::AnyElementContent::I2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::I2(node));
     }
     if let drawing::AnyElementContent::I4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::I4(node));
     }
     if let drawing::AnyElementContent::I8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::I8(node));
     }
     if let drawing::AnyElementContent::ImageData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ImageData(node));
     }
     if let drawing::AnyElementContent::ImageFile(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ImageFile(node));
     }
     if let drawing::AnyElementContent::InclusionExclusionDataForDataSource(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::InclusionExclusionDataForDataSource(node));
     }
     if let drawing::AnyElementContent::Ink(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Ink(node));
     }
     if let drawing::AnyElementContent::InkAnnotationFlag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::InkAnnotationFlag(node));
     }
     if let drawing::AnyElementContent::InlineDrawingMLObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::InlineDrawingMLObject(node));
     }
     if let drawing::AnyElementContent::Integer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Integer(node));
     }
     if let drawing::AnyElementContent::LayoutDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::LayoutDefinition(node));
     }
     if let drawing::AnyElementContent::LayoutDefinitionHeader(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::LayoutDefinitionHeader(node));
     }
     if let drawing::AnyElementContent::LeftBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::LeftBorder(node));
     }
     if let drawing::AnyElementContent::Line(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Line(node));
     }
     if let drawing::AnyElementContent::LineStrokeSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::LineStrokeSettings(node));
     }
     if let drawing::AnyElementContent::ListOfCommentAuthors(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ListOfCommentAuthors(node));
     }
     if let drawing::AnyElementContent::ListOfStyleDefinitionHeaders(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ListOfStyleDefinitionHeaders(
             node,
         ));
     }
     if let drawing::AnyElementContent::LockedCanvasContainer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::LockedCanvasContainer(node));
     }
     None
@@ -31117,67 +31117,67 @@ fn transform_any_element_5(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::Lpstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Lpstr(node));
     }
     if let drawing::AnyElementContent::Lpwstr(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Lpwstr(node));
     }
     if let drawing::AnyElementContent::MathProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::MathProperties(node));
     }
     if let drawing::AnyElementContent::Metadata(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Metadata(node));
     }
     if let drawing::AnyElementContent::MultiplePathLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::MultiplePathLine(node));
     }
     if let drawing::AnyElementContent::NewShapeDefaults(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::NewShapeDefaults(node));
     }
     if let drawing::AnyElementContent::NotesMaster(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::NotesMaster(node));
     }
     if let drawing::AnyElementContent::NotesSlide(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::NotesSlide(node));
     }
     if let drawing::AnyElementContent::Null(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Null(node));
     }
     if let drawing::AnyElementContent::NumberingDefinitions(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::NumberingDefinitions(node));
     }
     if let drawing::AnyElementContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::OfficeMath(node));
     }
     if let drawing::AnyElementContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::OfficeMathParagraph(node));
     }
     if let drawing::AnyElementContent::Oval(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Oval(node));
     }
     if let drawing::AnyElementContent::Picture(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Picture(node));
     }
     if let drawing::AnyElementContent::PivotCacheDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::PivotCacheDefinition(node));
     }
     if let drawing::AnyElementContent::PivotCacheRecords(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::PivotCacheRecords(node));
     }
     if let drawing::AnyElementContent::PivotTableDefinition(arm) = item {
@@ -31185,15 +31185,15 @@ fn transform_any_element_5(
         return Some(drawing::AnyElementContent::PivotTableDefinition(node));
     }
     if let drawing::AnyElementContent::Presentation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Presentation(node));
     }
     if let drawing::AnyElementContent::PresentationSlideSlide(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::PresentationSlideSlide(node));
     }
     if let drawing::AnyElementContent::PresentationWideProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::PresentationWideProperties(node));
     }
     None
@@ -31204,91 +31204,91 @@ fn transform_any_element_6(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::PresentationWideViewProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::PresentationWideViewProperties(
             node,
         ));
     }
     if let drawing::AnyElementContent::ProgrammableTabList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ProgrammableTabList(node));
     }
     if let drawing::AnyElementContent::QueryTable(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::QueryTable(node));
     }
     if let drawing::AnyElementContent::R4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::R4(node));
     }
     if let drawing::AnyElementContent::R8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::R8(node));
     }
     if let drawing::AnyElementContent::Rectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Rectangle(node));
     }
     if let drawing::AnyElementContent::ReferenceToChartPart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ReferenceToChartPart(node));
     }
     if let drawing::AnyElementContent::RevisionHeaders(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::RevisionHeaders(node));
     }
     if let drawing::AnyElementContent::Revisions(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Revisions(node));
     }
     if let drawing::AnyElementContent::RichTextBoxContentContainer(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::RichTextBoxContentContainer(
             node,
         ));
     }
     if let drawing::AnyElementContent::RightBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::RightBorder(node));
     }
     if let drawing::AnyElementContent::RoundedRectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::RoundedRectangle(node));
     }
     if let drawing::AnyElementContent::SetOfAdditionalCharacteristics(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SetOfAdditionalCharacteristics(
             node,
         ));
     }
     if let drawing::AnyElementContent::SetOfFormulas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SetOfFormulas(node));
     }
     if let drawing::AnyElementContent::SetOfHandles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SetOfHandles(node));
     }
     if let drawing::AnyElementContent::ShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShadowEffect(node));
     }
     if let drawing::AnyElementContent::ShapeClippingPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeClippingPath(node));
     }
     if let drawing::AnyElementContent::ShapeDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeDefinition(node));
     }
     if let drawing::AnyElementContent::ShapeFillExtendedProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeFillExtendedProperties(
             node,
         ));
     }
     if let drawing::AnyElementContent::ShapeFillProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeFillProperties(node));
     }
     None
@@ -31299,87 +31299,87 @@ fn transform_any_element_7(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::ShapeGroup(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeGroup(node));
     }
     if let drawing::AnyElementContent::ShapeLayoutProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeLayoutProperties(node));
     }
     if let drawing::AnyElementContent::ShapePath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapePath(node));
     }
     if let drawing::AnyElementContent::ShapeProtections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeProtections(node));
     }
     if let drawing::AnyElementContent::ShapeTemplate(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ShapeTemplate(node));
     }
     if let drawing::AnyElementContent::SharedStringTable(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SharedStringTable(node));
     }
     if let drawing::AnyElementContent::SingleCells(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SingleCells(node));
     }
     if let drawing::AnyElementContent::SkewTransform(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SkewTransform(node));
     }
     if let drawing::AnyElementContent::SlideLayout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SlideLayout(node));
     }
     if let drawing::AnyElementContent::SlideMaster(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SlideMaster(node));
     }
     if let drawing::AnyElementContent::SlideSynchronizationProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SlideSynchronizationProperties(
             node,
         ));
     }
     if let drawing::AnyElementContent::Sources(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Sources(node));
     }
     if let drawing::AnyElementContent::SpreadsheetTable(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::SpreadsheetTable(node));
     }
     if let drawing::AnyElementContent::StartingAnchorPoint(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::StartingAnchorPoint(node));
     }
     if let drawing::AnyElementContent::StorageForAlternateMathContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::StorageForAlternateMathContent(
             node,
         ));
     }
     if let drawing::AnyElementContent::StyleDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::StyleDefinition(node));
     }
     if let drawing::AnyElementContent::StyleDefinitionHeader(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::StyleDefinitionHeader(node));
     }
     if let drawing::AnyElementContent::StyleDefinitions(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::StyleDefinitions(node));
     }
     if let drawing::AnyElementContent::StyleSheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::StyleSheet(node));
     }
     if let drawing::AnyElementContent::Table(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Table(node));
     }
     None
@@ -31390,83 +31390,83 @@ fn transform_any_element_8(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::TableStyleList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TableStyleList(node));
     }
     if let drawing::AnyElementContent::TextBox(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextBox(node));
     }
     if let drawing::AnyElementContent::TextBoxBottomStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextBoxBottomStroke(node));
     }
     if let drawing::AnyElementContent::TextBoxInteriorStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextBoxInteriorStroke(node));
     }
     if let drawing::AnyElementContent::TextBoxLeftStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextBoxLeftStroke(node));
     }
     if let drawing::AnyElementContent::TextBoxRightStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextBoxRightStroke(node));
     }
     if let drawing::AnyElementContent::TextBoxTopStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextBoxTopStroke(node));
     }
     if let drawing::AnyElementContent::TextLayoutPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextLayoutPath(node));
     }
     if let drawing::AnyElementContent::TextWrapping(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TextWrapping(node));
     }
     if let drawing::AnyElementContent::Theme(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Theme(node));
     }
     if let drawing::AnyElementContent::ThemeManager(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ThemeManager(node));
     }
     if let drawing::AnyElementContent::ThemeOverride(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::ThemeOverride(node));
     }
     if let drawing::AnyElementContent::TopBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::TopBorder(node));
     }
     if let drawing::AnyElementContent::Ui1(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Ui1(node));
     }
     if let drawing::AnyElementContent::Ui2(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Ui2(node));
     }
     if let drawing::AnyElementContent::Ui4(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Ui4(node));
     }
     if let drawing::AnyElementContent::Ui8(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Ui8(node));
     }
     if let drawing::AnyElementContent::UnsignedInteger(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::UnsignedInteger(node));
     }
     if let drawing::AnyElementContent::UserList(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::UserList(node));
     }
     if let drawing::AnyElementContent::UserShapes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::UserShapes(node));
     }
     None
@@ -31477,61 +31477,61 @@ fn transform_any_element_9(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<drawing::AnyElementContent> {
     if let drawing::AnyElementContent::VMLDiagram(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::VMLDiagram(node));
     }
     if let drawing::AnyElementContent::VMLDiagramText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::VMLDiagramText(node));
     }
     if let drawing::AnyElementContent::Variant(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Variant(node));
     }
     if let drawing::AnyElementContent::Vector(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Vector(node));
     }
     if let drawing::AnyElementContent::VideoFromFile(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::VideoFromFile(node));
     }
     if let drawing::AnyElementContent::VolatileDependencyTypes(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::VolatileDependencyTypes(node));
     }
     if let drawing::AnyElementContent::WebPageSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::WebPageSettings(node));
     }
     if let drawing::AnyElementContent::WordprocessingMLDrawingCanvas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::WordprocessingMLDrawingCanvas(
             node,
         ));
     }
     if let drawing::AnyElementContent::WordprocessingMLShape(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::WordprocessingMLShape(node));
     }
     if let drawing::AnyElementContent::WordprocessingMLShapeGroup(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::WordprocessingMLShapeGroup(node));
     }
     if let drawing::AnyElementContent::Workbook(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Workbook(node));
     }
     if let drawing::AnyElementContent::Worksheet(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::Worksheet(node));
     }
     if let drawing::AnyElementContent::WorksheetDrawing(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::WorksheetDrawing(node));
     }
     if let drawing::AnyElementContent::XMLMappingMapInfo(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(drawing::AnyElementContent::XMLMappingMapInfo(node));
     }
     None

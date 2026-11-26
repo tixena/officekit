@@ -35,20 +35,20 @@ fn paragraph(text: &str) -> Paragraph {
     let mut characters = Text::default();
     text.clone_into(&mut characters.value);
     let mut run = TextRun::default();
-    run.content = vec![TextRunContent::Text(characters)];
+    run.content = vec![TextRunContent::from(characters)];
     let mut paragraph = Paragraph::default();
-    paragraph.content = vec![ParagraphContent::TextRun(run)];
+    paragraph.content = vec![ParagraphContent::from(run)];
     paragraph
 }
 
 /// A table of one row and one cell holding the paragraph `text`.
 fn table(text: &str) -> Table {
     let mut cell = TableCell::default();
-    cell.content = vec![BlockContent::Paragraph(paragraph(text))];
+    cell.content = vec![BlockContent::from(paragraph(text))];
     let mut row = TableRow::default();
-    row.content = vec![ContentCellContent::TableCell(cell)];
+    row.content = vec![ContentCellContent::from(cell)];
     let mut table = Table::default();
-    table.content_row_content = vec![ContentRowContent::TableRow(row)];
+    table.content_row_content = vec![ContentRowContent::from(row)];
     table
 }
 
@@ -66,9 +66,9 @@ fn document() -> Document {
     )];
     let mut body = DocumentBody::default();
     body.content = vec![
-        BlockContent::Paragraph(paragraph("first")),
-        BlockContent::Paragraph(paragraph("second")),
-        BlockContent::Table(table("in a cell")),
+        BlockContent::from(paragraph("first")),
+        BlockContent::from(paragraph("second")),
+        BlockContent::from(table("in a cell")),
     ];
     body.document_final_section_properties = Some(Box::new(section));
     body.unknown_mut()

@@ -79,17 +79,17 @@ fn document(count: usize) -> Document {
             let mut properties = RunProperties::default();
             properties
                 .content
-                .push(RunPropertiesContent::Bold(Bold::default()));
+                .push(RunPropertiesContent::from(Bold::default()));
             run.properties = Some(Box::new(properties));
-            run.content.push(TextRunContent::Text(text));
+            run.content.push(TextRunContent::from(text));
             let mut alignment = ParagraphAlignment::default();
             alignment.val = Some(HorizontalAlignmentType::from("left".to_owned()));
             let mut paragraph_properties = ParagraphProperties::default();
             paragraph_properties.paragraph_alignment = Some(Box::new(alignment));
             let mut paragraph = Paragraph::default();
             paragraph.properties = Some(Box::new(paragraph_properties));
-            paragraph.content.push(ParagraphContent::TextRun(run));
-            BlockContent::Paragraph(paragraph)
+            paragraph.content.push(ParagraphContent::from(run));
+            BlockContent::from(paragraph)
         })
         .collect();
     let mut document = Document::default();

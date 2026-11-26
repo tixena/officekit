@@ -79,13 +79,13 @@ fn run_of(content: Vec<RunPropertiesContent>) -> RunProperties {
 }
 
 fn bold_run() -> RunProperties {
-    run_of(alloc::vec![RunPropertiesContent::Bold(Bold::default())])
+    run_of(alloc::vec![RunPropertiesContent::from(Bold::default())])
 }
 
 fn colored_run(color: &str) -> RunProperties {
     let mut found = RunContentColor::default();
     found.val = Some(ColorValue::from(color.to_owned()));
-    run_of(alloc::vec![RunPropertiesContent::RunContentColor(found)])
+    run_of(alloc::vec![RunPropertiesContent::from(found)])
 }
 
 /// A conditional format of type `kind` with the cell properties `cell` and the run properties
@@ -531,11 +531,9 @@ fn a_table_with_no_style_keeps_its_own_properties() {
     let mut own = own_table(None, None);
     own.table_borders = example_table_properties().table_borders;
     let mut own_row = TableRowProperties::default();
-    own_row
-        .content
-        .push(TableRowPropertiesContent::TableRowCannotBreakAcrossPages(
-            TableRowCannotBreakAcrossPages::default(),
-        ));
+    own_row.content.push(TableRowPropertiesContent::from(
+        TableRowCannotBreakAcrossPages::default(),
+    ));
     let own_cell = shaded_cell("123456");
     let at = position(0, 3, 0, 2);
 
@@ -574,10 +572,9 @@ fn a_table_that_names_no_style_takes_the_default_table_style() {
 fn a_row_takes_the_formats_of_its_row_only() {
     let mut first_row = conditional(FirstRow, None, None);
     let mut row = TableRowProperties::default();
-    row.content
-        .push(TableRowPropertiesContent::TableRowCannotBreakAcrossPages(
-            TableRowCannotBreakAcrossPages::default(),
-        ));
+    row.content.push(TableRowPropertiesContent::from(
+        TableRowCannotBreakAcrossPages::default(),
+    ));
     first_row.table_row_properties = Some(Box::new(row.clone()));
     let mut first_column = conditional(
         ConditionalTableStyleFormattingTypesMember::FirstCol,
@@ -845,10 +842,8 @@ fn row_style_sheet(row: TableRowProperties) -> StyleSheet {
 fn a_row_s_bare_cant_split_turns_on_the_style_s_cant_split_that_is_off() {
     let mut off = TableRowCannotBreakAcrossPages::default();
     off.val = Some(false.into());
-    let sheet = row_style_sheet(row_with(
-        TableRowPropertiesContent::TableRowCannotBreakAcrossPages(off),
-    ));
-    let own = row_with(TableRowPropertiesContent::TableRowCannotBreakAcrossPages(
+    let sheet = row_style_sheet(row_with(TableRowPropertiesContent::from(off)));
+    let own = row_with(TableRowPropertiesContent::from(
         TableRowCannotBreakAcrossPages::default(),
     ));
     let row = sheet
@@ -866,12 +861,12 @@ fn a_row_s_bare_cant_split_turns_on_the_style_s_cant_split_that_is_off() {
 
 #[test]
 fn a_row_s_header_that_is_off_turns_off_the_style_s_bare_header() {
-    let sheet = row_style_sheet(row_with(TableRowPropertiesContent::RepeatTableRow(
+    let sheet = row_style_sheet(row_with(TableRowPropertiesContent::from(
         RepeatTableRow::default(),
     )));
     let mut off = RepeatTableRow::default();
     off.val = Some(false.into());
-    let own = row_with(TableRowPropertiesContent::RepeatTableRow(off));
+    let own = row_with(TableRowPropertiesContent::from(off));
     let row = sheet
         .table(&own_table(Some("OnOff"), None))
         .row(position(0, 1, 0, 1), Some(&own));
@@ -1212,9 +1207,7 @@ fn skip_before_last_row(table: &mut Table, count: i64) {
     let mut before = GridColumnsBeforeFirstCell::default();
     before.val = Some(DecimalNumberValue::from(count.to_string()));
     let mut properties = TableRowProperties::default();
-    properties.content = alloc::vec![TableRowPropertiesContent::GridColumnsBeforeFirstCell(
-        before
-    )];
+    properties.content = alloc::vec![TableRowPropertiesContent::from(before)];
     if let Some(ContentRowContent::TableRow(row)) = table.content_row_content.last_mut() {
         row.properties = Some(Box::new(properties));
     }
@@ -1398,7 +1391,7 @@ fn a_row_inside_a_content_control_continues_the_merge_above_it() {
     control.content = Some(Box::new(inner));
     table
         .content_row_content
-        .push(ContentRowContent::RowLevelStructuredDocumentTag(control));
+        .push(ContentRowContent::from(control));
     assert_eq!(
         merges(&table),
         [
@@ -1627,7 +1620,7 @@ fn cells_inside_a_content_control_and_rows_inside_one_take_their_place_in_the_me
     control.content = Some(Box::new(inner));
     table
         .content_row_content
-        .push(ContentRowContent::RowLevelStructuredDocumentTag(control));
+        .push(ContentRowContent::from(control));
     assert_eq!(
         h_merges(&table),
         [

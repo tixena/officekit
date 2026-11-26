@@ -316,7 +316,7 @@ fn read_fill(
         }
         FillPropertiesContent::GroupFill(_) => Fill::Group,
         FillPropertiesContent::PatternFill(pattern) => pattern_fill(pattern, colors, placeholder),
-        FillPropertiesContent::PictureFill(picture) => Fill::Picture(picture.clone()),
+        FillPropertiesContent::PictureFill(picture) => Fill::Picture(PictureFill::clone(picture)),
         FillPropertiesContent::SolidFill(solid) => solid_fill(solid, colors, placeholder),
         FillPropertiesContent::NoFill(_) | FillPropertiesContent::Other(_) | _ => Fill::None,
     }

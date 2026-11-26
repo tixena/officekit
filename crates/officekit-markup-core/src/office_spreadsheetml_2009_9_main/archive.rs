@@ -1587,18 +1587,18 @@ pub struct WorkbookPrMirror {
 #[rkyv(remote = super::PivotUserEditContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum PivotUserEditContent {
-    EditValue(super::EditValue),
-    F(office_excel_2006_main::F),
-    Other(Node),
+    EditValue(Box<super::EditValue>),
+    F(Box<office_excel_2006_main::F>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::SlicerCacheDataContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum SlicerCacheDataContent {
-    Olap(super::Olap),
-    Other(Node),
-    Tabular(super::Tabular),
+    Olap(Box<super::Olap>),
+    Other(Box<Node>),
+    Tabular(Box<super::Tabular>),
 }
 
 impl From<ArgumentDescriptionMirror> for super::ArgumentDescription {

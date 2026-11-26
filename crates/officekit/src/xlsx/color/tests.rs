@@ -75,27 +75,27 @@ fn tinted(rgb: &str, tint: &str) -> Option<Rgba> {
     )
 }
 
-fn hex(value: &str) -> Box<ColorContent> {
+fn hex(value: &str) -> ColorContent {
     let mut node = RGBColorModelHexVariant::default();
     node.val = Some(HexadecimalColorValue::from(value.to_owned()));
-    Box::new(ColorContent::RGBColorModelHexVariant(node))
+    ColorContent::from(node)
 }
 
 /// A scheme of black, white, 0E2841, E8E8E8, 156082 and distinct others, in the scheme's order.
 fn scheme() -> ColorScheme {
     let mut scheme = ColorScheme::default();
-    scheme.dark_1.content = hex("000000");
-    scheme.light_1.content = hex("FFFFFF");
-    scheme.dark_2.content = hex("0E2841");
-    scheme.light_2.content = hex("E8E8E8");
-    scheme.accent_1.content = hex("156082");
-    scheme.accent_2.content = hex("E97132");
-    scheme.accent_3.content = hex("196B24");
-    scheme.accent_4.content = hex("0F9ED5");
-    scheme.accent_5.content = hex("A02B93");
-    scheme.accent_6.content = hex("4EA72E");
-    scheme.hyperlink.content = hex("467886");
-    scheme.followed_hyperlink.content = hex("96607D");
+    *scheme.dark_1.content = hex("000000");
+    *scheme.light_1.content = hex("FFFFFF");
+    *scheme.dark_2.content = hex("0E2841");
+    *scheme.light_2.content = hex("E8E8E8");
+    *scheme.accent_1.content = hex("156082");
+    *scheme.accent_2.content = hex("E97132");
+    *scheme.accent_3.content = hex("196B24");
+    *scheme.accent_4.content = hex("0F9ED5");
+    *scheme.accent_5.content = hex("A02B93");
+    *scheme.accent_6.content = hex("4EA72E");
+    *scheme.hyperlink.content = hex("467886");
+    *scheme.followed_hyperlink.content = hex("96607D");
     scheme
 }
 

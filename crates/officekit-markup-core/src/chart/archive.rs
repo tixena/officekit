@@ -3394,9 +3394,9 @@ pub struct YValuesMirror {
 #[rkyv(remote = super::AxisCrossingContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum AxisCrossingContent {
-    Crosses(super::Crosses),
-    CrossingValue(super::CrossingValue),
-    Other(Node),
+    Crosses(Box<super::Crosses>),
+    CrossingValue(Box<super::CrossingValue>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3406,12 +3406,12 @@ pub enum AxisCrossingContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum AxisDataSourceContent {
-    MultiLevelStringReference(#[rkyv(omit_bounds)] super::MultiLevelStringReference),
-    NumberLiteral(#[rkyv(omit_bounds)] super::NumberLiteral),
-    NumberReference(#[rkyv(omit_bounds)] super::NumberReference),
-    Other(Node),
-    StringLiteral(#[rkyv(omit_bounds)] super::StringLiteral),
-    StringReference(#[rkyv(omit_bounds)] super::StringReference),
+    MultiLevelStringReference(#[rkyv(omit_bounds)] Box<super::MultiLevelStringReference>),
+    NumberLiteral(#[rkyv(omit_bounds)] Box<super::NumberLiteral>),
+    NumberReference(#[rkyv(omit_bounds)] Box<super::NumberReference>),
+    Other(Box<Node>),
+    StringLiteral(#[rkyv(omit_bounds)] Box<super::StringLiteral>),
+    StringReference(#[rkyv(omit_bounds)] Box<super::StringReference>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3421,9 +3421,9 @@ pub enum AxisDataSourceContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum ChartTextContent {
-    Other(Node),
-    RichText(#[rkyv(omit_bounds)] super::RichText),
-    StringReference(#[rkyv(omit_bounds)] super::StringReference),
+    Other(Box<Node>),
+    RichText(#[rkyv(omit_bounds)] Box<super::RichText>),
+    StringReference(#[rkyv(omit_bounds)] Box<super::StringReference>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3433,21 +3433,21 @@ pub enum ChartTextContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum DataLabelContent {
-    ChartText(#[rkyv(omit_bounds)] super::ChartText),
-    DataLabelPosition(super::DataLabelPosition),
-    Delete(super::Delete),
-    Layout(#[rkyv(omit_bounds)] super::Layout),
-    NumberFormat(super::NumberFormat),
-    Other(Node),
-    Separator(super::Separator),
-    ShapeProperties(#[rkyv(omit_bounds)] super::ShapeProperties),
-    ShowBubbleSize(super::ShowBubbleSize),
-    ShowCategoryName(super::ShowCategoryName),
-    ShowLegendKey(super::ShowLegendKey),
-    ShowPercent(super::ShowPercent),
-    ShowSeriesName(super::ShowSeriesName),
-    ShowValue(super::ShowValue),
-    TextProperties(#[rkyv(omit_bounds)] super::TextProperties),
+    ChartText(#[rkyv(omit_bounds)] Box<super::ChartText>),
+    DataLabelPosition(Box<super::DataLabelPosition>),
+    Delete(Box<super::Delete>),
+    Layout(#[rkyv(omit_bounds)] Box<super::Layout>),
+    NumberFormat(Box<super::NumberFormat>),
+    Other(Box<Node>),
+    Separator(Box<super::Separator>),
+    ShapeProperties(#[rkyv(omit_bounds)] Box<super::ShapeProperties>),
+    ShowBubbleSize(Box<super::ShowBubbleSize>),
+    ShowCategoryName(Box<super::ShowCategoryName>),
+    ShowLegendKey(Box<super::ShowLegendKey>),
+    ShowPercent(Box<super::ShowPercent>),
+    ShowSeriesName(Box<super::ShowSeriesName>),
+    ShowValue(Box<super::ShowValue>),
+    TextProperties(#[rkyv(omit_bounds)] Box<super::TextProperties>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3457,30 +3457,30 @@ pub enum DataLabelContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum DataLabelsContent {
-    DataLabelPosition(super::DataLabelPosition),
-    Delete(super::Delete),
-    LeaderLines(#[rkyv(omit_bounds)] super::LeaderLines),
-    NumberFormat(super::NumberFormat),
-    Other(Node),
-    Separator(super::Separator),
-    ShapeProperties(#[rkyv(omit_bounds)] super::ShapeProperties),
-    ShowBubbleSize(super::ShowBubbleSize),
-    ShowCategoryName(super::ShowCategoryName),
-    ShowLeaderLines(super::ShowLeaderLines),
-    ShowLegendKey(super::ShowLegendKey),
-    ShowPercent(super::ShowPercent),
-    ShowSeriesName(super::ShowSeriesName),
-    ShowValue(super::ShowValue),
-    TextProperties(#[rkyv(omit_bounds)] super::TextProperties),
+    DataLabelPosition(Box<super::DataLabelPosition>),
+    Delete(Box<super::Delete>),
+    LeaderLines(#[rkyv(omit_bounds)] Box<super::LeaderLines>),
+    NumberFormat(Box<super::NumberFormat>),
+    Other(Box<Node>),
+    Separator(Box<super::Separator>),
+    ShapeProperties(#[rkyv(omit_bounds)] Box<super::ShapeProperties>),
+    ShowBubbleSize(Box<super::ShowBubbleSize>),
+    ShowCategoryName(Box<super::ShowCategoryName>),
+    ShowLeaderLines(Box<super::ShowLeaderLines>),
+    ShowLegendKey(Box<super::ShowLegendKey>),
+    ShowPercent(Box<super::ShowPercent>),
+    ShowSeriesName(Box<super::ShowSeriesName>),
+    ShowValue(Box<super::ShowValue>),
+    TextProperties(#[rkyv(omit_bounds)] Box<super::TextProperties>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
 #[rkyv(remote = super::DisplayUnitsContent)]
 #[rkyv(attr(non_exhaustive))]
 pub enum DisplayUnitsContent {
-    BuiltInDisplayUnitValue(super::BuiltInDisplayUnitValue),
-    CustomDisplayUnit(super::CustomDisplayUnit),
-    Other(Node),
+    BuiltInDisplayUnitValue(Box<super::BuiltInDisplayUnitValue>),
+    CustomDisplayUnit(Box<super::CustomDisplayUnit>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3490,9 +3490,9 @@ pub enum DisplayUnitsContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum LegendEntryContent {
-    Delete(super::Delete),
-    Other(Node),
-    TextProperties(#[rkyv(omit_bounds)] super::TextProperties),
+    Delete(Box<super::Delete>),
+    Other(Box<Node>),
+    TextProperties(#[rkyv(omit_bounds)] Box<super::TextProperties>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3502,9 +3502,9 @@ pub enum LegendEntryContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum NumberDataSourceContent {
-    NumberLiteral(#[rkyv(omit_bounds)] super::NumberLiteral),
-    NumberReference(#[rkyv(omit_bounds)] super::NumberReference),
-    Other(Node),
+    NumberLiteral(#[rkyv(omit_bounds)] Box<super::NumberLiteral>),
+    NumberReference(#[rkyv(omit_bounds)] Box<super::NumberReference>),
+    Other(Box<Node>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3514,11 +3514,11 @@ pub enum NumberDataSourceContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum PlotAreaAxisContent {
-    CategoryAxisDataCatAx(#[rkyv(omit_bounds)] super::CategoryAxisDataCatAx),
-    DateAxis(#[rkyv(omit_bounds)] super::DateAxis),
-    Other(Node),
-    SeriesAxis(#[rkyv(omit_bounds)] super::SeriesAxis),
-    ValueAxis(#[rkyv(omit_bounds)] super::ValueAxis),
+    CategoryAxisDataCatAx(#[rkyv(omit_bounds)] Box<super::CategoryAxisDataCatAx>),
+    DateAxis(#[rkyv(omit_bounds)] Box<super::DateAxis>),
+    Other(Box<Node>),
+    SeriesAxis(#[rkyv(omit_bounds)] Box<super::SeriesAxis>),
+    ValueAxis(#[rkyv(omit_bounds)] Box<super::ValueAxis>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3528,23 +3528,23 @@ pub enum PlotAreaAxisContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum PlotAreaChartContent {
-    Area3DChart(#[rkyv(omit_bounds)] super::Area3DChart),
-    AreaCharts(#[rkyv(omit_bounds)] super::AreaCharts),
-    Bar3DChart(#[rkyv(omit_bounds)] super::Bar3DChart),
-    BarCharts(#[rkyv(omit_bounds)] super::BarCharts),
-    BubbleCharts(#[rkyv(omit_bounds)] super::BubbleCharts),
-    DoughnutCharts(#[rkyv(omit_bounds)] super::DoughnutCharts),
-    Line3DChart(#[rkyv(omit_bounds)] super::Line3DChart),
-    LineCharts(#[rkyv(omit_bounds)] super::LineCharts),
-    Other(Node),
-    Pie3DChart(#[rkyv(omit_bounds)] super::Pie3DChart),
-    PieCharts(#[rkyv(omit_bounds)] super::PieCharts),
-    PieOfPieCharts(#[rkyv(omit_bounds)] super::PieOfPieCharts),
-    RadarCharts(#[rkyv(omit_bounds)] super::RadarCharts),
-    ScatterCharts(#[rkyv(omit_bounds)] super::ScatterCharts),
-    StockCharts(#[rkyv(omit_bounds)] super::StockCharts),
-    Surface3DChart(#[rkyv(omit_bounds)] super::Surface3DChart),
-    SurfaceCharts(#[rkyv(omit_bounds)] super::SurfaceCharts),
+    Area3DChart(#[rkyv(omit_bounds)] Box<super::Area3DChart>),
+    AreaCharts(#[rkyv(omit_bounds)] Box<super::AreaCharts>),
+    Bar3DChart(#[rkyv(omit_bounds)] Box<super::Bar3DChart>),
+    BarCharts(#[rkyv(omit_bounds)] Box<super::BarCharts>),
+    BubbleCharts(#[rkyv(omit_bounds)] Box<super::BubbleCharts>),
+    DoughnutCharts(#[rkyv(omit_bounds)] Box<super::DoughnutCharts>),
+    Line3DChart(#[rkyv(omit_bounds)] Box<super::Line3DChart>),
+    LineCharts(#[rkyv(omit_bounds)] Box<super::LineCharts>),
+    Other(Box<Node>),
+    Pie3DChart(#[rkyv(omit_bounds)] Box<super::Pie3DChart>),
+    PieCharts(#[rkyv(omit_bounds)] Box<super::PieCharts>),
+    PieOfPieCharts(#[rkyv(omit_bounds)] Box<super::PieOfPieCharts>),
+    RadarCharts(#[rkyv(omit_bounds)] Box<super::RadarCharts>),
+    ScatterCharts(#[rkyv(omit_bounds)] Box<super::ScatterCharts>),
+    StockCharts(#[rkyv(omit_bounds)] Box<super::StockCharts>),
+    Surface3DChart(#[rkyv(omit_bounds)] Box<super::Surface3DChart>),
+    SurfaceCharts(#[rkyv(omit_bounds)] Box<super::SurfaceCharts>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -3554,9 +3554,9 @@ pub enum PlotAreaChartContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum SeriesTextContent {
-    NumericValue(super::NumericValue),
-    Other(Node),
-    StringReference(#[rkyv(omit_bounds)] super::StringReference),
+    NumericValue(Box<super::NumericValue>),
+    Other(Box<Node>),
+    StringReference(#[rkyv(omit_bounds)] Box<super::StringReference>),
 }
 
 impl From<ApplyToEndMirror> for super::ApplyToEnd {

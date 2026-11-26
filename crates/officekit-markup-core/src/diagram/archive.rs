@@ -1312,16 +1312,16 @@ pub struct WholeE2OFormattingMirror {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum LayoutElementContent {
-    Algorithm(#[rkyv(omit_bounds)] super::Algorithm),
-    ChooseElement(#[rkyv(omit_bounds)] super::ChooseElement),
-    ConstraintList(#[rkyv(omit_bounds)] super::ConstraintList),
-    ExtensionList(#[rkyv(omit_bounds)] super::ExtensionList),
-    ForEach(#[rkyv(omit_bounds)] super::ForEach),
-    LayoutNode(#[rkyv(omit_bounds)] super::LayoutNode),
-    Other(Node),
-    PresentationOf(#[rkyv(omit_bounds)] super::PresentationOf),
-    RuleList(#[rkyv(omit_bounds)] super::RuleList),
-    Shape(#[rkyv(omit_bounds)] super::Shape),
+    Algorithm(#[rkyv(omit_bounds)] Box<super::Algorithm>),
+    ChooseElement(#[rkyv(omit_bounds)] Box<super::ChooseElement>),
+    ConstraintList(#[rkyv(omit_bounds)] Box<super::ConstraintList>),
+    ExtensionList(#[rkyv(omit_bounds)] Box<super::ExtensionList>),
+    ForEach(#[rkyv(omit_bounds)] Box<super::ForEach>),
+    LayoutNode(#[rkyv(omit_bounds)] Box<super::LayoutNode>),
+    Other(Box<Node>),
+    PresentationOf(#[rkyv(omit_bounds)] Box<super::PresentationOf>),
+    RuleList(#[rkyv(omit_bounds)] Box<super::RuleList>),
+    Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
 }
 
 #[derive(rkyv::Archive, rkyv::Deserialize, rkyv::Serialize)]
@@ -1331,17 +1331,17 @@ pub enum LayoutElementContent {
 #[rkyv(bytecheck(bounds(__C: ArchiveContext + SharedContext, __C::Error: ErrorSource)))]
 #[rkyv(attr(non_exhaustive))]
 pub enum LayoutNodeContent {
-    Algorithm(#[rkyv(omit_bounds)] super::Algorithm),
-    ChooseElement(#[rkyv(omit_bounds)] super::ChooseElement),
-    ConstraintList(#[rkyv(omit_bounds)] super::ConstraintList),
-    ExtensionList(#[rkyv(omit_bounds)] super::ExtensionList),
-    ForEach(#[rkyv(omit_bounds)] super::ForEach),
-    LayoutNode(#[rkyv(omit_bounds)] super::LayoutNode),
-    Other(Node),
-    PresentationOf(#[rkyv(omit_bounds)] super::PresentationOf),
-    RuleList(#[rkyv(omit_bounds)] super::RuleList),
-    Shape(#[rkyv(omit_bounds)] super::Shape),
-    VariableList(super::VariableList),
+    Algorithm(#[rkyv(omit_bounds)] Box<super::Algorithm>),
+    ChooseElement(#[rkyv(omit_bounds)] Box<super::ChooseElement>),
+    ConstraintList(#[rkyv(omit_bounds)] Box<super::ConstraintList>),
+    ExtensionList(#[rkyv(omit_bounds)] Box<super::ExtensionList>),
+    ForEach(#[rkyv(omit_bounds)] Box<super::ForEach>),
+    LayoutNode(#[rkyv(omit_bounds)] Box<super::LayoutNode>),
+    Other(Box<Node>),
+    PresentationOf(#[rkyv(omit_bounds)] Box<super::PresentationOf>),
+    RuleList(#[rkyv(omit_bounds)] Box<super::RuleList>),
+    Shape(#[rkyv(omit_bounds)] Box<super::Shape>),
+    VariableList(Box<super::VariableList>),
 }
 
 impl From<AlgorithmMirror> for super::Algorithm {

@@ -151,18 +151,18 @@ fn paragraph_of(value: &str) -> wordprocessing::BlockContent {
     let mut text = Text::default();
     value.clone_into(&mut text.value);
     let mut run = wordprocessing::TextRun::default();
-    run.content = vec![wordprocessing::TextRunContent::Text(text)];
+    run.content = vec![wordprocessing::TextRunContent::from(text)];
     let mut paragraph = wordprocessing::Paragraph::default();
-    paragraph.content = vec![wordprocessing::ParagraphContent::TextRun(run)];
-    wordprocessing::BlockContent::Paragraph(paragraph)
+    paragraph.content = vec![wordprocessing::ParagraphContent::from(run)];
+    wordprocessing::BlockContent::from(paragraph)
 }
 
 fn row(value: &str) -> wordprocessing::ContentRowContent {
     let mut cell = wordprocessing::TableCell::default();
     cell.content = vec![paragraph_of(value)];
     let mut row = TableRow::default();
-    row.content = vec![wordprocessing::ContentCellContent::TableCell(cell)];
-    wordprocessing::ContentRowContent::TableRow(row)
+    row.content = vec![wordprocessing::ContentCellContent::from(cell)];
+    wordprocessing::ContentRowContent::from(row)
 }
 
 /// A table of automatic width and one 4000-twip column, of a `Name` row and a `placeholder` row.
@@ -178,7 +178,7 @@ fn table() -> wordprocessing::BlockContent {
     table.content_row_content = vec![row("Name"), row("placeholder")];
     table.grid.column_definition = vec![column];
     table.properties.preferred_table_width = Some(Box::new(width));
-    wordprocessing::BlockContent::Table(table)
+    wordprocessing::BlockContent::from(table)
 }
 
 /// The bytes of `root` as a part, after the XML declaration.

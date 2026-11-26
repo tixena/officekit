@@ -537,9 +537,25 @@ fn a_required_wildcard_defaults_to_an_empty_other_and_a_required_choice_to_its_f
     let text = required_module();
     for expected in [
         "impl<X: UserData> Default for AnyElementContentWith<X> {\n    fn default() -> Self {\n        \
-         Self::Other(Node::Text(String::new()))\n    }\n}\n",
+         Self::Other(Box::new(Node::Text(String::new())))\n    }\n}\n",
         "impl<X: UserData> Default for PickContentWith<X> {\n    fn default() -> Self {\n        \
-         Self::First(FirstWith::default())\n    }\n}\n",
+         Self::First(Box::default())\n    }\n}\n",
+    ] {
+        assert!(text.contains(expected), "{expected} is not in\n{text}");
+    }
+}
+
+#[test]
+fn an_arm_larger_than_the_inline_bytes_is_boxed_built_from_its_struct_and_bounded() {
+    let text = required_module();
+    for expected in [
+        "    First(Box<FirstWith<X>>),\n",
+        "    Other(Box<Node>),\n",
+        "impl<X: UserData> From<FirstWith<X>> for PickContentWith<X> {\n    \
+         fn from(arm: FirstWith<X>) -> Self {\n        \
+         Self::First(Box::new(arm))\n    }\n}\n",
+        "const _: () = assert!(\n    size_of::<PickContent>() <= 40,\n    \
+         \"an arm the generator holds in place takes more than 32 bytes\",\n);\n",
     ] {
         assert!(text.contains(expected), "{expected} is not in\n{text}");
     }

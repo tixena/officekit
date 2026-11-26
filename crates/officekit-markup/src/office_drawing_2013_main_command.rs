@@ -4678,19 +4678,19 @@ impl Eq for GridColMkLstWith<()> {}
 #[non_exhaustive]
 pub enum GroupCommandContentWith<X: UserData> {
     /// The element `oac:cxnSpMk`, a `CxnSpMk`.
-    CxnSpMk(CxnSpMkWith<X>),
+    CxnSpMk(Box<CxnSpMkWith<X>>),
     /// The element `oac:graphicFrameMk`, a `GraphicFrameMk`.
-    GraphicFrameMk(GraphicFrameMkWith<X>),
+    GraphicFrameMk(Box<GraphicFrameMkWith<X>>),
     /// The element `oac:grpSpMk`, a `GrpSpMk`.
-    GrpSpMk(GrpSpMkWith<X>),
+    GrpSpMk(Box<GrpSpMkWith<X>>),
     /// The element `oac:inkMk`, a `InkMk`.
-    InkMk(InkMkWith<X>),
+    InkMk(Box<InkMkWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `oac:picMk`, a `PicMk`.
-    PicMk(PicMkWith<X>),
+    PicMk(Box<PicMkWith<X>>),
     /// The element `oac:spMk`, a `SpMk`.
-    SpMk(SpMkWith<X>),
+    SpMk(Box<SpMkWith<X>>),
 }
 
 /// [`GroupCommandContentWith`] of the tree a read gives, where no node holds anything in
@@ -9330,33 +9330,37 @@ impl<X: UserData> GroupCommandContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::CxnSpMk(node) => GroupCommandContentWith::CxnSpMk(node.into_user_data()),
-            Self::GraphicFrameMk(node) => {
-                GroupCommandContentWith::GraphicFrameMk(node.into_user_data())
+            Self::CxnSpMk(node) => {
+                GroupCommandContentWith::CxnSpMk(Box::new((*node).into_user_data()))
             }
-            Self::GrpSpMk(node) => GroupCommandContentWith::GrpSpMk(node.into_user_data()),
-            Self::InkMk(node) => GroupCommandContentWith::InkMk(node.into_user_data()),
+            Self::GraphicFrameMk(node) => {
+                GroupCommandContentWith::GraphicFrameMk(Box::new((*node).into_user_data()))
+            }
+            Self::GrpSpMk(node) => {
+                GroupCommandContentWith::GrpSpMk(Box::new((*node).into_user_data()))
+            }
+            Self::InkMk(node) => GroupCommandContentWith::InkMk(Box::new((*node).into_user_data())),
             Self::Other(node) => GroupCommandContentWith::Other(node),
-            Self::PicMk(node) => GroupCommandContentWith::PicMk(node.into_user_data()),
-            Self::SpMk(node) => GroupCommandContentWith::SpMk(node.into_user_data()),
+            Self::PicMk(node) => GroupCommandContentWith::PicMk(Box::new((*node).into_user_data())),
+            Self::SpMk(node) => GroupCommandContentWith::SpMk(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for GroupCommandContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_OAC, "cxnSpMk")) => Self::CxnSpMk(item.read()),
-            Some((NS_OAC, "graphicFrameMk")) => Self::GraphicFrameMk(item.read()),
-            Some((NS_OAC, "grpSpMk")) => Self::GrpSpMk(item.read()),
-            Some((NS_OAC, "inkMk")) => Self::InkMk(item.read()),
-            Some((NS_OAC, "picMk")) => Self::PicMk(item.read()),
-            Some((NS_OAC, "spMk")) => Self::SpMk(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_OAC, "cxnSpMk")) => Self::CxnSpMk(Box::new(item.read())),
+            Some((NS_OAC, "graphicFrameMk")) => Self::GraphicFrameMk(Box::new(item.read())),
+            Some((NS_OAC, "grpSpMk")) => Self::GrpSpMk(Box::new(item.read())),
+            Some((NS_OAC, "inkMk")) => Self::InkMk(Box::new(item.read())),
+            Some((NS_OAC, "picMk")) => Self::PicMk(Box::new(item.read())),
+            Some((NS_OAC, "spMk")) => Self::SpMk(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -9368,12 +9372,53 @@ impl officekit_markup_base::Write for GroupCommandContent {
             Self::GraphicFrameMk(arm) => arm.write_into(writer),
             Self::GrpSpMk(arm) => arm.write_into(writer),
             Self::InkMk(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::PicMk(arm) => arm.write_into(writer),
             Self::SpMk(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<CxnSpMkWith<X>> for GroupCommandContentWith<X> {
+    fn from(arm: CxnSpMkWith<X>) -> Self {
+        Self::CxnSpMk(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GraphicFrameMkWith<X>> for GroupCommandContentWith<X> {
+    fn from(arm: GraphicFrameMkWith<X>) -> Self {
+        Self::GraphicFrameMk(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<GrpSpMkWith<X>> for GroupCommandContentWith<X> {
+    fn from(arm: GrpSpMkWith<X>) -> Self {
+        Self::GrpSpMk(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<InkMkWith<X>> for GroupCommandContentWith<X> {
+    fn from(arm: InkMkWith<X>) -> Self {
+        Self::InkMk(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<PicMkWith<X>> for GroupCommandContentWith<X> {
+    fn from(arm: PicMkWith<X>) -> Self {
+        Self::PicMk(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<SpMkWith<X>> for GroupCommandContentWith<X> {
+    fn from(arm: SpMkWith<X>) -> Self {
+        Self::SpMk(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<GroupCommandContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> GrpCmdWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

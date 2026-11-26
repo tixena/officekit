@@ -32,7 +32,7 @@ fn rectangle(attribute: Option<&str>, fills: &[Option<&str>]) -> Rectangle {
     rectangle.filled = attribute.map(truth);
     rectangle.content = fills
         .iter()
-        .map(|&on| ShapeElementContent::ShapeFillProperties(fill(on)))
+        .map(|&on| ShapeElementContent::from(fill(on)))
         .collect();
     rectangle
 }
@@ -43,7 +43,7 @@ fn shape(attribute: Option<&str>, strokes: &[Option<&str>]) -> ShapeDefinition {
     shape.stroked = attribute.map(truth);
     shape.content = strokes
         .iter()
-        .map(|&on| ShapeDefinitionContent::LineStrokeSettings(stroke(on)))
+        .map(|&on| ShapeDefinitionContent::from(stroke(on)))
         .collect();
     shape
 }
@@ -234,7 +234,7 @@ fn a_shape_is_stroked_from_its_attribute_and_its_stroke_child() {
 fn a_stroke_child_of_a_rectangle_decides_its_stroke() {
     let mut rectangle = Rectangle::default();
     rectangle.stroked = Some(truth("t"));
-    rectangle.content = vec![ShapeElementContent::LineStrokeSettings(stroke(Some("f")))];
+    rectangle.content = vec![ShapeElementContent::from(stroke(Some("f")))];
     assert_eq!(stroked(&rectangle), Toggle::Decided(false));
     assert_eq!(filled(&rectangle), Toggle::Decided(true));
 }
@@ -243,14 +243,12 @@ fn a_stroke_child_of_a_rectangle_decides_its_stroke() {
 fn a_polyline_a_group_and_a_background_read_their_fill_child() {
     let mut polyline = MultiplePathLine::default();
     polyline.filled = Some(truth("t"));
-    polyline.content = vec![MultiplePathLineContent::ShapeFillProperties(fill(Some(
-        "f",
-    )))];
+    polyline.content = vec![MultiplePathLineContent::from(fill(Some("f")))];
     assert_eq!(filled(&polyline), Toggle::Decided(false));
 
     let mut group = ShapeGroup::default();
     group.filled = Some(truth("f"));
-    group.content = vec![ShapeGroupContent::ShapeFillProperties(fill(Some("t")))];
+    group.content = vec![ShapeGroupContent::from(fill(Some("t")))];
     assert_eq!(filled(&group), Toggle::Decided(true));
 
     let mut background = DocumentBackground::default();
@@ -278,9 +276,9 @@ fn template(
     template.filled = toggles[0].map(truth);
     template.stroked = toggles[1].map(truth);
     template.content = fill
-        .map(ShapeElementContent::ShapeFillProperties)
+        .map(ShapeElementContent::from)
         .into_iter()
-        .chain(stroke.map(ShapeElementContent::LineStrokeSettings))
+        .chain(stroke.map(ShapeElementContent::from))
         .collect();
     template
 }
@@ -297,9 +295,9 @@ fn typed(
     shape.filled = toggles[0].map(truth);
     shape.stroked = toggles[1].map(truth);
     shape.content = fill
-        .map(ShapeDefinitionContent::ShapeFillProperties)
+        .map(ShapeDefinitionContent::from)
         .into_iter()
-        .chain(stroke.map(ShapeDefinitionContent::LineStrokeSettings))
+        .chain(stroke.map(ShapeDefinitionContent::from))
         .collect();
     shape
 }

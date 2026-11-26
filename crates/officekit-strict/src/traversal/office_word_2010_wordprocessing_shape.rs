@@ -830,11 +830,11 @@ impl super::Transform for office_word_2010_wordprocessing_shape::ShapeNonVisualP
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CNvCnPr(arm) = self {
-            Self::CNvCnPr(arm.transform(ctx))
+            Self::CNvCnPr(Box::new(arm.transform(ctx)))
         } else if let Self::CNvSpPr(arm) = self {
-            Self::CNvSpPr(arm.transform(ctx))
+            Self::CNvSpPr(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -927,11 +927,11 @@ impl super::Transform for office_word_2010_wordprocessing_shape::ShapeTextConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::LinkedTxbx(arm) = self {
-            Self::LinkedTxbx(arm.transform(ctx))
+            Self::LinkedTxbx(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Txbx(arm) = self {
-            Self::Txbx(arm.transform(ctx))
+            Self::Txbx(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

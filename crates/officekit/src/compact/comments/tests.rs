@@ -49,7 +49,7 @@ const HEADER_RELATIONSHIP: &str =
 /// A paragraph whose two runs merge around the range start of comment `id`,
 /// followed by the range end and the reference.
 fn removable(id: &str) -> BlockContent {
-    BlockContent::Paragraph(paragraph(vec![
+    BlockContent::from(paragraph(vec![
         plain_run("a"),
         comment_start(id),
         plain_run("b"),
@@ -60,8 +60,8 @@ fn removable(id: &str) -> BlockContent {
 
 /// A paragraph whose runs differ, so comment `id` stays.
 fn kept(id: &str) -> BlockContent {
-    BlockContent::Paragraph(paragraph(vec![
-        ParagraphContent::TextRun(run(vec![bold()], vec![plain_text("c")])),
+    BlockContent::from(paragraph(vec![
+        ParagraphContent::from(run(vec![bold()], vec![plain_text("c")])),
         comment_start(id),
         plain_run("d"),
         comment_end(id),
@@ -79,7 +79,7 @@ fn comment(id: &str, paragraphs: &[&str]) -> CommentContent {
         .map(|paragraph_id| {
             let mut note = paragraph(vec![plain_run("note")]);
             note.para_id = Some((*paragraph_id).to_owned());
-            BlockContent::Paragraph(note)
+            BlockContent::from(note)
         })
         .collect();
     entry.id = Some(DecimalNumberValue::from(id.to_owned()));

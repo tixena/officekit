@@ -1462,29 +1462,29 @@ impl super::Transform for office_tasks_2019_documenttasks::TaskHistoryEventConte
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Assign(arm) = self {
-            Self::Assign(arm.transform(ctx))
+            Self::Assign(Box::new(arm.transform(ctx)))
         } else if let Self::Create(arm) = self {
-            Self::Create(arm.transform(ctx))
+            Self::Create(Box::new(arm.transform(ctx)))
         } else if let Self::Delete(arm) = self {
-            Self::Delete(arm.transform(ctx))
+            Self::Delete(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::Priority(arm) = self {
-            Self::Priority(arm.transform(ctx))
+            Self::Priority(Box::new(arm.transform(ctx)))
         } else if let Self::Progress(arm) = self {
-            Self::Progress(arm.transform(ctx))
+            Self::Progress(Box::new(arm.transform(ctx)))
         } else if let Self::Schedule(arm) = self {
-            Self::Schedule(arm.transform(ctx))
+            Self::Schedule(Box::new(arm.transform(ctx)))
         } else if let Self::SetTitle(arm) = self {
-            Self::SetTitle(arm.transform(ctx))
+            Self::SetTitle(Box::new(arm.transform(ctx)))
         } else if let Self::Unassign(arm) = self {
-            Self::Unassign(arm.transform(ctx))
+            Self::Unassign(Box::new(arm.transform(ctx)))
         } else if let Self::UnassignAll(arm) = self {
-            Self::UnassignAll(arm.transform(ctx))
+            Self::UnassignAll(Box::new(arm.transform(ctx)))
         } else if let Self::Undelete(arm) = self {
-            Self::Undelete(arm.transform(ctx))
+            Self::Undelete(Box::new(arm.transform(ctx)))
         } else if let Self::Undo(arm) = self {
-            Self::Undo(arm.transform(ctx))
+            Self::Undo(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }

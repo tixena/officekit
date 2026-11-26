@@ -29,7 +29,7 @@ fn arc_to(w_r: &str, h_r: &str, start: &str, swing: &str) -> ShapePathContent {
     arc.h_r = Some(AdjustableCoordinateMethods::from(h_r.to_owned()));
     arc.st_ang = Some(AdjustableAngleMethods::from(start.to_owned()));
     arc.sw_ang = Some(AdjustableAngleMethods::from(swing.to_owned()));
-    ShapePathContent::DrawArcTo(arc)
+    ShapePathContent::from(arc)
 }
 
 /// A custom geometry of `guides` and `paths`.
@@ -79,14 +79,14 @@ fn letters(commands: &[PathCommand]) -> String {
 fn line_to(x: &str, y: &str) -> ShapePathContent {
     let mut line = DrawLineTo::default();
     line.shape_path_point = Box::new(point(x, y));
-    ShapePathContent::DrawLineTo(line)
+    ShapePathContent::from(line)
 }
 
 /// An `a:moveTo` to `x` and `y`.
 fn move_to(x: &str, y: &str) -> ShapePathContent {
     let mut moved = MovePathTo::default();
     moved.shape_path_point = Box::new(point(x, y));
-    ShapePathContent::MovePathTo(moved)
+    ShapePathContent::from(moved)
 }
 
 /// An `a:path` of `content`.

@@ -260,21 +260,21 @@ fn series_name(cell: &str, cache: StringCache) -> SeriesText {
     reference.formula = Box::new(formula(cell));
     reference.string_cache = Some(Box::new(cache));
     let mut text = SeriesText::default();
-    text.content = Box::new(SeriesTextContent::StringReference(reference));
+    text.content = Box::new(SeriesTextContent::from(reference));
     text
 }
 
 /// Values read through `reference`.
 fn values_of(reference: NumberReference) -> Values {
     let mut values = Values::default();
-    values.content = Box::new(NumberDataSourceContent::NumberReference(reference));
+    values.content = Box::new(NumberDataSourceContent::from(reference));
     values
 }
 
 /// Categories read through the number reference `reference`.
 fn categories_of(reference: NumberReference) -> CategoryAxisDataCat {
     let mut categories = CategoryAxisDataCat::default();
-    categories.content = Box::new(AxisDataSourceContent::NumberReference(reference));
+    categories.content = Box::new(AxisDataSourceContent::from(reference));
     categories
 }
 
@@ -311,7 +311,7 @@ fn chart_of(series: Vec<BarChartSeries>) -> ChartSpace {
     let mut bars = BarCharts::default();
     bars.bar_chart_series = series;
     let mut space = ChartSpace::default();
-    space.chart.plot_area.chart_content = vec![PlotAreaChartContent::BarCharts(bars)];
+    space.chart.plot_area.chart_content = vec![PlotAreaChartContent::from(bars)];
     space
 }
 
@@ -511,7 +511,7 @@ fn unique_id_extension() -> Extension {
     ));
     let mut extension = Extension::default();
     extension.uri = Some("{C3380CC4-5D6E-409C-BE32-E72D297353CC}".to_owned());
-    extension.content = Box::new(AnyElementContent::Other(Node::Element(unique_id)));
+    extension.content = Box::new(AnyElementContent::Other(Box::new(Node::Element(unique_id))));
     extension
 }
 
@@ -785,7 +785,7 @@ fn a_missing_cache_is_created_after_the_formula_and_points_go_before_the_extensi
     categories.string_cache = Some(Box::new(cache));
     let mut series = series_of_values(values);
     let mut category = CategoryAxisDataCat::default();
-    category.content = Box::new(AxisDataSourceContent::StringReference(categories));
+    category.content = Box::new(AxisDataSourceContent::from(categories));
     series.category_axis_data_cat = Some(Box::new(category));
     let mut docx = document(&chart_of(vec![series]), Some(workbook_bytes(two_rows())));
     docx.refresh_chart_caches(&name("/word/charts/chart1.xml"), ChartRanges::AsWritten)
@@ -871,7 +871,7 @@ fn a_text_category_range_becomes_a_text_reference_with_a_text_cache() {
     let mut bar = BarChartSeries::default();
     bar.category_axis_data_cat = Some(Box::new(categories_of(categories)));
     let mut x_values = XValues::default();
-    x_values.content = Box::new(AxisDataSourceContent::NumberReference(number_reference(
+    x_values.content = Box::new(AxisDataSourceContent::from(number_reference(
         "Sheet1!$A$2:$A$3",
         Some(empty_cache()),
     )));
@@ -884,7 +884,7 @@ fn a_text_category_range_becomes_a_text_reference_with_a_text_cache() {
         .chart
         .plot_area
         .chart_content
-        .push(PlotAreaChartContent::ScatterCharts(scatter));
+        .push(PlotAreaChartContent::from(scatter));
     let space = refreshed(&chart, ChartRanges::AsWritten);
     let weeks = strings("Sheet1!$A$2:$A$3", "2", &["Week 1", "Week 2"]);
     let category = series_read(&space)

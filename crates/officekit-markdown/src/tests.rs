@@ -520,7 +520,7 @@ fn row_cells(row: &TableRow) -> Vec<TableCell> {
         .iter()
         .filter_map(|content| {
             if let ContentCellContent::TableCell(cell) = content {
-                Some(cell.clone())
+                Some(TableCell::clone(cell))
             } else {
                 None
             }
@@ -1233,7 +1233,7 @@ fn a_short_row_gets_empty_cells_holding_one_paragraph() {
     assert_eq!(short.len(), 2);
     assert_eq!(
         short.last().unwrap().content,
-        [BlockContent::Paragraph(Paragraph::default())]
+        [BlockContent::from(Paragraph::default())]
     );
 }
 

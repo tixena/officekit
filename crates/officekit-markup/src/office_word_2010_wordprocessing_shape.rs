@@ -813,11 +813,11 @@ impl Eq for LinkedTxbxWith<()> {}
 #[non_exhaustive]
 pub enum ShapeNonVisualPropertiesContentWith<X: UserData> {
     /// The element `wps:cNvCnPr`, a `CNvCnPr`.
-    CNvCnPr(CNvCnPrWith<X>),
+    CNvCnPr(Box<CNvCnPrWith<X>>),
     /// The element `wps:cNvSpPr`, a `CNvSpPr`.
-    CNvSpPr(CNvSpPrWith<X>),
+    CNvSpPr(Box<CNvSpPrWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
 }
 
 /// [`ShapeNonVisualPropertiesContentWith`] of the tree a read gives, where no node holds anything
@@ -835,11 +835,11 @@ impl Eq for ShapeNonVisualPropertiesContentWith<()> {}
 #[non_exhaustive]
 pub enum ShapeTextContentWith<X: UserData> {
     /// The element `wps:linkedTxbx`, a `LinkedTxbx`.
-    LinkedTxbx(LinkedTxbxWith<X>),
+    LinkedTxbx(Box<LinkedTxbxWith<X>>),
     /// An element or node the schemas do not declare at this position.
-    Other(Node),
+    Other(Box<Node>),
     /// The element `wps:txbx`, a `Txbx`.
-    Txbx(TxbxWith<X>),
+    Txbx(Box<TxbxWith<X>>),
 }
 
 /// [`ShapeTextContentWith`] of the tree a read gives, where no node holds anything in `user_data`.
@@ -1442,10 +1442,10 @@ impl<X: UserData> ShapeNonVisualPropertiesContentWith<X> {
     {
         match self {
             Self::CNvCnPr(node) => {
-                ShapeNonVisualPropertiesContentWith::CNvCnPr(node.into_user_data())
+                ShapeNonVisualPropertiesContentWith::CNvCnPr(Box::new((*node).into_user_data()))
             }
             Self::CNvSpPr(node) => {
-                ShapeNonVisualPropertiesContentWith::CNvSpPr(node.into_user_data())
+                ShapeNonVisualPropertiesContentWith::CNvSpPr(Box::new((*node).into_user_data()))
             }
             Self::Other(node) => ShapeNonVisualPropertiesContentWith::Other(node),
         }
@@ -1454,20 +1454,20 @@ impl<X: UserData> ShapeNonVisualPropertiesContentWith<X> {
 
 impl<X: UserData> Default for ShapeNonVisualPropertiesContentWith<X> {
     fn default() -> Self {
-        Self::CNvCnPr(CNvCnPrWith::default())
+        Self::CNvCnPr(Box::default())
     }
 }
 
 impl officekit_markup_base::Read for ShapeNonVisualPropertiesContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WPS, "cNvCnPr")) => Self::CNvCnPr(item.read()),
-            Some((NS_WPS, "cNvSpPr")) => Self::CNvSpPr(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_WPS, "cNvCnPr")) => Self::CNvCnPr(Box::new(item.read())),
+            Some((NS_WPS, "cNvSpPr")) => Self::CNvSpPr(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -1477,10 +1477,27 @@ impl officekit_markup_base::Write for ShapeNonVisualPropertiesContent {
         match self {
             Self::CNvCnPr(arm) => arm.write_into(writer),
             Self::CNvSpPr(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
         }
     }
 }
+
+impl<X: UserData> From<CNvCnPrWith<X>> for ShapeNonVisualPropertiesContentWith<X> {
+    fn from(arm: CNvCnPrWith<X>) -> Self {
+        Self::CNvCnPr(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<CNvSpPrWith<X>> for ShapeNonVisualPropertiesContentWith<X> {
+    fn from(arm: CNvSpPrWith<X>) -> Self {
+        Self::CNvSpPr(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeNonVisualPropertiesContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> ShapeTextContentWith<X> {
     /// This item and every node under it with each `user_data` at `Y`'s default.
@@ -1490,23 +1507,25 @@ impl<X: UserData> ShapeTextContentWith<X> {
         Y: UserData,
     {
         match self {
-            Self::LinkedTxbx(node) => ShapeTextContentWith::LinkedTxbx(node.into_user_data()),
+            Self::LinkedTxbx(node) => {
+                ShapeTextContentWith::LinkedTxbx(Box::new((*node).into_user_data()))
+            }
             Self::Other(node) => ShapeTextContentWith::Other(node),
-            Self::Txbx(node) => ShapeTextContentWith::Txbx(node.into_user_data()),
+            Self::Txbx(node) => ShapeTextContentWith::Txbx(Box::new((*node).into_user_data())),
         }
     }
 }
 
 impl officekit_markup_base::Read for ShapeTextContent {
     fn other(node: Node) -> Option<Self> {
-        Some(Self::Other(node))
+        Some(Self::Other(Box::new(node)))
     }
 
     fn read_item(item: officekit_markup_base::Item<'_>) -> Self {
         match item.name() {
-            Some((NS_WPS, "linkedTxbx")) => Self::LinkedTxbx(item.read()),
-            Some((NS_WPS, "txbx")) => Self::Txbx(item.read()),
-            _ => Self::Other(item.into_node()),
+            Some((NS_WPS, "linkedTxbx")) => Self::LinkedTxbx(Box::new(item.read())),
+            Some((NS_WPS, "txbx")) => Self::Txbx(Box::new(item.read())),
+            _ => Self::Other(Box::new(item.into_node())),
         }
     }
 }
@@ -1515,11 +1534,28 @@ impl officekit_markup_base::Write for ShapeTextContent {
     fn write_into(&self, writer: &mut officekit_markup_base::Writer<'_, '_>) {
         match self {
             Self::LinkedTxbx(arm) => arm.write_into(writer),
-            Self::Other(node) => writer.other(node.clone()),
+            Self::Other(node) => writer.other(Node::clone(node)),
             Self::Txbx(arm) => arm.write_into(writer),
         }
     }
 }
+
+impl<X: UserData> From<LinkedTxbxWith<X>> for ShapeTextContentWith<X> {
+    fn from(arm: LinkedTxbxWith<X>) -> Self {
+        Self::LinkedTxbx(Box::new(arm))
+    }
+}
+
+impl<X: UserData> From<TxbxWith<X>> for ShapeTextContentWith<X> {
+    fn from(arm: TxbxWith<X>) -> Self {
+        Self::Txbx(Box::new(arm))
+    }
+}
+
+const _: () = assert!(
+    size_of::<ShapeTextContent>() <= 40,
+    "an arm the generator holds in place takes more than 32 bytes",
+);
 
 impl<X: UserData> SpPrWith<X> {
     /// This node and every node under it with each `user_data` at `Y`'s default; every other field

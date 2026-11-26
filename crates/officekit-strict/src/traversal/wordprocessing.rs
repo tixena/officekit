@@ -4421,7 +4421,7 @@ impl super::Transform for wordprocessing::BlockContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_block_1(self, ctx)
             .or_else(|| transform_block_2(self, ctx))
@@ -6214,13 +6214,13 @@ impl super::Transform for wordprocessing::CellMarkupContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::TableCellDeletion(arm) = self {
-            Self::TableCellDeletion(arm.transform(ctx))
+            Self::TableCellDeletion(Box::new(arm.transform(ctx)))
         } else if let Self::TableCellInsertion(arm) = self {
-            Self::TableCellInsertion(arm.transform(ctx))
+            Self::TableCellInsertion(Box::new(arm.transform(ctx)))
         } else if let Self::VerticallyMergedSplitTableCells(arm) = self {
-            Self::VerticallyMergedSplitTableCells(arm.transform(ctx))
+            Self::VerticallyMergedSplitTableCells(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -6845,11 +6845,11 @@ impl super::Transform for wordprocessing::CheckboxFormFieldPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AutomaticallySizeFormField(arm) = self {
-            Self::AutomaticallySizeFormField(arm.transform(ctx))
+            Self::AutomaticallySizeFormField(Box::new(arm.transform(ctx)))
         } else if let Self::CheckboxFormFieldSize(arm) = self {
-            Self::CheckboxFormFieldSize(arm.transform(ctx))
+            Self::CheckboxFormFieldSize(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -8521,13 +8521,13 @@ impl super::Transform for wordprocessing::ComplexFieldCharacterContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::CustomFieldData(arm) = self {
-            Self::CustomFieldData(arm.transform(ctx))
+            Self::CustomFieldData(Box::new(arm.transform(ctx)))
         } else if let Self::FormFieldProperties(arm) = self {
-            Self::FormFieldProperties(arm.transform(ctx))
+            Self::FormFieldProperties(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PreviousNumberingFieldProperties(arm) = self {
-            Self::PreviousNumberingFieldProperties(arm.transform(ctx))
+            Self::PreviousNumberingFieldProperties(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -8966,11 +8966,11 @@ impl super::Transform for wordprocessing::ConflictChangeContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::ConflictDelTrackChange(arm) = self {
-            Self::ConflictDelTrackChange(arm.transform(ctx))
+            Self::ConflictDelTrackChange(Box::new(arm.transform(ctx)))
         } else if let Self::ConflictInsTrackChange(arm) = self {
-            Self::ConflictInsTrackChange(arm.transform(ctx))
+            Self::ConflictInsTrackChange(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -9170,7 +9170,7 @@ impl super::Transform for wordprocessing::ContentBlockContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_content_block_1(self, ctx)
             .or_else(|| transform_content_block_2(self, ctx))
@@ -9277,7 +9277,7 @@ impl super::Transform for wordprocessing::ContentCellContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_content_cell_1(self, ctx)
             .or_else(|| transform_content_cell_2(self, ctx))
@@ -9469,7 +9469,7 @@ impl super::Transform for wordprocessing::ContentRowContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_content_row_1(self, ctx)
             .or_else(|| transform_content_row_2(self, ctx))
@@ -20681,9 +20681,9 @@ impl super::Transform for wordprocessing::DrawingObjectContent {
         if let Self::AnchorForFloatingDrawingMLObject(arm) = self {
             Self::AnchorForFloatingDrawingMLObject(Box::new(arm.transform(ctx)))
         } else if let Self::InlineDrawingMLObject(arm) = self {
-            Self::InlineDrawingMLObject(arm.transform(ctx))
+            Self::InlineDrawingMLObject(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -21920,15 +21920,15 @@ impl super::Transform for wordprocessing::EmbeddedObjectContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::EmbeddedControl(arm) = self {
-            Self::EmbeddedControl(arm.transform(ctx))
+            Self::EmbeddedControl(Box::new(arm.transform(ctx)))
         } else if let Self::EmbeddedObjectProperties(arm) = self {
-            Self::EmbeddedObjectProperties(arm.transform(ctx))
+            Self::EmbeddedObjectProperties(Box::new(arm.transform(ctx)))
         } else if let Self::EmbeddedVideo(arm) = self {
-            Self::EmbeddedVideo(arm.transform(ctx))
+            Self::EmbeddedVideo(Box::new(arm.transform(ctx)))
         } else if let Self::LinkedObjectProperties(arm) = self {
-            Self::LinkedObjectProperties(arm.transform(ctx))
+            Self::LinkedObjectProperties(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -25872,31 +25872,31 @@ impl super::Transform for wordprocessing::FormFieldPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AssociatedHelpText(arm) = self {
-            Self::AssociatedHelpText(arm.transform(ctx))
+            Self::AssociatedHelpText(Box::new(arm.transform(ctx)))
         } else if let Self::AssociatedStatusText(arm) = self {
-            Self::AssociatedStatusText(arm.transform(ctx))
+            Self::AssociatedStatusText(Box::new(arm.transform(ctx)))
         } else if let Self::CheckboxFormFieldProperties(arm) = self {
-            Self::CheckboxFormFieldProperties(arm.transform(ctx))
+            Self::CheckboxFormFieldProperties(Box::new(arm.transform(ctx)))
         } else if let Self::DropDownListFormFieldProperties(arm) = self {
-            Self::DropDownListFormFieldProperties(arm.transform(ctx))
+            Self::DropDownListFormFieldProperties(Box::new(arm.transform(ctx)))
         } else if let Self::ExecuteOnFormFieldEntry(arm) = self {
-            Self::ExecuteOnFormFieldEntry(arm.transform(ctx))
+            Self::ExecuteOnFormFieldEntry(Box::new(arm.transform(ctx)))
         } else if let Self::ExecuteOnFormFieldExit(arm) = self {
-            Self::ExecuteOnFormFieldExit(arm.transform(ctx))
+            Self::ExecuteOnFormFieldExit(Box::new(arm.transform(ctx)))
         } else if let Self::FormFieldEnabled(arm) = self {
-            Self::FormFieldEnabled(arm.transform(ctx))
+            Self::FormFieldEnabled(Box::new(arm.transform(ctx)))
         } else if let Self::FormFieldName(arm) = self {
-            Self::FormFieldName(arm.transform(ctx))
+            Self::FormFieldName(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RecalculateFieldsWhenModified(arm) = self {
-            Self::RecalculateFieldsWhenModified(arm.transform(ctx))
+            Self::RecalculateFieldsWhenModified(Box::new(arm.transform(ctx)))
         } else if let Self::StructuredDocumentTagLabel(arm) = self {
-            Self::StructuredDocumentTagLabel(arm.transform(ctx))
+            Self::StructuredDocumentTagLabel(Box::new(arm.transform(ctx)))
         } else if let Self::StructuredDocumentTagNavigationOrderIndex(arm) = self {
-            Self::StructuredDocumentTagNavigationOrderIndex(arm.transform(ctx))
+            Self::StructuredDocumentTagNavigationOrderIndex(Box::new(arm.transform(ctx)))
         } else if let Self::TextBoxFormFieldProperties(arm) = self {
-            Self::TextBoxFormFieldProperties(arm.transform(ctx))
+            Self::TextBoxFormFieldProperties(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -26400,11 +26400,11 @@ impl super::Transform for wordprocessing::FramesetDefinitionContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::NestedFramesetDefinition(arm) = self {
-            Self::NestedFramesetDefinition(arm.transform(ctx))
+            Self::NestedFramesetDefinition(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::SingleFrameProperties(arm) = self {
-            Self::SingleFrameProperties(arm.transform(ctx))
+            Self::SingleFrameProperties(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -27397,21 +27397,21 @@ impl super::Transform for wordprocessing::GlossaryDocumentEntryPropertiesContent
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AssociatedParagraphStyleName(arm) = self {
-            Self::AssociatedParagraphStyleName(arm.transform(ctx))
+            Self::AssociatedParagraphStyleName(Box::new(arm.transform(ctx)))
         } else if let Self::DescriptionForEntry(arm) = self {
-            Self::DescriptionForEntry(arm.transform(ctx))
+            Self::DescriptionForEntry(Box::new(arm.transform(ctx)))
         } else if let Self::EntryCategorization(arm) = self {
-            Self::EntryCategorization(arm.transform(ctx))
+            Self::EntryCategorization(Box::new(arm.transform(ctx)))
         } else if let Self::EntryID(arm) = self {
-            Self::EntryID(arm.transform(ctx))
+            Self::EntryID(Box::new(arm.transform(ctx)))
         } else if let Self::EntryInsertionBehaviors(arm) = self {
-            Self::EntryInsertionBehaviors(arm.transform(ctx))
+            Self::EntryInsertionBehaviors(Box::new(arm.transform(ctx)))
         } else if let Self::EntryName(arm) = self {
-            Self::EntryName(arm.transform(ctx))
+            Self::EntryName(Box::new(arm.transform(ctx)))
         } else if let Self::EntryTypes(arm) = self {
-            Self::EntryTypes(arm.transform(ctx))
+            Self::EntryTypes(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -30808,11 +30808,11 @@ impl super::Transform for wordprocessing::InsertedMathControlCharacterContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Del(arm) = self {
-            Self::Del(arm.transform(ctx))
+            Self::Del(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::RunProperties(arm) = self {
-            Self::RunProperties(arm.transform(ctx))
+            Self::RunProperties(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -40181,7 +40181,7 @@ impl super::Transform for wordprocessing::ParagraphContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_paragraph_content_1(self, ctx)
             .or_else(|| transform_paragraph_content_2(self, ctx))
@@ -41514,7 +41514,7 @@ impl super::Transform for wordprocessing::PhoneticGuideContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_phonetic_guide_content_1(self, ctx)
             .or_else(|| transform_phonetic_guide_content_2(self, ctx))
@@ -42057,11 +42057,11 @@ impl super::Transform for wordprocessing::PictureNumberingSymbolDefinitionConten
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::DrawingMLObject(arm) = self {
-            Self::DrawingMLObject(arm.transform(ctx))
+            Self::DrawingMLObject(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::VMLObject(arm) = self {
-            Self::VMLObject(arm.transform(ctx))
+            Self::VMLObject(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -45835,7 +45835,7 @@ impl super::Transform for wordprocessing::RangeMarkupContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_range_markup_1(self, ctx).unwrap_or_else(|| self.clone())
     }
@@ -49904,7 +49904,7 @@ impl super::Transform for wordprocessing::RunPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_run_properties_content_1(self, ctx)
             .or_else(|| transform_run_properties_content_2(self, ctx))
@@ -50417,11 +50417,11 @@ impl super::Transform for wordprocessing::SectionPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::FooterReference(arm) = self {
-            Self::FooterReference(arm.transform(ctx))
+            Self::FooterReference(Box::new(arm.transform(ctx)))
         } else if let Self::HeaderReference(arm) = self {
-            Self::HeaderReference(arm.transform(ctx))
+            Self::HeaderReference(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else {
             self.clone()
         }
@@ -53677,39 +53677,39 @@ impl super::Transform for wordprocessing::StructuredDocumentTagPropertiesContent
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::BibliographyStructuredDocumentTag(arm) = self {
-            Self::BibliographyStructuredDocumentTag(arm.transform(ctx))
+            Self::BibliographyStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::BuiltInDocumentPartStructuredDocumentTag(arm) = self {
-            Self::BuiltInDocumentPartStructuredDocumentTag(arm.transform(ctx))
+            Self::BuiltInDocumentPartStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::Checkbox(arm) = self {
-            Self::Checkbox(arm.transform(ctx))
+            Self::Checkbox(Box::new(arm.transform(ctx)))
         } else if let Self::CitationStructuredDocumentTag(arm) = self {
-            Self::CitationStructuredDocumentTag(arm.transform(ctx))
+            Self::CitationStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::ComboBoxStructuredDocumentTag(arm) = self {
-            Self::ComboBoxStructuredDocumentTag(arm.transform(ctx))
+            Self::ComboBoxStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::DateStructuredDocumentTag(arm) = self {
-            Self::DateStructuredDocumentTag(arm.transform(ctx))
+            Self::DateStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::DocumentPartGalleryStructuredDocumentTag(arm) = self {
-            Self::DocumentPartGalleryStructuredDocumentTag(arm.transform(ctx))
+            Self::DocumentPartGalleryStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::DropDownListStructuredDocumentTag(arm) = self {
-            Self::DropDownListStructuredDocumentTag(arm.transform(ctx))
+            Self::DropDownListStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::EntityPicker(arm) = self {
-            Self::EntityPicker(arm.transform(ctx))
+            Self::EntityPicker(Box::new(arm.transform(ctx)))
         } else if let Self::EquationStructuredDocumentTag(arm) = self {
-            Self::EquationStructuredDocumentTag(arm.transform(ctx))
+            Self::EquationStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::GroupStructuredDocumentTag(arm) = self {
-            Self::GroupStructuredDocumentTag(arm.transform(ctx))
+            Self::GroupStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::PictureStructuredDocumentTag(arm) = self {
-            Self::PictureStructuredDocumentTag(arm.transform(ctx))
+            Self::PictureStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::PlainTextStructuredDocumentTag(arm) = self {
-            Self::PlainTextStructuredDocumentTag(arm.transform(ctx))
+            Self::PlainTextStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else if let Self::RepeatingSection(arm) = self {
-            Self::RepeatingSection(arm.transform(ctx))
+            Self::RepeatingSection(Box::new(arm.transform(ctx)))
         } else if let Self::RepeatingSectionItem(arm) = self {
-            Self::RepeatingSectionItem(arm.transform(ctx))
+            Self::RepeatingSectionItem(Box::new(arm.transform(ctx)))
         } else if let Self::RichTextStructuredDocumentTag(arm) = self {
-            Self::RichTextStructuredDocumentTag(arm.transform(ctx))
+            Self::RichTextStructuredDocumentTag(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -58567,31 +58567,31 @@ impl super::Transform for wordprocessing::TableRowPropertiesContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::AssociatedHTMLDivID(arm) = self {
-            Self::AssociatedHTMLDivID(arm.transform(ctx))
+            Self::AssociatedHTMLDivID(Box::new(arm.transform(ctx)))
         } else if let Self::GridColumnsAfterLastCell(arm) = self {
-            Self::GridColumnsAfterLastCell(arm.transform(ctx))
+            Self::GridColumnsAfterLastCell(Box::new(arm.transform(ctx)))
         } else if let Self::GridColumnsBeforeFirstCell(arm) = self {
-            Self::GridColumnsBeforeFirstCell(arm.transform(ctx))
+            Self::GridColumnsBeforeFirstCell(Box::new(arm.transform(ctx)))
         } else if let Self::HiddenTableRowMarker(arm) = self {
-            Self::HiddenTableRowMarker(arm.transform(ctx))
+            Self::HiddenTableRowMarker(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ParagraphConditionalFormatting(arm) = self {
             Self::ParagraphConditionalFormatting(Box::new(arm.transform(ctx)))
         } else if let Self::PreferredWidthAfterTableRow(arm) = self {
-            Self::PreferredWidthAfterTableRow(arm.transform(ctx))
+            Self::PreferredWidthAfterTableRow(Box::new(arm.transform(ctx)))
         } else if let Self::PreferredWidthBeforeTableRow(arm) = self {
-            Self::PreferredWidthBeforeTableRow(arm.transform(ctx))
+            Self::PreferredWidthBeforeTableRow(Box::new(arm.transform(ctx)))
         } else if let Self::RepeatTableRow(arm) = self {
-            Self::RepeatTableRow(arm.transform(ctx))
+            Self::RepeatTableRow(Box::new(arm.transform(ctx)))
         } else if let Self::TableAlignmentException(arm) = self {
-            Self::TableAlignmentException(arm.transform(ctx))
+            Self::TableAlignmentException(Box::new(arm.transform(ctx)))
         } else if let Self::TableRowCannotBreakAcrossPages(arm) = self {
-            Self::TableRowCannotBreakAcrossPages(arm.transform(ctx))
+            Self::TableRowCannotBreakAcrossPages(Box::new(arm.transform(ctx)))
         } else if let Self::TableRowCellSpacing(arm) = self {
-            Self::TableRowCellSpacing(arm.transform(ctx))
+            Self::TableRowCellSpacing(Box::new(arm.transform(ctx)))
         } else if let Self::TableRowHeight(arm) = self {
-            Self::TableRowHeight(arm.transform(ctx))
+            Self::TableRowHeight(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -59734,7 +59734,7 @@ impl super::Transform for wordprocessing::TextRunContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_text_run_content_1(self, ctx)
             .or_else(|| transform_text_run_content_2(self, ctx))
@@ -60648,7 +60648,7 @@ impl super::Transform for wordprocessing::TrackedRunContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_tracked_run_1(self, ctx)
             .or_else(|| transform_tracked_run_2(self, ctx))
@@ -63524,7 +63524,7 @@ impl super::Transform for wordprocessing::VmlElementContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Other(node) = self {
-            return Self::Other(node.transform(ctx));
+            return Self::Other(Box::new(node.transform(ctx)));
         }
         transform_vml_element_1(self, ctx)
             .or_else(|| transform_vml_element_2(self, ctx))
@@ -63631,45 +63631,45 @@ impl super::Transform for wordprocessing::VmlOfficeDrawingElementContent {
 
     fn transform_children(&self, ctx: &mut dyn officekit_markup::Context) -> Self {
         if let Self::Callout(arm) = self {
-            Self::Callout(arm.transform(ctx))
+            Self::Callout(Box::new(arm.transform(ctx)))
         } else if let Self::Complex(arm) = self {
-            Self::Complex(arm.transform(ctx))
+            Self::Complex(Box::new(arm.transform(ctx)))
         } else if let Self::DigitalSignatureLine(arm) = self {
-            Self::DigitalSignatureLine(arm.transform(ctx))
+            Self::DigitalSignatureLine(Box::new(arm.transform(ctx)))
         } else if let Self::EmbeddedOLEObject(arm) = self {
-            Self::EmbeddedOLEObject(arm.transform(ctx))
+            Self::EmbeddedOLEObject(Box::new(arm.transform(ctx)))
         } else if let Self::Extrusion(arm) = self {
-            Self::Extrusion(arm.transform(ctx))
+            Self::Extrusion(Box::new(arm.transform(ctx)))
         } else if let Self::Ink(arm) = self {
-            Self::Ink(arm.transform(ctx))
+            Self::Ink(Box::new(arm.transform(ctx)))
         } else if let Self::NewShapeDefaults(arm) = self {
-            Self::NewShapeDefaults(arm.transform(ctx))
+            Self::NewShapeDefaults(Box::new(arm.transform(ctx)))
         } else if let Self::Other(node) = self {
-            Self::Other(node.transform(ctx))
+            Self::Other(Box::new(node.transform(ctx)))
         } else if let Self::ShapeClippingPath(arm) = self {
-            Self::ShapeClippingPath(arm.transform(ctx))
+            Self::ShapeClippingPath(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeFillExtendedProperties(arm) = self {
-            Self::ShapeFillExtendedProperties(arm.transform(ctx))
+            Self::ShapeFillExtendedProperties(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeLayoutProperties(arm) = self {
-            Self::ShapeLayoutProperties(arm.transform(ctx))
+            Self::ShapeLayoutProperties(Box::new(arm.transform(ctx)))
         } else if let Self::ShapeProtections(arm) = self {
-            Self::ShapeProtections(arm.transform(ctx))
+            Self::ShapeProtections(Box::new(arm.transform(ctx)))
         } else if let Self::SkewTransform(arm) = self {
-            Self::SkewTransform(arm.transform(ctx))
+            Self::SkewTransform(Box::new(arm.transform(ctx)))
         } else if let Self::StorageForAlternateMathContent(arm) = self {
-            Self::StorageForAlternateMathContent(arm.transform(ctx))
+            Self::StorageForAlternateMathContent(Box::new(arm.transform(ctx)))
         } else if let Self::TextBoxBottomStroke(arm) = self {
-            Self::TextBoxBottomStroke(arm.transform(ctx))
+            Self::TextBoxBottomStroke(Box::new(arm.transform(ctx)))
         } else if let Self::TextBoxInteriorStroke(arm) = self {
-            Self::TextBoxInteriorStroke(arm.transform(ctx))
+            Self::TextBoxInteriorStroke(Box::new(arm.transform(ctx)))
         } else if let Self::TextBoxLeftStroke(arm) = self {
-            Self::TextBoxLeftStroke(arm.transform(ctx))
+            Self::TextBoxLeftStroke(Box::new(arm.transform(ctx)))
         } else if let Self::TextBoxRightStroke(arm) = self {
-            Self::TextBoxRightStroke(arm.transform(ctx))
+            Self::TextBoxRightStroke(Box::new(arm.transform(ctx)))
         } else if let Self::TextBoxTopStroke(arm) = self {
-            Self::TextBoxTopStroke(arm.transform(ctx))
+            Self::TextBoxTopStroke(Box::new(arm.transform(ctx)))
         } else if let Self::VMLDiagram(arm) = self {
-            Self::VMLDiagram(arm.transform(ctx))
+            Self::VMLDiagram(Box::new(arm.transform(ctx)))
         } else {
             self.clone()
         }
@@ -65462,89 +65462,89 @@ fn transform_paragraph_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ParagraphContent> {
     if let wordprocessing::ParagraphContent::AnchorForSubdocumentLocation(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::AnchorForSubdocumentLocation(node));
     }
     if let wordprocessing::ParagraphContent::BidirectionalEmbeddingLevel(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::BidirectionalEmbeddingLevel(node));
     }
     if let wordprocessing::ParagraphContent::BidirectionalOverride(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::BidirectionalOverride(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::BookmarkEnd(node));
     }
     if let wordprocessing::ParagraphContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::BookmarkStart(node));
     }
     if let wordprocessing::ParagraphContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CommentAnchorRangeEnd(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CommentAnchorRangeStart(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::ConflictDelRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::ConflictDelRunTrackChange(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::ConflictInsRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::ConflictInsRunTrackChange(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let wordprocessing::ParagraphContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXMLMarkupDeletionStart(node));
     }
     if let wordprocessing::ParagraphContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let wordprocessing::ParagraphContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXMLMarkupInsertionStart(node));
     }
     if let wordprocessing::ParagraphContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let wordprocessing::ParagraphContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::ParagraphContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXmlConflictDelRangeEnd(node));
     }
     if let wordprocessing::ParagraphContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXmlConflictDelRangeStart(node));
     }
     if let wordprocessing::ParagraphContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXmlConflictInsRangeEnd(node));
     }
     if let wordprocessing::ParagraphContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXmlConflictInsRangeStart(node));
     }
     None
@@ -65555,89 +65555,89 @@ fn transform_paragraph_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ParagraphContent> {
     if let wordprocessing::ParagraphContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXmlMoveToRangeEnd(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::CustomXmlMoveToRangeStart(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::DeletedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::DeletedRunContent(node));
     }
     if let wordprocessing::ParagraphContent::Hyperlink(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::Hyperlink(node));
     }
     if let wordprocessing::ParagraphContent::InlineLevelCustomXMLElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::InlineLevelCustomXMLElement(node));
     }
     if let wordprocessing::ParagraphContent::InlineLevelSmartTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::InlineLevelSmartTag(node));
     }
     if let wordprocessing::ParagraphContent::InlineLevelStructuredDocumentTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::InlineLevelStructuredDocumentTag(node));
     }
     if let wordprocessing::ParagraphContent::InsertedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::InsertedRunContent(node));
     }
     if let wordprocessing::ParagraphContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::MoveDestinationLocationContainerEnd(node));
     }
     if let wordprocessing::ParagraphContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::MoveDestinationLocationContainerStart(node));
     }
     if let wordprocessing::ParagraphContent::MoveDestinationRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::MoveDestinationRunContent(
             node,
         ));
     }
     if let wordprocessing::ParagraphContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::MoveSourceLocationContainerEnd(node));
     }
     if let wordprocessing::ParagraphContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::MoveSourceLocationContainerStart(node));
     }
     if let wordprocessing::ParagraphContent::MoveSourceRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::MoveSourceRunContent(node));
     }
     if let wordprocessing::ParagraphContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::OfficeMath(node));
     }
     if let wordprocessing::ParagraphContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::OfficeMathParagraph(node));
     }
     if let wordprocessing::ParagraphContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::ProofingErrorAnchor(node));
     }
     if let wordprocessing::ParagraphContent::RangePermissionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::RangePermissionEnd(node));
     }
     if let wordprocessing::ParagraphContent::RangePermissionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::RangePermissionStart(node));
     }
     if let wordprocessing::ParagraphContent::SimpleField(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::SimpleField(node));
     }
     None
@@ -65648,7 +65648,7 @@ fn transform_paragraph_content_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ParagraphContent> {
     if let wordprocessing::ParagraphContent::TextRun(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ParagraphContent::TextRun(node));
     }
     None
@@ -65927,89 +65927,89 @@ fn transform_block_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::BlockContent> {
     if let wordprocessing::BlockContent::AnchorForImportedExternalContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::AnchorForImportedExternalContent(node));
     }
     if let wordprocessing::BlockContent::BlockLevelCustomXMLElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::BlockLevelCustomXMLElement(
             node,
         ));
     }
     if let wordprocessing::BlockContent::BlockLevelStructuredDocumentTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::BlockLevelStructuredDocumentTag(node));
     }
     if let wordprocessing::BlockContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::BookmarkEnd(node));
     }
     if let wordprocessing::BlockContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::BookmarkStart(node));
     }
     if let wordprocessing::BlockContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CommentAnchorRangeEnd(node));
     }
     if let wordprocessing::BlockContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CommentAnchorRangeStart(node));
     }
     if let wordprocessing::BlockContent::ConflictDelRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::ConflictDelRunTrackChange(
             node,
         ));
     }
     if let wordprocessing::BlockContent::ConflictInsRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::ConflictInsRunTrackChange(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXMLMarkupDeletionEnd(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXMLMarkupDeletionStart(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXMLMarkupInsertionEnd(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXMLMarkupInsertionStart(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXMLMarkupMoveSourceEnd(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::BlockContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXmlConflictDelRangeEnd(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXmlConflictDelRangeStart(node));
     }
     None
@@ -66020,85 +66020,85 @@ fn transform_block_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::BlockContent> {
     if let wordprocessing::BlockContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXmlConflictInsRangeEnd(
             node,
         ));
     }
     if let wordprocessing::BlockContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXmlConflictInsRangeStart(node));
     }
     if let wordprocessing::BlockContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXmlMoveToRangeEnd(node));
     }
     if let wordprocessing::BlockContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::CustomXmlMoveToRangeStart(
             node,
         ));
     }
     if let wordprocessing::BlockContent::DeletedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::DeletedRunContent(node));
     }
     if let wordprocessing::BlockContent::InsertedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::InsertedRunContent(node));
     }
     if let wordprocessing::BlockContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::MoveDestinationLocationContainerEnd(node));
     }
     if let wordprocessing::BlockContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::MoveDestinationLocationContainerStart(node));
     }
     if let wordprocessing::BlockContent::MoveDestinationRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::MoveDestinationRunContent(
             node,
         ));
     }
     if let wordprocessing::BlockContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::MoveSourceLocationContainerEnd(node));
     }
     if let wordprocessing::BlockContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::MoveSourceLocationContainerStart(node));
     }
     if let wordprocessing::BlockContent::MoveSourceRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::MoveSourceRunContent(node));
     }
     if let wordprocessing::BlockContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::OfficeMath(node));
     }
     if let wordprocessing::BlockContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::OfficeMathParagraph(node));
     }
     if let wordprocessing::BlockContent::Paragraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::Paragraph(node));
     }
     if let wordprocessing::BlockContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::ProofingErrorAnchor(node));
     }
     if let wordprocessing::BlockContent::RangePermissionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::RangePermissionEnd(node));
     }
     if let wordprocessing::BlockContent::RangePermissionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::RangePermissionStart(node));
     }
     if let wordprocessing::BlockContent::Table(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::BlockContent::Table(node));
     }
     None
@@ -66347,85 +66347,85 @@ fn transform_content_block_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ContentBlockContent> {
     if let wordprocessing::ContentBlockContent::BlockLevelCustomXMLElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::BlockLevelCustomXMLElement(node));
     }
     if let wordprocessing::ContentBlockContent::BlockLevelStructuredDocumentTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::BlockLevelStructuredDocumentTag(node));
     }
     if let wordprocessing::ContentBlockContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::BookmarkEnd(node));
     }
     if let wordprocessing::ContentBlockContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::BookmarkStart(node));
     }
     if let wordprocessing::ContentBlockContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CommentAnchorRangeEnd(
             node,
         ));
     }
     if let wordprocessing::ContentBlockContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CommentAnchorRangeStart(node));
     }
     if let wordprocessing::ContentBlockContent::ConflictDelRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::ConflictDelRunTrackChange(node));
     }
     if let wordprocessing::ContentBlockContent::ConflictInsRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::ConflictInsRunTrackChange(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXMLMarkupDeletionStart(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXMLMarkupInsertionStart(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXmlConflictDelRangeEnd(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXmlConflictDelRangeStart(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXmlConflictInsRangeEnd(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXmlConflictInsRangeStart(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXmlMoveToRangeEnd(node));
     }
     if let wordprocessing::ContentBlockContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::CustomXmlMoveToRangeStart(node));
     }
     None
@@ -66436,79 +66436,79 @@ fn transform_content_block_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ContentBlockContent> {
     if let wordprocessing::ContentBlockContent::DeletedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::DeletedRunContent(node));
     }
     if let wordprocessing::ContentBlockContent::InsertedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::InsertedRunContent(
             node,
         ));
     }
     if let wordprocessing::ContentBlockContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::ContentBlockContent::MoveDestinationLocationContainerEnd(node),
         );
     }
     if let wordprocessing::ContentBlockContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::ContentBlockContent::MoveDestinationLocationContainerStart(node),
         );
     }
     if let wordprocessing::ContentBlockContent::MoveDestinationRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::MoveDestinationRunContent(node));
     }
     if let wordprocessing::ContentBlockContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::MoveSourceLocationContainerEnd(node));
     }
     if let wordprocessing::ContentBlockContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::MoveSourceLocationContainerStart(node));
     }
     if let wordprocessing::ContentBlockContent::MoveSourceRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::MoveSourceRunContent(
             node,
         ));
     }
     if let wordprocessing::ContentBlockContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::OfficeMath(node));
     }
     if let wordprocessing::ContentBlockContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::OfficeMathParagraph(
             node,
         ));
     }
     if let wordprocessing::ContentBlockContent::Paragraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::Paragraph(node));
     }
     if let wordprocessing::ContentBlockContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::ProofingErrorAnchor(
             node,
         ));
     }
     if let wordprocessing::ContentBlockContent::RangePermissionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::RangePermissionEnd(
             node,
         ));
     }
     if let wordprocessing::ContentBlockContent::RangePermissionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::RangePermissionStart(
             node,
         ));
     }
     if let wordprocessing::ContentBlockContent::Table(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentBlockContent::Table(node));
     }
     None
@@ -66757,89 +66757,89 @@ fn transform_content_cell_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ContentCellContent> {
     if let wordprocessing::ContentCellContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::BookmarkEnd(node));
     }
     if let wordprocessing::ContentCellContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::BookmarkStart(node));
     }
     if let wordprocessing::ContentCellContent::CellLevelCustomXMLElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CellLevelCustomXMLElement(node));
     }
     if let wordprocessing::ContentCellContent::CellLevelStructuredDocumentTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CellLevelStructuredDocumentTag(node));
     }
     if let wordprocessing::ContentCellContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CommentAnchorRangeEnd(
             node,
         ));
     }
     if let wordprocessing::ContentCellContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CommentAnchorRangeStart(
             node,
         ));
     }
     if let wordprocessing::ContentCellContent::ConflictDelRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::ConflictDelRunTrackChange(node));
     }
     if let wordprocessing::ContentCellContent::ConflictInsRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::ConflictInsRunTrackChange(node));
     }
     if let wordprocessing::ContentCellContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let wordprocessing::ContentCellContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXMLMarkupDeletionStart(node));
     }
     if let wordprocessing::ContentCellContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let wordprocessing::ContentCellContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXMLMarkupInsertionStart(node));
     }
     if let wordprocessing::ContentCellContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let wordprocessing::ContentCellContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::ContentCellContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXmlConflictDelRangeEnd(node));
     }
     if let wordprocessing::ContentCellContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXmlConflictDelRangeStart(node));
     }
     if let wordprocessing::ContentCellContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXmlConflictInsRangeEnd(node));
     }
     if let wordprocessing::ContentCellContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXmlConflictInsRangeStart(node));
     }
     if let wordprocessing::ContentCellContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXmlMoveToRangeEnd(
             node,
         ));
     }
     if let wordprocessing::ContentCellContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::CustomXmlMoveToRangeStart(node));
     }
     None
@@ -66850,69 +66850,69 @@ fn transform_content_cell_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ContentCellContent> {
     if let wordprocessing::ContentCellContent::DeletedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::DeletedRunContent(node));
     }
     if let wordprocessing::ContentCellContent::InsertedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::InsertedRunContent(node));
     }
     if let wordprocessing::ContentCellContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::MoveDestinationLocationContainerEnd(node));
     }
     if let wordprocessing::ContentCellContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::ContentCellContent::MoveDestinationLocationContainerStart(node),
         );
     }
     if let wordprocessing::ContentCellContent::MoveDestinationRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::MoveDestinationRunContent(node));
     }
     if let wordprocessing::ContentCellContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::MoveSourceLocationContainerEnd(node));
     }
     if let wordprocessing::ContentCellContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::MoveSourceLocationContainerStart(node));
     }
     if let wordprocessing::ContentCellContent::MoveSourceRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::MoveSourceRunContent(
             node,
         ));
     }
     if let wordprocessing::ContentCellContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::OfficeMath(node));
     }
     if let wordprocessing::ContentCellContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::OfficeMathParagraph(
             node,
         ));
     }
     if let wordprocessing::ContentCellContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::ProofingErrorAnchor(
             node,
         ));
     }
     if let wordprocessing::ContentCellContent::RangePermissionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::RangePermissionEnd(node));
     }
     if let wordprocessing::ContentCellContent::RangePermissionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::RangePermissionStart(
             node,
         ));
     }
     if let wordprocessing::ContentCellContent::TableCell(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentCellContent::TableCell(node));
     }
     None
@@ -67155,89 +67155,89 @@ fn transform_content_row_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ContentRowContent> {
     if let wordprocessing::ContentRowContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::BookmarkEnd(node));
     }
     if let wordprocessing::ContentRowContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::BookmarkStart(node));
     }
     if let wordprocessing::ContentRowContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CommentAnchorRangeEnd(
             node,
         ));
     }
     if let wordprocessing::ContentRowContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CommentAnchorRangeStart(
             node,
         ));
     }
     if let wordprocessing::ContentRowContent::ConflictDelRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::ConflictDelRunTrackChange(node));
     }
     if let wordprocessing::ContentRowContent::ConflictInsRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::ConflictInsRunTrackChange(node));
     }
     if let wordprocessing::ContentRowContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let wordprocessing::ContentRowContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXMLMarkupDeletionStart(node));
     }
     if let wordprocessing::ContentRowContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let wordprocessing::ContentRowContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXMLMarkupInsertionStart(node));
     }
     if let wordprocessing::ContentRowContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let wordprocessing::ContentRowContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::ContentRowContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXmlConflictDelRangeEnd(node));
     }
     if let wordprocessing::ContentRowContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXmlConflictDelRangeStart(node));
     }
     if let wordprocessing::ContentRowContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXmlConflictInsRangeEnd(node));
     }
     if let wordprocessing::ContentRowContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXmlConflictInsRangeStart(node));
     }
     if let wordprocessing::ContentRowContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXmlMoveToRangeEnd(
             node,
         ));
     }
     if let wordprocessing::ContentRowContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::CustomXmlMoveToRangeStart(node));
     }
     if let wordprocessing::ContentRowContent::DeletedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::DeletedRunContent(node));
     }
     if let wordprocessing::ContentRowContent::InsertedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::InsertedRunContent(node));
     }
     None
@@ -67248,67 +67248,67 @@ fn transform_content_row_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::ContentRowContent> {
     if let wordprocessing::ContentRowContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::MoveDestinationLocationContainerEnd(node));
     }
     if let wordprocessing::ContentRowContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::ContentRowContent::MoveDestinationLocationContainerStart(node),
         );
     }
     if let wordprocessing::ContentRowContent::MoveDestinationRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::MoveDestinationRunContent(node));
     }
     if let wordprocessing::ContentRowContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::MoveSourceLocationContainerEnd(node));
     }
     if let wordprocessing::ContentRowContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::MoveSourceLocationContainerStart(node));
     }
     if let wordprocessing::ContentRowContent::MoveSourceRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::MoveSourceRunContent(
             node,
         ));
     }
     if let wordprocessing::ContentRowContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::OfficeMath(node));
     }
     if let wordprocessing::ContentRowContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::OfficeMathParagraph(node));
     }
     if let wordprocessing::ContentRowContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::ProofingErrorAnchor(node));
     }
     if let wordprocessing::ContentRowContent::RangePermissionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::RangePermissionEnd(node));
     }
     if let wordprocessing::ContentRowContent::RangePermissionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::RangePermissionStart(
             node,
         ));
     }
     if let wordprocessing::ContentRowContent::RowLevelCustomXMLElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::RowLevelCustomXMLElement(
             node,
         ));
     }
     if let wordprocessing::ContentRowContent::RowLevelStructuredDocumentTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::RowLevelStructuredDocumentTag(node));
     }
     if let wordprocessing::ContentRowContent::TableRow(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::ContentRowContent::TableRow(node));
     }
     None
@@ -67551,89 +67551,89 @@ fn transform_run_properties_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::RunPropertiesContent> {
     if let wordprocessing::RunPropertiesContent::AnimatedTextEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::AnimatedTextEffect(
             node,
         ));
     }
     if let wordprocessing::RunPropertiesContent::Bold(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::Bold(node));
     }
     if let wordprocessing::RunPropertiesContent::CharacterSpacingAdjustment(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::CharacterSpacingAdjustment(node));
     }
     if let wordprocessing::RunPropertiesContent::ComplexScriptBold(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ComplexScriptBold(
             node,
         ));
     }
     if let wordprocessing::RunPropertiesContent::ComplexScriptFontSize(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ComplexScriptFontSize(
             node,
         ));
     }
     if let wordprocessing::RunPropertiesContent::ComplexScriptItalics(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ComplexScriptItalics(
             node,
         ));
     }
     if let wordprocessing::RunPropertiesContent::DisplayAllCharactersAsCapitalLetters(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::RunPropertiesContent::DisplayAllCharactersAsCapitalLetters(node),
         );
     }
     if let wordprocessing::RunPropertiesContent::DisplayCharacterOutline(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::DisplayCharacterOutline(node));
     }
     if let wordprocessing::RunPropertiesContent::DoNotCheckSpellingOrGrammar(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::DoNotCheckSpellingOrGrammar(node));
     }
     if let wordprocessing::RunPropertiesContent::DocumentGridInterLineParagraphSpacing(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::RunPropertiesContent::DocumentGridInterLineParagraphSpacing(node),
         );
     }
     if let wordprocessing::RunPropertiesContent::DoubleStrikethrough(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::DoubleStrikethrough(
             node,
         ));
     }
     if let wordprocessing::RunPropertiesContent::EastAsianTypographySettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::EastAsianTypographySettings(node));
     }
     if let wordprocessing::RunPropertiesContent::Embossing(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::Embossing(node));
     }
     if let wordprocessing::RunPropertiesContent::EmphasisMark(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::EmphasisMark(node));
     }
     if let wordprocessing::RunPropertiesContent::ExpandedCompressedText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ExpandedCompressedText(node));
     }
     if let wordprocessing::RunPropertiesContent::FontKerning(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::FontKerning(node));
     }
     if let wordprocessing::RunPropertiesContent::HiddenText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::HiddenText(node));
     }
     if let wordprocessing::RunPropertiesContent::Imprinting(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::Imprinting(node));
     }
     None
@@ -67644,87 +67644,87 @@ fn transform_run_properties_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::RunPropertiesContent> {
     if let wordprocessing::RunPropertiesContent::Italics(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::Italics(node));
     }
     if let wordprocessing::RunPropertiesContent::LanguagesForRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::LanguagesForRunContent(node));
     }
     if let wordprocessing::RunPropertiesContent::ManualRunWidth(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ManualRunWidth(node));
     }
     if let wordprocessing::RunPropertiesContent::NonComplexScriptFontSize(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::NonComplexScriptFontSize(node));
     }
     if let wordprocessing::RunPropertiesContent::OfficeOpenXMLMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::OfficeOpenXMLMath(
             node,
         ));
     }
     if let wordprocessing::RunPropertiesContent::ParagraphMarkIsAlwaysHidden(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ParagraphMarkIsAlwaysHidden(node));
     }
     if let wordprocessing::RunPropertiesContent::ParagraphShading(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ParagraphShading(node));
     }
     if let wordprocessing::RunPropertiesContent::ReferencedCharacterStyle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::ReferencedCharacterStyle(node));
     }
     if let wordprocessing::RunPropertiesContent::RightToLeftText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::RightToLeftText(node));
     }
     if let wordprocessing::RunPropertiesContent::RunContentColor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::RunContentColor(node));
     }
     if let wordprocessing::RunPropertiesContent::RunFonts(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::RunFonts(node));
     }
     if let wordprocessing::RunPropertiesContent::Shadow(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::Shadow(node));
     }
     if let wordprocessing::RunPropertiesContent::SingleStrikethrough(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::SingleStrikethrough(
             node,
         ));
     }
     if let wordprocessing::RunPropertiesContent::SmallCaps(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::SmallCaps(node));
     }
     if let wordprocessing::RunPropertiesContent::SubscriptSuperscriptText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::SubscriptSuperscriptText(node));
     }
     if let wordprocessing::RunPropertiesContent::TextBorder(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::TextBorder(node));
     }
     if let wordprocessing::RunPropertiesContent::TextHighlighting(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::TextHighlighting(node));
     }
     if let wordprocessing::RunPropertiesContent::Underline(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::Underline(node));
     }
     if let wordprocessing::RunPropertiesContent::UseComplexScriptFormattingOnRun(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::UseComplexScriptFormattingOnRun(node));
     }
     if let wordprocessing::RunPropertiesContent::VerticallyRaisedOrLoweredText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::VerticallyRaisedOrLoweredText(node));
     }
     None
@@ -67735,7 +67735,7 @@ fn transform_run_properties_content_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::RunPropertiesContent> {
     if let wordprocessing::RunPropertiesContent::WebHiddenText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RunPropertiesContent::WebHiddenText(node));
     }
     None
@@ -68008,91 +68008,91 @@ fn transform_text_run_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::TextRunContent> {
     if let wordprocessing::TextRunContent::AbsolutePositionTabCharacter(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::AbsolutePositionTabCharacter(node));
     }
     if let wordprocessing::TextRunContent::Break(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::Break(node));
     }
     if let wordprocessing::TextRunContent::CarriageReturn(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::CarriageReturn(node));
     }
     if let wordprocessing::TextRunContent::CommentContentReferenceMark(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::CommentContentReferenceMark(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::CommentInformationBlock(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::CommentInformationBlock(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::ComplexFieldCharacter(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::ComplexFieldCharacter(node));
     }
     if let wordprocessing::TextRunContent::ContentPart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::ContentPart(node));
     }
     if let wordprocessing::TextRunContent::ContinuationSeparatorMark(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::ContinuationSeparatorMark(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::DateBlockLongDayFormat(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DateBlockLongDayFormat(node));
     }
     if let wordprocessing::TextRunContent::DateBlockLongMonthFormat(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DateBlockLongMonthFormat(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::DateBlockLongYearFormat(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DateBlockLongYearFormat(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::DateBlockShortDayFormat(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DateBlockShortDayFormat(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::DateBlockShortMonthFormat(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DateBlockShortMonthFormat(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::DateBlockShortYearFormat(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DateBlockShortYearFormat(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::DeletedFieldCode(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DeletedFieldCode(node));
     }
     if let wordprocessing::TextRunContent::DeletedText(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DeletedText(node));
     }
     if let wordprocessing::TextRunContent::DrawingMLObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::DrawingMLObject(node));
     }
     if let wordprocessing::TextRunContent::EmbeddedObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::EmbeddedObject(node));
     }
     None
@@ -68103,67 +68103,67 @@ fn transform_text_run_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::TextRunContent> {
     if let wordprocessing::TextRunContent::EndnoteReference(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::EndnoteReference(node));
     }
     if let wordprocessing::TextRunContent::EndnoteReferenceMark(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::EndnoteReferenceMark(node));
     }
     if let wordprocessing::TextRunContent::FieldCode(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::FieldCode(node));
     }
     if let wordprocessing::TextRunContent::FootnoteEndnoteSeparatorMark(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::FootnoteEndnoteSeparatorMark(node));
     }
     if let wordprocessing::TextRunContent::FootnoteReference(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::FootnoteReference(node));
     }
     if let wordprocessing::TextRunContent::FootnoteReferenceMark(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::FootnoteReferenceMark(node));
     }
     if let wordprocessing::TextRunContent::NonBreakingHyphenCharacter(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::NonBreakingHyphenCharacter(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::OptionalHyphenCharacter(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::OptionalHyphenCharacter(
             node,
         ));
     }
     if let wordprocessing::TextRunContent::PageNumberBlock(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::PageNumberBlock(node));
     }
     if let wordprocessing::TextRunContent::PhoneticGuide(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::PhoneticGuide(node));
     }
     if let wordprocessing::TextRunContent::PositionOfLastCalculatedPageBreak(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::PositionOfLastCalculatedPageBreak(node));
     }
     if let wordprocessing::TextRunContent::SymbolCharacter(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::SymbolCharacter(node));
     }
     if let wordprocessing::TextRunContent::TabCharacter(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::TabCharacter(node));
     }
     if let wordprocessing::TextRunContent::Text(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::Text(node));
     }
     if let wordprocessing::TextRunContent::VMLObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TextRunContent::VMLObject(node));
     }
     None
@@ -68400,87 +68400,87 @@ fn transform_phonetic_guide_content_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::PhoneticGuideContent> {
     if let wordprocessing::PhoneticGuideContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::BookmarkEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::BookmarkStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CommentAnchorRangeEnd(
             node,
         ));
     }
     if let wordprocessing::PhoneticGuideContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CommentAnchorRangeStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::ConflictDelRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::ConflictDelRunTrackChange(node));
     }
     if let wordprocessing::PhoneticGuideContent::ConflictInsRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::ConflictInsRunTrackChange(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXMLMarkupDeletionStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXMLMarkupInsertionStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXmlConflictDelRangeEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXmlConflictDelRangeStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXmlConflictInsRangeEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXmlConflictInsRangeStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXmlMoveToRangeEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::CustomXmlMoveToRangeStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::DeletedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::DeletedRunContent(
             node,
         ));
     }
     if let wordprocessing::PhoneticGuideContent::InsertedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::InsertedRunContent(
             node,
         ));
@@ -68493,65 +68493,65 @@ fn transform_phonetic_guide_content_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::PhoneticGuideContent> {
     if let wordprocessing::PhoneticGuideContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::PhoneticGuideContent::MoveDestinationLocationContainerEnd(node),
         );
     }
     if let wordprocessing::PhoneticGuideContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::PhoneticGuideContent::MoveDestinationLocationContainerStart(node),
         );
     }
     if let wordprocessing::PhoneticGuideContent::MoveDestinationRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::MoveDestinationRunContent(node));
     }
     if let wordprocessing::PhoneticGuideContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::MoveSourceLocationContainerEnd(node));
     }
     if let wordprocessing::PhoneticGuideContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::MoveSourceLocationContainerStart(node));
     }
     if let wordprocessing::PhoneticGuideContent::MoveSourceRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::MoveSourceRunContent(
             node,
         ));
     }
     if let wordprocessing::PhoneticGuideContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::OfficeMath(node));
     }
     if let wordprocessing::PhoneticGuideContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::OfficeMathParagraph(
             node,
         ));
     }
     if let wordprocessing::PhoneticGuideContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::ProofingErrorAnchor(
             node,
         ));
     }
     if let wordprocessing::PhoneticGuideContent::RangePermissionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::RangePermissionEnd(
             node,
         ));
     }
     if let wordprocessing::PhoneticGuideContent::RangePermissionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::RangePermissionStart(
             node,
         ));
     }
     if let wordprocessing::PhoneticGuideContent::TextRun(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::PhoneticGuideContent::TextRun(node));
     }
     None
@@ -68782,89 +68782,89 @@ fn transform_tracked_run_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::TrackedRunContent> {
     if let wordprocessing::TrackedRunContent::Accent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::Accent(node));
     }
     if let wordprocessing::TrackedRunContent::ArrayObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::ArrayObject(node));
     }
     if let wordprocessing::TrackedRunContent::Bar(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::Bar(node));
     }
     if let wordprocessing::TrackedRunContent::BidirectionalEmbeddingLevel(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::BidirectionalEmbeddingLevel(node));
     }
     if let wordprocessing::TrackedRunContent::BidirectionalOverride(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::BidirectionalOverride(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::BookmarkEnd(node));
     }
     if let wordprocessing::TrackedRunContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::BookmarkStart(node));
     }
     if let wordprocessing::TrackedRunContent::BorderBoxObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::BorderBoxObject(node));
     }
     if let wordprocessing::TrackedRunContent::BoxObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::BoxObject(node));
     }
     if let wordprocessing::TrackedRunContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CommentAnchorRangeEnd(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CommentAnchorRangeStart(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::ConflictDelRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::ConflictDelRunTrackChange(node));
     }
     if let wordprocessing::TrackedRunContent::ConflictInsRunTrackChange(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::ConflictInsRunTrackChange(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXMLMarkupDeletionStart(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXMLMarkupInsertionStart(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXmlConflictDelRangeEnd(node));
     }
     None
@@ -68875,89 +68875,89 @@ fn transform_tracked_run_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::TrackedRunContent> {
     if let wordprocessing::TrackedRunContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXmlConflictDelRangeStart(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXmlConflictInsRangeEnd(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXmlConflictInsRangeStart(node));
     }
     if let wordprocessing::TrackedRunContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXmlMoveToRangeEnd(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::CustomXmlMoveToRangeStart(node));
     }
     if let wordprocessing::TrackedRunContent::DeletedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::DeletedRunContent(node));
     }
     if let wordprocessing::TrackedRunContent::DelimiterObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::DelimiterObject(node));
     }
     if let wordprocessing::TrackedRunContent::FractionObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::FractionObject(node));
     }
     if let wordprocessing::TrackedRunContent::FunctionApplyObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::FunctionApplyObject(node));
     }
     if let wordprocessing::TrackedRunContent::GroupCharacterObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::GroupCharacterObject(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::InlineLevelCustomXMLElement(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::InlineLevelCustomXMLElement(node));
     }
     if let wordprocessing::TrackedRunContent::InlineLevelSmartTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::InlineLevelSmartTag(node));
     }
     if let wordprocessing::TrackedRunContent::InlineLevelStructuredDocumentTag(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::InlineLevelStructuredDocumentTag(node));
     }
     if let wordprocessing::TrackedRunContent::InsertedRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::InsertedRunContent(node));
     }
     if let wordprocessing::TrackedRunContent::LowerLimitObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::LowerLimitObject(node));
     }
     if let wordprocessing::TrackedRunContent::MatrixObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::MatrixObject(node));
     }
     if let wordprocessing::TrackedRunContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::MoveDestinationLocationContainerEnd(node));
     }
     if let wordprocessing::TrackedRunContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::TrackedRunContent::MoveDestinationLocationContainerStart(node),
         );
     }
     if let wordprocessing::TrackedRunContent::MoveDestinationRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::MoveDestinationRunContent(node));
     }
     if let wordprocessing::TrackedRunContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::MoveSourceLocationContainerEnd(node));
     }
     None
@@ -68968,79 +68968,79 @@ fn transform_tracked_run_3(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::TrackedRunContent> {
     if let wordprocessing::TrackedRunContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::MoveSourceLocationContainerStart(node));
     }
     if let wordprocessing::TrackedRunContent::MoveSourceRunContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::MoveSourceRunContent(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::Nary(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::Nary(node));
     }
     if let wordprocessing::TrackedRunContent::OfficeMath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::OfficeMath(node));
     }
     if let wordprocessing::TrackedRunContent::OfficeMathParagraph(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::OfficeMathParagraph(node));
     }
     if let wordprocessing::TrackedRunContent::PhantomObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::PhantomObject(node));
     }
     if let wordprocessing::TrackedRunContent::PreSubSuperscriptObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::PreSubSuperscriptObject(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::ProofingErrorAnchor(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::ProofingErrorAnchor(node));
     }
     if let wordprocessing::TrackedRunContent::RadicalObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::RadicalObject(node));
     }
     if let wordprocessing::TrackedRunContent::RangePermissionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::RangePermissionEnd(node));
     }
     if let wordprocessing::TrackedRunContent::RangePermissionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::RangePermissionStart(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::Run(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::Run(node));
     }
     if let wordprocessing::TrackedRunContent::SubSuperscriptObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::SubSuperscriptObject(
             node,
         ));
     }
     if let wordprocessing::TrackedRunContent::SubscriptObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::SubscriptObject(node));
     }
     if let wordprocessing::TrackedRunContent::SuperscriptObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::SuperscriptObject(node));
     }
     if let wordprocessing::TrackedRunContent::TextRun(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::TextRun(node));
     }
     if let wordprocessing::TrackedRunContent::UpperLimitObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::TrackedRunContent::UpperLimitObject(node));
     }
     None
@@ -69435,91 +69435,91 @@ fn transform_range_markup_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::RangeMarkupContent> {
     if let wordprocessing::RangeMarkupContent::BookmarkEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::BookmarkEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::BookmarkStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::BookmarkStart(node));
     }
     if let wordprocessing::RangeMarkupContent::CommentAnchorRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CommentAnchorRangeEnd(
             node,
         ));
     }
     if let wordprocessing::RangeMarkupContent::CommentAnchorRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CommentAnchorRangeStart(
             node,
         ));
     }
     if let wordprocessing::RangeMarkupContent::CustomXMLMarkupDeletionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXMLMarkupDeletionEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXMLMarkupDeletionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXMLMarkupDeletionStart(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXMLMarkupInsertionEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXMLMarkupInsertionEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXMLMarkupInsertionStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXMLMarkupInsertionStart(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXMLMarkupMoveSourceEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXMLMarkupMoveSourceEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXMLMarkupMoveSourceStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXMLMarkupMoveSourceStart(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXmlConflictDelRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXmlConflictDelRangeEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXmlConflictDelRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXmlConflictDelRangeStart(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXmlConflictInsRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXmlConflictInsRangeEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXmlConflictInsRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXmlConflictInsRangeStart(node));
     }
     if let wordprocessing::RangeMarkupContent::CustomXmlMoveToRangeEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXmlMoveToRangeEnd(
             node,
         ));
     }
     if let wordprocessing::RangeMarkupContent::CustomXmlMoveToRangeStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::CustomXmlMoveToRangeStart(node));
     }
     if let wordprocessing::RangeMarkupContent::MoveDestinationLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::MoveDestinationLocationContainerEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::MoveDestinationLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(
             wordprocessing::RangeMarkupContent::MoveDestinationLocationContainerStart(node),
         );
     }
     if let wordprocessing::RangeMarkupContent::MoveSourceLocationContainerEnd(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::MoveSourceLocationContainerEnd(node));
     }
     if let wordprocessing::RangeMarkupContent::MoveSourceLocationContainerStart(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::RangeMarkupContent::MoveSourceLocationContainerStart(node));
     }
     None
@@ -69664,85 +69664,85 @@ fn transform_vml_element_1(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::VmlElementContent> {
     if let wordprocessing::VmlElementContent::ArcSegment(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ArcSegment(node));
     }
     if let wordprocessing::VmlElementContent::BezierCurve(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::BezierCurve(node));
     }
     if let wordprocessing::VmlElementContent::Callout(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::Callout(node));
     }
     if let wordprocessing::VmlElementContent::Complex(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::Complex(node));
     }
     if let wordprocessing::VmlElementContent::DigitalSignatureLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::DigitalSignatureLine(
             node,
         ));
     }
     if let wordprocessing::VmlElementContent::DocumentBackground(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::DocumentBackground(node));
     }
     if let wordprocessing::VmlElementContent::EmbeddedOLEObject(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::EmbeddedOLEObject(node));
     }
     if let wordprocessing::VmlElementContent::Extrusion(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::Extrusion(node));
     }
     if let wordprocessing::VmlElementContent::ImageData(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ImageData(node));
     }
     if let wordprocessing::VmlElementContent::ImageFile(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ImageFile(node));
     }
     if let wordprocessing::VmlElementContent::Ink(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::Ink(node));
     }
     if let wordprocessing::VmlElementContent::Line(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::Line(node));
     }
     if let wordprocessing::VmlElementContent::LineStrokeSettings(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::LineStrokeSettings(node));
     }
     if let wordprocessing::VmlElementContent::MultiplePathLine(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::MultiplePathLine(node));
     }
     if let wordprocessing::VmlElementContent::NewShapeDefaults(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::NewShapeDefaults(node));
     }
     if let wordprocessing::VmlElementContent::Oval(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::Oval(node));
     }
     if let wordprocessing::VmlElementContent::Rectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::Rectangle(node));
     }
     if let wordprocessing::VmlElementContent::RoundedRectangle(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::RoundedRectangle(node));
     }
     if let wordprocessing::VmlElementContent::SetOfFormulas(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::SetOfFormulas(node));
     }
     if let wordprocessing::VmlElementContent::SetOfHandles(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::SetOfHandles(node));
     }
     None
@@ -69753,87 +69753,87 @@ fn transform_vml_element_2(
     ctx: &mut dyn officekit_markup::Context,
 ) -> Option<wordprocessing::VmlElementContent> {
     if let wordprocessing::VmlElementContent::ShadowEffect(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShadowEffect(node));
     }
     if let wordprocessing::VmlElementContent::ShapeClippingPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeClippingPath(node));
     }
     if let wordprocessing::VmlElementContent::ShapeDefinition(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeDefinition(node));
     }
     if let wordprocessing::VmlElementContent::ShapeFillExtendedProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeFillExtendedProperties(node));
     }
     if let wordprocessing::VmlElementContent::ShapeFillProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeFillProperties(node));
     }
     if let wordprocessing::VmlElementContent::ShapeGroup(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeGroup(node));
     }
     if let wordprocessing::VmlElementContent::ShapeLayoutProperties(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeLayoutProperties(
             node,
         ));
     }
     if let wordprocessing::VmlElementContent::ShapePath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapePath(node));
     }
     if let wordprocessing::VmlElementContent::ShapeProtections(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeProtections(node));
     }
     if let wordprocessing::VmlElementContent::ShapeTemplate(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::ShapeTemplate(node));
     }
     if let wordprocessing::VmlElementContent::SkewTransform(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::SkewTransform(node));
     }
     if let wordprocessing::VmlElementContent::StorageForAlternateMathContent(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::StorageForAlternateMathContent(node));
     }
     if let wordprocessing::VmlElementContent::TextBox(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::TextBox(node));
     }
     if let wordprocessing::VmlElementContent::TextBoxBottomStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::TextBoxBottomStroke(node));
     }
     if let wordprocessing::VmlElementContent::TextBoxInteriorStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::TextBoxInteriorStroke(
             node,
         ));
     }
     if let wordprocessing::VmlElementContent::TextBoxLeftStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::TextBoxLeftStroke(node));
     }
     if let wordprocessing::VmlElementContent::TextBoxRightStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::TextBoxRightStroke(node));
     }
     if let wordprocessing::VmlElementContent::TextBoxTopStroke(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::TextBoxTopStroke(node));
     }
     if let wordprocessing::VmlElementContent::TextLayoutPath(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::TextLayoutPath(node));
     }
     if let wordprocessing::VmlElementContent::VMLDiagram(arm) = item {
-        let node = arm.transform(ctx);
+        let node = Box::new(arm.transform(ctx));
         return Some(wordprocessing::VmlElementContent::VMLDiagram(node));
     }
     None
