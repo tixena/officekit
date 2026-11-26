@@ -13,10 +13,12 @@ const DECLARATION: &str = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\
 const KEEP: WriteOptions = WriteOptions {
     layout: Layout::Compact,
     namespace_cleanup: false,
+    respell: false,
 };
 const PRETTY: WriteOptions = WriteOptions {
     layout: Layout::Pretty,
     namespace_cleanup: false,
+    respell: false,
 };
 
 fn write(xml: &str, options: WriteOptions) -> String {
@@ -30,6 +32,7 @@ fn the_default_options_are_compact_with_the_cleanup() {
         WriteOptions {
             layout: Layout::Compact,
             namespace_cleanup: true,
+            respell: false,
         }
     );
     assert_eq!(Layout::default(), Layout::Compact);

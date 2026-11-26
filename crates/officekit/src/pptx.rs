@@ -340,7 +340,7 @@ impl Pptx {
             ConformanceClass::Strict,
             self.options,
             self.write_options,
-            &mut |_, _| Ok(false),
+            &mut |_, _, _| Ok(false),
         )
     }
 
@@ -365,7 +365,7 @@ impl Pptx {
             ConformanceClass::Transitional,
             self.options,
             self.write_options,
-            &mut |_, _| Ok(false),
+            &mut |_, _, _| Ok(false),
         )?;
         Ok((bytes, Vec::new()))
     }

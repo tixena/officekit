@@ -62,7 +62,7 @@ pub struct Scope {
     frames: Vec<Vec<NamespaceDeclaration>>,
 }
 
-/// The two options of writing a part from a tree.
+/// The options of writing a part.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[non_exhaustive]
 pub struct WriteOptions {
@@ -71,6 +71,10 @@ pub struct WriteOptions {
     /// Remove every namespace declaration nothing in its scope uses, and its
     /// prefix from the markup-compatibility lists.
     pub namespace_cleanup: bool,
+    /// Write each value of a typed root in the spelling of the class it is written in, as a save
+    /// from the other class does: Transitional's `left` for Strict's `start`. A Strict write
+    /// always does, and the writer of a tree never does.
+    pub respell: bool,
 }
 
 /// Which declarations of an element the cleanup removed, by the element's
@@ -203,6 +207,16 @@ impl WriteOptions {
         Self {
             layout,
             namespace_cleanup,
+            respell: false,
+        }
+    }
+
+    /// The same options, with [`respell`](Self::respell) on.
+    #[must_use = "this only builds the value"]
+    pub const fn respelled(self) -> Self {
+        Self {
+            respell: true,
+            ..self
         }
     }
 }
@@ -210,10 +224,7 @@ impl WriteOptions {
 impl Default for WriteOptions {
     /// Compact, with the cleanup on.
     fn default() -> Self {
-        Self {
-            layout: Layout::Compact,
-            namespace_cleanup: true,
-        }
+        Self::new(Layout::Compact, true)
     }
 }
 

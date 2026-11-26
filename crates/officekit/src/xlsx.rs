@@ -455,12 +455,12 @@ impl Xlsx {
             ConformanceClass::Strict,
             self.options,
             self.write_options,
-            &mut |package, name| {
+            &mut |package, name, write| {
                 match package.content_type(name) {
                     Some(worksheet::CONTENT_TYPE) => {
                         let sheet =
                             worksheet::load(package, name, self.options)?.transform(&mut dates);
-                        worksheet::store_strict(package, name, &sheet, self.write_options)?;
+                        worksheet::store_strict(package, name, &sheet, write)?;
                     }
                     Some(pivot_table_cache_definition::CONTENT_TYPE) => {
                         let definition =
@@ -470,18 +470,18 @@ impl Xlsx {
                             package,
                             name,
                             &definition,
-                            self.write_options,
+                            write,
                         )?;
                     }
                     Some(table_definition::CONTENT_TYPE) => {
                         let table = table_definition::load(package, name, self.options)?
                             .transform(&mut dates);
-                        table_definition::store_strict(package, name, &table, self.write_options)?;
+                        table_definition::store_strict(package, name, &table, write)?;
                     }
                     Some(pivot_table::CONTENT_TYPE) => {
                         let pivot =
                             pivot_table::load(package, name, self.options)?.transform(&mut dates);
-                        pivot_table::store_strict(package, name, &pivot, self.write_options)?;
+                        pivot_table::store_strict(package, name, &pivot, write)?;
                     }
                     _ => return Ok(false),
                 }
@@ -514,13 +514,13 @@ impl Xlsx {
             ConformanceClass::Transitional,
             self.options,
             self.write_options,
-            &mut |package, name| {
+            &mut |package, name, write| {
                 if package.content_type(name) != Some(worksheet::CONTENT_TYPE) {
                     return Ok(false);
                 }
                 let mut sheet = worksheet::load(package, name, self.options)?;
                 warnings.extend(convert_date_cells(&mut sheet, date1904, name));
-                worksheet::store_transitional(package, name, &sheet, self.write_options)?;
+                worksheet::store_transitional(package, name, &sheet, write)?;
                 Ok(true)
             },
         )?;

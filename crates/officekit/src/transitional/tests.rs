@@ -16,7 +16,9 @@ use officekit_xml::error::{ReadError, WriteError};
 use officekit_xml::parse::parse;
 use officekit_xml::write::{Layout, WriteOptions};
 
-use super::{Transitional, spell};
+use super::Transitional;
+#[cfg(feature = "strict")]
+use super::spell;
 
 const W: &str = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const W_STRICT: &str = "http://purl.oclc.org/ooxml/wordprocessingml/main";
@@ -332,23 +334,23 @@ fn an_ecma_wsp_under_another_address_stays_as_it_is() {
     assert_eq!(transitional::<TextRun>(&run), run);
 }
 
-/// `text` after a save from Strict to Transitional's walk, serialized compact, with whether the
-/// walk changed it.
-fn spelled(text: &str) -> (String, bool) {
+/// `text` after a save from Strict to Transitional's walk, serialized compact.
+#[cfg(feature = "strict")]
+fn spelled(text: &str) -> String {
     let mut root = element(text);
-    let changed = spell(&mut root, None);
+    spell(&mut root, None);
     let mut part = Part::new("", root);
     part.declaration = None;
     part.prolog.clear();
-    (String::from_utf8(part.to_xml(KEEP)).unwrap(), changed)
+    String::from_utf8(part.to_xml(KEEP)).unwrap()
 }
 
+#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_writes_each_kind_of_row_in_transitional_s_spelling() {
-    let (written, changed) = spelled(&format!(
+    let written = spelled(&format!(
         "<w:body xmlns:w=\"{W}\"><w:tbl><w:tblPr><w:tblW w:w=\"234pt\" w:type=\"dxa\"/><w:jc w:val=\"end\"/><w:tblBorders><w:start w:val=\"single\"/><w:end w:val=\"single\"/></w:tblBorders><w:tblLook w:firstRow=\"1\" w:lastRow=\"0\" w:firstColumn=\"true\" w:lastColumn=\"0\" w:noHBand=\"0\" w:noVBand=\"1\"/></w:tblPr></w:tbl><w:p><w:pPr><w:tabs><w:tab w:val=\"start\" w:pos=\"72pt\"/></w:tabs><w:ind w:start=\"36pt\" w:hanging=\"0.5in\"/><w:jc w:val=\"start\"/></w:pPr><w:r><w:rPr><w:w w:val=\"89%\"/></w:rPr></w:r></w:p><w:sectPr><w:pgSz w:w=\"612pt\" w:h=\"792pt\"/></w:sectPr></w:body>"
     ));
-    assert!(changed);
     for expected in [
         "<w:tblW w:w=\"4680\" w:type=\"dxa\"/>",
         "<w:jc w:val=\"right\"/>",
@@ -364,9 +366,10 @@ fn the_walk_back_writes_each_kind_of_row_in_transitional_s_spelling() {
     }
 }
 
+#[cfg(feature = "strict")]
 #[test]
 fn a_measure_rounds_half_away_from_zero_and_a_value_it_cannot_read_stays() {
-    let (written, _) = spelled(&format!(
+    let written = spelled(&format!(
         "<w:tblPr xmlns:w=\"{W}\"><w:tblW w:w=\"233.33pt\" w:type=\"dxa\"/><w:tblInd w:w=\"96.08%\" w:type=\"pct\"/><w:tblCellSpacing w:w=\"abc\" w:type=\"dxa\"/></w:tblPr>"
     ));
     assert!(
@@ -381,7 +384,7 @@ fn a_measure_rounds_half_away_from_zero_and_a_value_it_cannot_read_stays() {
         written.contains("<w:tblCellSpacing w:w=\"abc\" w:type=\"dxa\"/>"),
         "{written}"
     );
-    let (negative, _) = spelled(&format!(
+    let negative = spelled(&format!(
         "<w:ind xmlns:w=\"{W}\" w:start=\"-0.025pt\" w:end=\"2.54cm\"/>"
     ));
     assert_eq!(
@@ -390,9 +393,10 @@ fn a_measure_rounds_half_away_from_zero_and_a_value_it_cannot_read_stays() {
     );
 }
 
+#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_moves_codes_dates_and_children_back_into_their_attributes() {
-    let (font, _) = spelled(&format!(
+    let font = spelled(&format!(
         "<w:fonts xmlns:w=\"{W}\"><w:font w:name=\"A\"><w:charset w:characterSet=\"iso-8859-1\"/></w:font><w:font w:name=\"B\"><w:charset w:characterSet=\"x-unknown\"/></w:font></w:fonts>"
     ));
     assert!(font.contains("<w:charset w:val=\"00\"/>"), "{font}");
@@ -400,7 +404,7 @@ fn the_walk_back_moves_codes_dates_and_children_back_into_their_attributes() {
         font.contains("<w:charset w:characterSet=\"x-unknown\"/>"),
         "{font}"
     );
-    let (workbook, _) = spelled(&format!(
+    let workbook = spelled(&format!(
         "<x:root xmlns:x=\"{X}\"><x:textPr characterSet=\"iso-2022-jp\"/><x:dynamicFilter type=\"today\" maxValIso=\"2024-01-01T12:00:00\"/><x:protectedRange name=\"p\" sqref=\"A1\"><x:securityDescriptor>O:WD</x:securityDescriptor></x:protectedRange><x:dxf><x:border><x:start style=\"thin\"/><x:end/></x:border></x:dxf></x:root>"
     ));
     for expected in [
@@ -413,9 +417,10 @@ fn the_walk_back_moves_codes_dates_and_children_back_into_their_attributes() {
     }
 }
 
+#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_scopes_a_rule_to_the_parent_that_has_it() {
-    let (written, _) = spelled(&format!(
+    let written = spelled(&format!(
         "<x:root xmlns:x=\"{X}\"><x:calcChain><x:c r=\"A1\" i=\"1\"/></x:calcChain><x:row><x:c r=\"A1\"/></x:row></x:root>"
     ));
     assert_eq!(
@@ -426,11 +431,12 @@ fn the_walk_back_scopes_a_rule_to_the_parent_that_has_it() {
     );
 }
 
+#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_converts_percentages_in_text_and_attributes_and_keeps_a_chart_s_numbers() {
     let wp14 = "http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing";
     let chart = "http://schemas.openxmlformats.org/drawingml/2006/chart";
-    let (written, _) = spelled(&format!(
+    let written = spelled(&format!(
         "<a:root xmlns:a=\"{A}\" xmlns:wp14=\"{wp14}\" xmlns:c=\"{chart}\"><a:alpha val=\"93.999%\"/><a:gs pos=\"50%\"/><wp14:pctWidth>40%</wp14:pctWidth><c:gapWidth val=\"219\"/><c:overlap val=\"-27\"/></a:root>"
     ));
     for expected in [
@@ -444,10 +450,59 @@ fn the_walk_back_converts_percentages_in_text_and_attributes_and_keeps_a_chart_s
     }
 }
 
+#[cfg(feature = "strict")]
 #[test]
 fn the_walk_back_leaves_transitional_s_own_spelling_unchanged() {
     let text = format!(
         "<w:p xmlns:w=\"{W}\"><w:pPr><w:ind w:left=\"720\"/><w:jc w:val=\"left\"/></w:pPr></w:p>"
     );
-    assert_eq!(spelled(&text), (text, false));
+    assert_eq!(spelled(&text), text);
+}
+
+/// The main part `text` holds, read into its typed root and stored in Transitional with `options`.
+#[cfg(feature = "strict")]
+fn stored(text: &str, options: WriteOptions) -> String {
+    use crate::parts::main_document;
+    use crate::parts::part_root;
+    use officekit_xml::packaging::package::Package;
+    use officekit_xml::packaging::part_name::PartName;
+
+    let document = Document::from_transitional(&element(text)).unwrap();
+    let mut package = Package::new();
+    let name = PartName::new("/word/document.xml").unwrap();
+    part_root::store(
+        &mut package,
+        &name,
+        main_document::CONTENT_TYPES[0],
+        &document,
+        ConformanceClass::Transitional,
+        options,
+    )
+    .unwrap();
+    String::from_utf8(package.part_bytes(&name).unwrap()).unwrap()
+}
+
+#[cfg(feature = "strict")]
+#[test]
+fn a_transitional_store_respells_each_value_only_when_its_options_say() {
+    let text = format!(
+        "<w:document xmlns:w=\"{W_STRICT}\" w:conformance=\"strict\"><w:body><w:tbl><w:tblPr><w:jc w:val=\"end\"/><w:tblBorders><w:start w:val=\"single\"/></w:tblBorders></w:tblPr></w:tbl><w:p><w:pPr><w:ind w:start=\"36pt\"/></w:pPr></w:p></w:body></w:document>"
+    );
+    let kept = stored(&text, KEEP);
+    for expected in [
+        "<w:jc w:val=\"end\"/>",
+        "<w:tblBorders><w:start w:val=\"single\"/></w:tblBorders>",
+        "<w:ind w:start=\"36pt\"/>",
+    ] {
+        assert!(kept.contains(expected), "{expected} in {kept}");
+    }
+    let respelled = stored(&text, KEEP.respelled());
+    for expected in [
+        "<w:jc w:val=\"right\"/>",
+        "<w:tblBorders><w:left w:val=\"single\"/></w:tblBorders>",
+        "<w:ind w:left=\"720\"/>",
+    ] {
+        assert!(respelled.contains(expected), "{expected} in {respelled}");
+    }
+    assert!(!respelled.contains("conformance"), "{respelled}");
 }

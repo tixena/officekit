@@ -102,6 +102,7 @@
 include!("transitional/modules.rs");
 
 pub mod dates;
+#[cfg(feature = "strict")]
 mod spellings;
 
 use core::cmp::Ordering;
@@ -112,13 +113,11 @@ use officekit_markup::class_rules::{is, order};
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::element::{Attribute, Element, NamespaceDeclaration, Node};
 use officekit_xml::error::{ReadError, WriteError};
-use officekit_xml::name::{Namespace, NamespaceId, QName, tag_of};
-use officekit_xml::packaging::error::PackageError;
-use officekit_xml::packaging::package::Package;
-use officekit_xml::packaging::part_name::PartName;
+#[cfg(feature = "strict")]
+use officekit_xml::name::tag_of;
+use officekit_xml::name::{Namespace, NamespaceId, QName};
 #[cfg(feature = "strict")]
 use officekit_xml::stream::class::{ClassRules, Site};
-use officekit_xml::write::WriteOptions;
 
 #[cfg(test)]
 mod tests;
@@ -177,13 +176,19 @@ pub trait Transitional: Sized {
 /// A typed node whose element the write changes, a `w:drawing`, an `a:graphicData`, a
 /// `wne:txbxContent` or the owner of a value only Strict has, is written as one element the write
 /// converts; every other is written tag by tag. A main part's root loses `conformance="strict"`.
+///
+/// A save from Strict also writes each value in Transitional's spelling: an attribute in the start
+/// tag of its element, and the text or the children of an element whose content the spelling
+/// changes, a `wp14:pctWidth`, a `w:tblBorders` or an `x:protectedRange`, written as one element.
 #[cfg(feature = "strict")]
 #[derive(Debug)]
 pub(crate) struct TransitionalRules {
     conformance: Option<Tag>,
+    respell: bool,
 }
 
 /// What a save from Strict to Transitional does with an attribute.
+#[cfg(feature = "strict")]
 enum BackRule {
     /// A name of `codes` written as its code in the attribute `to`, in place of this one.
     Code {
@@ -215,6 +220,7 @@ enum BackRule {
 }
 
 /// How a packed attribute's bits are laid out.
+#[cfg(feature = "strict")]
 enum Bits {
     /// A string of `0` and `1`: the attribute of each character, first first.
     Characters(&'static [&'static str]),
@@ -229,9 +235,13 @@ type WordNamespace = (&'static str, &'static str);
 #[cfg(feature = "strict")]
 impl TransitionalRules {
     /// The rules of a part whose root drops `conformance="strict"` from the attribute
-    /// `conformance`, when it is a main part's root, or of any other part with `None`.
-    pub(crate) const fn new(conformance: Option<Tag>) -> Self {
-        Self { conformance }
+    /// `conformance`, when it is a main part's root, or of any other part with `None`; `respell`
+    /// writes each value in Transitional's spelling, as a save from Strict does.
+    pub(crate) const fn new(conformance: Option<Tag>, respell: bool) -> Self {
+        Self {
+            conformance,
+            respell,
+        }
     }
 }
 
@@ -249,6 +259,9 @@ impl ClassRules for TransitionalRules {
             None => written,
         };
         node.set_class(ConformanceClass::Transitional);
+        if self.respell {
+            spell(&mut node, site.parent.and_then(tag_of));
+        }
         Ok(vec![Node::Element(node)])
     }
 
@@ -269,12 +282,16 @@ impl ClassRules for TransitionalRules {
             || named(WORDPROCESSING, "drawing")
             || named(DRAWING, "graphicData")
             || named(WORD_ML, "txbxContent")
+            || (self.respell && spells_content(tag))
     }
 
     fn open(&mut self, element: &mut Element, site: &Site<'_>) -> Result<(), WriteError> {
         element.set_class(ConformanceClass::Transitional);
         if let (true, Some(conformance)) = (site.is_root(), self.conformance) {
             drop_strict_conformance(element, conformance);
+        }
+        if self.respell {
+            spell_attributes(element, site.parent.and_then(tag_of));
         }
         Ok(())
     }
@@ -307,25 +324,27 @@ fn alternate_content(drawing: Node, namespace: WordNamespace) -> Element {
     block
 }
 
-/// Apply `rule` to the attribute `attribute` of `element`; whether it changed. A value the rule
-/// cannot read stays as it is, and so does an attribute whose target is already there.
-fn apply_back(element: &mut Element, attribute: Tag, rule: &BackRule) -> bool {
+/// Apply `rule` to the attribute `attribute` of `element`. A value the rule cannot read stays as
+/// it is, and so does an attribute whose target is already there.
+#[cfg(feature = "strict")]
+fn apply_back(element: &mut Element, attribute: Tag, rule: &BackRule) {
     if let BackRule::Pack(bits) = rule {
-        return pack(element, attribute, bits);
+        pack(element, attribute, bits);
+        return;
     }
     let Some(index) = element
         .attributes
         .iter()
         .position(|found| is(attribute, &found.name))
     else {
-        return false;
+        return;
     };
     let Some(value) = element
         .attributes
         .get(index)
         .map(|found| found.value.clone())
     else {
-        return false;
+        return;
     };
     let rewritten = match rule {
         BackRule::Code { codes, to } => {
@@ -333,13 +352,12 @@ fn apply_back(element: &mut Element, attribute: Tag, rule: &BackRule) -> bool {
                 .iter()
                 .find(|(name, _)| *name == value)
                 .map(|(_, code)| *code);
-            return match code {
-                Some(found) if !has_sibling(element, index, to) => {
-                    move_attribute(element, index, to, found);
-                    true
-                }
-                _ => false,
-            };
+            if let Some(found) = code
+                && !has_sibling(element, index, to)
+            {
+                move_attribute(element, index, to, found);
+            }
+            return;
         }
         BackRule::Measure {
             per_percent,
@@ -367,19 +385,18 @@ fn apply_back(element: &mut Element, attribute: Tag, rule: &BackRule) -> bool {
         BackRule::Pack(_) => None,
         BackRule::Percent(per_percent) => bare_percent(&value, *per_percent),
         BackRule::Rename(to) => {
-            if has_sibling(element, index, to) {
-                return false;
+            if !has_sibling(element, index, to) {
+                move_attribute(element, index, to, &value);
             }
-            return move_attribute(element, index, to, &value);
+            return;
         }
         BackRule::Serial(to) => {
-            return match dates::serial_text(&value) {
-                Some(serial) if !has_sibling(element, index, to) => {
-                    move_attribute(element, index, to, &serial);
-                    true
-                }
-                _ => false,
-            };
+            if let Some(serial) = dates::serial_text(&value)
+                && !has_sibling(element, index, to)
+            {
+                move_attribute(element, index, to, &serial);
+            }
+            return;
         }
         BackRule::Twips => bare_measure(&value, 20),
         BackRule::Values(pairs) => pairs
@@ -387,16 +404,13 @@ fn apply_back(element: &mut Element, attribute: Tag, rule: &BackRule) -> bool {
             .find(|(strict, _)| *strict == value)
             .map(|(_, transitional)| (*transitional).to_owned()),
     };
-    match (rewritten, element.attributes.get_mut(index)) {
-        (Some(text), Some(found)) if text != found.value => {
-            found.value = text;
-            true
-        }
-        _ => false,
+    if let (Some(text), Some(found)) = (rewritten, element.attributes.get_mut(index)) {
+        found.value = text;
     }
 }
 
 /// The rows of a table keyed by `owner`'s tag.
+#[cfg(feature = "strict")]
 fn back_rows<T>(
     table: &'static [(Tag, Tag, T)],
     owner: (Option<NamespaceId>, &str),
@@ -408,6 +422,7 @@ fn back_rows<T>(
 
 /// A universal measure, such as `72pt`, `1in` or `2.54cm`, as a whole number counting `per_point`
 /// of a point, rounded half away from zero; `None` for any other text.
+#[cfg(feature = "strict")]
 fn bare_measure(text: &str, per_point: u32) -> Option<String> {
     let split = text.len().checked_sub(2)?;
     let (number, unit) = (text.get(..split)?, text.get(split..)?);
@@ -429,6 +444,7 @@ fn bare_measure(text: &str, per_point: u32) -> Option<String> {
 
 /// A percentage, such as `89.5%`, as a whole number counting `per_percent` of a percent, rounded
 /// half away from zero; `None` for any other text.
+#[cfg(feature = "strict")]
 fn bare_percent(text: &str, per_percent: u32) -> Option<String> {
     let (negative, digits, places) = decimal_number(text.strip_suffix('%')?)?;
     let numerator = digits.checked_mul(u128::from(per_percent))?;
@@ -436,9 +452,9 @@ fn bare_percent(text: &str, per_percent: u32) -> Option<String> {
 }
 
 /// A child of `element` whose text `rows` move back into an attribute, when there is exactly
-/// one and the attribute is absent; whether it changed.
-fn child_attributes(element: &mut Element, rows: &[(Tag, Tag, Tag)]) -> bool {
-    let mut changed = false;
+/// one and the attribute is absent.
+#[cfg(feature = "strict")]
+fn child_attributes(element: &mut Element, rows: &[(Tag, Tag, Tag)]) {
     for (_, child, attribute) in rows {
         let matching: Vec<usize> = element
             .children
@@ -479,13 +495,12 @@ fn child_attributes(element: &mut Element, rows: &[(Tag, Tag, Tag)]) -> bool {
                 QName::new(prefix, attribute.1.to_owned(), namespace),
                 text,
             ));
-            changed = true;
         }
     }
-    changed
 }
 
 /// The rows of `CONTEXTUAL` for an element `owner` under `parent`.
+#[cfg(feature = "strict")]
 fn contextual_back(
     parent: (Option<NamespaceId>, &str),
     owner: (Option<NamespaceId>, &str),
@@ -501,6 +516,7 @@ fn contextual_back(
 
 /// A decimal number's text: whether it is negative, its digits as one whole number, and how many
 /// of them follow the point.
+#[cfg(feature = "strict")]
 fn decimal_number(text: &str) -> Option<(bool, u128, u32)> {
     let (negative, unsigned) = text.strip_prefix('-').map_or_else(
         || (false, text.strip_prefix('+').unwrap_or(text)),
@@ -520,6 +536,7 @@ fn decimal_number(text: &str) -> Option<(bool, u128, u32)> {
 
 /// Whether `element` has an attribute named `local` in the namespace of its attribute at
 /// `index`, besides that one.
+#[cfg(feature = "strict")]
 fn has_sibling(element: &Element, index: usize, local: &str) -> bool {
     let Some(source) = element.attributes.get(index) else {
         return false;
@@ -535,25 +552,25 @@ fn has_sibling(element: &Element, index: usize, local: &str) -> bool {
         })
 }
 
-/// Rename the attribute at `index` to `to` and give it `value`; whether it changed.
-fn move_attribute(element: &mut Element, index: usize, to: &str, value: &str) -> bool {
-    let Some(found) = element.attributes.get_mut(index) else {
-        return false;
-    };
-    to.clone_into(&mut found.name.local);
-    value.clone_into(&mut found.value);
-    true
+/// Rename the attribute at `index` to `to` and give it `value`.
+#[cfg(feature = "strict")]
+fn move_attribute(element: &mut Element, index: usize, to: &str, value: &str) {
+    if let Some(found) = element.attributes.get_mut(index) {
+        to.clone_into(&mut found.name.local);
+        value.clone_into(&mut found.value);
+    }
 }
 
 /// Pack the attributes `bits` names into the attribute `attribute`, unless `element` has it or
-/// none of them; whether it changed.
-fn pack(element: &mut Element, attribute: Tag, bits: &Bits) -> bool {
+/// none of them.
+#[cfg(feature = "strict")]
+fn pack(element: &mut Element, attribute: Tag, bits: &Bits) {
     if element
         .attributes
         .iter()
         .any(|found| is(attribute, &found.name))
     {
-        return false;
+        return;
     }
     let namespace = attribute.0.map_or(Namespace::None, Namespace::Known);
     let flag = |local: &str| {
@@ -571,7 +588,7 @@ fn pack(element: &mut Element, attribute: Tag, bits: &Bits) -> bool {
         .find_map(|name| flag(name))
         .map(|found| found.name.prefix.clone())
     else {
-        return false;
+        return;
     };
     let on = |local: &str| {
         flag(local).is_some_and(|found| matches!(found.value.as_str(), "1" | "true" | "on"))
@@ -593,10 +610,10 @@ fn pack(element: &mut Element, attribute: Tag, bits: &Bits) -> bool {
         QName::new(prefix, attribute.1.to_owned(), namespace),
         value,
     ));
-    true
 }
 
 /// `numerator / denominator` rounded half away from zero, negative when `negative`.
+#[cfg(feature = "strict")]
 fn rounded(negative: bool, numerator: u128, denominator: u128) -> String {
     let quotient = numerator / denominator;
     let whole = if (numerator % denominator) * 2 >= denominator {
@@ -612,9 +629,9 @@ fn rounded(negative: bool, numerator: u128, denominator: u128) -> String {
 }
 
 /// Rename each child of `element` that `rows` name to Transitional's name, unless a sibling has
-/// it; whether it changed.
-fn rename_children(element: &mut Element, rows: &[(Tag, Tag, &str)]) -> bool {
-    let mut changed = false;
+/// it.
+#[cfg(feature = "strict")]
+fn rename_children(element: &mut Element, rows: &[(Tag, Tag, &str)]) {
     for index in 0..element.children.len() {
         let target = match element.children.get(index) {
             Some(Node::Element(child)) => rows
@@ -631,98 +648,87 @@ fn rename_children(element: &mut Element, rows: &[(Tag, Tag, &str)]) -> bool {
         });
         if let (false, Some(Node::Element(child))) = (taken, element.children.get_mut(index)) {
             to.clone_into(&mut child.name.local);
-            changed = true;
         }
     }
-    changed
 }
 
 /// Write every value of `element` and below it in Transitional's spelling, as a save from Strict
-/// writes it; whether anything changed. `parent` is the tag of the element holding it.
-fn spell(element: &mut Element, parent: Option<(Option<NamespaceId>, &str)>) -> bool {
-    let mut changed = false;
+/// writes it, the reverse of each rule of the Strict walk. `parent` is the tag of the element
+/// holding it.
+#[cfg(feature = "strict")]
+fn spell(element: &mut Element, parent: Option<(Option<NamespaceId>, &str)>) {
+    spell_attributes(element, parent);
     let tables = officekit_markup::name(element).map(|owner| {
-        let text_rule = spellings::TEXTS
-            .binary_search_by(|(tag, _)| order(*tag, owner))
-            .ok()
-            .and_then(|index| spellings::TEXTS.get(index))
-            .map(|(_, per_percent)| *per_percent);
         (
-            back_rows(spellings::ATTRIBUTES, owner),
-            parent.map_or(&[][..], |tag| contextual_back(tag, owner)),
-            text_rule,
+            text_rule(owner),
             back_rows(spellings::CHILDREN, owner),
             back_rows(spellings::CHILD_ATTRIBUTES, owner),
         )
     });
-    if let Some((attributes, contextual, text_rule, children, child_rows)) = tables {
-        let rows = attributes
-            .iter()
-            .map(|(_, attribute, rule)| (*attribute, rule))
-            .chain(
-                contextual
-                    .iter()
-                    .map(|(_, _, attribute, rule)| (*attribute, rule)),
-            );
-        for (attribute, rule) in rows {
-            changed |= apply_back(element, attribute, rule);
-        }
+    if let Some((text_rule, children, child_rows)) = tables {
         if let Some(per_percent) = text_rule {
             for node in &mut element.children {
                 if let Node::Text(text) = node
                     && let Some(bare) = bare_percent(text, per_percent)
                 {
                     *text = bare;
-                    changed = true;
                 }
             }
         }
-        changed |= rename_children(element, children);
-        changed |= child_attributes(element, child_rows);
+        rename_children(element, children);
+        child_attributes(element, child_rows);
     }
     let tag = tag_of(&element.name);
     for node in &mut element.children {
         if let Node::Element(child) = node {
-            changed |= spell(child, tag);
+            spell(child, tag);
         }
     }
-    changed
 }
 
-/// Write the part `name` with every value in Transitional's spelling: what a save from Strict
-/// to Transitional does after the part's own store, the reverse of each rule of the Strict walk.
-/// A part that is not XML, or that holds nothing to change, stays as it is.
-///
-/// # Errors
-///
-/// The errors of reading the part's tree and of storing it.
-pub(crate) fn spell_tree(
-    package: &mut Package,
-    name: &PartName,
-    options: WriteOptions,
-) -> Result<(), PackageError> {
-    let Some(content_type) = package.content_type(name).map(str::to_owned) else {
-        return Ok(());
+/// Write each attribute of `element` in Transitional's spelling, as [`spell`] does. `parent` is
+/// the tag of the element holding it.
+#[cfg(feature = "strict")]
+fn spell_attributes(element: &mut Element, parent: Option<(Option<NamespaceId>, &str)>) {
+    let Some((attributes, contextual)) = officekit_markup::name(element).map(|owner| {
+        (
+            back_rows(spellings::ATTRIBUTES, owner),
+            parent.map_or(&[][..], |tag| contextual_back(tag, owner)),
+        )
+    }) else {
+        return;
     };
-    let xml = content_type.ends_with("+xml")
-        || content_type == "application/xml"
-        || content_type == "text/xml";
-    if !xml {
-        return Ok(());
+    let rows = attributes
+        .iter()
+        .map(|(_, attribute, rule)| (*attribute, rule))
+        .chain(
+            contextual
+                .iter()
+                .map(|(_, _, attribute, rule)| (*attribute, rule)),
+        );
+    for (attribute, rule) in rows {
+        apply_back(element, attribute, rule);
     }
-    let mut document = package.tree_at(name)?;
-    if spell(&mut document.root, None) {
-        if options.namespace_cleanup {
-            document.root.clean_namespaces();
-        }
-        package.store_tree(
-            name,
-            &content_type,
-            &document,
-            WriteOptions::new(options.layout, false),
-        )?;
-    }
-    Ok(())
+}
+
+/// Whether [`spell`] changes the content of an element named `tag`, its text or its children,
+/// and not only its attributes.
+#[cfg(feature = "strict")]
+fn spells_content(tag: (Option<NamespaceId>, &str)) -> bool {
+    text_rule(tag).is_some()
+        || !back_rows(spellings::CHILDREN, tag).is_empty()
+        || !back_rows(spellings::CHILD_ATTRIBUTES, tag).is_empty()
+}
+
+/// How many of a percent the bare number counts that the text of an element named `owner` holds
+/// in Transitional, when Strict writes it as a percentage.
+#[cfg(feature = "strict")]
+fn text_rule(owner: (Option<NamespaceId>, &str)) -> Option<u32> {
+    spellings::TEXTS
+        .binary_search_by(|(tag, _)| order(*tag, owner))
+        .ok()
+        .and_then(|index| spellings::TEXTS.get(index))
+        .map(|(_, per_percent)| *per_percent)
 }
 
 /// Fail on a value only Strict has, in `element` or below it.

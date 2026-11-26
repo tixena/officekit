@@ -14,6 +14,7 @@ const W14: &str = "http://schemas.microsoft.com/office/word/2010/wordml";
 const KEEP: WriteOptions = WriteOptions {
     layout: Layout::Compact,
     namespace_cleanup: false,
+    respell: false,
 };
 
 fn written(document: &Document) -> String {

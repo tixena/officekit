@@ -196,32 +196,38 @@ pub fn write_through<R>(
 where
     R: WriteThrough,
 {
-    let previous = out.set_rules(Some(class_rules(class, conformance)));
+    let rules = class_rules(class, conformance, out.respells());
+    let previous = out.set_rules(Some(rules));
     let written = root.write_through(&mut Unchanged::default(), out);
     out.set_rules(previous);
     written.map_err(WriteError::from)
 }
 
-/// The rules of `class`.
+/// The rules of `class`; `respell` writes each value in the class's own spelling, which Strict's
+/// rules always do.
 #[cfg(feature = "strict")]
-fn class_rules(class: ConformanceClass, conformance: Option<Tag>) -> Box<dyn ClassRules> {
+fn class_rules(
+    class: ConformanceClass,
+    conformance: Option<Tag>,
+    respell: bool,
+) -> Box<dyn ClassRules> {
     if class == ConformanceClass::Strict {
         Box::new(StrictRules::new(conformance))
     } else {
-        transitional_rules(conformance)
+        transitional_rules(conformance, respell)
     }
 }
 
 /// The rules of the Transitional class.
 #[cfg(all(feature = "strict", feature = "transitional"))]
-fn transitional_rules(conformance: Option<Tag>) -> Box<dyn ClassRules> {
-    Box::new(TransitionalRules::new(conformance))
+fn transitional_rules(conformance: Option<Tag>, respell: bool) -> Box<dyn ClassRules> {
+    Box::new(TransitionalRules::new(conformance, respell))
 }
 
 /// The rules of the Transitional class with its feature off: the shared writer's nodes, every
 /// namespace declared in the Transitional URI.
 #[cfg(all(feature = "strict", not(feature = "transitional")))]
-fn transitional_rules(_conformance: Option<Tag>) -> Box<dyn ClassRules> {
+fn transitional_rules(_conformance: Option<Tag>, _respell: bool) -> Box<dyn ClassRules> {
     Box::new(SharedRules(ConformanceClass::Transitional))
 }
 
@@ -281,8 +287,8 @@ where
 /// class's URI; the part's XML declaration, prolog, and epilog are kept
 /// when it has them.
 ///
-/// The root is written through [`PartRoot::write_part`] into a buffer in `options`' layout, and
-/// the namespace cleanup runs on its bytes.
+/// The root is written through [`PartRoot::write_part`] into a buffer in `options`' layout, each
+/// value respelled when `options` says, and the namespace cleanup runs on its bytes.
 ///
 /// # Errors
 ///
@@ -303,6 +309,7 @@ where
     let frame = package.part_frame(name);
     let mut buffer = PartBuffer::default();
     let mut out = PartWriter::new(&mut buffer, options.layout);
+    out.set_respell(options.respell);
     write_part(
         &mut out,
         frame.as_ref().ok().and_then(Option::as_ref),

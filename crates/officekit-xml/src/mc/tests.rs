@@ -16,6 +16,7 @@ const OTHER: &str = r#"xmlns:x="urn:not-in-the-table""#;
 const KEEP: WriteOptions = WriteOptions {
     layout: Layout::Compact,
     namespace_cleanup: false,
+    respell: false,
 };
 
 /// A symbol in an Office 2016 namespace, with a fallback every version reads.

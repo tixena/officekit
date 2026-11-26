@@ -6,8 +6,6 @@ use crate::parts::model_of;
 use crate::parts::part_root::{self, PartRoot};
 #[cfg(any(feature = "strict", feature = "transitional"))]
 use crate::parts::restore_through_module;
-#[cfg(feature = "transitional")]
-use crate::transitional;
 use officekit_xml::conformance::ConformanceClass;
 use officekit_xml::packaging::error::PackageError;
 #[cfg(any(feature = "strict", feature = "transitional"))]
@@ -143,11 +141,11 @@ where
 
 /// The package's bytes in `to`, read in `from`.
 ///
-/// In `from`, the package as it is. In the other class, a copy: `own` is given each part first
-/// and answers whether it stored the part itself; every other part goes through the module its
-/// content type names, loaded with `open` and stored with `write` in `to`, a part no module knows
-/// staying as it is; then every relationship type takes `to`'s spelling. From Strict to
-/// Transitional, each part written again then takes Transitional's own spelling of every value.
+/// In `from`, the package as it is. In the other class, a copy: `own` is given each part first,
+/// with the options to store it with, and answers whether it stored the part itself; every other
+/// part goes through the module its content type names, loaded with `open` and stored with
+/// `write` in `to`, a part no module knows staying as it is; then every relationship type takes
+/// `to`'s spelling. Each part written again takes `to`'s own spelling of every value.
 ///
 /// # Errors
 ///
@@ -160,25 +158,16 @@ pub fn to_bytes_in_class(
     to: ConformanceClass,
     open: OpenOptions,
     write: WriteOptions,
-    own: &mut dyn FnMut(&mut Package, &PartName) -> Result<bool, PackageError>,
+    own: &mut dyn FnMut(&mut Package, &PartName, WriteOptions) -> Result<bool, PackageError>,
 ) -> Result<Vec<u8>, PackageError> {
     if from == to {
         return package.to_bytes();
     }
+    let respelled = write.respelled();
     let mut copy = package.duplicate()?;
     for name in copy.part_names()? {
-        #[cfg(feature = "transitional")]
-        let before = (from == ConformanceClass::Strict && to == ConformanceClass::Transitional)
-            .then(|| copy.part_bytes(&name))
-            .transpose()?;
-        if !own(&mut copy, &name)? {
-            restore_through_module(&mut copy, &name, to, open, write)?;
-        }
-        #[cfg(feature = "transitional")]
-        if let Some(original) = before
-            && copy.part_bytes(&name)? != original
-        {
-            transitional::spell_tree(&mut copy, &name, write)?;
+        if !own(&mut copy, &name, respelled)? {
+            restore_through_module(&mut copy, &name, to, open, respelled)?;
         }
     }
     copy.set_relationship_class(to)?;

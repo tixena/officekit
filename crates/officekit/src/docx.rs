@@ -692,7 +692,7 @@ impl Docx {
             ConformanceClass::Strict,
             self.options,
             self.write_options,
-            &mut |_, _| Ok(false),
+            &mut |_, _, _| Ok(false),
         )
     }
 
@@ -717,7 +717,7 @@ impl Docx {
             ConformanceClass::Transitional,
             self.options,
             self.write_options,
-            &mut |_, _| Ok(false),
+            &mut |_, _, _| Ok(false),
         )?;
         Ok((bytes, Vec::new()))
     }

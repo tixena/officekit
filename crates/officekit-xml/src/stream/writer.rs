@@ -60,6 +60,9 @@ pub struct PartWriter<'sink> {
     pending: Option<BytesStart<'static>>,
     /// Whether whitespace is preserved inside each open element.
     preserve: Vec<bool>,
+    /// Whether a typed root written through it takes the spelling of the class it is written in,
+    /// as [`WriteOptions::respell`](crate::write::WriteOptions::respell) says.
+    respell: bool,
     /// The rules of the class the part is written in.
     rules: Option<Box<dyn ClassRules>>,
     scope: Scope,
@@ -240,6 +243,7 @@ impl<'sink> PartWriter<'sink> {
             parents: Vec::new(),
             pending: None,
             preserve: Vec::new(),
+            respell: false,
             rules: None,
             scope: Scope::default(),
             writer: Writer::new(sink),
@@ -324,10 +328,22 @@ impl<'sink> PartWriter<'sink> {
         self.writer.get_mut().write_all(markup)
     }
 
+    /// Whether a typed root written through it takes the spelling of the class it is written in.
+    #[must_use = "this only answers the question"]
+    pub const fn respells(&self) -> bool {
+        self.respell
+    }
+
     /// The namespace declarations in scope, which a typed node written through this writer takes
     /// its prefixes from.
     pub const fn scope(&mut self) -> &mut Scope {
         &mut self.scope
+    }
+
+    /// Say whether a typed root written through it takes the spelling of the class it is written
+    /// in, as a save from the other class writes it.
+    pub const fn set_respell(&mut self, respell: bool) {
+        self.respell = respell;
     }
 
     /// Set the rules of the class the nodes written next are in, `None` for none; the rules

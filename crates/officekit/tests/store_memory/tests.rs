@@ -297,13 +297,12 @@ fn rises() -> (usize, usize) {
     (RISES.get(), usize::try_from(RISE_PEAK.get()).unwrap())
 }
 
-/// Below the generic tree the Transitional spelling pass parses of a large main part and a copy
-/// of it: the copy the namespace cleanup made of that tree. A save from Strict to Transitional
-/// holds the part's trees twice, once to store the typed root and once to respell the stored
-/// part, and frees them in between; the second rise is the spelling pass.
+/// Below the typed tree of a large main part and the generic tree it writes as, in one rise: a
+/// save from Strict to Transitional writes each value in Transitional's spelling while it stores
+/// the typed root, and parses no tree of the stored part to respell it.
 #[cfg(all(feature = "strict", feature = "transitional"))]
 #[test]
-fn the_transitional_spelling_pass_holds_less_than_its_tree_and_a_copy_of_it() {
+fn a_save_from_strict_to_transitional_respells_with_no_generic_tree_of_its_main_part() {
     use officekit::docx::Docx;
     use officekit::parts::kinds::WordprocessingKind;
     use officekit_markup::wordprocessing::{
@@ -338,11 +337,11 @@ fn the_transitional_spelling_pass_holds_less_than_its_tree_and_a_copy_of_it() {
     );
     drop(main);
     let base = live();
+    let read = strict.main_document().unwrap();
+    let typed_bytes = live() - base;
+    drop(read);
     let tree = saved.tree_at(&main_part()).unwrap();
     let generic = live() - base;
-    let copy = tree.clone();
-    let copied = live() - base - generic;
-    drop(copy);
     drop(tree);
     drop(saved);
     let before = live();
@@ -350,13 +349,10 @@ fn the_transitional_spelling_pass_holds_less_than_its_tree_and_a_copy_of_it() {
     strict.to_bytes_transitional().unwrap();
     let (count, rise_peak) = rises();
     stop();
-    assert_eq!(
-        count, 2,
-        "one rise to store the typed root, one to respell the part"
-    );
+    assert_eq!(count, 1, "one rise, to store the typed root");
     let peak = rise_peak - before;
     assert!(
-        peak < generic + copied,
-        "peak {peak} bytes, generic tree {generic}, its copy {copied}"
+        peak < typed_bytes + generic,
+        "peak {peak} bytes, typed tree {typed_bytes}, generic tree {generic}"
     );
 }
